@@ -1,0 +1,43 @@
+# 의존성
+/node_modules
+/.pnp
+.pnp.*
+
+# 빌드 산출물
+/.next/
+/out/
+/build
+*.tsbuildinfo
+next-env.d.ts
+
+# 로컬 실행 로그
+dev.log
+*.log
+
+# 환경변수 — 절대 커밋하지 말 것
+.env
+.env*.local
+
+# 수집 파이프라인 중간 산출물
+# (원본 사이트 HTML·스크린샷은 용량이 크고 재생성 가능하므로 커밋하지 않는다.
+#  builder/*.js 스크립트와 EXTRACTED-*.md 요약본은 커밋한다.)
+/builder/shots/
+/builder/*.html
+/builder/assets*.txt
+/builder/manifest.csv
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 에디터
+.vscode/
+.idea/
+
+.vercel
+/_port
+/npm-install.log
+/dev.log
+/build.log
+.env*.local

@@ -1,0 +1,306 @@
+{
+ "doctors/yang": {
+  "w": 1200,
+  "h": 1259
+ },
+ "doctors/hong": {
+  "w": 873,
+  "h": 1033
+ },
+ "scene/surgery": {
+  "w": 845,
+  "h": 1045
+ },
+ "scene/loupe": {
+  "w": 960,
+  "h": 767
+ },
+ "scene/endo": {
+  "w": 960,
+  "h": 931
+ },
+ "scene/endosonic": {
+  "w": 864,
+  "h": 931
+ },
+ "scene/nopain": {
+  "w": 864,
+  "h": 1045
+ },
+ "scene/wisdom": {
+  "w": 567,
+  "h": 569
+ },
+ "scene/denture": {
+  "w": 1190,
+  "h": 747
+ },
+ "scene/consult": {
+  "w": 499,
+  "h": 767
+ },
+ "scene/patient": {
+  "w": 422,
+  "h": 767
+ },
+ "scene/sterile": {
+  "w": 422,
+  "h": 767
+ },
+ "scene/sterile2": {
+  "w": 384,
+  "h": 767
+ },
+ "scene/tmj-1": {
+  "w": 538,
+  "h": 340
+ },
+ "scene/tmj-2": {
+  "w": 538,
+  "h": 340
+ },
+ "scene/tmj-3": {
+  "w": 576,
+  "h": 340
+ },
+ "scene/tmj-sym-1": {
+  "w": 365,
+  "h": 356
+ },
+ "scene/tmj-sym-2": {
+  "w": 365,
+  "h": 356
+ },
+ "scene/tmj-sym-3": {
+  "w": 384,
+  "h": 356
+ },
+ "scene/intro-1": {
+  "w": 769,
+  "h": 495
+ },
+ "scene/intro-2": {
+  "w": 837,
+  "h": 484
+ },
+ "scene/sleep": {
+  "w": 981,
+  "h": 835
+ },
+ "scene/smile": {
+  "w": 864,
+  "h": 459
+ },
+ "scene/xray-wisdom": {
+  "w": 593,
+  "h": 569
+ },
+ "equip/laser": {
+  "w": 346,
+  "h": 799
+ },
+ "equip/laser-room": {
+  "w": 422,
+  "h": 888
+ },
+ "equip/ct": {
+  "w": 422,
+  "h": 888
+ },
+ "equip/ct-3d": {
+  "w": 461,
+  "h": 888
+ },
+ "equip/scanner": {
+  "w": 1400,
+  "h": 421
+ },
+ "equip/ct2": {
+  "w": 461,
+  "h": 888
+ },
+ "equip/planning": {
+  "w": 1600,
+  "h": 307
+ },
+ "equip/guide": {
+  "w": 806,
+  "h": 577
+ },
+ "equip/printer": {
+  "w": 1400,
+  "h": 681
+ },
+ "equip/airflow": {
+  "w": 960,
+  "h": 835
+ },
+ "equip/airflow-4": {
+  "w": 1400,
+  "h": 429
+ },
+ "equip/painless-set": {
+  "w": 576,
+  "h": 519
+ },
+ "equip/gbt": {
+  "w": 1000,
+  "h": 793
+ },
+ "equip/gel": {
+  "w": 1200,
+  "h": 475
+ },
+ "implant/navigation": {
+  "w": 864,
+  "h": 519
+ },
+ "implant/process-4": {
+  "w": 1400,
+  "h": 518
+ },
+ "implant/allinone-4": {
+  "w": 1400,
+  "h": 1117
+ },
+ "implant/uv": {
+  "w": 400,
+  "h": 400
+ },
+ "implant/prf": {
+  "w": 360,
+  "h": 453
+ },
+ "implant/custom": {
+  "w": 320,
+  "h": 426
+ },
+ "implant/fullarch-model": {
+  "w": 336,
+  "h": 267
+ },
+ "implant/fullarch-4": {
+  "w": 1400,
+  "h": 984
+ },
+ "tmj/splint": {
+  "w": 320,
+  "h": 213
+ },
+ "tmj/skull": {
+  "w": 320,
+  "h": 240
+ },
+ "tmj/jaw": {
+  "w": 384,
+  "h": 380
+ },
+ "illust/tooth-mta": {
+  "w": 560,
+  "h": 381
+ },
+ "illust/aesthetic": {
+  "w": 800,
+  "h": 304
+ },
+ "illust/wisdom": {
+  "w": 800,
+  "h": 304
+ },
+ "illust/airflow-device": {
+  "w": 360,
+  "h": 240
+ },
+ "aesthetic/laminate": {
+  "w": 557,
+  "h": 502
+ },
+ "aesthetic/allceramic": {
+  "w": 557,
+  "h": 433
+ },
+ "aesthetic/zirconia": {
+  "w": 557,
+  "h": 538
+ },
+ "aesthetic/whitening": {
+  "w": 557,
+  "h": 468
+ },
+ "aesthetic/prosth-cases": {
+  "w": 1400,
+  "h": 933
+ },
+ "aesthetic/whitening-cases": {
+  "w": 1400,
+  "h": 1015
+ },
+ "wisdom/steps": {
+  "w": 1400,
+  "h": 301
+ },
+ "wisdom/case": {
+  "w": 1400,
+  "h": 393
+ },
+ "place/place01": {
+  "w": 1600,
+  "h": 1067
+ },
+ "place/place02": {
+  "w": 1600,
+  "h": 1231
+ },
+ "place/place03": {
+  "w": 1600,
+  "h": 1227
+ },
+ "place/place04": {
+  "w": 1600,
+  "h": 1067
+ },
+ "place/place05": {
+  "w": 1600,
+  "h": 1067
+ },
+ "place/place06": {
+  "w": 1600,
+  "h": 1067
+ },
+ "place/place07": {
+  "w": 1600,
+  "h": 1067
+ },
+ "place/place08": {
+  "w": 1600,
+  "h": 1067
+ },
+ "place/place09": {
+  "w": 1600,
+  "h": 1067
+ },
+ "place/place10": {
+  "w": 1600,
+  "h": 1067
+ },
+ "video/you-1": {
+  "w": 1280,
+  "h": 720
+ },
+ "video/you-2": {
+  "w": 1280,
+  "h": 720
+ },
+ "video/you-3": {
+  "w": 1280,
+  "h": 720
+ },
+ "video/you-4": {
+  "w": 1280,
+  "h": 720
+ },
+ "notice/2026-09": {
+  "w": 1024,
+  "h": 1536
+ }
+}
