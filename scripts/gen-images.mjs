@@ -73,6 +73,8 @@ const SCENES = {
   'insight-crack': 'Molar tooth model with a fine crack line, under a magnifying loupe, macro.',
   'insight-endo-pain': 'Cross-section tooth model with red pulp next to a small ice pack on a white counter.',
   'insight-whitening': 'Tooth shade guide fanned out on a white counter, macro, soft light.',
+  'hero-wide-1': 'Ultra-wide cinematic interior of a premium modern dental clinic lounge at blue hour: long white reception counter, deep navy feature wall, warm pendant lights, floor-to-ceiling window with a soft evening city glow, polished floor reflections, empty and calm, no people, no text.',
+  'hero-wide-2': 'Ultra-wide cinematic view of a modern dental treatment room: white dental chair in the foreground left, large monitor on the wall showing an abstract blue 3D jaw render, big window on the right with soft daylight, navy accents, no people, no text.',
   'about-philosophy': 'Dental mirror and probe laid neatly on a white tray beside a small green plant, calm daylight.',
 };
 
@@ -94,8 +96,9 @@ async function gen(key) {
       const j = await r.json();
       const b64 = j.data?.[0]?.b64_json;
       if (!b64) throw new Error('no image');
-      await sharp(Buffer.from(b64, 'base64')).resize(1200, 800, { fit: 'cover' }).webp({ quality: 80 }).toFile(out);
-      sizes[`ai/${key}`] = { w: 1200, h: 800 };
+      const wide = key.startsWith('hero-wide');
+      await sharp(Buffer.from(b64, 'base64')).resize(wide ? 1920 : 1200, wide ? 1080 : 800, { fit: 'cover' }).webp({ quality: wide ? 78 : 80 }).toFile(out);
+      sizes[`ai/${key}`] = wide ? { w: 1920, h: 1080 } : { w: 1200, h: 800 };
       return 'ok';
     }
     const text = await r.text();

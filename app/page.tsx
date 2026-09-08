@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { SiteHeader } from '@/components/SiteHeader';
+import { HomeHero } from '@/components/HomeHero';
 import { JsonLd } from '@/components/JsonLd';
 import { VideoFacade } from '@/components/VideoFacade';
 import { Carousel } from '@/components/Carousel';
@@ -39,12 +40,6 @@ const HUB_IMG: Record<string, string> = {
   '/treatment/painless': 'ai/painless-hub',
 };
 
-const SLIDES = [
-  { key: 'scene/surgery', alt: '확대경을 쓰고 임플란트 수술을 하는 광화문선치과 원장' },
-  { key: 'ai/hero-clinic', alt: '밝은 디지털 치과 진료실' },
-  { key: 'ai/hero-digital', alt: '3D 구강스캐너와 스캔 화면' },
-];
-
 export default function HomePage() {
   const featured = [
     { href: '/treatment/implant/navigation', label: '내비게이션 임플란트', desc: '모의수술로 오차를 줄인 무절개 임플란트.', fig: 'ai/implant-navigation' },
@@ -66,51 +61,7 @@ export default function HomePage() {
         ]}
       />
       <main id="main">
-        {/* ── 첫 화면 — 화면을 꽉 채우는 슬라이드 ── */}
-        <section className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-night text-white">
-          <div className="absolute inset-0 -z-10">
-            {SLIDES.map((s, i) => (
-              <div key={s.key} className="hero-slide">
-                <Image src={figSrc(s.key)} alt="" fill priority={i === 0} sizes="100vw" className="object-cover object-[65%_center] opacity-60" />
-              </div>
-            ))}
-            <div className="absolute inset-0 bg-gradient-to-r from-night via-night/75 to-night/20" />
-            <div className="absolute inset-0 bg-gradient-to-t from-night via-transparent to-night/40" />
-            <div aria-hidden className="orb pointer-events-none absolute -top-40 right-[10%] h-[560px] w-[560px] rounded-full bg-sun-500/15 blur-3xl" />
-          </div>
-          <div className="wrap flex flex-1 flex-col justify-center pt-[120px] pb-24 md:pt-[150px] md:pb-28">
-            <p className="eyebrow on-dark hero-in">SUN DENTAL CLINIC · 광화문역 6번 출구 도보 2분</p>
-            <h1 className="display mt-6 max-w-[820px] !text-white hero-in hero-in-2 on-photo">
-              더 빠르고, 정확하게,
-              <br />
-              그리고 <span className="accent-sun">편안하게</span>
-              <br />
-              환자중심의 디지털 치과 진료
-            </h1>
-            <p className="mt-7 max-w-[620px] text-[1.05rem] leading-[1.85] text-white/80 hero-in hero-in-3 md:text-[1.15rem]">
-              <Sentences text="강남성심병원 외래교수 출신 전문의가 이해하기 쉬운 설명과 불편함을 줄인 진료시스템으로 진료합니다. 디지털 임플란트와 턱관절 치료, MTA 신경치료로 자연치아를 지키는 광화문 선치과입니다." />
-            </p>
-            <div className="mt-10 flex flex-wrap gap-3 hero-in hero-in-4">
-              <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="btn-sun">네이버 예약</a>
-              <Link href="/treatment" className="btn-ghost-dark">진료 안내 보기</Link>
-            </div>
-            <ul className="mt-16 grid max-w-[1100px] gap-3 text-[14.5px] text-white/85 hero-in hero-in-4 sm:grid-cols-3">
-              {[
-                '강남성심병원 외래교수 출신 · 통합치의학과 · 치과보철과 전문의',
-                '3D 구강스캐너 · 저선량 CT · 수술 가이드 · 당일 디지털 보철',
-                '무통마취기 · 에어플로우 · 수면치료 · 전원 치과위생사',
-              ].map((t) => (
-                <li key={t} className="flex items-start gap-2.5">
-                  <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full border-2 border-sun-400" />
-                  <span>{t}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div aria-hidden className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/60">
-            <span className="scroll-hint block text-[11px] tracking-[0.3em]">SCROLL</span>
-          </div>
-        </section>
+        <HomeHero />
 
         <Marquee items={['디지털 임플란트', '내비게이션 임플란트', '풀아치 임플란트', '턱관절 치료', 'MTA 신경치료', '무통마취', '에어플로우 스케일링', '수면치료', '심미보철', '치아미백', '보험 틀니 · 임플란트', '매복사랑니']} />
 

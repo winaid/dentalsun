@@ -474,5 +474,13 @@
  "ai/about-philosophy": {
   "w": 1200,
   "h": 800
+ },
+ "ai/hero-wide-2": {
+  "w": 1920,
+  "h": 1080
+ },
+ "ai/hero-wide-1": {
+  "w": 1920,
+  "h": 1080
  }
 }
