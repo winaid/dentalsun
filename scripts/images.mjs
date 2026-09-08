@@ -10,8 +10,8 @@ const JOB = 'C:/Users/FORYOUCOM/Desktop/dental-builder/jobs/09cb870aa8fd/img';
 const OUT = 'public/img';
 const CROPS = {
   // 의료진
-  'doctors/yang': ['dental_intro02.png', [0.02, 0.0, 0.5, 1.0], 1200, [4, 5]],
-  'doctors/hong': ['dental_intro03.png', [0.17, 0.09, 0.49, 0.98], 1200, [4, 5]],
+  'doctors/yang': ['dental_intro02.png', [0.0, 0.0, 0.5, 1.0], 1200, [4, 5], true],
+  'doctors/hong': ['dental_intro03.png', [0.1, 0.02, 0.55, 1.0], 1200, [4, 5], true],
   // 진료 장면 (사진)
   'scene/surgery': ['jaw-join-treatment01_new.png', [0.56, 0.0, 1.0, 1.0], 1600],
   'scene/loupe': ['main01.png', [0.5, 0.0, 1.0, 1.0], 1400],
@@ -83,7 +83,7 @@ const FULL = {
   'notice/2026-09': '8_test.png',
 };
 const sizes = {};
-async function crop(key, file, box, maxW, ratio) {
+async function crop(key, file, box, maxW, ratio, trim) {
   const src = path.join(JOB, file);
   const meta = await sharp(src).metadata();
   const [x0, y0, x1, y1] = box;
@@ -91,13 +91,15 @@ async function crop(key, file, box, maxW, ratio) {
   const width = Math.min(Math.round(meta.width * (x1 - x0)), meta.width - left), height = Math.min(Math.round(meta.height * (y1 - y0)), meta.height - top);
   const out = path.join(OUT, key + '.webp');
   fs.mkdirSync(path.dirname(out), { recursive: true });
-  const pipe = sharp(src).extract({ left, top, width, height });
+  /* trim: 배너 속 사진 둘레의 흰 여백을 잘라낸다(의료진 사진). extract 뒤 새 인스턴스에서 해야 영역 오류가 없다. */
+  const region = trim ? await sharp(await sharp(src).extract({ left, top, width, height }).png().toBuffer()).trim({ threshold: 24 }).png().toBuffer() : null;
+  const pipe = region ? sharp(region) : sharp(src).extract({ left, top, width, height });
   const info = ratio
     ? await pipe.resize({ width: Math.min(maxW, width), height: Math.round((Math.min(maxW, width) * ratio[1]) / ratio[0]), fit: 'cover', position: 'top' }).webp({ quality: 82 }).toFile(out)
     : await pipe.resize({ width: Math.min(maxW, width), withoutEnlargement: true }).webp({ quality: 82 }).toFile(out);
   sizes[key] = { w: info.width, h: info.height };
 }
-for (const [key, [file, box, maxW, ratio]] of Object.entries(CROPS)) { try { await crop(key, file, box, maxW, ratio); } catch (e) { console.error('FAIL', key, file, e.message); } }
+for (const [key, [file, box, maxW, ratio, trim]] of Object.entries(CROPS)) { try { await crop(key, file, box, maxW, ratio, trim); } catch (e) { console.error('FAIL', key, file, e.message); } }
 for (const [key, file] of Object.entries(FULL)) {
   const out = path.join(OUT, key + '.webp');
   fs.mkdirSync(path.dirname(out), { recursive: true });
