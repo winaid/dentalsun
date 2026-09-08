@@ -42,4 +42,4 @@ npm run build      # 배포 전 반드시 통과시킬 것 (개발 서버는 끄
 
 ## 배포
 
-GitHub `winaid/dentalsun` → Vercel 자동 배포. 커스텀 도메인을 붙이면 Vercel 환경변수 `SITE_URL` 을 그 주소로 바꾸고 재배포합니다(canonical·OG·sitemap 이 그 값을 씁니다).
+GitHub `winaid/dentalsun` → Vercel 자동 배포 (프로덕션 https://dentalsun-cyan.vercel.app). 커스텀 도메인을 붙이면 Vercel 환경변수 `SITE_URL` 을 그 주소로 바꾸고 재배포합니다(canonical·OG·sitemap 이 그 값을 씁니다).
