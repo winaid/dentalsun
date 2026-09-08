@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { SiteHeader } from '@/components/SiteHeader';
 import { JsonLd } from '@/components/JsonLd';
-import { Breadcrumb, ContactBand, Figure, MedicalNotice } from '@/components/ui';
+import { Breadcrumb, ContactBand, Figure, MedicalNotice , Sentences } from '@/components/ui';
 import type { Fig } from '@/lib/docs';
 import { alt, articleSchema, breadcrumbSchema, medicalWebPageSchema, og } from '@/lib/seo';
 
@@ -33,7 +33,7 @@ export default function EquipmentPage() {
     <>
       <SiteHeader />
       <JsonLd data={[breadcrumbSchema(trail), medicalWebPageSchema({ title: TITLE, description: DESC, path: '/about/equipment' }), articleSchema({ path: '/about/equipment', title: TITLE, description: DESC, keywords: ['디지털치과', '3D 구강스캐너', '3D CT', '수술 가이드', '캐드캠', 'INOS 소독기', '무통마취기', '에어플로우'] })]} />
-      <main id="main" className="pt-[72px] md:pt-[84px]">
+      <main id="main" className="pt-[72px] md:pt-[88px]">
         <section className="section bg-canvas">
           <div className="wrap">
             <Breadcrumb trail={trail} />
@@ -43,7 +43,7 @@ export default function EquipmentPage() {
               <br />
               <span className="accent">3D 디지털치과</span>
             </h1>
-            <p className="lead mt-5 max-w-[720px]">진단부터 치료까지 치과 진료에 디지털을 더해 보다 빠르고 정확한 진료를 약속 드립니다. 아래는 광화문선치과가 실제로 갖추고 있는 장비와 시스템입니다.</p>
+            <p className="lead mt-5 max-w-[720px]"><Sentences text="진단부터 치료까지 치과 진료에 디지털을 더해 보다 빠르고 정확한 진료를 약속 드립니다. 아래는 광화문선치과가 실제로 갖추고 있는 장비와 시스템입니다." /></p>
           </div>
         </section>
         {ITEMS.map((it, i) => (
@@ -65,7 +65,7 @@ export default function EquipmentPage() {
                 )}
               </div>
               <div className={i % 2 ? 'lg:order-1' : ''}>
-                <Figure fig={it.fig} />
+                <Figure fig={it.fig} ratio="aspect-[4/3]" />
               </div>
             </div>
           </section>

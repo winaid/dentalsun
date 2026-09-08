@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import { SiteHeader } from '@/components/SiteHeader';
 import { JsonLd } from '@/components/JsonLd';
-import { Breadcrumb, ContactBand } from '@/components/ui';
+import { Breadcrumb, ContactBand , Sentences } from '@/components/ui';
 import { CLINIC, HOURS, MONTHLY_NOTICE } from '@/lib/clinic';
 import { alt, breadcrumbSchema, medicalWebPageSchema, og, withLocality } from '@/lib/seo';
 
@@ -18,7 +18,7 @@ export default function VisitPage() {
     <>
       <SiteHeader />
       <JsonLd data={[breadcrumbSchema(trail), medicalWebPageSchema({ title: TITLE, description: DESC, path: '/visit' })]} />
-      <main id="main" className="pt-[72px] md:pt-[84px]">
+      <main id="main" className="pt-[72px] md:pt-[88px]">
         <section className="section bg-canvas">
           <div className="wrap">
             <Breadcrumb trail={trail} />
@@ -93,7 +93,7 @@ export default function VisitPage() {
             <div className="reveal">
               <p className="eyebrow">MONTHLY SCHEDULE</p>
               <h2 className="display-sm mt-4">{MONTHLY_NOTICE.title}</h2>
-              <p className="lead mt-4">진료 일정 참고하셔서 내원 및 예약에 착오 없으시길 바랍니다.</p>
+              <p className="lead mt-4"><Sentences text="진료 일정 참고하셔서 내원 및 예약에 착오 없으시길 바랍니다." /></p>
               <ul className="mt-6 divide-y divide-hairline rounded-2xl border border-hairline bg-white">
                 {MONTHLY_NOTICE.items.map((it) => (
                   <li key={it.dates} className="flex items-center justify-between px-5 py-3.5 text-[15px]">
@@ -114,7 +114,7 @@ export default function VisitPage() {
             <div className="reveal max-w-[760px]">
               <p className="eyebrow">CONTACT</p>
               <h2 className="display-sm mt-4">상담 · 예약 창구</h2>
-              <p className="lead mt-4">기존 홈페이지의 온라인상담·온라인예약·치료후기 창구를 그대로 잇습니다.</p>
+              <p className="lead mt-4"><Sentences text="기존 홈페이지의 온라인상담·온라인예약·치료후기 창구를 그대로 잇습니다." /></p>
             </div>
             <div className="reveal-stack mt-8 grid gap-5 sm:grid-cols-3">
               <a href={CLINIC.booking.naverTalk} target="_blank" rel="noopener" className="card card-hover p-6">

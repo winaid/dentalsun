@@ -12,7 +12,7 @@ export function RevealScript() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const targets = document.querySelectorAll<HTMLElement>('.reveal, .reveal-stack, .img-in, .line-rise');
+    const targets = document.querySelectorAll<HTMLElement>('.reveal, .reveal-stack, .img-in, .line-rise, .wipe');
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduce) {
       targets.forEach((el) => el.classList.add('is-shown'));

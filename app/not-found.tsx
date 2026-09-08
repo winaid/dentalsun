@@ -5,7 +5,7 @@ export default function NotFound() {
   return (
     <>
       <SiteHeader />
-      <main id="main" className="pt-[72px] md:pt-[84px]">
+      <main id="main" className="pt-[72px] md:pt-[88px]">
         <section className="section">
           <div className="wrap text-center">
             <p className="eyebrow justify-center">404</p>

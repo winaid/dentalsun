@@ -1,25 +1,72 @@
-import Link from 'next/link';
+import Image from 'next/image';
 import { SiteHeader } from '@/components/SiteHeader';
 import { JsonLd } from '@/components/JsonLd';
-import { Breadcrumb, CardLink, ContactBand, FaqList, Figure, MedicalNotice } from '@/components/ui';
-import { docCharCount, docToc, figSize, figSrc, type Block, type Doc } from '@/lib/docs';
+import { Breadcrumb, CardLink, ContactBand, FaqList, Figure, MedicalNotice, Sentences } from '@/components/ui';
+import { docCharCount, figSize, figSrc, type Block, type Doc, type Fig } from '@/lib/docs';
 import { docByPath, docsOfHub } from '@/lib/content';
 import { articleSchema, breadcrumbSchema, faqSchema, imageObjectSchema, itemListSchema, medicalWebPageSchema } from '@/lib/seo';
 import { CLINIC } from '@/lib/clinic';
 
 /**
- * 진료 문서 렌더러 — Doc 하나를 쪽 하나로.
+ * 진료·인사이트 문서 렌더러 — Doc 하나를 쪽 하나로.
  *
- * 구조(AEO): 빵부스러기 → 윗줄 라벨 → H1 → 한 줄 답(첫 <p>, speakable) → 목차 → 본문 블록 →
+ * 구조(AEO): 빵부스러기 → 윗줄 라벨 → H1 → 한 줄 답(첫 <p>, speakable) → 본문 블록 →
  *            FAQ(화면 = 스키마) → 관련 문서 → 상담 띠 → 의료 고지.
+ * ★ 구역 사이 이동 버튼(목차)은 두지 않는다 (오너 지시). 긴 문서는 AI 정물 사진을 배경으로 깐 띠로 숨을 고른다.
  */
+
+/** 허브별 배경 사진 — 구역이 길어 비슷해 보일 때 배경으로 깐다. */
+const HUB_BG: Record<string, string> = {
+  '/treatment/implant': 'ai/implant-hub',
+  '/treatment/tmj': 'ai/tmj-hub',
+  '/treatment/aesthetic': 'ai/aesthetic-hub',
+  '/treatment/insurance': 'ai/insurance-hub',
+  '/treatment/wisdom-tooth': 'ai/wisdom',
+  '/treatment/natural-tooth': 'ai/natural-hub',
+  '/treatment/painless': 'ai/painless-hub',
+  '/insight': 'ai/insight-hub',
+};
+/** 문서 경로별 대표 AI 사진 — 원본 사진이 없거나 반복될 때 hero 로 쓴다. */
+const DOC_AI: Record<string, string> = {
+  '/treatment/implant': 'ai/implant-hub',
+  '/treatment/implant/navigation': 'ai/implant-navigation',
+  '/treatment/implant/full-arch': 'ai/implant-fullarch',
+  '/treatment/implant/uv': 'ai/implant-uv',
+  '/treatment/implant/prf': 'ai/implant-prf',
+  '/treatment/implant/custom': 'ai/implant-custom',
+  '/treatment/implant/warranty': 'ai/implant-warranty',
+  '/treatment/tmj': 'ai/tmj-hub',
+  '/treatment/tmj/symptoms': 'ai/tmj-symptoms',
+  '/treatment/tmj/treatments': 'ai/tmj-treatments',
+  '/treatment/aesthetic': 'ai/aesthetic-hub',
+  '/treatment/aesthetic/prosthetics': 'ai/aesthetic-prosthetics',
+  '/treatment/aesthetic/whitening': 'ai/aesthetic-whitening',
+  '/treatment/insurance': 'ai/insurance-hub',
+  '/treatment/insurance/denture': 'ai/insurance-denture',
+  '/treatment/insurance/implant': 'ai/insurance-implant',
+  '/treatment/wisdom-tooth': 'ai/wisdom',
+  '/treatment/natural-tooth': 'ai/natural-hub',
+  '/treatment/natural-tooth/mta': 'ai/natural-mta',
+  '/treatment/natural-tooth/endosonic': 'ai/natural-endosonic',
+  '/treatment/painless': 'ai/painless-hub',
+  '/treatment/painless/anesthesia': 'ai/painless-anesthesia',
+  '/treatment/painless/sedation': 'ai/painless-sedation',
+  '/treatment/painless/airflow': 'ai/painless-airflow',
+  '/insight': 'ai/insight-hub',
+};
+
 export function DocPage({ doc }: { doc: Doc }) {
-  const trail = [{ name: '진료 안내', path: '/treatment' }, { name: doc.hubLabel, path: doc.hub }];
+  const isInsight = doc.path.startsWith('/insight');
+  const trail = isInsight ? [{ name: '인사이트', path: '/insight' }] : [{ name: '진료 안내', path: '/treatment' }, { name: doc.hubLabel, path: doc.hub }];
   if (doc.path !== doc.hub) trail.push({ name: doc.title, path: doc.path });
-  const toc = docToc(doc);
   const children = doc.isHub ? docsOfHub(doc.path) : [];
   const related = (doc.related ?? []).map(docByPath).filter(Boolean) as Doc[];
-  const heroSize = doc.hero ? figSize(doc.hero.key) : null;
+  /* 대표 사진 — 쪽마다 다른 AI 정물을 우선 쓴다(원본 사진 24장이 서른 쪽에 반복되지 않게). 인사이트처럼 매핑이 없으면 문서가 지정한 사진. */
+  const heroKey = DOC_AI[doc.path] ?? doc.hero?.key;
+  const hero: Fig | undefined = heroKey ? { key: heroKey, alt: doc.hero?.alt ?? doc.title } : undefined;
+  const heroSize = hero ? figSize(hero.key) : null;
+  const bandBg = HUB_BG[doc.hub] ?? 'ai/hero-clinic';
+  const shortSummary = (s: string) => s.split(/(?<=다\.)\s/)[0];
 
   const schema: unknown[] = [
     breadcrumbSchema(trail),
@@ -28,14 +75,17 @@ export function DocPage({ doc }: { doc: Doc }) {
       description: doc.description,
       path: doc.path,
       about: doc.procedure ? { type: 'MedicalProcedure', name: doc.procedure } : undefined,
-      image: doc.hero && heroSize ? { src: figSrc(doc.hero.key), caption: doc.hero.alt, width: heroSize.w, height: heroSize.h } : undefined,
+      image: hero && heroSize ? { src: figSrc(hero.key), caption: hero.alt, width: heroSize.w, height: heroSize.h } : undefined,
       related: [...(doc.related ?? []), ...children.map((c) => c.path)],
     }),
   ];
-  if (doc.hero && heroSize) schema.push(imageObjectSchema({ path: doc.path, src: figSrc(doc.hero.key), caption: doc.hero.alt, width: heroSize.w, height: heroSize.h }));
-  if (!doc.isHub) schema.push(articleSchema({ path: doc.path, title: doc.title, description: doc.description, wordCount: docCharCount(doc), hasImage: !!doc.hero, keywords: doc.keywords }));
+  if (hero && heroSize) schema.push(imageObjectSchema({ path: doc.path, src: figSrc(hero.key), caption: hero.alt, width: heroSize.w, height: heroSize.h }));
+  if (!doc.isHub) schema.push(articleSchema({ path: doc.path, title: doc.title, description: doc.description, wordCount: docCharCount(doc), hasImage: !!hero, keywords: doc.keywords }));
   if (doc.isHub && children.length) schema.push(itemListSchema(doc.path, children.map((c) => ({ name: c.title, path: c.path })), `${doc.title} 세부 안내`));
   if (doc.faq?.length) schema.push(faqSchema(doc.faq, doc.path));
+
+  /* 긴 문서: 세 번째 블록마다 배경 띠로 바꿔 구역이 비슷해 보이지 않게 한다. */
+  let bandCount = 0;
 
   return (
     <>
@@ -43,57 +93,40 @@ export function DocPage({ doc }: { doc: Doc }) {
       <JsonLd data={schema} />
       <main id="main">
         {/* 첫 화면 — 어두운 바탕, 왼쪽 글 / 오른쪽 사진 */}
-        <section className="relative overflow-hidden bg-night pt-[104px] pb-14 text-white md:pt-[136px] md:pb-20">
-          <div aria-hidden className="pointer-events-none absolute -top-40 -right-40 h-[560px] w-[560px] rounded-full bg-sun-500/15 blur-3xl" />
-          <div aria-hidden className="pointer-events-none absolute -bottom-52 left-1/4 h-[520px] w-[520px] rounded-full bg-brand-500/25 blur-3xl" />
-          <div className="wrap relative grid items-center gap-10 lg:grid-cols-[1.1fr_1fr]">
+        <section className="relative isolate overflow-hidden bg-night pt-[104px] pb-16 text-white md:pt-[150px] md:pb-24">
+          <div aria-hidden className="orb pointer-events-none absolute -top-40 -right-40 h-[600px] w-[600px] rounded-full bg-sun-500/15 blur-3xl" />
+          <div aria-hidden className="orb orb-2 pointer-events-none absolute -bottom-52 left-1/4 h-[560px] w-[560px] rounded-full bg-brand-500/25 blur-3xl" />
+          <div className="wrap relative grid items-center gap-10 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
             <div>
               <Breadcrumb trail={trail} dark />
-              <p className="eyebrow on-dark mt-6 hero-in">{doc.eyebrow}</p>
+              <p className="eyebrow on-dark mt-7 hero-in">{doc.eyebrow}</p>
               <h1 className="display mt-4 !text-white hero-in hero-in-2">{doc.title}</h1>
-              <p className="mt-6 max-w-[640px] text-[1.05rem] leading-[1.8] text-white/80 hero-in hero-in-3 md:text-[1.12rem]">{doc.summary}</p>
-              <div className="mt-8 flex flex-wrap gap-3 hero-in hero-in-4">
+              <p className="mt-6 max-w-[680px] text-[1.05rem] leading-[1.85] text-white/80 hero-in hero-in-3 md:text-[1.15rem]">
+                <Sentences text={doc.summary} />
+              </p>
+              <div className="mt-9 flex flex-wrap gap-3 hero-in hero-in-4">
                 <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="btn-sun">네이버 예약</a>
                 <a href={CLINIC.phoneHref} className="btn-ghost-dark">전화 {CLINIC.phone}</a>
               </div>
             </div>
-            {doc.hero && (
+            {hero && (
               <div className="hero-in hero-in-3">
-                <Figure fig={doc.hero} priority sizes="(max-width: 1024px) 100vw, 45vw" rounded="rounded-3xl" className="[&_figcaption]:text-white/50" />
+                <Figure fig={hero} priority ratio="aspect-[4/3]" sizes="(max-width: 1024px) 100vw, 45vw" rounded="rounded-3xl" effect="none" caption={false} />
               </div>
             )}
           </div>
         </section>
 
-        {/* 목차 — 항목 3개 이상일 때만 */}
-        {toc.length >= 3 && (
-          <div className="border-b border-hairline bg-white">
-            <div className="wrap">
-              <nav aria-label="이 문서의 차례" className="hscroll !pb-0">
-                {toc.map((t) => (
-                  <a key={t.id} href={`#${t.id}`} className="border-b-2 border-transparent py-4 text-[14px] font-bold whitespace-nowrap text-ink-soft hover:border-sun-500 hover:text-ink">
-                    {t.label}
-                  </a>
-                ))}
-              </nav>
-            </div>
-          </div>
-        )}
-
-        {/* 허브: 하위 문서 카드 */}
+        {/* 허브: 하위 문서 카드 (같은 높이·같은 사진 비율) */}
         {doc.isHub && children.length > 0 && (
           <section className="section bg-canvas">
             <div className="wrap">
-              <p className="eyebrow">MENU</p>
-              <h2 className="display-sm mt-4">{doc.title} 세부 안내</h2>
-              <ol className="reveal-stack mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              <p className="eyebrow reveal">MENU</p>
+              <h2 className="display-sm reveal mt-4">{doc.title} 세부 안내</h2>
+              <ol className="reveal-stack grid-cards mt-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {children.map((c, i) => (
                   <li key={c.path}>
-                    <Link href={c.path} className="card card-hover group block h-full p-6">
-                      <span className="num">{String(i + 1).padStart(2, '0')}</span>
-                      <span className="mt-4 block text-[1.1rem] font-bold text-ink group-hover:text-brand-700">{c.title}</span>
-                      <span className="mt-2 block text-[14px] leading-relaxed text-ink-soft">{c.summary.split(/(?<=다\.)\s/)[0]}</span>
-                    </Link>
+                    <CardLink href={c.path} label={c.title} desc={shortSummary(c.summary)} num={String(i + 1).padStart(2, '0')} fig={{ key: DOC_AI[c.path] ?? c.hero?.key ?? bandBg, alt: c.title }} />
                   </li>
                 ))}
               </ol>
@@ -101,9 +134,11 @@ export function DocPage({ doc }: { doc: Doc }) {
           </section>
         )}
 
-        {doc.blocks.map((b, i) => (
-          <BlockView key={i} block={b} index={i} />
-        ))}
+        {doc.blocks.map((b, i) => {
+          const band = !doc.isHub && (b.type === 'points' || b.type === 'steps') && i > 0 && i % 3 === 2 && bandCount < 2;
+          if (band) bandCount++;
+          return <BlockView key={i} block={b} index={i} band={band ? bandBg : undefined} />;
+        })}
 
         {doc.faq && doc.faq.length > 0 && (
           <section className="section bg-canvas" id="faq-section">
@@ -115,7 +150,9 @@ export function DocPage({ doc }: { doc: Doc }) {
                   <br />
                   <span className="accent">자주 묻는 질문</span>
                 </h2>
-                <p className="lead mt-4">환자분들이 자주 물어보시는 내용을 정리했습니다. 더 궁금한 점은 톡톡이나 전화로 문의해 주세요.</p>
+                <p className="lead mt-4">
+                  <Sentences text="환자분들이 자주 물어보시는 내용을 정리했습니다. 더 궁금한 점은 톡톡이나 전화로 문의해 주세요." />
+                </p>
               </div>
               <div className="reveal">
                 <FaqList items={doc.faq} />
@@ -127,20 +164,19 @@ export function DocPage({ doc }: { doc: Doc }) {
         {(related.length > 0 || doc.path !== doc.hub) && (
           <section className="section">
             <div className="wrap">
-              <p className="eyebrow">RELATED</p>
-              <h2 className="display-sm mt-4">함께 보면 좋은 안내</h2>
-              <div className="reveal-stack mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                {doc.path !== doc.hub && <CardLink href={doc.hub} label={`${doc.hubLabel} 전체 안내`} desc="이 갈래의 모든 진료를 한눈에 봅니다." />}
-                {related.map((r) => (
-                  <CardLink key={r.path} href={r.path} label={r.title} desc={r.summary.split(/(?<=다\.)\s/)[0]} />
+              <p className="eyebrow reveal">RELATED</p>
+              <h2 className="display-sm reveal mt-4">함께 보면 좋은 안내</h2>
+              <div className="reveal-stack grid-cards mt-10 sm:grid-cols-2 lg:grid-cols-4">
+                {doc.path !== doc.hub && <CardLink href={doc.hub} label={`${isInsight ? '인사이트' : doc.hubLabel} 전체 안내`} desc="이 갈래의 모든 문서를 한눈에 봅니다." fig={{ key: bandBg, alt: doc.hubLabel }} />}
+                {related.slice(0, 3).map((r) => (
+                  <CardLink key={r.path} href={r.path} label={r.title} desc={shortSummary(r.summary)} fig={{ key: DOC_AI[r.path] ?? r.hero?.key ?? 'ai/faq', alt: r.title }} />
                 ))}
-                <CardLink href="/faq" label="자주 묻는 질문" desc="진료시간·주차·비용·보험 등 전체 문답" />
               </div>
             </div>
           </section>
         )}
 
-        <ContactBand />
+        <ContactBand bg={bandBg} />
         <div className="py-8">
           <MedicalNotice />
         </div>
@@ -149,34 +185,50 @@ export function DocPage({ doc }: { doc: Doc }) {
   );
 }
 
-function BlockView({ block: b, index }: { block: Block; index: number }) {
+function BlockView({ block: b, index, band }: { block: Block; index: number; band?: string }) {
   const id = ('id' in b && b.id) || `sec-${index + 1}`;
   const alt = index % 2 === 1;
-  const wrapCls = `section ${alt ? 'bg-canvas' : 'bg-white'}`;
-  const Head = ({ title, lead, center = false }: { title?: string; lead?: string; center?: boolean }) =>
-    title ? (
-      <div className={`reveal max-w-[760px] ${center ? 'mx-auto text-center' : ''}`}>
-        <h2 className="display-sm">{title}</h2>
-        {lead && <p className="lead mt-4">{lead}</p>}
+  const wrapCls = band ? 'relative isolate overflow-hidden bg-night text-white section' : `section ${alt ? 'bg-canvas' : 'bg-white'}`;
+  const Bg = () =>
+    band ? (
+      <div className="absolute inset-0 -z-10">
+        <Image src={figSrc(band)} alt="" fill sizes="100vw" className="object-cover opacity-25" />
+        <div className="absolute inset-0 bg-gradient-to-b from-night/90 via-night/80 to-night/95" />
       </div>
     ) : null;
+  const Head = ({ title, lead }: { title?: string; lead?: string }) =>
+    title ? (
+      <div className="reveal max-w-[820px]">
+        <h2 className={`display-sm ${band ? '!text-white' : ''}`}>{title}</h2>
+        {lead && (
+          <p className={`lead mt-4 ${band ? '!text-white/75' : ''}`}>
+            <Sentences text={lead} />
+          </p>
+        )}
+      </div>
+    ) : null;
+  const cardCls = band ? 'flex h-full flex-col rounded-2xl border border-white/12 bg-white/8 p-6 backdrop-blur-sm' : 'card flex h-full flex-col p-6';
+  const titleCls = band ? 'text-[1.05rem] font-bold text-white' : 'text-[1.05rem] font-bold text-ink';
+  const descCls = band ? 'mt-2 text-[14.5px] leading-relaxed text-white/75' : 'mt-2 text-[14.5px] leading-relaxed text-ink-soft';
 
   switch (b.type) {
     case 'text':
       return (
         <section id={id} className={wrapCls}>
-          <div className={`wrap grid items-center gap-10 ${b.figure ? 'lg:grid-cols-2' : ''}`}>
-            <div className={`reveal ${b.figure && b.figureSide === 'left' ? 'lg:order-2' : ''}`}>
+          <div className={`wrap grid items-center gap-10 lg:gap-16 ${b.figure ? 'lg:grid-cols-2' : ''}`}>
+            <div className={`reveal ${b.figure && b.figureSide === 'left' ? 'lg:order-2' : ''} ${b.figure ? '' : 'max-w-[900px]'}`}>
               {b.title && <h2 className="display-sm">{b.title}</h2>}
               <div className={`prose-ko ${b.title ? 'mt-6' : ''}`}>
                 {b.paragraphs.map((p, i) => (
-                  <p key={i}>{p}</p>
+                  <p key={i}>
+                    <Sentences text={p} />
+                  </p>
                 ))}
               </div>
             </div>
             {b.figure && (
               <div className={b.figureSide === 'left' ? 'lg:order-1' : ''}>
-                <Figure fig={b.figure} />
+                <Figure fig={b.figure} ratio="aspect-[4/3]" />
               </div>
             )}
           </div>
@@ -187,16 +239,21 @@ function BlockView({ block: b, index }: { block: Block; index: number }) {
       const colCls = cols === 4 ? 'sm:grid-cols-2 lg:grid-cols-4' : cols === 3 ? 'sm:grid-cols-2 lg:grid-cols-3' : 'sm:grid-cols-2';
       return (
         <section id={id} className={wrapCls}>
+          <Bg />
           <div className="wrap">
             <Head title={b.title} lead={b.lead} />
             <div className={`mt-10 grid gap-10 ${b.figure ? 'lg:grid-cols-[1fr_1.4fr] lg:items-start' : ''}`}>
-              {b.figure && <Figure fig={b.figure} />}
-              <ul className={`reveal-stack grid gap-4 ${b.figure ? 'sm:grid-cols-2' : colCls}`}>
+              {b.figure && <Figure fig={b.figure} ratio="aspect-[4/3]" />}
+              <ul className={`reveal-stack grid-cards ${b.figure ? 'sm:grid-cols-2' : colCls}`}>
                 {b.items.map((it, i) => (
-                  <li key={i} className="card p-6">
-                    {b.numbered !== false && <span className="num">{String(i + 1).padStart(2, '0')}</span>}
-                    <p className={`text-[1.05rem] font-bold text-ink ${b.numbered !== false ? 'mt-3' : ''}`}>{it.title}</p>
-                    {it.desc && <p className="mt-2 text-[14.5px] leading-relaxed text-ink-soft">{it.desc}</p>}
+                  <li key={i} className={cardCls}>
+                    {b.numbered !== false && <span className={`num ${band ? '!text-sun-300' : ''}`}>{String(i + 1).padStart(2, '0')}</span>}
+                    <p className={`${titleCls} ${b.numbered !== false ? 'mt-3' : ''}`}>{it.title}</p>
+                    {it.desc && (
+                      <p className={descCls}>
+                        <Sentences text={it.desc} clauses={false} />
+                      </p>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -205,24 +262,35 @@ function BlockView({ block: b, index }: { block: Block; index: number }) {
         </section>
       );
     }
-    case 'steps':
+    case 'steps': {
+      const withFig = b.steps.some((s) => s.figure);
       return (
         <section id={id} className={wrapCls}>
+          <Bg />
           <div className="wrap">
             <Head title={b.title} lead={b.lead} />
-            <ol className="reveal-stack mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            <ol className={`reveal-stack grid-cards mt-10 sm:grid-cols-2 ${b.steps.length >= 5 ? 'lg:grid-cols-3 xl:grid-cols-5' : b.steps.length === 4 ? 'lg:grid-cols-4' : 'lg:grid-cols-3'}`}>
               {b.steps.map((s, i) => (
-                <li key={i} className="card relative overflow-hidden p-6">
-                  {s.figure && <Figure fig={s.figure} className="-mx-6 -mt-6 mb-5" rounded="rounded-none" sizes="(max-width: 640px) 100vw, 25vw" />}
-                  <span className="pill-sun">STEP {String(i + 1).padStart(2, '0')}</span>
-                  <p className="mt-3 text-[1.05rem] font-bold text-ink">{s.title}</p>
-                  {s.desc && <p className="mt-2 text-[14.5px] leading-relaxed text-ink-soft">{s.desc}</p>}
+                <li key={i} className={`${cardCls} overflow-hidden`}>
+                  {withFig && (
+                    <span className="card-img -mx-6 -mt-6 mb-5 !w-auto">
+                      <Image src={figSrc(s.figure?.key ?? band ?? 'ai/insight-journey')} alt={s.figure?.alt ?? ''} fill sizes="(max-width: 640px) 100vw, 25vw" className="object-cover" />
+                    </span>
+                  )}
+                  <span className="pill-sun self-start">STEP {String(i + 1).padStart(2, '0')}</span>
+                  <p className={`${titleCls} mt-3`}>{s.title}</p>
+                  {s.desc && (
+                    <p className={descCls}>
+                      <Sentences text={s.desc} clauses={false} />
+                    </p>
+                  )}
                 </li>
               ))}
             </ol>
           </div>
         </section>
       );
+    }
     case 'compare': {
       const hl = b.highlight ?? 'b';
       return (
@@ -291,7 +359,7 @@ function BlockView({ block: b, index }: { block: Block; index: number }) {
             <Head title={b.title} lead={b.lead} />
             <div className={`reveal-stack mt-10 grid gap-5 ${cols === 4 ? 'grid-cols-2 lg:grid-cols-4' : cols === 2 ? 'sm:grid-cols-2' : 'grid-cols-2 lg:grid-cols-3'}`}>
               {b.figures.map((f, i) => (
-                <Figure key={i} fig={f} sizes="(max-width: 640px) 50vw, 33vw" />
+                <Figure key={i} fig={f} ratio="aspect-[4/3]" sizes="(max-width: 640px) 50vw, 33vw" effect="img-in" />
               ))}
             </div>
           </div>
@@ -303,8 +371,8 @@ function BlockView({ block: b, index }: { block: Block; index: number }) {
         <section id={id} className={wrapCls}>
           <div className="wrap">
             <Head title={b.title} lead={b.lead} />
-            <div className="reveal mt-10 max-w-[960px]">
-              <Figure fig={b.figure} sizes="(max-width: 1024px) 100vw, 960px" />
+            <div className="reveal mt-10 max-w-[1000px]">
+              <Figure fig={b.figure} sizes="(max-width: 1024px) 100vw, 1000px" />
               <p className="mt-4 rounded-xl bg-sun-50 px-5 py-3.5 text-[13.5px] leading-relaxed text-sun-700">{b.note}</p>
             </div>
           </div>
@@ -312,9 +380,12 @@ function BlockView({ block: b, index }: { block: Block; index: number }) {
       );
     case 'quote':
       return (
-        <section className="bg-brand-900 py-14 text-white">
+        <section className="relative isolate overflow-hidden bg-brand-900 py-20 text-white">
+          <div className="absolute inset-0 -z-10">
+            <Image src={figSrc('ai/about-philosophy')} alt="" fill sizes="100vw" className="object-cover opacity-20" />
+          </div>
           <div className="wrap reveal text-center">
-            <p className="mx-auto max-w-[820px] text-[1.3rem] leading-[1.6] font-bold md:text-[1.7rem]">“{b.text}”</p>
+            <p className="mx-auto max-w-[900px] text-[1.3rem] leading-[1.6] font-bold md:text-[1.8rem]">“{b.text}”</p>
             {b.by && <p className="mt-4 text-white/60">— {b.by}</p>}
           </div>
         </section>
@@ -324,7 +395,7 @@ function BlockView({ block: b, index }: { block: Block; index: number }) {
         <section id={id} className={wrapCls}>
           <div className="wrap">
             <Head title={b.title} lead={b.lead} />
-            <div className="reveal-stack mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="reveal-stack grid-cards mt-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {b.items.map((it) => (
                 <CardLink key={it.href} href={it.href} label={it.label} desc={it.desc} external={it.href.startsWith('http')} />
               ))}
@@ -340,7 +411,9 @@ function BlockView({ block: b, index }: { block: Block; index: number }) {
               {b.title && <p className="text-[1.05rem] font-bold text-sun-700">{b.title}</p>}
               <div className="prose-ko mt-3 [&_p]:!text-ink-soft">
                 {b.paragraphs.map((p, i) => (
-                  <p key={i}>{p}</p>
+                  <p key={i}>
+                    <Sentences text={p} />
+                  </p>
                 ))}
               </div>
             </div>

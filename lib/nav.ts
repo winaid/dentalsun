@@ -94,6 +94,16 @@ export const NAV: NavItem[] = [
     ],
   },
   {
+    label: '인사이트',
+    href: '/insight',
+    children: [
+      { label: '증상별 안내', href: '/insight#symptoms', desc: '턱 소리 · 시린 이 · 잇몸 출혈 · 사랑니 통증 …' },
+      { label: '치료 가이드', href: '/insight#guides', desc: '임플란트 과정 · 비용 요인 · 건강보험 · 턱관절 순서' },
+      { label: '치과 용어 풀이', href: '/insight/guide/glossary', desc: '픽스처 · 골유착 · 스플린트 · MTA …' },
+      { label: '치과가 무서운 분들께', href: '/insight/guide/dental-anxiety', desc: '무통마취 · 수면치료 · 첫 방문 준비' },
+    ],
+  },
+  {
     label: '상담 및 후기',
     href: '/visit#contact',
     children: [

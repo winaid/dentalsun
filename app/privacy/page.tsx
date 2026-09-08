@@ -15,7 +15,7 @@ export default function PrivacyPage() {
   return (
     <>
       <SiteHeader />
-      <main id="main" className="pt-[72px] md:pt-[84px]">
+      <main id="main" className="pt-[72px] md:pt-[88px]">
         <section className="section">
           <div className="wrap max-w-[860px]">
             <Breadcrumb trail={[{ name: '개인정보처리방침', path: '/privacy' }]} />

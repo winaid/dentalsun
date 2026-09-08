@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { SiteHeader } from '@/components/SiteHeader';
 import { JsonLd } from '@/components/JsonLd';
-import { Breadcrumb, ContactBand, Figure } from '@/components/ui';
+import { Breadcrumb, ContactBand, Figure , Sentences } from '@/components/ui';
 import { CLINIC, HYGIENE, STRENGTHS } from '@/lib/clinic';
 import { DOCTORS } from '@/lib/doctors';
 import { alt, breadcrumbSchema, medicalWebPageSchema, og, physicianSchema } from '@/lib/seo';
@@ -15,16 +15,16 @@ export const metadata: Metadata = { title: TITLE, description: DESC, alternates:
 
 /** 둘러보기 — 기존 홈페이지 '둘러보기' 사진 10장 그대로. 설명은 사진에 보이는 것만. */
 const TOUR = [
-  { key: 'place/place01', alt: '광화문선치과 진료실 복도', caption: '진료실 복도' },
-  { key: 'place/place02', alt: '광화문선치과 개별 진료실', caption: '진료실' },
-  { key: 'place/place03', alt: '광화문선치과 진료실과 간판', caption: '진료실' },
-  { key: 'place/place04', alt: '광화문선치과 진료실 유닛체어', caption: '진료실' },
-  { key: 'place/place05', alt: '수술실 표지', caption: '수술실' },
-  { key: 'place/place06', alt: '광화문선치과 수술실 내부', caption: '수술실' },
-  { key: 'place/place07', alt: '인증패·상장 진열장', caption: '인증패 진열장' },
-  { key: 'place/place08', alt: '3D CT 촬영실', caption: '3D CT 촬영실' },
-  { key: 'place/place09', alt: '광화문선치과 대기실', caption: '대기실' },
-  { key: 'place/place10', alt: '대기실의 2019 대한민국 메디컬 헬스케어 치과부문 대상 현판', caption: '대기실' },
+  { key: 'place/place01', alt: '광화문선치과 진료실 복도' },
+  { key: 'place/place02', alt: '광화문선치과 개별 진료실' },
+  { key: 'place/place03', alt: '광화문선치과 진료실과 간판' },
+  { key: 'place/place04', alt: '광화문선치과 진료실 유닛체어' },
+  { key: 'place/place05', alt: '수술실 표지' },
+  { key: 'place/place06', alt: '광화문선치과 수술실 내부' },
+  { key: 'place/place07', alt: '인증패·상장 진열장' },
+  { key: 'place/place08', alt: '3D CT 촬영실' },
+  { key: 'place/place09', alt: '광화문선치과 대기실' },
+  { key: 'place/place10', alt: '대기실의 2019 대한민국 메디컬 헬스케어 치과부문 대상 현판' },
 ];
 
 const POINTS = [
@@ -68,9 +68,9 @@ export default function AboutPage() {
                 치과치료, <span className="accent">광화문선치과</span>는 다릅니다
               </h2>
             </div>
-            <ul className="reveal-stack mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            <ul className="reveal-stack grid-cards mt-10 sm:grid-cols-2 lg:grid-cols-4">
               {STRENGTHS.map((s, i) => (
-                <li key={s.title} className="card p-6">
+                <li key={s.title} className="card flex h-full flex-col p-6">
                   <span className="num">{String(i + 1).padStart(2, '0')}</span>
                   <p className="mt-4 text-[1.05rem] font-bold text-ink">{s.title}</p>
                   <p className="mt-2 text-[14px] leading-relaxed text-ink-soft">{s.desc}</p>
@@ -89,7 +89,7 @@ export default function AboutPage() {
                 <br />
                 <span className="accent">전문의 진료</span>
               </h2>
-              <p className="lead mt-4">“다년간의 임상경험으로 믿을 수 있는 진료! 환자분이 이해하기 쉬운 친절한 설명”</p>
+              <p className="lead mt-4"><Sentences text="“다년간의 임상경험으로 믿을 수 있는 진료! 환자분이 이해하기 쉬운 친절한 설명”" /></p>
               <ul className="mt-6 space-y-3">
                 {DOCTORS.map((d) => (
                   <li key={d.slug} className="flex items-center gap-4 rounded-2xl bg-white p-4">
@@ -105,7 +105,7 @@ export default function AboutPage() {
               </ul>
               <Link href="/about/doctors" className="btn-brand mt-8">의료진 소개 자세히</Link>
             </div>
-            <Figure fig={{ key: 'scene/loupe', alt: '확대경을 착용하고 진료하는 광화문선치과 원장' }} />
+            <Figure fig={{ key: 'scene/loupe', alt: '확대경을 착용하고 진료하는 광화문선치과 원장' }} ratio="aspect-[4/3]" />
           </div>
         </section>
 
@@ -116,11 +116,11 @@ export default function AboutPage() {
               <h2 className="display-sm mt-4">
                 첨단 디지털 장비로 진료하는 <span className="accent">3D 디지털치과</span>
               </h2>
-              <p className="lead mt-4">진단부터 치료까지 치과 진료에 디지털을 더해 보다 빠르고 정확한 진료를 약속 드립니다.</p>
+              <p className="lead mt-4"><Sentences text="진단부터 치료까지 치과 진료에 디지털을 더해 보다 빠르고 정확한 진료를 약속 드립니다." /></p>
             </div>
-            <ol className="reveal-stack mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <ol className="reveal-stack grid-cards mt-10 sm:grid-cols-2 lg:grid-cols-3">
               {POINTS.map((p) => (
-                <li key={p.n} className="card p-6">
+                <li key={p.n} className="card flex h-full flex-col p-6">
                   <span className="pill-sun">Point {p.n}</span>
                   <p className="mt-3 text-[1.05rem] font-bold text-ink">{p.title}</p>
                   <p className="mt-2 text-[14px] leading-relaxed text-ink-soft">{p.desc}</p>
@@ -136,15 +136,15 @@ export default function AboutPage() {
         <section className="section bg-canvas" id="hygiene">
           <div className="wrap grid items-center gap-10 lg:grid-cols-2">
             <div className="reveal grid grid-cols-2 gap-4">
-              <Figure fig={{ key: 'scene/sterile', alt: '멸균 소독한 진료 기구' }} sizes="25vw" />
-              <Figure fig={{ key: 'scene/sterile2', alt: '개별 포장된 1인 1기구' }} sizes="25vw" />
+              <Figure fig={{ key: 'scene/sterile', alt: '멸균 소독한 진료 기구' }} ratio="aspect-[4/5]" sizes="25vw" effect="img-in" />
+              <Figure fig={{ key: 'scene/sterile2', alt: '개별 포장된 1인 1기구' }} ratio="aspect-[4/5]" sizes="25vw" effect="img-in" />
             </div>
             <div className="reveal">
               <p className="eyebrow">STERILIZATION</p>
               <h2 className="display-sm mt-4">
                 철저한 위생관리 <span className="accent">멸균 소독 시스템</span>
               </h2>
-              <p className="lead mt-4">교차감염을 차단하여 환자의 안전을 최우선으로 생각합니다.</p>
+              <p className="lead mt-4"><Sentences text="교차감염을 차단하여 환자의 안전을 최우선으로 생각합니다." /></p>
               <ul className="mt-6 space-y-2.5">
                 {HYGIENE.map((h) => (
                   <li key={h} className="flex items-center gap-3 text-[15px] text-ink">
@@ -169,9 +169,9 @@ export default function AboutPage() {
               </h2>
               <p className="lead mt-4">{CLINIC.address.full} · {CLINIC.address.landmark}</p>
             </div>
-            <div className="reveal-stack mt-10 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+            <div className="reveal-stack mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
               {TOUR.map((f, i) => (
-                <Figure key={f.key} fig={f} sizes="(max-width: 768px) 50vw, 25vw" className={i === 0 ? 'col-span-2 row-span-2' : ''} />
+                <Figure key={f.key} fig={f} ratio={i === 0 ? 'aspect-[4/3] h-full' : 'aspect-[4/3]'} sizes="(max-width: 768px) 50vw, 25vw" className={i === 0 ? 'col-span-2 row-span-2' : ''} effect="img-in" caption={false} />
               ))}
             </div>
           </div>

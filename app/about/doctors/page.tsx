@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import { SiteHeader } from '@/components/SiteHeader';
 import { JsonLd } from '@/components/JsonLd';
-import { Breadcrumb, ContactBand, Figure } from '@/components/ui';
+import { Breadcrumb, ContactBand, Figure , Sentences } from '@/components/ui';
 import { DOCTORS } from '@/lib/doctors';
 import { alt, breadcrumbSchema, medicalWebPageSchema, og, physicianSchema } from '@/lib/seo';
 
@@ -25,7 +25,7 @@ export default function DoctorsPage() {
     <>
       <SiteHeader />
       <JsonLd data={[breadcrumbSchema(trail), medicalWebPageSchema({ title: TITLE, description: DESC, path: '/about/doctors' }), ...DOCTORS.map(physicianSchema)]} />
-      <main id="main" className="pt-[72px] md:pt-[84px]">
+      <main id="main" className="pt-[72px] md:pt-[88px]">
         <section className="section bg-canvas">
           <div className="wrap">
             <Breadcrumb trail={trail} />
@@ -35,7 +35,7 @@ export default function DoctorsPage() {
               <br />
               직접 진단하고 치료합니다
             </h1>
-            <p className="lead mt-5 max-w-[720px]">보건복지부 인증 통합치의학과 전문의와 치과보철과 전문의. 아래 약력은 기존 홈페이지에 밝힌 내용 그대로입니다.</p>
+            <p className="lead mt-5 max-w-[720px]"><Sentences text="보건복지부 인증 통합치의학과 전문의와 치과보철과 전문의. 아래 약력은 기존 홈페이지에 밝힌 내용 그대로입니다." /></p>
           </div>
         </section>
 
@@ -43,8 +43,8 @@ export default function DoctorsPage() {
           <section key={d.slug} id={d.slug} className={`section scroll-mt-24 ${i % 2 ? 'bg-canvas' : ''}`}>
             <div className="wrap grid items-start gap-10 lg:grid-cols-[1fr_1.3fr]">
               <div className={`reveal ${i % 2 ? 'lg:order-2' : ''}`}>
-                <div className="overflow-hidden rounded-3xl bg-canvas-2">
-                  <Image src={d.photo} alt={`${d.name} ${d.role}`} width={1200} height={1200} sizes="(max-width: 1024px) 100vw, 40vw" className="h-auto w-full object-cover" priority={i === 0} />
+                <div className="wipe relative aspect-[4/5] overflow-hidden rounded-3xl bg-canvas-2">
+                  <Image src={d.photo} alt={`${d.name} ${d.role}`} fill sizes="(max-width: 1024px) 100vw, 40vw" className="object-cover object-top" priority={i === 0} />
                 </div>
               </div>
               <div className={`reveal ${i % 2 ? 'lg:order-1' : ''}`}>
@@ -69,7 +69,7 @@ export default function DoctorsPage() {
 
         <section className="section">
           <div className="wrap grid items-center gap-10 lg:grid-cols-2">
-            <Figure fig={{ key: 'scene/consult', alt: '환자와 상담하는 광화문선치과 원장' }} />
+            <Figure fig={{ key: 'scene/consult', alt: '환자와 상담하는 광화문선치과 원장' }} ratio="aspect-[4/3]" />
             <div className="reveal">
               <p className="eyebrow">PHILOSOPHY</p>
               <h2 className="display-sm mt-4">
@@ -77,7 +77,7 @@ export default function DoctorsPage() {
                 <br />
                 <span className="accent">이해하기 쉬운 친절한 설명</span>
               </h2>
-              <p className="lead mt-4">내 치아만큼 좋은 것은 없기에 자연치아를 살릴 수 있는지 먼저 살피고, 환자분이 이해하실 수 있도록 검사 결과와 치료 방법을 설명해 드립니다.</p>
+              <p className="lead mt-4"><Sentences text="내 치아만큼 좋은 것은 없기에 자연치아를 살릴 수 있는지 먼저 살피고, 환자분이 이해하실 수 있도록 검사 결과와 치료 방법을 설명해 드립니다." /></p>
             </div>
           </div>
         </section>

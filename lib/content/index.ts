@@ -10,6 +10,7 @@ import { INSURANCE_DOCS } from './insurance';
 import { WISDOM_DOCS } from './wisdom';
 import { NATURAL_DOCS } from './natural';
 import { PAINLESS_DOCS } from './painless';
+import { INSIGHT_DOCS } from './insight';
 
 export const ALL_DOCS: Doc[] = [
   ...IMPLANT_DOCS,
@@ -19,6 +20,7 @@ export const ALL_DOCS: Doc[] = [
   ...WISDOM_DOCS,
   ...NATURAL_DOCS,
   ...PAINLESS_DOCS,
+  ...INSIGHT_DOCS,
 ];
 
 const BY_PATH = new Map(ALL_DOCS.map((d) => [d.path, d]));

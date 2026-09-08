@@ -1,11 +1,11 @@
 {
  "doctors/yang": {
   "w": 1200,
-  "h": 1259
+  "h": 1500
  },
  "doctors/hong": {
-  "w": 873,
-  "h": 1033
+  "w": 822,
+  "h": 1028
  },
  "scene/surgery": {
   "w": 845,
@@ -302,5 +302,177 @@
  "notice/2026-09": {
   "w": 1024,
   "h": 1536
+ },
+ "ai/hero-digital": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/hero-clinic": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/implant-hub": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/implant-navigation": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/implant-uv": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/implant-fullarch": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/implant-custom": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/implant-prf": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/implant-warranty": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/tmj-hub": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/tmj-symptoms": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/tmj-treatments": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/aesthetic-hub": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/aesthetic-prosthetics": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/aesthetic-whitening": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/insurance-hub": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/insurance-denture": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/insurance-implant": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/natural-hub": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/wisdom": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/natural-mta": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/natural-endosonic": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/painless-hub": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/painless-anesthesia": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/painless-sedation": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/painless-airflow": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/visit": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/faq": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/insight-hub": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/insight-sensitive": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/insight-gum": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/insight-jaw": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/insight-wisdom": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/insight-implant-care": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/insight-denture": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/insight-cost": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/insight-journey": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/insight-fear": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/insight-glossary": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/insight-crack": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/insight-endo-pain": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/insight-whitening": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/about-philosophy": {
+  "w": 1200,
+  "h": 800
  }
 }

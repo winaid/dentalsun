@@ -11,7 +11,7 @@ import { figSize, figSrc } from '@/lib/docs';
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return ALL_DOCS.map((d) => ({ slug: d.path.replace('/treatment/', '').split('/') }));
+  return ALL_DOCS.filter((d) => d.path.startsWith('/treatment/')).map((d) => ({ slug: d.path.replace('/treatment/', '').split('/') }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string[] }> }): Promise<Metadata> {

@@ -4,11 +4,13 @@ import Image from 'next/image';
 import { SiteHeader } from '@/components/SiteHeader';
 import { JsonLd } from '@/components/JsonLd';
 import { VideoFacade } from '@/components/VideoFacade';
-import { ContactBand, FaqList, Figure, MedicalNotice } from '@/components/ui';
+import { Carousel } from '@/components/Carousel';
+import { CardLink, ContactBand, FaqList, Figure, Marquee, MedicalNotice, Sentences } from '@/components/ui';
 import { CLINIC, HOURS, HYGIENE, MONTHLY_NOTICE, STRENGTHS } from '@/lib/clinic';
 import { DOCTORS } from '@/lib/doctors';
 import { TREATMENT_HUBS } from '@/lib/nav';
 import { SITE_FAQ } from '@/lib/faq';
+import { figSrc } from '@/lib/docs';
 import { faqSchema, medicalWebPageSchema, physicianSchema } from '@/lib/seo';
 
 export const metadata: Metadata = {
@@ -27,14 +29,30 @@ const HUB_ICON: Record<string, string> = {
   '/treatment/natural-tooth': 'M12 3c-4 0-6 3-5 7l2 11h2l1-6 1 6h2l2-11c1-4-1-7-5-7z',
   '/treatment/painless': 'M12 4v16m-6-8h12',
 };
+const HUB_IMG: Record<string, string> = {
+  '/treatment/implant': 'ai/implant-hub',
+  '/treatment/tmj': 'ai/tmj-hub',
+  '/treatment/aesthetic': 'ai/aesthetic-hub',
+  '/treatment/insurance': 'ai/insurance-hub',
+  '/treatment/wisdom-tooth': 'ai/wisdom',
+  '/treatment/natural-tooth': 'ai/natural-hub',
+  '/treatment/painless': 'ai/painless-hub',
+};
+
+const SLIDES = [
+  { key: 'scene/surgery', alt: '확대경을 쓰고 임플란트 수술을 하는 광화문선치과 원장' },
+  { key: 'ai/hero-clinic', alt: '밝은 디지털 치과 진료실' },
+  { key: 'ai/hero-digital', alt: '3D 구강스캐너와 스캔 화면' },
+];
 
 export default function HomePage() {
   const featured = [
-    { href: '/treatment/implant/navigation', label: '내비게이션 임플란트', desc: '모의수술로 오차를 없앤 무절개 임플란트', fig: 'implant/navigation' },
-    { href: '/treatment/implant/full-arch', label: '풀아치(전체) 임플란트', desc: '4~6개 최소식립으로 무치악 해결', fig: 'implant/fullarch-model' },
-    { href: '/treatment/implant/uv', label: 'UV 임플란트', desc: '잇몸이 좋지 않다면', fig: 'implant/uv' },
-    { href: '/treatment/implant/prf', label: '자가혈 임플란트', desc: '뼈이식이 필요하다면', fig: 'implant/prf' },
-    { href: '/treatment/implant/custom', label: '맞춤 임플란트', desc: '내 잇몸에 꼭 맞게 제작', fig: 'implant/custom' },
+    { href: '/treatment/implant/navigation', label: '내비게이션 임플란트', desc: '모의수술로 오차를 줄인 무절개 임플란트.', fig: 'ai/implant-navigation' },
+    { href: '/treatment/implant/full-arch', label: '풀아치(전체) 임플란트', desc: '4~6개 최소식립으로 무치악 해결.', fig: 'ai/implant-fullarch' },
+    { href: '/treatment/implant/uv', label: 'UV 임플란트', desc: '잇몸이 좋지 않다면.', fig: 'implant/uv' },
+    { href: '/treatment/implant/prf', label: '자가혈 임플란트', desc: '뼈이식이 필요하다면.', fig: 'implant/prf' },
+    { href: '/treatment/implant/custom', label: '맞춤 임플란트', desc: '내 잇몸에 꼭 맞게 제작.', fig: 'implant/custom' },
+    { href: '/treatment/implant/warranty', label: '보증제도', desc: '치료 후 철저한 사후 관리.', fig: 'ai/implant-warranty' },
   ];
 
   return (
@@ -48,30 +66,35 @@ export default function HomePage() {
         ]}
       />
       <main id="main">
-        {/* ── 첫 화면 ── */}
-        <section className="relative isolate overflow-hidden bg-night text-white">
+        {/* ── 첫 화면 — 화면을 꽉 채우는 슬라이드 ── */}
+        <section className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-night text-white">
           <div className="absolute inset-0 -z-10">
-            <Image src="/img/scene/surgery.webp" alt="" fill priority sizes="100vw" className="object-cover object-[70%_center] opacity-60" />
-            <div className="absolute inset-0 bg-gradient-to-r from-night via-night/80 to-night/20" />
+            {SLIDES.map((s, i) => (
+              <div key={s.key} className="hero-slide">
+                <Image src={figSrc(s.key)} alt="" fill priority={i === 0} sizes="100vw" className="object-cover object-[65%_center] opacity-60" />
+              </div>
+            ))}
+            <div className="absolute inset-0 bg-gradient-to-r from-night via-night/75 to-night/20" />
             <div className="absolute inset-0 bg-gradient-to-t from-night via-transparent to-night/40" />
+            <div aria-hidden className="orb pointer-events-none absolute -top-40 right-[10%] h-[560px] w-[560px] rounded-full bg-sun-500/15 blur-3xl" />
           </div>
-          <div className="wrap pt-[128px] pb-20 md:pt-[176px] md:pb-32">
+          <div className="wrap flex flex-1 flex-col justify-center pt-[120px] pb-24 md:pt-[150px] md:pb-28">
             <p className="eyebrow on-dark hero-in">SUN DENTAL CLINIC · 광화문역 6번 출구 도보 2분</p>
-            <h1 className="display mt-5 max-w-[720px] !text-white hero-in hero-in-2 on-photo">
+            <h1 className="display mt-6 max-w-[820px] !text-white hero-in hero-in-2 on-photo">
               더 빠르고, 정확하게,
               <br />
               그리고 <span className="accent-sun">편안하게</span>
               <br />
               환자중심의 디지털 치과 진료
             </h1>
-            <p className="mt-6 max-w-[560px] text-[1.05rem] leading-[1.8] text-white/80 hero-in hero-in-3 md:text-[1.12rem]">
-              강남성심병원 외래교수 출신 전문의가 이해하기 쉬운 설명과 불편함을 줄인 진료시스템으로 진료합니다. 디지털 임플란트와 턱관절 치료, MTA 신경치료로 자연치아를 지키는 광화문 선치과입니다.
+            <p className="mt-7 max-w-[620px] text-[1.05rem] leading-[1.85] text-white/80 hero-in hero-in-3 md:text-[1.15rem]">
+              <Sentences text="강남성심병원 외래교수 출신 전문의가 이해하기 쉬운 설명과 불편함을 줄인 진료시스템으로 진료합니다. 디지털 임플란트와 턱관절 치료, MTA 신경치료로 자연치아를 지키는 광화문 선치과입니다." />
             </p>
-            <div className="mt-9 flex flex-wrap gap-3 hero-in hero-in-4">
+            <div className="mt-10 flex flex-wrap gap-3 hero-in hero-in-4">
               <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="btn-sun">네이버 예약</a>
               <Link href="/treatment" className="btn-ghost-dark">진료 안내 보기</Link>
             </div>
-            <ul className="mt-14 grid gap-3 text-[14.5px] text-white/85 hero-in hero-in-4 sm:grid-cols-3">
+            <ul className="mt-16 grid max-w-[1100px] gap-3 text-[14.5px] text-white/85 hero-in hero-in-4 sm:grid-cols-3">
               {[
                 '강남성심병원 외래교수 출신 · 통합치의학과 · 치과보철과 전문의',
                 '3D 구강스캐너 · 저선량 CT · 수술 가이드 · 당일 디지털 보철',
@@ -84,54 +107,76 @@ export default function HomePage() {
               ))}
             </ul>
           </div>
+          <div aria-hidden className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/60">
+            <span className="scroll-hint block text-[11px] tracking-[0.3em]">SCROLL</span>
+          </div>
         </section>
+
+        <Marquee items={['디지털 임플란트', '내비게이션 임플란트', '풀아치 임플란트', '턱관절 치료', 'MTA 신경치료', '무통마취', '에어플로우 스케일링', '수면치료', '심미보철', '치아미백', '보험 틀니 · 임플란트', '매복사랑니']} />
 
         {/* ── 강점 4 ── */}
         <section className="section">
           <div className="wrap">
-            <div className="reveal max-w-[760px]">
+            <div className="reveal max-w-[820px]">
               <p className="eyebrow">WHY SUN DENTAL</p>
               <h2 className="display-sm mt-4">
                 치과치료, <span className="accent">광화문선치과</span>는 다릅니다
               </h2>
-              <p className="lead mt-4">다년간의 임상경험으로 믿을 수 있는 진료, 환자분이 이해하기 쉬운 친절한 설명 — 기존 홈페이지에서 스스로 밝혀 온 네 가지 약속입니다.</p>
+              <p className="lead mt-4">
+                <Sentences text="다년간의 임상경험으로 믿을 수 있는 진료, 환자분이 이해하기 쉬운 친절한 설명. 광화문선치과가 지켜 온 네 가지 약속입니다." />
+              </p>
             </div>
-            <ul className="reveal-stack mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            <ul className="reveal-stack grid-cards mt-12 sm:grid-cols-2 lg:grid-cols-4">
               {STRENGTHS.map((s, i) => (
-                <li key={s.title} className="card p-6">
+                <li key={s.title} className="card card-hover flex h-full flex-col p-7">
                   <span className="num">{String(i + 1).padStart(2, '0')}</span>
-                  <p className="mt-4 text-[1.05rem] font-bold text-ink">{s.title}</p>
-                  <p className="mt-2 text-[14px] leading-relaxed text-ink-soft">{s.desc}</p>
+                  <p className="mt-5 text-[1.12rem] font-bold leading-snug text-ink">{s.title}</p>
+                  <p className="mt-3 text-[14.5px] leading-relaxed text-ink-soft">
+                    <Sentences text={s.desc} />
+                  </p>
                 </li>
               ))}
             </ul>
           </div>
         </section>
 
-        {/* ── 진료과목 ── */}
+        {/* ── 진료과목 — 사진 카드 ── */}
         <section className="section bg-canvas">
           <div className="wrap">
-            <div className="reveal mx-auto max-w-[760px] text-center">
+            <div className="reveal mx-auto max-w-[820px] text-center">
               <p className="eyebrow justify-center">DEPARTMENTS</p>
               <h2 className="display-sm mt-4">
                 광화문선치과 <span className="accent">진료과목</span>
               </h2>
             </div>
-            <ul className="reveal-stack mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
+            <ul className="reveal-stack grid-cards mt-12 grid-cols-2 lg:grid-cols-4">
               {TREATMENT_HUBS.map((h) => (
                 <li key={h.href}>
-                  <Link href={h.href} className="card card-hover group flex h-full flex-col items-center p-6 text-center">
-                    <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-50 text-brand-600 transition-colors group-hover:bg-sun-500 group-hover:text-white">
-                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden><path d={HUB_ICON[h.href] ?? 'M4 12h16'} stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" strokeLinecap="round" /></svg>
+                  <Link href={h.href} className="card card-hover group flex h-full flex-col overflow-hidden">
+                    <span className="card-img block">
+                      <Image src={figSrc(HUB_IMG[h.href])} alt="" fill sizes="(max-width: 1024px) 50vw, 25vw" className="object-cover" />
                     </span>
-                    <span className="mt-4 text-[1.02rem] font-bold text-ink">{h.label}</span>
-                    <span className="mt-1.5 text-[12.5px] text-ink-muted">{h.children?.slice(0, 3).map((c) => c.label).join(' · ')}</span>
+                    <span className="flex flex-1 flex-col p-6">
+                      <span className="flex items-center gap-3">
+                        <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-50 text-brand-600 transition-colors group-hover:bg-sun-500 group-hover:text-white">
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden><path d={HUB_ICON[h.href] ?? 'M4 12h16'} stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" strokeLinecap="round" /></svg>
+                        </span>
+                        <span className="text-[1.08rem] font-bold text-ink group-hover:text-brand-700">{h.label}</span>
+                      </span>
+                      <span className="mt-3 text-[13.5px] leading-relaxed text-ink-muted">{h.children?.slice(0, 3).map((c) => c.label).join(' · ')}</span>
+                    </span>
                   </Link>
                 </li>
               ))}
               <li>
-                <Link href="/faq" className="card card-hover group flex h-full flex-col items-center justify-center p-6 text-center">
-                  <span className="text-[1.02rem] font-bold text-brand-700">자주 묻는 질문 →</span>
+                <Link href="/insight" className="card card-hover group flex h-full flex-col overflow-hidden">
+                  <span className="card-img block">
+                    <Image src={figSrc('ai/insight-hub')} alt="" fill sizes="(max-width: 1024px) 50vw, 25vw" className="object-cover" />
+                  </span>
+                  <span className="flex flex-1 flex-col p-6">
+                    <span className="text-[1.08rem] font-bold text-brand-700">인사이트 · 증상별 안내 →</span>
+                    <span className="mt-3 text-[13.5px] leading-relaxed text-ink-muted">턱 소리 · 시린 이 · 잇몸 출혈 · 임플란트 과정 · 건강보험</span>
+                  </span>
                 </Link>
               </li>
             </ul>
@@ -141,16 +186,18 @@ export default function HomePage() {
         {/* ── 임플란트 ── */}
         <section className="section">
           <div className="wrap">
-            <div className="reveal mx-auto max-w-[760px] text-center">
+            <div className="reveal mx-auto max-w-[820px] text-center">
               <p className="eyebrow justify-center">PREMIUM DIGITAL IMPLANT</p>
               <h2 className="display-sm mt-4">
                 광화문선치과의 임플란트,
                 <br />
                 <span className="accent">왜 특별할까요?</span>
               </h2>
-              <p className="lead mt-4">내 치아 상태에 따른 다양한 수술 방법으로, 치아가 안 좋아도 잇몸뼈가 부족해도 구강 상태에 맞는 임플란트를 제안합니다.</p>
+              <p className="lead mt-4">
+                <Sentences text="내 치아 상태에 따른 다양한 수술 방법으로, 치아가 안 좋아도 잇몸뼈가 부족해도 구강 상태에 맞는 임플란트를 제안합니다." />
+              </p>
             </div>
-            <div className="reveal mt-12 grid gap-6 lg:grid-cols-2">
+            <div className="reveal-stack mt-12 grid gap-6 lg:grid-cols-2">
               {CLINIC.videos.slice(0, 2).map((v) => (
                 <div key={v.id}>
                   <VideoFacade id={v.id} poster={v.thumb} title={v.title} />
@@ -158,32 +205,26 @@ export default function HomePage() {
                 </div>
               ))}
             </div>
-            <ul className="reveal-stack mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
-              {featured.map((f) => (
-                <li key={f.href}>
-                  <Link href={f.href} className="card card-hover group block h-full overflow-hidden">
-                    <Figure fig={{ key: f.fig, alt: f.label }} rounded="rounded-none" sizes="(max-width: 640px) 100vw, 20vw" />
-                    <span className="block p-5">
-                      <span className="block text-[1rem] font-bold text-ink group-hover:text-brand-700">{f.label}</span>
-                      <span className="mt-1 block text-[13px] text-ink-soft">{f.desc}</span>
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-            <div className="mt-8 text-center">
+            <div className="mt-14">
+              <Carousel label="임플란트 6가지 · 좌우로 드래그">
+                {featured.map((f) => (
+                  <CardLink key={f.href} href={f.href} label={f.label} desc={f.desc} fig={{ key: f.fig, alt: f.label }} />
+                ))}
+              </Carousel>
+            </div>
+            <div className="mt-6 text-center">
               <Link href="/treatment/implant" className="btn-brand">임플란트 전체 안내</Link>
             </div>
           </div>
         </section>
 
-        {/* ── 턱관절 ── */}
-        <section className="relative isolate overflow-hidden bg-night py-20 text-white md:py-28">
+        {/* ── 턱관절 — 어두운 사진 띠 ── */}
+        <section className="relative isolate overflow-hidden bg-night py-24 text-white md:py-32">
           <div className="absolute inset-0 -z-10">
-            <Image src="/img/scene/loupe.webp" alt="" fill sizes="100vw" className="object-cover opacity-40" />
+            <Image src={figSrc('ai/tmj-hub')} alt="" fill sizes="100vw" className="object-cover opacity-35" />
             <div className="absolute inset-0 bg-gradient-to-r from-night via-night/85 to-night/40" />
           </div>
-          <div className="wrap grid items-center gap-10 lg:grid-cols-2">
+          <div className="wrap grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
             <div className="reveal">
               <p className="eyebrow on-dark">TMJ · 턱관절</p>
               <h2 className="display-sm mt-4 !text-white">
@@ -191,10 +232,12 @@ export default function HomePage() {
                 <br />
                 <span className="accent-sun">턱관절 진료</span>
               </h2>
-              <p className="mt-5 text-[1.05rem] leading-[1.8] text-white/80">정확한 진단과 근본적인 치료로 재발률을 낮춘 턱관절 진료. 기본적인 진료부터 어려운 장치치료까지, 다수의 환자분들을 진료하며 얻은 노하우로 개인별 맞춤 진료를 합니다.</p>
+              <p className="mt-5 text-[1.05rem] leading-[1.85] text-white/80">
+                <Sentences text="정확한 진단과 근본적인 치료로 재발률을 낮춘 턱관절 진료. 기본적인 진료부터 어려운 장치치료까지, 다수의 환자분들을 진료하며 얻은 노하우로 개인별 맞춤 진료를 합니다." />
+              </p>
               <ul className="reveal-stack mt-8 grid gap-3 sm:grid-cols-3">
                 {['01 정확한 진단', '02 전반적인 턱관절 치료 진행', '03 오랜 기간 다수의 턱관절 환자 진료'].map((t) => (
-                  <li key={t} className="rounded-2xl border border-white/15 bg-white/5 px-4 py-4 text-[14px] font-semibold backdrop-blur">{t}</li>
+                  <li key={t} className="flex min-h-[84px] items-center rounded-2xl border border-white/15 bg-white/5 px-4 py-4 text-[14px] font-semibold backdrop-blur">{t}</li>
                 ))}
               </ul>
               <div className="mt-8 flex flex-wrap gap-3">
@@ -202,39 +245,37 @@ export default function HomePage() {
                 <Link href="/treatment/tmj/symptoms" className="btn-ghost-dark">주요 증상 확인</Link>
               </div>
             </div>
-            <div className="reveal grid grid-cols-2 gap-4">
-              <Figure fig={{ key: 'tmj/splint', alt: '턱관절 스플린트 장치 모형' }} sizes="25vw" />
-              <Figure fig={{ key: 'tmj/skull', alt: '턱관절 위치 도해' }} sizes="25vw" />
-              <Figure fig={{ key: 'equip/laser', alt: '턱관절 물리치료 장비 PHL-15 레이저' }} sizes="25vw" />
-              <Figure fig={{ key: 'scene/tmj-3', alt: '턱관절 진료 상담' }} sizes="25vw" />
+            <div className="reveal-stack grid grid-cols-2 gap-4">
+              {[
+                { key: 'tmj/splint', alt: '턱관절 스플린트 장치 모형' },
+                { key: 'ai/tmj-symptoms', alt: '턱관절 도해 모형' },
+                { key: 'equip/laser', alt: '턱관절 물리치료 장비 PHL-15 레이저' },
+                { key: 'scene/tmj-3', alt: '턱관절 진료 상담' },
+              ].map((f) => (
+                <Figure key={f.key} fig={f} ratio="aspect-[4/3]" sizes="25vw" effect="img-in" />
+              ))}
             </div>
           </div>
         </section>
 
-        {/* ── 무통·자연치아·심미·사랑니 (원본 카드 4) ── */}
+        {/* ── 무통·자연치아·심미·사랑니 ── */}
         <section className="section bg-canvas">
           <div className="wrap">
-            <div className="reveal max-w-[760px]">
+            <div className="reveal max-w-[820px]">
               <p className="eyebrow">COMFORT & CARE</p>
               <h2 className="display-sm mt-4">
                 통증은 줄이고, <span className="accent">내 치아는 지키는</span> 진료
               </h2>
             </div>
-            <ul className="reveal-stack mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            <ul className="reveal-stack grid-cards mt-12 sm:grid-cols-2 lg:grid-cols-4">
               {[
-                { href: '/treatment/painless', label: '무통 & 저자극 치료', desc: '무통마취기, 저자극 스케일러 등을 이용한 편안한 치과 치료', fig: 'illust/airflow-device' },
-                { href: '/treatment/natural-tooth', label: '자연치아 살리기', desc: 'MTA 치료를 통해 내 치아를 최대한 보존', fig: 'illust/tooth-mta' },
-                { href: '/treatment/aesthetic', label: '심미치료', desc: '심미보철 · 치아미백', fig: 'illust/aesthetic' },
-                { href: '/treatment/wisdom-tooth', label: '매복사랑니', desc: '까다로운 매복 사랑니도 3D CT 진단 후 안전하게 발치', fig: 'illust/wisdom' },
+                { href: '/treatment/painless', label: '무통 & 저자극 치료', desc: '무통마취기, 저자극 스케일러 등을 이용한 편안한 치과 치료.', fig: 'ai/painless-hub' },
+                { href: '/treatment/natural-tooth', label: '자연치아 살리기', desc: 'MTA 치료를 통해 내 치아를 최대한 보존합니다.', fig: 'ai/natural-hub' },
+                { href: '/treatment/aesthetic', label: '심미치료', desc: '라미네이트 · 올세라믹 · 지르코니아 · 치아미백.', fig: 'ai/aesthetic-hub' },
+                { href: '/treatment/wisdom-tooth', label: '매복사랑니', desc: '까다로운 매복 사랑니도 3D CT 진단 후 안전하게 발치합니다.', fig: 'ai/wisdom' },
               ].map((c) => (
                 <li key={c.href}>
-                  <Link href={c.href} className="card card-hover group block h-full overflow-hidden">
-                    <Figure fig={{ key: c.fig, alt: c.label }} rounded="rounded-none" sizes="(max-width: 640px) 100vw, 25vw" />
-                    <span className="block p-5">
-                      <span className="block text-[1.05rem] font-bold text-ink group-hover:text-brand-700">{c.label}</span>
-                      <span className="mt-1.5 block text-[13.5px] leading-relaxed text-ink-soft">{c.desc}</span>
-                    </span>
-                  </Link>
+                  <CardLink href={c.href} label={c.label} desc={c.desc} fig={{ key: c.fig, alt: c.label }} />
                 </li>
               ))}
             </ul>
@@ -244,23 +285,25 @@ export default function HomePage() {
         {/* ── 의료진 ── */}
         <section className="section">
           <div className="wrap">
-            <div className="reveal mx-auto max-w-[760px] text-center">
+            <div className="reveal mx-auto max-w-[820px] text-center">
               <p className="eyebrow justify-center">OUR DOCTORS</p>
               <h2 className="display-sm mt-4">
                 두 분의 <span className="accent">전문의</span>가 진료합니다
               </h2>
-              <p className="lead mt-4">보건복지부 인증 통합치의학과 전문의와 치과보철과 전문의 — 강남성심병원 외래교수 출신의 다년간 임상경험으로 진료합니다.</p>
+              <p className="lead mt-4">
+                <Sentences text="보건복지부 인증 통합치의학과 전문의와 치과보철과 전문의. 강남성심병원 외래교수 출신의 다년간 임상경험으로 진료합니다." />
+              </p>
             </div>
-            <ul className="reveal-stack mx-auto mt-10 grid max-w-[900px] gap-6 sm:grid-cols-2">
+            <ul className="reveal-stack mx-auto mt-12 grid max-w-[1000px] gap-6 sm:grid-cols-2">
               {DOCTORS.map((d) => (
                 <li key={d.slug}>
-                  <Link href={`/about/doctors#${d.slug}`} className="card card-hover group block overflow-hidden">
-                    <div className="relative aspect-[4/3] bg-canvas-2">
-                      <Image src={d.photo} alt={`${d.name} ${d.role}`} fill sizes="(max-width: 640px) 100vw, 450px" className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]" />
+                  <Link href={`/about/doctors#${d.slug}`} className="card card-hover group flex h-full flex-col overflow-hidden">
+                    <div className="relative aspect-[4/5] bg-canvas-2">
+                      <Image src={d.photo} alt={`${d.name} ${d.role}`} fill sizes="(max-width: 640px) 100vw, 500px" className="object-cover object-top transition-transform duration-700 group-hover:scale-[1.04]" />
                     </div>
                     <div className="p-6 text-center">
                       <span className="pill-brand">{d.specialty}</span>
-                      <p className="mt-3 text-[1.25rem] font-extrabold text-ink">
+                      <p className="mt-3 text-[1.3rem] font-extrabold text-ink">
                         {d.name} <span className="text-[0.95rem] font-semibold text-ink-muted">{d.role}</span>
                       </p>
                       <p className="mt-1.5 text-[13.5px] text-ink-soft">{d.career[0]}</p>
@@ -272,28 +315,32 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── 위생·소독 ── */}
-        <section className="section bg-canvas">
-          <div className="wrap grid items-center gap-10 lg:grid-cols-2">
-            <div className="reveal order-2 lg:order-1 grid grid-cols-2 gap-4">
-              <Figure fig={{ key: 'scene/sterile', alt: '멸균 소독한 진료 기구' }} sizes="25vw" />
-              <Figure fig={{ key: 'scene/sterile2', alt: '개별 포장된 1인 1기구' }} sizes="25vw" />
+        {/* ── 위생·소독 — AI 사진 배경 띠 ── */}
+        <section className="relative isolate overflow-hidden bg-night py-24 text-white md:py-32">
+          <div className="absolute inset-0 -z-10">
+            <Image src={figSrc('ai/hero-clinic')} alt="" fill sizes="100vw" className="object-cover opacity-30" />
+            <div className="absolute inset-0 bg-gradient-to-l from-night via-night/85 to-night/50" />
+          </div>
+          <div className="wrap grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
+            <div className="reveal-stack order-2 grid grid-cols-2 gap-4 lg:order-1">
+              <Figure fig={{ key: 'scene/sterile', alt: '멸균 소독한 진료 기구' }} ratio="aspect-[4/5]" sizes="25vw" effect="img-in" />
+              <Figure fig={{ key: 'scene/sterile2', alt: '개별 포장된 1인 1기구' }} ratio="aspect-[4/5]" sizes="25vw" effect="img-in" />
             </div>
             <div className="reveal order-1 lg:order-2">
-              <p className="eyebrow">STERILIZATION</p>
-              <h2 className="display-sm mt-4">
-                철저한 위생관리 <span className="accent">멸균 소독 시스템</span>
+              <p className="eyebrow on-dark">STERILIZATION</p>
+              <h2 className="display-sm mt-4 !text-white">
+                철저한 위생관리 <span className="accent-sun">멸균 소독 시스템</span>
               </h2>
-              <p className="lead mt-4">교차감염을 차단하여 환자의 안전을 최우선으로 생각합니다.</p>
+              <p className="mt-4 text-[1.05rem] leading-[1.8] text-white/75">교차감염을 차단하여 환자의 안전을 최우선으로 생각합니다.</p>
               <ul className="mt-6 space-y-2.5">
                 {HYGIENE.map((h) => (
-                  <li key={h} className="flex items-center gap-3 text-[15px] text-ink">
-                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-600 text-[11px] font-bold text-white">✓</span>
+                  <li key={h} className="flex items-center gap-3 text-[15px] text-white/90">
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-sun-500 text-[11px] font-bold text-white">✓</span>
                     {h}
                   </li>
                 ))}
               </ul>
-              <Link href="/about/equipment" className="btn-ghost mt-8">디지털 장비 · 소독 시스템 보기</Link>
+              <Link href="/about/equipment" className="btn-ghost-dark mt-8">디지털 장비 · 소독 시스템 보기</Link>
             </div>
           </div>
         </section>
@@ -310,14 +357,14 @@ export default function HomePage() {
               </div>
               <Link href="/about#tour" className="btn-ghost">전체 사진 보기</Link>
             </div>
-            <div className="reveal-stack mt-8 grid grid-cols-2 gap-4 md:grid-cols-4">
+            <div className="reveal-stack mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
               {[
                 { key: 'place/place01', alt: '광화문선치과 진료실 복도' },
                 { key: 'place/place03', alt: '광화문선치과 진료실' },
                 { key: 'place/place08', alt: '3D CT 촬영실' },
-                { key: 'place/place10', alt: '대기실 · 2019 대한민국 메디컬 헬스케어 치과부문 대상 현판' },
+                { key: 'place/place10', alt: '광화문선치과 대기실' },
               ].map((f) => (
-                <Figure key={f.key} fig={f} sizes="25vw" />
+                <Figure key={f.key} fig={f} ratio="aspect-[4/3]" sizes="25vw" effect="img-in" />
               ))}
             </div>
           </div>
@@ -333,7 +380,9 @@ export default function HomePage() {
                 <br />
                 <span className="accent">자주 묻는 질문</span>
               </h2>
-              <p className="lead mt-4">진료시간·주차·임플란트·턱관절·건강보험·수면치료. 더 많은 문답은 FAQ 페이지에 있습니다.</p>
+              <p className="lead mt-4">
+                <Sentences text="진료시간·주차·임플란트·턱관절·건강보험·수면치료. 더 많은 문답은 FAQ 페이지에 있습니다." />
+              </p>
               <Link href="/faq" className="btn-ghost mt-6">전체 FAQ 보기</Link>
             </div>
             <div className="reveal">
@@ -345,18 +394,18 @@ export default function HomePage() {
         {/* ── 오시는 길 · 진료시간 ── */}
         <section className="section" id="visit">
           <div className="wrap">
-            <div className="reveal mx-auto max-w-[760px] text-center">
+            <div className="reveal mx-auto max-w-[820px] text-center">
               <p className="eyebrow justify-center">VISIT US</p>
               <h2 className="display-sm mt-4">
                 광화문역 <span className="accent">6번 출구 도보 2분</span>, 광화문선치과
               </h2>
             </div>
-            <div className="reveal mt-10 grid gap-6 lg:grid-cols-[1.3fr_1fr]">
+            <div className="reveal mt-12 grid gap-6 lg:grid-cols-[1.4fr_1fr]">
               <div className="card overflow-hidden">
                 <iframe
                   title="광화문선치과 지도"
                   src={`https://www.google.com/maps?q=${encodeURIComponent(`${CLINIC.name} ${CLINIC.address.full}`)}&z=17&output=embed&hl=ko`}
-                  className="h-[380px] w-full border-0 lg:h-full"
+                  className="h-[420px] w-full border-0 lg:h-full lg:min-h-[560px]"
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                 />
@@ -391,7 +440,7 @@ export default function HomePage() {
                   <p className="mt-1.5">
                     <span className="font-bold text-ink">주차</span> {CLINIC.parking.place} {CLINIC.parking.fee}
                   </p>
-                  <Link href="/visit" className="mt-3 inline-block font-bold text-brand-700 hover:underline">
+                  <Link href="/visit#notice" className="mt-3 inline-block font-bold text-brand-700 hover:underline">
                     {MONTHLY_NOTICE.title} 보기 →
                   </Link>
                 </div>

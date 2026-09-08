@@ -10,8 +10,8 @@ const JOB = 'C:/Users/FORYOUCOM/Desktop/dental-builder/jobs/09cb870aa8fd/img';
 const OUT = 'public/img';
 const CROPS = {
   // 의료진
-  'doctors/yang': ['dental_intro02.png', [0.0, 0.0, 0.52, 1.0], 1200],
-  'doctors/hong': ['dental_intro03.png', [0.16, 0.09, 0.50, 0.98], 1200],
+  'doctors/yang': ['dental_intro02.png', [0.02, 0.0, 0.5, 1.0], 1200, [4, 5]],
+  'doctors/hong': ['dental_intro03.png', [0.17, 0.09, 0.49, 0.98], 1200, [4, 5]],
   // 진료 장면 (사진)
   'scene/surgery': ['jaw-join-treatment01_new.png', [0.56, 0.0, 1.0, 1.0], 1600],
   'scene/loupe': ['main01.png', [0.5, 0.0, 1.0, 1.0], 1400],
@@ -83,7 +83,7 @@ const FULL = {
   'notice/2026-09': '8_test.png',
 };
 const sizes = {};
-async function crop(key, file, box, maxW) {
+async function crop(key, file, box, maxW, ratio) {
   const src = path.join(JOB, file);
   const meta = await sharp(src).metadata();
   const [x0, y0, x1, y1] = box;
@@ -91,10 +91,13 @@ async function crop(key, file, box, maxW) {
   const width = Math.min(Math.round(meta.width * (x1 - x0)), meta.width - left), height = Math.min(Math.round(meta.height * (y1 - y0)), meta.height - top);
   const out = path.join(OUT, key + '.webp');
   fs.mkdirSync(path.dirname(out), { recursive: true });
-  const info = await sharp(src).extract({ left, top, width, height }).resize({ width: Math.min(maxW, width), withoutEnlargement: true }).webp({ quality: 82 }).toFile(out);
+  const pipe = sharp(src).extract({ left, top, width, height });
+  const info = ratio
+    ? await pipe.resize({ width: Math.min(maxW, width), height: Math.round((Math.min(maxW, width) * ratio[1]) / ratio[0]), fit: 'cover', position: 'top' }).webp({ quality: 82 }).toFile(out)
+    : await pipe.resize({ width: Math.min(maxW, width), withoutEnlargement: true }).webp({ quality: 82 }).toFile(out);
   sizes[key] = { w: info.width, h: info.height };
 }
-for (const [key, [file, box, maxW]] of Object.entries(CROPS)) { try { await crop(key, file, box, maxW); } catch (e) { console.error('FAIL', key, file, e.message); } }
+for (const [key, [file, box, maxW, ratio]] of Object.entries(CROPS)) { try { await crop(key, file, box, maxW, ratio); } catch (e) { console.error('FAIL', key, file, e.message); } }
 for (const [key, file] of Object.entries(FULL)) {
   const out = path.join(OUT, key + '.webp');
   fs.mkdirSync(path.dirname(out), { recursive: true });
@@ -106,6 +109,8 @@ fs.mkdirSync(path.join(OUT, 'brand'), { recursive: true });
 await sharp(path.join(JOB, 'logo.png')).toFile(path.join(OUT, 'brand/logo.png'));
 const lm = await sharp(path.join(JOB, 'logo.png')).metadata();
 await sharp(path.join(JOB, 'logo.png')).extract({ left: 0, top: 0, width: Math.round(lm.width * 0.215), height: lm.height }).png().toFile(path.join(OUT, 'brand/mark.png'));
+const prev = fs.existsSync('lib/imageSizes.generated.json') ? JSON.parse(fs.readFileSync('lib/imageSizes.generated.json', 'utf8')) : {};
+for (const [k, v] of Object.entries(prev)) if (k.startsWith('ai/') && !sizes[k]) sizes[k] = v;
 fs.writeFileSync('lib/imageSizes.generated.json', JSON.stringify(sizes, null, 1));
 console.log('images', Object.keys(sizes).length);
 // 결과 확인용 시트
