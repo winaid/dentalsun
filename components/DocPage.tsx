@@ -59,7 +59,8 @@ export function DocPage({ doc }: { doc: Doc }) {
   const isInsight = doc.path.startsWith('/insight');
   const trail = isInsight ? [{ name: '인사이트', path: '/insight' }] : [{ name: '진료 안내', path: '/treatment' }, { name: doc.hubLabel, path: doc.hub }];
   if (doc.path !== doc.hub) trail.push({ name: doc.title, path: doc.path });
-  const children = doc.isHub ? docsOfHub(doc.path) : [];
+  /* 허브에 links 블록이 있으면(인사이트처럼 묶음별로 직접 나열) 자동 카드는 붙이지 않는다 — 같은 카드가 두 번 나온다. */
+  const children = doc.isHub && !doc.blocks.some((b) => b.type === 'links') ? docsOfHub(doc.path) : [];
   const related = (doc.related ?? []).map(docByPath).filter(Boolean) as Doc[];
   /* 대표 사진 — 쪽마다 다른 AI 정물을 우선 쓴다(원본 사진 24장이 서른 쪽에 반복되지 않게). 인사이트처럼 매핑이 없으면 문서가 지정한 사진. */
   const heroKey = DOC_AI[doc.path] ?? doc.hero?.key;
@@ -185,6 +186,13 @@ export function DocPage({ doc }: { doc: Doc }) {
   );
 }
 
+/** 링크 카드의 사진 — 가리키는 문서의 AI 사진(없으면 그 문서가 지정한 사진) */
+function linkFig(href: string, label: string): Fig | undefined {
+  const target = docByPath(href);
+  const key = DOC_AI[href] ?? target?.hero?.key;
+  return key ? { key, alt: label } : undefined;
+}
+
 function BlockView({ block: b, index, band }: { block: Block; index: number; band?: string }) {
   const id = ('id' in b && b.id) || `sec-${index + 1}`;
   const alt = index % 2 === 1;
@@ -269,7 +277,7 @@ function BlockView({ block: b, index, band }: { block: Block; index: number; ban
           <Bg />
           <div className="wrap">
             <Head title={b.title} lead={b.lead} />
-            <ol className={`reveal-stack grid-cards mt-10 sm:grid-cols-2 ${b.steps.length >= 5 ? 'lg:grid-cols-3 xl:grid-cols-5' : b.steps.length === 4 ? 'lg:grid-cols-4' : 'lg:grid-cols-3'}`}>
+            <ol className={`reveal-stack grid-cards mt-10 sm:grid-cols-2 ${b.steps.length % 3 === 0 ? 'lg:grid-cols-3' : b.steps.length % 4 === 0 ? 'lg:grid-cols-4' : b.steps.length === 5 ? 'lg:grid-cols-3 xl:grid-cols-5' : 'lg:grid-cols-3'}`}>
               {b.steps.map((s, i) => (
                 <li key={i} className={`${cardCls} overflow-hidden`}>
                   {withFig && (
@@ -397,7 +405,7 @@ function BlockView({ block: b, index, band }: { block: Block; index: number; ban
             <Head title={b.title} lead={b.lead} />
             <div className="reveal-stack grid-cards mt-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {b.items.map((it) => (
-                <CardLink key={it.href} href={it.href} label={it.label} desc={it.desc} external={it.href.startsWith('http')} />
+                <CardLink key={it.href} href={it.href} label={it.label} desc={it.desc} external={it.href.startsWith('http')} fig={linkFig(it.href, it.label)} />
               ))}
             </div>
           </div>
