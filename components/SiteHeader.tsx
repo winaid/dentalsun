@@ -42,7 +42,7 @@ export function SiteHeader({ dark = false }: { dark?: boolean }) {
       onMouseLeave={() => setPanel(null)}
     >
       <div className="wrap flex h-[72px] items-center gap-4 md:h-[84px]">
-        <Link href="/" className="flex items-center gap-2.5" aria-label={`${CLINIC.shortName} 홈`}>
+        <Link href="/" className="flex shrink-0 items-center gap-2.5 whitespace-nowrap" aria-label={`${CLINIC.shortName} 홈`}>
           <Image src="/img/brand/mark.png" alt="" width={44} height={44} priority className="h-10 w-10 md:h-11 md:w-11" />
           <span className={`text-[1.2rem] font-extrabold tracking-[-0.02em] md:text-[1.35rem] ${solid ? 'text-brand-800' : 'text-white'}`}>
             광화문 선치과

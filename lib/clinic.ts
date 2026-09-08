@@ -99,7 +99,7 @@ export const CLINIC = {
   ],
 
   /** 배포 주소 — Vercel 기본 도메인. 커스텀 도메인을 붙이면 여기만 바꾼다. */
-  url: process.env.SITE_URL?.replace(/\/$/, '') || 'https://dentalsun.vercel.app',
+  url: process.env.SITE_URL?.replace(/\/$/, '') || 'https://dentalsun-cyan.vercel.app',
 } as const;
 
 /**
