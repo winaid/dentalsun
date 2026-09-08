@@ -482,5 +482,53 @@
  "ai/hero-wide-1": {
   "w": 1920,
   "h": 1080
+ },
+ "ai/wide-tmj": {
+  "w": 1920,
+  "h": 1080
+ },
+ "ai/wide-aesthetic": {
+  "w": 1920,
+  "h": 1080
+ },
+ "ai/wide-implant": {
+  "w": 1920,
+  "h": 1080
+ },
+ "ai/wide-insurance": {
+  "w": 1920,
+  "h": 1080
+ },
+ "ai/wide-wisdom": {
+  "w": 1920,
+  "h": 1080
+ },
+ "ai/wide-natural": {
+  "w": 1920,
+  "h": 1080
+ },
+ "ai/wide-painless": {
+  "w": 1920,
+  "h": 1080
+ },
+ "ai/wide-insight": {
+  "w": 1920,
+  "h": 1080
+ },
+ "ai/wide-visit": {
+  "w": 1920,
+  "h": 1080
+ },
+ "ai/wide-clinic": {
+  "w": 1920,
+  "h": 1080
+ },
+ "ai/wide-philosophy": {
+  "w": 1920,
+  "h": 1080
+ },
+ "ai/sterile": {
+  "w": 1200,
+  "h": 800
  }
 }

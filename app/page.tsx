@@ -6,7 +6,8 @@ import { HomeHero } from '@/components/HomeHero';
 import { JsonLd } from '@/components/JsonLd';
 import { VideoFacade } from '@/components/VideoFacade';
 import { Carousel } from '@/components/Carousel';
-import { CardLink, ContactBand, FaqList, Figure, Marquee, MedicalNotice, Sentences } from '@/components/ui';
+import { CardLink, ContactBand, FaqList, Figure, Marquee, MedicalNotice, ScrubText, Sentences } from '@/components/ui';
+import { HomeStage, HomeStats, HomeTourPan } from '@/components/HomeScroll';
 import { CLINIC, HOURS, HYGIENE, MONTHLY_NOTICE, STRENGTHS } from '@/lib/clinic';
 import { DOCTORS } from '@/lib/doctors';
 import { TREATMENT_HUBS } from '@/lib/nav';
@@ -44,9 +45,9 @@ export default function HomePage() {
   const featured = [
     { href: '/treatment/implant/navigation', label: '내비게이션 임플란트', desc: '모의수술로 오차를 줄인 무절개 임플란트.', fig: 'ai/implant-navigation' },
     { href: '/treatment/implant/full-arch', label: '풀아치(전체) 임플란트', desc: '4~6개 최소식립으로 무치악 해결.', fig: 'ai/implant-fullarch' },
-    { href: '/treatment/implant/uv', label: 'UV 임플란트', desc: '잇몸이 좋지 않다면.', fig: 'implant/uv' },
-    { href: '/treatment/implant/prf', label: '자가혈 임플란트', desc: '뼈이식이 필요하다면.', fig: 'implant/prf' },
-    { href: '/treatment/implant/custom', label: '맞춤 임플란트', desc: '내 잇몸에 꼭 맞게 제작.', fig: 'implant/custom' },
+    { href: '/treatment/implant/uv', label: 'UV 임플란트', desc: '잇몸이 좋지 않다면.', fig: 'ai/implant-uv' },
+    { href: '/treatment/implant/prf', label: '자가혈 임플란트', desc: '뼈이식이 필요하다면.', fig: 'ai/implant-prf' },
+    { href: '/treatment/implant/custom', label: '맞춤 임플란트', desc: '내 잇몸에 꼭 맞게 제작.', fig: 'ai/implant-custom' },
     { href: '/treatment/implant/warranty', label: '보증제도', desc: '치료 후 철저한 사후 관리.', fig: 'ai/implant-warranty' },
   ];
 
@@ -63,7 +64,7 @@ export default function HomePage() {
       <main id="main">
         <HomeHero />
 
-        <Marquee items={['디지털 임플란트', '내비게이션 임플란트', '풀아치 임플란트', '턱관절 치료', 'MTA 신경치료', '무통마취', '에어플로우 스케일링', '수면치료', '심미보철', '치아미백', '보험 틀니 · 임플란트', '매복사랑니']} />
+        <Marquee overlap items={['디지털 임플란트', '내비게이션 임플란트', '풀아치 임플란트', '턱관절 치료', 'MTA 신경치료', '무통마취', '에어플로우 스케일링', '수면치료', '심미보철', '치아미백', '보험 틀니 · 임플란트', '매복사랑니']} />
 
         {/* ── 강점 4 ── */}
         <section className="section">
@@ -77,6 +78,7 @@ export default function HomePage() {
                 <Sentences text="다년간의 임상경험으로 믿을 수 있는 진료, 환자분이 이해하기 쉬운 친절한 설명. 광화문선치과가 지켜 온 네 가지 약속입니다." />
               </p>
             </div>
+            <HomeStats />
             <ul className="reveal-stack grid-cards mt-12 sm:grid-cols-2 lg:grid-cols-4">
               {STRENGTHS.map((s, i) => (
                 <li key={s.title} className="card card-hover flex h-full flex-col p-7">
@@ -169,10 +171,13 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* ── 내비게이션 임플란트 과정 — 고정 무대(스크롤하면 사진이 바뀐다) ── */}
+        <HomeStage />
+
         {/* ── 턱관절 — 어두운 사진 띠 ── */}
         <section className="relative isolate overflow-hidden bg-night py-24 text-white md:py-32">
           <div className="absolute inset-0 -z-10">
-            <Image src={figSrc('ai/tmj-hub')} alt="" fill sizes="100vw" className="object-cover opacity-35" />
+            <Image src={figSrc('ai/wide-tmj')} alt="" fill sizes="100vw" className="object-cover opacity-35" data-parallax="0.2" />
             <div className="absolute inset-0 bg-gradient-to-r from-night via-night/85 to-night/40" />
           </div>
           <div className="wrap grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
@@ -183,8 +188,8 @@ export default function HomePage() {
                 <br />
                 <span className="accent-sun">턱관절 진료</span>
               </h2>
-              <p className="mt-5 text-[1.05rem] leading-[1.85] text-white/80">
-                <Sentences text="정확한 진단과 근본적인 치료로 재발률을 낮춘 턱관절 진료. 기본적인 진료부터 어려운 장치치료까지, 다수의 환자분들을 진료하며 얻은 노하우로 개인별 맞춤 진료를 합니다." />
+              <p className="mt-5 text-[1.05rem] leading-[1.85] text-white md:text-[1.15rem]">
+                <ScrubText text="정확한 진단과 근본적인 치료로 재발률을 낮춘 턱관절 진료. 기본적인 진료부터 어려운 장치치료까지, 다수의 환자분들을 진료하며 얻은 노하우로 개인별 맞춤 진료를 합니다." />
               </p>
               <ul className="reveal-stack mt-8 grid gap-3 sm:grid-cols-3">
                 {['01 정확한 진단', '02 전반적인 턱관절 치료 진행', '03 오랜 기간 다수의 턱관절 환자 진료'].map((t) => (
@@ -269,7 +274,7 @@ export default function HomePage() {
         {/* ── 위생·소독 — AI 사진 배경 띠 ── */}
         <section className="relative isolate overflow-hidden bg-night py-24 text-white md:py-32">
           <div className="absolute inset-0 -z-10">
-            <Image src={figSrc('ai/hero-clinic')} alt="" fill sizes="100vw" className="object-cover opacity-30" />
+            <Image src={figSrc('ai/wide-clinic')} alt="" fill sizes="100vw" className="object-cover opacity-30" data-parallax="0.2" />
             <div className="absolute inset-0 bg-gradient-to-l from-night via-night/85 to-night/50" />
           </div>
           <div className="wrap grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
@@ -296,8 +301,8 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── 둘러보기 ── */}
-        <section className="section">
+        {/* ── 둘러보기 — 스크롤하는 만큼 사진 띠가 옆으로 흐른다 ── */}
+        <section className="section overflow-hidden">
           <div className="wrap">
             <div className="reveal flex flex-wrap items-end justify-between gap-4">
               <div>
@@ -308,17 +313,8 @@ export default function HomePage() {
               </div>
               <Link href="/about#tour" className="btn-ghost">전체 사진 보기</Link>
             </div>
-            <div className="reveal-stack mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
-              {[
-                { key: 'place/place01', alt: '광화문선치과 진료실 복도' },
-                { key: 'place/place03', alt: '광화문선치과 진료실' },
-                { key: 'place/place08', alt: '3D CT 촬영실' },
-                { key: 'place/place10', alt: '광화문선치과 대기실' },
-              ].map((f) => (
-                <Figure key={f.key} fig={f} ratio="aspect-[4/3]" sizes="25vw" effect="img-in" />
-              ))}
-            </div>
           </div>
+          <HomeTourPan />
         </section>
 
         {/* ── FAQ ── */}

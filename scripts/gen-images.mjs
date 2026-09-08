@@ -75,6 +75,18 @@ const SCENES = {
   'insight-whitening': 'Tooth shade guide fanned out on a white counter, macro, soft light.',
   'hero-wide-1': 'Ultra-wide cinematic interior of a premium modern dental clinic lounge at blue hour: long white reception counter, deep navy feature wall, warm pendant lights, floor-to-ceiling window with a soft evening city glow, polished floor reflections, empty and calm, no people, no text.',
   'hero-wide-2': 'Ultra-wide cinematic view of a modern dental treatment room: white dental chair in the foreground left, large monitor on the wall showing an abstract blue 3D jaw render, big window on the right with soft daylight, navy accents, no people, no text.',
+  'wide-implant': 'Ultra-wide cinematic scene on a long white clinic counter: titanium implant fixtures and a translucent 3D-printed jaw model in the foreground, soft window light, deep navy accents, no people, no text.',
+  'wide-tmj': 'Ultra-wide cinematic scene: transparent occlusal splint on a stone dental cast and a skull side-view model further back on a white counter, soft daylight, navy accents, no people, no text.',
+  'wide-aesthetic': 'Ultra-wide cinematic scene: porcelain veneer shells on a mirror tray and a tooth shade guide fanned out, white counter, soft light, navy accents, no people, no text.',
+  'wide-insurance': 'Ultra-wide cinematic scene: a complete denture on a stand and a single implant crown model on a stainless tray, white clinic counter, soft daylight, no people, no text.',
+  'wide-wisdom': 'Ultra-wide cinematic scene: lower jaw model with a tilted wisdom tooth beside a panoramic x-ray light box (no text), white counter, soft light, no people.',
+  'wide-natural': 'Ultra-wide cinematic scene: cross-section molar model with red pulp and a stand of fine endodontic files, white counter, soft daylight, navy accents, no people, no text.',
+  'wide-painless': 'Ultra-wide cinematic scene: computer-controlled anesthesia unit with pen handpiece and an airflow polishing device on a white clinic cart, soft light, no people, no text.',
+  'wide-insight': 'Ultra-wide cinematic scene: a row of tooth models on a long white shelf with a magnifying loupe, soft window light, navy accents, no people, no text.',
+  'wide-visit': 'Ultra-wide cinematic interior of a bright dental clinic reception: long white counter, deep navy accent wall, empty waiting sofa, warm pendant lights, daylight window, no people, no text.',
+  'wide-clinic': 'Ultra-wide cinematic interior of a premium dental clinic corridor with glass partitions, white and navy palette, soft daylight, polished floor reflections, no people, no text.',
+  'wide-philosophy': 'Ultra-wide cinematic scene: dental mirror and probe laid on a white tray beside a small green plant, calm daylight, long empty counter, no people, no text.',
+  'sterile': 'Sealed sterilization pouches with dental instruments and a small tabletop autoclave on a white counter, blue accent, macro, no people, no text.',
   'about-philosophy': 'Dental mirror and probe laid neatly on a white tray beside a small green plant, calm daylight.',
 };
 
@@ -85,7 +97,7 @@ const sizes = JSON.parse(readFileSync(SIZES, 'utf8'));
 
 async function gen(key) {
   const out = `${OUT}/${key}.webp`;
-  if (existsSync(out)) { if (!sizes[`ai/${key}`]) sizes[`ai/${key}`] = { w: 1200, h: 800 }; return 'skip'; }
+  if (existsSync(out)) { if (!sizes[`ai/${key}`]) sizes[`ai/${key}`] = key.startsWith('wide-') || key.startsWith('hero-wide') ? { w: 1920, h: 1080 } : { w: 1200, h: 800 }; return 'skip'; }
   for (let attempt = 0; attempt < 3; attempt++) {
     const r = await fetch('https://api.openai.com/v1/images/generations', {
       method: 'POST',
@@ -96,7 +108,7 @@ async function gen(key) {
       const j = await r.json();
       const b64 = j.data?.[0]?.b64_json;
       if (!b64) throw new Error('no image');
-      const wide = key.startsWith('hero-wide');
+      const wide = key.startsWith('hero-wide') || key.startsWith('wide-');
       await sharp(Buffer.from(b64, 'base64')).resize(wide ? 1920 : 1200, wide ? 1080 : 800, { fit: 'cover' }).webp({ quality: wide ? 78 : 80 }).toFile(out);
       sizes[`ai/${key}`] = wide ? { w: 1920, h: 1080 } : { w: 1200, h: 800 };
       return 'ok';

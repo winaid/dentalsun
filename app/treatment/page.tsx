@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { SiteHeader } from '@/components/SiteHeader';
+import { PageHero } from '@/components/PageHero';
 import { JsonLd } from '@/components/JsonLd';
 import Image from 'next/image';
 import { Breadcrumb, ContactBand, MedicalNotice, Sentences } from '@/components/ui';
@@ -29,22 +30,13 @@ export default function TreatmentIndex() {
   const hubs = TREATMENT_HUBS.map((h) => ({ nav: h, doc: ALL_DOCS.find((d) => d.path === h.href), children: docsOfHub(h.href) }));
   return (
     <>
-      <SiteHeader />
+      <SiteHeader dark />
       <JsonLd data={[breadcrumbSchema(trail), medicalWebPageSchema({ title: TITLE, description: DESC, path: '/treatment' }), itemListSchema('/treatment', hubs.map((h) => ({ name: h.nav.label, path: h.nav.href })), '광화문 선치과 진료 갈래')]} />
-      <main id="main" className="pt-[72px] md:pt-[88px]">
-        <section className="section bg-canvas">
-          <div className="wrap">
-            <Breadcrumb trail={trail} />
-            <p className="eyebrow mt-6">TREATMENTS</p>
-            <h1 className="display mt-4">
-              광화문 선치과 <span className="accent">진료 안내</span>
-            </h1>
-            <p className="lead mt-5 max-w-[720px]"><Sentences text="일곱 진료 갈래를 세부 항목까지 각각의 문서로 정리했습니다. 궁금한 진료를 고르면 무엇을 어떻게 하는지, 어떤 경우에 필요한지, 자주 묻는 질문까지 볼 수 있습니다." /></p>
-          </div>
-        </section>
+      <main id="main">
+        <PageHero trail={trail} eyebrow="TREATMENTS" bg="ai/wide-implant" title={<>광화문 선치과 <span className="accent">진료 안내</span></>} lead="일곱 진료 갈래를 세부 항목까지 각각의 문서로 정리했습니다. 궁금한 진료를 고르면 무엇을 어떻게 하는지, 어떤 경우에 필요한지, 자주 묻는 질문까지 볼 수 있습니다."></PageHero>
         <section className="section">
           <div className="wrap">
-            <ol className="reveal-stack grid-cards md:grid-cols-2 xl:grid-cols-3">
+            <ol className="reveal-stack grid-cards md:grid-cols-2 xl:grid-cols-4">
               {hubs.map((h, i) => (
                 <li key={h.nav.href} className="card card-hover flex h-full flex-col overflow-hidden">
                   <span className="card-img block">
@@ -72,6 +64,20 @@ export default function TreatmentIndex() {
                   </div>
                 </li>
               ))}
+              <li className="card card-hover flex h-full flex-col overflow-hidden">
+                <span className="card-img block">
+                  <Image src={figSrc('ai/insight-hub')} alt="" fill sizes="(max-width: 768px) 100vw, 25vw" className="object-cover" />
+                </span>
+                <div className="flex flex-1 flex-col p-7">
+                  <span className="num">08</span>
+                  <Link href="/insight" className="mt-3 block text-[1.35rem] font-extrabold text-ink hover:text-brand-700">인사이트</Link>
+                  <p className="mt-2 text-[14.5px] leading-relaxed text-ink-soft">증상별 안내 12편과 치료 가이드 6편.</p>
+                  <ul className="mt-5 flex flex-wrap gap-2">
+                    <li><Link href="/insight#symptoms" className="pill hover:border-brand-300 hover:text-brand-700">증상별 안내</Link></li>
+                    <li><Link href="/insight#guides" className="pill hover:border-brand-300 hover:text-brand-700">치료 가이드</Link></li>
+                  </ul>
+                </div>
+              </li>
             </ol>
           </div>
         </section>

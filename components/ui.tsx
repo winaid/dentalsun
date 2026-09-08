@@ -118,9 +118,23 @@ export function Figure({
 }) {
   const s = figSize(fig.key);
   const fx = effect === 'none' ? '' : effect;
+  /*
+   * ★ 작은 원본(폭 600px 미만 — 옛 배너에서 잘라 낸 도해)은 상자에 늘려 채우지 않는다 (오너: "사진 막 확대돼서").
+   *   같은 비율 상자 안에 **원래 크기 그대로** 가운데 놓고 옅은 바탕을 깐다 — 흐려지지 않고, 격자 줄은 그대로 맞는다.
+   */
+  /*
+   * ★ 글자가 박힌 도해·장비 배너(equip/·illust/ 원본)도 상자에 잘라 넣지 않는다 — 상자 안에 통째로(contain) 놓는다.
+   *   사진(scene/·place/·ai/)만 상자에 꽉 채워 자른다. 회귀 사례: GBT 도해의 바깥 라벨이 잘려 나갔다.
+   */
+  const diagram = /^(equip|illust)\//.test(fig.key);
+  const framed = !!ratio && (s.w < 600 || diagram);
   return (
     <figure className={className}>
-      {ratio ? (
+      {ratio && framed ? (
+        <div className={`${fx} relative ${ratio} flex items-center justify-center overflow-hidden ${rounded} bg-canvas-2 p-6`}>
+          <Image src={figSrc(fig.key)} alt={fig.alt} width={s.w} height={s.h} sizes={sizes} priority={priority} className="max-h-full w-auto max-w-full rounded-xl object-contain" />
+        </div>
+      ) : ratio ? (
         <div className={`${fx} relative ${ratio} overflow-hidden ${rounded} bg-canvas-2`}>
           <Image src={figSrc(fig.key)} alt={fig.alt} fill sizes={sizes} priority={priority} className="object-cover" />
         </div>
@@ -157,11 +171,11 @@ export function FaqList({ items, id = 'faq' }: { items: QA[]; id?: string }) {
 }
 
 /** 마무리 상담 띠 — 페이지당 하나. AI 정물 사진을 배경으로 깐다. */
-export function ContactBand({ title = '궁금한 점은 편하게 문의해 주세요', text, bg = 'ai/visit' }: { title?: string; text?: string; bg?: string }) {
+export function ContactBand({ title = '궁금한 점은 편하게 문의해 주세요', text, bg = 'ai/wide-visit' }: { title?: string; text?: string; bg?: string }) {
   return (
     <section className="relative isolate overflow-hidden bg-night text-white">
       <div className="absolute inset-0 -z-10">
-        <Image src={figSrc(bg)} alt="" fill sizes="100vw" className="object-cover opacity-30" />
+        <Image src={figSrc(bg)} alt="" fill sizes="100vw" className="object-cover opacity-30" data-parallax="0.18" />
         <div className="absolute inset-0 bg-gradient-to-r from-night via-night/85 to-night/50" />
       </div>
       <div className="wrap py-20 md:py-28">
@@ -222,10 +236,10 @@ export function CardLink({ href, label, desc, external = false, fig, num }: { hr
 }
 
 /** 흐르는 키워드 띠 — 구역 사이의 숨 고르기. */
-export function Marquee({ items, dark = false }: { items: string[]; dark?: boolean }) {
+export function Marquee({ items, dark = false, overlap = false }: { items: string[]; dark?: boolean; overlap?: boolean }) {
   const row = [...items, ...items];
   return (
-    <div className={`overflow-hidden border-y ${dark ? 'border-white/10 bg-night text-white/70' : 'border-hairline bg-white text-ink-soft'} py-4`} aria-hidden>
+    <div className={`overflow-hidden border-y ${dark ? 'border-white/10 bg-night text-white/70' : 'border-hairline bg-white text-ink-soft'} py-4 ${overlap ? 'relative z-10 -mt-8 rounded-t-[32px] border-t-0 shadow-[0_-24px_48px_rgba(13,20,51,0.35)]' : ''}`} aria-hidden>
       <div className="marquee">
         {row.map((t, i) => (
           <span key={i} className="flex items-center gap-6 px-6 text-[14px] font-bold tracking-wide whitespace-nowrap">
@@ -235,5 +249,29 @@ export function Marquee({ items, dark = false }: { items: string[]; dark?: boole
         ))}
       </div>
     </div>
+  );
+}
+
+/**
+ * 스크롤 따라 낱말이 차례로 밝아지는 글(레퍼런스의 문단 강조) — RevealScript 가 [data-scrub] 안의 .w 에 .on 을 붙인다.
+ * 문장 단위 줄바꿈은 Sentences 와 같다. 어두운 배경이 기본, 밝은 배경은 light.
+ */
+export function ScrubText({ text, className = '', light = false }: { text: string; className?: string; light?: boolean }) {
+  const sentences = text
+    .split(/(?<=[.!?])\s+(?=\S)/)
+    .map((s) => s.trim())
+    .filter(Boolean);
+  return (
+    <span className={`scrub ${light ? 'scrub-light' : ''} ${className}`} data-scrub>
+      {sentences.map((s, i) => (
+        <span key={i} className="sent">
+          {s.split(/\s+/).map((w, j) => (
+            <span key={j} className="w">
+              {w}{' '}
+            </span>
+          ))}
+        </span>
+      ))}
+    </span>
   );
 }

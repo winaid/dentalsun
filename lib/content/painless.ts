@@ -291,7 +291,7 @@ export const PAINLESS_DOCS: Doc[] = [
           '광화문선치과의 수면치료를 받기 위해 멀리 지방에서도 오시는 분들이 있습니다. 전국, 멀리서도 찾아 주시는 환자분들을 위해 한 분 한 분 정성껏 진료하고 있습니다.',
           '먼 곳에서 오시는 경우 치료 범위와 방문 횟수를 미리 상담해 가능한 한 방문을 줄여 진행할 수 있도록 계획을 세웁니다.',
         ],
-        figure: { key: 'scene/consult', alt: '의료진이 환자와 상담하는 모습' },
+        figure: { key: 'ai/faq', alt: '의료진이 환자와 상담하는 모습' },
         figureSide: 'left',
       },
       {
@@ -398,7 +398,7 @@ export const PAINLESS_DOCS: Doc[] = [
           { title: '임플란트 — 임플란트 주위점막염', desc: '임플란트 주변 잇몸에 생긴 염증으로, 초기에 관리하면 뼈 손상으로 진행되는 것을 막는 데 도움이 됩니다.' },
           { title: '임플란트 — 임플란트 주위염', desc: '임플란트 주변 뼈까지 염증이 진행된 상태로, 임플란트 표면을 손상시키지 않는 저자극 세척이 중요합니다.' },
         ],
-        figure: { key: 'illust/airflow-device', alt: '에어플로우 장비 도해' },
+        figure: { key: 'ai/painless-airflow', alt: '에어플로우 장비 도해' },
         columns: 2,
       },
       {

@@ -398,3 +398,68 @@ details.faq .a {
   .hero-slide:first-child { opacity: 1; }
   html { scroll-behavior: auto; }
 }
+
+/* 패럴랙스 배경 — 이동분만큼 여유를 두고 확대되므로 가장자리가 비지 않는다 */
+[data-parallax] {
+  will-change: transform;
+}
+[data-tilt-item] {
+  transition: translate 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+  will-change: translate;
+}
+
+/* ── 스크롤 연동 연출 2 — 낱말 밝아짐 · 고정 무대 · 가로 흐름 · 숫자 세기 · 첫 화면 옅어짐 (RevealScript) ── */
+.scrub .w {
+  color: rgba(255, 255, 255, 0.3);
+  transition: color 0.35s ease;
+}
+.scrub .w.on {
+  color: #fff;
+}
+.scrub-light .w {
+  color: rgba(20, 26, 46, 0.22);
+}
+.scrub-light .w.on {
+  color: var(--color-ink);
+}
+
+.stage-img {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: scale(1.06);
+  transition: opacity 0.7s ease, transform 1.2s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.stage-img.on {
+  opacity: 1;
+  transform: none;
+}
+.stage-step {
+  transition: opacity 0.5s ease;
+}
+@media (min-width: 1024px) {
+  .stage-step {
+    opacity: 0.35;
+  }
+  .stage-step.on {
+    opacity: 1;
+  }
+}
+[data-hpan],
+[data-scroll-fade] {
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrub .w,
+  .scrub-light .w {
+    color: inherit !important;
+  }
+  .stage-img {
+    opacity: 1;
+    transform: none;
+  }
+  .stage-step {
+    opacity: 1 !important;
+  }
+}

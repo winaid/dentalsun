@@ -45,8 +45,8 @@ export default function AboutPage() {
       <main id="main">
         <section className="relative isolate overflow-hidden bg-night text-white">
           <div className="absolute inset-0 -z-10">
-            <Image src="/img/scene/intro-1.webp" alt="" fill priority sizes="100vw" className="object-cover opacity-50" />
-            <div className="absolute inset-0 bg-gradient-to-r from-night via-night/80 to-night/30" />
+            <Image src="/img/ai/hero-wide-1.webp" alt="" fill priority sizes="100vw" className="kenburns object-cover opacity-70" />
+            <div className="absolute inset-0 bg-gradient-to-r from-night via-night/85 to-night/30" />
           </div>
           <div className="wrap pt-[120px] pb-16 md:pt-[160px] md:pb-24">
             <Breadcrumb trail={trail} dark />

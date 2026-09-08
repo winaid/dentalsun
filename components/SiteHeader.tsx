@@ -45,24 +45,24 @@ export function SiteHeader({ dark = false }: { dark?: boolean }) {
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${solid ? 'bg-white/92 shadow-[0_1px_0_rgba(20,26,46,0.06)] backdrop-blur-md' : 'bg-transparent'}`}
       onMouseLeave={() => setPanel(null)}
     >
-      <div className="flex h-[72px] items-center gap-5 px-5 sm:px-8 md:h-[88px] lg:px-10">
+      <div className={`flex items-center gap-5 px-5 transition-[height] duration-300 sm:px-8 lg:px-10 ${scrolled ? 'h-[64px] md:h-[72px]' : 'h-[72px] md:h-[88px]'}`}>
         <Link href="/" className="flex shrink-0 items-center gap-2.5 whitespace-nowrap" aria-label={`${CLINIC.shortName} 홈`}>
           <Image src="/img/brand/mark.png" alt="" width={44} height={44} priority className="h-10 w-10 md:h-11 md:w-11" />
-          <span className={`text-[1.2rem] font-extrabold tracking-[-0.02em] md:text-[1.4rem] ${solid ? 'text-brand-800' : 'text-white'}`}>광화문 선치과</span>
+          <span className={`text-[1.2rem] font-extrabold tracking-[-0.02em] md:text-[1.4rem] lg:text-[1.25rem] 2xl:text-[1.4rem] ${solid ? 'text-brand-800' : 'text-white'}`}>광화문 선치과</span>
         </Link>
 
-        <span className={`hidden shrink-0 items-center gap-2 whitespace-nowrap rounded-full border px-3 py-1 text-[12px] font-semibold xl:inline-flex ${solid ? 'border-hairline text-ink-soft' : 'border-white/25 text-white/85'}`}>
+        <span className={`hidden shrink-0 items-center gap-2 whitespace-nowrap rounded-full border px-3 py-1 text-[12px] font-semibold min-[1700px]:inline-flex ${solid ? 'border-hairline text-ink-soft' : 'border-white/25 text-white/85'}`}>
           <span className="h-1.5 w-1.5 rounded-full bg-sun-500" />
           광화문역 6번 출구 도보 2분
         </span>
 
         <nav className="mx-auto hidden lg:block" aria-label="주요 메뉴">
-          <ul className="flex items-center gap-0.5 xl:gap-1.5">
+          <ul className="flex items-center gap-0 2xl:gap-1">
             {NAV.map((item, i) => (
               <li key={item.href} className="relative" onMouseEnter={() => setPanel(i)}>
                 <Link
                   href={item.href}
-                  className={`block whitespace-nowrap rounded-full px-2.5 py-2 text-[14px] font-bold transition-colors xl:px-3.5 xl:text-[15px] ${solid ? 'text-ink hover:bg-brand-50 hover:text-brand-700' : 'text-white/90 hover:bg-white/15 hover:text-white'} ${isActive(item.href) ? (solid ? '!text-brand-700' : '!text-sun-300') : ''}`}
+                  className={`block whitespace-nowrap rounded-full px-1.5 py-2 text-[13px] font-bold transition-colors xl:px-2 xl:text-[14px] 2xl:px-3.5 2xl:text-[15px] ${solid ? 'text-ink hover:bg-brand-50 hover:text-brand-700' : 'text-white/90 hover:bg-white/15 hover:text-white'} ${isActive(item.href) ? (solid ? '!text-brand-700' : '!text-sun-300') : ''}`}
                   aria-haspopup={item.children ? 'true' : undefined}
                   aria-expanded={panel === i}
                 >
@@ -95,7 +95,7 @@ export function SiteHeader({ dark = false }: { dark?: boolean }) {
           </ul>
         </nav>
 
-        <a href={CLINIC.phoneHref} className={`hidden shrink-0 items-center gap-2 whitespace-nowrap rounded-full border px-4 py-2 text-[14px] font-extrabold lg:inline-flex ${solid ? 'border-hairline bg-white text-brand-800 hover:border-brand-300' : 'border-white/30 bg-white/10 text-white'}`}>
+        <a href={CLINIC.phoneHref} className={`hidden shrink-0 items-center gap-2 whitespace-nowrap rounded-full border px-4 py-2 text-[14px] font-extrabold xl:inline-flex ${solid ? 'border-hairline bg-white text-brand-800 hover:border-brand-300' : 'border-white/30 bg-white/10 text-white'}`}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" /></svg>
           {CLINIC.phone}
         </a>

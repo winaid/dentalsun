@@ -19,9 +19,9 @@ const BACKDROPS = [
 
 export function HomeHero() {
   return (
-    <section className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-night text-white">
+    <section className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-night text-white" data-hero-full>
       {/* 배경 — 두 장 교차, 천천히 다가옴 */}
-      <div className="absolute inset-0 -z-10">
+      <div className="absolute inset-0 -z-10" data-parallax="0.25">
         {BACKDROPS.map((b, i) => (
           <div key={b.key} className="hero-slide" style={{ animationDuration: '16s', animationDelay: `${i * 8}s` }}>
             <Image src={figSrc(b.key)} alt={b.alt} fill priority={i === 0} sizes="100vw" className="object-cover object-center" />
@@ -34,8 +34,8 @@ export function HomeHero() {
       </div>
 
       <div className="wrap grid flex-1 items-center gap-12 pt-[120px] pb-24 md:pt-[150px] lg:grid-cols-[1.05fr_0.95fr] lg:gap-10">
-        {/* 왼쪽 — 글 */}
-        <div>
+        {/* 왼쪽 — 글 (스크롤하면 살짝 올라가며 옅어진다) */}
+        <div data-scroll-fade>
           <p className="eyebrow on-dark hero-in">SUN DENTAL CLINIC · 광화문역 6번 출구 도보 2분</p>
           <h1 className="display mt-6 max-w-[760px] !text-white hero-in hero-in-2 on-photo">
             더 빠르고, 정확하게,
@@ -59,15 +59,15 @@ export function HomeHero() {
         </div>
 
         {/* 오른쪽 — 사진 카드 + 떠 있는 정보 */}
-        <div className="relative hidden aspect-[5/4] w-full lg:block">
-          <div className="hero-in hero-in-2 absolute top-0 right-0 h-[88%] w-[82%] overflow-hidden rounded-[36px] shadow-[0_40px_80px_rgba(0,0,0,0.45)] ring-1 ring-white/15">
+        <div className="relative hidden aspect-[5/4] w-full lg:block" data-tilt data-scroll-fade="0.6">
+          <div data-tilt-item="10" className="hero-in hero-in-2 absolute top-0 right-0 h-[88%] w-[82%] overflow-hidden rounded-[36px] shadow-[0_40px_80px_rgba(0,0,0,0.45)] ring-1 ring-white/15">
             <Image src={figSrc('scene/loupe')} alt="확대경을 착용하고 임플란트 수술을 하는 광화문선치과 원장" fill priority sizes="(max-width: 1280px) 50vw, 700px" className="kenburns object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-night/60 via-transparent to-transparent" />
             <p className="absolute top-5 right-5 rounded-full border border-white/20 bg-night/50 px-3 py-1.5 text-[11.5px] font-bold tracking-[0.14em] text-white/85 backdrop-blur">DIGITAL IMPLANT</p>
           </div>
 
           {/* 전문의 2인 칩 */}
-          <div className="float-y hero-in hero-in-3 absolute top-[6%] left-0 flex items-center gap-3 rounded-2xl border border-white/15 bg-white/10 px-4 py-3 backdrop-blur-md">
+          <div data-tilt-item="22" className="float-y hero-in hero-in-3 absolute top-[6%] left-0 flex items-center gap-3 rounded-2xl border border-white/15 bg-white/10 px-4 py-3 backdrop-blur-md">
             <span className="flex -space-x-3">
               {DOCTORS.map((d) => (
                 <Image key={d.slug} src={d.photo} alt={d.name} width={40} height={40} className="h-10 w-10 rounded-full border-2 border-night object-cover object-top" />
@@ -80,7 +80,7 @@ export function HomeHero() {
           </div>
 
           {/* 진료시간 유리 카드 */}
-          <div className="float-y hero-in hero-in-4 absolute bottom-0 left-0 w-[46%] rounded-3xl border border-white/15 bg-white/10 p-5 backdrop-blur-md" style={{ animationDelay: '-1.4s' }}>
+          <div data-tilt-item="18" className="float-y hero-in hero-in-4 absolute bottom-0 left-0 w-[46%] rounded-3xl border border-white/15 bg-white/10 p-5 backdrop-blur-md" style={{ animationDelay: '-1.4s' }}>
             <p className="flex items-center gap-2 text-[12px] font-bold tracking-wide text-white/70">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zm0 4v5l3 2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
               진료시간
@@ -97,7 +97,7 @@ export function HomeHero() {
           </div>
 
           {/* 역 칩 */}
-          <div className="float-y hero-in hero-in-4 absolute right-[4%] bottom-[4%] flex items-center gap-2.5 rounded-2xl border border-white/15 bg-night/70 px-4 py-3 backdrop-blur-md" style={{ animationDelay: '-2.6s' }}>
+          <div data-tilt-item="26" className="float-y hero-in hero-in-4 absolute right-[4%] bottom-[4%] flex items-center gap-2.5 rounded-2xl border border-white/15 bg-night/70 px-4 py-3 backdrop-blur-md" style={{ animationDelay: '-2.6s' }}>
             <span className="flex h-7 w-7 items-center justify-center rounded-full text-[12px] font-bold text-white" style={{ background: CLINIC.transit[0].color }}>5</span>
             <span className="text-[13px] leading-tight">
               <span className="block font-bold">{CLINIC.transit[0].station} {CLINIC.transit[0].exit}</span>

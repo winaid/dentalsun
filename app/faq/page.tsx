@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { SiteHeader } from '@/components/SiteHeader';
+import { PageHero } from '@/components/PageHero';
 import { JsonLd } from '@/components/JsonLd';
 import { Breadcrumb, ContactBand, FaqList, MedicalNotice , Sentences } from '@/components/ui';
 import { SITE_FAQ, ALL_FAQ } from '@/lib/faq';
@@ -19,19 +20,10 @@ export default function FaqPage() {
   const trail = [{ name: TITLE, path: '/faq' }];
   return (
     <>
-      <SiteHeader />
+      <SiteHeader dark />
       <JsonLd data={[breadcrumbSchema(trail), medicalWebPageSchema({ title: TITLE, description: DESC, path: '/faq' }), faqSchema(ALL_FAQ, '/faq')]} />
-      <main id="main" className="pt-[72px] md:pt-[88px]">
-        <section className="section bg-canvas">
-          <div className="wrap">
-            <Breadcrumb trail={trail} />
-            <p className="eyebrow mt-6">FREQUENTLY ASKED QUESTIONS</p>
-            <h1 className="display mt-4">
-              광화문 선치과에 <span className="accent">자주 묻는 질문</span>
-            </h1>
-            <p className="lead mt-5 max-w-[720px]"><Sentences text="진료시간과 예약, 오시는 길, 임플란트·턱관절 치료, 건강보험 적용, 마취와 수면치료까지 환자분들이 가장 많이 물어보시는 내용을 모았습니다." /></p>
-          </div>
-        </section>
+      <main id="main">
+        <PageHero trail={trail} eyebrow="FREQUENTLY ASKED QUESTIONS" bg="ai/wide-visit" title={<>광화문 선치과에 <span className="accent">자주 묻는 질문</span></>} lead="진료시간과 예약, 오시는 길, 임플란트·턱관절 치료, 건강보험 적용, 마취와 수면치료까지 환자분들이 가장 많이 물어보시는 내용을 모았습니다."></PageHero>
         {SITE_FAQ.map((g, i) => (
           <section key={g.id} id={g.id} className={`section ${i % 2 ? 'bg-canvas' : ''}`}>
             <div className="wrap grid gap-8 lg:grid-cols-[1fr_2fr]">

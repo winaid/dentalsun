@@ -102,7 +102,7 @@ export const IMPLANT_DOCS: Doc[] = [
           },
         ],
         columns: 3,
-        figure: { key: 'equip/planning', alt: '임플란트 식립 분석 화면' },
+        figure: { key: 'ai/implant-navigation', alt: '임플란트 식립 분석 화면' },
       },
       {
         type: 'text',
@@ -219,7 +219,7 @@ export const IMPLANT_DOCS: Doc[] = [
           {
             title: '임플란트 식립경로 분석',
             desc: '3차원 데이터 위에서 임플란트의 종류, 위치, 길이, 각도와 뼈이식 필요 여부를 분석합니다.',
-            figure: { key: 'equip/planning', alt: '임플란트 식립 분석 화면' },
+            figure: { key: 'ai/implant-navigation', alt: '임플란트 식립 분석 화면' },
           },
           {
             title: '3D 디지털 보철 디자인',
@@ -318,7 +318,7 @@ export const IMPLANT_DOCS: Doc[] = [
       '틀니 대신 임플란트',
       '광화문 선치과',
     ],
-    hero: { key: 'implant/fullarch-model', alt: '풀아치 임플란트 모형' },
+    hero: { key: 'ai/implant-fullarch', alt: '풀아치 임플란트 모형' },
     procedure: '풀아치 임플란트',
     blocks: [
       {
@@ -329,7 +329,7 @@ export const IMPLANT_DOCS: Doc[] = [
           '치아가 거의 없는데 불편한 틀니를 계속 써야 할지, 비용이 큰 전체 임플란트를 해야 할지 고민이라면 풀아치 임플란트가 또 하나의 선택지입니다. 풀아치(전체) 임플란트는 4~6개의 임플란트 식립으로 치아의 기능을 회복할 수 있는 무치악 치료 방법으로, 디지털 수술과 최소식립을 결합해 무치악의 불편함을 해결합니다.',
           '4~6개의 임플란트 최소식립으로 1~2개월 내로 치아의 기능을 회복할 수 있으며, 광화문 선치과는 전악 풀아치 임플란트를 최소식립과 합리적 비용으로 진행해 전체 치아 기능을 회복합니다.',
         ],
-        figure: { key: 'implant/fullarch-model', alt: '4~6개 임플란트 위에 고정한 풀아치 보철물 모형' },
+        figure: { key: 'ai/implant-fullarch', alt: '4~6개 임플란트 위에 고정한 풀아치 보철물 모형' },
       },
       {
         type: 'points',
@@ -438,7 +438,7 @@ export const IMPLANT_DOCS: Doc[] = [
       '자외선 임플란트',
       '광화문 선치과',
     ],
-    hero: { key: 'implant/uv', alt: '임플란트 픽스처' },
+    hero: { key: 'ai/implant-uv', alt: '임플란트 픽스처' },
     procedure: 'UV 임플란트',
     blocks: [
       {
@@ -484,7 +484,7 @@ export const IMPLANT_DOCS: Doc[] = [
           '일반적으로 티타늄 임플란트는 제조 후 시간이 지나면서 표면에 공기 중의 탄소 성분 등 유기물이 달라붙어 물과 혈액을 밀어내는 성질이 강해집니다. 식립 직전 UV(자외선)를 조사하면 이 유기물이 제거되어 표면이 물과 혈액에 잘 젖는 상태로 되돌아가고, 혈액 속의 단백질과 뼈세포가 표면에 쉽게 달라붙어 골유착이 빨라지는 것으로 알려져 있습니다.',
           '골유착이 빠르고 단단할수록 임플란트가 초기에 흔들리지 않고 자리를 잡기 쉬우므로, 뼈의 양이 적거나 뼈가 붙는 속도가 느린 분께 특히 도움이 됩니다.',
         ],
-        figure: { key: 'implant/uv', alt: 'UV 조사 전 임플란트 픽스처' },
+        figure: { key: 'ai/implant-uv', alt: 'UV 조사 전 임플란트 픽스처' },
         figureSide: 'left',
       },
       {
@@ -549,7 +549,7 @@ export const IMPLANT_DOCS: Doc[] = [
       '뼈이식',
       '광화문 선치과',
     ],
-    hero: { key: 'implant/prf', alt: '자가혈(PRF) 튜브' },
+    hero: { key: 'ai/implant-prf', alt: '자가혈(PRF) 튜브' },
     procedure: '자가혈(PRF) 임플란트',
     blocks: [
       {
@@ -560,7 +560,7 @@ export const IMPLANT_DOCS: Doc[] = [
           '자가혈(PRF) 임플란트는 내 혈액을 소량 채취하여 자가치유세포(PRF)를 추출한 뒤, 뼈이식 임플란트 시술 시 뼈이식 재료와 함께 주입하여 잇몸 재생과 빠른 회복을 촉진하는 방법입니다. 뼈이식이 필요하다면 자가혈 임플란트를 고려할 수 있습니다.',
           'PRF(Platelet Rich Fibrin)는 일반적으로 혈액 속 혈소판과 성장인자가 풍부하게 모인 섬유소 덩어리를 말하며, 상처 치유와 조직 재생을 돕는 역할을 합니다. 남의 조직이나 인공 재료가 아닌 내 몸에서 나온 재료라는 점이 특징입니다.',
         ],
-        figure: { key: 'implant/prf', alt: '채취한 혈액에서 분리한 자가혈(PRF) 튜브' },
+        figure: { key: 'ai/implant-prf', alt: '채취한 혈액에서 분리한 자가혈(PRF) 튜브' },
       },
       {
         type: 'points',
@@ -648,7 +648,7 @@ export const IMPLANT_DOCS: Doc[] = [
       '기성품 임플란트',
       '광화문 선치과',
     ],
-    hero: { key: 'implant/custom', alt: '맞춤 제작한 임플란트 어버트먼트' },
+    hero: { key: 'ai/implant-custom', alt: '맞춤 제작한 임플란트 어버트먼트' },
     procedure: '맞춤 임플란트',
     blocks: [
       {
@@ -659,7 +659,7 @@ export const IMPLANT_DOCS: Doc[] = [
           '임플란트는 일반적으로 잇몸뼈에 심는 인공 치근(픽스처), 그 위에 연결하는 기둥(어버트먼트), 겉으로 보이는 보철물(크라운)의 세 부분으로 이루어집니다. 맞춤 임플란트는 이 가운데 기둥을 규격대로 만든 기성품이 아니라 내 잇몸 라인에 맞춰 제작하는 방식입니다.',
           '잇몸의 높이와 두께, 치아가 나오는 방향은 사람마다 다르기 때문에, 잇몸에 꼭 맞게 제작한 기둥은 보철물과 잇몸 사이 틈을 줄여 편하고 오랫동안 사용할 수 있게 해 줍니다.',
         ],
-        figure: { key: 'implant/custom', alt: '잇몸 라인에 맞춰 제작한 맞춤 어버트먼트' },
+        figure: { key: 'ai/implant-custom', alt: '잇몸 라인에 맞춰 제작한 맞춤 어버트먼트' },
       },
       {
         type: 'compare',
@@ -710,7 +710,7 @@ export const IMPLANT_DOCS: Doc[] = [
           '임플란트 주위염은 일반적으로 임플란트 주변 잇몸과 잇몸뼈에 생기는 염증으로, 자연치아의 잇몸병(치주염)과 비슷하게 진행됩니다. 잇몸과 보철물 사이 틈에 음식물과 세균이 쌓이면 잇몸이 붓고 피가 나며, 방치하면 임플란트를 잡고 있는 뼈가 줄어들어 임플란트가 흔들릴 수 있습니다.',
           '맞춤 임플란트로 틈을 줄이는 것과 함께, 치료 후 정기검진과 꼼꼼한 칫솔질·치간 관리가 임플란트를 오래 쓰는 데 중요합니다.',
         ],
-        figure: { key: 'scene/consult', alt: '의료진이 환자와 상담하는 모습' },
+        figure: { key: 'ai/faq', alt: '의료진이 환자와 상담하는 모습' },
         figureSide: 'left',
       },
       {
@@ -764,7 +764,7 @@ export const IMPLANT_DOCS: Doc[] = [
       '정기검진',
       '광화문 선치과',
     ],
-    hero: { key: 'scene/consult', alt: '광화문 선치과 의료진이 환자와 상담하는 모습' },
+    hero: { key: 'ai/faq', alt: '광화문 선치과 의료진이 환자와 상담하는 모습' },
     blocks: [
       {
         type: 'text',

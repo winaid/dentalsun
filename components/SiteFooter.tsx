@@ -11,7 +11,7 @@ export function SiteFooter() {
   return (
     <footer className="border-t border-hairline bg-canvas">
       <div className="wrap py-14">
-        <div className="grid gap-10 lg:grid-cols-[1.2fr_2fr]">
+        <div className="grid gap-10 lg:grid-cols-[1fr_2.6fr]">
           <div>
             <Image src="/img/brand/logo.png" alt={CLINIC.name} width={522} height={145} className="h-11 w-auto" />
             <p className="mt-5 max-w-[380px] text-[14px] leading-relaxed text-ink-soft">{CLINIC.description}</p>
@@ -33,7 +33,7 @@ export function SiteFooter() {
             </div>
           </div>
 
-          <nav aria-label="전체 메뉴" className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3">
+          <nav aria-label="전체 메뉴" className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3 lg:grid-cols-5">
             {NAV.map((item) => (
               <div key={item.href}>
                 {item.href.startsWith('http') ? (

@@ -17,8 +17,14 @@ const ITEMS = [
 
 export function QuickMenu() {
   const [top, setTop] = useState(false);
+  /* 홈 첫 화면([data-hero-full])이 화면을 다 쓰는 동안은 숨긴다 — 떠 있는 정보 칩과 겹치지 않게. 다른 쪽은 처음부터 보인다. */
+  const [shown, setShown] = useState(true);
   useEffect(() => {
-    const on = () => setTop(window.scrollY > 600);
+    const hero = document.querySelector<HTMLElement>('[data-hero-full]');
+    const on = () => {
+      setTop(window.scrollY > 600);
+      setShown(!hero || window.scrollY > hero.offsetHeight - 160);
+    };
     on();
     window.addEventListener('scroll', on, { passive: true });
     return () => window.removeEventListener('scroll', on);
@@ -26,7 +32,7 @@ export function QuickMenu() {
   return (
     <>
       {/* 데스크톱 — 오른쪽 세로 */}
-      <div className="fixed right-5 bottom-6 z-40 hidden flex-col items-end gap-2.5 md:flex">
+      <div className={`fixed right-5 bottom-6 z-40 hidden flex-col items-end gap-2.5 transition-all duration-500 md:flex ${shown ? 'translate-x-0 opacity-100' : 'pointer-events-none translate-x-6 opacity-0'}`}>
         {top && (
           <button type="button" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} aria-label="맨 위로" className="flex h-11 w-11 items-center justify-center rounded-full border border-hairline bg-white text-ink shadow-[var(--shadow-soft)] hover:text-brand-700">
             ↑
