@@ -7,9 +7,8 @@ import { figSrc, type Fig } from '@/lib/docs';
  * 콜라주 첫 화면 — 레퍼런스(one-dental 'SMILE BY DESIGN')의 짜임새.
  *  · 화면을 가로지르는 큰 제목 두 줄(둘째 줄은 오른쪽으로 밀어 어긋나게).
  *  · 사진 카드 세 장을 흩뿌리고, 아래에 번호 항목 세 개를 높이를 달리해 놓는다.
- *  · 구역을 180svh 로 길게 잡고 안쪽 무대를 고정(sticky). 스크롤하면 카드·항목이 [data-seq] 순서로 하나씩 떠오른다.
- *    첫 카드는 처음부터 보이고, 나머지 둘 + 항목 셋이 차례로 켜진다(RevealScript 의 data-seq).
- *  · 좁은 화면은 고정 없이 위에서 아래로 흐른다(글 → 카드 세 장 → 항목).
+ *  · 페이지가 열리면 글 → 카드 1·2·3 → 항목 1·2·3 순서로 하나씩 떠오른다(스크롤 없이, hero-in 지연).
+ *  · 좁은 화면은 위에서 아래로 흐른다(글 → 카드 세 장 → 항목).
  */
 export interface CollageCard {
   fig: Fig;
@@ -47,8 +46,8 @@ export function HeroCollage({
   children?: ReactNode;
 }) {
   return (
-    <section className="relative isolate bg-night text-white lg:h-[180svh]" data-seq data-hero-full>
-      <div className="relative min-h-[100svh] overflow-hidden lg:sticky lg:top-0 lg:h-[100svh]">
+    <section className="relative isolate bg-night text-white" data-hero-full>
+      <div className="relative min-h-[100svh] overflow-hidden lg:h-[100svh]">
         {/* 배경 — 사진은 오른쪽이 또렷, 글 자리는 남색 */}
         <div className="absolute inset-0 -z-10">
           <Image src={figSrc(bg)} alt="" fill priority sizes="100vw" className="kenburns object-cover object-[60%_50%]" />
@@ -80,8 +79,8 @@ export function HeroCollage({
             {cards.map((c, i) => (
               <div
                 key={c.fig.key}
-                className={`relative overflow-hidden rounded-2xl bg-night-2 shadow-[var(--shadow-lift)] lg:absolute lg:rounded-3xl ${SHAPE[c.shape]} ${i === 0 ? 'hero-in hero-in-3' : ''}`}
-                {...(i === 0 ? {} : { 'data-seq-item': '' })}
+                className={`relative overflow-hidden rounded-2xl bg-night-2 shadow-[var(--shadow-lift)] lg:absolute lg:rounded-3xl ${SHAPE[c.shape]} hero-in`}
+                style={{ animationDelay: `${420 + i * 320}ms` }}
               >
                 <Image src={figSrc(c.fig.key)} alt={c.fig.alt} fill sizes="(max-width: 1024px) 33vw, 28vw" className="object-cover" priority={i === 0} />
               </div>
@@ -91,7 +90,7 @@ export function HeroCollage({
           {/* 번호 항목 — 높이를 달리해 흩어 놓는다 */}
           <ol className="relative z-20 mt-10 grid gap-6 sm:grid-cols-3 lg:absolute lg:bottom-[9svh] lg:left-0 lg:mt-0 lg:w-[60%] lg:gap-8">
             {items.slice(0, 3).map((it, i) => (
-              <li key={it.title} className={i === 1 ? 'lg:translate-y-7' : i === 2 ? 'lg:-translate-y-3' : ''} data-seq-item>
+              <li key={it.title} className={`hero-in ${i === 1 ? 'lg:translate-y-7' : i === 2 ? 'lg:-translate-y-3' : ''}`} style={{ animationDelay: `${1400 + i * 260}ms` }}>
                 <span className="text-[11px] tracking-[0.2em] text-sun-300">{String(i + 1).padStart(2, '0')}</span>
                 <p className="mt-2 flex items-start gap-2 text-[15px] font-bold leading-snug text-white">
                   <span aria-hidden className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-sun-500" />
