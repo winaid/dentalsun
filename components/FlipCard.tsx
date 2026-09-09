@@ -11,7 +11,7 @@ import { figSrc, type Fig } from '@/lib/docs';
 export function FlipCard({ href, num, label, desc, back, fig }: { href: string; num: string; label: string; desc: string; back: string; fig: Fig }) {
   return (
     <Link href={href} className="flip group block h-full rounded-3xl focus-visible:outline-2 focus-visible:outline-brand-600" aria-label={`${label} — ${desc}`}>
-      <div className="flip-inner relative h-full min-h-[224px]">
+      <div className="flip-inner relative h-full min-h-[250px]">
         {/* 앞면 */}
         <div className="flip-face card flex h-full flex-col p-7 md:p-8">
           <div className="flex items-start justify-between">
@@ -21,7 +21,7 @@ export function FlipCard({ href, num, label, desc, back, fig }: { href: string; 
             </span>
           </div>
           <p className="mt-auto pt-8 text-[1.15rem] font-bold leading-snug text-ink">{label}</p>
-          <p className="mt-2 text-[13.5px] text-ink-muted">{desc}</p>
+          <p className="mt-2 text-[14.5px] text-ink-muted">{desc}</p>
         </div>
         {/* 뒷면 — 사진 배경 */}
         <div className="flip-face flip-back overflow-hidden rounded-3xl bg-night text-white shadow-[var(--shadow-lift)]">
@@ -30,8 +30,8 @@ export function FlipCard({ href, num, label, desc, back, fig }: { href: string; 
           <div className="relative flex h-full flex-col p-7 md:p-8">
             <span className="text-[12px] font-bold tracking-[0.2em] text-sun-300">{num}</span>
             <p className="mt-auto text-[1.15rem] font-bold leading-snug on-photo">{label}</p>
-            <p className="mt-2 text-[13.5px] leading-[1.7] text-white/85">{back}</p>
-            <span className="mt-4 inline-flex items-center gap-1.5 text-[13px] font-bold text-sun-300">
+            <p className="mt-2 text-[14.5px] leading-[1.7] text-white/85">{back}</p>
+            <span className="mt-4 inline-flex items-center gap-1.5 text-[14px] font-bold text-sun-300">
               자세히 보기
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
             </span>

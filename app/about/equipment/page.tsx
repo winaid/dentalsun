@@ -59,7 +59,7 @@ export default function EquipmentPage() {
                 {it.more && (
                   <ul className="mt-5 space-y-2">
                     {it.more.map((m) => (
-                      <li key={m} className="flex items-start gap-2.5 text-[15px] text-ink">
+                      <li key={m} className="flex items-start gap-2.5 text-[16px] text-ink">
                         <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-sun-500" />
                         {m}
                       </li>

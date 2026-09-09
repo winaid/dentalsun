@@ -59,13 +59,13 @@ export function BeforeAfter({ groups, note, showTabs = true }: { groups: CaseGro
                 role="tab"
                 aria-selected={k === gi}
                 onClick={() => pick(k, 0)}
-                className={`rounded-full px-5 py-2.5 text-[14px] font-bold transition-colors ${k === gi ? 'bg-brand-700 text-white shadow-[var(--shadow-btn)]' : 'text-ink-soft hover:text-brand-700'}`}
+                className={`rounded-full px-5 py-2.5 text-[15px] font-bold transition-colors ${k === gi ? 'bg-brand-700 text-white shadow-[var(--shadow-btn)]' : 'text-ink-soft hover:text-brand-700'}`}
               >
                 {g.label}
               </button>
             ))}
           </div>
-          <Link href={group.href} className="text-[14px] font-bold text-brand-700 hover:underline">
+          <Link href={group.href} className="text-[15px] font-bold text-brand-700 hover:underline">
             {group.label} 자세히 보기 →
           </Link>
         </div>
@@ -133,7 +133,7 @@ export function BeforeAfter({ groups, note, showTabs = true }: { groups: CaseGro
         </ul>
       </div>
 
-      <p className="mt-4 text-[13px] leading-relaxed text-ink-muted">※ {note}</p>
+      <p className="mt-4 text-[14px] leading-relaxed text-ink-muted">※ {note}</p>
     </div>
   );
 }

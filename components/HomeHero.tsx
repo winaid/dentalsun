@@ -53,7 +53,7 @@ export function HomeHero() {
           </div>
           <ul className="mt-12 flex flex-wrap gap-2.5 hero-in hero-in-4">
             {['보건복지부 인증 통합치의학과 전문의', '3D 구강스캐너 · 3D CT · 수술 가이드', '무통마취기 · 에어플로우 · 수면치료'].map((t) => (
-              <li key={t} className="rounded-full border border-white/15 bg-white/8 px-4 py-2 text-[13.5px] font-semibold text-white/85 backdrop-blur">{t}</li>
+              <li key={t} className="rounded-full border border-white/15 bg-white/8 px-4 py-2 text-[14.5px] font-semibold text-white/85 backdrop-blur">{t}</li>
             ))}
           </ul>
         </div>
@@ -73,7 +73,7 @@ export function HomeHero() {
                 <Image key={d.slug} src={d.photo} alt={d.name} width={40} height={40} className="h-10 w-10 rounded-full border-2 border-night object-cover object-top" />
               ))}
             </span>
-            <span className="text-[13px] leading-tight">
+            <span className="text-[14px] leading-tight">
               <span className="block font-bold">보건복지부 인증 전문의</span>
               <span className="block text-white/65">통합치의학과 · 강남성심병원 외래교수</span>
             </span>
@@ -85,7 +85,7 @@ export function HomeHero() {
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zm0 4v5l3 2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
               진료시간
             </p>
-            <ul className="mt-3 space-y-1.5 text-[13.5px]">
+            <ul className="mt-3 space-y-1.5 text-[14.5px]">
               {HOURS.display.slice(0, 3).map((h) => (
                 <li key={h.label} className="flex items-center justify-between gap-3">
                   <span className="text-white/80">{h.label}</span>
@@ -99,7 +99,7 @@ export function HomeHero() {
           {/* 역 칩 */}
           <div data-tilt-item="26" className="float-y hero-in hero-in-4 absolute right-[4%] bottom-[4%] flex items-center gap-2.5 rounded-2xl border border-white/15 bg-night/70 px-4 py-3 backdrop-blur-md" style={{ animationDelay: '-2.6s' }}>
             <span className="flex h-7 w-7 items-center justify-center rounded-full text-[12px] font-bold text-white" style={{ background: CLINIC.transit[0].color }}>5</span>
-            <span className="text-[13px] leading-tight">
+            <span className="text-[14px] leading-tight">
               <span className="block font-bold">{CLINIC.transit[0].station} {CLINIC.transit[0].exit}</span>
               <span className="block text-white/65">{CLINIC.transit[0].walk} · {CLINIC.parking.place} {CLINIC.parking.fee}</span>
             </span>

@@ -30,7 +30,7 @@ export default function PrivacyPage() {
               <p>이 홈페이지는 광고 추적 스크립트를 사용하지 않습니다. 유튜브 영상은 이용자가 재생 버튼을 누른 뒤에만 불러옵니다.</p>
               <h2 className="text-[1.15rem] font-bold text-ink">4. 문의</h2>
               <p>개인정보에 관한 문의는 {CLINIC.name}(전화 {CLINIC.phone})으로 연락 주시기 바랍니다.</p>
-              <p className="text-[13px] text-ink-muted">시행일: 2026년 9월 8일</p>
+              <p className="text-[14px] text-ink-muted">시행일: 2026년 9월 8일</p>
             </div>
           </div>
         </section>

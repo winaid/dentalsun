@@ -79,7 +79,7 @@ export function HeroCollage({
               <span className="block hero-in hero-in-2">{lines[0]}</span>
               {lines[1] && <span className="block hero-in hero-in-3 lg:pl-[14vw]">{lines[1]}</span>}
             </h1>
-            <p className="mt-6 max-w-[520px] text-[1rem] leading-[1.8] text-white/80 hero-in hero-in-4 md:text-[1.08rem]">
+            <p className="mt-6 max-w-[520px] text-[1.08rem] leading-[1.8] text-white/80 hero-in hero-in-4 md:text-[1.16rem]">
               <Sentences text={lead} clauses={false} />
             </p>
             {children && <div className="mt-7 hero-in hero-in-4">{children}</div>}
@@ -113,8 +113,8 @@ export function HeroCollage({
                 style={{ animationDelay: `${1300 + i * 240}ms` }}
               >
                 <span className="num-xl">{String(i + 1).padStart(2, '0')}</span>
-                <p className="mt-3 text-[15.5px] font-bold leading-snug text-white">{it.title}</p>
-                <p className="mt-2 text-[13px] leading-[1.7] text-white/70">{it.desc}</p>
+                <p className="mt-3 text-[16.5px] font-bold leading-snug text-white">{it.title}</p>
+                <p className="mt-2 text-[14px] leading-[1.7] text-white/70">{it.desc}</p>
               </li>
             ))}
           </ol>

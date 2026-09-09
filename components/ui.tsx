@@ -69,7 +69,7 @@ export function SectionHead({
 
 export function Breadcrumb({ trail, dark = false }: { trail: Array<{ name: string; path: string }>; dark?: boolean }) {
   return (
-    <nav aria-label="현재 위치" className={`text-[13px] ${dark ? 'text-white/60' : 'text-ink-muted'}`}>
+    <nav aria-label="현재 위치" className={`text-[14px] ${dark ? 'text-white/60' : 'text-ink-muted'}`}>
       <ol className="flex flex-wrap items-center gap-1.5">
         <li>
           <Link href="/" className="hover:underline">홈</Link>
@@ -140,7 +140,7 @@ export function Figure({
           <Image src={figSrc(fig.key)} alt={fig.alt} width={s.w} height={s.h} sizes={sizes} priority={priority} className="h-auto w-full object-cover" />
         </div>
       )}
-      {caption && fig.caption && <figcaption className="mt-2.5 text-[13px] text-ink-muted">{fig.caption}</figcaption>}
+      {caption && fig.caption && <figcaption className="mt-2.5 text-[14px] text-ink-muted">{fig.caption}</figcaption>}
     </figure>
   );
 }
@@ -196,7 +196,7 @@ export function ContactBand({ title = '궁금한 점은 편하게 문의해 주�
 export function MedicalNotice() {
   return (
     <div className="wrap">
-      <p className="rounded-xl bg-canvas px-5 py-4 text-[13px] leading-relaxed text-ink-muted">{MEDICAL_DISCLAIMER}</p>
+      <p className="rounded-xl bg-canvas px-5 py-4 text-[14px] leading-relaxed text-ink-muted">{MEDICAL_DISCLAIMER}</p>
     </div>
   );
 }
@@ -214,7 +214,7 @@ export function CardLink({ href, label, desc, external = false, fig, num }: { hr
         {num && <span className="num mb-3">{num}</span>}
         <span className="block text-[1.08rem] font-bold leading-snug text-ink group-hover:text-brand-700">{label}</span>
         {desc && (
-          <span className="mt-2 block text-[14px] leading-relaxed text-ink-soft">
+          <span className="mt-2 block text-[15px] leading-relaxed text-ink-soft">
             <Sentences text={desc} clauses={false} />
           </span>
         )}
@@ -239,7 +239,7 @@ export function Marquee({ items, dark = false, overlap = false }: { items: strin
     <div className={`overflow-hidden border-y ${dark ? 'border-white/10 bg-night text-white/70' : 'border-hairline bg-white text-ink-soft'} py-4 ${overlap ? 'relative z-10 -mt-8 rounded-t-[32px] border-t-0 shadow-[0_-24px_48px_rgba(13,20,51,0.35)]' : ''}`} aria-hidden>
       <div className="marquee">
         {row.map((t, i) => (
-          <span key={i} className="flex items-center gap-6 px-6 text-[14px] font-bold tracking-wide whitespace-nowrap">
+          <span key={i} className="flex items-center gap-6 px-6 text-[15px] font-bold tracking-wide whitespace-nowrap">
             <span className="h-1.5 w-1.5 rounded-full bg-sun-500" />
             {t}
           </span>

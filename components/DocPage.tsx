@@ -274,7 +274,7 @@ function BlockView({ block: b, index, band, photoBand }: { block: Block; index: 
     ) : null;
   const cardCls = band ? 'flex h-full flex-col rounded-2xl border border-white/12 bg-white/8 p-6 backdrop-blur-sm' : 'card flex h-full flex-col p-6';
   const titleCls = band ? 'text-[1.05rem] font-bold text-white' : 'text-[1.05rem] font-bold text-ink';
-  const descCls = band ? 'mt-2 text-[14.5px] leading-relaxed text-white/75' : 'mt-2 text-[14.5px] leading-relaxed text-ink-soft';
+  const descCls = band ? 'mt-2 text-[15.5px] leading-relaxed text-white/75' : 'mt-2 text-[15.5px] leading-relaxed text-ink-soft';
 
   switch (b.type) {
     case 'text':
@@ -410,7 +410,7 @@ function BlockView({ block: b, index, band, photoBand }: { block: Block; index: 
                 </tbody>
               </table>
             </div>
-            {b.note && <p className="mt-4 text-[13.5px] leading-relaxed text-ink-muted">※ {b.note}</p>}
+            {b.note && <p className="mt-4 text-[14.5px] leading-relaxed text-ink-muted">※ {b.note}</p>}
           </div>
         </section>
       );
@@ -439,7 +439,7 @@ function BlockView({ block: b, index, band, photoBand }: { block: Block; index: 
                 </tbody>
               </table>
             </div>
-            {b.note && <p className="mt-4 text-[13.5px] leading-relaxed text-ink-muted">※ {b.note}</p>}
+            {b.note && <p className="mt-4 text-[14.5px] leading-relaxed text-ink-muted">※ {b.note}</p>}
           </div>
         </section>
       );
@@ -470,7 +470,7 @@ function BlockView({ block: b, index, band, photoBand }: { block: Block; index: 
             ) : (
               <div className="reveal mt-10 max-w-[1000px]">
                 <Figure fig={b.figure} sizes="(max-width: 1024px) 100vw, 1000px" />
-                <p className="mt-4 rounded-xl bg-sun-50 px-5 py-3.5 text-[13.5px] leading-relaxed text-sun-700">{b.note}</p>
+                <p className="mt-4 rounded-xl bg-sun-50 px-5 py-3.5 text-[14.5px] leading-relaxed text-sun-700">{b.note}</p>
               </div>
             )}
           </div>
@@ -512,7 +512,7 @@ function BlockView({ block: b, index, band, photoBand }: { block: Block; index: 
           <div className="wrap grid gap-8 lg:grid-cols-[0.85fr_1.4fr] lg:gap-16">
             <div className="reveal">
               <p className="inline-flex items-center gap-2.5 text-[12px] font-bold tracking-[0.2em] text-white/80">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full border border-white/50 text-[13px]">!</span>
+                <span className="flex h-6 w-6 items-center justify-center rounded-full border border-white/50 text-[14px]">!</span>
                 NOTICE · 알아두세요
               </p>
               {b.title && <h2 className="display-sm mt-5 !text-white">{b.title}</h2>}

@@ -59,11 +59,11 @@ export default function DoctorsPage() {
                 <h2 className="display-sm mt-4">
                   {d.name} <span className="text-[1.1rem] font-semibold text-ink-muted">{d.role}</span>
                 </h2>
-                <p className="mt-3 text-[14px] text-ink-soft">진료 분야 — {d.focus.join(' · ')}</p>
-                <h3 className="mt-8 text-[13px] font-bold tracking-wide text-ink-muted">주요 약력</h3>
+                <p className="mt-3 text-[15px] text-ink-soft">진료 분야 — {d.focus.join(' · ')}</p>
+                <h3 className="mt-8 text-[14px] font-bold tracking-wide text-ink-muted">주요 약력</h3>
                 <ul className={`mt-3 grid gap-2 ${d.career.length % 2 === 0 ? "sm:grid-cols-2" : ""}`}>
                   {d.career.map((c) => (
-                    <li key={c} className="flex items-start gap-2.5 rounded-xl bg-white px-4 py-3 text-[14.5px] text-ink shadow-[var(--shadow-soft)]">
+                    <li key={c} className="flex items-start gap-2.5 rounded-xl bg-white px-4 py-3 text-[15.5px] text-ink shadow-[var(--shadow-soft)]">
                       <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-sun-500" />
                       {c}
                     </li>

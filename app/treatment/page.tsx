@@ -61,7 +61,7 @@ export default function TreatmentIndex() {
                   <div className="flex flex-1 flex-col p-7">
                   <span className="num">{String(i + 1).padStart(2, '0')}</span>
                   <Link href={h.nav.href} className="mt-3 block text-[1.35rem] font-extrabold text-ink hover:text-brand-700">{h.nav.label}</Link>
-                  {h.doc && <p className="mt-2 text-[14.5px] leading-relaxed text-ink-soft"><Sentences text={h.doc.summary.split(/(?<=다.)s/)[0]} /></p>}
+                  {h.doc && <p className="mt-2 text-[15.5px] leading-relaxed text-ink-soft"><Sentences text={h.doc.summary.split(/(?<=다.)s/)[0]} /></p>}
                   <ul className="mt-5 flex flex-wrap gap-2">
                     {h.children.map((c) => (
                       <li key={c.path}>
@@ -87,7 +87,7 @@ export default function TreatmentIndex() {
                 <div className="flex flex-1 flex-col p-7">
                   <span className="num">08</span>
                   <Link href="/insight" className="mt-3 block text-[1.35rem] font-extrabold text-ink hover:text-brand-700">인사이트</Link>
-                  <p className="mt-2 text-[14.5px] leading-relaxed text-ink-soft">증상별 안내 12편과 치료 가이드 6편.</p>
+                  <p className="mt-2 text-[15.5px] leading-relaxed text-ink-soft">증상별 안내 12편과 치료 가이드 6편.</p>
                   <ul className="mt-5 flex flex-wrap gap-2">
                     <li><Link href="/insight#symptoms" className="pill hover:border-brand-300 hover:text-brand-700">증상별 안내</Link></li>
                     <li><Link href="/insight#guides" className="pill hover:border-brand-300 hover:text-brand-700">치료 가이드</Link></li>

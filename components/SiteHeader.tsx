@@ -45,10 +45,10 @@ export function SiteHeader({ dark = false }: { dark?: boolean }) {
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${solid ? 'bg-white/92 shadow-[0_1px_0_rgba(20,26,46,0.06)] backdrop-blur-md' : 'bg-transparent'}`}
       onMouseLeave={() => setPanel(null)}
     >
-      <div className={`flex items-center gap-5 px-5 transition-[height] duration-300 sm:px-8 lg:px-10 ${scrolled ? 'h-[64px] md:h-[72px]' : 'h-[72px] md:h-[88px]'}`}>
+      <div className={`flex items-center gap-5 px-5 transition-[height] duration-300 sm:px-8 lg:px-10 ${scrolled ? 'h-[68px] md:h-[80px]' : 'h-[76px] md:h-[96px]'}`}>
         <Link href="/" className="flex shrink-0 items-center gap-2.5 whitespace-nowrap" aria-label={`${CLINIC.shortName} 홈`}>
           <Image src="/img/brand/mark.png" alt="" width={44} height={44} priority className="h-10 w-10 md:h-11 md:w-11" />
-          <span className={`text-[1.2rem] font-extrabold tracking-[-0.02em] md:text-[1.4rem] lg:text-[1.25rem] 2xl:text-[1.4rem] ${solid ? 'text-brand-800' : 'text-white'}`}>광화문 선치과</span>
+          <span className={`text-[1.3rem] font-extrabold tracking-[-0.02em] md:text-[1.5rem] lg:text-[1.4rem] 2xl:text-[1.55rem] ${solid ? 'text-brand-800' : 'text-white'}`}>광화문 선치과</span>
         </Link>
 
         <span className={`hidden shrink-0 items-center gap-2 whitespace-nowrap rounded-full border px-3 py-1 text-[12px] font-semibold min-[1700px]:inline-flex ${solid ? 'border-hairline text-ink-soft' : 'border-white/25 text-white/85'}`}>
@@ -62,7 +62,7 @@ export function SiteHeader({ dark = false }: { dark?: boolean }) {
               <li key={item.href} className="relative" onMouseEnter={() => setPanel(i)}>
                 <Link
                   href={item.href}
-                  className={`block whitespace-nowrap rounded-full px-1.5 py-2 text-[13px] font-bold transition-colors xl:px-2 xl:text-[14px] 2xl:px-3.5 2xl:text-[15px] ${solid ? 'text-ink hover:bg-brand-50 hover:text-brand-700' : 'text-white/90 hover:bg-white/15 hover:text-white'} ${isActive(item.href) ? (solid ? '!text-brand-700' : '!text-sun-300') : ''}`}
+                  className={`block whitespace-nowrap rounded-full px-1.5 py-2 text-[14px] font-bold transition-colors xl:px-2 xl:text-[15px] 2xl:px-3.5 2xl:text-[16px] ${solid ? 'text-ink hover:bg-brand-50 hover:text-brand-700' : 'text-white/90 hover:bg-white/15 hover:text-white'} ${isActive(item.href) ? (solid ? '!text-brand-700' : '!text-sun-300') : ''}`}
                   aria-haspopup={item.children ? 'true' : undefined}
                   aria-expanded={panel === i}
                 >
@@ -74,14 +74,14 @@ export function SiteHeader({ dark = false }: { dark?: boolean }) {
                       {item.children.map((c) =>
                         c.external ? (
                           <li key={c.href}>
-                            <a href={c.href} target="_blank" rel="noopener" className="block rounded-xl px-3.5 py-2.5 text-[14.5px] font-semibold text-ink hover:bg-brand-50 hover:text-brand-700">
+                            <a href={c.href} target="_blank" rel="noopener" className="block rounded-xl px-3.5 py-2.5 text-[15.5px] font-semibold text-ink hover:bg-brand-50 hover:text-brand-700">
                               {c.label} <span className="text-ink-muted">↗</span>
                             </a>
                           </li>
                         ) : (
                           <li key={c.href}>
                             <Link href={c.href} className="block rounded-xl px-3.5 py-2.5 hover:bg-brand-50">
-                              <span className="block text-[14.5px] font-semibold text-ink">{c.label}</span>
+                              <span className="block text-[15.5px] font-semibold text-ink">{c.label}</span>
                               {c.desc && <span className="mt-0.5 block text-[12.5px] text-ink-muted">{c.desc}</span>}
                             </Link>
                           </li>
@@ -95,7 +95,7 @@ export function SiteHeader({ dark = false }: { dark?: boolean }) {
           </ul>
         </nav>
 
-        <a href={CLINIC.phoneHref} className={`hidden shrink-0 items-center gap-2 whitespace-nowrap rounded-full border px-4 py-2 text-[14px] font-extrabold xl:inline-flex ${solid ? 'border-hairline bg-white text-brand-800 hover:border-brand-300' : 'border-white/30 bg-white/10 text-white'}`}>
+        <a href={CLINIC.phoneHref} className={`hidden shrink-0 items-center gap-2 whitespace-nowrap rounded-full border px-4 py-2 text-[15px] font-extrabold xl:inline-flex ${solid ? 'border-hairline bg-white text-brand-800 hover:border-brand-300' : 'border-white/30 bg-white/10 text-white'}`}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" /></svg>
           {CLINIC.phone}
         </a>
@@ -120,7 +120,7 @@ export function SiteHeader({ dark = false }: { dark?: boolean }) {
         <div
           id="mobile-menu"
           /* ★ 머리말의 backdrop-filter 가 fixed 의 기준을 머리말로 바꿔 'bottom-0' 이 높이 0 이 된다 → 높이를 직접 준다 */
-          className="absolute inset-x-0 top-full h-[calc(100dvh-72px)] overflow-y-auto bg-white lg:hidden hero-in"
+          className="absolute inset-x-0 top-full h-[calc(100dvh-76px)] overflow-y-auto bg-white lg:hidden hero-in"
         >
           <div className="px-5 py-4 sm:px-8">
             {NAV.map((item) => (
@@ -132,15 +132,15 @@ export function SiteHeader({ dark = false }: { dark?: boolean }) {
                 <ul className="pb-3">
                   {!item.href.startsWith('http') && !item.href.includes('#') && (
                     <li>
-                      <Link href={item.href} className="block px-2 py-2 text-[15px] font-semibold text-brand-700">{item.label} 전체 보기</Link>
+                      <Link href={item.href} className="block px-2 py-2 text-[16px] font-semibold text-brand-700">{item.label} 전체 보기</Link>
                     </li>
                   )}
                   {item.children?.map((c) => (
                     <li key={c.href}>
                       {c.external ? (
-                        <a href={c.href} target="_blank" rel="noopener" className="block px-2 py-2 text-[15px] text-ink-soft">{c.label} ↗</a>
+                        <a href={c.href} target="_blank" rel="noopener" className="block px-2 py-2 text-[16px] text-ink-soft">{c.label} ↗</a>
                       ) : (
-                        <Link href={c.href} className="block px-2 py-2 text-[15px] text-ink-soft">{c.label}</Link>
+                        <Link href={c.href} className="block px-2 py-2 text-[16px] text-ink-soft">{c.label}</Link>
                       )}
                     </li>
                   ))}

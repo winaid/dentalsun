@@ -39,7 +39,7 @@ export default function VisitPage() {
         >
           <ul className="flex flex-wrap gap-2.5">
             {CLINIC.transit.map((t) => (
-              <li key={t.line} className="inline-flex items-center gap-2 rounded-full border-2 bg-white/95 px-4 py-1.5 text-[14px] font-bold text-ink" style={{ borderColor: t.color }}>
+              <li key={t.line} className="inline-flex items-center gap-2 rounded-full border-2 bg-white/95 px-4 py-1.5 text-[15px] font-bold text-ink" style={{ borderColor: t.color }}>
                 <span className="flex h-6 w-6 items-center justify-center rounded-full text-[12px] text-white" style={{ background: t.color }}>{t.line.replace('호선', '')}</span>
                 {t.station} {t.exit} {t.walk}
               </li>
@@ -54,9 +54,9 @@ export default function VisitPage() {
             </div>
             <div className="reveal-stack grid content-start gap-4">
               <div className="card p-6">
-                <p className="text-[13px] font-bold tracking-wide text-ink-muted">주소</p>
+                <p className="text-[14px] font-bold tracking-wide text-ink-muted">주소</p>
                 <p className="mt-2 text-[1.1rem] font-bold text-ink">{CLINIC.address.full}</p>
-                <p className="mt-1 text-[14px] text-ink-soft">{CLINIC.address.landmark}</p>
+                <p className="mt-1 text-[15px] text-ink-soft">{CLINIC.address.landmark}</p>
                 <div className="mt-4 flex flex-wrap gap-2">
                   <a href={CLINIC.maps.naverPlace} target="_blank" rel="noopener" className="pill hover:border-brand-300">네이버 지도</a>
                   <a href={CLINIC.maps.kakaoPlace} target="_blank" rel="noopener" className="pill hover:border-brand-300">카카오맵</a>
@@ -64,10 +64,10 @@ export default function VisitPage() {
                 </div>
               </div>
               <div className="card p-6" id="hours">
-                <p className="text-[13px] font-bold tracking-wide text-ink-muted">진료시간</p>
+                <p className="text-[14px] font-bold tracking-wide text-ink-muted">진료시간</p>
                 <ul className="mt-3 divide-y divide-hairline">
                   {HOURS.display.map((h) => (
-                    <li key={h.label} className="flex items-center justify-between py-2.5 text-[15px]">
+                    <li key={h.label} className="flex items-center justify-between py-2.5 text-[16px]">
                       <span className="font-semibold text-ink">
                         {h.label}
                         {h.note && <span className="ml-2 pill-sun !py-0.5 !text-[11px]">{h.note}</span>}
@@ -76,18 +76,18 @@ export default function VisitPage() {
                     </li>
                   ))}
                 </ul>
-                <p className="mt-3 text-[13px] text-ink-muted">{HOURS.closed} · 토요일은 격주 진료이므로 아래 이달의 진료일정을 확인해 주세요.</p>
+                <p className="mt-3 text-[14px] text-ink-muted">{HOURS.closed} · 토요일은 격주 진료이므로 아래 이달의 진료일정을 확인해 주세요.</p>
               </div>
               <div className="card p-6">
-                <p className="text-[13px] font-bold tracking-wide text-ink-muted">주차</p>
-                <p className="mt-2 text-[15px] font-bold text-ink">
+                <p className="text-[14px] font-bold tracking-wide text-ink-muted">주차</p>
+                <p className="mt-2 text-[16px] font-bold text-ink">
                   {CLINIC.parking.place} {CLINIC.parking.fee}
                 </p>
               </div>
               <a href={CLINIC.phoneHref} className="rounded-2xl bg-brand-700 p-6 text-white transition-colors hover:bg-brand-800">
-                <p className="text-[13px] text-white/70">전화 문의 · 예약</p>
+                <p className="text-[14px] text-white/70">전화 문의 · 예약</p>
                 <p className="mt-1 text-[1.8rem] font-extrabold tracking-tight">{CLINIC.phone}</p>
-                <p className="mt-1 text-[13px] text-white/70">팩스 {CLINIC.fax}</p>
+                <p className="mt-1 text-[14px] text-white/70">팩스 {CLINIC.fax}</p>
               </a>
             </div>
           </div>
@@ -101,7 +101,7 @@ export default function VisitPage() {
               <p className="lead mt-4"><Sentences text="진료 일정 참고하셔서 내원 및 예약에 착오 없으시길 바랍니다." /></p>
               <ul className="mt-6 divide-y divide-hairline rounded-2xl border border-hairline bg-white">
                 {MONTHLY_NOTICE.items.map((it) => (
-                  <li key={it.dates} className="flex items-center justify-between px-5 py-3.5 text-[15px]">
+                  <li key={it.dates} className="flex items-center justify-between px-5 py-3.5 text-[16px]">
                     <span className="font-semibold text-ink">{it.dates}</span>
                     <span className={`font-bold ${/휴진/.test(it.label) ? 'text-sun-600' : 'text-brand-700'}`}>{it.label}</span>
                   </li>
@@ -124,15 +124,15 @@ export default function VisitPage() {
             <div className="reveal-stack mt-8 grid gap-5 sm:grid-cols-3">
               <a href={CLINIC.booking.naverTalk} target="_blank" rel="noopener" className="card card-hover p-6">
                 <p className="text-[1.05rem] font-bold text-ink">1:1 톡 상담 ↗</p>
-                <p className="mt-1.5 text-[14px] text-ink-soft">네이버 톡톡으로 궁금한 점을 남겨 주세요.</p>
+                <p className="mt-1.5 text-[15px] text-ink-soft">네이버 톡톡으로 궁금한 점을 남겨 주세요.</p>
               </a>
               <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="card card-hover p-6">
                 <p className="text-[1.05rem] font-bold text-ink">온라인 예약 ↗</p>
-                <p className="mt-1.5 text-[14px] text-ink-soft">네이버 예약에서 원하는 시간을 고르세요.</p>
+                <p className="mt-1.5 text-[15px] text-ink-soft">네이버 예약에서 원하는 시간을 고르세요.</p>
               </a>
               <a href={CLINIC.booking.naverReview} target="_blank" rel="noopener" className="card card-hover p-6">
                 <p className="text-[1.05rem] font-bold text-ink">치료후기 ↗</p>
-                <p className="mt-1.5 text-[14px] text-ink-soft">다녀가신 환자분들의 후기는 네이버 플레이스에서 보실 수 있습니다.</p>
+                <p className="mt-1.5 text-[15px] text-ink-soft">다녀가신 환자분들의 후기는 네이버 플레이스에서 보실 수 있습니다.</p>
               </a>
             </div>
           </div>

@@ -31,7 +31,7 @@ export function HomeStats() {
             </span>
             <span className="text-[1.05rem] font-bold text-sun-600">{s.unit}</span>
           </p>
-          <p className="mt-2 text-[13.5px] text-ink-soft">{s.label}</p>
+          <p className="mt-2 text-[14.5px] text-ink-soft">{s.label}</p>
         </li>
       ))}
     </ul>
@@ -91,7 +91,7 @@ export function HomeStage() {
                 <div className="min-w-0 flex-1">
                   <h3 className="text-[1.3rem] font-bold leading-snug text-ink md:text-[1.55rem]">{s.title}</h3>
                   {s.desc && (
-                    <p className="mt-3 max-w-[560px] text-[15.5px] leading-[1.85] text-ink-soft">
+                    <p className="mt-3 max-w-[560px] text-[16.5px] leading-[1.85] text-ink-soft">
                       <Sentences text={s.desc} />
                     </p>
                   )}

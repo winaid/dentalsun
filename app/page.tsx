@@ -87,7 +87,7 @@ export default function HomePage() {
                 <li key={s.title} className="card card-hover flex h-full flex-col p-7">
                   <span className="num">{String(i + 1).padStart(2, '0')}</span>
                   <p className="mt-5 text-[1.12rem] font-bold leading-snug text-ink">{s.title}</p>
-                  <p className="mt-3 text-[14.5px] leading-relaxed text-ink-soft">
+                  <p className="mt-3 text-[15.5px] leading-relaxed text-ink-soft">
                     <Sentences text={s.desc} />
                   </p>
                 </li>
@@ -119,7 +119,7 @@ export default function HomePage() {
                         </span>
                         <span className="text-[1.08rem] font-bold text-ink group-hover:text-brand-700">{h.label}</span>
                       </span>
-                      <span className="mt-3 text-[13.5px] leading-relaxed text-ink-muted">{h.children?.slice(0, 3).map((c) => c.label).join(' · ')}</span>
+                      <span className="mt-3 text-[14.5px] leading-relaxed text-ink-muted">{h.children?.slice(0, 3).map((c) => c.label).join(' · ')}</span>
                     </span>
                   </Link>
                 </li>
@@ -131,7 +131,7 @@ export default function HomePage() {
                   </span>
                   <span className="flex flex-1 flex-col p-6">
                     <span className="text-[1.08rem] font-bold text-brand-700">인사이트 · 증상별 안내 →</span>
-                    <span className="mt-3 text-[13.5px] leading-relaxed text-ink-muted">턱 소리 · 시린 이 · 잇몸 출혈 · 임플란트 과정 · 건강보험</span>
+                    <span className="mt-3 text-[14.5px] leading-relaxed text-ink-muted">턱 소리 · 시린 이 · 잇몸 출혈 · 임플란트 과정 · 건강보험</span>
                   </span>
                 </Link>
               </li>
@@ -157,7 +157,7 @@ export default function HomePage() {
               {CLINIC.videos.map((v) => (
                 <div key={v.id}>
                   <VideoFacade id={v.id} poster={v.thumb} title={v.title} />
-                  <p className="mt-3 text-[14.5px] font-semibold text-ink">{v.title}</p>
+                  <p className="mt-3 text-[15.5px] font-semibold text-ink">{v.title}</p>
                 </div>
               ))}
             </div>
@@ -199,7 +199,7 @@ export default function HomePage() {
               </p>
               <ul className="reveal-stack mt-8 grid gap-3 sm:grid-cols-3">
                 {['01 정확한 진단', '02 전반적인 턱관절 치료 진행', '03 오랜 기간 다수의 턱관절 환자 진료'].map((t) => (
-                  <li key={t} className="flex min-h-[84px] items-center rounded-2xl border border-white/15 bg-white/5 px-4 py-4 text-[14px] font-semibold backdrop-blur">{t}</li>
+                  <li key={t} className="flex min-h-[84px] items-center rounded-2xl border border-white/15 bg-white/5 px-4 py-4 text-[15px] font-semibold backdrop-blur">{t}</li>
                 ))}
               </ul>
               <div className="mt-8 flex flex-wrap gap-3">
@@ -284,7 +284,7 @@ export default function HomePage() {
                       <p className="mt-3 text-[1.3rem] font-extrabold text-ink">
                         {d.name} <span className="text-[0.95rem] font-semibold text-ink-muted">{d.role}</span>
                       </p>
-                      <p className="mt-1.5 text-[13.5px] text-ink-soft">{d.career[0]}</p>
+                      <p className="mt-1.5 text-[14.5px] text-ink-soft">{d.career[0]}</p>
                     </div>
                   </Link>
                 </li>
@@ -312,7 +312,7 @@ export default function HomePage() {
               <p className="mt-4 text-[1.05rem] leading-[1.8] text-white/75">교차감염을 차단하여 환자의 안전을 최우선으로 생각합니다.</p>
               <ul className="mt-6 space-y-2.5">
                 {HYGIENE.map((h) => (
-                  <li key={h} className="flex items-center gap-3 text-[15px] text-white/90">
+                  <li key={h} className="flex items-center gap-3 text-[16px] text-white/90">
                     <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-sun-500 text-[11px] font-bold text-white">✓</span>
                     {h}
                   </li>
@@ -381,10 +381,10 @@ export default function HomePage() {
               </div>
               <div className="grid gap-4">
                 <div className="card p-6">
-                  <p className="text-[13px] font-bold tracking-wide text-ink-muted">진료시간</p>
+                  <p className="text-[14px] font-bold tracking-wide text-ink-muted">진료시간</p>
                   <ul className="mt-3 divide-y divide-hairline">
                     {HOURS.display.map((h) => (
-                      <li key={h.label} className="flex items-center justify-between py-2.5 text-[15px]">
+                      <li key={h.label} className="flex items-center justify-between py-2.5 text-[16px]">
                         <span className="font-semibold text-ink">
                           {h.label}
                           {h.note && <span className="ml-2 pill-sun !py-0.5 !text-[11px]">{h.note}</span>}
@@ -393,13 +393,13 @@ export default function HomePage() {
                       </li>
                     ))}
                   </ul>
-                  <p className="mt-3 text-[13px] text-ink-muted">{HOURS.closed}</p>
+                  <p className="mt-3 text-[14px] text-ink-muted">{HOURS.closed}</p>
                 </div>
                 <a href={CLINIC.phoneHref} className="rounded-2xl bg-brand-700 p-6 text-white transition-colors hover:bg-brand-800">
-                  <p className="text-[13px] text-white/70">전화 문의 · 예약</p>
+                  <p className="text-[14px] text-white/70">전화 문의 · 예약</p>
                   <p className="mt-1 text-[1.8rem] font-extrabold tracking-tight">{CLINIC.phone}</p>
                 </a>
-                <div className="card p-5 text-[14px] text-ink-soft">
+                <div className="card p-5 text-[15px] text-ink-soft">
                   <p>
                     <span className="font-bold text-ink">주소</span> {CLINIC.address.full} ({CLINIC.address.landmark})
                   </p>

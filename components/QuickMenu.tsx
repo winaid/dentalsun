@@ -40,7 +40,7 @@ export function QuickMenu() {
         )}
         <div className="card flex flex-col p-1.5">
           {ITEMS.map((it) => {
-            const cls = 'flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-[13px] font-bold text-ink hover:bg-brand-50 hover:text-brand-700';
+            const cls = 'flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-[14px] font-bold text-ink hover:bg-brand-50 hover:text-brand-700';
             const icon = (
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden className="text-brand-600"><path d={it.icon} stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" strokeLinecap="round" /></svg>
             );
@@ -51,7 +51,7 @@ export function QuickMenu() {
             );
           })}
         </div>
-        <a href={CLINIC.phoneHref} className="btn-sun !px-5 !py-3 text-[14px]">
+        <a href={CLINIC.phoneHref} className="btn-sun !px-5 !py-3 text-[15px]">
           {CLINIC.phone}
         </a>
       </div>

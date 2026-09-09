@@ -14,8 +14,8 @@ export function SiteFooter() {
         <div className="grid gap-10 lg:grid-cols-[1fr_2.6fr]">
           <div>
             <Image src="/img/brand/logo.png" alt={CLINIC.name} width={522} height={145} className="h-11 w-auto" />
-            <p className="mt-5 max-w-[380px] text-[14px] leading-relaxed text-ink-soft">{CLINIC.description}</p>
-            <div className="mt-6 space-y-1.5 text-[14px] text-ink-soft">
+            <p className="mt-5 max-w-[380px] text-[15px] leading-relaxed text-ink-soft">{CLINIC.description}</p>
+            <div className="mt-6 space-y-1.5 text-[15px] text-ink-soft">
               <p>
                 <span className="font-bold text-ink">주소</span> {CLINIC.address.full} ({CLINIC.address.landmark})
               </p>
@@ -37,17 +37,17 @@ export function SiteFooter() {
             {NAV.map((item) => (
               <div key={item.href}>
                 {item.href.startsWith('http') ? (
-                  <p className="text-[14px] font-extrabold text-ink">{item.label}</p>
+                  <p className="text-[15px] font-extrabold text-ink">{item.label}</p>
                 ) : (
-                  <Link href={item.href} className="text-[14px] font-extrabold text-ink hover:text-brand-700">{item.label}</Link>
+                  <Link href={item.href} className="text-[15px] font-extrabold text-ink hover:text-brand-700">{item.label}</Link>
                 )}
                 <ul className="mt-3 space-y-2">
                   {item.children?.map((c) => (
                     <li key={c.href}>
                       {c.external ? (
-                        <a href={c.href} target="_blank" rel="noopener" className="text-[13.5px] text-ink-soft hover:text-brand-700">{c.label} ↗</a>
+                        <a href={c.href} target="_blank" rel="noopener" className="text-[14.5px] text-ink-soft hover:text-brand-700">{c.label} ↗</a>
                       ) : (
-                        <Link href={c.href} className="text-[13.5px] text-ink-soft hover:text-brand-700">{c.label}</Link>
+                        <Link href={c.href} className="text-[14.5px] text-ink-soft hover:text-brand-700">{c.label}</Link>
                       )}
                     </li>
                   ))}

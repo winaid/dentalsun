@@ -70,7 +70,7 @@ export default function AboutPage() {
                 <li key={s.title} className="card flex h-full flex-col p-6">
                   <span className="num">{String(i + 1).padStart(2, '0')}</span>
                   <p className="mt-4 text-[1.05rem] font-bold text-ink">{s.title}</p>
-                  <p className="mt-2 text-[14px] leading-relaxed text-ink-soft">{s.desc}</p>
+                  <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">{s.desc}</p>
                 </li>
               ))}
             </ul>
@@ -95,7 +95,7 @@ export default function AboutPage() {
                       <p className="font-bold text-ink">
                         {d.name} {d.role}
                       </p>
-                      <p className="text-[13.5px] text-ink-soft">{d.specialty} · {d.career.find((c) => c.includes('외래교수')) ?? d.career[1]}</p>
+                      <p className="text-[14.5px] text-ink-soft">{d.specialty} · {d.career.find((c) => c.includes('외래교수')) ?? d.career[1]}</p>
                     </div>
                   </li>
                 ))}
@@ -120,7 +120,7 @@ export default function AboutPage() {
                 <li key={p.n} className="card flex h-full flex-col p-6">
                   <span className="pill-sun">Point {p.n}</span>
                   <p className="mt-3 text-[1.05rem] font-bold text-ink">{p.title}</p>
-                  <p className="mt-2 text-[14px] leading-relaxed text-ink-soft">{p.desc}</p>
+                  <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">{p.desc}</p>
                 </li>
               ))}
             </ol>
@@ -144,13 +144,13 @@ export default function AboutPage() {
               <p className="lead mt-4"><Sentences text="교차감염을 차단하여 환자의 안전을 최우선으로 생각합니다." /></p>
               <ul className="mt-6 space-y-2.5">
                 {HYGIENE.map((h) => (
-                  <li key={h} className="flex items-center gap-3 text-[15px] text-ink">
+                  <li key={h} className="flex items-center gap-3 text-[16px] text-ink">
                     <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-600 text-[11px] font-bold text-white">✓</span>
                     {h}
                   </li>
                 ))}
               </ul>
-              <p className="mt-6 rounded-2xl bg-white p-5 text-[14.5px] leading-relaxed text-ink-soft">
+              <p className="mt-6 rounded-2xl bg-white p-5 text-[15.5px] leading-relaxed text-ink-soft">
                 <span className="font-bold text-ink">전원 치과위생사</span> — 치과위생사 면허를 보유한 전문 진료스텝이 편안하고 안전한 진료를 도와드립니다. 환자분의 진료 만족도를 높여 드립니다.
               </p>
             </div>
