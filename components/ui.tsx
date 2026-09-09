@@ -178,7 +178,7 @@ export function Figure({
    */
   const diagram = /^(equip|illust)\//.test(fig.key);
   /* 상자 비율과 1.4배 넘게 다른 사진도 통째로 — 세로 사진이 4:3 에서 머리가 잘리거나, 긴 배너가 반 토막 나지 않게 */
-  const ar = ratio?.match(/[(d+)/(d+)]/);
+  const ar = ratio?.match(/\[(\d+)\/(\d+)\]/);
   const mismatch = ar ? !fitsBox(fig.key, Number(ar[1]), Number(ar[2])) : false;
   const framed = !!ratio && (s.w < 600 || diagram || mismatch);
   return (

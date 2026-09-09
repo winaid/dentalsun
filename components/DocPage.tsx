@@ -253,7 +253,7 @@ function TextFigure({ fig }: { fig: Fig }) {
 }
 
 function BlockView({ block: b, index, band, photoBand, concise = false }: { block: Block; index: number; band?: string; photoBand?: string; /** 진료 페이지: 카드 설명은 두 문장까지만(오너: 문구 줄이기) */ concise?: boolean }) {
-  const trim = (s: string) => (concise ? s.split(/(?<=[.!?])s+(?=S)/).slice(0, 2).join(' ') : s);
+  const trim = (s: string) => (concise ? s.split(/(?<=[.!?])\s+(?=\S)/).slice(0, 2).join(' ') : s);
   const id = ('id' in b && b.id) || `sec-${index + 1}`;
   const alt = index % 2 === 1;
   const wrapCls = band ? 'relative isolate overflow-hidden bg-night text-white section' : `section ${alt ? 'bg-canvas' : 'bg-white'}`;
