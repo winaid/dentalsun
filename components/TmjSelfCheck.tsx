@@ -17,8 +17,8 @@ export function TmjSelfCheck({ items }: { items: string[] }) {
       : n === 1
         ? { tone: 'bg-brand-50 text-brand-800', text: '한 가지가 해당됩니다. 증상이 이어지거나 커지면 검사를 받아 보세요.' }
         : { tone: 'bg-sun-50 text-sun-700', text: `${n}가지가 해당됩니다. 턱관절 검사를 받아 보시길 권합니다.` };
+  /* ★ 3D 기울기(card-3d)는 안 쓴다 — 읽으며 눌러야 하는 표라 흔들리면 방해된다(오너). 테두리만 진하게 */
   return (
-    {/* ★ 3D 기울기(card-3d)는 안 쓴다 — 읽으며 눌러야 하는 표라 흔들리면 방해된다(오너). 테두리만 진하게 */}
     <div className="card border-[1.5px] border-[#d9dde8] p-6 md:p-8">
       <div className="flex flex-wrap items-baseline justify-between gap-3">
         <p className="text-[1.2rem] font-extrabold text-ink md:text-[1.35rem]">내 턱, 지금 어떤가요?</p>
