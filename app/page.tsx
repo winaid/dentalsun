@@ -285,7 +285,7 @@ export default function HomePage() {
         </section>
 
         {/* ── 의료진 ── */}
-        <section className="section bg-canvas !py-12 lg:!py-16">
+        <section className="section relative overflow-hidden bg-canvas !py-12 lg:!py-16">
           <div className="wrap">
             <div className="reveal mx-auto max-w-[820px] text-center">
               <p className="eyebrow justify-center">OUR DOCTORS</p>
@@ -296,8 +296,8 @@ export default function HomePage() {
             </div>
             {/* 가운데에 적당한 크기(오너: 너무 컸다). 뒤에는 병원 영문 이름이 저절로 흐르는 큰 글자 띠(동그라미치과처럼). */}
             {DOCTORS.map((d) => (
-              <div key={d.slug} className="relative isolate mt-6 overflow-hidden py-6 md:py-8">
-                <div aria-hidden className="pointer-events-none absolute inset-x-0 top-1/2 -z-10 -translate-y-1/2 select-none">
+              <div key={d.slug} className="relative mt-6 py-6 md:py-8">
+                <div aria-hidden className="pointer-events-none absolute left-1/2 top-1/2 z-0 w-screen -translate-x-1/2 -translate-y-1/2 select-none">
                   <div className="marquee">
                     {[0, 1].map((k) => (
                       <span key={k} className="whitespace-nowrap pr-10 text-[110px] font-extrabold leading-none tracking-[-0.04em] text-brand-900/[0.11] md:text-[160px]">
@@ -306,7 +306,7 @@ export default function HomePage() {
                     ))}
                   </div>
                 </div>
-                <div className="mx-auto grid max-w-[960px] items-center gap-8 md:grid-cols-[320px_1fr] md:gap-10">
+                <div className="relative z-10 mx-auto grid max-w-[960px] items-center gap-8 md:grid-cols-[320px_1fr] md:gap-10">
                   <div className="reveal">
                     <div className="wipe relative mx-auto aspect-[4/5] w-full max-w-[320px] overflow-hidden rounded-3xl bg-canvas-2 shadow-[var(--shadow-lift)]">
                       <Image src={d.photo} alt={`${d.name} ${d.role}`} fill sizes="360px" className="object-cover object-top" />
