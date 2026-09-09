@@ -285,32 +285,30 @@ export default function HomePage() {
         </section>
 
         {/* ── 의료진 ── */}
-        <section className="section">
+        <section className="section bg-canvas !py-12 lg:!py-16">
           <div className="wrap">
             <div className="reveal mx-auto max-w-[820px] text-center">
               <p className="eyebrow justify-center">OUR DOCTORS</p>
               <h2 className="display-sm mt-4">
                 보건복지부 인증 <span className="accent">전문의</span>가 직접 진료합니다
               </h2>
-              <p className="lead mt-4">
-                <Sentences text="보건복지부 인증 통합치의학과 전문의. 강남성심병원 외래교수 출신의 다년간 임상경험으로 진료합니다." />
-              </p>
+              <p className="lead mt-3">보건복지부 인증 통합치의학과 전문의 · 강남성심병원 외래교수 출신의 다년간 임상경험으로 진료합니다.</p>
             </div>
             {/* 가운데에 적당한 크기(오너: 너무 컸다). 뒤에는 병원 영문 이름이 저절로 흐르는 큰 글자 띠(동그라미치과처럼). */}
             {DOCTORS.map((d) => (
-              <div key={d.slug} className="relative isolate mt-12 overflow-hidden py-10 md:py-14">
+              <div key={d.slug} className="relative isolate mt-6 overflow-hidden py-6 md:py-8">
                 <div aria-hidden className="pointer-events-none absolute inset-x-0 top-1/2 -z-10 -translate-y-1/2 select-none">
                   <div className="marquee">
                     {[0, 1].map((k) => (
-                      <span key={k} className="whitespace-nowrap pr-10 text-[110px] font-extrabold leading-none tracking-[-0.04em] text-brand-900/[0.045] md:text-[170px]">
+                      <span key={k} className="whitespace-nowrap pr-10 text-[110px] font-extrabold leading-none tracking-[-0.04em] text-brand-900/[0.11] md:text-[160px]">
                         GWANGHWAMUN SUN DENTAL CLINIC&nbsp;·&nbsp;
                       </span>
                     ))}
                   </div>
                 </div>
-                <div className="mx-auto grid max-w-[980px] items-center gap-8 md:grid-cols-[360px_1fr] md:gap-10">
+                <div className="mx-auto grid max-w-[960px] items-center gap-8 md:grid-cols-[320px_1fr] md:gap-10">
                   <div className="reveal">
-                    <div className="wipe relative mx-auto aspect-[4/5] w-full max-w-[360px] overflow-hidden rounded-3xl bg-canvas-2 shadow-[var(--shadow-lift)]">
+                    <div className="wipe relative mx-auto aspect-[4/5] w-full max-w-[320px] overflow-hidden rounded-3xl bg-canvas-2 shadow-[var(--shadow-lift)]">
                       <Image src={d.photo} alt={`${d.name} ${d.role}`} fill sizes="360px" className="object-cover object-top" />
                     </div>
                   </div>
@@ -319,18 +317,18 @@ export default function HomePage() {
                     <h3 className="mt-1.5 text-[1.9rem] font-extrabold tracking-[-0.02em] text-ink md:text-[2.2rem]">
                       {d.name} <span className="text-[1.2rem] font-bold text-ink-soft md:text-[1.35rem]">{d.role}</span>
                     </h3>
-                    <div className="mt-5 rounded-2xl border border-hairline bg-white/95 p-6 shadow-[var(--shadow-soft)] backdrop-blur md:p-7">
+                    <div className="mt-4 rounded-2xl border border-hairline bg-white/95 p-5 shadow-[var(--shadow-soft)] backdrop-blur md:p-6">
                       <p className="text-[14px] font-bold tracking-wide text-ink-muted">주요 약력</p>
                       <ul className="mt-3 grid gap-x-6 gap-y-2 sm:grid-cols-2">
                         {d.career.map((c) => (
-                          <li key={c} className="flex items-start gap-2.5 text-[15px] leading-[1.55] text-ink">
+                          <li key={c} className="flex items-start gap-2.5 text-[14.5px] leading-[1.5] text-ink">
                             <span className="mt-[8px] h-1.5 w-1.5 shrink-0 rounded-full bg-brand-600" />
                             {c}
                           </li>
                         ))}
                       </ul>
                     </div>
-                    <Link href={`/about/doctors#${d.slug}`} className="btn-brand mt-6">의료진 소개 자세히</Link>
+                    <Link href={`/about/doctors#${d.slug}`} className="btn-brand mt-5">의료진 소개 자세히</Link>
                   </div>
                 </div>
               </div>
