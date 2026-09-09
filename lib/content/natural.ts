@@ -159,7 +159,7 @@ export const NATURAL_DOCS: Doc[] = [
         steps: [
           { title: '신경 개방', desc: '충치를 제거하고 치아 속 신경이 있는 공간을 엽니다.' },
           { title: '신경조직 제거', desc: '감염되거나 손상된 신경조직을 제거합니다.' },
-          { title: '소독 및 세척', desc: '근관 내부를 세척하고 소독합니다. 광화문선치과는 이 단계에서 엔도소닉 초음파 세척기를 이용합니다.' },
+          { title: '소독 및 세척', desc: '근관 내부를 세척하고 소독합니다.' },
           { title: 'MTA 근관 충전', desc: '비워진 근관을 MTA 재료로 꼼꼼하게 채워 밀폐합니다.' },
         ],
       },
@@ -182,6 +182,15 @@ export const NATURAL_DOCS: Doc[] = [
             desc: '신경치료 후 다시 염증이 재발하였을 경우 발치를 하게 될 확률이 높습니다. 그러나 광화문선치과에서는 최대한 발치를 막기 위해 MTA를 이용하여 재신경치료를 진행합니다. MTA는 생체 친화적 특성 및 치근 재생 효과가 있어 재발하는 치아 뿌리 끝 염증 치료에 효과를 기대할 수 있습니다.',
           },
         ],
+      },
+      {
+        type: 'cases',
+        id: 'cases',
+        title: 'MTA 치료 전과 후',
+        lead: '위 세 가지 상황에 해당하는 실제 사례입니다. 손잡이를 좌우로 끌면 치료 전과 후를 비교해 볼 수 있습니다.',
+        figure: { key: 'orig/case-mta1-after', alt: 'MTA 치료 전과 후를 비교한 사례' },
+        caseGroup: 'mta',
+        note: '본 사진은 광화문선치과에서 진료받은 환자의 사례이며, 개인의 구강 상태와 치아 상태에 따라 결과는 다를 수 있습니다. 모든 의료 행위에는 부작용이 따를 수 있습니다.',
       },
       {
         type: 'points',
@@ -234,7 +243,7 @@ export const NATURAL_DOCS: Doc[] = [
     path: '/treatment/natural-tooth/endosonic',
     hub: '/treatment/natural-tooth',
     hubLabel: '자연치아살리기',
-    title: '초음파 근관세척',
+    title: '엔도소닉 초음파 세척기',
     eyebrow: 'NATURAL TOOTH · ENDOSONIC',
     summary:
       '초음파 근관세척은 신경치료 중 엔도소닉 초음파 세척기로 신경관 내부에 남아 있는 신경과 염증 조직을 제거하고 소독하는 과정입니다. 미세 초음파와 다양한 길이의 팁으로 기존 신경치료 기구로는 닿기 어려운 긴 신경관과 안쪽 어금니까지 꼼꼼하게 세척해 신경치료 성공률을 높입니다.',

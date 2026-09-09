@@ -80,7 +80,7 @@ export const NAV: NavItem[] = [
     href: '/treatment/natural-tooth',
     children: [
       { label: 'MTA 신경치료', href: '/treatment/natural-tooth/mta', desc: '생체 친화적 재료로 재발 확률을 낮춘 신경치료' },
-      { label: '초음파 근관세척', href: '/treatment/natural-tooth/endosonic', desc: '엔도소닉 초음파 세척기' },
+      { label: '엔도소닉 초음파 세척기', href: '/treatment/natural-tooth/endosonic', desc: '효과적인 근관 세척' },
     ],
   },
   {

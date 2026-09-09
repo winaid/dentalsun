@@ -61,7 +61,7 @@ export default function DoctorsPage() {
 
         <section className="section">
           <div className="wrap grid items-center gap-10 lg:grid-cols-2">
-            <Figure fig={{ key: 'ai/faq', alt: '환자와 상담하는 광화문선치과 원장' }} ratio="aspect-[4/3]" />
+            <Figure fig={{ key: 'orig/intro-monitor-pair', alt: '모니터의 3D 구강 스캔 화면을 함께 보며 설명하는 모습' }} ratio="aspect-[2/1]" />
             <div className="reveal">
               <p className="eyebrow">PHILOSOPHY</p>
               <h2 className="display-sm mt-4">

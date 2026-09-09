@@ -57,7 +57,6 @@ export const WISDOM_DOCS: Doc[] = [
           { title: '신경을 누를 경우 감각이 둔해지는 문제 발생', desc: '사랑니 뿌리가 아래턱의 하치조신경을 누르면 입술이나 턱의 감각이 둔해질 수 있습니다.' },
           { title: '치아가 틀어져 부정교합을 일으킬 수 있음', desc: '누운 사랑니가 옆 치아를 밀면 치아 배열이 틀어지고 맞물림이 어긋날 수 있습니다.' },
         ],
-        columns: 2,
         numbered: true,
       },
       {
@@ -83,6 +82,7 @@ export const WISDOM_DOCS: Doc[] = [
         lead:
           '발치 시기가 늦어 매복 사랑니가 누워 옆 치아에 닿아 있던 사례입니다. 발치 시 옆 치아가 손상될 수밖에 없어 안타깝지만 함께 발치를 하고 임플란트를 식립하였습니다. 이처럼 매복 사랑니는 옆 치아에 손상을 줄 수 있어 제때 발치가 필요합니다.',
         figure: { key: 'wisdom/case', alt: '발치 전 매복 사랑니와 발치 후 임플란트를 식립한 X-ray 비교' },
+        caseGroup: 'wisdom',
         note: CASE_NOTE,
       },
       {

@@ -102,7 +102,7 @@ export const IMPLANT_DOCS: Doc[] = [
           },
         ],
         columns: 3,
-        figure: { key: 'ai/implant-navigation', alt: '임플란트 식립 분석 화면' },
+        figure: { key: 'orig/misc-nav-implant-set', alt: '임플란트 계획 화면과 픽스처·수술 가이드' },
       },
       {
         type: 'text',
@@ -219,7 +219,7 @@ export const IMPLANT_DOCS: Doc[] = [
           {
             title: '임플란트 식립경로 분석',
             desc: '3차원 데이터 위에서 임플란트의 종류, 위치, 길이, 각도와 뼈이식 필요 여부를 분석합니다.',
-            figure: { key: 'ai/implant-navigation', alt: '임플란트 식립 분석 화면' },
+            figure: { key: 'orig/implant-nav-plan', alt: '임플란트 식립 경로를 분석하는 화면' },
           },
           {
             title: '3D 디지털 보철 디자인',
@@ -229,7 +229,7 @@ export const IMPLANT_DOCS: Doc[] = [
           {
             title: '개인 맞춤형 수술 유도장치 제작',
             desc: '확정된 계획을 그대로 옮긴 수술 유도장치(가이드)를 제작해 수술 시 계획한 위치와 각도로 식립합니다.',
-            figure: { key: 'equip/guide', alt: '수술 유도장치 모형' },
+            figure: { key: 'orig/implant-nav-guide', alt: '하악 모형에 씌운 투명 수술 유도장치와 드릴' },
           },
         ],
       },
@@ -240,9 +240,9 @@ export const IMPLANT_DOCS: Doc[] = [
         lead: '무엇이 다를까요?',
         columns: ['일반 임플란트', '내비게이션 임플란트'],
         rows: [
-          { label: '잇몸절개', a: '절개', b: '작은 홈을 통한 최소절개' },
+          { label: '절개', a: '잇몸절개', b: '작은 홈을 통한 최소절개' },
           { label: '출혈', a: '많은 출혈과 붓기', b: '최소절개로 출혈 및 붓기 거의 없음' },
-          { label: '감염', a: '염증 및 감염 우려가 있음', b: '염증 및 감염 위험이 낮음' },
+          { label: '감염', a: '염증 및 감염 우려가 있음', b: '염증 및 감염 위험 현저히 낮음' },
           { label: '회복', a: '회복에 시간이 걸림', b: '빠른 회복 가능' },
         ],
         highlight: 'b',
@@ -318,7 +318,7 @@ export const IMPLANT_DOCS: Doc[] = [
       '틀니 대신 임플란트',
       '광화문 선치과',
     ],
-    hero: { key: 'ai/implant-fullarch', alt: '풀아치 임플란트 모형' },
+    hero: { key: 'orig/implant-fa-fixed', alt: '임플란트 위에 고정한 풀아치 보철물' },
     procedure: '풀아치 임플란트',
     blocks: [
       {
@@ -329,7 +329,7 @@ export const IMPLANT_DOCS: Doc[] = [
           '치아가 거의 없는데 불편한 틀니를 계속 써야 할지, 비용이 큰 전체 임플란트를 해야 할지 고민이라면 풀아치 임플란트가 또 하나의 선택지입니다. 풀아치(전체) 임플란트는 4~6개의 임플란트 식립으로 치아의 기능을 회복할 수 있는 무치악 치료 방법으로, 디지털 수술과 최소식립을 결합해 무치악의 불편함을 해결합니다.',
           '4~6개의 임플란트 최소식립으로 1~2개월 내로 치아의 기능을 회복할 수 있으며, 광화문 선치과는 전악 풀아치 임플란트를 최소식립과 합리적 비용으로 진행해 전체 치아 기능을 회복합니다.',
         ],
-        figure: { key: 'ai/implant-fullarch', alt: '4~6개 임플란트 위에 고정한 풀아치 보철물 모형' },
+        figure: { key: 'orig/implant-fa-render', alt: '하악골에 식립한 임플란트 위의 풀아치 보철물' },
       },
       {
         type: 'points',
@@ -648,7 +648,7 @@ export const IMPLANT_DOCS: Doc[] = [
       '기성품 임플란트',
       '광화문 선치과',
     ],
-    hero: { key: 'ai/implant-custom', alt: '맞춤 제작한 임플란트 어버트먼트' },
+    hero: { key: 'orig/implant-custom-fit', alt: '잇몸 라인에 맞춘 맞춤 기둥 단면 도해' },
     procedure: '맞춤 임플란트',
     blocks: [
       {
@@ -659,7 +659,7 @@ export const IMPLANT_DOCS: Doc[] = [
           '임플란트는 일반적으로 잇몸뼈에 심는 인공 치근(픽스처), 그 위에 연결하는 기둥(어버트먼트), 겉으로 보이는 보철물(크라운)의 세 부분으로 이루어집니다. 맞춤 임플란트는 이 가운데 기둥을 규격대로 만든 기성품이 아니라 내 잇몸 라인에 맞춰 제작하는 방식입니다.',
           '잇몸의 높이와 두께, 치아가 나오는 방향은 사람마다 다르기 때문에, 잇몸에 꼭 맞게 제작한 기둥은 보철물과 잇몸 사이 틈을 줄여 편하고 오랫동안 사용할 수 있게 해 줍니다.',
         ],
-        figure: { key: 'ai/implant-custom', alt: '잇몸 라인에 맞춰 제작한 맞춤 어버트먼트' },
+        figure: { key: 'orig/implant-custom-stock', alt: '기성품 기둥과 보철물 사이 공간을 나타낸 단면 도해' },
       },
       {
         type: 'compare',
@@ -710,7 +710,7 @@ export const IMPLANT_DOCS: Doc[] = [
           '임플란트 주위염은 일반적으로 임플란트 주변 잇몸과 잇몸뼈에 생기는 염증으로, 자연치아의 잇몸병(치주염)과 비슷하게 진행됩니다. 잇몸과 보철물 사이 틈에 음식물과 세균이 쌓이면 잇몸이 붓고 피가 나며, 방치하면 임플란트를 잡고 있는 뼈가 줄어들어 임플란트가 흔들릴 수 있습니다.',
           '맞춤 임플란트로 틈을 줄이는 것과 함께, 치료 후 정기검진과 꼼꼼한 칫솔질·치간 관리가 임플란트를 오래 쓰는 데 중요합니다.',
         ],
-        figure: { key: 'ai/faq', alt: '의료진이 환자와 상담하는 모습' },
+        figure: { key: 'orig/implant-custom-fit', alt: '잇몸 라인에 맞춘 맞춤 기둥 단면 도해' },
         figureSide: 'left',
       },
       {

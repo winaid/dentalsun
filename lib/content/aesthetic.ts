@@ -34,7 +34,7 @@ export const AESTHETIC_DOCS: Doc[] = [
           '심미치료는 아름다운 심미성과 치아 건강을 동시에 생각하는 치료입니다. 치아 모양, 색상, 잇몸라인, 치아 배열을 따로 떼어 보지 않고 하나의 미소로 함께 설계합니다.',
           '광화문선치과에서는 맞춤 시술을 통해 내 이미지에 알맞은 치아의 형태와 크기, 색상, 치아 배열을 만들어 드립니다. 치료 과정에서는 무통 장비를 이용해 편안하게 치료받으실 수 있도록 합니다.',
         ],
-        figure: { key: 'ai/aesthetic-hub', alt: '앞니의 형태와 배열을 나타낸 도해' },
+        figure: { key: 'orig/misc-veneer-teeth', alt: '앞니 보철물을 씌우는 과정을 나타낸 도해' },
       },
       {
         type: 'points',
@@ -57,7 +57,7 @@ export const AESTHETIC_DOCS: Doc[] = [
           '일반적으로 치아의 색만 밝히고 싶다면 치아미백을, 치아의 모양·크기·배열까지 바꾸고 싶다면 심미보철을 고려합니다. 치아가 얼마나 손상됐는지, 남은 치아 구조가 얼마나 되는지, 씹는 힘이 얼마나 실리는 부위인지에 따라 라미네이트·올세라믹·지르코니아 가운데 알맞은 방법이 달라집니다.',
           '광화문선치과는 상담과 검사를 통해 현재 치아 상태를 확인한 뒤, 원하시는 이미지와 구강 상태에 맞는 치료 방법을 제안합니다.',
         ],
-        figure: { key: 'ai/faq', alt: '의사가 환자와 치료 계획을 상담하는 모습' },
+        figure: { key: 'orig/misc-consult-desk', alt: '치료 계획을 상담하는 모습' },
       },
       {
         type: 'notice',
@@ -160,6 +160,7 @@ export const AESTHETIC_DOCS: Doc[] = [
         title: '심미보철 효과',
         lead: '심미보철 전과 후를 비교한 사례입니다.',
         figure: { key: 'aesthetic/prosth-cases', alt: '심미보철 전과 후를 비교한 사례 사진 3쌍' },
+        caseGroup: 'prosthetics',
         note: CASE_NOTE,
       },
       {
@@ -254,6 +255,7 @@ export const AESTHETIC_DOCS: Doc[] = [
         title: '치아미백 효과',
         lead: '치아미백 전과 후를 비교한 사례입니다.',
         figure: { key: 'aesthetic/whitening-cases', alt: '치아미백 전과 후를 비교한 사례 사진 3쌍' },
+        caseGroup: 'whitening',
         note: CASE_NOTE,
       },
       {

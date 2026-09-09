@@ -112,7 +112,7 @@ await sharp(path.join(JOB, 'logo.png')).toFile(path.join(OUT, 'brand/logo.png'))
 const lm = await sharp(path.join(JOB, 'logo.png')).metadata();
 await sharp(path.join(JOB, 'logo.png')).extract({ left: 0, top: 0, width: Math.round(lm.width * 0.215), height: lm.height }).png().toFile(path.join(OUT, 'brand/mark.png'));
 const prev = fs.existsSync('lib/imageSizes.generated.json') ? JSON.parse(fs.readFileSync('lib/imageSizes.generated.json', 'utf8')) : {};
-for (const [k, v] of Object.entries(prev)) if (k.startsWith('ai/') && !sizes[k]) sizes[k] = v;
+for (const [k, v] of Object.entries(prev)) if (/^(ai|orig|cases)//.test(k) && !sizes[k]) sizes[k] = v;
 fs.writeFileSync('lib/imageSizes.generated.json', JSON.stringify(sizes, null, 1));
 console.log('images', Object.keys(sizes).length);
 // 결과 확인용 시트

@@ -1,9 +1,12 @@
 import Image from 'next/image';
+import type { CSSProperties } from 'react';
 import { SiteHeader } from '@/components/SiteHeader';
 import { JsonLd } from '@/components/JsonLd';
 import { Breadcrumb, CardLink, ContactBand, FaqList, Figure, MedicalNotice, ScrubText, Sentences } from '@/components/ui';
 import { docCharCount, figSize, figSrc, type Block, type Doc, type Fig } from '@/lib/docs';
 import { docByPath, docsOfHub } from '@/lib/content';
+import { caseGroup } from '@/lib/cases';
+import { BeforeAfter } from '@/components/BeforeAfter';
 import { articleSchema, breadcrumbSchema, faqSchema, imageObjectSchema, itemListSchema, medicalWebPageSchema } from '@/lib/seo';
 import { CLINIC } from '@/lib/clinic';
 
@@ -28,30 +31,30 @@ const HUB_BG: Record<string, string> = {
 };
 /** 문서 경로별 대표 AI 사진 — 원본 사진이 없거나 반복될 때 hero 로 쓴다. */
 const DOC_AI: Record<string, string> = {
-  '/treatment/implant': 'ai/implant-hub',
-  '/treatment/implant/navigation': 'ai/implant-navigation',
-  '/treatment/implant/full-arch': 'ai/implant-fullarch',
+  '/treatment/implant': 'orig/implant-hero',
+  '/treatment/implant/navigation': 'orig/misc-nav-implant-set',
+  '/treatment/implant/full-arch': 'orig/implant-fa-fixed',
   '/treatment/implant/uv': 'ai/implant-uv',
   '/treatment/implant/prf': 'ai/implant-prf',
-  '/treatment/implant/custom': 'ai/implant-custom',
+  '/treatment/implant/custom': 'orig/implant-custom-fit',
   '/treatment/implant/warranty': 'ai/implant-warranty',
-  '/treatment/tmj': 'ai/tmj-hub',
+  '/treatment/tmj': 'orig/tmj-hero',
   '/treatment/tmj/symptoms': 'ai/tmj-symptoms',
-  '/treatment/tmj/treatments': 'ai/tmj-treatments',
+  '/treatment/tmj/treatments': 'place/place04',
   '/treatment/aesthetic': 'ai/aesthetic-hub',
   '/treatment/aesthetic/prosthetics': 'ai/aesthetic-prosthetics',
   '/treatment/aesthetic/whitening': 'ai/aesthetic-whitening',
   '/treatment/insurance': 'ai/insurance-hub',
   '/treatment/insurance/denture': 'ai/insurance-denture',
   '/treatment/insurance/implant': 'ai/insurance-implant',
-  '/treatment/wisdom-tooth': 'ai/wisdom',
-  '/treatment/natural-tooth': 'ai/natural-hub',
-  '/treatment/natural-tooth/mta': 'ai/natural-mta',
-  '/treatment/natural-tooth/endosonic': 'ai/natural-endosonic',
-  '/treatment/painless': 'ai/painless-hub',
-  '/treatment/painless/anesthesia': 'ai/painless-anesthesia',
-  '/treatment/painless/sedation': 'ai/painless-sedation',
-  '/treatment/painless/airflow': 'ai/painless-airflow',
+  '/treatment/wisdom-tooth': 'orig/wisdom-doctor',
+  '/treatment/natural-tooth': 'orig/mta-hero',
+  '/treatment/natural-tooth/mta': 'orig/mta-hero',
+  '/treatment/natural-tooth/endosonic': 'orig/endo-handpiece',
+  '/treatment/painless': 'orig/pain-hero',
+  '/treatment/painless/anesthesia': 'orig/pain-nopain',
+  '/treatment/painless/sedation': 'orig/sleep-hero',
+  '/treatment/painless/airflow': 'orig/airflow-device',
   '/insight': 'ai/insight-hub',
 };
 
@@ -67,8 +70,6 @@ export function DocPage({ doc }: { doc: Doc }) {
   const hero: Fig | undefined = heroKey ? { key: heroKey, alt: doc.hero?.alt ?? doc.title } : undefined;
   const heroSize = hero ? figSize(hero.key) : null;
   const bandBg = HUB_BG[doc.hub] ?? 'ai/wide-clinic';
-  /* 격자 열 수 — 마지막 줄에 한두 장만 남지 않게 개수로 정한다 */
-  const colsFor = (n: number) => (n % 4 === 0 ? 'sm:grid-cols-2 lg:grid-cols-4' : n % 3 === 0 ? 'sm:grid-cols-2 lg:grid-cols-3' : n === 5 ? 'sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5' : n === 2 ? 'sm:grid-cols-2' : 'sm:grid-cols-2 lg:grid-cols-4');
   const shortSummary = (s: string) => s.split(/(?<=다\.)\s/)[0];
 
   const schema: unknown[] = [
@@ -126,7 +127,7 @@ export function DocPage({ doc }: { doc: Doc }) {
             <div className="wrap">
               <p className="eyebrow reveal">MENU</p>
               <h2 className="display-sm reveal mt-4">{doc.title} 세부 안내</h2>
-              <ol className={`reveal-stack grid-cards mt-10 ${colsFor(children.length)}`}>
+              <ol className="reveal-stack cards-flex mt-10" style={gridVars(children.length)}>
                 {children.map((c, i) => (
                   <li key={c.path}>
                     <CardLink href={c.path} label={c.title} desc={shortSummary(c.summary)} num={String(i + 1).padStart(2, '0')} fig={{ key: DOC_AI[c.path] ?? c.hero?.key ?? bandBg, alt: c.title }} />
@@ -195,6 +196,20 @@ function linkFig(href: string, label: string): Fig | undefined {
   return key ? { key, alt: label } : undefined;
 }
 
+/**
+ * 균형 격자(.cards-flex)의 열 수 — 줄마다 개수가 고르도록 개수로 정한다. 마지막 줄이 모자라면 CSS 가 가운데로 모은다.
+ *  1→1 · 2→2 · 3의 배수→3 · 4의 배수→4 · 5→3(3+2) · 7→4(4+3) · 10→4/xl5 · 그 밖→4
+ */
+function gridVars(n: number, opt: { max?: number; compact?: boolean } = {}): CSSProperties {
+  const max = opt.max ?? (opt.compact ? 6 : 4);
+  /* 설명 없는 짧은 항목(라벨 칩)은 원본처럼 한 줄에 다 놓는다(최대 6) */
+  let lg = opt.compact && n <= 6 ? n : n <= 2 ? n : n % 4 === 0 ? 4 : n % 3 === 0 ? 3 : n === 5 ? 3 : 4;
+  let xl = n === 10 ? 5 : lg;
+  lg = Math.min(lg, max);
+  xl = Math.min(xl, max);
+  return { '--sm': Math.min(2, n, max), '--lg': lg, '--xl': xl } as CSSProperties;
+}
+
 function BlockView({ block: b, index, band }: { block: Block; index: number; band?: string }) {
   const id = ('id' in b && b.id) || `sec-${index + 1}`;
   const alt = index % 2 === 1;
@@ -246,7 +261,9 @@ function BlockView({ block: b, index, band }: { block: Block; index: number; ban
       );
     case 'points': {
       const n = b.items.length;
-      const colCls = b.columns === 2 ? 'sm:grid-cols-2' : n % 4 === 0 ? 'sm:grid-cols-2 lg:grid-cols-4' : n % 3 === 0 ? 'sm:grid-cols-2 lg:grid-cols-3' : n === 5 ? 'sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5' : n === 2 ? 'sm:grid-cols-2' : 'sm:grid-cols-2 lg:grid-cols-4';
+      /* 사진 옆에 붙는 목록은 최대 2열, 아니면 개수에 맞춰 줄마다 고르게(마지막 줄은 가운데) */
+      const compact = b.items.every((it) => !it.desc);
+      const vars = b.figure ? gridVars(n, { max: 2 }) : b.columns === 2 ? gridVars(n, { max: 2 }) : gridVars(n, { compact });
       return (
         <section id={id} className={wrapCls}>
           <Bg />
@@ -254,7 +271,7 @@ function BlockView({ block: b, index, band }: { block: Block; index: number; ban
             <Head title={b.title} lead={b.lead} />
             <div className={`mt-10 grid gap-10 ${b.figure ? 'lg:grid-cols-[1fr_1.4fr] lg:items-start' : ''}`}>
               {b.figure && <Figure fig={b.figure} ratio="aspect-[4/3]" />}
-              <ul className={`reveal-stack grid-cards ${b.figure ? (n % 2 === 0 ? 'sm:grid-cols-2' : 'grid-cols-1') : colCls}`}>
+              <ul className="reveal-stack cards-flex" style={vars}>
                 {b.items.map((it, i) => (
                   <li key={i} className={cardCls}>
                     {b.numbered !== false && <span className={`num ${band ? '!text-sun-300' : ''}`}>{String(i + 1).padStart(2, '0')}</span>}
@@ -279,7 +296,7 @@ function BlockView({ block: b, index, band }: { block: Block; index: number; ban
           <Bg />
           <div className="wrap">
             <Head title={b.title} lead={b.lead} />
-            <ol className={`reveal-stack grid-cards mt-10 sm:grid-cols-2 ${b.steps.length % 3 === 0 ? 'lg:grid-cols-3' : b.steps.length % 4 === 0 ? 'lg:grid-cols-4' : b.steps.length === 5 ? 'lg:grid-cols-3 xl:grid-cols-5' : 'lg:grid-cols-3'}`}>
+            <ol className="reveal-stack cards-flex mt-10" style={gridVars(b.steps.length)}>
               {b.steps.map((s, i) => (
                 <li key={i} className={`${cardCls} overflow-hidden`}>
                   {withFig && (
@@ -381,10 +398,16 @@ function BlockView({ block: b, index, band }: { block: Block; index: number; ban
         <section id={id} className={wrapCls}>
           <div className="wrap">
             <Head title={b.title} lead={b.lead} />
-            <div className="reveal mt-10 max-w-[1000px]">
-              <Figure fig={b.figure} sizes="(max-width: 1024px) 100vw, 1000px" />
-              <p className="mt-4 rounded-xl bg-sun-50 px-5 py-3.5 text-[13.5px] leading-relaxed text-sun-700">{b.note}</p>
-            </div>
+            {b.caseGroup && caseGroup(b.caseGroup) ? (
+              <div className="reveal mt-10">
+                <BeforeAfter groups={[caseGroup(b.caseGroup)!]} note={b.note} showTabs={false} />
+              </div>
+            ) : (
+              <div className="reveal mt-10 max-w-[1000px]">
+                <Figure fig={b.figure} sizes="(max-width: 1024px) 100vw, 1000px" />
+                <p className="mt-4 rounded-xl bg-sun-50 px-5 py-3.5 text-[13.5px] leading-relaxed text-sun-700">{b.note}</p>
+              </div>
+            )}
           </div>
         </section>
       );
@@ -407,7 +430,7 @@ function BlockView({ block: b, index, band }: { block: Block; index: number; ban
         <section id={id} className={wrapCls}>
           <div className="wrap">
             <Head title={b.title} lead={b.lead} />
-            <div className={`reveal-stack grid-cards mt-10 ${b.items.length % 4 === 0 ? 'sm:grid-cols-2 lg:grid-cols-4' : b.items.length % 3 === 0 ? 'sm:grid-cols-2 lg:grid-cols-3' : 'sm:grid-cols-2 lg:grid-cols-4'}`}>
+            <div className="reveal-stack cards-flex mt-10" style={gridVars(b.items.length)}>
               {b.items.map((it) => (
                 <CardLink key={it.href} href={it.href} label={it.label} desc={it.desc} external={it.href.startsWith('http')} fig={linkFig(it.href, it.label)} />
               ))}

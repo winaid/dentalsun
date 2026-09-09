@@ -8,6 +8,8 @@ import { VideoFacade } from '@/components/VideoFacade';
 import { Carousel } from '@/components/Carousel';
 import { CardLink, ContactBand, FaqList, Figure, Marquee, MedicalNotice, ScrubText, Sentences } from '@/components/ui';
 import { HomeStage, HomeStats, HomeTourPan } from '@/components/HomeScroll';
+import { BeforeAfter } from '@/components/BeforeAfter';
+import { CASE_GROUPS, CASE_NOTE } from '@/lib/cases';
 import { CLINIC, HOURS, HYGIENE, MONTHLY_NOTICE, STRENGTHS } from '@/lib/clinic';
 import { DOCTORS } from '@/lib/doctors';
 import { TREATMENT_HUBS } from '@/lib/nav';
@@ -43,11 +45,11 @@ const HUB_IMG: Record<string, string> = {
 
 export default function HomePage() {
   const featured = [
-    { href: '/treatment/implant/navigation', label: '내비게이션 임플란트', desc: '모의수술로 오차를 줄인 무절개 임플란트.', fig: 'ai/implant-navigation' },
-    { href: '/treatment/implant/full-arch', label: '풀아치(전체) 임플란트', desc: '4~6개 최소식립으로 무치악 해결.', fig: 'ai/implant-fullarch' },
+    { href: '/treatment/implant/navigation', label: '내비게이션 임플란트', desc: '모의수술로 오차를 줄인 무절개 임플란트.', fig: 'orig/misc-nav-implant-set' },
+    { href: '/treatment/implant/full-arch', label: '풀아치(전체) 임플란트', desc: '4~6개 최소식립으로 무치악 해결.', fig: 'orig/implant-fa-fixed' },
     { href: '/treatment/implant/uv', label: 'UV 임플란트', desc: '잇몸이 좋지 않다면.', fig: 'ai/implant-uv' },
     { href: '/treatment/implant/prf', label: '자가혈 임플란트', desc: '뼈이식이 필요하다면.', fig: 'ai/implant-prf' },
-    { href: '/treatment/implant/custom', label: '맞춤 임플란트', desc: '내 잇몸에 꼭 맞게 제작.', fig: 'ai/implant-custom' },
+    { href: '/treatment/implant/custom', label: '맞춤 임플란트', desc: '내 잇몸에 꼭 맞게 제작.', fig: 'orig/implant-custom-fit' },
     { href: '/treatment/implant/warranty', label: '보증제도', desc: '치료 후 철저한 사후 관리.', fig: 'ai/implant-warranty' },
   ];
 
@@ -150,8 +152,8 @@ export default function HomePage() {
                 <Sentences text="내 치아 상태에 따른 다양한 수술 방법으로, 치아가 안 좋아도 잇몸뼈가 부족해도 구강 상태에 맞는 임플란트를 제안합니다." />
               </p>
             </div>
-            <div className="reveal-stack mt-12 grid gap-6 lg:grid-cols-2">
-              {CLINIC.videos.slice(0, 2).map((v) => (
+            <div className="reveal-stack mt-12 grid gap-6 sm:grid-cols-2">
+              {CLINIC.videos.map((v) => (
                 <div key={v.id}>
                   <VideoFacade id={v.id} poster={v.thumb} title={v.title} />
                   <p className="mt-3 text-[14.5px] font-semibold text-ink">{v.title}</p>
@@ -235,6 +237,22 @@ export default function HomePage() {
                 </li>
               ))}
             </ul>
+          </div>
+        </section>
+
+        {/* ── 치료 전후 사례 — 실제 환자 사진, 손잡이를 끌어 비교 ── */}
+        <section className="section">
+          <div className="wrap">
+            <div className="reveal max-w-[820px]">
+              <p className="eyebrow">BEFORE &amp; AFTER</p>
+              <h2 className="display-sm mt-4">
+                광화문선치과 <span className="accent">실제 치료 전후 사례</span>
+              </h2>
+              <p className="lead mt-4">환자분이 경험한 치료 전후의 변화를 실제 사례로 확인해 보세요.</p>
+            </div>
+            <div className="reveal mt-10">
+              <BeforeAfter groups={CASE_GROUPS} note={CASE_NOTE} />
+            </div>
           </div>
         </section>
 

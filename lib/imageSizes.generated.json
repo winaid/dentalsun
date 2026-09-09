@@ -530,5 +530,357 @@
  "ai/sterile": {
   "w": 1200,
   "h": 800
+ },
+ "cases/prosth-1-before": {
+  "w": 590,
+  "h": 245
+ },
+ "cases/prosth-1-after": {
+  "w": 585,
+  "h": 245
+ },
+ "cases/prosth-2-before": {
+  "w": 590,
+  "h": 245
+ },
+ "cases/prosth-2-after": {
+  "w": 585,
+  "h": 245
+ },
+ "cases/prosth-3-before": {
+  "w": 590,
+  "h": 245
+ },
+ "cases/prosth-3-after": {
+  "w": 585,
+  "h": 245
+ },
+ "cases/whitening-1-before": {
+  "w": 591,
+  "h": 244
+ },
+ "cases/whitening-1-after": {
+  "w": 584,
+  "h": 244
+ },
+ "cases/whitening-2-before": {
+  "w": 591,
+  "h": 244
+ },
+ "cases/whitening-2-after": {
+  "w": 584,
+  "h": 244
+ },
+ "cases/whitening-3-before": {
+  "w": 591,
+  "h": 244
+ },
+ "cases/whitening-3-after": {
+  "w": 584,
+  "h": 244
+ },
+ "orig/add-korea-map": {
+  "w": 570,
+  "h": 878
+ },
+ "orig/add-lidoca-gargle": {
+  "w": 511,
+  "h": 537
+ },
+ "orig/add-lidoca-gel": {
+  "w": 570,
+  "h": 520
+ },
+ "orig/airflow-device": {
+  "w": 768,
+  "h": 802
+ },
+ "orig/airflow-piezon": {
+  "w": 653,
+  "h": 237
+ },
+ "orig/case-mta1-after": {
+  "w": 775,
+  "h": 322
+ },
+ "orig/case-mta1-before": {
+  "w": 792,
+  "h": 322
+ },
+ "orig/case-mta2-after": {
+  "w": 775,
+  "h": 322
+ },
+ "orig/case-mta2-before": {
+  "w": 792,
+  "h": 330
+ },
+ "orig/case-mta3-after": {
+  "w": 775,
+  "h": 322
+ },
+ "orig/case-mta3-before": {
+  "w": 792,
+  "h": 322
+ },
+ "orig/case-wisdom-after": {
+  "w": 804,
+  "h": 334
+ },
+ "orig/case-wisdom-before": {
+  "w": 823,
+  "h": 342
+ },
+ "orig/consent-tmj-tx-arthro": {
+  "w": 512,
+  "h": 417
+ },
+ "orig/denture-clinic-bg": {
+  "w": 502,
+  "h": 769
+ },
+ "orig/denture-hero": {
+  "w": 893,
+  "h": 747
+ },
+ "orig/denture-implant-render": {
+  "w": 710,
+  "h": 327
+ },
+ "orig/doctor-hong": {
+  "w": 973,
+  "h": 1007
+ },
+ "orig/doctor-yang": {
+  "w": 1952,
+  "h": 2497
+ },
+ "orig/endo-handpiece": {
+  "w": 679,
+  "h": 550
+ },
+ "orig/endo-hero": {
+  "w": 929,
+  "h": 931
+ },
+ "orig/implant-aio-cad": {
+  "w": 672,
+  "h": 317
+ },
+ "orig/implant-aio-printer": {
+  "w": 672,
+  "h": 317
+ },
+ "orig/implant-aio-scanner": {
+  "w": 672,
+  "h": 318
+ },
+ "orig/implant-aio-teeth": {
+  "w": 672,
+  "h": 318
+ },
+ "orig/implant-custom-fit": {
+  "w": 580,
+  "h": 608
+ },
+ "orig/implant-custom-stock": {
+  "w": 580,
+  "h": 609
+ },
+ "orig/implant-cut-flapless": {
+  "w": 673,
+  "h": 355
+ },
+ "orig/implant-cut-incision": {
+  "w": 673,
+  "h": 355
+ },
+ "orig/implant-fa-denture": {
+  "w": 728,
+  "h": 765
+ },
+ "orig/implant-fa-fixed": {
+  "w": 585,
+  "h": 349
+ },
+ "orig/implant-fa-models": {
+  "w": 585,
+  "h": 349
+ },
+ "orig/implant-fa-render": {
+  "w": 729,
+  "h": 765
+ },
+ "orig/implant-fa-sim": {
+  "w": 583,
+  "h": 359
+ },
+ "orig/implant-fa-surgery": {
+  "w": 585,
+  "h": 360
+ },
+ "orig/implant-hero": {
+  "w": 585,
+  "h": 360
+ },
+ "orig/implant-nav-guide": {
+  "w": 542,
+  "h": 228
+ },
+ "orig/implant-nav-plan": {
+  "w": 542,
+  "h": 225
+ },
+ "orig/intro-hero": {
+  "w": 1068,
+  "h": 494
+ },
+ "orig/intro-monitor-pair": {
+  "w": 819,
+  "h": 362
+ },
+ "orig/intro-p01-scan-monitor": {
+  "w": 691,
+  "h": 479
+ },
+ "orig/intro-p01-scan": {
+  "w": 1920,
+  "h": 479
+ },
+ "orig/intro-p02-ct3d": {
+  "w": 528,
+  "h": 391
+ },
+ "orig/intro-p02-ctroom": {
+  "w": 691,
+  "h": 480
+ },
+ "orig/intro-p03-sim": {
+  "w": 1920,
+  "h": 301
+ },
+ "orig/intro-p04-guide": {
+  "w": 614,
+  "h": 572
+ },
+ "orig/intro-p05-cad": {
+  "w": 607,
+  "h": 466
+ },
+ "orig/intro-p05-cure": {
+  "w": 580,
+  "h": 413
+ },
+ "orig/intro-p05-group": {
+  "w": 1288,
+  "h": 895
+ },
+ "orig/intro-p05-printer": {
+  "w": 576,
+  "h": 719
+ },
+ "orig/intro-p06-inos-flat": {
+  "w": 652,
+  "h": 459
+ },
+ "orig/intro-p06-inos-group": {
+  "w": 1238,
+  "h": 552
+ },
+ "orig/intro-p06-inos-tower": {
+  "w": 537,
+  "h": 526
+ },
+ "orig/main-fa-surgeon-right": {
+  "w": 517,
+  "h": 767
+ },
+ "orig/main-surgeon": {
+  "w": 912,
+  "h": 767
+ },
+ "orig/misc-consult-desk": {
+  "w": 504,
+  "h": 253
+ },
+ "orig/misc-mta-tooth": {
+  "w": 800,
+  "h": 476
+ },
+ "orig/misc-nav-implant-set": {
+  "w": 865,
+  "h": 614
+ },
+ "orig/misc-online-phone": {
+  "w": 504,
+  "h": 253
+ },
+ "orig/misc-review-note": {
+  "w": 504,
+  "h": 253
+ },
+ "orig/misc-tmj-skull": {
+  "w": 759,
+  "h": 659
+ },
+ "orig/misc-veneer-teeth": {
+  "w": 800,
+  "h": 476
+ },
+ "orig/misc-whitening-model": {
+  "w": 1154,
+  "h": 1368
+ },
+ "orig/misc-wisdom-tooth": {
+  "w": 800,
+  "h": 476
+ },
+ "orig/mta-hero": {
+  "w": 1094,
+  "h": 931
+ },
+ "orig/pain-hero": {
+  "w": 960,
+  "h": 1045
+ },
+ "orig/pain-nopain": {
+  "w": 614,
+  "h": 522
+ },
+ "orig/sleep-hero": {
+  "w": 829,
+  "h": 835
+ },
+ "orig/sleep-molar": {
+  "w": 763,
+  "h": 389
+ },
+ "orig/tmj-hero": {
+  "w": 914,
+  "h": 1045
+ },
+ "orig/tmj-tx-botox": {
+  "w": 610,
+  "h": 417
+ },
+ "orig/tmj-tx-laser": {
+  "w": 590,
+  "h": 417
+ },
+ "orig/tmj-tx-pills": {
+  "w": 512,
+  "h": 417
+ },
+ "orig/tmj-tx-splint": {
+  "w": 590,
+  "h": 417
+ },
+ "orig/wisdom-ct-screen": {
+  "w": 677,
+  "h": 451
+ },
+ "orig/wisdom-doctor": {
+  "w": 677,
+  "h": 451
  }
 }

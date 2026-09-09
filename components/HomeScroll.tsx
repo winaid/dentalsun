@@ -41,10 +41,10 @@ export function HomeStats() {
 
 /** 고정 무대 사진 — 단계별. 작은 옛 도해 대신 큰 사진(AI 정물 2 + 원본 장비 2). */
 const STAGE_IMG = [
-  { key: 'ai/hero-digital', alt: '3D 구강 스캐너와 스캔 화면' },
-  { key: 'ai/implant-navigation', alt: '임플란트 식립 경로 분석 화면' },
+  { key: 'equip/scanner', alt: '3D 구강 스캐너로 촬영해 모니터에 뜬 스캔 데이터' },
+  { key: 'orig/intro-p03-sim', alt: '임플란트 식립 경로를 분석하는 화면' },
   { key: 'equip/printer', alt: '3D 프린터와 보철 디자인 화면' },
-  { key: 'equip/guide', alt: '수술 유도장치(가이드) 모형' },
+  { key: 'equip/guide', alt: '하악 모형에 씌운 투명 수술 유도장치' },
 ];
 
 export function HomeStage() {
@@ -71,7 +71,7 @@ export function HomeStage() {
           {/* 왼쪽 — 고정 무대 (lg 이상) */}
           <div className="hidden lg:block">
             <div className="sticky top-[120px]">
-              <div className="relative aspect-[4/3] overflow-hidden rounded-[28px] bg-canvas-2 shadow-[var(--shadow-lift)]">
+              <div className="relative aspect-[2/1] overflow-hidden rounded-[28px] bg-canvas-2 shadow-[var(--shadow-lift)]">
                 {STAGE_IMG.map((f, i) => (
                   <div key={f.key} className="stage-img" data-stage-img>
                     <Image src={figSrc(f.key)} alt={f.alt} fill sizes="50vw" className="object-cover" />
@@ -96,7 +96,7 @@ export function HomeStage() {
                       <Sentences text={s.desc} />
                     </p>
                   )}
-                  <div className="relative mt-5 aspect-[4/3] overflow-hidden rounded-2xl bg-canvas-2 lg:hidden">
+                  <div className="relative mt-5 aspect-[2/1] overflow-hidden rounded-2xl bg-canvas-2 lg:hidden">
                     <Image src={figSrc(STAGE_IMG[i]?.key ?? STAGE_IMG[0].key)} alt={STAGE_IMG[i]?.alt ?? ''} fill sizes="100vw" className="object-cover" />
                   </div>
                 </div>
@@ -122,7 +122,7 @@ const TOUR = [
   { key: 'place/place08', alt: '3D CT 촬영실' },
   { key: 'place/place04', alt: '물리치료실과 3번 진료실' },
   { key: 'place/place03', alt: '광화문선치과 진료실' },
-  { key: 'place/place10', alt: '광화문선치과 대기실' },
+  { key: 'place/place09', alt: '광화문선치과 대기실' },
 ];
 
 export function HomeTourPan() {

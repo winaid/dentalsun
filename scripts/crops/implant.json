@@ -1,0 +1,19 @@
+[
+  { "src": "full_arch_implant02_m.png", "key": "orig/implant-hero", "box": [0.118, 0.359, 0.8604, 0.4853], "alt": "확대경을 쓴 의료진이 파노라마 모니터 앞에서 임플란트 수술을 하는 장면" },
+  { "src": "implant03.png", "key": "orig/implant-nav-plan", "box": [0.5115, 0.3469, 0.7938, 0.5656], "alt": "CT 위에 임플란트 식립 경로를 잡는 계획 소프트웨어 화면" },
+  { "src": "implant03.png", "key": "orig/implant-nav-guide", "box": [0.5115, 0.6589, 0.7938, 0.8805], "alt": "하악 모형에 투명 수술 가이드를 얹고 드릴을 맞춘 모습" },
+  { "src": "implant03-2_m.png", "key": "orig/implant-aio-scanner", "box": [0.2027, 0.1132, 0.8081, 0.2173], "alt": "3shape 구강 스캐너 본체" },
+  { "src": "implant03-2_m.png", "key": "orig/implant-aio-cad", "box": [0.2027, 0.3302, 0.8081, 0.4339], "alt": "DIO CAD 프로그램으로 보철물을 설계하는 화면" },
+  { "src": "implant03-2_m.png", "key": "orig/implant-aio-printer", "box": [0.2027, 0.5477, 0.8081, 0.6515], "alt": "DIO 3D 프린터" },
+  { "src": "implant03-2_m.png", "key": "orig/implant-aio-teeth", "box": [0.2027, 0.765, 0.8081, 0.8691], "alt": "치경을 댄 가지런한 치열" },
+  { "src": "implant04_m.png", "key": "orig/implant-cut-incision", "box": [0.0953, 0.275, 0.4458, 0.5382], "alt": "잇몸을 절개하고 봉합한 모습(흑백)" },
+  { "src": "implant04_m.png", "key": "orig/implant-cut-flapless", "box": [0.5536, 0.275, 0.9042, 0.5382], "alt": "절개 없이 작은 구멍 두 개만 낸 잇몸" },
+  { "src": "implant08_m.png", "key": "orig/implant-custom-stock", "box": [0.0842, 0.3136, 0.4625, 0.719], "alt": "기성품 어버트먼트 단면 일러스트" },
+  { "src": "implant08_m.png", "key": "orig/implant-custom-fit", "box": [0.5362, 0.3142, 0.9146, 0.719], "alt": "잇몸 선에 맞춘 맞춤 어버트먼트 단면 일러스트" },
+  { "src": "full_arch_implant02_m.png", "key": "orig/implant-fa-sim", "box": [0.1155, 0.1441, 0.8553, 0.27], "alt": "전악 스캔 데이터 위에 임플란트 식립을 시뮬레이션한 화면" },
+  { "src": "full_arch_implant02_m.png", "key": "orig/implant-fa-surgery", "box": [0.118, 0.359, 0.8604, 0.4853], "alt": "수술실에서 임플란트 수술 중인 의료진" },
+  { "src": "full_arch_implant02_m.png", "key": "orig/implant-fa-fixed", "box": [0.1155, 0.5712, 0.8579, 0.6936], "alt": "임플란트 여섯 개로 고정한 전악 보철 렌더" },
+  { "src": "full_arch_implant02_m.png", "key": "orig/implant-fa-models", "box": [0.118, 0.7837, 0.8604, 0.906], "alt": "상악·하악 전악 임플란트 보철 모형" },
+  { "src": "full_arch_implant03_m.png", "key": "orig/implant-fa-denture", "box": [0.0844, 0.2157, 0.4635, 0.5815], "alt": "전악 임플란트 보철물과 분홍 틀니" },
+  { "src": "full_arch_implant03_m.png", "key": "orig/implant-fa-render", "box": [0.5365, 0.2157, 0.9161, 0.5815], "alt": "하악골에 임플란트 네 개로 고정한 전악 보철 렌더" }
+]

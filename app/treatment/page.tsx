@@ -8,13 +8,13 @@ import { Breadcrumb, ContactBand, MedicalNotice, Sentences } from '@/components/
 import { figSrc } from '@/lib/docs';
 
 const HUB_IMG: Record<string, string> = {
-  '/treatment/implant': 'ai/implant-hub',
-  '/treatment/tmj': 'ai/tmj-hub',
+  '/treatment/implant': 'orig/implant-hero',
+  '/treatment/tmj': 'orig/tmj-hero',
   '/treatment/aesthetic': 'ai/aesthetic-hub',
   '/treatment/insurance': 'ai/insurance-hub',
-  '/treatment/wisdom-tooth': 'ai/wisdom',
-  '/treatment/natural-tooth': 'ai/natural-hub',
-  '/treatment/painless': 'ai/painless-hub',
+  '/treatment/wisdom-tooth': 'orig/wisdom-doctor',
+  '/treatment/natural-tooth': 'orig/mta-hero',
+  '/treatment/painless': 'orig/pain-hero',
 };
 import { ALL_DOCS, docsOfHub } from '@/lib/content';
 import { TREATMENT_HUBS } from '@/lib/nav';

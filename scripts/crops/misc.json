@@ -1,0 +1,21 @@
+[
+  { "src": "analgesic_anesthetic02.png", "key": "orig/pain-hero", "box": [0.5, 0, 1, 1], "alt": "파노라마 모니터 앞에서 무통마취기(NO PAIN III)로 마취하는 원장" },
+  { "src": "analgesic_anesthetic02.png", "key": "orig/pain-nopain", "box": [0.68, 0.5, 1, 1], "alt": "컴퓨터 제어 무통마취기 NO PAIN III 장비" },
+  { "src": "sleep01.png", "key": "orig/sleep-hero", "box": [0.62, 0, 1, 1], "alt": "눈을 감고 편안하게 진료받는 여성 환자" },
+  { "src": "sleep03.png", "key": "orig/sleep-molar", "box": [0.585, 0.09, 0.895, 0.49], "alt": "흰 어금니 3D 이미지" },
+  { "src": "scaler01.png", "key": "orig/airflow-device", "box": [0.505, 0.04, 0.905, 1], "alt": "EMS 에어플로우 프로필락시스 마스터 장비" },
+  { "src": "scaler03.png", "key": "orig/airflow-piezon", "box": [0.595, 0, 0.935, 0.38], "alt": "파란 LED 가 켜진 피에존 스케일러 핸드피스 팁" },
+  { "src": "cleaner01.png", "key": "orig/endo-hero", "box": [0.516, 0, 1, 1], "alt": "엔도소닉 초음파 세척기로 근관을 세척하는 진료 장면" },
+  { "src": "cleaner01.png", "key": "orig/endo-handpiece", "box": [0.516, 0.17, 0.87, 0.76], "alt": "엔도소닉 초음파 세척기 핸드피스" },
+  { "src": "neurotherapy01.png", "key": "orig/mta-hero", "box": [0.43, 0, 1, 1], "alt": "확대경을 쓰고 MTA 신경치료를 하는 원장" },
+  { "src": "neurotherapy03.png", "key": "orig/case-mta1-before", "box": [0.19737, 0.19955, 0.50387, 0.27967], "alt": "깊은 충치로 신경이 노출된 어금니 — MTA 치료 전" },
+  { "src": "neurotherapy03.png", "key": "orig/case-mta1-after", "box": [0.50929, 0.19955, 0.80921, 0.27967], "alt": "MTA 로 신경을 덮고 보철로 마무리한 어금니 — 치료 후" },
+  { "src": "neurotherapy03.png", "key": "orig/case-mta2-before", "box": [0.19737, 0.40085, 0.50387, 0.48296], "alt": "신경 깊은 곳까지 충치가 진행된 치아 엑스레이 — MTA 신경치료 전" },
+  { "src": "neurotherapy03.png", "key": "orig/case-mta2-after", "box": [0.50929, 0.40284, 0.80921, 0.48296], "alt": "MTA 로 근관을 충전한 치아 엑스레이 — 치료 후" },
+  { "src": "neurotherapy03.png", "key": "orig/case-mta3-before", "box": [0.19737, 0.61956, 0.50387, 0.69968], "alt": "뿌리 끝 염증이 재발한 치아 엑스레이 — 재신경치료 전" },
+  { "src": "neurotherapy03.png", "key": "orig/case-mta3-after", "box": [0.50929, 0.61956, 0.80921, 0.69968], "alt": "MTA 재신경치료로 발치를 피한 치아 엑스레이 — 치료 후" },
+  { "src": "wisdom_teeth1.png", "key": "orig/wisdom-doctor", "box": [0.14979, 0.17354, 0.4125, 0.81508], "alt": "확대경을 쓰고 사랑니를 발치하는 원장" },
+  { "src": "wisdom_teeth2.png", "key": "orig/wisdom-ct-screen", "box": [0.15017, 0.17354, 0.41288, 0.81508], "alt": "3D CT 판독 화면 — 사랑니와 하치조신경 위치 확인" },
+  { "src": "wisdom_teeth4.png", "key": "orig/case-wisdom-before", "box": [0.1599, 0.21187, 0.49734, 0.5242], "alt": "옆 치아에 닿아 누운 매복 사랑니 파노라마 — 발치 전" },
+  { "src": "wisdom_teeth4.png", "key": "orig/case-wisdom-after", "box": [0.50308, 0.21918, 0.83272, 0.5242], "alt": "사랑니와 손상된 옆 치아를 발치하고 임플란트를 식립한 엑스레이 — 발치 후" }
+]

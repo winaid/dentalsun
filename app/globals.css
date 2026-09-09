@@ -27,15 +27,15 @@
   --color-sun-600: #e0570f;
   --color-sun-700: #b9430c;
 
-  --color-ink: #141a2e;
-  --color-ink-soft: #4b5270;
-  --color-ink-muted: #8a90a8;
+  --color-ink: #131829;
+  --color-ink-soft: #545b74;
+  --color-ink-muted: #8b91a5;
   --color-paper: #ffffff;
-  --color-canvas: #f6f7fb;
-  --color-canvas-2: #eef1f8;
-  --color-hairline: #e4e7f0;
-  --color-night: #0d1433;
-  --color-night-2: #111a3f;
+  --color-canvas: #f7f8fa;
+  --color-canvas-2: #eef0f5;
+  --color-hairline: #e6e8ef;
+  --color-night: #0c1230;
+  --color-night-2: #141c42;
 
   --font-sans: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
 
@@ -43,9 +43,9 @@
   --radius-2xl: 20px;
   --radius-3xl: 28px;
 
-  --shadow-soft: 0 1px 2px rgba(20, 26, 46, 0.04), 0 8px 24px rgba(20, 26, 46, 0.06);
-  --shadow-lift: 0 4px 16px rgba(20, 26, 46, 0.08), 0 16px 40px rgba(24, 43, 88, 0.12);
-  --shadow-btn: 0 6px 18px rgba(242, 111, 30, 0.28);
+  --shadow-soft: 0 1px 2px rgba(19, 24, 41, 0.03), 0 6px 20px rgba(19, 24, 41, 0.045);
+  --shadow-lift: 0 2px 8px rgba(19, 24, 41, 0.05), 0 20px 44px rgba(24, 43, 88, 0.11);
+  --shadow-btn: 0 4px 14px rgba(242, 111, 30, 0.24);
 }
 
 html {
@@ -98,16 +98,25 @@ body {
   @apply bg-sun-300;
 }
 .display {
-  @apply text-[2rem] leading-[1.18] font-extrabold tracking-[-0.03em] text-ink sm:text-[2.6rem] lg:text-[3.3rem];
+  @apply text-[2rem] leading-[1.16] font-extrabold tracking-[-0.035em] text-ink sm:text-[2.6rem] lg:text-[3.3rem];
 }
 .display-sm {
-  @apply text-[1.6rem] leading-[1.22] font-extrabold tracking-[-0.025em] text-ink sm:text-[2rem] lg:text-[2.5rem];
+  @apply text-[1.6rem] leading-[1.2] font-extrabold tracking-[-0.03em] text-ink sm:text-[2rem] lg:text-[2.5rem];
 }
+/* 강조 낱말 — 색과 함께 밑에 얇은 획 하나. 형광펜처럼 넓게 칠하지 않는다. */
 .accent {
   @apply text-brand-600;
+  background-image: linear-gradient(var(--color-brand-200), var(--color-brand-200));
+  background-repeat: no-repeat;
+  background-size: 100% 0.14em;
+  background-position: 0 92%;
 }
 .accent-sun {
   @apply text-sun-500;
+  background-image: linear-gradient(rgba(242, 111, 30, 0.35), rgba(242, 111, 30, 0.35));
+  background-repeat: no-repeat;
+  background-size: 100% 0.14em;
+  background-position: 0 92%;
 }
 .lead {
   @apply text-[1.02rem] leading-[1.8] text-ink-soft md:text-[1.12rem];
@@ -166,7 +175,7 @@ body {
   @apply rounded-2xl border border-hairline bg-white shadow-[var(--shadow-soft)];
 }
 .card-hover {
-  @apply transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[var(--shadow-lift)] hover:border-brand-200;
+  @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-lift)] hover:border-brand-200;
 }
 .card-img {
   @apply relative aspect-[4/3] w-full overflow-hidden bg-canvas-2;
@@ -178,7 +187,8 @@ body {
   transform: scale(1.06);
 }
 .num {
-  @apply text-[1.9rem] leading-none font-extrabold tracking-tight text-brand-600;
+  @apply text-[1.75rem] leading-none font-extrabold tracking-[-0.04em] text-brand-500;
+  font-variant-numeric: tabular-nums;
 }
 .grid-cards {
   @apply grid gap-5 auto-rows-fr;
@@ -462,4 +472,42 @@ details.faq .a {
   .stage-step {
     opacity: 1 !important;
   }
+}
+
+/* ── 균형 격자 — 줄마다 개수가 고르도록: 마지막 줄이 모자라면 가운데로 모은다 (오너: "4개 한 줄 1개 한 줄 금지") ── */
+.cards-flex {
+  --gap: 1.25rem;
+  --cols: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--gap);
+}
+@media (min-width: 640px) {
+  .cards-flex { --cols: var(--sm, 2); }
+}
+@media (min-width: 1024px) {
+  .cards-flex { --cols: var(--lg, 3); }
+}
+@media (min-width: 1280px) {
+  .cards-flex { --cols: var(--xl, var(--lg, 3)); }
+}
+.cards-flex > * {
+  flex: 0 0 calc((100% - (var(--cols) - 1) * var(--gap)) / var(--cols));
+  min-width: 0;
+  /* ★ h-full(height:100%)이 flex 안에서는 컨테이너 높이를 되물어 카드가 통째로 늘어난다.
+     줄 높이 맞춤은 flex 의 stretch 가 이미 해 주므로 높이는 auto 로 되돌린다. */
+  height: auto;
+}
+
+/* ── 결 다듬기 (2026-09-08 3차) — 어두운 구역은 단색 대신 깊이 있는 남색 그라데이션 ── */
+.bg-night {
+  background-image: radial-gradient(120% 90% at 12% 0%, #17204d 0%, transparent 55%), radial-gradient(90% 70% at 88% 100%, #10173a 0%, transparent 60%);
+}
+.section + .section:not(.bg-canvas):not([class*='bg-night']) {
+  padding-top: 0;
+}
+/* 옅은 바탕 구역은 위아래 실선 대신 아주 옅은 경계로 */
+.bg-canvas {
+  box-shadow: inset 0 1px 0 rgba(19, 24, 41, 0.04), inset 0 -1px 0 rgba(19, 24, 41, 0.04);
 }

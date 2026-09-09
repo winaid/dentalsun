@@ -14,17 +14,16 @@ const DESC = '광화문 선치과 소개 — 환자중심의 디지털 치과 �
 export const metadata: Metadata = { title: TITLE, description: DESC, alternates: alt('/about'), openGraph: og({ title: TITLE, description: DESC, path: '/about', images: [{ url: '/img/scene/intro-1.webp', width: 769, height: 495, alt: '광화문선치과 진료 장면' }] }) };
 
 /** 둘러보기 — 기존 홈페이지 '둘러보기' 사진 10장 그대로. 설명은 사진에 보이는 것만. */
+/* 여덟 장 = 4열 두 줄이 딱 맞는다(마지막 줄에 한 장만 남지 않게). 상장·현판 사진은 의료광고 심의를 고려해 빼 두었다. */
 const TOUR = [
   { key: 'place/place01', alt: '광화문선치과 진료실 복도' },
   { key: 'place/place02', alt: '광화문선치과 개별 진료실' },
   { key: 'place/place03', alt: '광화문선치과 진료실과 간판' },
-  { key: 'place/place04', alt: '광화문선치과 진료실 유닛체어' },
+  { key: 'place/place04', alt: '광화문선치과 물리치료실과 진료실' },
   { key: 'place/place05', alt: '수술실 표지' },
   { key: 'place/place06', alt: '광화문선치과 수술실 내부' },
-  { key: 'place/place07', alt: '인증패·상장 진열장' },
   { key: 'place/place08', alt: '3D CT 촬영실' },
   { key: 'place/place09', alt: '광화문선치과 대기실' },
-  { key: 'place/place10', alt: '대기실의 2019 대한민국 메디컬 헬스케어 치과부문 대상 현판' },
 ];
 
 const POINTS = [
@@ -45,7 +44,7 @@ export default function AboutPage() {
       <main id="main">
         <section className="relative isolate overflow-hidden bg-night text-white">
           <div className="absolute inset-0 -z-10">
-            <Image src="/img/ai/hero-wide-1.webp" alt="" fill priority sizes="100vw" className="kenburns object-cover opacity-70" />
+            <Image src="/img/place/place01.webp" alt="" fill priority sizes="100vw" className="kenburns object-cover opacity-70" />
             <div className="absolute inset-0 bg-gradient-to-r from-night via-night/85 to-night/30" />
           </div>
           <div className="wrap pt-[120px] pb-16 md:pt-[160px] md:pb-24">
@@ -170,8 +169,8 @@ export default function AboutPage() {
               <p className="lead mt-4">{CLINIC.address.full} · {CLINIC.address.landmark}</p>
             </div>
             <div className="reveal-stack mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
-              {TOUR.map((f, i) => (
-                <Figure key={f.key} fig={f} ratio={i === 0 ? 'aspect-[4/3] h-full' : 'aspect-[4/3]'} sizes="(max-width: 768px) 50vw, 25vw" className={i === 0 ? 'col-span-2 row-span-2' : ''} effect="img-in" caption={false} />
+              {TOUR.map((f) => (
+                <Figure key={f.key} fig={f} ratio="aspect-[4/3]" sizes="(max-width: 768px) 50vw, 25vw" effect="img-in" caption={false} />
               ))}
             </div>
           </div>

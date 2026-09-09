@@ -52,7 +52,7 @@ export function HomeHero() {
             <Link href="/treatment" className="btn-ghost-dark">진료 안내 보기</Link>
           </div>
           <ul className="mt-12 flex flex-wrap gap-2.5 hero-in hero-in-4">
-            {['통합치의학과 · 치과보철과 전문의', '3D 구강스캐너 · 저선량 CT · 수술 가이드', '무통마취기 · 에어플로우 · 수면치료'].map((t) => (
+            {['통합치의학과 · 치과보철과 전문의', '3D 구강스캐너 · 3D CT · 수술 가이드', '무통마취기 · 에어플로우 · 수면치료'].map((t) => (
               <li key={t} className="rounded-full border border-white/15 bg-white/8 px-4 py-2 text-[13.5px] font-semibold text-white/85 backdrop-blur">{t}</li>
             ))}
           </ul>

@@ -38,7 +38,7 @@ export type Block =
   /** 사진 여러 장 */
   | { type: 'gallery'; id?: string; title?: string; lead?: string; figures: Fig[]; columns?: 2 | 3 | 4 }
   /** 치료 전후 등 사례 사진 한 장 + 고지문(필수) */
-  | { type: 'cases'; id?: string; title?: string; lead?: string; figure: Fig; note: string }
+  | { type: 'cases'; id?: string; title?: string; lead?: string; figure: Fig; note: string; /** lib/cases.ts 의 묶음 id — 있으면 전후 비교 슬라이더로 보여 준다 */ caseGroup?: string }
   /** 강조 한 줄 */
   | { type: 'quote'; text: string; by?: string }
   /** 다른 문서로 가는 카드 */

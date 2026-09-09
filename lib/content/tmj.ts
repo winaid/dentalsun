@@ -97,6 +97,13 @@ export const TMJ_DOCS: Doc[] = [
         figure: { key: 'equip/laser', alt: 'PHL-15 레이저 물리치료 장비' },
       },
       {
+        type: 'points',
+        id: 'laser-points',
+        title: '저출력 레이저와 저주파 전기치료기로 빠르게 턱관절 근육 통증 완화',
+        items: [{ title: '원적외선보다 5배 높은 피부 침투력' }, { title: '증상에 따른 여러 가지 치료 모드' }, { title: '건강보험 적용으로 부담 없이' }],
+        numbered: false,
+      },
+      {
         type: 'text',
         id: 'ct',
         title: '저선량 첨단 디지털 CT',
@@ -106,6 +113,13 @@ export const TMJ_DOCS: Doc[] = [
         ],
         figure: { key: 'equip/ct', alt: '저선량 디지털 CT 장비' },
         figureSide: 'left',
+      },
+      {
+        type: 'points',
+        id: 'ct-points',
+        title: '3D 촬영으로 보다 정확하고 안전한 진단',
+        items: [{ title: '여러 가지 영상을 제공하는 올인원 시스템' }, { title: '파노라마와 CT를 함께 촬영 가능' }, { title: '짧은 촬영시간과 적은 방사선 노출량으로 안전한 CT' }],
+        numbered: false,
       },
       {
         type: 'notice',
@@ -339,23 +353,27 @@ export const TMJ_DOCS: Doc[] = [
           {
             title: '약물치료',
             desc: '턱관절 질환의 초기 단계에는 약물을 이용해 비교적 빠르게 치료할 수 있습니다. 염증성 증상을 보일 때 규칙적으로 복용합니다.',
+            figure: { key: 'orig/tmj-tx-pills', alt: '약물치료에 쓰는 알약' },
           },
           {
             title: '물리치료',
             desc: '턱관절 근육이 장시간 스트레스를 받아 문제가 생긴 경우, 레이저 및 초음파 장비를 이용해 수축된 근육을 이완시켜 통증과 증상을 완화합니다.',
+            figure: { key: 'orig/tmj-tx-laser', alt: 'PHL-15 레이저 물리치료 장비' },
           },
           {
             title: '보톡스 치료',
             desc: '미용 목적의 보톡스와 다르게, 과활성화된 턱관절 근육을 보톡스로 인위적으로 약화시켜 증상을 치료합니다. 턱관절로 인한 두통의 경우 머리 근육에 보톡스를 주입해 증상을 완화합니다.',
+            figure: { key: 'orig/tmj-tx-botox', alt: '약병에서 주사기로 약물을 뽑는 모습' },
           },
           {
             title: '스플린트 장치치료',
             desc: '턱관절 디스크(관절원판)가 빠져 제 위치를 벗어나면, 투명한 스플린트 장치를 이용해 머리뼈와 턱관절 사이의 공간을 확보해 주어 원래의 위치로 교정하는 치료 방법입니다.',
-            figure: { key: 'tmj/splint', alt: '투명한 스플린트 장치 모형' },
+            figure: { key: 'orig/tmj-tx-splint', alt: '석고 모형 위에 올린 투명 스플린트 장치' },
           },
           {
             title: '관절강 세척술',
             desc: '갑자기 입이 안 벌어지거나 통증이 있을 때 주사침을 이용해 관절 안을 세척하고 약물을 주입합니다. 염증을 제거하고 입이 벌어질 수 있게 공간을 확보하는 시술입니다.',
+            figure: { key: 'orig/tmj-hero', alt: '확대경을 착용하고 턱관절 시술을 진행하는 원장' },
           },
         ],
       },
