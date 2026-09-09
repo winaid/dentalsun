@@ -69,7 +69,7 @@ export function SiteHeader({ dark = false }: { dark?: boolean }) {
                   {item.label}
                 </Link>
                 {item.children && panel === i && (
-                  <div className="absolute left-1/2 top-full z-50 w-[300px] -translate-x-1/2 pt-3 hero-in">
+                  <div className="absolute left-1/2 top-full z-50 w-[300px] -translate-x-1/2 pt-3 menu-in">
                     <ul className="card p-2.5">
                       {item.children.map((c) =>
                         c.external ? (

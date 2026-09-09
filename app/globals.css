@@ -275,6 +275,15 @@ body {
 .hero-in-3 { animation-delay: 360ms; }
 .hero-in-4 { animation-delay: 540ms; }
 
+/* 머리말 펼침 메뉴 — 위에서 아래로 짧게 내려온다(hero-in 은 아래에서 올라와 메뉴에는 어색했다, 오너 지적) */
+@keyframes menu-in {
+  from { opacity: 0; transform: translate(-50%, -10px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+.menu-in {
+  animation: menu-in 0.22s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
 /* 첫 화면 배경 — 천천히 다가오는 켄번스 + 슬라이드 교차 */
 @keyframes kenburns {
   from { transform: scale(1); }
