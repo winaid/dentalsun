@@ -66,11 +66,11 @@ export function HomeStage() {
           )}
         </div>
 
-        <div className="mt-12 grid gap-10 lg:grid-cols-2 lg:gap-16">
-          {/* 왼쪽 — 고정 무대 (lg 이상) */}
+        <div className="mt-12 grid gap-10 lg:grid-cols-[1.15fr_1fr] lg:gap-16">
+          {/* 왼쪽 — 고정 무대 (lg 이상). 화면 세로 가운데에 고정: 100svh 상자 안에서 가운데 정렬(오너: 너무 위에 붙어 있었다) */}
           <div className="hidden lg:block">
-            <div className="sticky top-[120px]">
-              <div className="relative aspect-[2/1] overflow-hidden rounded-[28px] bg-canvas-2 shadow-[var(--shadow-lift)]">
+            <div className="sticky top-0 flex h-[100svh] items-center">
+              <div className="relative w-full aspect-[2/1] overflow-hidden rounded-[28px] bg-canvas-2 shadow-[var(--shadow-lift)]">
                 {STAGE_IMG.map((f, i) => (
                   <div key={f.key} className="stage-img" data-stage-img>
                     <Image src={figSrc(f.key)} alt={f.alt} fill sizes="50vw" className="object-cover" />
@@ -84,9 +84,9 @@ export function HomeStage() {
           </div>
 
           {/* 오른쪽 — 단계 글 (모바일은 사진을 각 단계 아래에) */}
-          <ol className="lg:py-[8vh]">
+          <ol className="lg:py-[18vh]">
             {steps.map((s, i) => (
-              <li key={s.title} className="stage-step flex gap-5 border-t border-hairline py-9 md:gap-7 lg:min-h-[54vh] lg:py-12" data-stage-step>
+              <li key={s.title} className="stage-step flex gap-5 border-t border-hairline py-9 md:gap-7 lg:min-h-[48vh] lg:py-12" data-stage-step>
                 <span className="num shrink-0 !text-[1.6rem]">{String(i + 1).padStart(2, '0')}</span>
                 <div className="min-w-0 flex-1">
                   <h3 className="text-[1.3rem] font-bold leading-snug text-ink md:text-[1.55rem]">{s.title}</h3>
