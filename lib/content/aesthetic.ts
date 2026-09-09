@@ -96,7 +96,7 @@ export const AESTHETIC_DOCS: Doc[] = [
     description:
       '광화문 선치과 심미보철 — 라미네이트·올세라믹·지르코니아로 벌어지거나 깨진 앞니, 고르지 않은 치아 배열을 개선합니다. 치아 상태에 따른 보철 선택과 치료 전후 사례를 안내합니다.',
     keywords: ['광화문 심미보철', '라미네이트', '올세라믹', '지르코니아', '앞니 보철', '벌어진 앞니', '광화문 치과'],
-    hero: { key: 'ai/aesthetic-hub', alt: '앞니의 형태와 배열을 나타낸 도해' },
+    hero: { key: 'ai/aesthetic-hub', alt: '가지런한 앞니가 드러나는 자연스러운 미소' },
     procedure: '심미보철',
     blocks: [
       {

@@ -167,7 +167,7 @@ export const TMJ_DOCS: Doc[] = [
     description:
       '광화문 선치과가 안내하는 턱관절 장애의 주요 증상(소리·통증·입 벌리기 힘듦)과 원인, 집에서 해보는 자가 점검, 진료가 필요한 신호와 저선량 CT 진단 과정을 정리했습니다.',
     keywords: ['턱관절 증상', '턱에서 소리', '턱관절 통증', '입이 안 벌어짐', '턱관절 원인', '턱관절 자가진단', '광화문 턱관절'],
-    hero: { key: 'ai/tmj-symptoms', alt: '턱관절의 위치를 나타낸 두개골 도해' },
+    hero: { key: 'ai/tmj-symptoms', alt: '귀 앞 턱관절 부위를 손가락으로 짚어 보는 모습' },
     procedure: '턱관절 장애 진단',
     blocks: [
       {

@@ -211,7 +211,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     lines: ['광화문 선치과', '{인사이트}'],
     cards: [
       { fig: { key: 'scene/consult', alt: '환자와 상담하는 장면' }, shape: 'portrait' },
-      { fig: { key: 'ai/insight-hub', alt: '치아 모형과 확대경(연출 사진)' }, shape: 'wide' },
+      { fig: { key: 'ai/insight-hub', alt: '휴대폰으로 치과 안내 글을 읽는 손(연출 사진)' }, shape: 'wide' },
       { fig: { key: 'orig/misc-online-phone', alt: '노트북 앞에서 스마트폰을 든 손' }, shape: 'std' },
     ],
     items: [

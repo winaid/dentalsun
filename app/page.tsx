@@ -206,7 +206,7 @@ export default function HomePage() {
             <div className="reveal-stack grid grid-cols-2 gap-4">
               {[
                 { key: 'tmj/splint', alt: '턱관절 스플린트 장치 모형' },
-                { key: 'ai/tmj-symptoms', alt: '턱관절 도해 모형' },
+                { key: 'ai/tmj-symptoms', alt: '귀 앞 턱관절 부위를 손가락으로 짚어 보는 모습' },
                 { key: 'equip/laser', alt: '턱관절 물리치료 장비 PHL-15 레이저' },
                 { key: 'scene/tmj-3', alt: '턱관절 진료 상담' },
               ].map((f) => (

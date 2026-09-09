@@ -138,7 +138,7 @@ export const INSIGHT_SYMPTOM_A: Doc[] = [
     description:
       '광화문 선치과 인사이트 — 입이 잘 안 벌어지는 원인(디스크 걸림·근육 긴장·염증·사랑니), 손가락 세 개 자가 점검, 집에서의 대처와 관절강 세척술·스플린트 등 치과 치료를 정리했습니다.',
     keywords: ['입이 안 벌어져요', '개구 제한', '입 벌리기 힘듦', '턱관절 디스크', '턱 걸림', '광화문 턱관절', '턱관절 치료'],
-    hero: { key: 'ai/tmj-symptoms', alt: '턱관절의 위치를 나타낸 두개골 도해' },
+    hero: { key: 'ai/tmj-symptoms', alt: '귀 앞 턱관절 부위를 손가락으로 짚어 보는 모습' },
     blocks: [
       {
         type: 'text',
