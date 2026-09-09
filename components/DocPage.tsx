@@ -100,6 +100,13 @@ export function DocPage({ doc }: { doc: Doc }) {
 
   /* 긴 문서: 세 번째 블록마다 배경 띠로 바꿔 구역이 비슷해 보이지 않게 한다. */
   let bandCount = 0;
+  /* '글 + 사진' 2열 구역이 세 번 이상 이어지면 가운데 하나는 사진을 배경으로 깔고 글을 가운데 놓는다(오너: 같은 구역 반복 지루함).
+     배경으로 쓸 사진은 폭 900px 이상인 진짜 사진이어야 한다 — 작은 배너 조각이면 첫 화면 사진, 그것도 작으면 허브 배경. */
+  const textFigIdx = doc.blocks.map((b, i) => (b.type === 'text' && b.figure ? i : -1)).filter((i) => i >= 0);
+  const photoBandIndex = textFigIdx.length >= 3 ? textFigIdx[Math.floor(textFigIdx.length / 2)] : -1;
+  const bigEnough = (key?: string) => !!key && figSize(key).w >= 900 && !/^(equip|illust|implant|tmj|aesthetic|wisdom)\//.test(key);
+  const photoBandBlock = photoBandIndex >= 0 ? (doc.blocks[photoBandIndex] as Extract<Block, { type: 'text' }>) : null;
+  const photoBandKey = photoBandBlock ? (bigEnough(photoBandBlock.figure?.key) ? photoBandBlock.figure!.key : bigEnough(hero?.key) ? hero!.key : bandBg) : undefined;
 
   return (
     <>
@@ -144,7 +151,7 @@ export function DocPage({ doc }: { doc: Doc }) {
         {doc.blocks.map((b, i) => {
           const band = !doc.isHub && (b.type === 'points' || b.type === 'steps') && i > 0 && i % 3 === 2 && bandCount < 2;
           if (band) bandCount++;
-          return <BlockView key={i} block={b} index={i} band={band ? bandBg : undefined} />;
+          return <BlockView key={i} block={b} index={i} band={band ? bandBg : undefined} photoBand={i === photoBandIndex ? photoBandKey : undefined} />;
         })}
 
         {doc.faq && doc.faq.length > 0 && (
@@ -215,19 +222,35 @@ function fallbackCollage(doc: Doc, bandBg: string): HeroCollageSpec {
 
 /**
  * 균형 격자(.cards-flex)의 열 수 — 줄마다 개수가 고르도록 개수로 정한다. 마지막 줄이 모자라면 CSS 가 가운데로 모은다.
- *  1→1 · 2→2 · 3의 배수→3 · 4의 배수→4 · 5→3(3+2) · 7→4(4+3) · 10→4/xl5 · 그 밖→4
+ *  1→3폭 · 2→3폭 · 3의 배수→3 · 4의 배수→4 · 5→3(3+2) · 7→4(4+3) · 10→4/xl5 · 그 밖→4
  */
 function gridVars(n: number, opt: { max?: number; compact?: boolean } = {}): CSSProperties {
   const max = opt.max ?? (opt.compact ? 6 : 4);
   /* 설명 없는 짧은 항목(라벨 칩)은 원본처럼 한 줄에 다 놓는다(최대 6) */
-  let lg = opt.compact && n <= 6 ? n : n <= 2 ? n : n % 4 === 0 ? 4 : n % 3 === 0 ? 3 : n === 5 ? 3 : 4;
+  /* 1~2개도 3열 폭으로 — 카드 한 장이 화면 절반을 차지하지 않게(오너: 크기가 너무 큼). cards-flex 가 가운데로 모은다. */
+  let lg = opt.compact && n <= 6 ? n : n <= 2 ? 3 : n % 4 === 0 ? 4 : n % 3 === 0 ? 3 : n === 5 ? 3 : 4;
   let xl = n === 10 ? 5 : lg;
   lg = Math.min(lg, max);
   xl = Math.min(xl, max);
   return { '--sm': Math.min(2, n, max), '--lg': lg, '--xl': xl } as CSSProperties;
 }
 
-function BlockView({ block: b, index, band }: { block: Block; index: number; band?: string }) {
+/**
+ * 글 옆 사진 — 원본 비율 그대로, 원본 크기보다 키우지 않는다(옛 배너 조각이 4:3 틀에 큼직하게 늘어나 어색했다).
+ *  · 세로 사진(장비 배너 등)은 폭 340px 까지, 가로 사진은 560px 까지. 칸 안에서 가운데.
+ */
+function TextFigure({ fig }: { fig: Fig }) {
+  const s = figSize(fig.key);
+  const portrait = s.h > s.w * 1.1;
+  const cap = Math.min(portrait ? 340 : 560, s.w);
+  return (
+    <div className="mx-auto w-full" style={{ maxWidth: `${cap}px` }}>
+      <Figure fig={fig} sizes="(max-width: 1024px) 90vw, 560px" />
+    </div>
+  );
+}
+
+function BlockView({ block: b, index, band, photoBand }: { block: Block; index: number; band?: string; photoBand?: string }) {
   const id = ('id' in b && b.id) || `sec-${index + 1}`;
   const alt = index % 2 === 1;
   const wrapCls = band ? 'relative isolate overflow-hidden bg-night text-white section' : `section ${alt ? 'bg-canvas' : 'bg-white'}`;
@@ -255,6 +278,31 @@ function BlockView({ block: b, index, band }: { block: Block; index: number; ban
 
   switch (b.type) {
     case 'text':
+      /* 사진을 배경으로 깐 가운데 정렬 구역 — 2열 반복 사이의 숨 고르기 */
+      if (photoBand) {
+        return (
+          <section id={id} className="relative isolate overflow-hidden bg-night py-28 text-white md:py-36">
+            <div className="absolute inset-0 -z-10">
+              <Image src={figSrc(photoBand)} alt="" fill sizes="100vw" className="object-cover" data-parallax="0.15" />
+              <div className="absolute inset-0 bg-night/70" />
+              <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-night/70 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-night/70 to-transparent" />
+            </div>
+            <div className="wrap">
+              <div className="reveal mx-auto max-w-[780px] text-center">
+                {b.title && <h2 className="display-sm !text-white on-photo">{b.title}</h2>}
+                <div className={`prose-ko prose-on-dark ${b.title ? 'mt-7' : ''}`}>
+                  {b.paragraphs.map((p, i) => (
+                    <p key={i} className="!text-white/85">
+                      <Sentences text={p} clauses={false} />
+                    </p>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+        );
+      }
       return (
         <section id={id} className={wrapCls}>
           <div className={`wrap grid items-center gap-10 lg:gap-16 ${b.figure ? 'lg:grid-cols-2' : ''}`}>
@@ -270,7 +318,7 @@ function BlockView({ block: b, index, band }: { block: Block; index: number; ban
             </div>
             {b.figure && (
               <div className={b.figureSide === 'left' ? 'lg:order-1' : ''}>
-                <Figure fig={b.figure} ratio="aspect-[4/3]" />
+                <TextFigure fig={b.figure} />
               </div>
             )}
           </div>

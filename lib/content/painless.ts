@@ -178,7 +178,7 @@ export const PAINLESS_DOCS: Doc[] = [
             desc: '스케일링 민감 환자. 편리한 가글마취로 스케일링 시 시림 및 통증을 가글로 완화합니다.',
           },
         ],
-        figure: { key: 'equip/gel', alt: '리도카겔과 리도카글액 제품 사진' },
+        figure: { key: 'orig/add-lidoca-gel', alt: '잇몸 도포마취제 리도카겔' },
         columns: 2,
       },
       {
@@ -384,7 +384,7 @@ export const PAINLESS_DOCS: Doc[] = [
             desc: '치아 상태에 따른 각각의 스케일러 팁이 불편함을 감소시킵니다.',
           },
         ],
-        figure: { key: 'equip/airflow-4', alt: '에어플로우 4가지 특징' },
+        figure: { key: 'equip/airflow', alt: 'EMS 에어플로우 장비' },
         columns: 2,
       },
       {

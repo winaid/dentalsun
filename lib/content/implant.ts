@@ -80,7 +80,7 @@ export const IMPLANT_DOCS: Doc[] = [
           '내비게이션 임플란트는 수술 전 컴퓨터 모의수술을 진행해 무절개 임플란트 수술이 가능합니다. 미리 결과를 예측할 수 있어 오차가 거의 발생하지 않고, 출혈과 붓기가 거의 없어 통증 감소와 빠른 회복을 기대할 수 있습니다.',
           '치아가 거의 없는 전악 상태라면 풀아치 임플란트로 전체 치아 기능을 회복합니다. 헐거워 저작력이 약한 틀니, 비용 부담이 큰 전체 임플란트와 달리 고정형으로 튼튼한 저작력을 회복하고, 4~6개 최소식립으로 비용 부담을 낮춥니다.',
         ],
-        figure: { key: 'implant/navigation', alt: '컴퓨터 모의수술 화면과 임플란트 모형' },
+        figure: { key: 'orig/implant-nav-plan', alt: 'CT 위에 임플란트 식립 경로를 잡는 계획 소프트웨어 화면' },
         figureSide: 'left',
       },
       {
@@ -111,7 +111,7 @@ export const IMPLANT_DOCS: Doc[] = [
         paragraphs: [
           '광화문 선치과는 구강 스캐너, CAD 소프트웨어, 3D 프린터를 한 흐름으로 연결한 디지털 올인원 시스템을 갖추고 있습니다. 스캔부터 디자인·제작·부착까지 디지털로 이어지므로 수술 당일 임시 보철물을 장착하고 빠르게 일상생활로 돌아갈 수 있습니다.',
         ],
-        figure: { key: 'implant/allinone-4', alt: '구강 스캐닝·보철물 디자인·제작·부착 4단계' },
+        figure: { key: 'orig/intro-p05-group', alt: '당일 보철 제작 장비 일체 — 3D 프린터·CAD 모니터·후처리기' },
       },
       {
         type: 'steps',
@@ -180,7 +180,7 @@ export const IMPLANT_DOCS: Doc[] = [
       '수술 유도장치',
       '광화문 선치과',
     ],
-    hero: { key: 'implant/navigation', alt: '컴퓨터 모의수술 화면과 임플란트 모형' },
+    hero: { key: 'equip/guide', alt: '하악 모형에 얹은 수술 가이드와 임플란트' },
     procedure: '내비게이션 임플란트',
     blocks: [
       {
@@ -191,7 +191,7 @@ export const IMPLANT_DOCS: Doc[] = [
           '내비게이션 임플란트는 수술 전 CT와 3D 구강카메라로 촬영한 3차원 데이터를 가지고 컴퓨터가 모의 수술을 진행한 뒤, 그 계획대로 실제 수술을 진행하는 방식입니다. 광화문 선치과는 컴퓨터 모의수술을 통해 미리 결과를 예측하고 구강 상태에 맞는 수술 방법을 결정합니다.',
           '경험과 감각에만 의존하는 대신 뼈의 두께와 신경의 위치를 미리 화면에서 확인하고 식립 위치·각도·깊이를 정한 뒤 수술하므로, 계획과 실제 수술 사이의 오차를 줄일 수 있습니다.',
         ],
-        figure: { key: 'implant/process-4', alt: 'CT 촬영·식립경로 분석·보철 디자인·수술 유도장치 제작 과정' },
+        figure: { key: 'orig/intro-p04-guide', alt: '하악 모형 위의 투명 수술 가이드와 드릴' },
       },
       {
         type: 'points',
@@ -343,7 +343,7 @@ export const IMPLANT_DOCS: Doc[] = [
         ],
         columns: 4,
         numbered: true,
-        figure: { key: 'implant/fullarch-4', alt: '정확한 진단·빠른 치료·자연스러움·절반 비용' },
+        figure: { key: 'orig/implant-fa-models', alt: '상악·하악 전악 임플란트 보철 모형' },
       },
       {
         type: 'compare',

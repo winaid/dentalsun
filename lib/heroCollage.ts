@@ -203,7 +203,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     lines: ['{에어 플로우}', '(저자극 스케일링 · GBT)'],
     cards: [
       { fig: { key: 'orig/airflow-device', alt: 'EMS 에어플로우 프로필락시스 마스터 장비' }, shape: 'portrait' },
-      { fig: { key: 'equip/airflow-4', alt: '에어플로우 스케일링 장비 구성' }, shape: 'wide' },
+      { fig: { key: 'equip/airflow', alt: 'EMS 에어플로우 장비' }, shape: 'wide' },
       { fig: { key: 'orig/airflow-piezon', alt: '파란 LED 가 켜진 피에존 스케일러 핸드피스 팁' }, shape: 'std' },
     ],
   },
@@ -224,7 +224,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     lines: ['임플란트, 처음부터 끝까지', '{어떻게 진행되나요}'],
     cards: [
       { fig: { key: 'scene/surgery', alt: '수술 가운과 확대경을 착용하고 임플란트 수술 중인 광화문선치과 원장' }, shape: 'portrait' },
-      { fig: { key: 'implant/process-4', alt: '임플란트 치료 4단계' }, shape: 'wide' },
+      { fig: { key: 'orig/intro-p04-guide', alt: '하악 모형 위의 투명 수술 가이드와 드릴' }, shape: 'wide' },
       { fig: { key: 'equip/ct', alt: '3D CT 장비' }, shape: 'std' },
     ],
   },
@@ -273,7 +273,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     cards: [
       { fig: { key: 'scene/tmj-sym-1', alt: '턱관절에서 소리가 나는 증상' }, shape: 'portrait' },
       { fig: { key: 'ai/insight-jaw', alt: '턱관절 모형(연출 사진)' }, shape: 'wide' },
-      { fig: { key: 'tmj/jaw', alt: '턱관절 구조 도해' }, shape: 'std' },
+      { fig: { key: 'orig/misc-tmj-skull', alt: '두개골 모형의 턱관절을 펜으로 가리키는 모습' }, shape: 'std' },
     ],
   },
   '/insight/symptom/mouth-wont-open': {

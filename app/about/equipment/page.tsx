@@ -13,9 +13,9 @@ export const metadata: Metadata = { title: TITLE, description: DESC, alternates:
 
 /** 기존 홈페이지 '디지털치과 장비소개' Point 01~06 + 각 진료 페이지의 장비 배너 원문 */
 const ITEMS: Array<{ n: string; title: string; desc: string; more?: string[]; fig: Fig; ratio?: string }> = [
-  { n: 'Point 01', title: '디지털 진단장비, 3D 구강스캐너', desc: '기존의 본뜨는 작업을 3D 구강스캐너가 대체하여 불편했던 치과 치료를 편하게.', fig: { key: 'equip/scanner', alt: '3D 구강스캐너로 스캔한 치아 데이터가 모니터에 표시된 진료 장면' }, ratio: 'aspect-[16/9]' },
+  { n: 'Point 01', title: '디지털 진단장비, 3D 구강스캐너', desc: '기존의 본뜨는 작업을 3D 구강스캐너가 대체하여 불편했던 치과 치료를 편하게.', fig: { key: 'orig/intro-hero', alt: '원장이 모니터의 3D 구강 스캔 화면을 보며 구강스캐너로 환자를 스캔하는 모습' }, ratio: 'aspect-[16/9]' },
   { n: 'Point 02', title: '디지털 진단장비, 3D CT', desc: '3D 촬영으로 보다 정확하고 안전한 진단.', more: ['여러가지 영상을 제공하는 올인원 시스템', '파노라마와 CT를 함께 촬영 가능', '짧은 촬영시간과 적은 방사선 노출량으로 안전한 CT'], fig: { key: 'place/place08', alt: '광화문선치과 3D CT 촬영실' } },
-  { n: 'Point 03', title: '오차를 줄인 디지털 분석 시스템', desc: '임플란트 수술 시 컴퓨터가 모의수술을 통해 미리 결과를 예측할 수 있어 오차를 최소화할 수 있습니다.', fig: { key: 'equip/planning', alt: '임플란트 식립 경로 분석 화면' }, ratio: 'aspect-[21/9]' },
+  { n: 'Point 03', title: '오차를 줄인 디지털 분석 시스템', desc: '임플란트 수술 시 컴퓨터가 모의수술을 통해 미리 결과를 예측할 수 있어 오차를 최소화할 수 있습니다.', fig: { key: 'orig/implant-nav-plan', alt: 'CT 위에 임플란트 식립 경로를 잡는 계획 소프트웨어 화면' } },
   { n: 'Point 04', title: '안전한 디지털 수술 가이드 시스템', desc: '임플란트 수술 시 수술유도장치(가이드)를 이용하여 출혈 및 붓기를 최소화합니다.', fig: { key: 'equip/guide', alt: '개인 맞춤형 수술 유도장치 모형' } },
   { n: 'Point 05', title: '당일 디지털 보철 제작 시스템', desc: '캐드캠 디지털 시스템을 구축하여 수술 당일 임시 보철 장착까지 진행되어 빠르게 일상생활에 복귀 가능.', fig: { key: 'equip/printer', alt: '3D 프린터와 보철 디자인 CAD 화면' } },
   { n: 'Point 06', title: '교차감염 방지, 디지털 실시간 소독 시스템', desc: '진료기구를 통해 발생하는 교차감염의 위험성을 최소화하기 위해 INOS 소독기를 사용하여 실시간으로 소독합니다.', more: ['최대 99.999% 소독력 — KTR(한국화학융합시험연구원) 테스트 완료'], fig: { key: 'orig/intro-p06-inos-group', alt: 'INOS 실시간 소독기 세 종류' } },
