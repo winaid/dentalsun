@@ -151,7 +151,7 @@ export default async function BlogIndexPage() {
                       </time>
                       {p.category && <span className="text-[13px] font-bold text-ink-muted">{p.category}</span>}
                     </div>
-                    <h2 className="display-sm mt-3 line-clamp-2 min-h-[2.8em] text-[19px] leading-[1.4] text-ink transition-colors group-hover:text-sun-700">
+                    <h2 className="mt-3 line-clamp-2 min-h-[2.8em] text-[20px] font-extrabold leading-[1.4] tracking-[-0.02em] text-ink transition-colors group-hover:text-sun-700">
                       {p.title}
                     </h2>
                     {/* ⚠️ Sentences 를 쓰지 않는다 — 카드 폭에서 쉼표마다 줄이 갈려 계단이 된다(증상 허브와 같은 이유). */}
