@@ -36,6 +36,10 @@ const SCENES = {
   'aesthetic-hub': 'Close-up of a bright natural smile: only the lips and even white teeth of a young woman from the nose down, clean pale background, soft daylight, subtle warm tone.',
   'wisdom': 'A young adult from the nose down holding a swollen cheek with one hand, slight discomfort, plain light background, cool soft light, navy sweater.',
   'insight-hub': 'Top-down view of hands holding a smartphone while reading, over a light wooden table with a cup of tea and a small plant; the screen shows only soft abstract blue shapes, no text.',
+  /* 턱관절 허브(레퍼런스 tmjdoctor 구조) — '원인 3가지' 카드. 2026-09-09 */
+  'tmj-cause-habit': 'A young East Asian woman seen from the nose down, resting her chin heavily on one hand at a white desk by a bright window, relaxed posture, plain light background, soft daylight.',
+  'tmj-cause-grind': 'A person sleeping on their side on a white pillow seen from behind and above, face hidden, jaw area slightly tense, soft morning light, white bedding, calm muted tones.',
+  'tmj-cause-stress': 'A person seen from behind at a desk, both hands pressing the temples and back of the head in a stressed posture, laptop and papers blurred in front, soft window light, muted navy sweater.',
   'painless-hub': 'A patient reclined in a dental chair seen from the nose down, relaxed and calm with lips gently closed, a clinician\'s gloved hand resting reassuringly on the chair, soft light.',
 };
 

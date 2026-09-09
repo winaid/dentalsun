@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { DocPage } from '@/components/DocPage';
+import { TmjPage } from '@/components/TmjPage';
 import { ALL_DOCS, docByPath } from '@/lib/content';
 import { alt, og, withLocality } from '@/lib/seo';
 import { figSize, figSrc } from '@/lib/docs';
@@ -39,5 +40,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string[
   const { slug } = await params;
   const doc = docByPath(`/treatment/${slug.join('/')}`);
   if (!doc) notFound();
+  /* 턱관절 허브는 레퍼런스(tmjdoctor) 짜임새의 전용 화면 — 데이터·FAQ·스키마는 같은 Doc 을 쓴다 */
+  if (doc.path === '/treatment/tmj') return <TmjPage doc={doc} />;
   return <DocPage doc={doc} />;
 }

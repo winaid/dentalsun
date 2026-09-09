@@ -882,5 +882,45 @@
  "orig/wisdom-doctor": {
   "w": 677,
   "h": 451
+ },
+ "sun/tmj-explain-skull": {
+  "w": 1920,
+  "h": 1280
+ },
+ "sun/tmj-explain-monitor": {
+  "w": 1600,
+  "h": 1067
+ },
+ "sun/doctor-arms": {
+  "w": 1600,
+  "h": 1067
+ },
+ "sun/treat-loupe": {
+  "w": 1600,
+  "h": 1067
+ },
+ "sun/consult-monitor": {
+  "w": 1600,
+  "h": 1067
+ },
+ "sun/tmj-explain-skull-2": {
+  "w": 1600,
+  "h": 1067
+ },
+ "ai/tmj-cause-habit": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/tmj-cause-grind": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/tmj-cause-stress": {
+  "w": 1200,
+  "h": 800
+ },
+ "sun/surgery-loupe": {
+  "w": 1600,
+  "h": 1067
  }
 }

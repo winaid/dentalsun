@@ -825,3 +825,12 @@ body:has([data-admin]) > :is(header, footer, .fixed) {
 body:has([data-admin]) {
   padding-bottom: 0 !important;
 }
+
+/* ── 턱관절 허브(components/TmjPage) — 레퍼런스처럼 가늘고 큰 글자(TMJ · ? · 3 · 5 · FAQ) ── */
+.tmj-big {
+  @apply block text-ink;
+  font-size: clamp(4.2rem, 9vw, 7.5rem);
+  font-weight: 200;
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+}
