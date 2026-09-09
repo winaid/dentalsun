@@ -35,6 +35,16 @@ const HUB_ICON: Record<string, string> = {
   '/treatment/natural-tooth': 'M12 3c-4 0-6 3-5 7l2 11h2l1-6 1 6h2l2-11c1-4-1-7-5-7z',
   '/treatment/painless': 'M12 4v16m-6-8h12',
 };
+/** 아코디언 접힌 띠의 짧은 이름 */
+const HUB_SHORT: Record<string, string> = {
+  '/treatment/implant': '임플란트',
+  '/treatment/tmj': '턱관절',
+  '/treatment/aesthetic': '심미치료',
+  '/treatment/insurance': '보험틀니',
+  '/treatment/wisdom-tooth': '사랑니',
+  '/treatment/natural-tooth': '자연치아',
+  '/treatment/painless': '무통치료',
+};
 const HUB_IMG: Record<string, string> = {
   '/treatment/implant': 'ai/implant-hub',
   '/treatment/tmj': 'ai/tmj-hub',
@@ -112,11 +122,12 @@ export default function HomePage() {
                 ...TREATMENT_HUBS.map((h) => ({
                   href: h.href,
                   label: h.label,
+                  short: HUB_SHORT[h.href] ?? h.label,
                   desc: docByPath(h.href)?.summary.split(/(?<=다\.)\s/)[0] ?? '',
                   subs: h.children?.slice(0, 4).map((c) => c.label) ?? [],
                   fig: HUB_IMG[h.href],
                 })),
-                { href: '/insight', label: '인사이트', desc: '턱 소리, 시린 이, 잇몸 출혈처럼 자주 겪는 증상을 환자의 말로 풀어 쓴 안내와 임플란트 과정·비용·건강보험 가이드.', subs: ['증상별 안내', '임플란트 과정', '비용 요인', '건강보험'], fig: 'ai/insight-hub' },
+                { href: '/insight', label: '인사이트', short: '인사이트', desc: '턱 소리, 시린 이, 잇몸 출혈처럼 자주 겪는 증상을 환자의 말로 풀어 쓴 안내와 임플란트 과정·비용·건강보험 가이드.', subs: ['증상별 안내', '임플란트 과정', '비용 요인', '건강보험'], fig: 'ai/insight-hub' },
               ]}
             />
             {/* ★ .grid-cards 의 display:grid 가 lg:hidden 을 이기므로 감싸는 상자에서 숨긴다 */}
