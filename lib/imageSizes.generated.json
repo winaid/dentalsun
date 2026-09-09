@@ -922,5 +922,17 @@
  "sun/surgery-loupe": {
   "w": 1600,
   "h": 1067
+ },
+ "sun/circle-diagnosis": {
+  "w": 800,
+  "h": 800
+ },
+ "sun/circle-treatment": {
+  "w": 800,
+  "h": 800
+ },
+ "sun/circle-experience": {
+  "w": 800,
+  "h": 800
  }
 }
