@@ -504,18 +504,25 @@ function BlockView({ block: b, index, band, photoBand }: { block: Block; index: 
         </section>
       );
     case 'notice':
+      /* 안내 구역 — 연한 상자 대신 구역 전체에 진한 주황을 깔고, 왼쪽 라벨+큰 제목 / 오른쪽 본문의 편집 배치 */
       return (
-        <section className="py-6">
-          <div className="wrap">
-            <div className="reveal rounded-2xl border border-sun-200 bg-sun-50 p-6 md:p-8">
-              {b.title && <p className="text-[1.05rem] font-bold text-sun-700">{b.title}</p>}
-              <div className="prose-ko mt-3 [&_p]:!text-ink-soft">
-                {b.paragraphs.map((p, i) => (
-                  <p key={i}>
-                    <Sentences text={p} />
-                  </p>
-                ))}
-              </div>
+        <section className="relative isolate overflow-hidden bg-sun-600 py-16 text-white md:py-20">
+          <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(900px_420px_at_85%_-10%,rgba(255,255,255,0.22),transparent_60%),radial-gradient(700px_360px_at_0%_110%,rgba(120,40,0,0.35),transparent_60%)]" />
+          <span aria-hidden className="pointer-events-none absolute -right-6 -bottom-10 -z-10 select-none text-[220px] font-extrabold leading-none tracking-[-0.06em] text-white/10 md:text-[300px]">!</span>
+          <div className="wrap grid gap-8 lg:grid-cols-[0.85fr_1.4fr] lg:gap-16">
+            <div className="reveal">
+              <p className="inline-flex items-center gap-2.5 text-[12px] font-bold tracking-[0.2em] text-white/80">
+                <span className="flex h-6 w-6 items-center justify-center rounded-full border border-white/50 text-[13px]">!</span>
+                NOTICE · 알아두세요
+              </p>
+              {b.title && <h2 className="display-sm mt-5 !text-white">{b.title}</h2>}
+            </div>
+            <div className="reveal border-l border-white/30 pl-6 md:pl-8">
+              {b.paragraphs.map((p, i) => (
+                <p key={i} className={`text-[1.02rem] leading-[1.9] text-white/92 md:text-[1.08rem] ${i > 0 ? 'mt-5' : ''}`}>
+                  <Sentences text={p} clauses={false} />
+                </p>
+              ))}
             </div>
           </div>
         </section>
