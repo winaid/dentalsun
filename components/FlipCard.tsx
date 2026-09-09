@@ -11,11 +11,16 @@ import { figSrc, type Fig } from '@/lib/docs';
 export function FlipCard({ href, num, label, desc, back, fig }: { href: string; num: string; label: string; desc: string; back: string; fig: Fig }) {
   return (
     <Link href={href} className="flip group block h-full rounded-3xl focus-visible:outline-2 focus-visible:outline-brand-600" aria-label={`${label} — ${desc}`}>
-      <div className="flip-inner relative h-full min-h-[260px]">
+      <div className="flip-inner relative h-full min-h-[224px]">
         {/* 앞면 */}
         <div className="flip-face card flex h-full flex-col p-7 md:p-8">
-          <span className="num-xl !text-brand-700">{num}</span>
-          <p className="mt-auto pt-10 text-[1.15rem] font-bold leading-snug text-ink">{label}</p>
+          <div className="flex items-start justify-between">
+            <span className="num-xl !text-brand-700">{num}</span>
+            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-50 text-brand-700 transition-colors group-hover:bg-sun-500 group-hover:text-white" aria-hidden>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            </span>
+          </div>
+          <p className="mt-auto pt-8 text-[1.15rem] font-bold leading-snug text-ink">{label}</p>
           <p className="mt-2 text-[13.5px] text-ink-muted">{desc}</p>
         </div>
         {/* 뒷면 — 사진 배경 */}
