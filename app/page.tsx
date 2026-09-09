@@ -6,6 +6,7 @@ import { HomeHero } from '@/components/HomeHero';
 import { JsonLd } from '@/components/JsonLd';
 import { VideoFacade } from '@/components/VideoFacade';
 import { FlipCard } from '@/components/FlipCard';
+import { HubAccordion } from '@/components/HubAccordion';
 import { docByPath } from '@/lib/content';
 import { CardLink, ContactBand, FaqList, Figure, Marquee, MedicalNotice, ScrubText, Sentences } from '@/components/ui';
 import { HomeStage, HomeStats, HomeTourPan } from '@/components/HomeScroll';
@@ -105,7 +106,22 @@ export default function HomePage() {
                 광화문선치과 <span className="accent">진료과목</span>
               </h2>
             </div>
-            <ul className="reveal-stack grid-cards mt-12 grid-cols-2 lg:grid-cols-4">
+            {/* 넓은 화면: 펼침 아코디언 띠(오너 선택). 좁은 화면: 아래 카드 격자. */}
+            <HubAccordion
+              items={[
+                ...TREATMENT_HUBS.map((h) => ({
+                  href: h.href,
+                  label: h.label,
+                  desc: docByPath(h.href)?.summary.split(/(?<=다\.)\s/)[0] ?? '',
+                  subs: h.children?.slice(0, 4).map((c) => c.label) ?? [],
+                  fig: HUB_IMG[h.href],
+                })),
+                { href: '/insight', label: '인사이트', desc: '턱 소리, 시린 이, 잇몸 출혈처럼 자주 겪는 증상을 환자의 말로 풀어 쓴 안내와 임플란트 과정·비용·건강보험 가이드.', subs: ['증상별 안내', '임플란트 과정', '비용 요인', '건강보험'], fig: 'ai/insight-hub' },
+              ]}
+            />
+            {/* ★ .grid-cards 의 display:grid 가 lg:hidden 을 이기므로 감싸는 상자에서 숨긴다 */}
+            <div className="lg:hidden">
+            <ul className="reveal-stack grid-cards mt-12 grid-cols-2">
               {TREATMENT_HUBS.map((h) => (
                 <li key={h.href}>
                   <Link href={h.href} className="card card-hover group flex h-full flex-col overflow-hidden">
@@ -136,6 +152,7 @@ export default function HomePage() {
                 </Link>
               </li>
             </ul>
+            </div>
           </div>
         </section>
 
