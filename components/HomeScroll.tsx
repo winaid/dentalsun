@@ -40,9 +40,10 @@ export function HomeStats() {
 
 /** 고정 무대 사진 — 단계별. 작은 옛 도해 대신 큰 사진(AI 정물 2 + 원본 장비 2). */
 const STAGE_IMG = [
-  { key: 'equip/scanner', alt: '3D 구강 스캐너로 촬영해 모니터에 뜬 스캔 데이터' },
-  { key: 'orig/intro-p03-sim', alt: '임플란트 식립 경로를 분석하는 화면' },
-  { key: 'equip/printer', alt: '3D 프린터와 보철 디자인 화면' },
+  /* 무대는 3:2 — 네 장 모두 비율 1.4 안팎의 원본이라 거의 잘리지 않는다(가로로 긴 배너 띠는 흐려져서 뺐다) */
+  { key: 'orig/intro-p02-ctroom', alt: '3D CT 촬영실' },
+  { key: 'orig/misc-nav-implant-set', alt: '내비게이션 임플란트 모의수술 화면이 뜬 모니터·태블릿과 임플란트 모형' },
+  { key: 'orig/intro-p05-group', alt: '당일 보철 제작 장비 — 3D 프린터·CAD 모니터·후처리기' },
   { key: 'equip/guide', alt: '하악 모형에 씌운 투명 수술 유도장치' },
 ];
 
@@ -70,7 +71,7 @@ export function HomeStage() {
           {/* 왼쪽 — 고정 무대 (lg 이상). 화면 세로 가운데에 고정: 100svh 상자 안에서 가운데 정렬(오너: 너무 위에 붙어 있었다) */}
           <div className="hidden lg:block">
             <div className="sticky top-0 flex h-[100svh] items-center">
-              <div className="relative w-full aspect-[2/1] overflow-hidden rounded-[28px] bg-canvas-2 shadow-[var(--shadow-lift)]">
+              <div className="relative w-full aspect-[3/2] overflow-hidden rounded-[28px] bg-canvas-2 shadow-[var(--shadow-lift)]">
                 {STAGE_IMG.map((f, i) => (
                   <div key={f.key} className="stage-img" data-stage-img>
                     <Image src={figSrc(f.key)} alt={f.alt} fill sizes="50vw" className="object-cover" />
@@ -84,10 +85,10 @@ export function HomeStage() {
           </div>
 
           {/* 오른쪽 — 단계 글 (모바일은 사진을 각 단계 아래에) */}
-          <ol className="lg:py-[18vh]">
+          <ol className="lg:pt-[18vh] lg:pb-[2vh]">
             {steps.map((s, i) => (
-              <li key={s.title} className="stage-step flex gap-5 border-t border-hairline py-9 md:gap-7 lg:min-h-[48vh] lg:py-12" data-stage-step>
-                <span className="num shrink-0 !text-[1.6rem]">{String(i + 1).padStart(2, '0')}</span>
+              <li key={s.title} className="stage-step flex gap-5 rounded-3xl px-6 py-7 md:gap-6 lg:my-[6vh] lg:min-h-[36vh] lg:items-center lg:px-8 lg:py-8" data-stage-step>
+                <span className="stage-badge shrink-0">STEP {String(i + 1).padStart(2, '0')}</span>
                 <div className="min-w-0 flex-1">
                   <h3 className="text-[1.3rem] font-bold leading-snug text-ink md:text-[1.55rem]">{s.title}</h3>
                   {s.desc && (
@@ -95,7 +96,7 @@ export function HomeStage() {
                       <Sentences text={s.desc} />
                     </p>
                   )}
-                  <div className="relative mt-5 aspect-[2/1] overflow-hidden rounded-2xl bg-canvas-2 lg:hidden">
+                  <div className="relative mt-5 aspect-[3/2] overflow-hidden rounded-2xl bg-canvas-2 lg:hidden">
                     <Image src={figSrc(STAGE_IMG[i]?.key ?? STAGE_IMG[0].key)} alt={STAGE_IMG[i]?.alt ?? ''} fill sizes="100vw" className="object-cover" />
                   </div>
                 </div>

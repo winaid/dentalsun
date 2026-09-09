@@ -576,3 +576,20 @@ details.faq .a {
 @media (prefers-reduced-motion: reduce) {
   .flip-inner { transition: none; }
 }
+
+/* 고정 무대의 단계 카드 — 켜진 단계만 흰 카드로 떠오른다(오너: 단계가 딱딱 구분되게) */
+.stage-badge {
+  @apply inline-flex items-center rounded-full bg-brand-50 px-3.5 py-1.5 text-[12.5px] font-extrabold tracking-[0.12em] text-brand-700;
+}
+.stage-step {
+  border: 1px solid transparent;
+  transition: opacity 0.5s ease, background-color 0.5s ease, box-shadow 0.5s ease, border-color 0.5s ease;
+}
+.stage-step.on {
+  background: #fff;
+  border-color: var(--color-hairline);
+  box-shadow: var(--shadow-lift);
+}
+.stage-step.on .stage-badge {
+  @apply bg-sun-500 text-white;
+}
