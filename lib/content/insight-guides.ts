@@ -485,7 +485,7 @@ export const INSIGHT_GUIDES: Doc[] = [
         a: '진찰과 약물 처방, 레이저·초음파 물리치료는 일반적으로 급여입니다. 광화문선치과의 PHL-15 레이저 물리치료도 건강보험을 적용해 진행합니다. 스플린트 장치와 보톡스 치료는 일반적으로 비급여입니다.',
       },
     ],
-    related: ['/treatment/insurance/implant', '/treatment/insurance/denture', '/treatment/painless/airflow', '/treatment/tmj/treatments'],
+    related: ['/treatment/insurance/implant', '/treatment/insurance/denture', '/treatment/painless/airflow'],
   },
 
   /* ───────────────────────── 가이드 4 · 턱관절 치료 순서 ───────────────────────── */
@@ -616,7 +616,7 @@ export const INSIGHT_GUIDES: Doc[] = [
         a: '진찰, 약물 처방, 레이저·초음파 물리치료는 일반적으로 건강보험이 적용되며, 광화문선치과의 PHL-15 레이저 물리치료도 건강보험을 적용합니다. 스플린트 장치와 보톡스는 일반적으로 비급여입니다. 기준은 변경될 수 있습니다.',
       },
     ],
-    related: ['/treatment/tmj', '/treatment/tmj/symptoms', '/treatment/tmj/treatments', '/insight/symptom/jaw-clicking'],
+    related: ['/treatment/tmj', '/insight/symptom/jaw-clicking'],
   },
 
   /* ───────────────────────── 가이드 5 · 치과 공포 ───────────────────────── */
@@ -870,6 +870,6 @@ export const INSIGHT_GUIDES: Doc[] = [
         a: '모양은 비슷하지만 목적이 다릅니다. 운동용 마우스피스는 충격에서 치아를 보호하는 기성품이고, 스플린트는 턱관절 사이 공간을 확보하고 근육 부담을 줄이도록 치과에서 개인 맞춤으로 만들어 정기적으로 조정하는 치료 장치입니다.',
       },
     ],
-    related: ['/treatment/implant', '/treatment/natural-tooth/mta', '/treatment/tmj/treatments', '/treatment/painless/sedation'],
+    related: ['/treatment/implant', '/treatment/natural-tooth/mta', '/treatment/painless/sedation'],
   },
 ];

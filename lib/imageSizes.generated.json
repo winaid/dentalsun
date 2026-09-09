@@ -934,5 +934,9 @@
  "sun/circle-experience": {
   "w": 800,
   "h": 800
+ },
+ "ai/tmj-symptoms-sq": {
+  "w": 800,
+  "h": 800
  }
 }

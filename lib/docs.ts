@@ -75,6 +75,17 @@ export interface Doc {
   related?: string[];
 }
 
+/**
+ * 상자 비율과 사진 비율이 많이 다르면(1.4배 이상) 잘라 채우지 않고 통째로 넣는다(오너: 사진 규격 맞추기).
+ * 예: 가로로 긴 배너 조각을 4:3 카드에 넣으면 절반이 잘려 나갔다. → 옅은 바탕 위에 contain.
+ */
+export function fitsBox(key: string, boxW: number, boxH: number) {
+  const s = figSize(key);
+  const a = s.w / s.h;
+  const b = boxW / boxH;
+  return Math.max(a / b, b / a) <= 1.4;
+}
+
 export function figSize(key: string) {
   const s = (SIZES as Record<string, { w: number; h: number }>)[key];
   return s ?? { w: 1200, h: 800 };

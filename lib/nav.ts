@@ -45,9 +45,9 @@ export const NAV: NavItem[] = [
     label: '턱관절',
     href: '/treatment/tmj',
     children: [
-      { label: '턱관절치료 노하우', href: '/treatment/tmj', desc: '근본적인 원인을 찾는 개인별 맞춤 진료' },
-      { label: '주요증상', href: '/treatment/tmj/symptoms', desc: '소리 · 통증 · 입 벌리기 힘듦' },
-      { label: '치료방법', href: '/treatment/tmj/treatments', desc: '약물 · 물리치료 · 보톡스 · 스플린트 · 관절강 세척' },
+      { label: '턱관절치료 노하우', href: '/treatment/tmj#knowhow', desc: '근본적인 원인을 찾는 개인별 맞춤 진료' },
+      { label: '주요증상', href: '/treatment/tmj#symptoms', desc: '소리 · 통증 · 입 벌리기 힘듦' },
+      { label: '치료방법', href: '/treatment/tmj#treatments', desc: '약물 · 물리치료 · 보톡스 · 스플린트 · 관절강 세척' },
     ],
   },
   {

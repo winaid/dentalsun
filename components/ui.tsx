@@ -2,14 +2,67 @@ import Link from 'next/link';
 import Image from 'next/image';
 import type { ReactNode } from 'react';
 import { Fragment } from 'react';
-import { figSize, figSrc, type Fig, type QA } from '@/lib/docs';
+import { figSize, figSrc, fitsBox, type Fig, type QA } from '@/lib/docs';
 import { CLINIC, MEDICAL_DISCLAIMER } from '@/lib/clinic';
 
 /**
- * 문장·마디 줄바꿈 — 마침표에서 줄을 바꾸고, 문장 안에서는 쉼표 마디가 통째로 내려간다.
- * ★ split 은 경계에서만 자르므로 글자를 잃지 않는다(소수점·약어 뒤엔 공백이 없어 안 잘린다).
- * ⚠️ 마디는 md 이상에서만 inline-block 이다(globals.css) — 좁은 칸에서 두 글자씩 꺾이는 사고 방지.
+ * 문장·마디·쉼 줄바꿈 (오너 규칙, 2026-09-09)
+ *  1) 마침표에서 줄을 바꾼다(.sent = block).
+ *  2) 문장 안에서는 쉼표 마디(.clause)가 통째로 내려간다.
+ *  3) 쉼표가 없는 긴 마디는 **말하다 쉬는 구간**(조사·연결어미 뒤)에서만 끊기도록 쉼 덩어리(.chunk)로 묶는다.
+ *     덩어리 사이에서만 줄이 바뀌고, .sent 의 text-wrap: balance 가 줄 길이를 고르게 맞춘다.
+ *     → "…치료 방법을 제시해 / 드리고 있습니다." 같은 꼬리 고아 줄이 안 생긴다.
+ * ★ split 은 경계에서만 자르므로 글자를 잃지 않는다. 좁은 화면에서는 덩어리를 풀어(inline) 자연스럽게 흐르게 둔다(globals.css).
  */
+/** 말하다 쉬는 자리 — 조사·연결어미로 끝나는 낱말 뒤 */
+const PAUSE_END = /(은|는|이|가|을|를|에|에서|으로|로|과|와|도|의|고|며|면|서|까지|부터|처럼|보다|에게|한테|마다|조차|이나|나|든|라서|해서|하면|해도|지만|는데|은데|더라도|으며|이며|하고|이고|라면|이라|다가|자마자)$/;
+/** 앞말과 한 덩어리로 읽히는 낱말 — 이 앞에서는 끊지 않는다("오차로 | 인해" 방지) */
+const NO_BREAK_BEFORE = /^(인해|인한|통해|통한|위해|위한|위해서|의해|의한|대해|대한|대해서|따라|따른|따라서|비해|비하면|걸쳐|관해|관한|함께|같이|더불어|이상|이하|이내|정도|만큼|때문|때문에|덕분|덕분에|이후|이전|동안|사이|뒤|후|전|중|안|밖|없이|없는|없어|있는|있어|있을|있습니다|없습니다|것|수|줄|지|등|및|또는|혹은|그리고|그래서|하지만|다른|같은|위|아래|옆)$/;
+/** 한 덩어리는 이 길이를 넘긴 뒤 처음 만나는 쉼 자리에서 닫는다 */
+const CHUNK_MIN = 13;
+/** 마지막 덩어리가 이보다 짧으면 앞 덩어리에 붙인다(꼬리 고아 방지) */
+const TAIL_MIN = 7;
+/** 이 길이 이하의 마디는 덩어리로 나누지 않는다 */
+const NO_SPLIT_MAX = 22;
+
+export function pauseChunks(clause: string): string[] {
+  if (clause.length <= NO_SPLIT_MAX) return [clause];
+  const words = clause.split(/\s+/).filter(Boolean);
+  const chunks: string[] = [];
+  let cur: string[] = [];
+  let len = 0;
+  for (let i = 0; i < words.length; i++) {
+    const w = words[i];
+    const next = words[i + 1];
+    cur.push(w);
+    len += w.length + 1;
+    const bare = w.replace(/[,.!?…)”’"']+$/, '');
+    if (len >= CHUNK_MIN && next && PAUSE_END.test(bare) && !NO_BREAK_BEFORE.test(next.replace(/[,.!?…)”’"']+$/, ''))) {
+      chunks.push(cur.join(' '));
+      cur = [];
+      len = 0;
+    }
+  }
+  if (cur.length) chunks.push(cur.join(' '));
+  if (chunks.length >= 2 && chunks[chunks.length - 1].length < TAIL_MIN) {
+    const tail = chunks.pop()!;
+    chunks[chunks.length - 1] += ' ' + tail;
+  }
+  return chunks;
+}
+
+function Clause({ text }: { text: string }) {
+  const parts = pauseChunks(text);
+  if (parts.length === 1) return <span className="clause">{text}</span>;
+  return (
+    <span className="clause clause-open">
+      {parts.map((c, i) => (
+        <Fragment key={i}><span className="chunk">{c}</span>{i < parts.length - 1 ? ' ' : ''}</Fragment>
+      ))}
+    </span>
+  );
+}
+
 export function Sentences({ text, className = '', clauses: useClauses = true }: { text: string; className?: string; /** 좁은 카드에서는 쉼표 마디를 풀어 자연스럽게 흐르게 한다 */ clauses?: boolean }) {
   const sentences = text
     .split(/(?<=[.!?])\s+(?=\S)/)
@@ -18,9 +71,9 @@ export function Sentences({ text, className = '', clauses: useClauses = true }: 
   const clauses = (s: string) => (useClauses ? s.split(/(?<=,)\s+(?=\S)/).filter(Boolean) : [s]);
   if (sentences.length <= 1) {
     return (
-      <span className={className}>
+      <span className={`sent-one ${className}`}>
         {clauses(text).map((c, i) => (
-          <Fragment key={i}><span className="clause">{c}</span>{' '}</Fragment>
+          <Fragment key={i}><Clause text={c} />{' '}</Fragment>
         ))}
       </span>
     );
@@ -30,7 +83,7 @@ export function Sentences({ text, className = '', clauses: useClauses = true }: 
       {sentences.map((s, i) => (
         <span key={i} className="sent">
           {clauses(s).map((c, j) => (
-            <Fragment key={j}><span className="clause">{c}</span>{' '}</Fragment>
+            <Fragment key={j}><Clause text={c} />{' '}</Fragment>
           ))}
         </span>
       ))}
@@ -124,7 +177,10 @@ export function Figure({
    *   사진(scene/·place/·ai/)만 상자에 꽉 채워 자른다. 회귀 사례: GBT 도해의 바깥 라벨이 잘려 나갔다.
    */
   const diagram = /^(equip|illust)\//.test(fig.key);
-  const framed = !!ratio && (s.w < 600 || diagram);
+  /* 상자 비율과 1.4배 넘게 다른 사진도 통째로 — 세로 사진이 4:3 에서 머리가 잘리거나, 긴 배너가 반 토막 나지 않게 */
+  const ar = ratio?.match(/[(d+)/(d+)]/);
+  const mismatch = ar ? !fitsBox(fig.key, Number(ar[1]), Number(ar[2])) : false;
+  const framed = !!ratio && (s.w < 600 || diagram || mismatch);
   return (
     <figure className={className}>
       {ratio && framed ? (
@@ -207,7 +263,7 @@ export function CardLink({ href, label, desc, external = false, fig, num }: { hr
     <>
       {fig && (
         <span className="card-img block">
-          <Image src={figSrc(fig.key)} alt={fig.alt} fill sizes="(max-width: 640px) 100vw, 25vw" className="object-cover" />
+          <Image src={figSrc(fig.key)} alt={fig.alt} fill sizes="(max-width: 640px) 100vw, 25vw" className={fitsBox(fig.key, 4, 3) ? 'object-cover' : '!object-contain p-3'} />
         </span>
       )}
       <span className="flex flex-1 flex-col p-6">
@@ -224,7 +280,7 @@ export function CardLink({ href, label, desc, external = false, fig, num }: { hr
       </span>
     </>
   );
-  const cls = 'card card-hover group flex h-full flex-col overflow-hidden';
+  const cls = 'card card-3d group flex h-full flex-col overflow-hidden';
   return external ? (
     <a href={href} target="_blank" rel="noopener" className={cls}>{inner}</a>
   ) : (

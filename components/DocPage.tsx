@@ -2,8 +2,8 @@ import Image from 'next/image';
 import type { CSSProperties, ReactNode } from 'react';
 import { SiteHeader } from '@/components/SiteHeader';
 import { JsonLd } from '@/components/JsonLd';
-import { Breadcrumb, CardLink, ContactBand, FaqList, Figure, MedicalNotice, ScrubText, Sentences } from '@/components/ui';
-import { docCharCount, figSize, figSrc, type Block, type Doc, type Fig } from '@/lib/docs';
+import { Breadcrumb, CardLink, ContactBand, FaqList, Figure, Marquee, MedicalNotice, ScrubText, Sentences } from '@/components/ui';
+import { docCharCount, figSize, figSrc, fitsBox, type Block, type Doc, type Fig } from '@/lib/docs';
 import { docByPath, docsOfHub } from '@/lib/content';
 import { caseGroup } from '@/lib/cases';
 import { BeforeAfter } from '@/components/BeforeAfter';
@@ -38,9 +38,9 @@ const DOC_AI: Record<string, string> = {
   '/treatment/implant/full-arch': 'orig/implant-fa-fixed',
   '/treatment/implant/uv': 'ai/implant-uv',
   '/treatment/implant/prf': 'ai/implant-prf',
-  '/treatment/implant/custom': 'equip/printer',
+  '/treatment/implant/custom': 'ai/implant-custom',
   '/treatment/implant/warranty': 'ai/implant-warranty',
-  '/treatment/tmj': 'orig/tmj-hero',
+  '/treatment/tmj': 'sun/tmj-explain-skull-2',
   '/treatment/tmj/symptoms': 'ai/tmj-symptoms',
   '/treatment/tmj/treatments': 'place/place04',
   '/treatment/aesthetic': 'ai/aesthetic-hub',
@@ -53,7 +53,7 @@ const DOC_AI: Record<string, string> = {
   '/treatment/natural-tooth': 'orig/mta-hero',
   '/treatment/natural-tooth/mta': 'orig/mta-hero',
   '/treatment/natural-tooth/endosonic': 'orig/endo-handpiece',
-  '/treatment/painless': 'orig/pain-hero',
+  '/treatment/painless': 'ai/painless-hub',
   '/treatment/painless/anesthesia': 'orig/pain-nopain',
   '/treatment/painless/sedation': 'orig/sleep-hero',
   '/treatment/painless/airflow': 'orig/airflow-device',
@@ -131,7 +131,8 @@ export function DocPage({ doc }: { doc: Doc }) {
           </div>
         </HeroCollage>
 
-        {/* 허브: 하위 문서 카드 (같은 높이·같은 사진 비율) */}
+        {/* 허브: 홈처럼 흐르는 띠로 첫 화면과 잇고, 하위 문서 카드 (같은 높이·같은 사진 비율) */}
+        {doc.isHub && children.length > 0 && <Marquee items={[doc.title, ...children.map((c) => c.title), CLINIC.nameEn]} overlap />}
         {doc.isHub && children.length > 0 && (
           <section className="section bg-canvas">
             <div className="wrap">
@@ -151,7 +152,7 @@ export function DocPage({ doc }: { doc: Doc }) {
         {doc.blocks.map((b, i) => {
           const band = !doc.isHub && (b.type === 'points' || b.type === 'steps') && i > 0 && i % 3 === 2 && bandCount < 2;
           if (band) bandCount++;
-          return <BlockView key={i} block={b} index={i} band={band ? bandBg : undefined} photoBand={i === photoBandIndex ? photoBandKey : undefined} />;
+          return <BlockView key={i} block={b} index={i} band={band ? bandBg : undefined} photoBand={i === photoBandIndex ? photoBandKey : undefined} concise={!isInsight} />;
         })}
 
         {doc.faq && doc.faq.length > 0 && (
@@ -175,7 +176,8 @@ export function DocPage({ doc }: { doc: Doc }) {
           </section>
         )}
 
-        {(related.length > 0 || doc.path !== doc.hub) && (
+        {/* 관련 문서 카드는 인사이트에서만 — 진료 페이지는 링크를 타고 다니지 않게(오너: 링크 사슬 줄이기, SEO 티 안 나게) */}
+        {isInsight && (related.length > 0 || doc.path !== doc.hub) && (
           <section className="section">
             <div className="wrap">
               <p className="eyebrow reveal">RELATED</p>
@@ -250,7 +252,8 @@ function TextFigure({ fig }: { fig: Fig }) {
   );
 }
 
-function BlockView({ block: b, index, band, photoBand }: { block: Block; index: number; band?: string; photoBand?: string }) {
+function BlockView({ block: b, index, band, photoBand, concise = false }: { block: Block; index: number; band?: string; photoBand?: string; /** 진료 페이지: 카드 설명은 두 문장까지만(오너: 문구 줄이기) */ concise?: boolean }) {
+  const trim = (s: string) => (concise ? s.split(/(?<=[.!?])s+(?=S)/).slice(0, 2).join(' ') : s);
   const id = ('id' in b && b.id) || `sec-${index + 1}`;
   const alt = index % 2 === 1;
   const wrapCls = band ? 'relative isolate overflow-hidden bg-night text-white section' : `section ${alt ? 'bg-canvas' : 'bg-white'}`;
@@ -272,7 +275,7 @@ function BlockView({ block: b, index, band, photoBand }: { block: Block; index: 
         )}
       </div>
     ) : null;
-  const cardCls = band ? 'flex h-full flex-col rounded-2xl border border-white/12 bg-white/8 p-6 backdrop-blur-sm' : 'card flex h-full flex-col p-6';
+  const cardCls = band ? 'flex h-full flex-col rounded-2xl border border-white/12 bg-white/8 p-6 backdrop-blur-sm' : 'card card-3d flex h-full flex-col p-6';
   const titleCls = band ? 'text-[1.05rem] font-bold text-white' : 'text-[1.05rem] font-bold text-ink';
   const descCls = band ? 'mt-2 text-[15.5px] leading-relaxed text-white/75' : 'mt-2 text-[15.5px] leading-relaxed text-ink-soft';
 
@@ -343,7 +346,7 @@ function BlockView({ block: b, index, band, photoBand }: { block: Block; index: 
                     <p className={`${titleCls} ${b.numbered !== false ? 'mt-3' : ''}`}>{it.title}</p>
                     {it.desc && (
                       <p className={descCls}>
-                        <Sentences text={it.desc} clauses={false} />
+                        <Sentences text={trim(it.desc)} clauses={false} />
                       </p>
                     )}
                   </li>
@@ -366,14 +369,14 @@ function BlockView({ block: b, index, band, photoBand }: { block: Block; index: 
                 <li key={i} className={`${cardCls} overflow-hidden`}>
                   {withFig && (
                     <span className="card-img -mx-6 -mt-6 mb-5 !w-auto">
-                      <Image src={figSrc(s.figure?.key ?? band ?? 'ai/insight-journey')} alt={s.figure?.alt ?? ''} fill sizes="(max-width: 640px) 100vw, 25vw" className="object-cover" />
+                      <Image src={figSrc(s.figure?.key ?? band ?? 'ai/insight-journey')} alt={s.figure?.alt ?? ''} fill sizes="(max-width: 640px) 100vw, 25vw" className={fitsBox(s.figure?.key ?? band ?? 'ai/insight-journey', 4, 3) ? 'object-cover' : '!object-contain p-3'} />
                     </span>
                   )}
                   <span className="pill-sun self-start">STEP {String(i + 1).padStart(2, '0')}</span>
                   <p className={`${titleCls} mt-3`}>{s.title}</p>
                   {s.desc && (
                     <p className={descCls}>
-                      <Sentences text={s.desc} clauses={false} />
+                      <Sentences text={trim(s.desc)} clauses={false} />
                     </p>
                   )}
                 </li>

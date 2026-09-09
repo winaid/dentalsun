@@ -134,14 +134,25 @@ body {
  * 통째로 다음 줄로 내려간다. 좁은 화면(모바일)에서는 마디를 풀어 자연스럽게 흐르게 둔다.
  * ⚠️ 두 글자마다 꺾이는 사고를 막기 위해 clause 는 폭이 좁으면 inline 으로 되돌아간다.
  */
-.sent {
+.sent,
+.sent-one {
   display: block;
+  text-wrap: balance;
 }
-.clause {
+.clause,
+.chunk {
   display: inline;
 }
 @media (min-width: 768px) {
   .clause {
+    display: inline-block;
+    max-width: 100%;
+  }
+  /* 쉼 덩어리로 나뉜 마디는 덩어리 단위로만 줄이 바뀐다 — 마디 자체는 inline 으로 풀어 덩어리가 줄을 넘나들게 */
+  .clause-open {
+    display: inline;
+  }
+  .chunk {
     display: inline-block;
     max-width: 100%;
   }
@@ -183,7 +194,8 @@ body {
 .card-img img {
   @apply h-full w-full object-cover transition-transform duration-700;
 }
-.card-hover:hover .card-img img {
+.card-hover:hover .card-img img,
+.card-3d:hover .card-img img {
   transform: scale(1.06);
 }
 .num {

@@ -47,7 +47,7 @@ const HUB_SHORT: Record<string, string> = {
 };
 const HUB_IMG: Record<string, string> = {
   '/treatment/implant': 'ai/implant-hub',
-  '/treatment/tmj': 'ai/tmj-hub',
+  '/treatment/tmj': 'sun/tmj-explain-skull-2',
   '/treatment/aesthetic': 'ai/aesthetic-hub',
   '/treatment/insurance': 'ai/insurance-hub',
   '/treatment/wisdom-tooth': 'ai/wisdom',
@@ -61,7 +61,7 @@ export default function HomePage() {
     { href: '/treatment/implant/full-arch', label: '풀아치(전체) 임플란트', desc: '4~6개 최소식립으로 무치악 해결.', fig: 'orig/implant-fa-fixed' },
     { href: '/treatment/implant/uv', label: 'UV 임플란트', desc: '잇몸이 좋지 않다면.', fig: 'ai/implant-uv' },
     { href: '/treatment/implant/prf', label: '자가혈 임플란트', desc: '뼈이식이 필요하다면.', fig: 'ai/implant-prf' },
-    { href: '/treatment/implant/custom', label: '맞춤 임플란트', desc: '내 잇몸에 꼭 맞게 제작.', fig: 'orig/implant-custom-fit' },
+    { href: '/treatment/implant/custom', label: '맞춤 임플란트', desc: '내 잇몸에 꼭 맞게 제작.', fig: 'ai/implant-custom' },
     { href: '/treatment/implant/warranty', label: '보증제도', desc: '치료 후 철저한 사후 관리.', fig: 'ai/implant-warranty' },
   ];
 
@@ -238,7 +238,7 @@ export default function HomePage() {
               </ul>
               <div className="mt-10 flex flex-wrap justify-center gap-3">
                 <Link href="/treatment/tmj" className="btn-sun">턱관절 치료 안내</Link>
-                <Link href="/treatment/tmj/symptoms" className="btn-ghost-dark">주요 증상 확인</Link>
+                <Link href="/treatment/tmj#symptoms" className="btn-ghost-dark">주요 증상 확인</Link>
               </div>
             </div>
           </div>

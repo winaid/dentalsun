@@ -123,7 +123,7 @@ export const INSIGHT_SYMPTOM_A: Doc[] = [
         a: '스플린트는 머리뼈와 턱관절 사이의 공간을 확보해 디스크가 제 위치로 돌아오도록 돕는 장치로, 디스크 변위가 원인일 때 소리와 통증을 줄이는 데 쓰입니다. 다만 원인과 상태에 따라 효과가 다르므로 진찰 후 필요한 경우에 맞춰 사용합니다.',
       },
     ],
-    related: ['/treatment/tmj/symptoms', '/treatment/tmj/treatments', '/treatment/tmj', '/insight/symptom/mouth-wont-open'],
+    related: ['/treatment/tmj', '/insight/symptom/mouth-wont-open'],
   },
 
   /* ───────────────────────── 2. 입이 잘 안 벌어져요 ───────────────────────── */
@@ -235,7 +235,7 @@ export const INSIGHT_SYMPTOM_A: Doc[] = [
         a: '아래 사랑니 주변 잇몸에 염증이 생기면 붓기와 통증으로 입이 잘 벌어지지 않을 수 있습니다. 이 경우 관절이 아니라 염증이 원인이므로 염증을 가라앉힌 뒤 사랑니 발치를 고려하며, 열이나 삼킴 곤란이 있으면 바로 진료를 받으셔야 합니다.',
       },
     ],
-    related: ['/treatment/tmj/treatments', '/treatment/tmj/symptoms', '/treatment/wisdom-tooth', '/insight/symptom/jaw-clicking'],
+    related: ['/treatment/wisdom-tooth', '/insight/symptom/jaw-clicking'],
   },
 
   /* ───────────────────────── 3. 자고 일어나면 턱이 뻐근하고 머리가 아파요 ───────────────────────── */
@@ -350,7 +350,7 @@ export const INSIGHT_SYMPTOM_A: Doc[] = [
         a: '닳은 정도가 가볍고 불편이 없으면 더 닳지 않도록 보호하며 지켜봅니다. 시림이 심하거나 깨진 부분이 있으면 상태에 따라 충전이나 보철로 치아를 보호합니다. 어떤 방법이든 이갈이 관리가 함께 이루어져야 보철물도 오래갑니다.',
       },
     ],
-    related: ['/treatment/tmj/treatments', '/treatment/tmj/symptoms', '/treatment/tmj', '/insight/symptom/sensitive-teeth'],
+    related: ['/treatment/tmj', '/insight/symptom/sensitive-teeth'],
   },
 
   /* ───────────────────────── 4. 찬물에 이가 시려요 ───────────────────────── */
