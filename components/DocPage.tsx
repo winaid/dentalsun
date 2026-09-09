@@ -506,8 +506,8 @@ function BlockView({ block: b, index, band, photoBand }: { block: Block; index: 
     case 'notice':
       /* 안내 구역 — 연한 상자 대신 구역 전체에 진한 주황을 깔고, 왼쪽 라벨+큰 제목 / 오른쪽 본문의 편집 배치 */
       return (
-        <section className="relative isolate overflow-hidden bg-sun-600 py-16 text-white md:py-20">
-          <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(900px_420px_at_85%_-10%,rgba(255,255,255,0.22),transparent_60%),radial-gradient(700px_360px_at_0%_110%,rgba(120,40,0,0.35),transparent_60%)]" />
+        <section className="relative isolate overflow-hidden bg-[#e8783a] py-16 text-white md:py-20">
+          <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(900px_420px_at_85%_-10%,rgba(255,255,255,0.26),transparent_60%),radial-gradient(700px_360px_at_0%_110%,rgba(120,40,0,0.18),transparent_60%)]" />
           <span aria-hidden className="pointer-events-none absolute -right-6 -bottom-10 -z-10 select-none text-[220px] font-extrabold leading-none tracking-[-0.06em] text-white/10 md:text-[300px]">!</span>
           <div className="wrap grid gap-8 lg:grid-cols-[0.85fr_1.4fr] lg:gap-16">
             <div className="reveal">
