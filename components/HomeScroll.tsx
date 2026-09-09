@@ -55,23 +55,22 @@ export function HomeStage() {
   return (
     <section className="section bg-canvas" data-stage>
       <div className="wrap">
-        <div className="reveal max-w-[820px]">
-          <p className="eyebrow">DIGITAL PROCESS</p>
-          <h2 className="display-sm mt-4">
-            내비게이션 임플란트, <span className="accent">이렇게 진행됩니다</span>
-          </h2>
-          {block.lead && (
-            <p className="lead mt-4">
-              <Sentences text={block.lead} />
-            </p>
-          )}
-        </div>
-
-        <div className="mt-12 grid gap-10 lg:grid-cols-[1.15fr_1fr] lg:gap-16">
-          {/* 왼쪽 — 고정 무대 (lg 이상). 화면 세로 가운데에 고정: 100svh 상자 안에서 가운데 정렬(오너: 너무 위에 붙어 있었다) */}
-          <div className="hidden lg:block">
-            <div className="sticky top-0 flex h-[100svh] items-center">
-              <div className="relative w-full aspect-[3/2] overflow-hidden rounded-[28px] bg-canvas-2 shadow-[var(--shadow-lift)]">
+        <div className="grid gap-10 lg:grid-cols-[1.15fr_1fr] lg:gap-16">
+          {/* 왼쪽 — 제목·설명 + 고정 무대. lg 이상에서는 열 전체가 화면 세로 가운데에 고정돼 스크롤 내내 제목이 사진 위에 남는다(오너 요청). */}
+          <div>
+            <div className="lg:sticky lg:top-0 lg:flex lg:h-[100svh] lg:flex-col lg:justify-start lg:pt-[112px]">
+              <div className="reveal">
+                <p className="eyebrow">DIGITAL PROCESS</p>
+                <h2 className="display-sm mt-4">
+                  내비게이션 임플란트, <span className="accent">이렇게 진행됩니다</span>
+                </h2>
+                {block.lead && (
+                  <p className="lead mt-4">
+                    <Sentences text={block.lead} />
+                  </p>
+                )}
+              </div>
+              <div className="relative mt-8 hidden w-full aspect-[3/2] max-h-[50svh] overflow-hidden rounded-[28px] bg-canvas-2 shadow-[var(--shadow-lift)] lg:block">
                 {STAGE_IMG.map((f, i) => (
                   <div key={f.key} className="stage-img" data-stage-img>
                     <Image src={figSrc(f.key)} alt={f.alt} fill sizes="50vw" className="object-cover" />
@@ -85,7 +84,7 @@ export function HomeStage() {
           </div>
 
           {/* 오른쪽 — 단계 글 (모바일은 사진을 각 단계 아래에) */}
-          <ol className="lg:pt-[18vh] lg:pb-[2vh]">
+          <ol className="lg:pt-[22vh] lg:pb-[2vh]">
             {steps.map((s, i) => (
               <li key={s.title} className="stage-step flex gap-5 rounded-3xl px-6 py-7 md:gap-6 lg:my-[6vh] lg:min-h-[36vh] lg:items-center lg:px-8 lg:py-8" data-stage-step>
                 <span className="stage-badge shrink-0">STEP {String(i + 1).padStart(2, '0')}</span>
