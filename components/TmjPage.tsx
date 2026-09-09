@@ -1,8 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { SiteHeader } from '@/components/SiteHeader';
+import { HeroCollage, type CollageCard } from '@/components/HeroCollage';
 import { JsonLd } from '@/components/JsonLd';
-import { Breadcrumb, CardLink, ContactBand, FaqList, MedicalNotice, Sentences } from '@/components/ui';
+import { CardLink, ContactBand, FaqList, MedicalNotice, Sentences } from '@/components/ui';
 import { figSize, figSrc, type Doc, type Fig } from '@/lib/docs';
 import { docByPath, docsOfHub } from '@/lib/content';
 import { TMJ_CAUSES, TMJ_EQUIP, TMJ_HERO, TMJ_KNOWHOW, TMJ_PROCESS, TMJ_STEPS, TMJ_SYMPTOMS } from '@/lib/content/tmjLanding';
@@ -15,6 +16,12 @@ import { CLINIC, HOURS, MONTHLY_NOTICE } from '@/lib/clinic';
  *  글·사진은 옛 홈페이지 캡처와 오너 제공 실사(lib/content/tmjLanding.ts). 구조화 데이터·FAQ 는 Doc(lib/content/tmj.ts)에서 그대로.
  *  ★ 구역 이동 목차는 두지 않는다(오너 지시). 사이드바의 '자주 묻는 질문' 은 FAQ 로 내려가는 링크뿐이다.
  */
+/** 히어로 사진 카드 3장 — 오너 실사. 원본 비율 그대로(HeroCollage 가 자르지 않는다) */
+const HERO_CARDS: [CollageCard, CollageCard, CollageCard] = [
+  { fig: { key: 'sun/circle-treatment', alt: '확대경을 쓰고 치료하는 양대일 원장' }, shape: 'portrait' },
+  { fig: { key: 'sun/doctor-arms', alt: '진료실에서 팔짱을 낀 양대일 원장' }, shape: 'wide' },
+  { fig: { key: 'sun/tmj-explain-skull-2', alt: '두개골 모형으로 턱관절을 설명하는 양대일 원장' }, shape: 'std' },
+];
 const CHILD_FIG: Record<string, Fig> = {
   '/treatment/tmj/symptoms': { key: 'ai/tmj-symptoms', alt: '턱관절 주요 증상과 원인' },
   '/treatment/tmj/treatments': { key: 'orig/tmj-tx-splint', alt: '턱관절 치료 방법' },
@@ -52,32 +59,35 @@ export function TmjPage({ doc }: { doc: Doc }) {
 
   return (
     <>
-      <SiteHeader />
+      <SiteHeader dark />
       <JsonLd data={schema} />
       <main id="main" className="bg-white">
-        {/* 쪽 머리 — 레퍼런스처럼 큰 쪽 이름 + 밑줄 + 빵부스러기 */}
-        <div className="wrap pt-[100px] lg:pt-[124px]">
-          <div className="flex flex-wrap items-end justify-between gap-4 border-b border-ink/80 pb-4">
-            <p className="text-[2rem] font-extrabold tracking-[-0.03em] text-ink md:text-[2.4rem]">턱관절</p>
-            <Breadcrumb trail={trail} />
+        {/* 첫 화면 — 다른 서브페이지와 같은 콜라주 히어로(오너: "맨 위에만 다른 서브페이지처럼"). 배경·카드 모두 오너 실사, 제목은 원본 첫 배너 문구 */}
+        <HeroCollage
+          trail={trail}
+          eyebrow="TMJ · 턱관절"
+          lines={[TMJ_HERO.line1, <span key="l2" className="accent-sun">{TMJ_HERO.line2}</span>]}
+          lead={TMJ_HERO.desc}
+          bg={TMJ_HERO.bg.key}
+          cards={HERO_CARDS}
+          items={TMJ_KNOWHOW.items.map((k) => ({ title: k.title, desc: k.desc.split(/(?<=다.)s/)[0] }))}
+        >
+          <div className="flex flex-wrap gap-3">
+            <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="btn-sun">네이버 예약</a>
+            <a href={CLINIC.phoneHref} className="btn-ghost-dark">전화 {CLINIC.phone}</a>
           </div>
-        </div>
+        </HeroCollage>
 
-        <div className="wrap grid gap-14 pt-10 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-16 lg:pt-14 xl:grid-cols-[minmax(0,1fr)_360px]">
+        <div className="wrap grid gap-14 pt-16 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-16 lg:pt-24 xl:grid-cols-[minmax(0,1fr)_360px]">
           {/* ───────── 본문 ───────── */}
           <div className="min-w-0">
-            {/* 1. 첫 화면 — TMJ 큰 글자 + 원본 첫 배너 문구 + 원장 실사 */}
-            <section className="text-center" aria-labelledby="tmj-title">
-              <p className="tmj-big hero-in" aria-hidden>{TMJ_HERO.letters}</p>
-              <h1 id="tmj-title" className="display-sm mt-6 hero-in hero-in-2">
-                {TMJ_HERO.line1},
-                <br />
-                <span className="accent-sun">{TMJ_HERO.line2}</span>
-              </h1>
-              <p className="lead mx-auto mt-5 max-w-[640px] hero-in hero-in-3">
-                <Sentences text={TMJ_HERO.desc} clauses={false} />
+            {/* 1. TMJ 큰 글자 — 레퍼런스 첫 구역. 제목·설명은 히어로가 맡았으니 여기는 글자와 특징 세 개만 */}
+            <section className="text-center" aria-label="턱관절 진료 특징">
+              <p className="tmj-big reveal" aria-hidden>{TMJ_HERO.letters}</p>
+              <p className="lead reveal mx-auto mt-5 max-w-[640px]">
+                <Sentences text={TMJ_KNOWHOW.lead} clauses={false} />
               </p>
-              <ul className="mt-6 flex flex-wrap justify-center gap-2 hero-in hero-in-4" aria-label="진료 특징">
+              <ul className="reveal-stack mt-6 flex flex-wrap justify-center gap-2" aria-label="진료 특징">
                 {TMJ_HERO.tags.map((t, i) => (
                   <li key={t} className="inline-flex items-center gap-2 rounded-full border border-hairline bg-white px-4 py-2 text-[14px] font-bold text-ink">
                     <span className="text-[12px] font-extrabold text-sun-500">0{i + 1}</span>
@@ -85,15 +95,10 @@ export function TmjPage({ doc }: { doc: Doc }) {
                   </li>
                 ))}
               </ul>
-              <div className="relative mx-auto mt-10 max-w-[980px] hero-in hero-in-4">
-                <div className="relative aspect-[3/2] overflow-hidden rounded-[28px] bg-canvas-2 shadow-[var(--shadow-lift)]">
-                  <Image src={figSrc(hero.key)} alt={hero.alt} fill priority sizes="(max-width: 1024px) 100vw, 980px" className="object-cover" />
-                </div>
-              </div>
             </section>
 
             {/* 2. 경고 — ! + 증상 4가지 (원본 3가지 + 연관통) */}
-            <section className="pt-24 md:pt-32" aria-labelledby="tmj-symptoms">
+            <section className="pt-20 md:pt-28" aria-labelledby="tmj-symptoms">
               <div className="reveal text-center">
                 <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-sun-500 text-[2.2rem] font-extrabold leading-none text-white shadow-[0_12px_30px_rgba(242,111,30,0.35)]" aria-hidden>!</span>
                 <h2 id="tmj-symptoms" className="display-sm mt-6">
