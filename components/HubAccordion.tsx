@@ -20,7 +20,7 @@ export interface HubItem {
 
 export function HubAccordion({ items }: { items: HubItem[] }) {
   return (
-    <div className="acc reveal mt-12 hidden h-[560px] gap-2 lg:flex" role="list">
+    <div className="acc reveal mt-12 hidden h-[440px] gap-2 lg:flex" role="list">
       {items.map((it, i) => (
         <Link key={it.href} href={it.href} className="acc-item group relative block overflow-hidden rounded-3xl bg-night text-white" role="listitem">
           <Image src={figSrc(it.fig)} alt="" fill sizes="(max-width: 1280px) 60vw, 800px" className="acc-img object-cover" />
@@ -34,9 +34,9 @@ export function HubAccordion({ items }: { items: HubItem[] }) {
           </div>
 
           {/* 펼친 상태 */}
-          <div className="acc-open absolute inset-x-0 bottom-0 p-8 lg:p-9">
+          <div className="acc-open absolute inset-x-0 bottom-0 p-7 lg:p-8">
             <span className="text-[12px] font-extrabold tracking-[0.2em] text-sun-300">{String(i + 1).padStart(2, '0')}</span>
-            <p className="mt-2 text-[1.9rem] font-extrabold leading-tight tracking-[-0.02em] on-photo md:text-[2.2rem]">{it.label}</p>
+            <p className="mt-2 text-[1.7rem] font-extrabold leading-tight tracking-[-0.02em] on-photo md:text-[2rem]">{it.label}</p>
             <p className="mt-3 max-w-[520px] text-[15.5px] leading-[1.75] text-white/85">{it.desc}</p>
             {it.subs.length > 0 && (
               <ul className="mt-5 flex flex-wrap gap-2">
