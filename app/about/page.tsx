@@ -95,14 +95,14 @@ export default function AboutPage() {
                       <p className="font-bold text-ink">
                         {d.name} {d.role}
                       </p>
-                      <p className="text-[13.5px] text-ink-soft">{d.specialty} · {d.career[0]}</p>
+                      <p className="text-[13.5px] text-ink-soft">{d.specialty} · {d.career.find((c) => c.includes('외래교수')) ?? d.career[1]}</p>
                     </div>
                   </li>
                 ))}
               </ul>
               <Link href="/about/doctors" className="btn-brand mt-8">의료진 소개 자세히</Link>
             </div>
-            <Figure fig={{ key: 'scene/loupe', alt: '확대경을 착용하고 진료하는 광화문선치과 원장' }} ratio="aspect-[4/3]" />
+            <Figure fig={{ key: 'scene/loupe', alt: '확대경을 착용하고 진료하는 광화문선치과 원장' }} ratio="aspect-[960/767]" />
           </div>
         </section>
 
