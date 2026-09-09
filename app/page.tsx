@@ -270,24 +270,40 @@ export default function HomePage() {
                 <Sentences text="보건복지부 인증 통합치의학과 전문의. 강남성심병원 외래교수 출신의 다년간 임상경험으로 진료합니다." />
               </p>
             </div>
-            <ul className="reveal-stack mx-auto mt-12 grid max-w-[1000px] gap-6 sm:grid-cols-2">
-              {DOCTORS.map((d) => (
-                <li key={d.slug}>
-                  <Link href={`/about/doctors#${d.slug}`} className="card card-hover group flex h-full flex-col overflow-hidden">
-                    <div className="relative aspect-[4/5] bg-canvas-2">
-                      <Image src={d.photo} alt={`${d.name} ${d.role}`} fill sizes="(max-width: 640px) 100vw, 500px" className="object-cover object-top transition-transform duration-700 group-hover:scale-[1.04]" />
+            {/* 기존 홈페이지 배치(오너 지시): 왼쪽 큰 사진, 오른쪽 전문의·이름, 약력 카드가 사진에 걸침. 의료진 페이지와 같은 짜임새. */}
+            {DOCTORS.map((d) => (
+              <div key={d.slug} className="relative isolate mt-14 overflow-hidden">
+                <span aria-hidden className="pointer-events-none absolute right-[2%] top-0 -z-10 select-none text-right font-extrabold leading-none tracking-[-0.05em] text-brand-900/[0.05]">
+                  <span className="block text-[140px] md:text-[200px]">SUN</span>
+                  <span className="-mt-3 block pr-2 text-[26px] tracking-[0.02em] md:text-[36px]">Dental clinic</span>
+                </span>
+                <div className="grid items-start gap-8 lg:grid-cols-[1fr_1fr] lg:gap-0">
+                  <div className="reveal">
+                    <div className="wipe relative aspect-[4/5] overflow-hidden rounded-3xl bg-canvas-2 lg:aspect-[5/6]">
+                      <Image src={d.photo} alt={`${d.name} ${d.role}`} fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover object-top" />
                     </div>
-                    <div className="p-6 text-center">
-                      <span className="pill-brand">{d.specialty}</span>
-                      <p className="mt-3 text-[1.3rem] font-extrabold text-ink">
-                        {d.name} <span className="text-[0.95rem] font-semibold text-ink-muted">{d.role}</span>
-                      </p>
-                      <p className="mt-1.5 text-[14.5px] text-ink-soft">{d.career[0]}</p>
+                  </div>
+                  <div className="reveal relative z-10 lg:pt-[12%] lg:pl-2">
+                    <p className="text-[1.1rem] font-semibold text-brand-600 md:text-[1.2rem]">{d.specialty}</p>
+                    <h3 className="display-sm mt-2">
+                      {d.name} <span className="font-bold">{d.role}</span>
+                    </h3>
+                    <div className="mt-8 rounded-2xl border border-hairline bg-white p-7 shadow-[var(--shadow-lift)] md:p-9 lg:-ml-[22%]">
+                      <p className="text-[1.15rem] font-bold text-ink">주요 약력</p>
+                      <ul className="mt-5 space-y-2.5">
+                        {d.career.map((c) => (
+                          <li key={c} className="flex items-start gap-3 text-[16px] leading-[1.6] text-ink">
+                            <span className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-brand-600" />
+                            {c}
+                          </li>
+                        ))}
+                      </ul>
+                      <Link href={`/about/doctors#${d.slug}`} className="btn-brand mt-7">의료진 소개 자세히</Link>
                     </div>
-                  </Link>
-                </li>
-              ))}
-            </ul>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
 
