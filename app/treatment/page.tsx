@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { SiteHeader } from '@/components/SiteHeader';
-import { PageHero } from '@/components/PageHero';
+import { HeroCollage } from '@/components/HeroCollage';
 import { JsonLd } from '@/components/JsonLd';
 import Image from 'next/image';
 import { Breadcrumb, ContactBand, MedicalNotice, Sentences } from '@/components/ui';
@@ -33,7 +33,23 @@ export default function TreatmentIndex() {
       <SiteHeader dark />
       <JsonLd data={[breadcrumbSchema(trail), medicalWebPageSchema({ title: TITLE, description: DESC, path: '/treatment' }), itemListSchema('/treatment', hubs.map((h) => ({ name: h.nav.label, path: h.nav.href })), '광화문 선치과 진료 갈래')]} />
       <main id="main">
-        <PageHero trail={trail} eyebrow="TREATMENTS" bg="ai/wide-implant" title={<>광화문 선치과 <span className="accent-sun">진료 안내</span></>} lead="일곱 진료 갈래를 세부 항목까지 각각의 문서로 정리했습니다. 궁금한 진료를 고르면 무엇을 어떻게 하는지, 어떤 경우에 필요한지, 자주 묻는 질문까지 볼 수 있습니다."></PageHero>
+        <HeroCollage
+          trail={trail}
+          eyebrow="TREATMENTS"
+          lines={['광화문 선치과', <><span className="accent-sun">진료 안내</span></>]}
+          lead="일곱 진료 갈래를 세부 항목까지 각각의 문서로 정리했습니다. 궁금한 진료를 고르면 무엇을 어떻게 하는지, 어떤 경우에 필요한지, 자주 묻는 질문까지 볼 수 있습니다."
+          bg="ai/wide-implant"
+          cards={[
+            { fig: { key: 'orig/mta-hero', alt: '확대경을 쓰고 MTA 신경치료를 하는 원장' }, shape: 'portrait' },
+            { fig: { key: 'orig/implant-hero', alt: '확대경을 쓴 의료진이 파노라마 모니터 앞에서 임플란트 수술을 하는 장면' }, shape: 'wide' },
+            { fig: { key: 'orig/pain-nopain', alt: '컴퓨터 제어 무통마취기 NO PAIN III 장비' }, shape: 'std' },
+          ]}
+          items={[
+            { title: '디지털 임플란트', desc: 'CT와 3D 구강스캔 데이터로 모의수술을 거치는 내비게이션·풀아치·UV·자가혈·맞춤 임플란트' },
+            { title: '턱관절 · 자연치아 살리기', desc: '원인을 찾는 턱관절 치료와 MTA 신경치료·엔도소닉 초음파 세척으로 내 치아를 보존' },
+            { title: '무통 & 저자극 시스템', desc: '무통마취기 NO-PAIN III, 도포·가글마취, 수면치료, 에어플로우 스케일링' },
+          ]}
+        />
         <section className="section">
           <div className="wrap">
             <ol className="reveal-stack grid-cards md:grid-cols-2 xl:grid-cols-4">

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { SiteHeader } from '@/components/SiteHeader';
-import { PageHero } from '@/components/PageHero';
+import { HeroCollage } from '@/components/HeroCollage';
 import { JsonLd } from '@/components/JsonLd';
 import { Breadcrumb, ContactBand, FaqList, MedicalNotice , Sentences } from '@/components/ui';
 import { SITE_FAQ, ALL_FAQ } from '@/lib/faq';
@@ -23,7 +23,23 @@ export default function FaqPage() {
       <SiteHeader dark />
       <JsonLd data={[breadcrumbSchema(trail), medicalWebPageSchema({ title: TITLE, description: DESC, path: '/faq' }), faqSchema(ALL_FAQ, '/faq')]} />
       <main id="main">
-        <PageHero trail={trail} eyebrow="FREQUENTLY ASKED QUESTIONS" bg="ai/wide-visit" title={<>광화문 선치과에 <span className="accent-sun">자주 묻는 질문</span></>} lead="진료시간과 예약, 오시는 길, 임플란트·턱관절 치료, 건강보험 적용, 마취와 수면치료까지 환자분들이 가장 많이 물어보시는 내용을 모았습니다."></PageHero>
+        <HeroCollage
+          trail={trail}
+          eyebrow="FREQUENTLY ASKED QUESTIONS"
+          lines={['광화문 선치과에', <><span className="accent-sun">자주 묻는 질문</span></>]}
+          lead="진료시간과 예약, 오시는 길, 임플란트·턱관절 치료, 건강보험 적용, 마취와 수면치료까지 환자분들이 가장 많이 물어보시는 내용을 모았습니다."
+          bg="ai/wide-visit"
+          cards={[
+            { fig: { key: 'place/place09', alt: '광화문선치과 대기실' }, shape: 'portrait' },
+            { fig: { key: 'orig/misc-consult-desk', alt: '책상에서 의사가 환자에게 서류를 설명하는 모습' }, shape: 'wide' },
+            { fig: { key: 'place/place02', alt: '광화문선치과 개별 진료실' }, shape: 'std' },
+          ]}
+          items={[
+            { title: '진료시간 · 예약', desc: '월~금 10:00~19:00, 화·목요일은 밤 9시까지 야간진료, 토요일은 격주 10:00~14:00' },
+            { title: '위치 · 주차', desc: '광화문역 6번 출구 도보 2분, 코리아나 호텔 야외주차장 무료 이용' },
+            { title: '비용 · 건강보험', desc: '만 65세 이상 보험 임플란트(평생 2개)와 보험틀니는 본인 부담금 30%' },
+          ]}
+        />
         {SITE_FAQ.map((g, i) => (
           <section key={g.id} id={g.id} className={`section ${i % 2 ? 'bg-canvas' : ''}`}>
             <div className="wrap grid gap-8 lg:grid-cols-[1fr_2fr]">

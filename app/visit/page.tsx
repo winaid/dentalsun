@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { SiteHeader } from '@/components/SiteHeader';
-import { PageHero } from '@/components/PageHero';
+import { HeroCollage } from '@/components/HeroCollage';
 import { JsonLd } from '@/components/JsonLd';
 import { Breadcrumb, ContactBand , Sentences } from '@/components/ui';
 import { CLINIC, HOURS, MONTHLY_NOTICE } from '@/lib/clinic';
@@ -20,18 +20,32 @@ export default function VisitPage() {
       <SiteHeader dark />
       <JsonLd data={[breadcrumbSchema(trail), medicalWebPageSchema({ title: TITLE, description: DESC, path: '/visit' })]} />
       <main id="main">
-        <PageHero trail={trail} eyebrow="VISIT US" bg="ai/wide-visit" title={<>광화문역 <span className="accent-sun">6번 출구 도보 2분</span>
-              <br />
-              광화문선치과 오시는 길</>}>
-          <p className="max-w-[720px] text-[1.05rem] leading-[1.85] text-white/80">{CLINIC.address.full} — {CLINIC.address.landmark}. 화·목요일은 밤 9시까지 야간진료를 하고, 코리아나 호텔 야외주차장을 무료로 이용하실 수 있습니다.</p><ul className="flex flex-wrap gap-2.5">
-              {CLINIC.transit.map((t) => (
-                <li key={t.line} className="inline-flex items-center gap-2 rounded-full border-2 bg-white/95 px-4 py-1.5 text-[14px] font-bold text-ink" style={{ borderColor: t.color }}>
-                  <span className="flex h-6 w-6 items-center justify-center rounded-full text-[12px] text-white" style={{ background: t.color }}>{t.line.replace('호선', '')}</span>
-                  {t.station} {t.exit} {t.walk}
-                </li>
-              ))}
-            </ul>
-        </PageHero>
+        <HeroCollage
+          trail={trail}
+          eyebrow="VISIT US"
+          lines={['광화문역 6번 출구', <><span className="accent-sun">도보 2분</span></>]}
+          lead={`${CLINIC.address.full} — ${CLINIC.address.landmark}. 화·목요일은 밤 9시까지 야간진료를 하고, 코리아나 호텔 야외주차장을 무료로 이용하실 수 있습니다.`}
+          bg="ai/wide-visit"
+          cards={[
+            { fig: { key: 'place/place03', alt: '광화문선치과 진료실과 간판' }, shape: 'portrait' },
+            { fig: { key: 'place/place01', alt: '광화문선치과 진료실 복도' }, shape: 'wide' },
+            { fig: { key: 'place/place09', alt: '광화문선치과 대기실' }, shape: 'std' },
+          ]}
+          items={[
+            { title: '주소', desc: `${CLINIC.address.full} · ${CLINIC.address.landmark}` },
+            { title: '진료시간', desc: '월~금 10:00~19:00 · 화·목 야간진료 21:00까지 · 토요일 격주 10:00~14:00' },
+            { title: '주차', desc: `${CLINIC.parking.place} ${CLINIC.parking.fee}` },
+          ]}
+        >
+          <ul className="flex flex-wrap gap-2.5">
+            {CLINIC.transit.map((t) => (
+              <li key={t.line} className="inline-flex items-center gap-2 rounded-full border-2 bg-white/95 px-4 py-1.5 text-[14px] font-bold text-ink" style={{ borderColor: t.color }}>
+                <span className="flex h-6 w-6 items-center justify-center rounded-full text-[12px] text-white" style={{ background: t.color }}>{t.line.replace('호선', '')}</span>
+                {t.station} {t.exit} {t.walk}
+              </li>
+            ))}
+          </ul>
+        </HeroCollage>
 
         <section className="section">
           <div className="wrap grid gap-6 lg:grid-cols-[1.3fr_1fr]">

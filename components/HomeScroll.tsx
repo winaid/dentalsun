@@ -4,7 +4,6 @@ import { Sentences } from '@/components/ui';
 import { figSrc, type Block } from '@/lib/docs';
 import { docByPath } from '@/lib/content';
 import { CLINIC } from '@/lib/clinic';
-import { DOCTORS } from '@/lib/doctors';
 import { TREATMENT_HUBS } from '@/lib/nav';
 
 /**
@@ -17,7 +16,7 @@ import { TREATMENT_HUBS } from '@/lib/nav';
 export function HomeStats() {
   const walk = Number((CLINIC.transit[0].walk.match(/\d+/) ?? ['2'])[0]);
   const stats = [
-    { n: DOCTORS.length, unit: '인', label: '보건복지부 인증 전문의' },
+    { n: 6, unit: '가지', label: '3D 디지털 진료 시스템 (Point 01~06)' },
     { n: walk, unit: '분', label: `${CLINIC.transit[0].station} ${CLINIC.transit[0].exit} 도보` },
     { n: 21, unit: '시', label: '화·목 야간진료 (21:00 까지)' },
     { n: TREATMENT_HUBS.length, unit: '분야', label: '임플란트 · 턱관절 등 진료 분야' },

@@ -547,3 +547,6 @@ details.faq .a {
 @media (prefers-reduced-motion: reduce) {
   .hero-card { animation: none; opacity: 1; transform: none; }
 }
+.display-xl.is-long {
+  @apply text-[2.2rem] sm:text-[3.2rem] lg:text-[4.2rem] 2xl:text-[4.8rem];
+}

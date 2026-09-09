@@ -9,7 +9,7 @@ import { figSrc } from '@/lib/docs';
  * 홈 첫 화면 — 레퍼런스처럼 사진이 또렷하게 보이는 전폭 배경 + 오른쪽에 떠 있는 사진 카드와 정보 칩.
  *
  * ★ 배경은 어둡게 뭉개지 않는다. 왼쪽 글 자리에만 남색 그라데이션을 깔고 오른쪽은 사진이 그대로 보인다.
- * ★ 오른쪽 빈 공간을 채우는 것: 진료 장면 사진 카드 + 진료시간 유리 카드 + 전문의 2인 칩 + 역 칩.
+ * ★ 오른쪽 빈 공간을 채우는 것: 진료 장면 사진 카드 + 진료시간 유리 카드 + 전문의 칩 + 역 칩.
  *   전부 lib/clinic.ts·lib/doctors.ts 의 사실만 쓴다.
  */
 const BACKDROPS = [
@@ -52,7 +52,7 @@ export function HomeHero() {
             <Link href="/treatment" className="btn-ghost-dark">진료 안내 보기</Link>
           </div>
           <ul className="mt-12 flex flex-wrap gap-2.5 hero-in hero-in-4">
-            {['통합치의학과 · 치과보철과 전문의', '3D 구강스캐너 · 3D CT · 수술 가이드', '무통마취기 · 에어플로우 · 수면치료'].map((t) => (
+            {['보건복지부 인증 통합치의학과 전문의', '3D 구강스캐너 · 3D CT · 수술 가이드', '무통마취기 · 에어플로우 · 수면치료'].map((t) => (
               <li key={t} className="rounded-full border border-white/15 bg-white/8 px-4 py-2 text-[13.5px] font-semibold text-white/85 backdrop-blur">{t}</li>
             ))}
           </ul>
@@ -66,7 +66,7 @@ export function HomeHero() {
             <p className="absolute top-5 right-5 rounded-full border border-white/20 bg-night/50 px-3 py-1.5 text-[11.5px] font-bold tracking-[0.14em] text-white/85 backdrop-blur">DIGITAL IMPLANT</p>
           </div>
 
-          {/* 전문의 2인 칩 */}
+          {/* 전문의 칩 */}
           <div data-tilt-item="22" className="float-y hero-in hero-in-3 absolute top-[6%] left-0 flex items-center gap-3 rounded-2xl border border-white/15 bg-white/10 px-4 py-3 backdrop-blur-md">
             <span className="flex -space-x-3">
               {DOCTORS.map((d) => (
@@ -74,8 +74,8 @@ export function HomeHero() {
               ))}
             </span>
             <span className="text-[13px] leading-tight">
-              <span className="block font-bold">보건복지부 인증 전문의 2인</span>
-              <span className="block text-white/65">통합치의학과 · 치과보철과</span>
+              <span className="block font-bold">보건복지부 인증 전문의</span>
+              <span className="block text-white/65">통합치의학과 · 강남성심병원 외래교수</span>
             </span>
           </div>
 

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { SiteHeader } from '@/components/SiteHeader';
-import { PageHero } from '@/components/PageHero';
+import { HeroCollage } from '@/components/HeroCollage';
 import { JsonLd } from '@/components/JsonLd';
 import { Breadcrumb, ContactBand, Figure, MedicalNotice , Sentences } from '@/components/ui';
 import type { Fig } from '@/lib/docs';
@@ -35,9 +35,20 @@ export default function EquipmentPage() {
       <SiteHeader dark />
       <JsonLd data={[breadcrumbSchema(trail), medicalWebPageSchema({ title: TITLE, description: DESC, path: '/about/equipment' }), articleSchema({ path: '/about/equipment', title: TITLE, description: DESC, keywords: ['디지털치과', '3D 구강스캐너', '3D CT', '수술 가이드', '캐드캠', 'INOS 소독기', '무통마취기', '에어플로우'] })]} />
       <main id="main">
-        <PageHero trail={trail} eyebrow="DIGITAL EQUIPMENT" bg="place/place08" title={<>첨단 디지털 장비로 진료하는
-              <br />
-              <span className="accent-sun">3D 디지털치과</span></>} lead="진단부터 치료까지 치과 진료에 디지털을 더해 보다 빠르고 정확한 진료를 약속 드립니다. 아래는 광화문선치과가 실제로 갖추고 있는 장비와 시스템입니다."></PageHero>
+        <HeroCollage
+          trail={trail}
+          eyebrow="DIGITAL EQUIPMENT"
+          lines={['첨단 디지털 장비로 진료하는', <><span className="accent-sun">3D 디지털치과</span></>]}
+          long
+          lead="진단부터 치료까지 치과 진료에 디지털을 더해 보다 빠르고 정확한 진료를 약속 드립니다. 아래는 광화문선치과가 실제로 갖추고 있는 장비와 시스템입니다."
+          bg="place/place08"
+          cards={[
+            { fig: { key: 'equip/ct', alt: '3D CT 장비' }, shape: 'portrait' },
+            { fig: { key: 'orig/intro-p05-group', alt: '당일 보철 제작 장비 일체 (3D 프린터·CAD 모니터·후처리기)' }, shape: 'wide' },
+            { fig: { key: 'orig/intro-p06-inos-tower', alt: '파란 UV 불이 켜진 INOS 소독 타워 두 대' }, shape: 'std' },
+          ]}
+          items={ITEMS.slice(0, 3).map((it) => ({ title: it.title, desc: it.desc }))}
+        />
         {ITEMS.map((it, i) => (
           <section key={it.title} className={`section ${i % 2 ? 'bg-canvas' : ''}`}>
             <div className="wrap grid items-center gap-10 lg:grid-cols-2">

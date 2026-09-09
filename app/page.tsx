@@ -262,10 +262,10 @@ export default function HomePage() {
             <div className="reveal mx-auto max-w-[820px] text-center">
               <p className="eyebrow justify-center">OUR DOCTORS</p>
               <h2 className="display-sm mt-4">
-                두 분의 <span className="accent">전문의</span>가 진료합니다
+                보건복지부 인증 <span className="accent">전문의</span>가 직접 진료합니다
               </h2>
               <p className="lead mt-4">
-                <Sentences text="보건복지부 인증 통합치의학과 전문의와 치과보철과 전문의. 강남성심병원 외래교수 출신의 다년간 임상경험으로 진료합니다." />
+                <Sentences text="보건복지부 인증 통합치의학과 전문의. 강남성심병원 외래교수 출신의 다년간 임상경험으로 진료합니다." />
               </p>
             </div>
             <ul className="reveal-stack mx-auto mt-12 grid max-w-[1000px] gap-6 sm:grid-cols-2">

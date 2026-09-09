@@ -1,14 +1,14 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { SiteHeader } from '@/components/SiteHeader';
-import { PageHero } from '@/components/PageHero';
+import { HeroCollage } from '@/components/HeroCollage';
 import { JsonLd } from '@/components/JsonLd';
 import { Breadcrumb, ContactBand, Figure , Sentences } from '@/components/ui';
 import { DOCTORS } from '@/lib/doctors';
 import { alt, breadcrumbSchema, medicalWebPageSchema, og, physicianSchema } from '@/lib/seo';
 
 const TITLE = '의료진 소개';
-const DESC = '광화문 선치과 의료진 — 양대일 대표원장(보건복지부 인증 통합치의학과 전문의, 강남성심병원 치과 외래교수)과 홍진기 대표원장(보건복지부 인증 치과보철과 전문의).';
+const DESC = '광화문 선치과 의료진 — 양대일 대표원장(보건복지부 인증 통합치의학과 전문의, 강남성심병원 치과 외래교수). 약력은 기존 홈페이지에 밝힌 내용 그대로입니다.';
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -27,9 +27,24 @@ export default function DoctorsPage() {
       <SiteHeader dark />
       <JsonLd data={[breadcrumbSchema(trail), medicalWebPageSchema({ title: TITLE, description: DESC, path: '/about/doctors' }), ...DOCTORS.map(physicianSchema)]} />
       <main id="main">
-        <PageHero trail={trail} eyebrow="OUR DOCTORS" bg="ai/wide-clinic" title={<>두 분의 <span className="accent-sun">전문의</span>가
-              <br />
-              직접 진단하고 치료합니다</>} lead="보건복지부 인증 통합치의학과 전문의와 치과보철과 전문의. 아래 약력은 기존 홈페이지에 밝힌 내용 그대로입니다."></PageHero>
+        <HeroCollage
+          trail={trail}
+          eyebrow="OUR DOCTORS"
+          lines={[<>보건복지부 인증 <span className="accent-sun">전문의</span>가</>, '직접 진단하고 치료합니다']}
+          long
+          lead="양대일 대표원장 — 보건복지부 인증 통합치의학과 전문의, 강남성심병원 치과 외래교수. 아래 약력은 기존 홈페이지에 밝힌 내용 그대로입니다."
+          bg="ai/wide-clinic"
+          cards={[
+            { fig: { key: 'orig/doctor-yang', alt: '양대일 대표원장' }, shape: 'portrait' },
+            { fig: { key: 'orig/intro-monitor-pair', alt: '마스크를 쓴 두 사람이 로고 모니터 앞에서 스캔 화면을 함께 보는 장면' }, shape: 'wide' },
+            { fig: { key: 'scene/loupe', alt: '확대경을 착용하고 진료하는 양대일 대표원장' }, shape: 'std' },
+          ]}
+          items={[
+            { title: `${DOCTORS[0].name} ${DOCTORS[0].role}`, desc: DOCTORS[0].career[0] },
+            { title: '강남성심병원 치과 외래교수', desc: '강남성심병원 통합치의학과 레지던트 수련 · 서울대학교 치의학 대학원 고급치의학 연수과정' },
+            { title: '임플란트 · 심미 · 턱관절 학회 정회원', desc: 'AAID(미국 임플란트 학회) · AACD(미국 심미치과 학회) · 대한 구강악안면 임플란트 학회 · 대한 턱관절교합학회' },
+          ]}
+        />
 
         {DOCTORS.map((d, i) => (
           <section key={d.slug} id={d.slug} className={`section scroll-mt-24 ${i % 2 ? 'bg-canvas' : ''}`}>

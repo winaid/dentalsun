@@ -23,7 +23,7 @@ export const NAV: NavItem[] = [
     href: '/about',
     children: [
       { label: '광화문선치과 소개', href: '/about', desc: '환자중심의 디지털 치과 진료' },
-      { label: '의료진 소개', href: '/about/doctors', desc: '통합치의학과 · 치과보철과 전문의' },
+      { label: '의료진 소개', href: '/about/doctors', desc: '통합치의학과 전문의 · 강남성심병원 외래교수' },
       { label: '디지털치과 장비소개', href: '/about/equipment', desc: '3D 구강스캐너 · CT · 수술 가이드 · 당일 보철' },
       { label: '둘러보기', href: '/about#tour', desc: '진료실 · 수술실 · 대기실' },
       { label: '오시는 길 · 진료시간', href: '/visit', desc: '광화문역 6번 출구 도보 2분' },
