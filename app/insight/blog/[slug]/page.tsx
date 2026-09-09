@@ -11,6 +11,7 @@ import { allPosts, publishedIso } from '@/lib/blog';
 import { postBySlugMerged, extractFaq } from '@/lib/insightFeed';
 import { ContactBand, Breadcrumb, Sentences } from '@/components/ui';
 import { JsonLd } from '@/components/JsonLd';
+import { SiteHeader } from '@/components/SiteHeader';
 import { breadcrumbSchema, abs, og, medicalWebPageSchema, alt } from '@/lib/seo';
 
 /**
@@ -76,6 +77,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   return (
     <>
+      <SiteHeader />
       <JsonLd
         data={[
           breadcrumbSchema(trail),
@@ -110,6 +112,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       />
 
       {/* ⚠️ pb — 없으면 '블로그 목록' 단추가 아래 예약 띠에 붙는다(2026-09-07 오너 지적). */}
+      <main id="main">
       <div className="wrap pt-[110px] pb-16 sm:pb-20 lg:pt-[130px] lg:pb-24">
         <Breadcrumb trail={trail} />
 
@@ -168,6 +171,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       </div>
 
       <ContactBand />
+      </main>
     </>
   );
 }

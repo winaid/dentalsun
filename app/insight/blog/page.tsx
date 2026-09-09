@@ -7,6 +7,7 @@ import { allPostsMerged } from '@/lib/insightFeed';
 import { ContactBand } from '@/components/ui';
 import { HeroCollage } from '@/components/HeroCollage';
 import { JsonLd } from '@/components/JsonLd';
+import { SiteHeader } from '@/components/SiteHeader';
 import { breadcrumbSchema, abs, og, alt } from '@/lib/seo';
 
 /*
@@ -59,6 +60,7 @@ export default async function BlogIndexPage() {
 
   return (
     <>
+      <SiteHeader dark />
       <JsonLd
         data={[
           breadcrumbSchema(TRAIL),
@@ -82,6 +84,7 @@ export default async function BlogIndexPage() {
         ]}
       />
 
+      <main id="main">
       <HeroCollage
         trail={TRAIL.slice(1)}
         eyebrow="BLOG"
@@ -165,6 +168,7 @@ export default async function BlogIndexPage() {
       </div></section>
 
       <ContactBand />
+      </main>
     </>
   );
 }
