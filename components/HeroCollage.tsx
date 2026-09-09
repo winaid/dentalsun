@@ -20,10 +20,11 @@ export interface CollageItem {
   desc: string;
 }
 
+/* 사진 묶음 — 오른쪽에 살짝 기울여 겹쳐 놓는다(레퍼런스처럼 흩뿌리지 않는다) */
 const SHAPE = {
-  portrait: 'aspect-[4/5] lg:left-[44%] lg:top-[12svh] lg:w-[19%]',
-  wide: 'aspect-[16/10] lg:right-0 lg:top-[11svh] lg:w-[27%]',
-  std: 'aspect-[4/3] lg:right-[5%] lg:bottom-[9svh] lg:w-[20%]',
+  portrait: 'aspect-[4/5] lg:right-[27%] lg:top-[15svh] lg:w-[17%] lg:-rotate-[5deg]',
+  wide: 'aspect-[16/10] lg:right-0 lg:top-[10svh] lg:w-[26%] lg:rotate-[3deg]',
+  std: 'aspect-[4/3] lg:right-[9%] lg:top-[46svh] lg:w-[19%] lg:-rotate-[2deg]',
 } as const;
 
 export function HeroCollage({
@@ -87,16 +88,17 @@ export function HeroCollage({
             ))}
           </div>
 
-          {/* 번호 항목 — 높이를 달리해 흩어 놓는다 */}
-          <ol className="relative z-20 mt-10 grid gap-6 sm:grid-cols-3 lg:absolute lg:bottom-[9svh] lg:left-0 lg:mt-0 lg:w-[60%] lg:gap-8">
+          {/* 유리 카드 세 장 — 왼쪽은 왼쪽에서, 가운데는 아래에서, 오른쪽은 오른쪽에서 튀어오른다 */}
+          <ol className="relative z-20 mt-10 grid gap-4 sm:grid-cols-3 lg:absolute lg:inset-x-0 lg:bottom-[7svh] lg:mt-0 lg:gap-5">
             {items.slice(0, 3).map((it, i) => (
-              <li key={it.title} className={`hero-in ${i === 1 ? 'lg:translate-y-7' : i === 2 ? 'lg:-translate-y-3' : ''}`} style={{ animationDelay: `${1400 + i * 260}ms` }}>
-                <span className="text-[11px] tracking-[0.2em] text-sun-300">{String(i + 1).padStart(2, '0')}</span>
-                <p className="mt-2 flex items-start gap-2 text-[15px] font-bold leading-snug text-white">
-                  <span aria-hidden className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-sun-500" />
-                  {it.title}
-                </p>
-                <p className="mt-2 max-w-[300px] text-[13px] leading-[1.7] text-white/70">{it.desc}</p>
+              <li
+                key={it.title}
+                className={`hero-card ${['hero-card-l', 'hero-card-c', 'hero-card-r'][i]} rounded-2xl border border-white/12 bg-white/8 p-5 backdrop-blur-md shadow-[var(--shadow-lift)] lg:p-6`}
+                style={{ animationDelay: `${1300 + i * 240}ms` }}
+              >
+                <span className="num-xl">{String(i + 1).padStart(2, '0')}</span>
+                <p className="mt-3 text-[15.5px] font-bold leading-snug text-white">{it.title}</p>
+                <p className="mt-2 text-[13px] leading-[1.7] text-white/70">{it.desc}</p>
               </li>
             ))}
           </ol>
