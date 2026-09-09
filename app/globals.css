@@ -550,3 +550,29 @@ details.faq .a {
 .display-xl.is-long {
   @apply text-[2.2rem] sm:text-[3.2rem] lg:text-[4.2rem] 2xl:text-[4.8rem];
 }
+
+/* 뒤집기 카드(components/FlipCard) — 마우스를 올리거나 초점이 오면 Y축으로 180° 회전 */
+.flip {
+  perspective: 1400px;
+}
+.flip-inner {
+  transform-style: preserve-3d;
+  transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.flip:hover .flip-inner,
+.flip:focus-visible .flip-inner,
+.flip:active .flip-inner {
+  transform: rotateY(180deg);
+}
+.flip-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.flip-back {
+  transform: rotateY(180deg);
+}
+@media (prefers-reduced-motion: reduce) {
+  .flip-inner { transition: none; }
+}

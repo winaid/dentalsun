@@ -5,7 +5,8 @@ import { SiteHeader } from '@/components/SiteHeader';
 import { HomeHero } from '@/components/HomeHero';
 import { JsonLd } from '@/components/JsonLd';
 import { VideoFacade } from '@/components/VideoFacade';
-import { Carousel } from '@/components/Carousel';
+import { FlipCard } from '@/components/FlipCard';
+import { docByPath } from '@/lib/content';
 import { CardLink, ContactBand, FaqList, Figure, Marquee, MedicalNotice, ScrubText, Sentences } from '@/components/ui';
 import { HomeStage, HomeStats, HomeTourPan } from '@/components/HomeScroll';
 import { BeforeAfter } from '@/components/BeforeAfter';
@@ -161,11 +162,14 @@ export default function HomePage() {
               ))}
             </div>
             <div className="mt-14">
-              <Carousel label="임플란트 6가지 · 좌우로 드래그">
-                {featured.map((f) => (
-                  <CardLink key={f.href} href={f.href} label={f.label} desc={f.desc} fig={{ key: f.fig, alt: f.label }} />
+              {/* 뒤집기 카드 3×2 — 앞면은 번호·제목만, 마우스를 올리면 사진 배경과 설명이 나온다(오너 요청) */}
+              <ul className="reveal-stack mt-2 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                {featured.map((f, i) => (
+                  <li key={f.href}>
+                    <FlipCard href={f.href} num={String(i + 1).padStart(2, '0')} label={f.label} desc={f.desc} back={docByPath(f.href)?.summary.split(/(?<=다\.)\s/)[0] ?? f.desc} fig={{ key: f.fig, alt: f.label }} />
+                  </li>
                 ))}
-              </Carousel>
+              </ul>
             </div>
             <div className="mt-6 text-center">
               <Link href="/treatment/implant" className="btn-brand">임플란트 전체 안내</Link>
