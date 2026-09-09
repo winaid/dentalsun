@@ -517,3 +517,26 @@ details.faq .a {
   filter: blur(2.5px) saturate(1.08);
   transform: scale(1.06);
 }
+
+/* 순서 등장 — [data-seq] 구역을 스크롤하면 카드·항목이 하나씩 떠오른다 */
+[data-seq-item] {
+  opacity: 0;
+  transform: translate3d(0, 56px, 0);
+  transition: opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+  will-change: opacity, transform;
+}
+[data-seq-item].on {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-seq-item] { opacity: 1; transform: none; transition: none; }
+}
+/* 큰 제목 — 레퍼런스처럼 화면을 가로지르는 두 줄 */
+.display-xl {
+  @apply text-[2.6rem] leading-[1.02] font-extrabold tracking-[-0.045em] text-white sm:text-[4rem] lg:text-[5.6rem] 2xl:text-[6.4rem];
+}
+/* 좁은 화면은 무대를 고정하지 않으니 순서 등장 없이 바로 보인다 */
+@media (max-width: 1023px) {
+  [data-seq-item] { opacity: 1; transform: none; transition: none; }
+}

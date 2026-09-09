@@ -25,6 +25,7 @@ export function RevealScript() {
     const targets = document.querySelectorAll<HTMLElement>('.reveal, .reveal-stack, .img-in, .line-rise, .wipe');
     if (reduce) {
       targets.forEach((el) => el.classList.add('is-shown'));
+      document.querySelectorAll<HTMLElement>('[data-seq-item]').forEach((el) => el.classList.add('on'));
       document.querySelectorAll<HTMLElement>('[data-count]').forEach((el) => {
         el.textContent = el.dataset.count ?? el.textContent;
       });
@@ -53,6 +54,8 @@ export function RevealScript() {
     const fades = [...document.querySelectorAll<HTMLElement>('[data-scroll-fade]')].map((el) => ({ el, k: Number(el.dataset.scrollFade) || 1 }));
     const scrubs = [...document.querySelectorAll<HTMLElement>('[data-scrub]')].map((el) => ({ el, words: [...el.querySelectorAll<HTMLElement>('.w')], last: -1 }));
     const pans = [...document.querySelectorAll<HTMLElement>('[data-hpan]')];
+    /* 순서 등장 — 긴 구역([data-seq]) 안에서 스크롤 진행에 따라 [data-seq-item] 이 하나씩 켜진다 */
+    const seqs = [...document.querySelectorAll<HTMLElement>('[data-seq]')].map((el) => ({ el, items: [...el.querySelectorAll<HTMLElement>('[data-seq-item]')], last: -1 }));
     const bar = document.getElementById('scroll-progress');
     let ticking = false;
     const frame = () => {
@@ -88,6 +91,15 @@ export function RevealScript() {
         if (over <= 0) continue;
         const p = clamp((vh - r.top) / (vh + r.height));
         el.style.transform = `translate3d(${(-over * p).toFixed(1)}px, 0, 0)`;
+      }
+      for (const q of seqs) {
+        const r = q.el.getBoundingClientRect();
+        const travel = Math.max(1, r.height - vh);
+        const p = clamp(-r.top / travel);
+        const n = Math.min(q.items.length, Math.floor(p * (q.items.length + 1)));
+        if (n === q.last) continue;
+        q.last = n;
+        q.items.forEach((it, i) => it.classList.toggle('on', i < n));
       }
       if (bar) {
         const max = document.documentElement.scrollHeight - vh;

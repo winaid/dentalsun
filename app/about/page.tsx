@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { SiteHeader } from '@/components/SiteHeader';
+import { HeroCollage } from '@/components/HeroCollage';
 import { JsonLd } from '@/components/JsonLd';
 import { Breadcrumb, ContactBand, Figure , Sentences } from '@/components/ui';
 import { CLINIC, HYGIENE, STRENGTHS } from '@/lib/clinic';
@@ -42,25 +43,19 @@ export default function AboutPage() {
       <SiteHeader dark />
       <JsonLd data={[breadcrumbSchema(trail), medicalWebPageSchema({ title: TITLE, description: DESC, path: '/about' }), ...DOCTORS.map(physicianSchema)]} />
       <main id="main">
-        <section className="relative isolate flex min-h-[100svh] flex-col justify-center overflow-hidden bg-night text-white" data-hero-full>
-          <div className="absolute inset-0 -z-10">
-            <Image src="/img/place/place01.webp" alt="" fill priority sizes="100vw" className="kenburns object-cover opacity-70" />
-            <div className="absolute inset-0 bg-gradient-to-r from-night via-night/85 to-night/30" />
-          </div>
-          <div className="wrap w-full pt-[120px] pb-20 md:pt-[140px] md:pb-24">
-            <Breadcrumb trail={trail} dark />
-            <p className="eyebrow on-dark mt-6 hero-in">ABOUT SUN DENTAL CLINIC</p>
-            <h1 className="display mt-4 max-w-[720px] !text-white hero-in hero-in-2">
-              환자중심의
-              <br />
-              <span className="accent-sun">디지털 치과 진료</span>
-            </h1>
-            <p className="mt-6 max-w-[600px] text-[1.05rem] leading-[1.8] text-white/80 hero-in hero-in-3">이해하기 쉬운 설명과 불편함을 줄인 진료시스템. 더 빠르고, 정확하게, 그리고 편안하게 — 스마트한 진료를 약속 드립니다.</p>
-          </div>
-          <div aria-hidden className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/60">
-            <span className="scroll-hint block text-[11px] tracking-[0.3em]">SCROLL</span>
-          </div>
-        </section>
+        <HeroCollage
+          trail={trail}
+          eyebrow="ABOUT SUN DENTAL CLINIC"
+          lines={['환자중심의', <>디지털 <span className="accent-sun">치과 진료</span></>]}
+          lead="이해하기 쉬운 설명과 불편함을 줄인 진료시스템. 더 빠르고, 정확하게, 그리고 편안하게 스마트한 진료를 약속 드립니다."
+          bg="place/place01"
+          cards={[
+            { fig: { key: 'scene/loupe', alt: '확대경을 착용하고 진료하는 광화문선치과 원장' }, shape: 'portrait' },
+            { fig: { key: 'place/place08', alt: '3D CT 촬영실' }, shape: 'wide' },
+            { fig: { key: 'place/place06', alt: '광화문선치과 수술실 내부' }, shape: 'std' },
+          ]}
+          items={STRENGTHS.slice(0, 3).map((s) => ({ title: s.title, desc: s.desc }))}
+        />
 
         <section className="section">
           <div className="wrap">

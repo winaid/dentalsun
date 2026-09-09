@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import type { ReactNode } from 'react';
+import { Fragment } from 'react';
 import { figSize, figSrc, type Fig, type QA } from '@/lib/docs';
 import { CLINIC, MEDICAL_DISCLAIMER } from '@/lib/clinic';
 
@@ -19,9 +20,7 @@ export function Sentences({ text, className = '', clauses: useClauses = true }: 
     return (
       <span className={className}>
         {clauses(text).map((c, i) => (
-          <span key={i} className="clause">
-            {c}{' '}
-          </span>
+          <Fragment key={i}><span className="clause">{c}</span>{' '}</Fragment>
         ))}
       </span>
     );
@@ -31,9 +30,7 @@ export function Sentences({ text, className = '', clauses: useClauses = true }: 
       {sentences.map((s, i) => (
         <span key={i} className="sent">
           {clauses(s).map((c, j) => (
-            <span key={j} className="clause">
-              {c}{' '}
-            </span>
+            <Fragment key={j}><span className="clause">{c}</span>{' '}</Fragment>
           ))}
         </span>
       ))}
