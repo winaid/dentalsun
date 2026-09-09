@@ -22,9 +22,9 @@ export function HomeStats() {
     { n: TREATMENT_HUBS.length, unit: '분야', label: '임플란트 · 턱관절 등 진료 분야' },
   ];
   return (
-    <ul className="reveal-stack mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-3xl border border-hairline bg-hairline sm:grid-cols-4">
+    <ul className="reveal-stack mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
       {stats.map((s) => (
-        <li key={s.label} className="bg-white px-6 py-7">
+        <li key={s.label} className="card card-3d px-6 py-7">
           <p className="flex items-baseline gap-1 text-brand-800">
             <span className="text-[2.6rem] font-extrabold leading-none tracking-[-0.03em] tabular-nums md:text-[3rem]" data-count={s.n}>
               {s.n}

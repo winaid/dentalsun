@@ -84,7 +84,7 @@ export default function HomePage() {
             <HomeStats />
             <ul className="reveal-stack grid-cards mt-12 sm:grid-cols-2 lg:grid-cols-4">
               {STRENGTHS.map((s, i) => (
-                <li key={s.title} className="card card-hover flex h-full flex-col p-7">
+                <li key={s.title} className="card card-3d flex h-full flex-col p-7">
                   <span className="num">{String(i + 1).padStart(2, '0')}</span>
                   <p className="mt-5 text-[1.12rem] font-bold leading-snug text-ink">{s.title}</p>
                   <p className="mt-3 text-[15.5px] leading-relaxed text-ink-soft">
@@ -145,9 +145,7 @@ export default function HomePage() {
             <div className="reveal mx-auto max-w-[820px] text-center">
               <p className="eyebrow justify-center">PREMIUM DIGITAL IMPLANT</p>
               <h2 className="display-sm mt-4">
-                광화문선치과의 임플란트,
-                <br />
-                <span className="accent">왜 특별할까요?</span>
+                광화문선치과의 임플란트, <span className="accent">왜 특별할까요?</span>
               </h2>
               <p className="lead mt-4">
                 <Sentences text="내 치아 상태에 따른 다양한 수술 방법으로, 치아가 안 좋아도 잇몸뼈가 부족해도 구강 상태에 맞는 임플란트를 제안합니다." />
