@@ -5,7 +5,7 @@ import { SITE_FAQ } from '@/lib/faq';
 
 /**
  * /llms.txt — 언어모델을 위한 사이트 요약. 데이터에서 생성하므로 페이지와 어긋나지 않는다.
- * ★ 사실만 적는다. 격주 토요일은 '해당 월 일정 확인' 으로 밝힌다.
+ * ★ 사실만 적는다. 토요일은 2·4째주 진료이며 '해당 월 일정 확인' 을 덧붙인다.
  */
 export function GET() {
   const L: string[] = [];
@@ -24,7 +24,7 @@ export function GET() {
   for (const r of HOURS.rows) L.push(`  - ${r.ko}: ${r.open}–${r.close}${r.note ? ` (${r.note})` : ''}`);
   L.push(`  - 점심시간(휴진): ${HOURS.lunch.start}–${HOURS.lunch.end} (토요일 제외)`);
   L.push(`  - ${HOURS.closed}`);
-  L.push('  - 토요일은 격주 진료이므로 해당 월 진료 일정을 확인해야 합니다.');
+  L.push('  - 토요일은 2·4째주에 진료합니다(10:00–14:00, 점심시간 없음). 휴진일이 바뀌는 달이 있어 해당 월 진료 일정을 확인해야 합니다.');
   L.push('');
   L.push('## 진료 안내 문서');
   L.push('');

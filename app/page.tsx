@@ -319,9 +319,10 @@ export default function HomePage() {
             <div className="absolute inset-0 bg-gradient-to-l from-night via-night/85 to-night/50" />
           </div>
           <div className="wrap grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
-            <div className="reveal-stack order-2 grid grid-cols-2 gap-4 lg:order-1">
-              <Figure fig={{ key: 'scene/sterile', alt: '멸균 소독한 진료 기구' }} ratio="aspect-[4/5]" sizes="25vw" effect="img-in" />
-              <Figure fig={{ key: 'scene/sterile2', alt: '개별 포장된 1인 1기구' }} ratio="aspect-[4/5]" sizes="25vw" effect="img-in" />
+            {/* 세로로 긴 원본(폭 422·384px) 두 장 — 틀 없이 원본 비율 그대로, 둘째 장은 살짝 내려 어긋나게 */}
+            <div className="reveal-stack order-2 mx-auto grid w-full max-w-[560px] grid-cols-2 items-start gap-5 lg:order-1 lg:mx-0">
+              <Figure fig={{ key: 'scene/sterile', alt: '멸균 소독한 진료 기구' }} sizes="280px" effect="img-in" rounded="rounded-3xl" />
+              <Figure fig={{ key: 'scene/sterile2', alt: '개별 포장된 1인 1기구' }} sizes="280px" effect="img-in" rounded="rounded-3xl" className="mt-10" />
             </div>
             <div className="reveal order-1 lg:order-2">
               <p className="eyebrow on-dark">STERILIZATION</p>

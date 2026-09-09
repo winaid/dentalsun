@@ -33,7 +33,7 @@ export default function VisitPage() {
           ]}
           items={[
             { title: '주소', desc: `${CLINIC.address.full} · ${CLINIC.address.landmark}` },
-            { title: '진료시간', desc: '월~금 10:00~19:00 · 화·목 야간진료 21:00까지 · 토요일 격주 10:00~14:00' },
+            { title: '진료시간', desc: '월~금 10:00~19:00 · 화·목 야간진료 21:00까지 · 토요일 2·4째주 10:00~14:00' },
             { title: '주차', desc: `${CLINIC.parking.place} ${CLINIC.parking.fee}` },
           ]}
         >
@@ -76,7 +76,7 @@ export default function VisitPage() {
                     </li>
                   ))}
                 </ul>
-                <p className="mt-3 text-[14px] text-ink-muted">{HOURS.closed} · 토요일은 격주 진료이므로 아래 이달의 진료일정을 확인해 주세요.</p>
+                <p className="mt-3 text-[14px] text-ink-muted">{HOURS.closed} · 토요일은 2·4째주 진료입니다. 휴진일이 바뀌는 달도 있으니 아래 이달의 진료일정을 확인해 주세요.</p>
               </div>
               <div className="card p-6">
                 <p className="text-[14px] font-bold tracking-wide text-ink-muted">주차</p>

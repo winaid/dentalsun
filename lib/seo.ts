@@ -4,7 +4,7 @@
  * ★ 검색엔진과 AI 는 본문을 읽기 전에 구조화 데이터를 먼저 본다. 진료시간·주소·전화번호가
  *   기계가 읽을 수 있는 형태로 있어야 지도·지식패널·AI 답변에 인용된다.
  * ★★ 확인되지 않은 값은 절대 넣지 않는다 ★★ — 틀린 구조화 데이터는 없는 것보다 나쁘다.
- *   좌표(UNVERIFIED.geo)는 확인 전이라 빠지고, 격주 토요일은 openingHoursSpecification 에서 뺀다.
+ *   좌표(UNVERIFIED.geo)는 확인 전이라 빠지고, 2·4째주 토요일은 openingHoursSpecification 에서 뺀다.
  * ★ 모든 노드는 @id 로 이어진다 — 발행자·검토자·저자가 한 병원, 한 사람으로 모인다.
  */
 import { CLINIC, HOURS, UNVERIFIED } from './clinic';
@@ -95,7 +95,7 @@ export function clinicSchema() {
   /*
    * 진료시간 — 요일별 한 줄씩, **점심시간을 쪼개서** 낸다. 묶어서 내면 크롤러가 못 읽고,
    * 점심을 안 빼면 지도가 13:30 에 '진료 중' 이라고 답한다.
-   * ⚠️ 토요일(격주)은 넣지 않는다 — 휴진 토요일에 '진료 중' 이 되는 쪽이 더 나쁘다.
+   * ⚠️ 토요일(2·4째주)은 넣지 않는다 — 휴진 토요일에 '진료 중' 이 되는 쪽이 더 나쁘다.
    */
   const lunch = HOURS.lunch;
   schema.openingHoursSpecification = HOURS.rows
