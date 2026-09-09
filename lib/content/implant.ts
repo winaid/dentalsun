@@ -438,7 +438,7 @@ export const IMPLANT_DOCS: Doc[] = [
       '자외선 임플란트',
       '광화문 선치과',
     ],
-    hero: { key: 'ai/implant-uv', alt: '임플란트 픽스처' },
+    hero: { key: 'ai/implant-uv', alt: 'UV 활성화 장비에 임플란트 픽스처를 넣는 장갑 낀 손' },
     procedure: 'UV 임플란트',
     blocks: [
       {
@@ -484,7 +484,7 @@ export const IMPLANT_DOCS: Doc[] = [
           '일반적으로 티타늄 임플란트는 제조 후 시간이 지나면서 표면에 공기 중의 탄소 성분 등 유기물이 달라붙어 물과 혈액을 밀어내는 성질이 강해집니다. 식립 직전 UV(자외선)를 조사하면 이 유기물이 제거되어 표면이 물과 혈액에 잘 젖는 상태로 되돌아가고, 혈액 속의 단백질과 뼈세포가 표면에 쉽게 달라붙어 골유착이 빨라지는 것으로 알려져 있습니다.',
           '골유착이 빠르고 단단할수록 임플란트가 초기에 흔들리지 않고 자리를 잡기 쉬우므로, 뼈의 양이 적거나 뼈가 붙는 속도가 느린 분께 특히 도움이 됩니다.',
         ],
-        figure: { key: 'ai/implant-uv', alt: 'UV 조사 전 임플란트 픽스처' },
+        figure: { key: 'ai/implant-uv', alt: 'UV 활성화 장비에 임플란트 픽스처를 넣는 장갑 낀 손' },
         figureSide: 'left',
       },
       {
@@ -549,7 +549,7 @@ export const IMPLANT_DOCS: Doc[] = [
       '뼈이식',
       '광화문 선치과',
     ],
-    hero: { key: 'ai/implant-prf', alt: '자가혈(PRF) 튜브' },
+    hero: { key: 'ai/implant-prf', alt: '원심분리기에서 혈액 튜브를 꺼내는 장갑 낀 손' },
     procedure: '자가혈(PRF) 임플란트',
     blocks: [
       {
@@ -560,7 +560,7 @@ export const IMPLANT_DOCS: Doc[] = [
           '자가혈(PRF) 임플란트는 내 혈액을 소량 채취하여 자가치유세포(PRF)를 추출한 뒤, 뼈이식 임플란트 시술 시 뼈이식 재료와 함께 주입하여 잇몸 재생과 빠른 회복을 촉진하는 방법입니다. 뼈이식이 필요하다면 자가혈 임플란트를 고려할 수 있습니다.',
           'PRF(Platelet Rich Fibrin)는 일반적으로 혈액 속 혈소판과 성장인자가 풍부하게 모인 섬유소 덩어리를 말하며, 상처 치유와 조직 재생을 돕는 역할을 합니다. 남의 조직이나 인공 재료가 아닌 내 몸에서 나온 재료라는 점이 특징입니다.',
         ],
-        figure: { key: 'ai/implant-prf', alt: '채취한 혈액에서 분리한 자가혈(PRF) 튜브' },
+        figure: { key: 'ai/implant-prf', alt: '원심분리기에서 혈액 튜브를 꺼내는 장갑 낀 손' },
       },
       {
         type: 'points',
@@ -764,7 +764,7 @@ export const IMPLANT_DOCS: Doc[] = [
       '정기검진',
       '광화문 선치과',
     ],
-    hero: { key: 'ai/faq', alt: '광화문 선치과 의료진이 환자와 상담하는 모습' },
+    hero: { key: 'ai/faq', alt: '접수 데스크에서 안내지를 짚어 가며 설명하는 모습' },
     blocks: [
       {
         type: 'text',

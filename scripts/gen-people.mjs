@@ -40,6 +40,22 @@ const SCENES = {
   'tmj-cause-habit': 'A young East Asian woman seen from the nose down, resting her chin heavily on one hand at a white desk by a bright window, relaxed posture, plain light background, soft daylight.',
   'tmj-cause-grind': 'A person sleeping on their side on a white pillow seen from behind and above, face hidden, jaw area slightly tense, soft morning light, white bedding, calm muted tones.',
   'tmj-cause-stress': 'A person seen from behind at a desk, both hands pressing the temples and back of the head in a stressed posture, laptop and papers blurred in front, soft window light, muted navy sweater.',
+  /* 2026-09-09 오너 GO: 흰 카운터 정물로 비슷비슷하던 설명 사진 교체 — 사람·손·상황 (문자열에 따옴표 금지: 셸 경유 시 백슬래시 유실) */
+  "implant-uv": "Close-up of gloved clinician hands placing a small implant fixture into a compact tabletop UV activation device that glows faint violet, modern dental clinic counter, shallow depth of field.",
+  "implant-prf": "Gloved hands lifting a small blood collection tube out of a tabletop centrifuge in a dental clinic, soft daylight, clean white counter, no faces.",
+  "implant-warranty": "Patient hands receiving a small folded warranty card from receptionist hands across a bright clinic reception counter, both faces out of frame, warm light.",
+  "implant-custom": "Gloved hands holding a tiny custom implant abutment with tweezers over a plaster dental model on a white lab bench, soft daylight, shallow focus.",
+  "aesthetic-prosthetics": "Close-up of a natural smile of a woman from the nose down, even white ceramic teeth, a gloved clinician hand holding a shade guide beside the lips, bright clean background.",
+  "aesthetic-whitening": "Close-up from the nose down of a young woman smiling while a gloved hand holds a tooth shade guide next to her teeth, soft daylight, white background.",
+  "insurance-hub": "An elderly East Asian woman seen from the nose down, smiling warmly, gently holding hands with a younger family member across a light table in a bright clinic waiting area, no eyes visible.",
+  "insurance-denture": "Close-up of elderly hands holding a partial denture on a soft cloth at a bright table, warm daylight, calm mood, face not visible.",
+  "insurance-implant": "An elderly patient reclined in a dental chair seen from behind and above, a gloved clinician hand resting reassuringly on the chair, bright treatment room, no faces.",
+  "natural-hub": "Close-up of gloved clinician hands examining a single natural tooth model held between fingers under a bright dental light, magnifying loupe blurred in background, no faces.",
+  "faq": "Two people at a bright clinic reception desk seen from the side and from the neck down, one hand pointing at a printed sheet, a tablet and a small plant on the counter, soft daylight.",
+  "insight-journey": "A young adult seen from behind walking through a glass door into a bright, calm dental clinic lobby, morning light, plants and a light wood counter ahead.",
+  "insight-cost": "Top-down view of hands over a light wooden desk with a printed treatment plan, a pen and a cup of tea, the sheet shows only soft blurred lines and no readable text.",
+  "insight-glossary": "Close-up of hands turning the pages of an open dental reference book beside a small tooth model on a light desk, soft window light, no readable text.",
+  "insight-denture": "An elderly person seen from the nose down smiling gently at a bright table, hands folded, a small glass of water nearby, warm daylight.",
   'painless-hub': 'A patient reclined in a dental chair seen from the nose down, relaxed and calm with lips gently closed, a clinician\'s gloved hand resting reassuringly on the chair, soft light.',
 };
 

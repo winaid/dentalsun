@@ -78,7 +78,10 @@ export function DocPage({ doc }: { doc: Doc }) {
   const collageLines = collage.lines.map((l) => (l ? renderAccent(l) : undefined)) as [ReactNode, ReactNode?];
   const collageLong = collage.lines.join('').replace(/[{}]/g, '').length > 14;
   /* 첫 화면 요약은 앞 두 문장만 — 나머지는 본문 첫 단락이 이어받는다 */
-  const heroLead = doc.summary.split(/(?<=[.!?])\s+(?=\S)/).slice(0, 2).join(' ');
+  const heroLead = doc.summary
+    .split(/(?<=[.!?])\s+(?=\S)/)
+    .slice(0, 2)
+    .reduce<string>((acc, s) => (acc && acc.length + s.length > 120 ? acc : acc ? `${acc} ${s}` : s), '');
   const firstPoints = doc.blocks.find((b): b is Extract<Block, { type: 'points' }> => b.type === 'points');
   const collageItems: CollageItem[] = collage.items ?? (firstPoints ? firstPoints.items.slice(0, 3).map((it) => ({ title: it.title, desc: it.desc ?? '' })) : [{ title: doc.title, desc: shortSummary(doc.summary) }]);
 
@@ -138,7 +141,7 @@ export function DocPage({ doc }: { doc: Doc }) {
             <div className="wrap">
               <p className="eyebrow reveal">MENU</p>
               <h2 className="display-sm reveal mt-4">{doc.title} 세부 안내</h2>
-              <ol className="reveal-stack cards-flex mt-10" style={gridVars(children.length)}>
+              <ol className="reveal-stack cards-flex mx-auto mt-10 max-w-[1320px]" style={gridVars(children.length)}>
                 {children.map((c, i) => (
                   <li key={c.path}>
                     <CardLink href={c.path} label={c.title} desc={shortSummary(c.summary)} num={String(i + 1).padStart(2, '0')} fig={{ key: DOC_AI[c.path] ?? c.hero?.key ?? bandBg, alt: c.title }} />
@@ -254,6 +257,8 @@ function TextFigure({ fig }: { fig: Fig }) {
 
 function BlockView({ block: b, index, band, photoBand, concise = false }: { block: Block; index: number; band?: string; photoBand?: string; /** 진료 페이지: 카드 설명은 두 문장까지만(오너: 문구 줄이기) */ concise?: boolean }) {
   const trim = (s: string) => (concise ? s.split(/(?<=[.!?])\s+(?=\S)/).slice(0, 2).join(' ') : s);
+  /* 글 구역: 진료 페이지는 문단 두 개, 문단마다 세 문장까지(오너: 문구 너무 많음). 인사이트는 그대로 */
+  const paras = (ps: string[]) => (concise ? ps.slice(0, 2).map((p) => p.split(/(?<=[.!?])\s+(?=\S)/).slice(0, 3).join(' ')) : ps);
   const id = ('id' in b && b.id) || `sec-${index + 1}`;
   const alt = index % 2 === 1;
   const wrapCls = band ? 'relative isolate overflow-hidden bg-night text-white section' : `section ${alt ? 'bg-canvas' : 'bg-white'}`;
@@ -297,7 +302,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
               <div className="reveal mx-auto max-w-[780px] text-center">
                 {b.title && <h2 className="display-sm !text-white on-photo">{b.title}</h2>}
                 <div className={`prose-ko prose-on-dark ${b.title ? 'mt-7' : ''}`}>
-                  {b.paragraphs.map((p, i) => (
+                  {paras(b.paragraphs).map((p, i) => (
                     <p key={i} className="!text-white/85">
                       <Sentences text={p} clauses={false} />
                     </p>
@@ -314,7 +319,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
             <div className={`reveal ${b.figure && b.figureSide === 'left' ? 'lg:order-2' : ''} ${b.figure ? '' : 'max-w-[900px]'}`}>
               {b.title && <h2 className="display-sm">{b.title}</h2>}
               <div className={`prose-ko ${b.title ? 'mt-6' : ''}`}>
-                {b.paragraphs.map((p, i) => (
+                {paras(b.paragraphs).map((p, i) => (
                   <p key={i}>
                     <Sentences text={p} />
                   </p>
@@ -360,7 +365,8 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
       );
     }
     case 'steps': {
-      const withFig = b.steps.some((s) => s.figure);
+      /* 모든 단계에 사진이 있을 때만 사진 줄을 둔다 — 빠진 단계를 배경 사진으로 채우면 같은 사진이 셋씩 반복된다(오너: 비슷한 사진) */
+      const withFig = b.steps.every((s) => s.figure);
       return (
         <section id={id} className={wrapCls}>
           <Bg />
@@ -371,7 +377,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
                 <li key={i} className={`${withFig ? plainCls : cardCls} overflow-hidden`}>
                   {withFig && (
                     <span className="card-img -mx-6 -mt-6 mb-5 !w-auto">
-                      <Image src={figSrc(s.figure?.key ?? band ?? 'ai/insight-journey')} alt={s.figure?.alt ?? ''} fill sizes="(max-width: 640px) 100vw, 25vw" className={fitsBox(s.figure?.key ?? band ?? 'ai/insight-journey', 4, 3) ? 'object-cover' : '!object-contain p-3'} />
+                      <Image src={figSrc(s.figure?.key ?? band ?? 'ai/insight-journey')} alt={s.figure?.alt ?? ''} fill sizes="(max-width: 640px) 100vw, 25vw" className={fitsBox(s.figure?.key ?? band ?? 'ai/insight-journey', 3, 2) ? 'object-cover' : '!object-contain p-3'} />
                     </span>
                   )}
                   <span className="pill-sun self-start">STEP {String(i + 1).padStart(2, '0')}</span>
@@ -523,7 +529,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
               {b.title && <h2 className="display-sm mt-5 !text-white">{b.title}</h2>}
             </div>
             <div className="reveal border-l border-white/30 pl-6 md:pl-8">
-              {b.paragraphs.map((p, i) => (
+              {paras(b.paragraphs).map((p, i) => (
                 <p key={i} className={`text-[1.02rem] leading-[1.9] text-white/92 md:text-[1.08rem] ${i > 0 ? 'mt-5' : ''}`}>
                   <Sentences text={p} clauses={false} />
                 </p>

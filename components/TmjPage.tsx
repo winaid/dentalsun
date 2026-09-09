@@ -6,7 +6,7 @@ import { HeroCollage, type CollageCard } from '@/components/HeroCollage';
 import { JsonLd } from '@/components/JsonLd';
 import { TmjSelfCheck } from '@/components/TmjSelfCheck';
 import { ContactBand, FaqList, MedicalNotice, Sentences } from '@/components/ui';
-import { figSize, figSrc, type Doc } from '@/lib/docs';
+import { figSize, figSrc, fitsBox, type Doc } from '@/lib/docs';
 import { docByPath } from '@/lib/content';
 import {
   TMJ_CAUSES,
@@ -218,7 +218,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                 {TMJ_STEPS.map((s, i) => (
                   <li key={s.title} className="card grid items-center gap-5 p-4 md:grid-cols-[210px_72px_1fr] md:gap-7 md:p-5">
                     <span className="relative block aspect-[16/10] overflow-hidden rounded-xl bg-canvas-2">
-                      <Image src={figSrc(s.fig.key)} alt={s.fig.alt} fill sizes="(max-width: 768px) 100vw, 210px" className="object-cover" />
+                      <Image src={figSrc(s.fig.key)} alt={s.fig.alt} fill sizes="(max-width: 768px) 100vw, 210px" className={fitsBox(s.fig.key, 16, 10) ? 'object-cover' : '!object-contain p-2'} />
                     </span>
                     <span className="flex h-[64px] w-[64px] flex-col items-center justify-center rounded-full bg-night text-white md:h-[72px] md:w-[72px]">
                       <span className="text-[1.25rem] font-extrabold leading-none">{i + 1}</span>

@@ -263,7 +263,7 @@ export function CardLink({ href, label, desc, external = false, fig, num }: { hr
     <>
       {fig && (
         <span className="card-img block">
-          <Image src={figSrc(fig.key)} alt={fig.alt} fill sizes="(max-width: 640px) 100vw, 25vw" className={fitsBox(fig.key, 4, 3) ? 'object-cover' : '!object-contain p-3'} />
+          <Image src={figSrc(fig.key)} alt={fig.alt} fill sizes="(max-width: 640px) 100vw, 25vw" className={fitsBox(fig.key, 3, 2) ? 'object-cover' : '!object-contain p-3'} />
         </span>
       )}
       <span className="flex flex-1 flex-col p-6">

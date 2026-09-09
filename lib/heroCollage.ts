@@ -43,7 +43,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     lines: ['UV', '{임플란트}'],
     cards: [
       { fig: { key: 'implant/uv', alt: 'UV 임플란트 표면 처리 개념도' }, shape: 'portrait' },
-      { fig: { key: 'ai/implant-uv', alt: 'UV 조사 장치 안의 임플란트(연출 사진)' }, shape: 'wide' },
+      { fig: { key: 'ai/implant-uv', alt: 'UV 활성화 장비에 임플란트 픽스처를 넣는 장갑 낀 손' }, shape: 'wide' },
       { fig: { key: 'orig/implant-hero', alt: '확대경을 쓴 의료진이 파노라마 모니터 앞에서 임플란트 수술을 하는 장면' }, shape: 'std' },
     ],
   },
@@ -51,7 +51,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     lines: ['자가혈(PRF)', '{임플란트}'],
     cards: [
       { fig: { key: 'implant/prf', alt: '자가혈(PRF) 추출 개념도' }, shape: 'portrait' },
-      { fig: { key: 'ai/implant-prf', alt: '자가혈 원심분리기(연출 사진)' }, shape: 'wide' },
+      { fig: { key: 'ai/implant-prf', alt: '원심분리기에서 혈액 튜브를 꺼내는 장갑 낀 손' }, shape: 'wide' },
       { fig: { key: 'equip/ct', alt: '3D CT 장비' }, shape: 'std' },
     ],
   },
@@ -232,7 +232,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     lines: ['임플란트 비용은', '{무엇으로 정해지나요}'],
     cards: [
       { fig: { key: 'orig/misc-consult-desk', alt: '책상에서 의사가 환자에게 서류를 설명하는 모습' }, shape: 'portrait' },
-      { fig: { key: 'ai/insight-cost', alt: '임플란트 부품과 계산기(연출 사진)' }, shape: 'wide' },
+      { fig: { key: 'ai/insight-cost', alt: '책상 위 치료 계획서를 함께 보는 모습' }, shape: 'wide' },
       { fig: { key: 'orig/denture-implant-render', alt: '픽스처·어버트먼트·크라운이 분해된 임플란트 일러스트' }, shape: 'std' },
     ],
   },
@@ -240,7 +240,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     lines: ['건강보험이 되는 치과 치료,', '{무엇이 있나요}'],
     cards: [
       { fig: { key: 'orig/misc-consult-desk', alt: '책상에서 의사가 환자에게 서류를 설명하는 모습' }, shape: 'portrait' },
-      { fig: { key: 'ai/insight-denture', alt: '틀니와 임플란트 모형(연출 사진)' }, shape: 'wide' },
+      { fig: { key: 'ai/insight-denture', alt: '밝은 탁자에 두 손을 모으고 미소 짓는 어르신' }, shape: 'wide' },
       { fig: { key: 'scene/denture', alt: '틀니 모형' }, shape: 'std' },
     ],
   },
@@ -264,7 +264,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     lines: ['치과 용어', '{쉽게 풀이}'],
     cards: [
       { fig: { key: 'scene/consult', alt: '환자와 상담하는 장면' }, shape: 'portrait' },
-      { fig: { key: 'ai/insight-glossary', alt: '치과 기구 정물(연출 사진)' }, shape: 'wide' },
+      { fig: { key: 'ai/insight-glossary', alt: '치아 모형 옆에서 치과 참고서를 넘겨 보는 손' }, shape: 'wide' },
       { fig: { key: 'orig/misc-review-note', alt: '노트에 Review 라고 쓰는 손' }, shape: 'std' },
     ],
   },
@@ -296,7 +296,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     lines: ['찬물에', '{이가 시려요}'],
     cards: [
       { fig: { key: 'scene/endo', alt: '신경치료 중인 진료 장면' }, shape: 'portrait' },
-      { fig: { key: 'ai/natural-hub', alt: '치아 단면 모형(연출 사진)' }, shape: 'wide' },
+      { fig: { key: 'ai/natural-hub', alt: '자연치아 모형을 살펴보는 장갑 낀 손' }, shape: 'wide' },
       { fig: { key: 'equip/airflow', alt: 'EMS 에어플로우 장비' }, shape: 'std' },
     ],
   },
@@ -312,7 +312,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     lines: ['씹을 때', '{이가 아파요}'],
     cards: [
       { fig: { key: 'scene/endo', alt: '신경치료 중인 진료 장면' }, shape: 'portrait' },
-      { fig: { key: 'ai/natural-hub', alt: '치아 단면 모형(연출 사진)' }, shape: 'wide' },
+      { fig: { key: 'ai/natural-hub', alt: '자연치아 모형을 살펴보는 장갑 낀 손' }, shape: 'wide' },
       { fig: { key: 'orig/misc-mta-tooth', alt: '치수(신경)가 비치는 투명 치아 일러스트' }, shape: 'std' },
     ],
   },
@@ -345,7 +345,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     cards: [
       { fig: { key: 'orig/airflow-device', alt: 'EMS 에어플로우 프로필락시스 마스터 장비' }, shape: 'portrait' },
       { fig: { key: 'equip/gbt', alt: 'GBT 가이드 바이오필름 치료 장비' }, shape: 'wide' },
-      { fig: { key: 'ai/implant-custom', alt: '맞춤 어버트먼트 모형(연출 사진)' }, shape: 'std' },
+      { fig: { key: 'ai/implant-custom', alt: '석고 모형 위에서 맞춤 기둥을 핀셋으로 잡은 손' }, shape: 'std' },
     ],
   },
   '/insight/symptom/loose-denture': {
