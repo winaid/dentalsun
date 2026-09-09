@@ -280,7 +280,8 @@ export function CardLink({ href, label, desc, external = false, fig, num }: { hr
       </span>
     </>
   );
-  const cls = 'card card-3d group flex h-full flex-col overflow-hidden';
+  /* 사진이 있는 카드는 3D 기울기 없이 살짝 떠오르기만(오너: 3D 는 사진 없이 글만 나열된 카드에만) */
+  const cls = 'card card-hover group flex h-full flex-col overflow-hidden';
   return external ? (
     <a href={href} target="_blank" rel="noopener" className={cls}>{inner}</a>
   ) : (

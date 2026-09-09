@@ -166,7 +166,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
               <Head id="tmj-causes" big={<span className="tmj-big !text-[4.5rem] md:!text-[6rem]" aria-hidden>?</span>} title={<>원인을 알아야<br /><span className="accent-sun">근본 치료</span>가 가능합니다</>} lead="턱관절 장애는 한 가지 원인보다 관절에 가는 부담, 생활 습관, 심리적인 긴장이 겹쳐서 생기는 경우가 많습니다." />
               <ul className="reveal-stack mt-12 grid gap-6 sm:grid-cols-3">
                 {TMJ_CAUSES.map((c) => (
-                  <li key={c.title} className="card card-3d flex flex-col overflow-hidden text-center">
+                  <li key={c.title} className="card card-hover flex flex-col overflow-hidden text-center">
                     <span className="relative block aspect-[4/3] overflow-hidden bg-canvas-2">
                       <Image src={figSrc(c.fig.key)} alt={c.fig.alt} fill sizes="(max-width: 640px) 100vw, 33vw" className="object-cover" />
                     </span>
@@ -216,7 +216,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
               <Head id="tmj-steps" big={<Big unit="가지">5</Big>} title={<>턱관절, <span className="accent-sun">어떻게 치료</span>해야 할까요?</>} lead="약물치료와 물리치료부터 보톡스, 스플린트 장치치료, 관절강 세척술까지 한곳에서 이어서 진행합니다. 부담이 적은 치료부터 시작해 진단 결과에 따라 조합합니다." />
               <ol className="reveal-stack mt-12 grid gap-4">
                 {TMJ_STEPS.map((s, i) => (
-                  <li key={s.title} className="card card-3d grid items-center gap-5 p-4 md:grid-cols-[210px_72px_1fr] md:gap-7 md:p-5">
+                  <li key={s.title} className="card grid items-center gap-5 p-4 md:grid-cols-[210px_72px_1fr] md:gap-7 md:p-5">
                     <span className="relative block aspect-[16/10] overflow-hidden rounded-xl bg-canvas-2">
                       <Image src={figSrc(s.fig.key)} alt={s.fig.alt} fill sizes="(max-width: 768px) 100vw, 210px" className="object-cover" />
                     </span>
@@ -264,7 +264,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
               <h2 id="tmj-equip" className="sr-only">턱관절 진료 장비</h2>
               <ul className="reveal-stack grid gap-5 md:grid-cols-2">
                 {TMJ_EQUIP.map((e) => (
-                  <li key={e.title} className="card card-3d flex gap-5 p-5 md:p-6">
+                  <li key={e.title} className="card flex gap-5 p-5 md:p-6">
                     <span className="flex w-[110px] shrink-0 items-center justify-center rounded-xl bg-canvas-2 p-2 md:w-[130px]">
                       <Image src={figSrc(e.fig.key)} alt={e.fig.alt} width={figSize(e.fig.key).w} height={figSize(e.fig.key).h} sizes="130px" className="h-auto max-h-[230px] w-auto max-w-full object-contain" />
                     </span>

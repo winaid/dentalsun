@@ -275,7 +275,9 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
         )}
       </div>
     ) : null;
+  /* 3D 기울기·빛 쓸림(card-3d)은 사진 없이 글만 나열된 카드에만 — 사진 있는 순서 카드는 평범한 카드(오너 지시) */
   const cardCls = band ? 'flex h-full flex-col rounded-2xl border border-white/12 bg-white/8 p-6 backdrop-blur-sm' : 'card card-3d flex h-full flex-col p-6';
+  const plainCls = band ? cardCls : 'card flex h-full flex-col p-6';
   const titleCls = band ? 'text-[1.05rem] font-bold text-white' : 'text-[1.05rem] font-bold text-ink';
   const descCls = band ? 'mt-2 text-[15.5px] leading-relaxed text-white/75' : 'mt-2 text-[15.5px] leading-relaxed text-ink-soft';
 
@@ -366,7 +368,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
             <Head title={b.title} lead={b.lead} />
             <ol className="reveal-stack cards-flex mt-10" style={gridVars(b.steps.length)}>
               {b.steps.map((s, i) => (
-                <li key={i} className={`${cardCls} overflow-hidden`}>
+                <li key={i} className={`${withFig ? plainCls : cardCls} overflow-hidden`}>
                   {withFig && (
                     <span className="card-img -mx-6 -mt-6 mb-5 !w-auto">
                       <Image src={figSrc(s.figure?.key ?? band ?? 'ai/insight-journey')} alt={s.figure?.alt ?? ''} fill sizes="(max-width: 640px) 100vw, 25vw" className={fitsBox(s.figure?.key ?? band ?? 'ai/insight-journey', 4, 3) ? 'object-cover' : '!object-contain p-3'} />
