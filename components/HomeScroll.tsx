@@ -125,13 +125,15 @@ const TOUR = [
   { key: 'place/place09', alt: '광화문선치과 대기실' },
 ];
 
+/** 둘러보기 — 스크롤과 무관하게 저절로 흐른다(오너: 동그라미치과처럼). 목록을 두 벌 이어 붙여 끊김 없이 돈다. 마우스를 올리면 멈춘다. */
 export function HomeTourPan() {
+  const items = [...TOUR, ...TOUR];
   return (
     <div className="mt-10 overflow-hidden">
-      <div className="flex w-max gap-4 px-5 sm:px-8 lg:px-12" data-hpan>
-        {TOUR.map((f) => (
-          <div key={f.key} className="relative aspect-[4/3] w-[72vw] max-w-[480px] shrink-0 overflow-hidden rounded-2xl bg-canvas-2">
-            <Image src={figSrc(f.key)} alt={f.alt} fill sizes="480px" className="object-cover" />
+      <div className="tour-track flex w-max gap-4 pl-4">
+        {items.map((f, i) => (
+          <div key={f.key + i} className="relative aspect-[4/3] w-[72vw] max-w-[440px] shrink-0 overflow-hidden rounded-2xl bg-canvas-2" aria-hidden={i >= TOUR.length}>
+            <Image src={figSrc(f.key)} alt={i >= TOUR.length ? '' : f.alt} fill sizes="440px" className="object-cover" />
           </div>
         ))}
       </div>

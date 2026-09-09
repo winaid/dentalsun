@@ -593,3 +593,19 @@ details.faq .a {
 .stage-step.on .stage-badge {
   @apply bg-sun-500 text-white;
 }
+
+/* 둘러보기 — 저절로 흐르는 사진 띠(목록 두 벌 = 절반 이동하면 처음과 같아진다). 마우스를 올리면 멈춘다. */
+@keyframes tour-scroll {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+.tour-track {
+  animation: tour-scroll 55s linear infinite;
+  will-change: transform;
+}
+.tour-track:hover {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .tour-track { animation: none; }
+}

@@ -183,39 +183,37 @@ export default function HomePage() {
         {/* ── 턱관절 — 어두운 사진 띠 ── */}
         <section className="relative isolate overflow-hidden bg-night py-24 text-white md:py-32">
           <div className="absolute inset-0 -z-10">
-            <Image src={figSrc('ai/wide-tmj')} alt="" fill sizes="100vw" className="object-cover opacity-35" data-parallax="0.2" />
-            <div className="absolute inset-0 bg-gradient-to-r from-night via-night/85 to-night/40" />
+            <Image src={figSrc('ai/wide-tmj')} alt="" fill sizes="100vw" className="object-cover opacity-50" data-parallax="0.2" />
+            <div className="absolute inset-0 bg-gradient-to-b from-night/85 via-night/65 to-night/90" />
           </div>
-          <div className="wrap grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
-            <div className="reveal">
-              <p className="eyebrow on-dark">TMJ · 턱관절</p>
-              <h2 className="display-sm mt-4 !text-white">
+          {/* 사진 카드 없이 글만 가운데(오너: 억지로 맞춘 사진 카드 제거). 배경 사진이 분위기를 맡는다. */}
+          <div className="wrap">
+            <div className="reveal mx-auto max-w-[880px] text-center">
+              <p className="eyebrow on-dark justify-center">TMJ · 턱관절</p>
+              <h2 className="display-sm mt-4 !text-white on-photo">
                 원인부터 해결하는
                 <br />
                 <span className="accent-sun">턱관절 진료</span>
               </h2>
-              <p className="mt-5 text-[1.05rem] leading-[1.85] text-white md:text-[1.15rem]">
+              <p className="mx-auto mt-6 max-w-[720px] text-[1.05rem] leading-[1.85] text-white md:text-[1.15rem]">
                 <ScrubText text="정확한 진단과 근본적인 치료로 재발률을 낮춘 턱관절 진료. 기본적인 진료부터 어려운 장치치료까지, 다수의 환자분들을 진료하며 얻은 노하우로 개인별 맞춤 진료를 합니다." />
               </p>
-              <ul className="reveal-stack mt-8 grid gap-3 sm:grid-cols-3">
-                {['01 정확한 진단', '02 전반적인 턱관절 치료 진행', '03 오랜 기간 다수의 턱관절 환자 진료'].map((t) => (
-                  <li key={t} className="flex min-h-[84px] items-center rounded-2xl border border-white/15 bg-white/5 px-4 py-4 text-[15px] font-semibold backdrop-blur">{t}</li>
+              <ul className="reveal-stack mx-auto mt-10 grid max-w-[860px] gap-4 sm:grid-cols-3">
+                {[
+                  ['01', '정확한 진단'],
+                  ['02', '전반적인 턱관절 치료 진행'],
+                  ['03', '오랜 기간 다수의 턱관절 환자 진료'],
+                ].map(([n, t]) => (
+                  <li key={n} className="flex min-h-[110px] flex-col items-center justify-center rounded-2xl border border-white/15 bg-white/8 px-5 py-5 text-center backdrop-blur-md">
+                    <span className="text-[12px] font-extrabold tracking-[0.2em] text-sun-300">{n}</span>
+                    <span className="mt-2 text-[16px] font-bold leading-snug">{t}</span>
+                  </li>
                 ))}
               </ul>
-              <div className="mt-8 flex flex-wrap gap-3">
+              <div className="mt-10 flex flex-wrap justify-center gap-3">
                 <Link href="/treatment/tmj" className="btn-sun">턱관절 치료 안내</Link>
                 <Link href="/treatment/tmj/symptoms" className="btn-ghost-dark">주요 증상 확인</Link>
               </div>
-            </div>
-            <div className="reveal-stack grid grid-cols-2 gap-4">
-              {[
-                { key: 'tmj/splint', alt: '턱관절 스플린트 장치 모형' },
-                { key: 'ai/tmj-symptoms', alt: '귀 앞 턱관절 부위를 손가락으로 짚어 보는 모습' },
-                { key: 'equip/laser', alt: '턱관절 물리치료 장비 PHL-15 레이저' },
-                { key: 'scene/tmj-3', alt: '턱관절 진료 상담' },
-              ].map((f) => (
-                <Figure key={f.key} fig={f} ratio="aspect-[4/3]" sizes="25vw" effect="img-in" />
-              ))}
             </div>
           </div>
         </section>
@@ -247,8 +245,8 @@ export default function HomePage() {
         {/* ── 치료 전후 사례 — 실제 환자 사진, 손잡이를 끌어 비교 ── */}
         <section className="section">
           <div className="wrap">
-            <div className="reveal max-w-[820px]">
-              <p className="eyebrow">BEFORE &amp; AFTER</p>
+            <div className="reveal mx-auto max-w-[820px] text-center">
+              <p className="eyebrow justify-center">BEFORE &amp; AFTER</p>
               <h2 className="display-sm mt-4">
                 광화문선치과 <span className="accent">실제 치료 전후 사례</span>
               </h2>

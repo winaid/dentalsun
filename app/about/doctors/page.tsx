@@ -46,29 +46,35 @@ export default function DoctorsPage() {
           ]}
         />
 
+        {/* 기존 홈페이지 배치 그대로(오너 지시): 왼쪽 큰 사진, 오른쪽 위 전문의·이름, 약력 카드가 사진 오른쪽 가장자리에 걸친다. 뒤에는 옅은 SUN 워터마크. */}
         {DOCTORS.map((d, i) => (
-          <section key={d.slug} id={d.slug} className={`section scroll-mt-24 ${i % 2 ? 'bg-canvas' : ''}`}>
-            <div className="wrap grid items-center gap-10 lg:grid-cols-[1fr_1.3fr]">
-              <div className={`reveal ${i % 2 ? 'lg:order-2' : ''}`}>
-                <div className="wipe relative aspect-[4/5] overflow-hidden rounded-3xl bg-canvas-2">
-                  <Image src={d.photo} alt={`${d.name} ${d.role}`} fill sizes="(max-width: 1024px) 100vw, 40vw" className="object-cover object-top" priority={i === 0} />
+          <section key={d.slug} id={d.slug} className="section relative isolate overflow-hidden scroll-mt-24">
+            <span aria-hidden className="pointer-events-none absolute right-[3%] top-6 -z-10 select-none text-right font-extrabold leading-none tracking-[-0.05em] text-brand-900/[0.05]">
+              <span className="block text-[160px] md:text-[220px]">SUN</span>
+              <span className="-mt-3 block pr-2 text-[28px] tracking-[0.02em] md:text-[40px]">Dental clinic</span>
+            </span>
+            <div className="wrap grid items-start gap-8 lg:grid-cols-[1fr_1fr] lg:gap-0">
+              <div className="reveal">
+                <div className="wipe relative aspect-[4/5] overflow-hidden rounded-3xl bg-canvas-2 lg:aspect-[5/6]">
+                  <Image src={d.photo} alt={`${d.name} ${d.role}`} fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover object-top" priority={i === 0} />
                 </div>
               </div>
-              <div className={`reveal ${i % 2 ? 'lg:order-1' : ''}`}>
-                <span className="pill-brand">보건복지부 인증 · {d.specialty}</span>
-                <h2 className="display-sm mt-4">
-                  {d.name} <span className="text-[1.1rem] font-semibold text-ink-muted">{d.role}</span>
+              <div className="reveal relative z-10 lg:pt-[12%] lg:pl-2">
+                <p className="text-[1.1rem] font-semibold text-brand-600 md:text-[1.2rem]">{d.specialty}</p>
+                <h2 className="display-sm mt-2">
+                  {d.name} <span className="font-bold">{d.role}</span>
                 </h2>
-                <p className="mt-3 text-[15px] text-ink-soft">진료 분야 — {d.focus.join(' · ')}</p>
-                <h3 className="mt-8 text-[14px] font-bold tracking-wide text-ink-muted">주요 약력</h3>
-                <ul className={`mt-3 grid gap-2 ${d.career.length % 2 === 0 ? "sm:grid-cols-2" : ""}`}>
-                  {d.career.map((c) => (
-                    <li key={c} className="flex items-start gap-2.5 rounded-xl bg-white px-4 py-3 text-[15.5px] text-ink shadow-[var(--shadow-soft)]">
-                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-sun-500" />
-                      {c}
-                    </li>
-                  ))}
-                </ul>
+                <div className="mt-8 rounded-2xl border border-hairline bg-white p-7 shadow-[var(--shadow-lift)] md:p-9 lg:-ml-[22%]">
+                  <h3 className="text-[1.15rem] font-bold text-ink">주요 약력</h3>
+                  <ul className="mt-5 space-y-2.5">
+                    {d.career.map((c) => (
+                      <li key={c} className="flex items-start gap-3 text-[16px] leading-[1.6] text-ink">
+                        <span className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-brand-600" />
+                        {c}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </div>
           </section>
