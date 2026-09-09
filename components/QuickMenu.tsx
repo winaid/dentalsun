@@ -57,18 +57,31 @@ export function QuickMenu() {
       </div>
 
       {/* 모바일 — 아래 띠 */}
+      {/* 이모지 대신 선 아이콘·브랜드 마크(네이버 초록 N·톡톡 말풍선). 손가락에 맞게 높이 64px. */}
       <div className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-4 border-t border-hairline bg-white/95 backdrop-blur md:hidden" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
-        <a href={CLINIC.phoneHref} className="flex flex-col items-center gap-0.5 py-2.5 text-[11px] font-bold text-sun-600">
-          <span className="text-[16px]">☎</span>전화
+        <a href={CLINIC.phoneHref} className="flex min-h-[64px] flex-col items-center justify-center gap-1 text-[12px] font-bold text-sun-600 active:bg-sun-50">
+          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-sun-500 text-white">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z" fill="currentColor" /></svg>
+          </span>
+          전화
         </a>
-        <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="flex flex-col items-center gap-0.5 py-2.5 text-[11px] font-bold text-ink">
-          <span className="text-[16px]">N</span>예약
+        <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="flex min-h-[64px] flex-col items-center justify-center gap-1 text-[12px] font-bold text-ink active:bg-canvas">
+          <span className="flex h-7 w-7 items-center justify-center rounded-[7px] bg-[#03C75A] text-white">
+            <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden><path d="M4 3h5.2l5.6 8.4V3H20v18h-5.2L9.2 12.6V21H4z" fill="currentColor" /></svg>
+          </span>
+          예약
         </a>
-        <a href={CLINIC.booking.naverTalk} target="_blank" rel="noopener" className="flex flex-col items-center gap-0.5 py-2.5 text-[11px] font-bold text-ink">
-          <span className="text-[16px]">💬</span>상담
+        <a href={CLINIC.booking.naverTalk} target="_blank" rel="noopener" className="flex min-h-[64px] flex-col items-center justify-center gap-1 text-[12px] font-bold text-ink active:bg-canvas">
+          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#03C75A] text-white">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M12 4c-4.7 0-8.5 3-8.5 6.8 0 2.4 1.6 4.5 4 5.7L6.8 20l4-2.4c.4 0 .8.1 1.2.1 4.7 0 8.5-3 8.5-6.8S16.7 4 12 4z" fill="currentColor" /></svg>
+          </span>
+          상담
         </a>
-        <Link href="/visit" className="flex flex-col items-center gap-0.5 py-2.5 text-[11px] font-bold text-ink">
-          <span className="text-[16px]">📍</span>오시는 길
+        <Link href="/visit" className="flex min-h-[64px] flex-col items-center justify-center gap-1 text-[12px] font-bold text-ink active:bg-canvas">
+          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-brand-600 text-white">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M12 21s6-5.2 6-10a6 6 0 1 0-12 0c0 4.8 6 10 6 10z" fill="currentColor" /><circle cx="12" cy="11" r="2.2" fill="#fff" /></svg>
+          </span>
+          오시는 길
         </Link>
       </div>
     </>

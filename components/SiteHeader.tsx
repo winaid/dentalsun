@@ -117,7 +117,11 @@ export function SiteHeader({ dark = false }: { dark?: boolean }) {
       </div>
 
       {open && (
-        <div id="mobile-menu" className="fixed inset-x-0 top-[72px] bottom-0 overflow-y-auto bg-white lg:hidden hero-in">
+        <div
+          id="mobile-menu"
+          /* ★ 머리말의 backdrop-filter 가 fixed 의 기준을 머리말로 바꿔 'bottom-0' 이 높이 0 이 된다 → 높이를 직접 준다 */
+          className="absolute inset-x-0 top-full h-[calc(100dvh-72px)] overflow-y-auto bg-white lg:hidden hero-in"
+        >
           <div className="px-5 py-4 sm:px-8">
             {NAV.map((item) => (
               <details key={item.href} className="border-b border-hairline">

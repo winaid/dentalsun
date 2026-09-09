@@ -47,7 +47,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           />
         </noscript>
       </head>
-      <body className="pb-16 md:pb-0">
+      <body className="pb-[72px] md:pb-0">
         <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-brand-700 focus:px-5 focus:py-3 focus:text-white">
           본문으로 건너뛰기
         </a>

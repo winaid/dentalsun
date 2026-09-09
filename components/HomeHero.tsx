@@ -36,7 +36,7 @@ export function HomeHero() {
       <div className="wrap grid flex-1 items-center gap-12 pt-[120px] pb-24 md:pt-[150px] lg:grid-cols-[1.05fr_0.95fr] lg:gap-10">
         {/* 왼쪽 — 글 (스크롤하면 살짝 올라가며 옅어진다) */}
         <div data-scroll-fade>
-          <p className="eyebrow on-dark hero-in">SUN DENTAL CLINIC · 광화문역 6번 출구 도보 2분</p>
+          <p className="eyebrow on-dark hero-in">SUN DENTAL CLINIC<span className="hidden sm:inline"> · 광화문역 6번 출구 도보 2분</span></p>
           <h1 className="display mt-6 max-w-[760px] !text-white hero-in hero-in-2 on-photo">
             더 빠르고, 정확하게,
             <br />
