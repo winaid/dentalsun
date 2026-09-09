@@ -2,12 +2,16 @@ import { CLINIC, HOURS } from '@/lib/clinic';
 import { DOCTORS } from '@/lib/doctors';
 import { ALL_DOCS } from '@/lib/content';
 import { SITE_FAQ } from '@/lib/faq';
+import { allPostsMerged } from '@/lib/insightFeed';
+
+/* ★ 한 시간마다 다시 만든다 — 예약 글이 날짜가 되면 여기에도 실려야 한다. */
+export const revalidate = 3600;
 
 /**
  * /llms.txt — 언어모델을 위한 사이트 요약. 데이터에서 생성하므로 페이지와 어긋나지 않는다.
  * ★ 사실만 적는다. 토요일은 2·4째주 진료이며 '해당 월 일정 확인' 을 덧붙인다.
  */
-export function GET() {
+export async function GET() {
   const L: string[] = [];
   L.push(`# ${CLINIC.name} (${CLINIC.nameEn})`, '', `> ${CLINIC.description}`, '');
   L.push('## 기본 정보');
@@ -34,6 +38,18 @@ export function GET() {
     L.push(`- URL: ${CLINIC.url}${d.path}`);
     if (d.faq?.length) L.push(`- 다루는 질문: ${d.faq.map((q) => q.q).join(' / ')}`);
     L.push('');
+  }
+  const posts = await allPostsMerged();
+  if (posts.length) {
+    L.push('## 블로그 (진료실에서 자주 받는 질문에 대한 글)');
+    L.push('');
+    for (const p of posts) {
+      L.push(`### ${p.title}`);
+      L.push(p.summary);
+      L.push(`- URL: ${CLINIC.url}/insight/blog/${p.slug}`);
+      L.push(`- 발행일: ${p.date}`);
+      L.push('');
+    }
   }
   L.push('## 자주 묻는 질문');
   L.push(`- URL: ${CLINIC.url}/faq`);

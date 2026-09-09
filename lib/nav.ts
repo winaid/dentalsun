@@ -97,6 +97,7 @@ export const NAV: NavItem[] = [
     label: '인사이트',
     href: '/insight',
     children: [
+      { label: '블로그', href: '/insight/blog', desc: '진료실에서 자주 받는 질문을 글로 — 새 글 예약 발행' },
       { label: '증상별 안내', href: '/insight#symptoms', desc: '턱 소리 · 시린 이 · 잇몸 출혈 · 사랑니 통증 …' },
       { label: '치료 가이드', href: '/insight#guides', desc: '임플란트 과정 · 비용 요인 · 건강보험 · 턱관절 순서' },
       { label: '치과 용어 풀이', href: '/insight/guide/glossary', desc: '픽스처 · 골유착 · 스플린트 · MTA …' },

@@ -39,7 +39,8 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   devIndicators: false,
   outputFileTracingRoot: __dirname,
-  images: { formats: ['image/avif', 'image/webp'] },
+  /* remotePatterns — 중앙(winaid) 인사이트 글의 표지 사진 호스트. lib/insightFeed.ts CENTRAL_IMAGE_HOSTS 와 같이 고친다. */
+  images: { formats: ['image/avif', 'image/webp'], remotePatterns: [{ protocol: 'https', hostname: 'xmbyxlimqvyvijcpzsal.supabase.co' }] },
   async redirects() {
     return [
       ...OLD_SITE.map(([source, destination]) => ({ source, destination, permanent: true })),

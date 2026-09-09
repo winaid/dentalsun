@@ -13,7 +13,8 @@ export default function robots(): MetadataRoute.Robots {
   ];
   return {
     rules: [
-      { userAgent: '*', allow: '/', disallow: ['/api/'] },
+      /* ⚠️ 관리자 화면과 API 는 검색에 안 실린다 — app/admin/layout.tsx 의 noindex 와 한 쌍. */
+      { userAgent: '*', allow: '/', disallow: ['/admin', '/api/'] },
       ...ai.map((userAgent) => ({ userAgent, allow: '/' })),
       ...['AhrefsBot', 'SemrushBot', 'MJ12bot', 'DotBot', 'DataForSeoBot', 'BLEXBot'].map((userAgent) => ({ userAgent, disallow: '/' })),
     ],

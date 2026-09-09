@@ -39,6 +39,13 @@ export const INSIGHT_GUIDES: Doc[] = [
       },
       {
         type: 'links',
+        id: 'blog',
+        title: '블로그',
+        lead: '진료실에서 자주 받는 질문에 대표원장이 설명하듯 답한 글입니다. 새 글은 날짜를 정해 예약 발행됩니다.',
+        items: [{ label: '블로그 목록 보기', href: '/insight/blog', desc: '임플란트·턱관절·사랑니·수면치료 — 상담 때 짧게밖에 못 드린 이야기를 글로' }],
+      },
+      {
+        type: 'links',
         id: 'symptoms',
         title: '증상별 안내',
         lead: '지금 겪는 증상으로 찾아보세요. 생각해 볼 수 있는 원인, 집에서 먼저 할 수 있는 것, 바로 치과로 와야 하는 신호를 담았습니다.',
