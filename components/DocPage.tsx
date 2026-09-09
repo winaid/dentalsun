@@ -36,7 +36,7 @@ const DOC_AI: Record<string, string> = {
   '/treatment/implant/full-arch': 'orig/implant-fa-fixed',
   '/treatment/implant/uv': 'ai/implant-uv',
   '/treatment/implant/prf': 'ai/implant-prf',
-  '/treatment/implant/custom': 'orig/implant-custom-fit',
+  '/treatment/implant/custom': 'equip/printer',
   '/treatment/implant/warranty': 'ai/implant-warranty',
   '/treatment/tmj': 'orig/tmj-hero',
   '/treatment/tmj/symptoms': 'ai/tmj-symptoms',
@@ -71,6 +71,9 @@ export function DocPage({ doc }: { doc: Doc }) {
   const heroSize = hero ? figSize(hero.key) : null;
   const bandBg = HUB_BG[doc.hub] ?? 'ai/wide-clinic';
   const shortSummary = (s: string) => s.split(/(?<=다\.)\s/)[0];
+  /* 첫 화면 문구: 첫 문장(한 줄 답) / 나머지(보충) */
+  const summaryLead = shortSummary(doc.summary);
+  const summaryRest = doc.summary.slice(summaryLead.length).trim();
 
   const schema: unknown[] = [
     breadcrumbSchema(trail),
@@ -96,28 +99,59 @@ export function DocPage({ doc }: { doc: Doc }) {
       <SiteHeader dark />
       <JsonLd data={schema} />
       <main id="main">
-        {/* 첫 화면 — 어두운 바탕, 왼쪽 글 / 오른쪽 사진 */}
-        <section className="relative isolate overflow-hidden bg-night pt-[104px] pb-16 text-white md:pt-[150px] md:pb-24">
-          <div aria-hidden className="orb pointer-events-none absolute -top-40 -right-40 h-[600px] w-[600px] rounded-full bg-sun-500/15 blur-3xl" />
-          <div aria-hidden className="orb orb-2 pointer-events-none absolute -bottom-52 left-1/4 h-[560px] w-[560px] rounded-full bg-brand-500/25 blur-3xl" />
-          <div className="wrap relative grid items-center gap-10 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
-            <div>
-              <Breadcrumb trail={trail} dark />
-              <p className="eyebrow on-dark mt-7 hero-in">{doc.eyebrow}</p>
-              <h1 className="display mt-4 !text-white hero-in hero-in-2">{doc.title}</h1>
-              <p className="mt-6 max-w-[680px] text-[1.05rem] leading-[1.85] text-white/80 hero-in hero-in-3 md:text-[1.15rem]">
-                <Sentences text={doc.summary} />
+        {/* 첫 화면 — 대표 사진을 통째로 배경에 깔고(오른쪽이 또렷, 왼쪽은 남색으로 가라앉힘) 글은 왼쪽 아래에 모은다.
+            ★ 폭 900px 미만의 옛 배너 조각은 그대로 늘리면 거칠어서 살짝 흐리게 깐다(원본 사진을 받으면 hero-soft 가 저절로 빠진다). */}
+        <section className="relative isolate flex min-h-[100svh] flex-col justify-center overflow-hidden bg-night text-white" data-hero-full>
+          <div className="absolute inset-0 -z-10">
+            {hero && heroSize ? (
+              <>
+                <div className={`absolute inset-0 ${heroSize.w < 900 ? 'hero-soft' : ''}`}>
+                  <Image
+                    src={figSrc(hero.key)}
+                    alt=""
+                    fill
+                    priority
+                    sizes="100vw"
+                    className={`kenburns object-cover ${heroSize.h > heroSize.w ? 'object-[50%_22%]' : 'object-[65%_50%]'}`}
+                    data-parallax="0.2"
+                  />
+                </div>
+                {/* 좁은 화면: 아래로 갈수록 남색 / 넓은 화면: 왼쪽 글 자리만 남색 */}
+                <div className="absolute inset-0 bg-gradient-to-t from-night via-night/80 to-night/35 lg:hidden" />
+                <div className="absolute inset-0 hidden bg-gradient-to-r from-night via-night/85 to-night/10 lg:block" />
+                <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-night/70 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-night to-transparent" />
+              </>
+            ) : (
+              <>
+                <div aria-hidden className="orb pointer-events-none absolute -top-40 -right-40 h-[600px] w-[600px] rounded-full bg-sun-500/15 blur-3xl" />
+                <div aria-hidden className="orb orb-2 pointer-events-none absolute -bottom-52 left-1/4 h-[560px] w-[560px] rounded-full bg-brand-500/25 blur-3xl" />
+              </>
+            )}
+          </div>
+
+          <div className="wrap relative w-full pt-[120px] pb-20 md:pt-[140px] md:pb-24">
+            <Breadcrumb trail={trail} dark />
+            <div className="mt-8 max-w-[760px] md:mt-10">
+              <p className="eyebrow on-dark hero-in">{doc.eyebrow}</p>
+              <h1 className="display mt-4 !text-white on-photo hero-in hero-in-2">{doc.title}</h1>
+              {/* 요약: 첫 문장은 한 줄 답(크게), 나머지는 보충(작게) */}
+              <p className="mt-6 max-w-[640px] text-[1.1rem] font-semibold leading-[1.7] text-white on-photo hero-in hero-in-3 md:text-[1.3rem]">
+                <Sentences text={summaryLead} clauses={false} />
               </p>
-              <div className="mt-9 flex flex-wrap gap-3 hero-in hero-in-4">
+              {summaryRest && (
+                <p className="mt-3 max-w-[600px] text-[0.98rem] leading-[1.8] text-white/72 hero-in hero-in-3 md:text-[1.02rem]">
+                  <Sentences text={summaryRest} clauses={false} />
+                </p>
+              )}
+              <div className="mt-8 flex flex-wrap gap-3 hero-in hero-in-4">
                 <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="btn-sun">네이버 예약</a>
                 <a href={CLINIC.phoneHref} className="btn-ghost-dark">전화 {CLINIC.phone}</a>
               </div>
             </div>
-            {hero && (
-              <div className="hero-in hero-in-3">
-                <Figure fig={hero} priority ratio="aspect-[4/3]" sizes="(max-width: 1024px) 100vw, 45vw" rounded="rounded-3xl" effect="none" caption={false} />
-              </div>
-            )}
+          </div>
+          <div aria-hidden className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/60">
+            <span className="scroll-hint block text-[11px] tracking-[0.3em]">SCROLL</span>
           </div>
         </section>
 

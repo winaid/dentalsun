@@ -37,7 +37,7 @@ export default function EquipmentPage() {
       <main id="main">
         <PageHero trail={trail} eyebrow="DIGITAL EQUIPMENT" bg="place/place08" title={<>첨단 디지털 장비로 진료하는
               <br />
-              <span className="accent">3D 디지털치과</span></>} lead="진단부터 치료까지 치과 진료에 디지털을 더해 보다 빠르고 정확한 진료를 약속 드립니다. 아래는 광화문선치과가 실제로 갖추고 있는 장비와 시스템입니다."></PageHero>
+              <span className="accent-sun">3D 디지털치과</span></>} lead="진단부터 치료까지 치과 진료에 디지털을 더해 보다 빠르고 정확한 진료를 약속 드립니다. 아래는 광화문선치과가 실제로 갖추고 있는 장비와 시스템입니다."></PageHero>
         {ITEMS.map((it, i) => (
           <section key={it.title} className={`section ${i % 2 ? 'bg-canvas' : ''}`}>
             <div className="wrap grid items-center gap-10 lg:grid-cols-2">

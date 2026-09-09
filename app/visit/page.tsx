@@ -20,7 +20,7 @@ export default function VisitPage() {
       <SiteHeader dark />
       <JsonLd data={[breadcrumbSchema(trail), medicalWebPageSchema({ title: TITLE, description: DESC, path: '/visit' })]} />
       <main id="main">
-        <PageHero trail={trail} eyebrow="VISIT US" bg="ai/wide-visit" title={<>광화문역 <span className="accent">6번 출구 도보 2분</span>
+        <PageHero trail={trail} eyebrow="VISIT US" bg="ai/wide-visit" title={<>광화문역 <span className="accent-sun">6번 출구 도보 2분</span>
               <br />
               광화문선치과 오시는 길</>}>
           <p className="max-w-[720px] text-[1.05rem] leading-[1.85] text-white/80">{CLINIC.address.full} — {CLINIC.address.landmark}. 화·목요일은 밤 9시까지 야간진료를 하고, 코리아나 호텔 야외주차장을 무료로 이용하실 수 있습니다.</p><ul className="flex flex-wrap gap-2.5">

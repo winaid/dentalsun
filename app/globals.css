@@ -511,3 +511,9 @@ details.faq .a {
 .bg-canvas {
   box-shadow: inset 0 1px 0 rgba(19, 24, 41, 0.04), inset 0 -1px 0 rgba(19, 24, 41, 0.04);
 }
+
+/* 문서 첫 화면 배경 — 폭이 좁은 옛 배너 조각은 살짝 흐리게 깔아 확대 자국을 감춘다 */
+.hero-soft img {
+  filter: blur(2.5px) saturate(1.08);
+  transform: scale(1.06);
+}

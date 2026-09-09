@@ -27,7 +27,7 @@ export default function DoctorsPage() {
       <SiteHeader dark />
       <JsonLd data={[breadcrumbSchema(trail), medicalWebPageSchema({ title: TITLE, description: DESC, path: '/about/doctors' }), ...DOCTORS.map(physicianSchema)]} />
       <main id="main">
-        <PageHero trail={trail} eyebrow="OUR DOCTORS" bg="ai/wide-clinic" title={<>두 분의 <span className="accent">전문의</span>가
+        <PageHero trail={trail} eyebrow="OUR DOCTORS" bg="ai/wide-clinic" title={<>두 분의 <span className="accent-sun">전문의</span>가
               <br />
               직접 진단하고 치료합니다</>} lead="보건복지부 인증 통합치의학과 전문의와 치과보철과 전문의. 아래 약력은 기존 홈페이지에 밝힌 내용 그대로입니다."></PageHero>
 

@@ -23,7 +23,7 @@ export default function FaqPage() {
       <SiteHeader dark />
       <JsonLd data={[breadcrumbSchema(trail), medicalWebPageSchema({ title: TITLE, description: DESC, path: '/faq' }), faqSchema(ALL_FAQ, '/faq')]} />
       <main id="main">
-        <PageHero trail={trail} eyebrow="FREQUENTLY ASKED QUESTIONS" bg="ai/wide-visit" title={<>광화문 선치과에 <span className="accent">자주 묻는 질문</span></>} lead="진료시간과 예약, 오시는 길, 임플란트·턱관절 치료, 건강보험 적용, 마취와 수면치료까지 환자분들이 가장 많이 물어보시는 내용을 모았습니다."></PageHero>
+        <PageHero trail={trail} eyebrow="FREQUENTLY ASKED QUESTIONS" bg="ai/wide-visit" title={<>광화문 선치과에 <span className="accent-sun">자주 묻는 질문</span></>} lead="진료시간과 예약, 오시는 길, 임플란트·턱관절 치료, 건강보험 적용, 마취와 수면치료까지 환자분들이 가장 많이 물어보시는 내용을 모았습니다."></PageHero>
         {SITE_FAQ.map((g, i) => (
           <section key={g.id} id={g.id} className={`section ${i % 2 ? 'bg-canvas' : ''}`}>
             <div className="wrap grid gap-8 lg:grid-cols-[1fr_2fr]">

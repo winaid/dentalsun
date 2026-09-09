@@ -33,7 +33,7 @@ export default function TreatmentIndex() {
       <SiteHeader dark />
       <JsonLd data={[breadcrumbSchema(trail), medicalWebPageSchema({ title: TITLE, description: DESC, path: '/treatment' }), itemListSchema('/treatment', hubs.map((h) => ({ name: h.nav.label, path: h.nav.href })), '광화문 선치과 진료 갈래')]} />
       <main id="main">
-        <PageHero trail={trail} eyebrow="TREATMENTS" bg="ai/wide-implant" title={<>광화문 선치과 <span className="accent">진료 안내</span></>} lead="일곱 진료 갈래를 세부 항목까지 각각의 문서로 정리했습니다. 궁금한 진료를 고르면 무엇을 어떻게 하는지, 어떤 경우에 필요한지, 자주 묻는 질문까지 볼 수 있습니다."></PageHero>
+        <PageHero trail={trail} eyebrow="TREATMENTS" bg="ai/wide-implant" title={<>광화문 선치과 <span className="accent-sun">진료 안내</span></>} lead="일곱 진료 갈래를 세부 항목까지 각각의 문서로 정리했습니다. 궁금한 진료를 고르면 무엇을 어떻게 하는지, 어떤 경우에 필요한지, 자주 묻는 질문까지 볼 수 있습니다."></PageHero>
         <section className="section">
           <div className="wrap">
             <ol className="reveal-stack grid-cards md:grid-cols-2 xl:grid-cols-4">
