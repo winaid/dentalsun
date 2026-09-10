@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import type { ReactNode } from 'react';
 import { Breadcrumb, Sentences } from '@/components/ui';
-import { figSize, figSrc, type Fig } from '@/lib/docs';
+import { figSrc, type Fig } from '@/lib/docs';
 
 /**
  * 콜라주 첫 화면 — 레퍼런스(one-dental 'SMILE BY DESIGN')의 짜임새.
@@ -20,17 +20,6 @@ export interface CollageItem {
   title: string;
   desc: string;
 }
-
-/*
- * 사진 묶음 — 오른쪽에 두 줄로 세운다. 자리·크기를 **사진의 원본 비율에서 계산**해 서로 겹치지 않게 한다.
- *
- * ★ 예전에는 슬롯마다 고정 폭·고정 위치라 세로로 긴 사진이 오면 아래 사진과 겹쳤다(오너 화면에서 확인).
- * ★ 계산 근거: 16:9 화면에서 폭 p(%) 인 사진의 높이는 178·p/비율 (svh). 이 값으로 아래 사진의 시작점을 민다.
- */
-const svhHeight = (widthPct: number, ratio: number) => (178 * widthPct) / 100 / ratio;
-
-/** 폭을 줄여서라도 높이를 maxH 안에 넣는다 — 세로 사진이 화면을 뚫지 않게 */
-const fitWidth = (basePct: number, ratio: number, maxH: number) => Math.min(basePct, (maxH * ratio * 100) / 178);
 
 export function HeroCollage({
   trail,
@@ -74,7 +63,7 @@ export function HeroCollage({
         <div className="wrap h-full">
         {/* 절대 배치 기준 — wrap 의 안쪽 여백을 무시하지 않도록 상자를 하나 더 둔다 */}
         <div className="relative flex min-h-[100svh] flex-col pt-[110px] pb-16 lg:pt-[13svh] lg:pb-[7svh]">
-          {/* 글 — 큰 제목은 사진 카드 위로 지나간다 */}
+          {/* 글 */}
           <div className="relative z-20 lg:flex-1">
             <Breadcrumb trail={trail} dark />
             <p className="eyebrow on-dark mt-6 hero-in">{eyebrow}</p>
@@ -88,54 +77,8 @@ export function HeroCollage({
             {children && <div className="mt-7 hero-in hero-in-4">{children}</div>}
           </div>
 
-          {/* 사진 카드 — 넓은 화면에만(좁은 화면은 뺀다, 오너 지시). 원본 비율 그대로, 잘리지 않고 서로 겹치지 않는다. */}
-          <div className="hidden lg:block">
-            {(() => {
-              /* 같은 사진이 두 번 들어오면 하나만 남긴다 — orig/X-hero 와 scene/X 는 같은 사진의 다른 조각이다.
-                 ⚠️ -1 · -2 처럼 번호가 붙은 것은 서로 다른 사진이라 묶지 않는다 */
-              const seen = new Set<string>();
-              const uniq = cards.filter((c) => {
-                const base = c.fig.key.replace(/^[a-z]+\//, '').replace(/-hero$/, '');
-                if (seen.has(base)) return false;
-                seen.add(base);
-                return true;
-              });
-              /* 오른쪽 줄(위·아래) + 왼쪽 줄(가운데). 높이를 계산해 시작점을 밀어 둔다 */
-              const right = uniq.slice(0, 2);
-              const left = uniq[2];
-              let top = 9;
-              const placed = right.map((c, i) => {
-                const sz = figSize(c.fig.key);
-                const ratio = sz.w / sz.h;
-                const w = fitWidth(20, ratio, 27);
-                const spec = { c, ratio, w, top, right: 0, rot: i === 0 ? 3 : -3 };
-                top += svhHeight(w, ratio) + 3.5;
-                return spec;
-              });
-              if (left) {
-                const sz = figSize(left.fig.key);
-                const ratio = sz.w / sz.h;
-                const w = fitWidth(17, ratio, 30);
-                placed.push({ c: left, ratio, w, top: 20, right: Math.max(22, 22), rot: -4 });
-              }
-              return placed.map((p, i) => (
-                <div
-                  key={p.c.fig.key}
-                  className="hero-in absolute overflow-hidden rounded-3xl bg-night-2 shadow-[var(--shadow-lift)]"
-                  style={{
-                    animationDelay: `${420 + i * 320}ms`,
-                    aspectRatio: `${p.ratio}`,
-                    top: `${p.top}svh`,
-                    right: `${p.right}%`,
-                    width: `${p.w}%`,
-                    transform: `rotate(${p.rot}deg)`,
-                  }}
-                >
-                  <Image src={figSrc(p.c.fig.key)} alt={p.c.fig.alt} fill sizes="28vw" className="object-contain" priority={i === 0} />
-                </div>
-              ));
-            })()}
-          </div>
+          {/* 2026-09-10 오너 지시로 첫 화면 사진 카드를 없앴다 — 홈처럼 배경 사진 한 장으로 통일.
+              (옛 홈페이지에서 긁어 온 제품·모델 조각이 잘리거나 어색했다. 되살리려면 git 이력 참조) */}
 
           {/* 유리 카드 세 장 — 왼쪽은 왼쪽에서, 가운데는 아래에서, 오른쪽은 오른쪽에서 튀어오른다 */}
           <ol className="relative z-20 mt-10 grid gap-4 sm:grid-cols-3 lg:mt-8 lg:gap-5">
