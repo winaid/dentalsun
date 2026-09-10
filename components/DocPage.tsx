@@ -83,7 +83,7 @@ export function DocPage({ doc }: { doc: Doc }) {
     .slice(0, 2)
     .reduce<string>((acc, s) => (acc && acc.length + s.length > 120 ? acc : acc ? `${acc} ${s}` : s), '');
   const firstPoints = doc.blocks.find((b): b is Extract<Block, { type: 'points' }> => b.type === 'points');
-  const collageItems: CollageItem[] = collage.items ?? (firstPoints ? firstPoints.items.slice(0, 3).map((it) => ({ title: it.title, desc: it.desc ?? '' })) : [{ title: doc.title, desc: shortSummary(doc.summary) }]);
+  const collageItems: CollageItem[] = collage.items ?? (firstPoints ? firstPoints.items.slice(0, 4).map((it) => ({ title: it.title, desc: it.desc ?? '' })) : [{ title: doc.title, desc: shortSummary(doc.summary) }]);
 
   const schema: unknown[] = [
     breadcrumbSchema(trail),
@@ -119,10 +119,10 @@ export function DocPage({ doc }: { doc: Doc }) {
         {/* 첫 화면 — 콜라주(components/HeroCollage): 큰 제목 두 줄 + 옛 홈페이지 사진 세 장 + 유리 카드 세 장. 표는 lib/heroCollage.ts */}
         <HeroCollage
           trail={trail}
-          eyebrow={doc.eyebrow}
+          eyebrow={collage.kicker ?? doc.eyebrow}
           lines={collageLines}
           long={collageLong}
-          lead={heroLead}
+          lead={collage.lead ?? heroLead}
           bg={hero && heroSize ? hero.key : bandBg}
           bgSoft={!!heroSize && heroSize.w < 900}
           cards={collage.cards}

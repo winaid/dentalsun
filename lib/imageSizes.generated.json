@@ -176,8 +176,8 @@
   "h": 426
  },
  "implant/fullarch-model": {
-  "w": 336,
-  "h": 267
+  "w": 280,
+  "h": 256
  },
  "implant/fullarch-4": {
   "w": 1400,
@@ -192,7 +192,7 @@
   "h": 240
  },
  "tmj/jaw": {
-  "w": 384,
+  "w": 998,
   "h": 380
  },
  "illust/tooth-mta": {
@@ -208,24 +208,24 @@
   "h": 304
  },
  "illust/airflow-device": {
-  "w": 360,
-  "h": 240
+  "w": 272,
+  "h": 267
  },
  "aesthetic/laminate": {
-  "w": 557,
-  "h": 502
+  "w": 267,
+  "h": 363
  },
  "aesthetic/allceramic": {
-  "w": 557,
-  "h": 433
+  "w": 526,
+  "h": 439
  },
  "aesthetic/zirconia": {
-  "w": 557,
-  "h": 538
+  "w": 591,
+  "h": 390
  },
  "aesthetic/whitening": {
-  "w": 557,
-  "h": 468
+  "w": 218,
+  "h": 312
  },
  "aesthetic/prosth-cases": {
   "w": 1400,

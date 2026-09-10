@@ -81,11 +81,11 @@ export function HeroCollage({
               (옛 홈페이지에서 긁어 온 제품·모델 조각이 잘리거나 어색했다. 되살리려면 git 이력 참조) */}
 
           {/* 유리 카드 세 장 — 왼쪽은 왼쪽에서, 가운데는 아래에서, 오른쪽은 오른쪽에서 튀어오른다 */}
-          <ol className="relative z-20 mt-10 grid gap-4 sm:grid-cols-3 lg:mt-8 lg:gap-5">
-            {items.slice(0, 3).map((it, i) => (
+          <ol className={`relative z-20 mt-10 grid gap-4 lg:mt-8 lg:gap-5 ${items.length >= 4 ? 'sm:grid-cols-2 lg:grid-cols-4' : 'sm:grid-cols-3'}`}>
+            {items.slice(0, 4).map((it, i) => (
               <li
                 key={it.title}
-                className={`hero-card ${['hero-card-l', 'hero-card-c', 'hero-card-r'][i]} rounded-2xl border border-white/12 bg-white/8 p-5 backdrop-blur-md shadow-[var(--shadow-lift)] lg:p-6`}
+                className={`hero-card ${['hero-card-l', 'hero-card-c', 'hero-card-r', 'hero-card-c'][i]} rounded-2xl border border-white/12 bg-white/8 p-5 backdrop-blur-md shadow-[var(--shadow-lift)] lg:p-6`}
                 style={{ animationDelay: `${1300 + i * 240}ms` }}
               >
                 <span className="num-xl">{String(i + 1).padStart(2, '0')}</span>
