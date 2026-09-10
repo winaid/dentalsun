@@ -18,7 +18,10 @@ export function BeforeAfter({ groups, note, showTabs = true }: { groups: CaseGro
   const [ci, setCi] = useState(0);
   const [pos, setPos] = useState(50);
   const [dragging, setDragging] = useState(false);
+  /** 처음 이 구역에 닿았을 때 한 번만 좌우로 흔들어 '끌 수 있다'를 알린다(오너) */
+  const [hintDone, setHintDone] = useState(false);
   const stage = useRef<HTMLDivElement>(null);
+  const touched = useRef(false);
   const group = groups[Math.min(gi, groups.length - 1)];
   const pair = group.pairs[Math.min(ci, group.pairs.length - 1)];
 
@@ -41,6 +44,45 @@ export function BeforeAfter({ groups, note, showTabs = true }: { groups: CaseGro
       window.removeEventListener('pointercancel', onUp);
     };
   }, [dragging, moveTo]);
+
+  /* 화면에 들어오면 갈림선이 한 번 좌우로 지나간다 — 끌 수 있다는 걸 알아채게 */
+  useEffect(() => {
+    const el = stage.current;
+    if (!el || hintDone) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setHintDone(true);
+      return;
+    }
+    let raf = 0;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((e) => e.isIntersecting)) return;
+        io.disconnect();
+        const t0 = performance.now();
+        const DUR = 1700;
+        const step = (now: number) => {
+          if (touched.current) {
+            setHintDone(true);
+            return;
+          }
+          const t = Math.min(1, (now - t0) / DUR);
+          setPos(50 + Math.sin(t * Math.PI * 2) * 17);
+          if (t < 1) raf = requestAnimationFrame(step);
+          else {
+            setPos(50);
+            setHintDone(true);
+          }
+        };
+        raf = requestAnimationFrame(step);
+      },
+      { threshold: 0.55 },
+    );
+    io.observe(el);
+    return () => {
+      io.disconnect();
+      cancelAnimationFrame(raf);
+    };
+  }, [hintDone]);
 
   const pick = (g: number, c: number) => {
     setGi(g);
@@ -72,8 +114,12 @@ export function BeforeAfter({ groups, note, showTabs = true }: { groups: CaseGro
       {/* 무대 */}
       <div
         ref={stage}
-        className="relative aspect-[12/5] cursor-ew-resize touch-pan-y select-none overflow-hidden rounded-[28px] bg-night shadow-[var(--shadow-lift)]"
+        className="relative aspect-[12/5] cursor-ew-resize touch-none select-none overflow-hidden rounded-[28px] bg-night shadow-[var(--shadow-lift)]"
         onPointerDown={(e) => {
+          /* 손가락으로 사진을 끌 때는 화면이 따라 스크롤되지 않게 붙잡는다(오너) */
+          e.currentTarget.setPointerCapture?.(e.pointerId);
+          touched.current = true;
+          setHintDone(true);
           setDragging(true);
           moveTo(e.clientX);
         }}
@@ -85,22 +131,41 @@ export function BeforeAfter({ groups, note, showTabs = true }: { groups: CaseGro
 
         {/* 갈림선 + 주황 알약 손잡이 */}
         <div className="pointer-events-none absolute inset-y-0 w-[3px] bg-sun-500 shadow-[0_0_0_1px_rgba(0,0,0,0.25)]" style={{ left: `calc(${pos}% - 1.5px)` }} />
+        {/* 손잡이 — 손가락으로 잡기 쉽게 크게(48×80), 둘레에 보이지 않는 여유 칸까지.
+            touch-action:none 이라 손잡이를 끌면 화면이 스크롤되지 않는다 */}
         <button
           type="button"
           role="slider"
-          aria-label="전후 비교 손잡이"
+          aria-label="전후 비교 손잡이 — 좌우로 끌어 보세요"
           aria-valuemin={0}
           aria-valuemax={100}
           aria-valuenow={Math.round(pos)}
+          onPointerDown={(e) => {
+            e.stopPropagation();
+            e.currentTarget.setPointerCapture?.(e.pointerId);
+            touched.current = true;
+            setHintDone(true);
+            setDragging(true);
+          }}
           onKeyDown={(e) => {
+            touched.current = true;
             if (e.key === 'ArrowLeft') setPos((p) => Math.max(3, p - 3));
             if (e.key === 'ArrowRight') setPos((p) => Math.min(97, p + 3));
           }}
-          className="absolute top-1/2 flex h-16 w-9 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center gap-1 rounded-full bg-sun-500 text-white shadow-[0_8px_24px_rgba(0,0,0,0.35)] focus-visible:outline-2 focus-visible:outline-white"
+          className="absolute top-1/2 flex h-20 w-12 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize touch-none items-center justify-center rounded-full bg-sun-500 text-white shadow-[0_8px_24px_rgba(0,0,0,0.35)] ring-2 ring-white/70 before:absolute before:-inset-4 before:content-[''] focus-visible:outline-2 focus-visible:outline-white"
           style={{ left: `${pos}%` }}
         >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M10 6l-6 6 6 6M14 6l6 6-6 6" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+            <path d="M10 6l-6 6 6 6M14 6l6 6-6 6" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
         </button>
+
+        {/* 처음 한 번만 보이는 안내 — 손을 대면 사라진다 */}
+        {!hintDone && (
+          <span className="pointer-events-none absolute left-1/2 top-[calc(50%+62px)] -translate-x-1/2 rounded-full bg-night/70 px-3.5 py-1.5 text-[12.5px] font-bold text-white backdrop-blur">
+            좌우로 끌어 보세요
+          </span>
+        )}
 
         {/* 아래 모서리의 큰 낱말 + 위 왼쪽의 사례 표시 */}
         <span className="pointer-events-none absolute bottom-4 left-5 text-[15px] font-extrabold tracking-[0.22em] text-white drop-shadow md:text-[18px]">BEFORE</span>
