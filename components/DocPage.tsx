@@ -413,16 +413,17 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
                 <thead>
                   <tr>
                     <th scope="col" className="w-[22%]">구분</th>
-                    <th scope="col" className={hl === 'a' ? '!bg-sun-500 !border-sun-500 !text-white' : ''}>{b.columns[0]}</th>
-                    <th scope="col" className={hl === 'b' ? '!bg-sun-500 !border-sun-500 !text-white' : ''}>{b.columns[1]}</th>
+                    {/* 강조 열은 tbl-hl — 머리칸 주황 그러데이션과 몸통 기둥 색을 globals.css 가 함께 준다 */}
+                    <th scope="col" className={hl === 'a' ? 'tbl-hl !border-sun-500 !text-white' : ''}>{b.columns[0]}</th>
+                    <th scope="col" className={hl === 'b' ? 'tbl-hl !border-sun-500 !text-white' : ''}>{b.columns[1]}</th>
                   </tr>
                 </thead>
                 <tbody>
                   {b.rows.map((r, i) => (
                     <tr key={i}>
                       <th scope="row">{r.label}</th>
-                      <td className={hl === 'a' ? 'bg-brand-50/60 font-semibold text-brand-800' : 'text-ink-soft'}>{r.a}</td>
-                      <td className={hl === 'b' ? 'bg-brand-50/60 font-semibold text-brand-800' : 'text-ink-soft'}>{r.b}</td>
+                      <td className={hl === 'a' ? 'tbl-hl font-semibold text-brand-800' : 'text-ink-soft'}>{r.a}</td>
+                      <td className={hl === 'b' ? 'tbl-hl font-semibold text-brand-800' : 'text-ink-soft'}>{r.b}</td>
                     </tr>
                   ))}
                 </tbody>
