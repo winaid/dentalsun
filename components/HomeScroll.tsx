@@ -38,13 +38,16 @@ export function HomeStats() {
   );
 }
 
-/** 고정 무대 사진 — 단계별. 작은 옛 도해 대신 큰 사진(AI 정물 2 + 원본 장비 2). */
-const STAGE_IMG = [
-  /* 무대는 3:2 — 네 장 모두 비율 1.4 안팎의 원본이라 거의 잘리지 않는다(가로로 긴 배너 띠는 흐려져서 뺐다) */
-  { key: 'orig/intro-p02-ctroom', alt: '3D CT 촬영실' },
-  { key: 'orig/misc-nav-implant-set', alt: '내비게이션 임플란트 모의수술 화면이 뜬 모니터·태블릿과 임플란트 모형' },
-  { key: 'orig/intro-p05-group', alt: '당일 보철 제작 장비 — 3D 프린터·CAD 모니터·후처리기' },
-  { key: 'equip/guide', alt: '하악 모형에 씌운 투명 수술 유도장치' },
+/**
+ * 고정 무대 사진 — 단계별.
+ *  · 1단계는 실제 CT 촬영실 사진(옛 배너에서 잘라 낸 691px 짜리 천장 구석 사진을 2026-09-10 교체).
+ *  · 2~4단계는 흰 바탕 제품 사진이라 잘라 채우지 않고 통째로 놓는다(fit='contain').
+ */
+const STAGE_IMG: Array<{ key: string; alt: string; fit: 'cover' | 'contain' }> = [
+  { key: 'place/place08', alt: '광화문선치과 3D CT 촬영실', fit: 'cover' },
+  { key: 'orig/misc-nav-implant-set', alt: '내비게이션 임플란트 모의수술 화면이 뜬 모니터·태블릿과 임플란트 모형', fit: 'contain' },
+  { key: 'orig/intro-p05-group', alt: '당일 보철 제작 장비 — 3D 프린터·CAD 모니터·후처리기', fit: 'contain' },
+  { key: 'equip/guide', alt: '하악 모형에 씌운 투명 수술 유도장치', fit: 'contain' },
 ];
 
 export function HomeStage() {
@@ -70,16 +73,29 @@ export function HomeStage() {
                   </p>
                 )}
               </div>
-              {/* 사진은 잘라서 채우지 않고 통째로 넣는다 — 장비 사진이 옆·아래가 잘려 나갔다(오너). 흰 바탕 + 테두리로 액자처럼 */}
-              <div className="relative mt-8 hidden w-full aspect-[4/3] max-h-[52svh] overflow-hidden rounded-[28px] border border-hairline bg-white shadow-[var(--shadow-lift)] lg:block">
+              {/*
+                무대 — 장비 사진은 잘라 채우지 않고 통째로 놓는다(오너: 옆·아래가 잘려 나갔다).
+                밋밋하지 않도록 옅은 빛 바탕 + 안쪽 테두리로 촬영 부스처럼 만들고,
+                위에는 단계 진행 막대, 아래에는 지금 보고 있는 단계 이름을 띄운다.
+              */}
+              {/* 진행 막대는 사진 밖(설명 아래)에 둔다 — 사진 위에 얹으면 어두운 사진에서 안 보인다 */}
+              <div aria-hidden className="mt-7 hidden gap-1.5 lg:flex">
+                {STAGE_IMG.map((f) => (
+                  <span key={f.key} data-stage-dot className="stage-dot h-[3px] flex-1 rounded-full" />
+                ))}
+              </div>
+              <div className="stage-panel relative mt-4 hidden w-full aspect-[3/2] max-h-[52svh] overflow-hidden rounded-[28px] shadow-[var(--shadow-lift)] lg:block">
+                <div aria-hidden className="absolute inset-0 bg-[radial-gradient(115%_80%_at_50%_12%,#ffffff_0%,#f6f8fc_72%,#eceff6_100%)]" />
                 {STAGE_IMG.map((f, i) => (
                   <div key={f.key} className="stage-img" data-stage-img>
-                    <Image src={figSrc(f.key)} alt={f.alt} fill sizes="50vw" className="object-contain p-3" />
-                    <span className="absolute left-5 top-5 rounded-full bg-night/60 px-3 py-1.5 text-[12px] font-bold tracking-[0.12em] text-white backdrop-blur">
-                      STEP {String(i + 1).padStart(2, '0')} / {String(steps.length).padStart(2, '0')}
-                    </span>
+                    <Image src={figSrc(f.key)} alt={f.alt} fill sizes="50vw" className={f.fit === 'cover' ? 'object-cover' : 'object-contain p-8 pb-20'} />
+                    <div className="absolute inset-x-0 bottom-0 flex items-center gap-3 border-t border-hairline bg-white/88 px-6 py-4 backdrop-blur-md">
+                      <span className="shrink-0 text-[12px] font-extrabold tracking-[0.16em] text-sun-600">STEP {String(i + 1).padStart(2, '0')}</span>
+                      <span className="truncate text-[15.5px] font-bold text-ink">{steps[i]?.title}</span>
+                    </div>
                   </div>
                 ))}
+                <div aria-hidden className="pointer-events-none absolute inset-0 z-20 rounded-[28px] ring-1 ring-inset ring-ink/[0.08]" />
               </div>
             </div>
           </div>
@@ -100,8 +116,9 @@ export function HomeStage() {
                       <Sentences text={s.desc} />
                     </p>
                   )}
-                  <div className="relative mt-5 aspect-[4/3] overflow-hidden rounded-2xl border border-hairline bg-white lg:hidden">
-                    <Image src={figSrc(STAGE_IMG[i]?.key ?? STAGE_IMG[0].key)} alt={STAGE_IMG[i]?.alt ?? ''} fill sizes="100vw" className="object-contain p-2" />
+                  {/* 폰 — 무대와 같은 규칙(사진은 꽉, 흰 바탕 제품은 통째로) */}
+                  <div className="relative mt-5 aspect-[3/2] overflow-hidden rounded-2xl border border-hairline bg-[radial-gradient(115%_80%_at_50%_12%,#ffffff_0%,#f2f5fa_100%)] lg:hidden">
+                    <Image src={figSrc(STAGE_IMG[i]?.key ?? STAGE_IMG[0].key)} alt={STAGE_IMG[i]?.alt ?? ''} fill sizes="100vw" className={(STAGE_IMG[i]?.fit ?? 'contain') === 'cover' ? 'object-cover' : 'object-contain p-3'} />
                   </div>
                 </div>
               </li>

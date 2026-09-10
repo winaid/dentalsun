@@ -133,9 +133,15 @@ export function RevealScript() {
     const stageIOs = [...document.querySelectorAll<HTMLElement>('[data-stage]')].map((stage) => {
       const steps = [...stage.querySelectorAll<HTMLElement>('[data-stage-step]')];
       const imgs = [...stage.querySelectorAll<HTMLElement>('[data-stage-img]')];
+      const dots = [...stage.querySelectorAll<HTMLElement>('[data-stage-dot]')];
       const set = (i: number) => {
         steps.forEach((s, j) => s.classList.toggle('on', j === i));
         imgs.forEach((m, j) => m.classList.toggle('on', j === i));
+        /* 진행 막대 — 지나온 단계(on)와 지금 단계(now) */
+        dots.forEach((d, j) => {
+          d.classList.toggle('on', j <= i);
+          d.classList.toggle('now', j === i);
+        });
       };
       set(0);
       const sio = new IntersectionObserver(

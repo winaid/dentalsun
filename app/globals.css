@@ -555,26 +555,49 @@ details.faq .a {
   color: var(--color-ink);
 }
 
+/*
+ * 고정 무대의 장면 전환 — 나가는 장면은 짧게 접히고(0.4s), 들어오는 장면은 흐릿함이 걷히며 떠오른다(0.85s).
+ * 같은 속도로 겹쳐 사라지면 '툭 바뀐다' 는 느낌이 나서 들어옴/나감의 시간을 다르게 줬다(오너: 모션 세련되게).
+ */
 .stage-img {
   position: absolute;
   inset: 0;
   opacity: 0;
-  transform: scale(1.06);
-  transition: opacity 0.7s ease, transform 1.2s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transform: translateY(14px) scale(1.03);
+  filter: blur(9px);
+  transition: opacity 0.4s ease, transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1), filter 0.4s ease;
 }
 .stage-img.on {
   opacity: 1;
   transform: none;
+  filter: blur(0);
+  transition: opacity 0.85s ease 0.06s, transform 1s cubic-bezier(0.16, 0.84, 0.24, 1) 0.06s, filter 0.7s ease 0.06s;
+}
+/* 무대 위 진행 막대 — 지나온 단계는 옅은 주황, 지금 단계는 진하고 길어진다 */
+.stage-dot {
+  background: rgba(19, 24, 41, 0.12);
+  flex-grow: 1;
+  transition: background-color 0.5s ease, flex-grow 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.stage-dot.on {
+  background: var(--color-sun-300);
+}
+.stage-dot.now {
+  background: var(--color-sun-500);
+  flex-grow: 1.8;
 }
 .stage-step {
   transition: opacity 0.5s ease;
 }
 @media (min-width: 1024px) {
   .stage-step {
-    opacity: 0.35;
+    opacity: 0.4;
+    transform: scale(0.985);
+    transform-origin: left center;
   }
   .stage-step.on {
     opacity: 1;
+    transform: none;
   }
 }
 [data-hpan],
@@ -590,9 +613,16 @@ details.faq .a {
   .stage-img {
     opacity: 1;
     transform: none;
+    filter: none;
+    transition: none;
   }
   .stage-step {
     opacity: 1 !important;
+    transform: none !important;
+  }
+  .stage-step::before,
+  .stage-dot {
+    transition: none;
   }
 }
 
@@ -726,9 +756,28 @@ details.faq .a {
 }
 .stage-step {
   /* 테두리는 늘 있고(오너: 사진·카드에 테두리), 지금 보는 단계만 흰 바탕에 그림자가 얹힌다 */
+  position: relative;
   border: 1px solid var(--color-hairline);
   background: rgba(255, 255, 255, 0.55);
-  transition: opacity 0.5s ease, background-color 0.5s ease, box-shadow 0.5s ease, border-color 0.5s ease;
+  transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1), background-color 0.5s ease, box-shadow 0.5s ease,
+    border-color 0.5s ease;
+}
+/* 지금 단계의 왼쪽에 주황 기둥이 위에서 아래로 자란다 */
+.stage-step::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 16px;
+  bottom: 16px;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: linear-gradient(180deg, var(--color-sun-500), var(--color-sun-300));
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.65s cubic-bezier(0.16, 0.84, 0.24, 1);
+}
+.stage-step.on::before {
+  transform: scaleY(1);
 }
 .stage-step.on {
   background: #fff;
