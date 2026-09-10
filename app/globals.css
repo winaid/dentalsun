@@ -335,14 +335,15 @@ body {
 .hero-bar {
   animation: hero-bar 1s 0.45s cubic-bezier(0.16, 0.84, 0.24, 1) both;
 }
-/* 아래 띠의 진행 막대 — 이 장면이 머무는 6.5초 동안 왼쪽에서 오른쪽으로 찬다 */
+/* 아래 띠의 진행 막대 — 장면이 머무는 동안 왼쪽에서 오른쪽으로 찬다.
+   머무는 시간은 HomeHero 의 DURATION 이 inline style 로 넘겨준다(여기 초는 넘겨받지 못했을 때의 대비값) */
 @keyframes hero-rail {
   from { transform: scaleX(0); }
   to { transform: scaleX(1); }
 }
 .hero-rail {
   transform-origin: left;
-  animation: hero-rail 6.5s linear both;
+  animation: hero-rail 5.5s linear both;
 }
 
 /* 떠다니는 빛 덩어리 */

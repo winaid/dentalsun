@@ -62,7 +62,8 @@ const SLIDES = [
   },
 ];
 
-const DURATION = 6500;
+/** 한 장면이 머무는 시간 (오너: 1초 줄여 5.5초). 진행 막대는 아래에서 이 값을 그대로 받는다 */
+const DURATION = 5500;
 
 /** 오시는 길 — 같은 역·같은 출구는 한 줄로 묶는다 (시청역 1·2호선). 값은 lib/clinic.ts 하나뿐. */
 const STATIONS = CLINIC.transit.reduce<Array<{ station: string; exit: string; walk: string; lines: Array<{ n: string; color: string }> }>>((acc, t) => {
@@ -194,7 +195,8 @@ export function HomeHero() {
                   />
                   {/* 진행 막대 — 이 장면이 머무는 동안 왼쪽에서 오른쪽으로 찬다 */}
                   <span aria-hidden className="absolute inset-x-0 top-0 h-[2px] bg-white/10">
-                    {n === i && <span key={i} className="hero-rail block h-[2px] bg-sun-500 shadow-[0_0_12px_rgba(242,111,30,0.6)]" />}
+                    {/* 막대가 차는 시간 = 장면이 머무는 시간(DURATION). CSS 에 초를 또 적지 않는다 — 둘이 어긋나면 막대가 먼저 차 버린다 */}
+                    {n === i && <span key={i} style={{ animationDuration: `${DURATION}ms` }} className="hero-rail block h-[2px] bg-sun-500 shadow-[0_0_12px_rgba(242,111,30,0.6)]" />}
                   </span>
                   <span className="relative flex items-center gap-3">
                     <span
