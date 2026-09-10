@@ -293,21 +293,22 @@ body {
 .kenburns {
   animation: kenburns 18s ease-out both;
 }
-@keyframes slidefade {
-  0%, 30% { opacity: 1; }
-  38%, 100% { opacity: 0; }
+/* 홈 첫 화면 — 영상이 없어 사진으로 대신한다. 보이는 동안만 천천히 다가온다(영상 느낌). */
+@keyframes hero-zoom {
+  from { transform: scale(1.02); }
+  to { transform: scale(1.1); }
 }
-.hero-slide {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  animation: slidefade 21s linear infinite;
+.hero-zoom {
+  animation: hero-zoom 9s ease-out both;
 }
-.hero-slide:nth-child(1) { animation-delay: 0s; }
-.hero-slide:nth-child(2) { animation-delay: 7s; }
-.hero-slide:nth-child(3) { animation-delay: 14s; }
-.hero-slide img {
-  animation: kenburns 9s ease-out infinite alternate;
+/* 아래 띠의 진행 막대 — 이 장면이 머무는 6.5초 동안 왼쪽에서 오른쪽으로 찬다 */
+@keyframes hero-rail {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+.hero-rail {
+  transform-origin: left;
+  animation: hero-rail 6.5s linear both;
 }
 
 /* 떠다니는 빛 덩어리 */

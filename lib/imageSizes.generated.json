@@ -938,5 +938,17 @@
  "ai/tmj-symptoms-sq": {
   "w": 800,
   "h": 800
+ },
+ "sun/hero-surgery": {
+  "w": 2560,
+  "h": 1440
+ },
+ "sun/hero-scan": {
+  "w": 2560,
+  "h": 1440
+ },
+ "sun/hero-loupe": {
+  "w": 2560,
+  "h": 1440
  }
 }
