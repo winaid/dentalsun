@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { ConsultButton } from '@/components/ConsultButton';
 import Image from 'next/image';
 import { CLINIC, HOURS } from '@/lib/clinic';
 import { figSrc } from '@/lib/docs';
@@ -125,7 +124,7 @@ export function HomeHero() {
             <h1 className="display mt-6 text-balance !text-white on-photo">{SLIDES[i].title}</h1>
             <p className="mt-7 text-[1.05rem] leading-[1.85] text-white/75 md:text-[1.1rem]">{SLIDES[i].lead}</p>
           </div>
-          {/* 예약 두 갈래 — 왼쪽은 네이버 예약(플레이스와 연결), 오른쪽은 연락처만 남기는 팝업 */}
+          {/* 예약 두 갈래 — 왼쪽은 네이버 예약(플레이스와 연결), 오른쪽은 네이버 톡톡 상담 */}
           <div className="mt-10 grid grid-cols-2 gap-3 hero-in hero-in-4 sm:flex sm:flex-wrap sm:gap-3.5">
             <a
               href={CLINIC.booking.naver}
@@ -133,14 +132,26 @@ export function HomeHero() {
               rel="noopener"
               className="btn-sun !gap-2 !px-4 !py-[16px] !text-[15.5px] !shadow-[0_14px_34px_rgba(242,111,30,0.35)] sm:!gap-2.5 sm:!px-9 sm:!py-[20px] sm:!text-[17.5px]"
             >
-              <span className="flex h-[22px] w-[22px] items-center justify-center rounded-[6px] bg-white/95 text-[#03C75A]">
-                <svg width="13" height="13" viewBox="0 0 24 24" aria-hidden>
-                  <path d="M4 3h5.2l5.6 8.4V3H20v18h-5.2L9.2 12.6V21H4z" fill="currentColor" />
-                </svg>
-              </span>
+              {/* 흰 네모 안의 초록 N 은 주황 버튼 위에서 겉돌아 뺐다(오너 지적) — 글자와 같은 흰 선 아이콘 */}
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+                <path d="M7 3v3m10-3v3M4 8.5h16M5 6h14a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1z" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M9 13.5l2 2 4-4" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
               네이버 예약
             </a>
-            <ConsultButton className="inline-flex items-center justify-center gap-2 rounded-full bg-white/95 px-4 py-[16px] text-[15.5px] font-bold text-brand-800 shadow-[0_14px_34px_rgba(9,14,35,0.35)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-white sm:gap-2.5 sm:px-9 sm:py-[20px] sm:text-[17.5px]" />
+            <a
+              href={CLINIC.booking.naverTalk}
+              target="_blank"
+              rel="noopener"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-white/95 px-4 py-[16px] text-[15.5px] font-bold text-brand-800 shadow-[0_14px_34px_rgba(9,14,35,0.35)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-white sm:gap-2.5 sm:px-9 sm:py-[20px] sm:text-[17.5px]"
+            >
+              <span className="flex h-[22px] w-[22px] items-center justify-center rounded-full bg-[#03C75A] text-white">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
+                  <path d="M12 4c-4.7 0-8.5 3-8.5 6.8 0 2.4 1.6 4.5 4 5.7L6.8 20l4-2.4c.4 0 .8.1 1.2.1 4.7 0 8.5-3 8.5-6.8S16.7 4 12 4z" fill="currentColor" />
+                </svg>
+              </span>
+              톡톡 상담
+            </a>
           </div>
         </div>
       </div>
