@@ -55,8 +55,8 @@ const DOC_AI: Record<string, string> = {
   '/treatment/natural-tooth/endosonic': 'orig/endo-handpiece',
   '/treatment/painless': 'ai/painless-hub',
   '/treatment/painless/anesthesia': 'orig/pain-nopain',
-  '/treatment/painless/sedation': 'orig/sleep-hero',
-  '/treatment/painless/airflow': 'orig/airflow-device',
+  '/treatment/painless/sedation': 'fit/sleep-hero',
+  '/treatment/painless/airflow': 'fit/airflow-device',
   '/insight': 'ai/insight-hub',
 };
 

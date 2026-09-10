@@ -9,12 +9,12 @@ import { figSrc, fitsBox } from '@/lib/docs';
 
 const HUB_IMG: Record<string, string> = {
   '/treatment/implant': 'orig/implant-hero',
-  '/treatment/tmj': 'orig/tmj-hero',
+  '/treatment/tmj': 'fit/tmj-hero',
   '/treatment/aesthetic': 'ai/aesthetic-hub',
   '/treatment/insurance': 'ai/insurance-hub',
   '/treatment/wisdom-tooth': 'orig/wisdom-doctor',
   '/treatment/natural-tooth': 'orig/mta-hero',
-  '/treatment/painless': 'orig/pain-hero',
+  '/treatment/painless': 'fit/pain-hero',
 };
 import { ALL_DOCS, docsOfHub } from '@/lib/content';
 import { TREATMENT_HUBS } from '@/lib/nav';

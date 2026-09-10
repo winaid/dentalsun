@@ -954,5 +954,21 @@
  "sun/hero-tmj": {
   "w": 2560,
   "h": 1440
+ },
+ "fit/airflow-device": {
+  "w": 1100,
+  "h": 733
+ },
+ "fit/sleep-hero": {
+  "w": 1100,
+  "h": 733
+ },
+ "fit/tmj-hero": {
+  "w": 1100,
+  "h": 733
+ },
+ "fit/pain-hero": {
+  "w": 1100,
+  "h": 733
  }
 }

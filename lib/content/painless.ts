@@ -398,7 +398,7 @@ export const PAINLESS_DOCS: Doc[] = [
           { title: '임플란트 — 임플란트 주위점막염', desc: '임플란트 주변 잇몸에 생긴 염증으로, 초기에 관리하면 뼈 손상으로 진행되는 것을 막는 데 도움이 됩니다.' },
           { title: '임플란트 — 임플란트 주위염', desc: '임플란트 주변 뼈까지 염증이 진행된 상태로, 임플란트 표면을 손상시키지 않는 저자극 세척이 중요합니다.' },
         ],
-        figure: { key: 'orig/airflow-device', alt: 'EMS 에어플로우 스케일러 장비' },
+        figure: { key: 'fit/airflow-device', alt: 'EMS 에어플로우 스케일러 장비' },
         columns: 2,
       },
       {

@@ -214,12 +214,12 @@ export const IMPLANT_DOCS: Doc[] = [
           {
             title: 'CT 및 구강 스캐너 촬영',
             desc: 'CT로 잇몸뼈와 신경의 위치를, 3D 구강 스캐너로 치아와 잇몸의 형태를 촬영해 3차원 데이터를 만듭니다.',
-            figure: { key: 'equip/ct', alt: 'CT 장비' },
+            figure: { key: 'place/place08', alt: 'CT와 파노라마를 함께 찍는 광화문선치과 3D CT 촬영실' },
           },
           {
             title: '임플란트 식립경로 분석',
             desc: '3차원 데이터 위에서 임플란트의 종류, 위치, 길이, 각도와 뼈이식 필요 여부를 분석합니다.',
-            figure: { key: 'orig/implant-nav-plan', alt: '임플란트 식립 경로를 분석하는 화면' },
+            figure: { key: 'orig/misc-nav-implant-set', alt: '모니터에 뜬 임플란트 식립 계획 화면과 임플란트 모형' },
           },
           {
             title: '3D 디지털 보철 디자인',

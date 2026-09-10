@@ -206,6 +206,13 @@ body {
 .card-3d:hover .card-img img {
   transform: scale(1.06);
 }
+/*
+ * 비율이 안 맞아 통째로 놓은 사진(object-contain)은 흰 판 위에 올린다.
+ * 회색 바탕(bg-canvas-2)에 흰 배경 제품 사진을 얹으면 '회색 상자 위 스티커' 로 보였다(오너 지적, 2026-09-10).
+ */
+.card-img:has(> img[class*='object-contain']) {
+  background-color: #fff;
+}
 .num {
   @apply text-[1.75rem] leading-none font-extrabold tracking-[-0.04em] text-brand-500;
   font-variant-numeric: tabular-nums;

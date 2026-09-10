@@ -96,7 +96,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     lead: '촉진과 영상 검사로 원인을 먼저 확인하고, 스플린트·물리치료 등 원인에 맞는 방법을 단계적으로 씁니다.',
     cardsLead: '이런 증상이 있다면 턱관절을 확인해 보세요.',
     cards: [
-      { fig: { key: 'orig/tmj-hero', alt: '확대경을 쓰고 환자를 진료하는 원장' }, shape: 'portrait' },
+      { fig: { key: 'fit/tmj-hero', alt: '확대경을 쓰고 환자를 진료하는 원장' }, shape: 'portrait' },
       { fig: { key: 'orig/misc-tmj-skull', alt: '두개골 모형의 턱관절을 펜으로 가리키는 모습' }, shape: 'wide' },
       { fig: { key: 'orig/tmj-tx-laser', alt: '물리치료 — 관절 팔이 달린 레이저 장비' }, shape: 'std' },
     ],
@@ -226,7 +226,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     lead: '무통마취기·저자극 스케일러·수면치료로 진료 중 느끼는 불편함을 줄입니다.',
     cardsLead: '이런 방법으로 줄입니다.',
     cards: [
-      { fig: { key: 'orig/pain-hero', alt: '파노라마 모니터 앞에서 무통마취기(NO PAIN III)로 마취하는 원장' }, shape: 'portrait' },
+      { fig: { key: 'fit/pain-hero', alt: '파노라마 모니터 앞에서 무통마취기(NO PAIN III)로 마취하는 원장' }, shape: 'portrait' },
       { fig: { key: 'equip/painless-set', alt: '무통 & 저자극 시스템 장비' }, shape: 'wide' },
       { fig: { key: 'orig/pain-nopain', alt: '컴퓨터 제어 무통마취기 NO PAIN III 장비' }, shape: 'std' },
     ],
@@ -236,7 +236,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     lead: '컴퓨터가 일정한 속도와 압력으로 마취액을 넣고, 극세사 바늘을 씁니다.',
     cardsLead: '마취가 아픈 두 순간을 이렇게 줄입니다.',
     cards: [
-      { fig: { key: 'orig/pain-hero', alt: '파노라마 모니터 앞에서 무통마취기(NO PAIN III)로 마취하는 원장' }, shape: 'portrait' },
+      { fig: { key: 'fit/pain-hero', alt: '파노라마 모니터 앞에서 무통마취기(NO PAIN III)로 마취하는 원장' }, shape: 'portrait' },
       { fig: { key: 'orig/add-lidoca-gel', alt: '잇몸 도포마취제 리도카겔 상자·통과 딸기' }, shape: 'wide' },
       { fig: { key: 'orig/add-lidoca-gargle', alt: '가글마취제 리도카글액 2% 병(파란 치아 아이콘 포함)' }, shape: 'std' },
     ],
@@ -246,7 +246,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     lead: '진정제로 긴장을 낮춘 상태에서 진료하는 의식하 진정요법입니다.',
     cardsLead: '이런 분들이 수면치료를 고려합니다.',
     cards: [
-      { fig: { key: 'orig/sleep-hero', alt: '눈을 감고 편안하게 진료받는 여성 환자' }, shape: 'portrait' },
+      { fig: { key: 'fit/sleep-hero', alt: '눈을 감고 편안하게 진료받는 여성 환자' }, shape: 'portrait' },
       { fig: { key: 'sun/consult-monitor', alt: '모니터로 촬영 사진을 보며 환자에게 설명하는 원장' }, shape: 'wide' },
       { fig: { key: 'orig/add-korea-map', alt: '지역별 핀이 꽂힌 한국 지도 일러스트' }, shape: 'std' },
     ],
@@ -256,7 +256,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     lead: '고운 파우더와 물을 뿌려 치석과 바이오필름을 씻어 내, 긁는 느낌과 시린 자극을 줄입니다.',
     cardsLead: '에어플로우 스케일링은 이런 점이 다릅니다.',
     cards: [
-      { fig: { key: 'orig/airflow-device', alt: 'EMS 에어플로우 프로필락시스 마스터 장비' }, shape: 'portrait' },
+      { fig: { key: 'fit/airflow-device', alt: 'EMS 에어플로우 프로필락시스 마스터 장비' }, shape: 'portrait' },
       { fig: { key: 'equip/airflow', alt: 'EMS 에어플로우 장비' }, shape: 'wide' },
       { fig: { key: 'orig/airflow-piezon', alt: '파란 LED 가 켜진 피에존 스케일러 핸드피스 팁' }, shape: 'std' },
     ],
@@ -301,7 +301,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   '/insight/guide/tmj-treatment-flow': {
     lines: ['턱관절 치료는', '{어떤 순서로 하나요}'],
     cards: [
-      { fig: { key: 'orig/tmj-hero', alt: '확대경을 쓰고 환자를 진료하는 원장' }, shape: 'portrait' },
+      { fig: { key: 'fit/tmj-hero', alt: '확대경을 쓰고 환자를 진료하는 원장' }, shape: 'portrait' },
       { fig: { key: 'ai/tmj-treatments', alt: '턱관절 치료 도구(연출 사진)' }, shape: 'wide' },
       { fig: { key: 'orig/tmj-tx-splint', alt: '스플린트 장치 — 검은 배경 위 석고 모형과 투명 스플린트' }, shape: 'std' },
     ],
@@ -309,7 +309,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   '/insight/guide/dental-anxiety': {
     lines: ['치과가 무서운 분들을', '{위한 안내}'],
     cards: [
-      { fig: { key: 'orig/sleep-hero', alt: '눈을 감고 편안하게 진료받는 여성 환자' }, shape: 'portrait' },
+      { fig: { key: 'fit/sleep-hero', alt: '눈을 감고 편안하게 진료받는 여성 환자' }, shape: 'portrait' },
       { fig: { key: 'ai/painless-anesthesia', alt: '무통마취기로 천천히 마취액을 넣는 장면' }, shape: 'wide' },
       { fig: { key: 'orig/pain-nopain', alt: '컴퓨터 제어 무통마취기 NO PAIN III 장비' }, shape: 'std' },
     ],
@@ -397,7 +397,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   '/insight/symptom/swelling-around-implant': {
     lines: ['임플란트 주변 잇몸이', '{붓고 피가 나요}'],
     cards: [
-      { fig: { key: 'orig/airflow-device', alt: 'EMS 에어플로우 프로필락시스 마스터 장비' }, shape: 'portrait' },
+      { fig: { key: 'fit/airflow-device', alt: 'EMS 에어플로우 프로필락시스 마스터 장비' }, shape: 'portrait' },
       { fig: { key: 'equip/gbt', alt: 'GBT 가이드 바이오필름 치료 장비' }, shape: 'wide' },
       { fig: { key: 'ai/implant-custom', alt: '석고 모형 위에서 맞춤 기둥을 핀셋으로 잡은 손' }, shape: 'std' },
     ],
