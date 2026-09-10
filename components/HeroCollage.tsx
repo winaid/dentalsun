@@ -67,7 +67,8 @@ export function HeroCollage({
           <div className="relative z-20 lg:flex-1">
             <Breadcrumb trail={trail} dark />
             <p className="eyebrow on-dark mt-6 hero-in">{eyebrow}</p>
-            <h1 className={`display-xl mt-4 on-photo ${long ? 'is-long' : ''}`}>
+            {/* 제목은 한 줄이든 두 줄이든 같은 높이를 차지한다 — 쪽마다 글이 위아래로 튀지 않게(오너: 느낌 통일) */}
+            <h1 className={`display-xl mt-4 on-photo lg:flex lg:min-h-[2.04em] lg:flex-col lg:justify-end ${long ? 'is-long' : ''}`}>
               <span className="block hero-in hero-in-2">{lines[0]}</span>
               {lines[1] && <span className="block hero-in hero-in-3 lg:pl-[14vw]">{lines[1]}</span>}
             </h1>

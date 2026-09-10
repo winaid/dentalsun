@@ -21,8 +21,8 @@ export interface HeroCollageSpec {
 export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   '/treatment/implant': {
     lines: ['광화문 선치과', '{디지털} 임플란트'],
-    kicker: '3D 로 계획하고 가이드로 식립합니다',
-    lead: '3D CT 와 구강스캐너로 뼈·신경 위치를 확인하고, 모의수술로 정한 자리에 가이드를 대고 식립합니다.',
+    kicker: '3D 로 계획하고 가이드로 식립하는 디지털 임플란트',
+    lead: '광화문 선치과 임플란트는 이렇게 다릅니다.',
     cards: [
       { fig: { key: 'scene/surgery', alt: '수술 가운과 확대경을 착용하고 임플란트 수술 중인 광화문선치과 원장' }, shape: 'portrait' },
       { fig: { key: 'orig/implant-hero', alt: '확대경을 쓴 의료진이 파노라마 모니터 앞에서 임플란트 수술을 하는 장면' }, shape: 'wide' },
@@ -31,6 +31,8 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   },
   '/treatment/implant/navigation': {
     lines: ['내비게이션', '{임플란트}'],
+    kicker: '수술 전 컴퓨터 모의수술로 자리를 정하는 임플란트',
+    lead: '내비게이션 임플란트는 이렇게 진행합니다.',
     cards: [
       { fig: { key: 'orig/implant-nav-guide', alt: '하악 모형에 투명 수술 가이드를 얹고 드릴을 맞춘 모습' }, shape: 'portrait' },
       { fig: { key: 'orig/implant-nav-plan', alt: 'CT 위에 임플란트 식립 경로를 잡는 계획 소프트웨어 화면' }, shape: 'wide' },
@@ -39,8 +41,8 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   },
   '/treatment/implant/full-arch': {
     lines: ['풀아치', '{임플란트}'],
-    kicker: '최소식립으로 무치악 해결',
-    lead: '4~6개의 임플란트로 위·아래 전체 치아의 기능을 회복하는 방법입니다. 남은 뼈 상태에 따라 계획이 달라집니다.',
+    kicker: '최소식립으로 전체 치아를 회복하는 풀아치 임플란트',
+    lead: '이런 경우, 풀아치 임플란트를 고려합니다.',
     cards: [
       { fig: { key: 'orig/implant-fa-surgery', alt: '수술실에서 임플란트 수술 중인 의료진' }, shape: 'portrait' },
       { fig: { key: 'orig/implant-fa-fixed', alt: '임플란트 여섯 개로 고정한 전악 보철 렌더' }, shape: 'wide' },
@@ -49,6 +51,8 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   },
   '/treatment/implant/uv': {
     lines: ['UV', '{임플란트}'],
+    kicker: '잇몸뼈가 약할 때 쓰는 UV 표면 처리 임플란트',
+    lead: 'UV 임플란트는 이런 점이 다릅니다.',
     cards: [
       { fig: { key: 'implant/uv', alt: 'UV 임플란트 표면 처리 개념도' }, shape: 'portrait' },
       { fig: { key: 'ai/implant-uv', alt: 'UV 활성화 장비에 임플란트 픽스처를 넣는 장갑 낀 손' }, shape: 'wide' },
@@ -57,6 +61,8 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   },
   '/treatment/implant/prf': {
     lines: ['자가혈(PRF)', '{임플란트}'],
+    kicker: '내 피에서 뽑아 쓰는 자가혈(PRF) 임플란트',
+    lead: '자가혈 임플란트는 이런 경우에 씁니다.',
     cards: [
       { fig: { key: 'implant/prf', alt: '자가혈(PRF) 추출 개념도' }, shape: 'portrait' },
       { fig: { key: 'ai/implant-prf', alt: '원심분리기에서 혈액 튜브를 꺼내는 장갑 낀 손' }, shape: 'wide' },
@@ -65,6 +71,8 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   },
   '/treatment/implant/custom': {
     lines: ['맞춤', '{임플란트}'],
+    kicker: '내 잇몸 선에 맞춰 만드는 맞춤 임플란트',
+    lead: '맞춤 기둥은 이런 점이 다릅니다.',
     cards: [
       { fig: { key: 'implant/custom', alt: '맞춤 어버트먼트 개념도' }, shape: 'portrait' },
       { fig: { key: 'orig/implant-custom-fit', alt: '잇몸 선에 맞춘 맞춤 어버트먼트 단면 일러스트' }, shape: 'wide' },
@@ -73,6 +81,8 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   },
   '/treatment/implant/warranty': {
     lines: ['광화문 선치과', '{보증제도}'],
+    kicker: '치료 뒤에도 이어지는 광화문 선치과 보증제도',
+    lead: '임플란트 보증은 이렇게 운영합니다.',
     cards: [
       { fig: { key: 'orig/misc-consult-desk', alt: '책상에서 의사가 환자에게 서류를 설명하는 모습' }, shape: 'portrait' },
       { fig: { key: 'scene/intro-1', alt: '광화문선치과 진료 장면' }, shape: 'wide' },
@@ -81,8 +91,8 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   },
   '/treatment/tmj': {
     lines: ['턱관절', '{치료}'],
-    kicker: '턱관절이 아픈 이유부터',
-    lead: '턱에서 소리가 나고 아픈 이유를 검사로 먼저 확인하고, 찾은 원인에 맞춰 단계적으로 치료합니다.',
+    kicker: '원인을 먼저 찾는 광화문 선치과 턱관절 치료',
+    lead: '이런 증상이 있다면 턱관절을 확인해 보세요.',
     cards: [
       { fig: { key: 'orig/tmj-hero', alt: '확대경을 쓰고 환자를 진료하는 원장' }, shape: 'portrait' },
       { fig: { key: 'orig/misc-tmj-skull', alt: '두개골 모형의 턱관절을 펜으로 가리키는 모습' }, shape: 'wide' },
@@ -91,6 +101,8 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   },
   '/treatment/tmj/symptoms': {
     lines: ['턱관절', '{주요 증상과 원인}'],
+    kicker: '턱에서 나는 소리와 통증, 왜 생길까요',
+    lead: '이런 증상이 턱관절에서 옵니다.',
     cards: [
       { fig: { key: 'scene/tmj-sym-1', alt: '턱관절에서 소리가 나는 증상' }, shape: 'portrait' },
       { fig: { key: 'scene/tmj-1', alt: '턱관절 통증을 호소하는 모습' }, shape: 'wide' },
@@ -99,6 +111,8 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   },
   '/treatment/tmj/treatments': {
     lines: ['턱관절', '{치료 방법}'],
+    kicker: '원인에 맞춰 단계적으로 하는 턱관절 치료',
+    lead: '턱관절은 이런 순서로 치료합니다.',
     cards: [
       { fig: { key: 'orig/tmj-tx-botox', alt: '보톡스 치료 — 바이알에서 주사기로 약을 뽑는 장갑 낀 손' }, shape: 'portrait' },
       { fig: { key: 'orig/tmj-tx-laser', alt: '물리치료 — 관절 팔이 달린 레이저 장비' }, shape: 'wide' },
@@ -107,8 +121,8 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   },
   '/treatment/aesthetic': {
     lines: ['{심미치료}'],
-    kicker: '치아 모양 · 색 · 배열을 함께 봅니다',
-    lead: '라미네이트·올세라믹·지르코니아 심미보철과 전문가 치아미백으로 앞니의 인상을 다듬습니다.',
+    kicker: '치아 모양 · 색 · 배열을 함께 보는 심미치료',
+    lead: '이런 고민이라면 심미치료를 고려합니다.',
     cards: [
       { fig: { key: 'orig/misc-whitening-model', alt: '하얀 치아를 드러내며 웃는 여성 모델' }, shape: 'portrait' },
       { fig: { key: 'orig/misc-veneer-teeth', alt: '라미네이트를 붙이는 앞니 일러스트' }, shape: 'wide' },
@@ -117,8 +131,8 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   },
   '/treatment/aesthetic/prosthetics': {
     lines: ['{심미보철}'],
-    kicker: '내 치아 상태에 따른 심미보철',
-    lead: '손톱같이 얇은 라미네이트부터 치아 전체를 덮는 올세라믹·지르코니아까지, 남은 치아 구조에 맞는 방법을 고릅니다.',
+    kicker: '내 치아 상태에 따른 다양한 심미보철 치료',
+    lead: '이런 경우, 심미보철이 필요합니다.',
     cards: [
       { fig: { key: 'aesthetic/zirconia', alt: '지르코니아 크라운' }, shape: 'portrait' },
       { fig: { key: 'aesthetic/laminate', alt: '라미네이트' }, shape: 'wide' },
@@ -127,8 +141,8 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   },
   '/treatment/aesthetic/whitening': {
     lines: ['{치아미백}'],
-    kicker: '전문가 치아미백',
-    lead: '치아 표면에 전문가용 미백제를 바르고 광선으로 활성화해 변색된 치아 색을 밝히는 진료입니다.',
+    kicker: '전문가가 직접 진행하는 치아미백',
+    lead: '이런 경우, 치아미백을 고려합니다.',
     cards: [
       { fig: { key: 'orig/misc-whitening-model', alt: '하얀 치아를 드러내며 웃는 여성 모델' }, shape: 'portrait' },
       { fig: { key: 'aesthetic/whitening', alt: '전문가 치아미백' }, shape: 'wide' },
@@ -137,8 +151,8 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   },
   '/treatment/insurance': {
     lines: ['보험 틀니 &', '{임플란트}'],
-    kicker: '만 65세 이상 건강보험 급여',
-    lead: '전체틀니·부분틀니와 임플란트 2개까지 건강보험이 적용됩니다. 본인 부담금은 30% 입니다.',
+    kicker: '만 65세 이상이면 받는 건강보험 틀니 · 임플란트',
+    lead: '이런 분들이 급여 대상입니다.',
     cards: [
       { fig: { key: 'orig/denture-hero', alt: '확대경을 쓴 원장이 초록 드레이프를 덮은 환자를 진료하는 모습' }, shape: 'portrait' },
       { fig: { key: 'ai/insurance-denture', alt: '부분 틀니를 두 손으로 살펴보는 어르신의 손' }, shape: 'wide' },
@@ -147,8 +161,8 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   },
   '/treatment/insurance/denture': {
     lines: ['{보험틀니}'],
-    kicker: '만 65세 이상 건강보험 급여',
-    lead: '치아가 전혀 없으면 전체틀니, 일부 남아 있으면 부분틀니 — 둘 다 건강보험이 적용됩니다.',
+    kicker: '만 65세 이상 건강보험이 적용되는 보험틀니',
+    lead: '이런 경우, 보험틀니를 만듭니다.',
     cards: [
       { fig: { key: 'orig/denture-hero', alt: '확대경을 쓴 원장이 초록 드레이프를 덮은 환자를 진료하는 모습' }, shape: 'portrait' },
       { fig: { key: 'ai/insurance-denture', alt: '부분 틀니를 두 손으로 살펴보는 어르신의 손' }, shape: 'wide' },
@@ -157,8 +171,8 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   },
   '/treatment/insurance/implant': {
     lines: ['보험', '{임플란트}'],
-    kicker: '1인당 평생 2개까지',
-    lead: '만 65세 이상이면서 치아가 일부라도 남아 있으면 임플란트 2개까지 건강보험이 적용됩니다.',
+    kicker: '1인당 평생 2개까지 적용되는 보험임플란트',
+    lead: '이런 조건이면 보험이 적용됩니다.',
     cards: [
       { fig: { key: 'orig/denture-hero', alt: '확대경을 쓴 원장이 초록 드레이프를 덮은 환자를 진료하는 모습' }, shape: 'portrait' },
       { fig: { key: 'orig/implant-fa-denture', alt: '전악 임플란트 보철물과 분홍 틀니' }, shape: 'wide' },
@@ -167,8 +181,8 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   },
   '/treatment/wisdom-tooth': {
     lines: ['매복사랑니', '{발치}'],
-    kicker: '3D CT 로 보고 빼는 매복사랑니',
-    lead: '잇몸 안에 묻혀 있거나 신경에 가까운 사랑니를 3D CT 로 확인한 뒤, 신경과 옆 치아를 건드리지 않는 순서로 빼냅니다.',
+    kicker: '3D CT 로 보고 빼는 매복사랑니 발치',
+    lead: '이런 경우, 사랑니를 빼는 것이 좋습니다.',
     cards: [
       { fig: { key: 'orig/wisdom-doctor', alt: '확대경을 쓰고 사랑니를 발치하는 원장' }, shape: 'portrait' },
       { fig: { key: 'orig/wisdom-ct-screen', alt: '3D CT 판독 화면 — 사랑니와 하치조신경 위치 확인' }, shape: 'wide' },
@@ -177,8 +191,8 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   },
   '/treatment/natural-tooth': {
     lines: ['자연치아', '{살리기}'],
-    kicker: '뺄지 살릴지 다시 봅니다',
-    lead: 'MTA 신경치료와 확대경 정밀 진료로, 뽑기 전에 남길 수 있는지부터 확인합니다.',
+    kicker: '뽑기 전에 남길 수 있는지 먼저 보는 진료',
+    lead: '이런 경우, 자연치아를 살릴 수 있습니다.',
     cards: [
       { fig: { key: 'orig/mta-hero', alt: '확대경을 쓰고 MTA 신경치료를 하는 원장' }, shape: 'portrait' },
       { fig: { key: 'orig/endo-hero', alt: '엔도소닉 초음파 세척기로 근관을 세척하는 진료 장면' }, shape: 'wide' },
@@ -187,6 +201,8 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   },
   '/treatment/natural-tooth/mta': {
     lines: ['MTA', '{신경치료}'],
+    kicker: '재신경치료까지 보는 MTA 신경치료',
+    lead: '이런 경우, MTA 를 씁니다.',
     cards: [
       { fig: { key: 'orig/mta-hero', alt: '확대경을 쓰고 MTA 신경치료를 하는 원장' }, shape: 'portrait' },
       { fig: { key: 'orig/case-mta1-after', alt: 'MTA 로 신경을 덮고 보철로 마무리한 어금니 — 치료 후' }, shape: 'wide' },
@@ -195,6 +211,8 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   },
   '/treatment/natural-tooth/endosonic': {
     lines: ['엔도소닉', '{초음파 세척기}'],
+    kicker: '초음파로 신경관을 씻어 내는 엔도소닉',
+    lead: '엔도소닉은 이런 점이 다릅니다.',
     cards: [
       { fig: { key: 'scene/endosonic', alt: '엔도소닉 초음파 세척기로 근관을 세척하는 장면' }, shape: 'portrait' },
       { fig: { key: 'orig/endo-hero', alt: '엔도소닉 초음파 세척기로 근관을 세척하는 진료 장면' }, shape: 'wide' },
@@ -203,8 +221,8 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   },
   '/treatment/painless': {
     lines: ['무통 & 저자극', '{시스템}'],
-    kicker: '통증을 줄인 편안한 진료',
-    lead: '무통마취기와 저자극 스케일러, 수면치료로 진료 중 느끼는 불편함을 줄입니다.',
+    kicker: '통증을 줄이는 무통 & 저자극 시스템',
+    lead: '진료 중 불편함을 이렇게 줄입니다.',
     cards: [
       { fig: { key: 'orig/pain-hero', alt: '파노라마 모니터 앞에서 무통마취기(NO PAIN III)로 마취하는 원장' }, shape: 'portrait' },
       { fig: { key: 'equip/painless-set', alt: '무통 & 저자극 시스템 장비' }, shape: 'wide' },
@@ -213,8 +231,8 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   },
   '/treatment/painless/anesthesia': {
     lines: ['무통마취 ·', '{도포 & 가글마취}'],
-    kicker: '컴퓨터 자동 마취 NO-PAIN III',
-    lead: '일정한 속도와 압력으로 마취액을 넣고 극세사 바늘을 써서 마취 주사의 통증을 줄입니다.',
+    kicker: '컴퓨터가 속도를 맞추는 무통마취 NO-PAIN III',
+    lead: '마취가 아픈 두 순간을 이렇게 줄입니다.',
     cards: [
       { fig: { key: 'orig/pain-hero', alt: '파노라마 모니터 앞에서 무통마취기(NO PAIN III)로 마취하는 원장' }, shape: 'portrait' },
       { fig: { key: 'orig/add-lidoca-gel', alt: '잇몸 도포마취제 리도카겔 상자·통과 딸기' }, shape: 'wide' },
@@ -223,8 +241,8 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   },
   '/treatment/painless/sedation': {
     lines: ['{수면치료}', '(의식하 진정요법)'],
-    kicker: '의식하 진정요법',
-    lead: '치과가 무섭거나 오래 걸리는 수술이라면, 진정제로 긴장을 낮춘 상태에서 진료합니다.',
+    kicker: '긴장을 낮춘 상태로 받는 의식하 진정요법',
+    lead: '이런 분들이 수면치료를 고려합니다.',
     cards: [
       { fig: { key: 'orig/sleep-hero', alt: '눈을 감고 편안하게 진료받는 여성 환자' }, shape: 'portrait' },
       { fig: { key: 'sun/consult-monitor', alt: '모니터로 촬영 사진을 보며 환자에게 설명하는 원장' }, shape: 'wide' },
@@ -233,8 +251,8 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   },
   '/treatment/painless/airflow': {
     lines: ['{에어 플로우}', '(저자극 스케일링 · GBT)'],
-    kicker: '에어플로우 · GBT 스케일링',
-    lead: '고운 파우더와 물을 뿌려 치석과 바이오필름을 씻어 내, 긁는 느낌과 시린 자극을 줄입니다.',
+    kicker: '긁지 않고 씻어 내는 에어플로우 · GBT',
+    lead: '에어플로우 스케일링은 이런 점이 다릅니다.',
     cards: [
       { fig: { key: 'orig/airflow-device', alt: 'EMS 에어플로우 프로필락시스 마스터 장비' }, shape: 'portrait' },
       { fig: { key: 'equip/airflow', alt: 'EMS 에어플로우 장비' }, shape: 'wide' },
