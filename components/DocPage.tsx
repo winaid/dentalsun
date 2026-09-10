@@ -429,7 +429,6 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
                 </tbody>
               </table>
             </div>
-            <p className="mt-2 text-[12.5px] text-ink-muted md:hidden" aria-hidden>표를 옆으로 밀어 나머지 칸을 보세요 →</p>
             {b.note && <p className="mt-4 text-[14.5px] leading-relaxed text-ink-muted">※ {b.note}</p>}
           </div>
         </section>
@@ -459,7 +458,6 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
                 </tbody>
               </table>
             </div>
-            <p className="mt-2 text-[12.5px] text-ink-muted md:hidden" aria-hidden>표를 옆으로 밀어 나머지 칸을 보세요 →</p>
             {b.note && <p className="mt-4 text-[14.5px] leading-relaxed text-ink-muted">※ {b.note}</p>}
           </div>
         </section>

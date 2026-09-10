@@ -181,7 +181,6 @@ export default function HomePage() {
                 </div>
               ))}
             </div>
-            <p className="mt-2 text-[12.5px] text-ink-muted sm:hidden" aria-hidden>옆으로 밀어 다른 영상을 보세요 →</p>
             <div className="mt-10 sm:mt-14">
               {/* 뒤집기 카드 3×2 — 앞면은 번호·제목만, 마우스를 올리면 사진 배경과 설명이 나온다(오너 요청). 폰은 2열 */}
               <ul className="reveal-stack mt-2 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">

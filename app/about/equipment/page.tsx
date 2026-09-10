@@ -67,7 +67,7 @@ export default function EquipmentPage() {
                 진단부터 제작까지 <span className="accent">디지털 여섯 단계</span>
               </h2>
               <p className="lead mt-4">
-                <Sentences text="본을 뜨고 기다리던 과정을 스캔과 데이터가 대신합니다. 띠에 마우스를 올리면 장비별 설명이 열립니다." />
+                <Sentences text="본을 뜨고 기다리던 과정을 스캔과 데이터가 대신합니다." />
               </p>
             </div>
             <EquipShowcase items={DIGITAL} />
@@ -82,7 +82,7 @@ export default function EquipmentPage() {
                 통증과 자극을 줄이는 <span className="accent">진료 장비</span>
               </h2>
               <p className="lead mt-4">
-                <Sentences text="마취, 스케일링, 턱관절 물리치료, 신경치료까지 환자분의 부담을 줄이는 장비를 갖췄습니다. 카드에 마우스를 올리면 장비 사진과 설명이 나옵니다." />
+                <Sentences text="마취, 스케일링, 턱관절 물리치료, 신경치료까지 환자분의 부담을 줄이는 장비를 갖췄습니다." />
               </p>
             </div>
             <EquipShowcase items={COMFORT} variant="flip" />
