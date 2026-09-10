@@ -232,7 +232,7 @@ export function ContactBand({ title = '궁금한 점은 편하게 문의해 주�
         <div className="absolute inset-0 bg-gradient-to-r from-night via-night/85 to-night/50" />
       </div>
       <div className="wrap py-20 md:py-28">
-        <div className="reveal grid items-center gap-10 md:grid-cols-[1fr_auto]">
+        <div className="reveal mx-auto grid max-w-[1320px] items-center gap-10 md:grid-cols-[1fr_auto] lg:gap-16">
           <div>
             <p className="eyebrow on-dark">CONTACT</p>
             <h2 className="display-sm mt-4 !text-white">{title}</h2>
@@ -257,36 +257,73 @@ export function ContactBand({ title = '궁금한 점은 편하게 문의해 주�
               ))}
             </ul>
           </div>
-          {/* 버튼 넷은 같은 크기 — 전화번호를 버튼 안에 넣으면 혼자 길어진다(오너) */}
-          <div className="grid grid-cols-2 gap-3">
-            <a href={CLINIC.phoneHref} className="btn-sun !min-w-[152px] !gap-2">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden>
-                <path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z" fill="currentColor" />
-              </svg>
-              전화
+          {/* 문의 카드 넷 — 가운데가 휑해 보여 버튼을 카드로 키웠다(오너). 이름 아래 한 줄로 무엇인지 알려 준다 */}
+          <div className="grid gap-3.5 sm:grid-cols-2 lg:min-w-[560px]">
+            <a
+              href={CLINIC.phoneHref}
+              className="group flex items-center gap-4 rounded-2xl bg-sun-500 px-5 py-4 shadow-[var(--shadow-btn)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-sun-600"
+            >
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/20 text-white">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
+                  <path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z" fill="currentColor" />
+                </svg>
+              </span>
+              <span className="min-w-0">
+                <span className="block text-[16.5px] font-extrabold text-white">전화 상담</span>
+                <span className="block text-[13.5px] tabular-nums text-white/80">{CLINIC.phone}</span>
+              </span>
             </a>
-            <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="btn-ghost-dark !min-w-[152px] !gap-2">
-              <span className="flex h-[18px] w-[18px] items-center justify-center rounded-[5px] bg-[#03C75A] text-white">
-                <svg width="11" height="11" viewBox="0 0 24 24" aria-hidden>
+
+            <a
+              href={CLINIC.booking.naver}
+              target="_blank"
+              rel="noopener"
+              className="group flex items-center gap-4 rounded-2xl border border-white/15 bg-white/8 px-5 py-4 backdrop-blur transition-all duration-200 hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/14"
+            >
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#03C75A] text-white">
+                <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden>
                   <path d="M4 3h5.2l5.6 8.4V3H20v18h-5.2L9.2 12.6V21H4z" fill="currentColor" />
                 </svg>
               </span>
-              네이버 예약
+              <span className="min-w-0">
+                <span className="block text-[16.5px] font-extrabold">네이버 예약</span>
+                <span className="block text-[13.5px] text-white/60">원하는 날짜·시간 고르기</span>
+              </span>
             </a>
-            <a href={CLINIC.booking.naverTalk} target="_blank" rel="noopener" className="btn-ghost-dark !min-w-[152px] !gap-2">
-              <span className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-[#03C75A] text-white">
-                <svg width="11" height="11" viewBox="0 0 24 24" aria-hidden>
+
+            <a
+              href={CLINIC.booking.naverTalk}
+              target="_blank"
+              rel="noopener"
+              className="group flex items-center gap-4 rounded-2xl border border-white/15 bg-white/8 px-5 py-4 backdrop-blur transition-all duration-200 hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/14"
+            >
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#03C75A] text-white">
+                <svg width="19" height="19" viewBox="0 0 24 24" aria-hidden>
                   <path d="M12 4c-4.7 0-8.5 3-8.5 6.8 0 2.4 1.6 4.5 4 5.7L6.8 20l4-2.4c.4 0 .8.1 1.2.1 4.7 0 8.5-3 8.5-6.8S16.7 4 12 4z" fill="currentColor" />
                 </svg>
               </span>
-              톡톡 상담
+              <span className="min-w-0">
+                <span className="block text-[16.5px] font-extrabold">톡톡 상담</span>
+                <span className="block text-[13.5px] text-white/60">메시지로 물어보기</span>
+              </span>
             </a>
-            <Link href="/visit" className="btn-ghost-dark !min-w-[152px] !gap-2">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden>
-                <path d="M12 21s6-5.2 6-10a6 6 0 1 0-12 0c0 4.8 6 10 6 10z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
-                <circle cx="12" cy="11" r="2.2" fill="currentColor" />
-              </svg>
-              오시는 길
+
+            <Link
+              href="/visit"
+              className="group flex items-center gap-4 rounded-2xl border border-white/15 bg-white/8 px-5 py-4 backdrop-blur transition-all duration-200 hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/14"
+            >
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand-600 text-white">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
+                  <path d="M12 21s6-5.2 6-10a6 6 0 1 0-12 0c0 4.8 6 10 6 10z" stroke="currentColor" strokeWidth="1.9" strokeLinejoin="round" />
+                  <circle cx="12" cy="11" r="2.2" fill="currentColor" />
+                </svg>
+              </span>
+              <span className="min-w-0">
+                <span className="block text-[16.5px] font-extrabold">오시는 길</span>
+                <span className="block text-[13.5px] text-white/60">
+                  {CLINIC.transit[0].station} {CLINIC.transit[0].exit} {CLINIC.transit[0].walk}
+                </span>
+              </span>
             </Link>
           </div>
         </div>

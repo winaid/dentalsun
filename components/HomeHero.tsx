@@ -16,6 +16,15 @@ const BACKDROPS = [
   { key: 'ai/hero-wide-2', alt: '' },
 ];
 
+/** 오시는 길 — 같은 역·같은 출구는 한 줄로 묶는다 (시청역 1·2호선). 값은 lib/clinic.ts 하나뿐. */
+const STATIONS = CLINIC.transit.reduce<Array<{ station: string; exit: string; walk: string; lines: Array<{ n: string; color: string }> }>>((acc, t) => {
+  const n = t.line.replace('호선', '');
+  const hit = acc.find((s) => s.station === t.station && s.exit === t.exit);
+  if (hit) hit.lines.push({ n, color: t.color });
+  else acc.push({ station: t.station, exit: t.exit, walk: t.walk, lines: [{ n, color: t.color }] });
+  return acc;
+}, []);
+
 export function HomeHero() {
   return (
     <section className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-night text-white" data-hero-full>
@@ -97,13 +106,34 @@ export function HomeHero() {
             <p className="mt-3 text-[12px] text-white/55">{HOURS.closed}</p>
           </div>
 
-          {/* 역 칩 */}
-          <div data-tilt-item="26" className="float-y hero-in hero-in-4 absolute right-[4%] bottom-[4%] flex items-center gap-2.5 rounded-2xl border border-white/15 bg-night/70 px-4 py-3 backdrop-blur-md" style={{ animationDelay: '-2.6s' }}>
-            <span className="flex h-7 w-7 items-center justify-center rounded-full text-[12px] font-bold text-white" style={{ background: CLINIC.transit[0].color }}>5</span>
-            <span className="text-[14px] leading-tight">
-              <span className="block font-bold">{CLINIC.transit[0].station} {CLINIC.transit[0].exit}</span>
-              <span className="block text-white/65">{CLINIC.transit[0].walk} · {CLINIC.parking.place} {CLINIC.parking.fee}</span>
-            </span>
+          {/* 역 칩 — 광화문역만 적으면 시청역에서 오시는 분들이 모른다(오너). 같은 역·출구는 한 줄로 묶는다 */}
+          <div data-tilt-item="26" className="float-y hero-in hero-in-4 absolute right-[4%] bottom-[4%] rounded-2xl border border-white/15 bg-night/70 px-4 py-3 backdrop-blur-md" style={{ animationDelay: '-2.6s' }}>
+            <ul className="space-y-1.5">
+              {STATIONS.map((s) => (
+                <li key={s.station} className="flex items-center gap-2.5 text-[14px] leading-tight">
+                  <span className="flex gap-1">
+                    {s.lines.map((l) => (
+                      <span
+                        key={l.n}
+                        className="flex h-[22px] w-[22px] items-center justify-center rounded-full text-[11.5px] font-extrabold text-white"
+                        style={{ background: l.color }}
+                      >
+                        {l.n}
+                      </span>
+                    ))}
+                  </span>
+                  <span>
+                    <span className="font-bold">
+                      {s.station} {s.exit}
+                    </span>{' '}
+                    <span className="text-white/65">{s.walk}</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-2.5 border-t border-white/12 pt-2.5 text-[12.5px] text-white/60">
+              {CLINIC.parking.place} {CLINIC.parking.fee}
+            </p>
           </div>
         </div>
       </div>
