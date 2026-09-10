@@ -82,15 +82,19 @@ export function HomeHero() {
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zm0 4v5l3 2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
               진료시간
             </p>
+            {/* 네 줄 모두 — 점심시간과 토요일(2·4주)을 빼면 잘못 알고 오신다(오너) */}
             <ul className="mt-3 space-y-1.5 text-[14.5px]">
-              {HOURS.display.slice(0, 3).map((h) => (
+              {HOURS.display.map((h) => (
                 <li key={h.label} className="flex items-center justify-between gap-3">
-                  <span className="text-white/80">{h.label}</span>
+                  <span className="text-white/80">
+                    {h.label}
+                    {h.short && <span className="ml-1.5 text-[12px] font-semibold text-sun-300">{h.short}</span>}
+                  </span>
                   <span className="font-bold tabular-nums">{h.time}</span>
                 </li>
               ))}
             </ul>
-            <p className="mt-3 inline-flex rounded-full bg-sun-500/90 px-2.5 py-1 text-[11px] font-bold">화·목 야간진료 21:00</p>
+            <p className="mt-3 text-[12px] text-white/55">{HOURS.closed}</p>
           </div>
 
           {/* 역 칩 */}

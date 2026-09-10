@@ -115,7 +115,8 @@ export const CLINIC = {
  *    휴진 토요일에 '진료 중' 이라고 답하면 환자가 헛걸음한다.
  */
 export interface HourRow { day: string; ko: string; open: string; close: string; note?: string; biweekly?: boolean }
-export interface HourDisplay { label: string; time: string; note?: string }
+/** short = 좁은 자리(첫 화면 띠)용 아주 짧은 단서. note 는 표에 쓰는 긴 설명 */
+export interface HourDisplay { label: string; time: string; note?: string; short?: string }
 export const HOURS: { lunch: { start: string; end: string }; rows: HourRow[]; display: HourDisplay[]; closed: string } = {
   lunch: { start: '13:30', end: '14:30' },
   rows: [
@@ -129,8 +130,8 @@ export const HOURS: { lunch: { start: string; end: string }; rows: HourRow[]; di
   /** 화면에 보여 주는 묶음 표기 — 기존 홈페이지 표기 순서 그대로 */
   display: [
     { label: '월 · 수 · 금', time: '10:00 – 19:00' },
-    { label: '화 · 목', time: '10:00 – 21:00', note: '야간진료' },
-    { label: '토요일', time: '10:00 – 14:00', note: '2·4째주 진료 · 점심시간 없음' },
+    { label: '화 · 목', time: '10:00 – 21:00', note: '야간진료', short: '야간' },
+    { label: '토요일', time: '10:00 – 14:00', note: '2·4째주 진료 · 점심시간 없음', short: '2·4주' },
     { label: '점심시간', time: '13:30 – 14:30' },
   ],
   closed: '일요일 · 공휴일 휴진 (대체공휴일 정상진료)',
