@@ -10,7 +10,7 @@ import { figSrc } from '@/lib/docs';
  * 홈 첫 화면 — 전폭 실사 한 장이 화면을 채우고, 아래 띠에서 장면이 바뀐다.
  *
  * ★ 사진은 전부 오너가 준 병원 실사(sega8074)다. AI 사진·스톡 사진을 쓰지 않는다.
- * ★ 영상이 없어 사진으로 대신한다 — 켄번스(천천히 다가옴) + 6.5초 교차로 영상처럼 보이게 한다.
+ * ★ 영상이 없어 사진으로 대신한다 — 켄번스(천천히 다가옴) + 교차 전환으로 영상처럼 보이게 한다(머무는 시간은 DURATION 하나로 정한다).
  * ★ 문구는 lib/clinic.ts 의 사실과 실제 진료 내용만 쓴다. 효과·최상급 표현 금지(의료광고).
  */
 const SLIDES = [
@@ -62,8 +62,8 @@ const SLIDES = [
   },
 ];
 
-/** 한 장면이 머무는 시간 (오너: 1초 줄여 5.5초). 진행 막대는 아래에서 이 값을 그대로 받는다 */
-const DURATION = 5500;
+/** 한 장면이 머무는 시간 (오너 요청으로 두 번 줄여 4.5초). 진행 막대는 아래에서 이 값을 그대로 받는다 */
+const DURATION = 4500;
 
 /** 오시는 길 — 같은 역·같은 출구는 한 줄로 묶는다 (시청역 1·2호선). 값은 lib/clinic.ts 하나뿐. */
 const STATIONS = CLINIC.transit.reduce<Array<{ station: string; exit: string; walk: string; lines: Array<{ n: string; color: string }> }>>((acc, t) => {

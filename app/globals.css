@@ -343,7 +343,7 @@ body {
 }
 .hero-rail {
   transform-origin: left;
-  animation: hero-rail 5.5s linear both;
+  animation: hero-rail 4.5s linear both;
 }
 
 /* 떠다니는 빛 덩어리 */
