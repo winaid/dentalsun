@@ -277,9 +277,11 @@ body {
 .hero-in-4 { animation-delay: 540ms; }
 
 /* 머리말 펼침 메뉴 — 위에서 아래로 짧게 내려온다(hero-in 은 아래에서 올라와 메뉴에는 어색했다, 오너 지적) */
+/* ⚠️ X 이동을 여기서 하지 않는다 — 가운데 맞춤은 유틸(-translate-x-1/2)이 CSS translate 속성으로 하고,
+   여기서 transform 으로 또 -50% 를 주면 둘이 더해져 메뉴가 한 칸 왼쪽으로 밀린다(오너 지적). */
 @keyframes menu-in {
-  from { opacity: 0; transform: translate(-50%, -10px); }
-  to { opacity: 1; transform: translate(-50%, 0); }
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: none; }
 }
 .menu-in {
   animation: menu-in 0.22s cubic-bezier(0.2, 0.7, 0.2, 1) both;
