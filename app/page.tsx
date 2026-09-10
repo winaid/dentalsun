@@ -285,7 +285,7 @@ export default function HomePage() {
         </section>
 
         {/* ── 의료진 ── */}
-        <section className="section relative overflow-hidden bg-canvas !py-12 lg:!py-16">
+        <section className="section relative overflow-hidden bg-canvas !py-14 lg:!py-20">
           <div className="wrap">
             <div className="reveal mx-auto max-w-[820px] text-center">
               <p className="eyebrow justify-center">OUR DOCTORS</p>
@@ -306,29 +306,29 @@ export default function HomePage() {
                     ))}
                   </div>
                 </div>
-                <div className="relative z-10 mx-auto grid max-w-[960px] items-center gap-8 md:grid-cols-[320px_1fr] md:gap-10">
+                <div className="relative z-10 mx-auto grid max-w-[1440px] items-center gap-10 md:grid-cols-[minmax(0,360px)_1fr] md:gap-12 lg:grid-cols-[460px_1fr] lg:gap-16 xl:grid-cols-[480px_1fr]">
                   <div className="reveal">
-                    <div className="wipe relative mx-auto aspect-[4/5] w-full max-w-[320px] overflow-hidden rounded-3xl bg-canvas-2 shadow-[var(--shadow-lift)]">
-                      <Image src={d.photo} alt={`${d.name} ${d.role}`} fill sizes="360px" className="object-cover object-top" />
+                    <div className="wipe relative mx-auto aspect-[4/5] w-full max-w-[360px] overflow-hidden rounded-3xl bg-canvas-2 shadow-[var(--shadow-lift)] lg:max-w-none">
+                      <Image src={d.photo} alt={`${d.name} ${d.role}`} fill sizes="(max-width: 768px) 88vw, 480px" className="object-cover object-top" />
                     </div>
                   </div>
                   <div className="reveal">
-                    <p className="text-[1.05rem] font-semibold text-brand-600">{d.specialty}</p>
-                    <h3 className="mt-1.5 text-[1.9rem] font-extrabold tracking-[-0.02em] text-ink md:text-[2.2rem]">
-                      {d.name} <span className="text-[1.2rem] font-bold text-ink-soft md:text-[1.35rem]">{d.role}</span>
+                    <p className="text-[1.1rem] font-semibold text-brand-600 md:text-[1.2rem]">{d.specialty}</p>
+                    <h3 className="mt-2 text-[2.1rem] font-extrabold tracking-[-0.02em] text-ink md:text-[2.6rem] lg:text-[2.9rem]">
+                      {d.name} <span className="text-[1.3rem] font-bold text-ink-soft md:text-[1.5rem]">{d.role}</span>
                     </h3>
-                    <div className="mt-4 rounded-2xl border border-hairline bg-white/95 p-5 shadow-[var(--shadow-soft)] backdrop-blur md:p-6">
-                      <p className="text-[14px] font-bold tracking-wide text-ink-muted">주요 약력</p>
-                      <ul className="mt-3 grid gap-x-6 gap-y-2 sm:grid-cols-2">
+                    <div className="mt-5 rounded-2xl border border-hairline bg-white/95 p-6 shadow-[var(--shadow-soft)] backdrop-blur md:mt-6 md:p-8">
+                      <p className="text-[14.5px] font-bold tracking-wide text-ink-muted md:text-[15px]">주요 약력</p>
+                      <ul className="mt-4 grid gap-x-8 gap-y-3 sm:grid-cols-2 md:mt-5 md:gap-x-10 md:gap-y-3.5">
                         {d.career.map((c) => (
-                          <li key={c} className="flex items-start gap-2.5 text-[14.5px] leading-[1.5] text-ink">
-                            <span className="mt-[8px] h-1.5 w-1.5 shrink-0 rounded-full bg-brand-600" />
+                          <li key={c} className="flex items-start gap-3 text-[15.5px] leading-[1.5] text-ink md:text-[16.5px]">
+                            <span className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-brand-600 md:mt-[10px]" />
                             {c}
                           </li>
                         ))}
                       </ul>
                     </div>
-                    <Link href={`/about/doctors#${d.slug}`} className="btn-brand mt-5">의료진 소개 자세히</Link>
+                    <Link href={`/about/doctors#${d.slug}`} className="btn-brand mt-6 md:mt-7">의료진 소개 자세히</Link>
                   </div>
                 </div>
               </div>
