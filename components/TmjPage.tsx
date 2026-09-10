@@ -239,9 +239,20 @@ export function TmjPage({ doc }: { doc: Doc }) {
                 <div className="rounded-2xl bg-night p-7 text-white md:p-8">
                   <p className="text-[12px] font-bold tracking-[0.2em] text-sun-300">PRINCIPLE</p>
                   <h3 className="mt-2 text-[1.3rem] font-extrabold">{TMJ_PRINCIPLE.title}</h3>
-                  <p className="mt-3 text-[15px] leading-[1.8] text-white/80">
-                    <Sentences text={TMJ_PRINCIPLE.text} clauses={false} />
+                  <p className="mt-3 text-[15px] leading-[1.8] text-white/75">
+                    <Sentences text={TMJ_PRINCIPLE.lead} clauses={false} />
                   </p>
+                  {/* 단계 사다리 — 왼쪽 선을 따라 1 → 2 → 3 → 마지막. 긴 한 덩어리 글을 눈으로 따라가게 나눴다 */}
+                  <ol className="mt-6 space-y-5 border-l border-white/15 pl-6">
+                    {TMJ_PRINCIPLE.steps.map((s) => (
+                      <li key={s.n} className="relative">
+                        <span aria-hidden className="absolute -left-[27px] top-1.5 h-2.5 w-2.5 rounded-full bg-sun-400 ring-4 ring-night" />
+                        <span className="block text-[11.5px] font-extrabold tracking-[0.18em] text-sun-300">{s.n}</span>
+                        <span className="mt-1 block text-[15.5px] font-bold leading-snug text-white">{s.label}</span>
+                        <span className="mt-1.5 block text-[14px] leading-[1.7] text-white/70">{s.desc}</span>
+                      </li>
+                    ))}
+                  </ol>
                 </div>
                 <div className="card card-3d p-7 md:p-8">
                   <p className="text-[12px] font-bold tracking-[0.2em] text-sun-600">SPLINT</p>
@@ -267,8 +278,9 @@ export function TmjPage({ doc }: { doc: Doc }) {
               <ul className="reveal-stack grid gap-5 md:grid-cols-2">
                 {TMJ_EQUIP.map((e) => (
                   <li key={e.title} className="card flex gap-5 p-5 md:p-6">
-                    <span className="flex w-[110px] shrink-0 items-center justify-center rounded-xl bg-canvas-2 p-2 md:w-[130px]">
-                      <Image src={figSrc(e.fig.key)} alt={e.fig.alt} width={figSize(e.fig.key).w} height={figSize(e.fig.key).h} sizes="130px" className="h-auto max-h-[230px] w-auto max-w-full object-contain" />
+                    {/* 사진은 3:4 상자를 꽉 채운다 — 아주 긴 세로 원본이 회색 상자 안에 작게 떠 있던 것을 배경을 이어 붙여 규격에 맞췄다 */}
+                    <span className="relative block aspect-[3/4] w-[104px] shrink-0 self-start overflow-hidden rounded-xl bg-canvas-2 md:w-[118px] lg:w-[132px]">
+                      <Image src={figSrc(e.fig.key)} alt={e.fig.alt} fill sizes="150px" className="object-cover" />
                     </span>
                     <div className="min-w-0">
                       <p className="text-[11.5px] font-bold tracking-[0.2em] text-sun-600">{e.eyebrow}</p>

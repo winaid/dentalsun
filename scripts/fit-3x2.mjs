@@ -16,16 +16,22 @@ import fs from 'node:fs';
 import path from 'node:path';
 import sharp from 'sharp';
 
-const W = 1100; /* 1200 미만 — 이 값을 넘으면 DocPage 가 첫 화면 배경으로도 쓴다(카드만 바꾸려는 것) */
-const H = 733;
+const BASE_W = 1100; /* 1200 미만 — 이 값을 넘으면 DocPage 가 첫 화면 배경으로도 쓴다(카드만 바꾸려는 것) */
+const BASE_H = 733;
 
-/** [원본 키, 방식, 자를 위치] — 결과는 fit/<이름>.webp. 위치를 안 주면 attention(볼거리 우선) */
+/**
+ * [원본 키, 방식, 자를 위치, 가로세로, 새 이름] — 결과는 fit/<이름>.webp.
+ * 위치를 안 주면 attention(볼거리 우선), 가로세로를 안 주면 3:2.
+ */
 const JOBS = [
   ['orig/airflow-device', 'pad'],
   ['orig/sleep-hero', 'crop'],
   /* 원장이 서서 진료하는 사진은 머리가 위에 있어 위쪽 기준으로 자른다 — attention 은 손만 남기고 얼굴을 잘랐다 */
   ['orig/tmj-hero', 'crop', 'north'],
   ['orig/pain-hero', 'crop', 'north'],
+  /* 턱관절 장비 두 대 — 원본이 아주 긴 세로(0.43·0.52)라 회색 상자에 작게 떠 있었다. 3:4 로 배경을 이어 붙인다 */
+  ['equip/laser', 'pad', null, 3 / 4, 'tmj-laser'],
+  ['equip/ct-3d', 'pad', null, 3 / 4, 'tmj-ct3d'],
 ];
 
 const outDir = 'public/img/fit';
@@ -44,10 +50,12 @@ async function edgeColor(src) {
   return { rgb: { r: avg[0], g: avg[1], b: avg[2] }, flat: spread < 26 };
 }
 
-for (const [key, mode, position] of JOBS) {
+for (const [key, mode, position, ratio, rename] of JOBS) {
   const src = `public/img/${key}.webp`;
-  const name = path.basename(key);
+  const name = rename ?? path.basename(key);
   const out = `${outDir}/${name}.webp`;
+  /* 세로로 긴 상자는 폭을 기준으로 잡는다 — 1200 을 넘으면 DocPage 가 첫 화면 배경으로도 쓴다 */
+  const [W, H] = ratio ? [900, Math.round(900 / ratio)] : [BASE_W, BASE_H];
 
   if (mode === 'crop') {
     await sharp(src)
