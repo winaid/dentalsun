@@ -11,6 +11,8 @@ export interface Doctor {
   /** 자격 한 줄 — 배너의 상단 표기 그대로 */
   specialty: string;
   photo: string;
+  /** 배경을 지운 사진(누끼) — 홈 의료진 구역처럼 액자 없이 쓰는 자리. AI 재생성이 아니라 배경만 걷어 낸 원본이다 */
+  cutout?: string;
   /** 주요 약력 — 배너 원문 순서 */
   career: string[];
   /** 진료 초점 — 기존 홈페이지 메뉴에서 이 원장이 다루는 것으로 표시된 영역 */
@@ -24,6 +26,7 @@ export const DOCTORS: Doctor[] = [
     role: '대표원장',
     specialty: '통합치의학과 전문의',
     photo: '/img/doctors/yang.webp',
+    cutout: '/img/doctors/yang-cut.webp',
     career: [
       '보건복지부 인증 통합치의학과 전문의',
       '서울대학교 치의학 대학원 고급치의학 연수과정',

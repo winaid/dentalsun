@@ -123,7 +123,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     lines: ['보험 틀니 &', '{임플란트}'],
     cards: [
       { fig: { key: 'orig/denture-hero', alt: '확대경을 쓴 원장이 초록 드레이프를 덮은 환자를 진료하는 모습' }, shape: 'portrait' },
-      { fig: { key: 'scene/denture', alt: '틀니 모형' }, shape: 'wide' },
+      { fig: { key: 'ai/insurance-denture', alt: '부분 틀니를 두 손으로 살펴보는 어르신의 손' }, shape: 'wide' },
       { fig: { key: 'orig/implant-fa-denture', alt: '전악 임플란트 보철물과 분홍 틀니' }, shape: 'std' },
     ],
   },
@@ -131,7 +131,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     lines: ['{보험틀니}'],
     cards: [
       { fig: { key: 'orig/denture-hero', alt: '확대경을 쓴 원장이 초록 드레이프를 덮은 환자를 진료하는 모습' }, shape: 'portrait' },
-      { fig: { key: 'scene/denture', alt: '틀니 모형' }, shape: 'wide' },
+      { fig: { key: 'ai/insurance-denture', alt: '부분 틀니를 두 손으로 살펴보는 어르신의 손' }, shape: 'wide' },
       { fig: { key: 'orig/implant-fa-models', alt: '상악·하악 전악 임플란트 보철 모형' }, shape: 'std' },
     ],
   },
@@ -195,7 +195,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     lines: ['{수면치료}', '(의식하 진정요법)'],
     cards: [
       { fig: { key: 'orig/sleep-hero', alt: '눈을 감고 편안하게 진료받는 여성 환자' }, shape: 'portrait' },
-      { fig: { key: 'scene/sleep', alt: '수면치료 중 편안하게 눈을 감은 환자' }, shape: 'wide' },
+      { fig: { key: 'sun/consult-monitor', alt: '모니터로 촬영 사진을 보며 환자에게 설명하는 원장' }, shape: 'wide' },
       { fig: { key: 'orig/add-korea-map', alt: '지역별 핀이 꽂힌 한국 지도 일러스트' }, shape: 'std' },
     ],
   },
@@ -256,7 +256,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     lines: ['치과가 무서운 분들을', '{위한 안내}'],
     cards: [
       { fig: { key: 'orig/sleep-hero', alt: '눈을 감고 편안하게 진료받는 여성 환자' }, shape: 'portrait' },
-      { fig: { key: 'scene/sleep', alt: '수면치료 중 편안하게 눈을 감은 환자' }, shape: 'wide' },
+      { fig: { key: 'ai/painless-anesthesia', alt: '무통마취기로 천천히 마취액을 넣는 장면' }, shape: 'wide' },
       { fig: { key: 'orig/pain-nopain', alt: '컴퓨터 제어 무통마취기 NO PAIN III 장비' }, shape: 'std' },
     ],
   },
@@ -352,7 +352,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     lines: ['틀니가 헐거워지고', '{잘 씹히지 않아요}'],
     cards: [
       { fig: { key: 'orig/denture-hero', alt: '확대경을 쓴 원장이 초록 드레이프를 덮은 환자를 진료하는 모습' }, shape: 'portrait' },
-      { fig: { key: 'scene/denture', alt: '틀니 모형' }, shape: 'wide' },
+      { fig: { key: 'ai/insurance-denture', alt: '부분 틀니를 두 손으로 살펴보는 어르신의 손' }, shape: 'wide' },
       { fig: { key: 'orig/implant-fa-denture', alt: '전악 임플란트 보철물과 분홍 틀니' }, shape: 'std' },
     ],
   },

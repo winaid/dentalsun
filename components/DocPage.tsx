@@ -130,7 +130,7 @@ export function DocPage({ doc }: { doc: Doc }) {
         >
           <div className="flex flex-wrap gap-3">
             <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="btn-sun">네이버 예약</a>
-            <a href={CLINIC.phoneHref} className="btn-ghost-dark">전화 {CLINIC.phone}</a>
+            <a href={CLINIC.booking.naverTalk} target="_blank" rel="noopener" className="btn-ghost-dark">톡톡 상담</a>
           </div>
         </HeroCollage>
 
@@ -196,9 +196,7 @@ export function DocPage({ doc }: { doc: Doc }) {
         )}
 
         <ContactBand bg={bandBg} />
-        <div className="py-8">
-          <MedicalNotice />
-        </div>
+        <MedicalNotice />
       </main>
     </>
   );

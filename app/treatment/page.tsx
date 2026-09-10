@@ -98,9 +98,7 @@ export default function TreatmentIndex() {
           </div>
         </section>
         <ContactBand />
-        <div className="py-8">
-          <MedicalNotice />
-        </div>
+        <MedicalNotice />
       </main>
     </>
   );

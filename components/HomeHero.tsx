@@ -21,20 +21,14 @@ const SLIDES = [
     alt: '광화문선치과 수술실에서 무영등 아래 임플란트 수술을 진행하는 의료진',
     /** 사진이 보이는 자리 — 넓은 화면은 글 자리를 비우려 오른쪽으로, 좁은 화면은 사람이 잘리지 않게 */
     fit: 'object-[56%_50%] md:object-[58%_50%]',
+    /* 첫 문장(후킹)은 오너가 준 문구 그대로. ⚠️ 15년 · 5,000건 은 병원이 확인한 숫자여야 한다(허위·과장 광고 금지) */
     title: (
       <>
-        더 빠르고, 정확하게, 그리고 <span className="accent-sun">편안하게</span>
-        <br />
-        {/* 좁은 화면에서 '진료' 한 낱말만 남지 않게 두 낱말씩 끊는다 */}
-        <span className="sm:hidden">
-          {CLINIC.tagline.split(' ').slice(0, 2).join(' ')}
-          <br />
-          {CLINIC.tagline.split(' ').slice(2).join(' ')}
-        </span>
-        <span className="hidden sm:inline">{CLINIC.tagline}</span>
+        바른 진료 <span className="accent-sun">15년</span>,
+        <br className="sm:hidden" /> 결과는 오래도록.
       </>
     ),
-    lead: '강남성심병원 외래교수 출신 전문의가 이해하기 쉬운 설명과 불편함을 줄인 진료 시스템으로 함께합니다.',
+    lead: '턱관절 5,000건+ & 고난도 풀아치·임플란트 전문 광화문선치과',
   },
   {
     key: 'sun/hero-scan',
@@ -124,13 +118,14 @@ export function HomeHero() {
             <h1 className="display mt-6 text-balance !text-white on-photo">{SLIDES[i].title}</h1>
             <p className="mt-7 text-[1.05rem] leading-[1.85] text-white/75 md:text-[1.1rem]">{SLIDES[i].lead}</p>
           </div>
-          {/* 예약 두 갈래 — 왼쪽은 네이버 예약(플레이스와 연결), 오른쪽은 네이버 톡톡 상담 */}
-          <div className="mt-10 grid grid-cols-2 gap-3 hero-in hero-in-4 sm:flex sm:flex-wrap sm:gap-3.5">
+          {/* 예약 두 갈래 — 왼쪽은 네이버 예약(플레이스와 연결), 오른쪽은 네이버 톡톡 상담.
+              폰에서는 아래 빠른메뉴(전화·예약·상담·오시는 길)가 같은 일을 하므로 감춘다(오너) */}
+          <div className="mt-10 hidden gap-3 hero-in hero-in-4 sm:flex sm:flex-wrap sm:gap-3.5">
             <a
               href={CLINIC.booking.naver}
               target="_blank"
               rel="noopener"
-              className="btn-sun !gap-2 !px-4 !py-[16px] !text-[15.5px] !shadow-[0_14px_34px_rgba(242,111,30,0.35)] sm:!min-w-[210px] sm:!gap-2.5 sm:!px-8 sm:!py-[20px] sm:!text-[17.5px]"
+              className="btn-sun !gap-2 !px-4 !py-[16px] !text-[15.5px] !shadow-[0_14px_34px_rgba(242,111,30,0.35)] sm:!min-w-[186px] sm:!gap-2.5 sm:!px-7 sm:!py-[16px] sm:!text-[16px]"
             >
               {/* 흰 네모 안의 초록 N 은 주황 버튼 위에서 겉돌아 뺐다(오너 지적) — 글자와 같은 흰 선 아이콘 */}
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -143,7 +138,7 @@ export function HomeHero() {
               href={CLINIC.booking.naverTalk}
               target="_blank"
               rel="noopener"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-white/95 px-4 py-[16px] text-[15.5px] font-bold text-brand-800 shadow-[0_14px_34px_rgba(9,14,35,0.35)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-white sm:min-w-[210px] sm:gap-2.5 sm:px-8 sm:py-[20px] sm:text-[17.5px]"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-white/95 px-4 py-[16px] text-[15.5px] font-bold text-brand-800 shadow-[0_14px_34px_rgba(9,14,35,0.35)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-white sm:min-w-[186px] sm:gap-2.5 sm:px-7 sm:py-[16px] sm:text-[16px]"
             >
               <span className="flex h-[22px] w-[22px] items-center justify-center rounded-full bg-[#03C75A] text-white">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -157,8 +152,8 @@ export function HomeHero() {
       </div>
 
       {/* 아래 띠 — 장면 고르기(사진이 바뀐다) + 진료시간 */}
-      {/* 좁은 화면에서는 아래 빠른메뉴(64px) 위에 얹는다 */}
-      <div className="hero-bar absolute inset-x-0 bottom-[64px] z-10 border-t border-white/12 bg-night/35 backdrop-blur-md md:bottom-0">
+      {/* 좁은 화면에서는 아래 빠른메뉴(72px) 위에 얹는다 */}
+      <div className="hero-bar absolute inset-x-0 bottom-[72px] z-10 border-t border-white/12 bg-night/35 backdrop-blur-md md:bottom-0">
         <div className="wrap grid gap-x-10 lg:grid-cols-[1fr_auto]">
           {/* 좁은 화면 — 점과 지금 장면 이름만 */}
           <div className="flex items-center gap-3.5 py-4 md:hidden">
@@ -235,14 +230,19 @@ export function HomeHero() {
           <div className="hidden items-center gap-8 border-l border-white/12 py-6 pl-10 lg:flex">
             <div>
               <p className="text-[12.5px] font-bold tracking-[0.16em] text-white/45">진료시간</p>
+              {/* 네 줄 모두 보여 준다 — 점심시간과 토요일(2·4주)을 빼면 잘못 알고 오신다(오너) */}
               <ul className="mt-2.5 space-y-1.5 text-[14.5px]">
-                {HOURS.display.slice(0, 3).map((h) => (
+                {HOURS.display.map((h) => (
                   <li key={h.label} className="flex items-center justify-between gap-7">
-                    <span className="text-white/55">{h.label}</span>
+                    <span className="text-white/55">
+                      {h.label}
+                      {h.short && <span className="ml-1.5 text-[12px] font-semibold text-sun-400">{h.short}</span>}
+                    </span>
                     <span className="font-semibold tabular-nums text-white/90">{h.time}</span>
                   </li>
                 ))}
               </ul>
+              <p className="mt-2 text-[12.5px] text-white/40">{HOURS.closed}</p>
             </div>
             {/* 전화번호는 머리말 오른쪽에 늘 있으니 여기는 역·주차 안내(오너 지시) */}
             <Link

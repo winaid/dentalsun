@@ -46,9 +46,27 @@ export function SiteHeader({ dark = false }: { dark?: boolean }) {
       onMouseLeave={() => setPanel(null)}
     >
       <div className={`flex items-center gap-5 px-5 transition-[height] duration-300 sm:px-8 lg:px-10 ${scrolled ? 'h-[68px] md:h-[80px]' : 'h-[76px] md:h-[96px]'}`}>
-        <Link href="/" className="flex shrink-0 items-center gap-2.5 whitespace-nowrap" aria-label={`${CLINIC.shortName} 홈`}>
-          <Image src="/img/brand/mark.png" alt="" width={44} height={44} priority className="h-10 w-10 md:h-11 md:w-11" />
-          <span className={`text-[1.3rem] font-extrabold tracking-[-0.02em] md:text-[1.5rem] lg:text-[1.4rem] 2xl:text-[1.55rem] ${solid ? 'text-brand-800' : 'text-white'}`}>광화문 선치과</span>
+        {/* 병원 로고 원본 그대로 — 마크만 잘라 쓰면 비율이 눌린다(오너 지적).
+            어두운 첫 화면 위에서는 글자만 흰색으로 바꾼 판(logo-white)을 겹쳐 두고 서로 바꾼다. */}
+        <Link href="/" className="flex shrink-0 items-center" aria-label={`${CLINIC.shortName} 홈`}>
+          <span className="relative block h-10 w-[144px] md:h-11 md:w-[158px]">
+            <Image
+              src="/img/brand/logo.png"
+              alt={CLINIC.name}
+              fill
+              priority
+              sizes="144px"
+              className={`object-contain transition-opacity duration-300 ${solid ? 'opacity-100' : 'opacity-0'}`}
+            />
+            <Image
+              src="/img/brand/logo-white.png"
+              alt=""
+              fill
+              priority
+              sizes="144px"
+              className={`object-contain transition-opacity duration-300 ${solid ? 'opacity-0' : 'opacity-100'}`}
+            />
+          </span>
         </Link>
 
         <span className={`hidden shrink-0 items-center gap-2 whitespace-nowrap rounded-full border px-3 py-1 text-[12px] font-semibold min-[1700px]:inline-flex ${solid ? 'border-hairline text-ink-soft' : 'border-white/25 text-white/85'}`}>
