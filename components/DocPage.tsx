@@ -160,7 +160,9 @@ export function DocPage({ doc }: { doc: Doc }) {
         )}
 
         {doc.blocks.map((b, i) => {
-          const band = !doc.isHub && (b.type === 'points' || b.type === 'steps') && i > 0 && i % 3 === 2 && bandCount < 2;
+          /* 첫 화면 카드가 이미 보여 준 목록(그림 없는 ≤4개 points)은 본문에서 한 번 더 늘어놓지 않는다 — 같은 카드 네 장이 연달아 두 번 나오던 것 */
+          if (b === firstPoints && !collage.items && !b.figure && b.items.length <= 4) return null;
+          const band =!doc.isHub && (b.type === 'points' || b.type === 'steps') && i > 0 && i % 3 === 2 && bandCount < 2;
           if (band) bandCount++;
           return <BlockView key={i} block={b} index={i} band={band ? bandBg : undefined} photoBand={i === photoBandIndex ? photoBandKey : undefined} concise={!isInsight} />;
         })}
@@ -405,7 +407,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
         <section id={id} className={wrapCls}>
           <div className="wrap">
             <Head title={b.title} lead={b.lead} />
-            <div className="reveal mt-10 overflow-x-auto">
+            <div className="tbl-scroll reveal mt-10 overflow-x-auto">
               <table className="tbl min-w-[640px]">
                 <caption className="sr-only">{b.title ?? '비교표'}</caption>
                 <thead>
@@ -426,6 +428,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
                 </tbody>
               </table>
             </div>
+            <p className="mt-2 text-[12.5px] text-ink-muted md:hidden" aria-hidden>표를 옆으로 밀어 나머지 칸을 보세요 →</p>
             {b.note && <p className="mt-4 text-[14.5px] leading-relaxed text-ink-muted">※ {b.note}</p>}
           </div>
         </section>
@@ -436,7 +439,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
         <section id={id} className={wrapCls}>
           <div className="wrap">
             <Head title={b.title} lead={b.lead} />
-            <div className="reveal mt-10 overflow-x-auto">
+            <div className="tbl-scroll reveal mt-10 overflow-x-auto">
               <table className="tbl min-w-[640px]">
                 <caption className="sr-only">{b.title ?? '표'}</caption>
                 <thead>
@@ -455,6 +458,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
                 </tbody>
               </table>
             </div>
+            <p className="mt-2 text-[12.5px] text-ink-muted md:hidden" aria-hidden>표를 옆으로 밀어 나머지 칸을 보세요 →</p>
             {b.note && <p className="mt-4 text-[14.5px] leading-relaxed text-ink-muted">※ {b.note}</p>}
           </div>
         </section>

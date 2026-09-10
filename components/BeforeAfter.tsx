@@ -94,7 +94,8 @@ export function BeforeAfter({ groups, note, showTabs = true }: { groups: CaseGro
     <div className="mx-auto max-w-[1000px]">
       {showTabs && groups.length > 1 && (
         <div className="mb-8 flex justify-center">
-          <div className="inline-flex flex-wrap justify-center gap-1 rounded-full border border-hairline bg-white p-1.5 shadow-[var(--shadow-soft)]" role="tablist" aria-label="진료 갈래">
+          {/* 폰에서는 2×2 격자(한 줄에 안 들어가 한 알약이 혼자 떨어지던 것) — 넓은 화면은 한 줄 알약 */}
+          <div className="grid w-full grid-cols-2 gap-1 rounded-3xl border border-hairline bg-white p-1.5 shadow-[var(--shadow-soft)] sm:inline-flex sm:w-auto sm:flex-wrap sm:justify-center sm:rounded-full" role="tablist" aria-label="진료 갈래">
             {groups.map((g, k) => (
               <button
                 key={g.id}
@@ -175,16 +176,17 @@ export function BeforeAfter({ groups, note, showTabs = true }: { groups: CaseGro
         </span>
       </div>
 
-      {/* 사례 선택 — 무대 아래 한 줄, 가운데 */}
+      {/* 사례 선택 — 무대 아래 한 줄, 가운데.
+          w-max + mx-auto: 다 들어오면 가운데, 넘치면 왼쪽부터 밀어 본다(justify-center 로 넘치면 첫 장이 잘려 못 보던 사고) */}
       {group.pairs.length > 1 && (
-        <ul className="mt-5 flex justify-center gap-3 overflow-x-auto pb-1" aria-label="사례 목록">
+        <ul className="mx-auto mt-5 flex w-max max-w-full gap-2.5 overflow-x-auto pb-1 sm:gap-3" aria-label="사례 목록">
           {group.pairs.map((p, k) => (
             <li key={p.after.key} className="shrink-0">
               <button
                 type="button"
                 onClick={() => pick(gi, k)}
                 aria-pressed={k === ci}
-                className={`group block w-[150px] overflow-hidden rounded-xl bg-white p-1.5 ring-2 transition-all md:w-[180px] ${k === ci ? 'ring-sun-500 shadow-[var(--shadow-soft)]' : 'ring-hairline opacity-75 hover:opacity-100'}`}
+                className={`group block w-[104px] overflow-hidden rounded-xl bg-white p-1.5 ring-2 transition-all sm:w-[150px] md:w-[180px] ${k === ci ? 'ring-sun-500 shadow-[var(--shadow-soft)]' : 'ring-hairline opacity-75 hover:opacity-100'}`}
               >
                 <span className="relative block aspect-[12/5] overflow-hidden rounded-lg bg-canvas-2">
                   <Image src={figSrc(p.after.key)} alt="" fill sizes="180px" className="object-cover" />

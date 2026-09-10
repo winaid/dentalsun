@@ -165,8 +165,11 @@ export function HomeHero() {
                   onClick={() => setI(n)}
                   aria-label={`${s.label} 장면 보기`}
                   aria-current={n === i}
-                  className={`h-[7px] rounded-full transition-all duration-500 ${n === i ? 'w-7 bg-sun-500' : 'w-[7px] bg-white/30'}`}
-                />
+                  className="flex h-10 items-center px-1"
+                >
+                  {/* 보이는 점은 7px 이지만 누르는 자리는 40px 높이 — 손가락으로 잡힌다 */}
+                  <span className={`block h-[7px] rounded-full transition-all duration-500 ${n === i ? 'w-7 bg-sun-500' : 'w-[7px] bg-white/30'}`} />
+                </button>
               ))}
             </span>
             <span key={i} className="hero-swap text-[15px] font-bold text-white">{SLIDES[i].label}</span>

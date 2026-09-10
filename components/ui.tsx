@@ -191,6 +191,11 @@ export function Figure({
         <div className={`${fx} relative ${ratio} overflow-hidden ${rounded} bg-canvas-2`}>
           <Image src={figSrc(fig.key)} alt={fig.alt} fill sizes={sizes} priority={priority} className="object-cover" />
         </div>
+      ) : s.w < 600 ? (
+        /* 비율 상자 없는 작은 원본(옛 배너 조각 111~200px)도 폭에 맞춰 늘리지 않는다 — 원래 크기의 1.4배까지만, 옅은 바탕 가운데 */
+        <div className={`${fx} flex justify-center overflow-hidden ${rounded} bg-canvas-2 p-5`}>
+          <Image src={figSrc(fig.key)} alt={fig.alt} width={s.w} height={s.h} sizes={sizes} priority={priority} className="h-auto w-full rounded-xl object-contain" style={{ maxWidth: Math.round(s.w * 1.4) }} />
+        </div>
       ) : (
         <div className={`${fx} overflow-hidden ${rounded} bg-canvas-2`}>
           <Image src={figSrc(fig.key)} alt={fig.alt} width={s.w} height={s.h} sizes={sizes} priority={priority} className="h-auto w-full object-cover" />
@@ -355,11 +360,12 @@ export function CardLink({ href, label, desc, external = false, fig, num }: { hr
           <Image src={figSrc(fig.key)} alt={fig.alt} fill sizes="(max-width: 640px) 100vw, 25vw" className={fitsBox(fig.key, 3, 2) ? 'object-cover' : '!object-contain p-3'} />
         </span>
       )}
-      <span className="flex flex-1 flex-col p-6">
+      {/* 폰의 두 칸 격자에서도 글자가 쪼개지지 않게 여백·글자를 한 단계 줄인다 */}
+      <span className="flex flex-1 flex-col p-4 sm:p-6">
         {num && <span className="num mb-3">{num}</span>}
-        <span className="block text-[1.08rem] font-bold leading-snug text-ink group-hover:text-brand-700">{label}</span>
+        <span className="block text-[15px] font-bold leading-snug text-ink group-hover:text-brand-700 sm:text-[1.08rem]">{label}</span>
         {desc && (
-          <span className="mt-2 block text-[15px] leading-relaxed text-ink-soft">
+          <span className="mt-2 block text-[13.5px] leading-[1.6] text-ink-soft sm:text-[15px] sm:leading-relaxed">
             <Sentences text={desc} clauses={false} />
           </span>
         )}

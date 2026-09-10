@@ -7,6 +7,34 @@ import { CLINIC, HOURS } from '@/lib/clinic';
  * 꼬리말 — 사업자 정보(의료광고 필수 표기)와 사이트 전역 내부 링크.
  * ★ 전 페이지에 한 번씩 실리는 자리라 지역명·역 정보가 여기 들어간다.
  */
+/** 전체 메뉴 칸들 — 넓은 화면의 다섯 칸과 폰의 접힘 상자가 같은 목록을 쓴다. 링크는 폰에서도 손가락 높이(≥32px) */
+function NavColumns() {
+  return (
+    <div className="grid grid-cols-2 gap-x-6 gap-y-6 sm:grid-cols-3 lg:grid-cols-5 lg:gap-y-8">
+      {NAV.map((item) => (
+        <div key={item.href}>
+          {item.href.startsWith('http') ? (
+            <p className="text-[15px] font-extrabold text-ink">{item.label}</p>
+          ) : (
+            <Link href={item.href} className="inline-block py-1 text-[15px] font-extrabold text-ink hover:text-brand-700">{item.label}</Link>
+          )}
+          <ul className="mt-1.5 lg:mt-2">
+            {item.children?.map((c) => (
+              <li key={c.href}>
+                {c.external ? (
+                  <a href={c.href} target="_blank" rel="noopener" className="inline-block py-1.5 text-[14.5px] text-ink-soft hover:text-brand-700 lg:py-1">{c.label} ↗</a>
+                ) : (
+                  <Link href={c.href} className="inline-block py-1.5 text-[14.5px] text-ink-soft hover:text-brand-700 lg:py-1">{c.label}</Link>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export function SiteFooter() {
   return (
     <footer className="border-t border-hairline bg-canvas">
@@ -53,28 +81,19 @@ export function SiteFooter() {
             </dl>
           </div>
 
-          <nav aria-label="전체 메뉴" className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3 lg:grid-cols-5">
-            {NAV.map((item) => (
-              <div key={item.href}>
-                {item.href.startsWith('http') ? (
-                  <p className="text-[15px] font-extrabold text-ink">{item.label}</p>
-                ) : (
-                  <Link href={item.href} className="text-[15px] font-extrabold text-ink hover:text-brand-700">{item.label}</Link>
-                )}
-                <ul className="mt-3 space-y-2">
-                  {item.children?.map((c) => (
-                    <li key={c.href}>
-                      {c.external ? (
-                        <a href={c.href} target="_blank" rel="noopener" className="text-[14.5px] text-ink-soft hover:text-brand-700">{c.label} ↗</a>
-                      ) : (
-                        <Link href={c.href} className="text-[14.5px] text-ink-soft hover:text-brand-700">{c.label}</Link>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+          {/* 넓은 화면: 다섯 칸 전체 메뉴. 폰: 접어 두고 '전체 메뉴 보기'로 편다 — 마흔 개 링크가 두 화면을 차지하던 것 */}
+          <nav aria-label="전체 메뉴" className="hidden lg:block">
+            <NavColumns />
           </nav>
+          <details className="group rounded-2xl border border-hairline bg-white lg:hidden">
+            <summary className="flex min-h-[52px] cursor-pointer list-none items-center justify-between px-5 text-[15px] font-bold text-ink [&::-webkit-details-marker]:hidden">
+              전체 메뉴 보기
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden className="transition-transform group-open:rotate-180"><path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            </summary>
+            <nav aria-label="전체 메뉴 (폰)" className="border-t border-hairline px-5 pb-5 pt-4">
+              <NavColumns />
+            </nav>
+          </details>
         </div>
 
         <div className="mt-12 flex flex-col gap-3 border-t border-hairline pt-6 text-[12.5px] text-ink-muted md:flex-row md:items-center md:justify-between">

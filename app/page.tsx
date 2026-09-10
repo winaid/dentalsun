@@ -95,10 +95,10 @@ export default function HomePage() {
             <HomeStats />
             <ul className="reveal-stack grid-cards mt-12 sm:grid-cols-2 lg:grid-cols-4">
               {STRENGTHS.map((s, i) => (
-                <li key={s.title} className="card card-3d flex h-full flex-col p-7">
+                <li key={s.title} className="card card-3d flex h-full flex-col p-5 sm:p-7">
                   <span className="num">{String(i + 1).padStart(2, '0')}</span>
-                  <p className="mt-5 text-[1.12rem] font-bold leading-snug text-ink">{s.title}</p>
-                  <p className="mt-3 text-[15.5px] leading-relaxed text-ink-soft">
+                  <p className="mt-3 text-[1.12rem] font-bold leading-snug text-ink sm:mt-5">{s.title}</p>
+                  <p className="mt-2 text-[15.5px] leading-relaxed text-ink-soft sm:mt-3">
                     <Sentences text={s.desc} />
                   </p>
                 </li>
@@ -162,7 +162,7 @@ export default function HomePage() {
                     <Image src={figSrc('ai/insight-hub')} alt="" fill sizes="(max-width: 1024px) 50vw, 25vw" className="object-cover" />
                   </span>
                   <span className="flex flex-1 flex-col p-4 sm:p-6">
-                    <span className="text-[15px] font-bold text-brand-700 sm:text-[1.08rem]">인사이트 · 증상별 안내 →</span>
+                    <span className="text-[15px] font-bold text-brand-700 sm:text-[1.08rem]">인사이트 · <span className="whitespace-nowrap">증상별 안내 →</span></span>
                     <span className="mt-2.5 text-[13px] leading-[1.55] text-ink-muted sm:mt-3 sm:text-[14.5px] sm:leading-relaxed">턱 소리 · 시린 이 · 잇몸 출혈 · 임플란트 과정 · 건강보험</span>
                   </span>
                 </Link>
@@ -184,17 +184,19 @@ export default function HomePage() {
                 <Sentences text="내 치아 상태에 따른 다양한 수술 방법으로, 치아가 안 좋아도 잇몸뼈가 부족해도 구강 상태에 맞는 임플란트를 제안합니다." />
               </p>
             </div>
-            <div className="reveal-stack mt-12 grid gap-6 sm:grid-cols-2">
+            {/* 폰에서는 영상 네 편을 옆으로 넘기는 한 줄로(세로로 쌓으면 1,000px 넘게 길어진다) — 넓은 화면은 2×2 */}
+            <div className="reveal-stack mt-12 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 sm:grid sm:grid-cols-2 sm:gap-6 sm:overflow-visible sm:pb-0">
               {CLINIC.videos.map((v) => (
-                <div key={v.id}>
+                <div key={v.id} className="w-[84%] shrink-0 snap-start sm:w-auto sm:shrink">
                   <VideoFacade id={v.id} poster={v.thumb} title={v.title} />
-                  <p className="mt-3 text-[15.5px] font-semibold text-ink">{v.title}</p>
+                  <p className="mt-3 text-[15px] font-semibold text-ink sm:text-[15.5px]">{v.title}</p>
                 </div>
               ))}
             </div>
-            <div className="mt-14">
-              {/* 뒤집기 카드 3×2 — 앞면은 번호·제목만, 마우스를 올리면 사진 배경과 설명이 나온다(오너 요청) */}
-              <ul className="reveal-stack mt-2 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <p className="mt-2 text-[12.5px] text-ink-muted sm:hidden" aria-hidden>옆으로 밀어 다른 영상을 보세요 →</p>
+            <div className="mt-10 sm:mt-14">
+              {/* 뒤집기 카드 3×2 — 앞면은 번호·제목만, 마우스를 올리면 사진 배경과 설명이 나온다(오너 요청). 폰은 2열 */}
+              <ul className="reveal-stack mt-2 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">
                 {featured.map((f, i) => (
                   <li key={f.href}>
                     <FlipCard href={f.href} num={String(i + 1).padStart(2, '0')} label={f.label} desc={f.desc} back={docByPath(f.href)?.summary.split(/(?<=다\.)\s/)[0] ?? f.desc} fig={{ key: f.fig, alt: f.label }} />
@@ -235,9 +237,10 @@ export default function HomePage() {
                   ['02', '전반적인 턱관절 치료 진행'],
                   ['03', '오랜 기간 다수의 턱관절 환자 진료'],
                 ].map(([n, t]) => (
-                  <li key={n} className="flex min-h-[110px] flex-col items-center justify-center rounded-2xl border border-white/15 bg-white/8 px-5 py-5 text-center backdrop-blur-md">
+                  /* 폰에서는 번호·글이 한 줄로 나란히(세 장을 세로로 쌓아도 얇게) — 넓은 화면은 가운데 정렬 상자 */
+                  <li key={n} className="flex items-center gap-4 rounded-2xl border border-white/15 bg-white/8 px-5 py-3.5 text-left backdrop-blur-md sm:min-h-[110px] sm:flex-col sm:justify-center sm:gap-0 sm:py-5 sm:text-center">
                     <span className="text-[12px] font-extrabold tracking-[0.2em] text-sun-300">{n}</span>
-                    <span className="mt-2 text-[16px] font-bold leading-snug">{t}</span>
+                    <span className="text-[16px] font-bold leading-snug sm:mt-2">{t}</span>
                   </li>
                 ))}
               </ul>
@@ -258,7 +261,8 @@ export default function HomePage() {
                 통증은 줄이고, <span className="accent">내 치아는 지키는</span> 진료
               </h2>
             </div>
-            <ul className="reveal-stack grid-cards mt-12 sm:grid-cols-2 lg:grid-cols-4">
+            {/* 폰도 두 칸 — 진료과목 카드와 같은 격자(한 칸씩 쌓으면 사진 네 장에 2,000px) */}
+            <ul className="reveal-stack grid-cards mt-12 !gap-3 grid-cols-2 sm:!gap-5 lg:grid-cols-4">
               {[
                 { href: '/treatment/painless', label: '무통 & 저자극 치료', desc: '무통마취기, 저자극 스케일러 등을 이용한 편안한 치과 치료.', fig: 'ai/painless-hub' },
                 { href: '/treatment/natural-tooth', label: '자연치아 살리기', desc: 'MTA 치료를 통해 내 치아를 최대한 보존합니다.', fig: 'ai/natural-hub' },
@@ -444,12 +448,13 @@ export default function HomePage() {
                   <p className="text-[14px] font-bold tracking-wide text-ink-muted">진료시간</p>
                   <ul className="mt-3 divide-y divide-hairline">
                     {HOURS.display.map((h) => (
-                      <li key={h.label} className="flex items-center justify-between py-2.5 text-[16px]">
+                      <li key={h.label} className="flex items-center justify-between gap-3 py-2.5 text-[16px]">
                         <span className="font-semibold text-ink">
                           {h.label}
-                          {h.note && <span className="ml-2 pill-sun !py-0.5 !text-[11px]">{h.note}</span>}
+                          {/* 폰에서는 알림표를 요일 아래 줄로 — 시간이 두 줄로 쪼개지지 않게 */}
+                          {h.note && <span className="mt-1 !block w-fit pill-sun !py-0.5 !text-[11px] sm:ml-2 sm:mt-0 sm:!inline-flex">{h.note}</span>}
                         </span>
-                        <span className="font-bold tabular-nums text-brand-800">{h.time}</span>
+                        <span className="shrink-0 whitespace-nowrap font-bold tabular-nums text-brand-800">{h.time}</span>
                       </li>
                     ))}
                   </ul>

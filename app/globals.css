@@ -137,7 +137,14 @@ body {
 .sent,
 .sent-one {
   display: block;
-  text-wrap: balance;
+  /* 폰에서는 balance 를 끄고 pretty 로 — 문장마다 줄을 고르게 나누면 오른쪽이 크게 비는 들쭉날쭉한 글이 됐다 */
+  text-wrap: pretty;
+}
+@media (min-width: 768px) {
+  .sent,
+  .sent-one {
+    text-wrap: balance;
+  }
 }
 .clause,
 .chunk {
@@ -423,6 +430,32 @@ body {
 .tbl tbody tr:nth-child(even) td {
   @apply bg-canvas/60;
 }
+/* 폰에서 옆으로 미는 표 — 첫 칸(구분)은 붙박이로 남아 무슨 줄인지 놓치지 않는다. 오른쪽 안개는 더 있다는 표시 */
+@media (max-width: 767px) {
+  .tbl th:first-child,
+  .tbl td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background-color: var(--color-canvas);
+  }
+  .tbl thead th:first-child {
+    background-color: var(--color-brand-800);
+  }
+  .tbl-scroll {
+    position: relative;
+  }
+  .tbl-scroll::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 40px;
+    pointer-events: none;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.9));
+  }
+}
 
 /* FAQ */
 details.faq {
@@ -635,6 +668,15 @@ details.faq .a {
   inset: 0;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+}
+/* 앞면은 흐름 안에 두어 카드 높이를 정한다 — 두 면이 다 absolute 이면 높이가 0 이 되어 폰의 2열 격자에서 카드가 겹쳤다.
+   grid 한 칸에 놓아 앞면이 min-height 까지 늘어나고(넓은 화면), 뒷면은 그 높이를 그대로 덮는다 */
+.flip-inner {
+  display: grid;
+}
+.flip-face:not(.flip-back) {
+  position: relative;
+  grid-area: 1 / 1;
 }
 .flip-back {
   transform: rotateY(180deg);

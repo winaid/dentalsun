@@ -74,12 +74,12 @@ export default function VisitPage() {
                 <p className="text-[14px] font-bold tracking-wide text-ink-muted">진료시간</p>
                 <ul className="mt-3 divide-y divide-hairline">
                   {HOURS.display.map((h) => (
-                    <li key={h.label} className="flex items-center justify-between py-2.5 text-[16px]">
+                    <li key={h.label} className="flex items-center justify-between gap-3 py-2.5 text-[16px]">
                       <span className="font-semibold text-ink">
                         {h.label}
-                        {h.note && <span className="ml-2 pill-sun !py-0.5 !text-[11px]">{h.note}</span>}
+                        {h.note && <span className="mt-1 !block w-fit pill-sun !py-0.5 !text-[11px] sm:ml-2 sm:mt-0 sm:!inline-flex">{h.note}</span>}
                       </span>
-                      <span className="font-bold tabular-nums text-brand-800">{h.time}</span>
+                      <span className="shrink-0 whitespace-nowrap font-bold tabular-nums text-brand-800">{h.time}</span>
                     </li>
                   ))}
                 </ul>
