@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { ConsultButton } from '@/components/ConsultButton';
 import Image from 'next/image';
 import { CLINIC, HOURS } from '@/lib/clinic';
@@ -17,7 +18,7 @@ const SLIDES = [
   {
     key: 'sun/hero-surgery',
     label: '가이드 임플란트 수술',
-    desc: '모의수술로 정한 자리에 그대로 식립합니다.',
+    desc: '모의수술로 정한 자리에 식립합니다.',
     alt: '광화문선치과 수술실에서 무영등 아래 임플란트 수술을 진행하는 의료진',
     /** 사진이 보이는 자리 — 넓은 화면은 글 자리를 비우려 오른쪽으로, 좁은 화면은 사람이 잘리지 않게 */
     fit: 'object-[56%_50%] md:object-[58%_50%]',
@@ -54,7 +55,7 @@ const SLIDES = [
   {
     key: 'sun/hero-loupe',
     label: '확대경 정밀 진료',
-    desc: '놓치기 쉬운 부분까지 확대해서 봅니다.',
+    desc: '놓치기 쉬운 부분까지 확대해 봅니다.',
     alt: '확대경을 착용하고 파노라마 사진을 띄운 채 진료하는 광화문선치과 원장',
     fit: 'object-[68%_50%] md:object-[60%_50%]',
     title: (
@@ -69,6 +70,15 @@ const SLIDES = [
 ];
 
 const DURATION = 6500;
+
+/** 오시는 길 — 같은 역·같은 출구는 한 줄로 묶는다 (시청역 1·2호선). 값은 lib/clinic.ts 하나뿐. */
+const STATIONS = CLINIC.transit.reduce<Array<{ station: string; exit: string; walk: string; lines: Array<{ n: string; color: string }> }>>((acc, t) => {
+  const n = t.line.replace('호선', '');
+  const hit = acc.find((s) => s.station === t.station && s.exit === t.exit);
+  if (hit) hit.lines.push({ n, color: t.color });
+  else acc.push({ station: t.station, exit: t.exit, walk: t.walk, lines: [{ n, color: t.color }] });
+  return acc;
+}, []);
 
 export function HomeHero() {
   const [i, setI] = useState(0);
@@ -105,7 +115,7 @@ export function HomeHero() {
         <div className="absolute inset-0 bg-night/35 md:hidden" />
       </div>
 
-      <div className="wrap relative flex flex-1 flex-col justify-center pt-[132px] pb-[150px] md:pt-[150px] md:pb-[210px] lg:pb-[190px]">
+      <div className="wrap relative flex flex-1 flex-col justify-center pt-[132px] pb-[150px] md:pt-[150px] md:pb-[230px] lg:pb-[220px]">
         <div className="max-w-[1000px]" data-scroll-fade>
           <p className="eyebrow on-dark hero-in">
             SUN DENTAL CLINIC<span className="hidden sm:inline"> · 광화문역 6번 출구 도보 2분</span>
@@ -198,7 +208,12 @@ export function HomeHero() {
                       {s.label}
                     </span>
                   </span>
-                  <span className={`relative mt-2 hidden pl-[62px] text-[14.5px] leading-[1.55] transition-colors duration-500 md:block ${n === i ? 'text-white/75' : 'text-white/40'}`}>
+                  {/* 넓은 화면에서만 이름 아래로 들여쓴다 — 좁으면 들여쓴 만큼 글이 두 줄로 접힌다 */}
+                  <span
+                    className={`relative mt-2 hidden text-[13.5px] leading-[1.55] transition-colors duration-500 md:block 2xl:pl-[62px] 2xl:text-[14.5px] ${
+                      n === i ? 'text-white/75' : 'text-white/40'
+                    }`}
+                  >
                     {s.desc}
                   </span>
                 </button>
@@ -218,13 +233,37 @@ export function HomeHero() {
                 ))}
               </ul>
             </div>
-            <a
-              href={CLINIC.phoneHref}
-              className="flex flex-col items-start rounded-2xl border border-white/15 bg-white/5 px-6 py-4.5 transition-all duration-300 hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/10"
+            {/* 전화번호는 머리말 오른쪽에 늘 있으니 여기는 역·주차 안내(오너 지시) */}
+            <Link
+              href="/visit"
+              className="group rounded-2xl border border-white/15 bg-white/5 px-6 py-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/10"
             >
-              <span className="text-[12.5px] font-bold tracking-[0.16em] text-white/45">대표전화</span>
-              <span className="mt-1 text-[21px] font-extrabold tabular-nums">{CLINIC.phone}</span>
-            </a>
+              <span className="block text-[12.5px] font-bold tracking-[0.16em] text-white/45">오시는 길</span>
+              <ul className="mt-2.5 space-y-1.5 text-[14.5px]">
+                {STATIONS.map((s) => (
+                  <li key={s.station} className="flex items-center gap-2.5">
+                    <span className="flex gap-1">
+                      {s.lines.map((l) => (
+                        <span
+                          key={l.n}
+                          className="flex h-[21px] w-[21px] items-center justify-center rounded-full text-[11.5px] font-extrabold text-white"
+                          style={{ background: l.color }}
+                        >
+                          {l.n}
+                        </span>
+                      ))}
+                    </span>
+                    <span className="font-semibold text-white/90">{s.station}</span>
+                    <span className="text-white/55">
+                      {s.exit} · {s.walk}
+                    </span>
+                  </li>
+                ))}
+                <li className="text-[13.5px] text-white/45">
+                  {CLINIC.parking.place} {CLINIC.parking.fee}
+                </li>
+              </ul>
+            </Link>
           </div>
         </div>
       </div>
