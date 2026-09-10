@@ -97,6 +97,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
           eyebrow="TMJ · 턱관절"
           lines={[TMJ_HERO.line1, <span key="l2" className="accent-sun">{TMJ_HERO.line2}</span>]}
           lead={TMJ_HERO.desc}
+          long
           bg={TMJ_HERO.bg.key}
           cards={HERO_CARDS}
           items={TMJ_KNOWHOW.items.map((k) => ({ title: k.title, desc: first(k.desc) }))}

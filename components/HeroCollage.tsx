@@ -2,6 +2,7 @@ import Image from 'next/image';
 import type { ReactNode } from 'react';
 import { Breadcrumb, Sentences } from '@/components/ui';
 import { figSrc, type Fig } from '@/lib/docs';
+import { CLINIC } from '@/lib/clinic';
 
 /**
  * 콜라주 첫 화면 — 레퍼런스(one-dental 'SMILE BY DESIGN')의 짜임새.
@@ -31,6 +32,7 @@ export function HeroCollage({
   items,
   children,
   long = false,
+  longer = false,
   bgSoft = false,
 }: {
   trail: Array<{ name: string; path: string }>;
@@ -38,6 +40,8 @@ export function HeroCollage({
   lines: [ReactNode, ReactNode?];
   /** 제목이 길면(대략 14자 초과) 한 단계 작게 */
   long?: boolean;
+  /** 제목이 문장 길이(22자 초과)면 두 단계 작게 — 두 줄 안에 들어와야 쪽마다 높이가 같다 */
+  longer?: boolean;
   /** 배경 사진이 작은 원본 조각이면 살짝 흐리게(hero-soft) */
   bgSoft?: boolean;
   lead: string;
@@ -68,14 +72,26 @@ export function HeroCollage({
             <Breadcrumb trail={trail} dark />
             <p className="eyebrow on-dark mt-6 hero-in">{eyebrow}</p>
             {/* 제목은 한 줄이든 두 줄이든 같은 높이를 차지한다 — 쪽마다 글이 위아래로 튀지 않게(오너: 느낌 통일) */}
-            <h1 className={`display-xl mt-4 on-photo lg:flex lg:min-h-[2.04em] lg:flex-col lg:justify-end ${long ? 'is-long' : ''}`}>
+            <h1 className={`display-xl mt-4 on-photo lg:flex lg:min-h-[2.04em] lg:flex-col lg:justify-end ${longer ? 'is-longer' : long ? 'is-long' : ''}`}>
               <span className="block hero-in hero-in-2">{lines[0]}</span>
               {lines[1] && <span className="block hero-in hero-in-3 lg:pl-[14vw]">{lines[1]}</span>}
             </h1>
             <p className="mt-6 max-w-[560px] text-[1.08rem] leading-[1.8] text-white/80 hero-in hero-in-4 md:text-[1.16rem] lg:max-w-[660px]">
               <Sentences text={lead} clauses={false} />
             </p>
-            {children && <div className="mt-7 hero-in hero-in-4">{children}</div>}
+            {/* 버튼 두 개는 모든 첫 화면에 — 따로 주지 않으면 네이버 예약 · 톡톡 상담(오너: 소개 쪽도 다른 쪽처럼) */}
+            <div className="mt-7 hero-in hero-in-4">
+              {children ?? (
+                <div className="flex flex-wrap gap-3">
+                  <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="btn-sun">
+                    네이버 예약
+                  </a>
+                  <a href={CLINIC.booking.naverTalk} target="_blank" rel="noopener" className="btn-ghost-dark">
+                    톡톡 상담
+                  </a>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* 2026-09-10 오너 지시로 첫 화면 사진 카드를 없앴다 — 홈처럼 배경 사진 한 장으로 통일.

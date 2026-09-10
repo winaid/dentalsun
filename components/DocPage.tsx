@@ -78,7 +78,10 @@ export function DocPage({ doc }: { doc: Doc }) {
   /* 첫 화면 콜라주 — 표에 없는 문서는 제목을 마지막 띄어쓰기에서 두 줄로 나누고 허브 배경 사진 세 장으로 채운다 */
   const collage: HeroCollageSpec = HERO_COLLAGE[doc.path] ?? fallbackCollage(doc, bandBg);
   const collageLines = collage.lines.map((l) => (l ? renderAccent(l) : undefined)) as [ReactNode, ReactNode?];
-  const collageLong = collage.lines.join('').replace(/[{}]/g, '').length > 14;
+  const collageLen = collage.lines.join('').replace(/[{}]/g, '').length;
+  /* 제목이 문장이면(옛 배너 문구) 한 단계 더 작게 — 두 줄 안에 들어와야 쪽마다 높이가 같다 */
+  const collageLong = collageLen > 14;
+  const collageLonger = collageLen > 22;
   /* 첫 화면 요약은 앞 두 문장만 — 나머지는 본문 첫 단락이 이어받는다 */
   const heroLead = doc.summary
     .split(/(?<=[.!?])\s+(?=\S)/)
