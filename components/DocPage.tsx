@@ -72,6 +72,8 @@ export function DocPage({ doc }: { doc: Doc }) {
   const hero: Fig | undefined = heroKey ? { key: heroKey, alt: doc.hero?.alt ?? doc.title } : undefined;
   const heroSize = hero ? figSize(hero.key) : null;
   const bandBg = HUB_BG[doc.hub] ?? 'ai/wide-clinic';
+  /* ★ 첫 화면 배경은 폭 1200px 이상인 사진만 쓴다 — 작은 배너 조각을 전폭으로 늘리면 흐려진다(오너 지적).
+     그보다 작으면 그 진료 갈래의 넓은 사진(HUB_BG)으로 바꾼다. */
   const shortSummary = (s: string) => s.split(/(?<=다\.)\s/)[0];
   /* 첫 화면 콜라주 — 표에 없는 문서는 제목을 마지막 띄어쓰기에서 두 줄로 나누고 허브 배경 사진 세 장으로 채운다 */
   const collage: HeroCollageSpec = HERO_COLLAGE[doc.path] ?? fallbackCollage(doc, bandBg);
@@ -123,8 +125,8 @@ export function DocPage({ doc }: { doc: Doc }) {
           lines={collageLines}
           long={collageLong}
           lead={collage.lead ?? heroLead}
-          bg={hero && heroSize ? hero.key : bandBg}
-          bgSoft={!!heroSize && heroSize.w < 900}
+          bg={hero && heroSize && heroSize.w >= 1200 ? hero.key : bandBg}
+          bgSoft={false}
           cards={collage.cards}
           items={collageItems}
         >

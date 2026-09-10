@@ -5,7 +5,7 @@ import { HeroCollage } from '@/components/HeroCollage';
 import { JsonLd } from '@/components/JsonLd';
 import Image from 'next/image';
 import { Breadcrumb, ContactBand, MedicalNotice, Sentences } from '@/components/ui';
-import { figSrc } from '@/lib/docs';
+import { figSrc, fitsBox } from '@/lib/docs';
 
 const HUB_IMG: Record<string, string> = {
   '/treatment/implant': 'orig/implant-hero',
@@ -56,7 +56,7 @@ export default function TreatmentIndex() {
               {hubs.map((h, i) => (
                 <li key={h.nav.href} className="card card-hover flex h-full flex-col overflow-hidden">
                   <span className="card-img block">
-                    <Image src={figSrc(HUB_IMG[h.nav.href] ?? 'ai/faq')} alt="" fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" />
+                    <Image src={figSrc(HUB_IMG[h.nav.href] ?? 'ai/faq')} alt="" fill sizes="(max-width: 768px) 100vw, 33vw" className={fitsBox(HUB_IMG[h.nav.href] ?? 'ai/faq', 3, 2) ? 'object-cover' : '!object-contain p-3'} />
                   </span>
                   <div className="flex flex-1 flex-col p-7">
                   <span className="num">{String(i + 1).padStart(2, '0')}</span>
