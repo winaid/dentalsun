@@ -95,6 +95,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
         <HeroCollage
           trail={trail}
           eyebrow="TMJ · 턱관절"
+          cardsLead="이런 증상이 있다면 턱관절을 확인해 보세요."
           lines={[TMJ_HERO.line1, <span key="l2" className="accent-sun">{TMJ_HERO.line2}</span>]}
           lead={TMJ_HERO.desc}
           long

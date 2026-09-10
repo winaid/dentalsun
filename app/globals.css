@@ -409,15 +409,19 @@ body {
 .tbl {
   @apply w-full border-collapse text-[14.5px];
 }
+/* 표 — 칸마다 선을 두르고 머리칸은 남색으로 채워 행·열이 한눈에 갈리게(오너). 강조 열의 머리칸은 주황(DocPage) */
 .tbl th,
 .tbl td {
-  @apply border-b border-hairline px-4 py-3.5 text-left align-top;
+  @apply border border-hairline px-4 py-3.5 text-left align-top;
 }
 .tbl thead th {
-  @apply bg-brand-50 text-[13px] font-bold tracking-wide text-brand-800;
+  @apply border-brand-700 bg-brand-800 text-[13.5px] font-bold tracking-wide text-white;
 }
 .tbl tbody th {
   @apply bg-canvas font-bold text-ink;
+}
+.tbl tbody tr:nth-child(even) td {
+  @apply bg-canvas/60;
 }
 
 /* FAQ */

@@ -88,6 +88,7 @@ export default async function BlogIndexPage() {
       <HeroCollage
         trail={TRAIL.slice(1)}
         eyebrow="BLOG"
+        cardsLead="이런 이야기를 씁니다."
         lines={['진료하면서 자주 받는 질문을', <><span className="accent-sun">글로 정리합니다</span></>]}
         long
         lead="상담 중에 짧게밖에 말씀드리지 못한 내용을 글로 남깁니다. 읽고 오시면 진료실에서 다음 이야기부터 하실 수 있습니다."

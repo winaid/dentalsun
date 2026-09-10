@@ -46,6 +46,8 @@ export default function AboutPage() {
         <HeroCollage
           trail={trail}
           eyebrow="ABOUT SUN DENTAL CLINIC"
+          long
+          cardsLead="광화문 선치과는 이렇게 진료합니다."
           lines={['환자중심의', <>디지털 <span className="accent-sun">치과 진료</span></>]}
           lead="이해하기 쉬운 설명과 불편함을 줄인 진료시스템. 더 빠르고, 정확하게, 그리고 편안하게 스마트한 진료를 약속 드립니다."
           bg="place/place01"

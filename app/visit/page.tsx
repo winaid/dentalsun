@@ -23,8 +23,10 @@ export default function VisitPage() {
         <HeroCollage
           trail={trail}
           eyebrow="VISIT US"
+          long
+          cardsLead="찾아오실 때 필요한 것들입니다."
           lines={['광화문역 6번 출구', <><span className="accent-sun">도보 2분</span></>]}
-          lead={`${CLINIC.address.full} — ${CLINIC.address.landmark}. 화·목요일은 밤 9시까지 야간진료를 하고, 코리아나 호텔 야외주차장을 무료로 이용하실 수 있습니다.`}
+          lead={`${CLINIC.address.full} (${CLINIC.address.landmark}). 화·목은 밤 9시까지 야간진료, 주차는 ${CLINIC.parking.place} 무료입니다.`}
           bg="ai/wide-visit"
           cards={[
             { fig: { key: 'place/place03', alt: '광화문선치과 진료실과 간판' }, shape: 'portrait' },

@@ -30,6 +30,7 @@ export function HeroCollage({
   bg,
   cards,
   items,
+  cardsLead,
   children,
   long = false,
   longer = false,
@@ -48,6 +49,8 @@ export function HeroCollage({
   bg: string;
   cards: [CollageCard, CollageCard, CollageCard];
   items: CollageItem[];
+  /** 카드 바로 위 한 줄 — 구역 설명처럼 카드를 연다 (이런 경우, ~합니다.) */
+  cardsLead?: string;
   children?: ReactNode;
 }) {
   return (
@@ -71,16 +74,17 @@ export function HeroCollage({
           <div className="relative z-20 lg:flex-1">
             <Breadcrumb trail={trail} dark />
             <p className="eyebrow on-dark mt-6 hero-in">{eyebrow}</p>
-            {/* 제목은 한 줄이든 두 줄이든 같은 높이를 차지한다 — 쪽마다 글이 위아래로 튀지 않게(오너: 느낌 통일) */}
-            <h1 className={`display-xl mt-4 on-photo lg:flex lg:min-h-[2.04em] lg:flex-col lg:justify-end ${longer ? 'is-longer' : long ? 'is-long' : ''}`}>
+            {/* 제목은 한 줄이든 두 줄이든 같은 높이를 차지한다 — 쪽마다 글이 튀지 않게(오너: 행열 규격 통일). 둘째 줄 어긋남은 오너가 좋아해서 유지 */}
+            <h1 className={`display-xl mt-4 on-photo lg:flex lg:min-h-[138px] lg:flex-col lg:justify-end 2xl:min-h-[158px] ${longer ? 'is-longer' : long ? 'is-long' : ''}`}>
               <span className="block hero-in hero-in-2">{lines[0]}</span>
               {lines[1] && <span className="block hero-in hero-in-3 lg:pl-[14vw]">{lines[1]}</span>}
             </h1>
-            <p className="mt-6 max-w-[560px] text-[1.08rem] leading-[1.8] text-white/80 hero-in hero-in-4 md:text-[1.16rem] lg:max-w-[660px]">
+            {/* 설명은 두 줄 높이를 잡아 두어 한 문장이든 두 문장이든 버튼 자리가 같다 */}
+            <p className="mt-8 max-w-[560px] text-[1.08rem] leading-[1.8] text-white/80 hero-in hero-in-4 md:text-[1.16rem] lg:mt-10 lg:min-h-[3.6em] lg:max-w-[720px]">
               <Sentences text={lead} clauses={false} />
             </p>
             {/* 버튼 두 개는 모든 첫 화면에 — 따로 주지 않으면 네이버 예약 · 톡톡 상담(오너: 소개 쪽도 다른 쪽처럼) */}
-            <div className="mt-7 hero-in hero-in-4">
+            <div className="mt-8 hero-in hero-in-4 lg:mt-9">
               {children ?? (
                 <div className="flex flex-wrap gap-3">
                   <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="btn-sun">
@@ -97,8 +101,15 @@ export function HeroCollage({
           {/* 2026-09-10 오너 지시로 첫 화면 사진 카드를 없앴다 — 홈처럼 배경 사진 한 장으로 통일.
               (옛 홈페이지에서 긁어 온 제품·모델 조각이 잘리거나 어색했다. 되살리려면 git 이력 참조) */}
 
-          {/* 유리 카드 세 장 — 왼쪽은 왼쪽에서, 가운데는 아래에서, 오른쪽은 오른쪽에서 튀어오른다 */}
-          <ol className={`relative z-20 mt-10 grid gap-4 lg:mt-8 lg:gap-5 ${items.length >= 4 ? 'sm:grid-cols-2 lg:grid-cols-4' : 'sm:grid-cols-3'}`}>
+          {/* 카드 바로 위 한 줄 — 구역 설명처럼 카드를 연다(오너: "이런 경우, ~합니다"는 카드 위에) */}
+          {cardsLead && (
+            <p className="hero-in hero-in-4 relative z-20 mt-10 flex items-center gap-3 text-[1.05rem] font-bold text-white/90 lg:mt-6 md:text-[1.12rem]">
+              <span aria-hidden className="h-px w-7 shrink-0 bg-sun-400" />
+              {cardsLead}
+            </p>
+          )}
+          {/* 유리 카드 — 왼쪽은 왼쪽에서, 가운데는 아래에서, 오른쪽은 오른쪽에서 튀어오른다 */}
+          <ol className={`relative z-20 grid gap-4 lg:gap-5 ${cardsLead ? 'mt-4' : 'mt-10 lg:mt-8'} ${items.length >= 4 ? 'sm:grid-cols-2 lg:grid-cols-4' : 'sm:grid-cols-3'}`}>
             {items.slice(0, 4).map((it, i) => (
               <li
                 key={it.title}

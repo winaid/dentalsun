@@ -36,8 +36,10 @@ export default function TreatmentIndex() {
         <HeroCollage
           trail={trail}
           eyebrow="TREATMENTS"
+          long
+          cardsLead="진료 갈래를 한눈에 봅니다."
           lines={['광화문 선치과', <><span className="accent-sun">진료 안내</span></>]}
-          lead="일곱 진료 갈래를 세부 항목까지 각각의 문서로 정리했습니다. 궁금한 진료를 고르면 무엇을 어떻게 하는지, 어떤 경우에 필요한지, 자주 묻는 질문까지 볼 수 있습니다."
+          lead="일곱 진료 갈래를 세부 항목까지 문서로 정리했습니다. 무엇을 어떻게 하는지, 어떤 경우에 필요한지, 자주 묻는 질문까지 볼 수 있습니다."
           bg="ai/wide-implant"
           cards={[
             { fig: { key: 'orig/mta-hero', alt: '확대경을 쓰고 MTA 신경치료를 하는 원장' }, shape: 'portrait' },

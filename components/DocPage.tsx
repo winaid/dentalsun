@@ -127,11 +127,13 @@ export function DocPage({ doc }: { doc: Doc }) {
           eyebrow={collage.kicker ?? doc.eyebrow}
           lines={collageLines}
           long={collageLong}
+          longer={collageLonger}
           lead={collage.lead ?? heroLead}
           bg={hero && heroSize && heroSize.w >= 1200 ? hero.key : bandBg}
           bgSoft={false}
           cards={collage.cards}
           items={collageItems}
+          cardsLead={collage.cardsLead}
         >
           <div className="flex flex-wrap gap-3">
             <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="btn-sun">네이버 예약</a>
@@ -409,8 +411,8 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
                 <thead>
                   <tr>
                     <th scope="col" className="w-[22%]">구분</th>
-                    <th scope="col" className={hl === 'a' ? '!bg-brand-700 !text-white' : ''}>{b.columns[0]}</th>
-                    <th scope="col" className={hl === 'b' ? '!bg-brand-700 !text-white' : ''}>{b.columns[1]}</th>
+                    <th scope="col" className={hl === 'a' ? '!bg-sun-500 !border-sun-500 !text-white' : ''}>{b.columns[0]}</th>
+                    <th scope="col" className={hl === 'b' ? '!bg-sun-500 !border-sun-500 !text-white' : ''}>{b.columns[1]}</th>
                   </tr>
                 </thead>
                 <tbody>

@@ -26,6 +26,8 @@ export default function FaqPage() {
         <HeroCollage
           trail={trail}
           eyebrow="FREQUENTLY ASKED QUESTIONS"
+          long
+          cardsLead="자주 묻는 질문을 모았습니다."
           lines={['광화문 선치과에', <><span className="accent-sun">자주 묻는 질문</span></>]}
           lead="진료시간과 예약, 오시는 길, 임플란트·턱관절 치료, 건강보험 적용, 마취와 수면치료까지 환자분들이 가장 많이 물어보시는 내용을 모았습니다."
           bg="ai/wide-visit"
