@@ -318,6 +318,21 @@ body {
 .hero-swap > *:nth-child(2) {
   animation-delay: 0.13s;
 }
+/* 팝업(간편 상담예약) — 뒤는 옅게, 카드는 살짝 커지며 올라온다 */
+@keyframes modal-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes modal-in {
+  from { opacity: 0; transform: translateY(22px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.modal-fade {
+  animation: modal-fade 0.28s ease-out both;
+}
+.modal-in {
+  animation: modal-in 0.45s cubic-bezier(0.16, 0.84, 0.24, 1) both;
+}
 /* 첫 화면 아래 띠 — 사진이 자리 잡은 뒤 살짝 올라오며 나타난다 */
 @keyframes hero-bar {
   from { opacity: 0; transform: translateY(28px); }

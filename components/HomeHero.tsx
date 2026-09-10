@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
+import { ConsultButton } from '@/components/ConsultButton';
 import Image from 'next/image';
 import { CLINIC, HOURS } from '@/lib/clinic';
 import { figSrc } from '@/lib/docs';
@@ -115,13 +115,22 @@ export function HomeHero() {
             <h1 className="display mt-6 text-balance !text-white on-photo">{SLIDES[i].title}</h1>
             <p className="mt-7 text-[1.05rem] leading-[1.85] text-white/75 md:text-[1.1rem]">{SLIDES[i].lead}</p>
           </div>
-          <div className="mt-9 flex flex-wrap gap-3 hero-in hero-in-4">
-            <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="btn-sun">
+          {/* 예약 두 갈래 — 왼쪽은 네이버 예약(플레이스와 연결), 오른쪽은 연락처만 남기는 팝업 */}
+          <div className="mt-10 grid grid-cols-2 gap-3 hero-in hero-in-4 sm:flex sm:flex-wrap sm:gap-3.5">
+            <a
+              href={CLINIC.booking.naver}
+              target="_blank"
+              rel="noopener"
+              className="btn-sun !gap-2 !px-4 !py-[16px] !text-[15.5px] !shadow-[0_14px_34px_rgba(242,111,30,0.35)] sm:!gap-2.5 sm:!px-9 sm:!py-[20px] sm:!text-[17.5px]"
+            >
+              <span className="flex h-[22px] w-[22px] items-center justify-center rounded-[6px] bg-white/95 text-[#03C75A]">
+                <svg width="13" height="13" viewBox="0 0 24 24" aria-hidden>
+                  <path d="M4 3h5.2l5.6 8.4V3H20v18h-5.2L9.2 12.6V21H4z" fill="currentColor" />
+                </svg>
+              </span>
               네이버 예약
             </a>
-            <Link href="/treatment" className="btn-ghost-dark">
-              진료 안내 보기
-            </Link>
+            <ConsultButton className="inline-flex items-center justify-center gap-2 rounded-full bg-white/95 px-4 py-[16px] text-[15.5px] font-bold text-brand-800 shadow-[0_14px_34px_rgba(9,14,35,0.35)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-white sm:gap-2.5 sm:px-9 sm:py-[20px] sm:text-[17.5px]" />
           </div>
         </div>
       </div>
