@@ -301,6 +301,14 @@ body {
 .hero-zoom {
   animation: hero-zoom 9s ease-out both;
 }
+/* 장면이 바뀔 때 글도 같이 바뀐다 — 짧게 올라오며 나타난다 */
+@keyframes hero-swap {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero-swap {
+  animation: hero-swap 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
 /* 아래 띠의 진행 막대 — 이 장면이 머무는 6.5초 동안 왼쪽에서 오른쪽으로 찬다 */
 @keyframes hero-rail {
   from { transform: scaleX(0); }

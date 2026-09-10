@@ -21,6 +21,20 @@ const SLIDES = [
     alt: '광화문선치과 수술실에서 무영등 아래 임플란트 수술을 진행하는 의료진',
     /** 사진이 보이는 자리 — 넓은 화면은 글 자리를 비우려 오른쪽으로, 좁은 화면은 사람이 잘리지 않게 */
     fit: 'object-[56%_50%] md:object-[58%_50%]',
+    title: (
+      <>
+        더 빠르고, 정확하게, 그리고 <span className="accent-sun">편안하게</span>
+        <br />
+        {/* 좁은 화면에서 '진료' 한 낱말만 남지 않게 두 낱말씩 끊는다 */}
+        <span className="sm:hidden">
+          {CLINIC.tagline.split(' ').slice(0, 2).join(' ')}
+          <br />
+          {CLINIC.tagline.split(' ').slice(2).join(' ')}
+        </span>
+        <span className="hidden sm:inline">{CLINIC.tagline}</span>
+      </>
+    ),
+    lead: '강남성심병원 외래교수 출신 전문의가 이해하기 쉬운 설명과 불편함을 줄인 진료 시스템으로 함께합니다.',
   },
   {
     key: 'sun/hero-scan',
@@ -28,6 +42,14 @@ const SLIDES = [
     desc: '구강스캐너와 3D CT 로 입안을 그대로 옮겨 계획을 세웁니다.',
     alt: '구강스캐너로 치아를 스캔하고 모니터에 3D 모형이 뜨는 광화문선치과 진료 장면',
     fit: 'object-[30%_50%] md:object-[62%_50%]',
+    title: (
+      <>
+        3D 로 미리 보고 계획하는
+        <br />
+        <span className="accent-sun">디지털</span> 임플란트
+      </>
+    ),
+    lead: '구강스캐너와 3D CT 로 뼈와 신경 위치를 확인하고, 모의수술로 정한 자리에 식립합니다.',
   },
   {
     key: 'sun/hero-loupe',
@@ -35,6 +57,14 @@ const SLIDES = [
     desc: '육안으로 놓치기 쉬운 부분까지 확대해 보며 치료합니다.',
     alt: '확대경을 착용하고 파노라마 사진을 띄운 채 진료하는 광화문선치과 원장',
     fit: 'object-[68%_50%] md:object-[60%_50%]',
+    title: (
+      <>
+        확대해서 보고, 남길 수 있는지
+        <br />
+        <span className="accent-sun">먼저</span> 확인합니다
+      </>
+    ),
+    lead: '확대경으로 시야를 넓혀 육안으로 놓치기 쉬운 부분까지 보며 치료합니다.',
   },
 ];
 
@@ -73,20 +103,15 @@ export function HomeHero() {
       </div>
 
       <div className="wrap relative flex flex-1 flex-col justify-center pt-[132px] pb-[150px] md:pt-[150px] md:pb-[210px] lg:pb-[190px]">
-        <div className="max-w-[880px]" data-scroll-fade>
+        <div className="max-w-[1000px]" data-scroll-fade>
           <p className="eyebrow on-dark hero-in">
             SUN DENTAL CLINIC<span className="hidden sm:inline"> · 광화문역 6번 출구 도보 2분</span>
           </p>
-          <h1 className="display mt-6 !text-white hero-in hero-in-2 on-photo">
-            더 빠르고, 정확하게,
-            <br />
-            그리고 <span className="accent-sun">편안하게</span>
-            <br />
-            {CLINIC.tagline}
-          </h1>
-          <p className="mt-7 max-w-[620px] text-[1.05rem] leading-[1.85] text-white/75 hero-in hero-in-3 md:text-[1.1rem]">
-            강남성심병원 외래교수 출신 전문의가 이해하기 쉬운 설명과 불편함을 줄인 진료 시스템으로 함께합니다.
-          </p>
+          {/* 장면이 바뀌면 글도 같이 바뀐다 — key 를 바꿔 다시 그리면서 짧게 올라온다 */}
+          <div key={i} className="hero-swap">
+            <h1 className="display mt-6 text-balance !text-white on-photo">{SLIDES[i].title}</h1>
+            <p className="mt-7 text-[1.05rem] leading-[1.85] text-white/75 md:text-[1.1rem]">{SLIDES[i].lead}</p>
+          </div>
           <div className="mt-9 flex flex-wrap gap-3 hero-in hero-in-4">
             <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="btn-sun">
               네이버 예약
