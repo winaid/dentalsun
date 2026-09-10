@@ -45,6 +45,11 @@ export default function VisitPage() {
               </li>
             ))}
           </ul>
+          {/* 다른 쪽과 같은 버튼 두 개(오너: 첫 화면마다 CTA 통일) */}
+          <div className="mt-4 flex flex-wrap gap-3">
+            <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="btn-sun">네이버 예약</a>
+            <a href={CLINIC.booking.naverTalk} target="_blank" rel="noopener" className="btn-ghost-dark">톡톡 상담</a>
+          </div>
         </HeroCollage>
 
         <section className="section">
