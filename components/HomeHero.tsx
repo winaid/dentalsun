@@ -17,7 +17,7 @@ const SLIDES = [
   {
     key: 'sun/hero-surgery',
     label: '가이드 임플란트 수술',
-    desc: '모의수술로 정한 위치 그대로, 수술 가이드를 대고 식립합니다.',
+    desc: '모의수술로 정한 자리에 그대로 식립합니다.',
     alt: '광화문선치과 수술실에서 무영등 아래 임플란트 수술을 진행하는 의료진',
     /** 사진이 보이는 자리 — 넓은 화면은 글 자리를 비우려 오른쪽으로, 좁은 화면은 사람이 잘리지 않게 */
     fit: 'object-[56%_50%] md:object-[58%_50%]',
@@ -39,7 +39,7 @@ const SLIDES = [
   {
     key: 'sun/hero-scan',
     label: '3D 디지털 진단',
-    desc: '구강스캐너와 3D CT 로 입안을 그대로 옮겨 계획을 세웁니다.',
+    desc: '구강스캐너와 3D CT 로 미리 확인합니다.',
     alt: '구강스캐너로 치아를 스캔하고 모니터에 3D 모형이 뜨는 광화문선치과 진료 장면',
     fit: 'object-[30%_50%] md:object-[62%_50%]',
     title: (
@@ -54,7 +54,7 @@ const SLIDES = [
   {
     key: 'sun/hero-loupe',
     label: '확대경 정밀 진료',
-    desc: '육안으로 놓치기 쉬운 부분까지 확대해 보며 치료합니다.',
+    desc: '놓치기 쉬운 부분까지 확대해서 봅니다.',
     alt: '확대경을 착용하고 파노라마 사진을 띄운 채 진료하는 광화문선치과 원장',
     fit: 'object-[68%_50%] md:object-[60%_50%]',
     title: (
@@ -84,7 +84,10 @@ export function HomeHero() {
       {/* 배경 사진 — 한 장씩 천천히 바뀐다 */}
       <div className="absolute inset-0 -z-10">
         {SLIDES.map((s, n) => (
-          <div key={s.key} className={`absolute inset-0 transition-opacity duration-[1400ms] ease-out ${n === i ? 'opacity-100' : 'opacity-0'}`}>
+          <div
+            key={s.key}
+            className={`absolute inset-0 transition-opacity duration-[1600ms] ease-[cubic-bezier(0.33,0,0.2,1)] ${n === i ? 'opacity-100' : 'opacity-0'}`}
+          >
             <Image
               src={figSrc(s.key)}
               alt={n === i ? s.alt : ''}
@@ -125,10 +128,10 @@ export function HomeHero() {
 
       {/* 아래 띠 — 장면 고르기(사진이 바뀐다) + 진료시간 */}
       {/* 좁은 화면에서는 아래 빠른메뉴(64px) 위에 얹는다 */}
-      <div className="absolute inset-x-0 bottom-[64px] z-10 border-t border-white/12 bg-night/35 backdrop-blur-md md:bottom-0">
+      <div className="hero-bar absolute inset-x-0 bottom-[64px] z-10 border-t border-white/12 bg-night/35 backdrop-blur-md md:bottom-0">
         <div className="wrap grid gap-x-10 lg:grid-cols-[1fr_auto]">
           {/* 좁은 화면 — 점과 지금 장면 이름만 */}
-          <div className="flex items-center gap-3 py-3.5 md:hidden">
+          <div className="flex items-center gap-3.5 py-4 md:hidden">
             <span className="flex items-center gap-1.5">
               {SLIDES.map((s, n) => (
                 <button
@@ -137,11 +140,11 @@ export function HomeHero() {
                   onClick={() => setI(n)}
                   aria-label={`${s.label} 장면 보기`}
                   aria-current={n === i}
-                  className={`h-1.5 rounded-full transition-all ${n === i ? 'w-6 bg-sun-500' : 'w-1.5 bg-white/30'}`}
+                  className={`h-[7px] rounded-full transition-all duration-500 ${n === i ? 'w-7 bg-sun-500' : 'w-[7px] bg-white/30'}`}
                 />
               ))}
             </span>
-            <span className="text-[14px] font-bold text-white">{SLIDES[i].label}</span>
+            <span key={i} className="hero-swap text-[15px] font-bold text-white">{SLIDES[i].label}</span>
           </div>
 
           <ul className="hidden grid-cols-3 md:grid">
@@ -152,25 +155,41 @@ export function HomeHero() {
                   onClick={() => setI(n)}
                   aria-current={n === i}
                   aria-label={`${s.label} 장면 보기`}
-                  className="group block w-full py-4 pr-4 text-left md:py-5"
+                  className="group relative block w-full cursor-pointer overflow-hidden py-5 pr-6 text-left md:py-6"
                 >
+                  {/* 고른 자리는 아래에서 옅은 빛이 올라온다 */}
+                  <span
+                    aria-hidden
+                    className={`pointer-events-none absolute inset-x-0 bottom-0 top-px bg-[radial-gradient(130%_120%_at_50%_100%,rgba(255,255,255,0.10)_0%,rgba(255,255,255,0)_62%)] transition-opacity duration-700 ${
+                      n === i ? 'opacity-100' : 'opacity-0 group-hover:opacity-50'
+                    }`}
+                  />
                   {/* 진행 막대 — 이 장면이 머무는 동안 왼쪽에서 오른쪽으로 찬다 */}
-                  <span aria-hidden className="absolute inset-x-0 top-0 h-px bg-white/12">
-                    {n === i && <span key={i} className="hero-rail block h-px bg-sun-500" />}
+                  <span aria-hidden className="absolute inset-x-0 top-0 h-[2px] bg-white/10">
+                    {n === i && <span key={i} className="hero-rail block h-[2px] bg-sun-500 shadow-[0_0_12px_rgba(242,111,30,0.6)]" />}
                   </span>
-                  <span className="flex items-center gap-2.5">
+                  <span className="relative flex items-center gap-3">
                     <span
-                      className={`flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full border transition-colors ${
+                      className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border transition-colors duration-500 ${
                         n === i ? 'border-sun-500' : 'border-white/30 group-hover:border-white/60'
                       }`}
                     >
-                      <span className={`h-2 w-2 rounded-full transition-all ${n === i ? 'bg-sun-500' : 'bg-transparent'}`} />
+                      <span
+                        className={`h-2.5 w-2.5 rounded-full bg-sun-500 transition-transform duration-500 ${n === i ? 'scale-100' : 'scale-0'}`}
+                      />
                     </span>
-                    <span className={`text-[14px] font-bold transition-colors md:text-[15.5px] ${n === i ? 'text-white' : 'text-white/60 group-hover:text-white/85'}`}>
+                    <span className={`text-[13px] font-bold tabular-nums tracking-[0.18em] transition-colors duration-500 ${n === i ? 'text-sun-400' : 'text-white/35'}`}>
+                      {String(n + 1).padStart(2, '0')}
+                    </span>
+                    <span
+                      className={`text-[15px] font-bold transition-all duration-500 md:text-[17px] ${
+                        n === i ? 'translate-x-0 text-white' : '-translate-x-0.5 text-white/60 group-hover:translate-x-0 group-hover:text-white/90'
+                      }`}
+                    >
                       {s.label}
                     </span>
                   </span>
-                  <span className={`mt-1.5 hidden pl-[28px] text-[13.5px] leading-[1.5] transition-colors md:block ${n === i ? 'text-white/70' : 'text-white/40'}`}>
+                  <span className={`relative mt-2 hidden pl-[62px] text-[14.5px] leading-[1.55] transition-colors duration-500 md:block ${n === i ? 'text-white/75' : 'text-white/40'}`}>
                     {s.desc}
                   </span>
                 </button>
@@ -178,21 +197,24 @@ export function HomeHero() {
             ))}
           </ul>
 
-          <div className="hidden items-center gap-7 border-l border-white/12 py-5 pl-10 lg:flex">
+          <div className="hidden items-center gap-8 border-l border-white/12 py-6 pl-10 lg:flex">
             <div>
-              <p className="text-[12px] font-bold tracking-[0.14em] text-white/45">진료시간</p>
-              <ul className="mt-2 space-y-1 text-[13.5px]">
+              <p className="text-[12.5px] font-bold tracking-[0.16em] text-white/45">진료시간</p>
+              <ul className="mt-2.5 space-y-1.5 text-[14.5px]">
                 {HOURS.display.slice(0, 3).map((h) => (
-                  <li key={h.label} className="flex items-center justify-between gap-6">
+                  <li key={h.label} className="flex items-center justify-between gap-7">
                     <span className="text-white/55">{h.label}</span>
                     <span className="font-semibold tabular-nums text-white/90">{h.time}</span>
                   </li>
                 ))}
               </ul>
             </div>
-            <a href={CLINIC.phoneHref} className="flex flex-col items-start rounded-2xl border border-white/15 bg-white/5 px-5 py-4 transition-colors hover:bg-white/10">
-              <span className="text-[12px] font-bold tracking-[0.14em] text-white/45">대표전화</span>
-              <span className="mt-1 text-[18px] font-extrabold tabular-nums">{CLINIC.phone}</span>
+            <a
+              href={CLINIC.phoneHref}
+              className="flex flex-col items-start rounded-2xl border border-white/15 bg-white/5 px-6 py-4.5 transition-all duration-300 hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/10"
+            >
+              <span className="text-[12.5px] font-bold tracking-[0.16em] text-white/45">대표전화</span>
+              <span className="mt-1 text-[21px] font-extrabold tabular-nums">{CLINIC.phone}</span>
             </a>
           </div>
         </div>
