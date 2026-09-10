@@ -8,7 +8,7 @@ import { VideoFacade } from '@/components/VideoFacade';
 import { FlipCard } from '@/components/FlipCard';
 import { HubAccordion } from '@/components/HubAccordion';
 import { docByPath } from '@/lib/content';
-import { CardLink, ContactBand, FaqList, Figure, Marquee, MedicalNotice, ScrubText, Sentences } from '@/components/ui';
+import { CardLink, ContactBand, FaqList, Figure, MedicalNotice, ScrubText, Sentences } from '@/components/ui';
 import { HomeStage, HomeStats, HomeTourPan } from '@/components/HomeScroll';
 import { BeforeAfter } from '@/components/BeforeAfter';
 import { CASE_GROUPS, CASE_NOTE } from '@/lib/cases';
@@ -78,7 +78,7 @@ export default function HomePage() {
       <main id="main">
         <HomeHero />
 
-        <Marquee items={['디지털 임플란트', '내비게이션 임플란트', '풀아치 임플란트', '턱관절 치료', 'MTA 신경치료', '무통마취', '에어플로우 스케일링', '수면치료', '심미보철', '치아미백', '보험 틀니 · 임플란트', '매복사랑니']} />
+        {/* 첫 화면 아래 흐르는 낱말 띠는 오너 지시로 뺐다(2026-09-10) */}
 
         {/* ── 강점 4 ── */}
         <section className="section">
@@ -127,14 +127,13 @@ export default function HomePage() {
                   subs: h.children?.slice(0, 4).map((c) => c.label) ?? [],
                   fig: HUB_IMG[h.href],
                 })),
-                { href: '/insight', label: '인사이트', short: '인사이트', desc: '턱 소리, 시린 이, 잇몸 출혈처럼 자주 겪는 증상을 환자의 말로 풀어 쓴 안내와 임플란트 과정·비용·건강보험 가이드.', subs: ['증상별 안내', '임플란트 과정', '비용 요인', '건강보험'], fig: 'ai/insight-hub' },
               ]}
             />
             {/* ★ .grid-cards 의 display:grid 가 lg:hidden 을 이기므로 감싸는 상자에서 숨긴다 */}
             <div className="lg:hidden">
             <ul className="reveal-stack grid-cards mt-12 grid-cols-2">
               {TREATMENT_HUBS.map((h) => (
-                <li key={h.href}>
+                <li key={h.href} className="last:col-span-2">
                   <Link href={h.href} className="card card-hover group flex h-full flex-col overflow-hidden">
                     <span className="card-img block">
                       <Image src={figSrc(HUB_IMG[h.href])} alt="" fill sizes="(max-width: 1024px) 50vw, 25vw" className="object-cover" />
@@ -156,17 +155,6 @@ export default function HomePage() {
                   </Link>
                 </li>
               ))}
-              <li>
-                <Link href="/insight" className="card card-hover group flex h-full flex-col overflow-hidden">
-                  <span className="card-img block">
-                    <Image src={figSrc('ai/insight-hub')} alt="" fill sizes="(max-width: 1024px) 50vw, 25vw" className="object-cover" />
-                  </span>
-                  <span className="flex flex-1 flex-col p-4 sm:p-6">
-                    <span className="text-[15px] font-bold text-brand-700 sm:text-[1.08rem]">인사이트 · <span className="whitespace-nowrap">증상별 안내 →</span></span>
-                    <span className="mt-2.5 text-[13px] leading-[1.55] text-ink-muted sm:mt-3 sm:text-[14.5px] sm:leading-relaxed">턱 소리 · 시린 이 · 잇몸 출혈 · 임플란트 과정 · 건강보험</span>
-                  </span>
-                </Link>
-              </li>
             </ul>
             </div>
           </div>
