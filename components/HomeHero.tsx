@@ -130,7 +130,7 @@ export function HomeHero() {
               href={CLINIC.booking.naver}
               target="_blank"
               rel="noopener"
-              className="btn-sun !gap-2 !px-4 !py-[16px] !text-[15.5px] !shadow-[0_14px_34px_rgba(242,111,30,0.35)] sm:!gap-2.5 sm:!px-9 sm:!py-[20px] sm:!text-[17.5px]"
+              className="btn-sun !gap-2 !px-4 !py-[16px] !text-[15.5px] !shadow-[0_14px_34px_rgba(242,111,30,0.35)] sm:!min-w-[210px] sm:!gap-2.5 sm:!px-8 sm:!py-[20px] sm:!text-[17.5px]"
             >
               {/* 흰 네모 안의 초록 N 은 주황 버튼 위에서 겉돌아 뺐다(오너 지적) — 글자와 같은 흰 선 아이콘 */}
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -143,7 +143,7 @@ export function HomeHero() {
               href={CLINIC.booking.naverTalk}
               target="_blank"
               rel="noopener"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-white/95 px-4 py-[16px] text-[15.5px] font-bold text-brand-800 shadow-[0_14px_34px_rgba(9,14,35,0.35)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-white sm:gap-2.5 sm:px-9 sm:py-[20px] sm:text-[17.5px]"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-white/95 px-4 py-[16px] text-[15.5px] font-bold text-brand-800 shadow-[0_14px_34px_rgba(9,14,35,0.35)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-white sm:min-w-[210px] sm:gap-2.5 sm:px-8 sm:py-[20px] sm:text-[17.5px]"
             >
               <span className="flex h-[22px] w-[22px] items-center justify-center rounded-full bg-[#03C75A] text-white">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
