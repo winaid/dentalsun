@@ -54,9 +54,7 @@ export default function FaqPage() {
           </section>
         ))}
         <ContactBand title="여기에 없는 질문은 톡톡이나 전화로 물어보세요" />
-        <div className="py-8">
-          <MedicalNotice />
-        </div>
+        <MedicalNotice />
       </main>
     </>
   );

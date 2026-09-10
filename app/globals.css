@@ -172,13 +172,13 @@ body {
   @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-[15px] font-bold transition-all duration-200 border border-white/25 bg-white/10 text-white backdrop-blur hover:bg-white/20 hover:-translate-y-0.5;
 }
 .pill {
-  @apply inline-flex items-center gap-1.5 rounded-full border border-hairline bg-white px-3.5 py-1.5 text-[13px] font-semibold text-ink-soft;
+  @apply inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-hairline bg-white px-3.5 py-1.5 text-[13px] font-semibold text-ink-soft;
 }
 .pill-brand {
-  @apply inline-flex items-center rounded-full bg-brand-50 px-3.5 py-1.5 text-[13px] font-bold text-brand-700;
+  @apply inline-flex items-center whitespace-nowrap rounded-full bg-brand-50 px-3.5 py-1.5 text-[13px] font-bold text-brand-700;
 }
 .pill-sun {
-  @apply inline-flex items-center rounded-full bg-sun-50 px-3.5 py-1.5 text-[13px] font-bold text-sun-700;
+  @apply inline-flex items-center whitespace-nowrap rounded-full bg-sun-50 px-3.5 py-1.5 text-[13px] font-bold text-sun-700;
 }
 
 /* ── 카드 — 격자 안 카드는 전부 같은 높이·같은 여백·같은 사진 비율 ── */
@@ -526,8 +526,10 @@ details.faq .a {
 .bg-night {
   background-image: radial-gradient(120% 90% at 12% 0%, #17204d 0%, transparent 55%), radial-gradient(90% 70% at 88% 100%, #10173a 0%, transparent 60%);
 }
+/* 같은 색 구역이 이어지면 위아래 여백이 두 배가 된다 — 위 여백을 줄이되 0 으로 만들지는 않는다.
+   0 이면 제목이 구역 경계선에 딱 붙어 답답하다(오너 지적). */
 .section + .section:not(.bg-canvas):not([class*='bg-night']) {
-  padding-top: 0;
+  @apply pt-10 md:pt-14 lg:pt-16;
 }
 /* ★ 옅은 바탕·남색·주황 구역 **다음** 흰 구역은 위 여백을 되살린다 — 안 그러면 사진이 구역 위에 딱 붙는다(오너 지적) */
 .bg-canvas + .section:not(.bg-canvas),
@@ -610,7 +612,9 @@ details.faq .a {
   @apply inline-flex items-center rounded-full bg-brand-50 px-3.5 py-1.5 text-[12.5px] font-extrabold tracking-[0.12em] text-brand-700;
 }
 .stage-step {
-  border: 1px solid transparent;
+  /* 테두리는 늘 있고(오너: 사진·카드에 테두리), 지금 보는 단계만 흰 바탕에 그림자가 얹힌다 */
+  border: 1px solid var(--color-hairline);
+  background: rgba(255, 255, 255, 0.55);
   transition: opacity 0.5s ease, background-color 0.5s ease, box-shadow 0.5s ease, border-color 0.5s ease;
 }
 .stage-step.on {

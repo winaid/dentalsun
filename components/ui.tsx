@@ -232,16 +232,62 @@ export function ContactBand({ title = '궁금한 점은 편하게 문의해 주�
         <div className="absolute inset-0 bg-gradient-to-r from-night via-night/85 to-night/50" />
       </div>
       <div className="wrap py-20 md:py-28">
-        <div className="reveal grid items-center gap-8 md:grid-cols-[1fr_auto]">
+        <div className="reveal grid items-center gap-10 md:grid-cols-[1fr_auto]">
           <div>
             <p className="eyebrow on-dark">CONTACT</p>
             <h2 className="display-sm mt-4 !text-white">{title}</h2>
-            <p className="mt-3 text-white/70">{text ?? `${CLINIC.transit[0].line} ${CLINIC.transit[0].station} ${CLINIC.transit[0].exit} ${CLINIC.transit[0].walk} · 화·목 야간진료 21:00 · ${CLINIC.parking.place} ${CLINIC.parking.fee}`}</p>
+            <p className="mt-3 text-white/70">{text ?? `화·목 야간진료 21:00 · ${CLINIC.parking.place} ${CLINIC.parking.fee}`}</p>
+            {/* 빈 자리에 지하철 안내 — 기존 홈페이지 오시는 길 표기 그대로, 호선 색 동그라미 */}
+            <ul className="mt-6 flex flex-wrap gap-2.5">
+              {CLINIC.transit.map((t) => (
+                <li
+                  key={`${t.line}-${t.station}`}
+                  className="flex items-center gap-2.5 rounded-full border border-white/15 bg-white/8 py-1.5 pr-4 pl-1.5 backdrop-blur"
+                >
+                  <span className="flex h-7 w-7 items-center justify-center rounded-full text-[12px] font-extrabold text-white" style={{ background: t.color }}>
+                    {t.line.replace('호선', '')}
+                  </span>
+                  <span className="text-[14px] leading-tight">
+                    <span className="font-bold text-white">{t.station}</span>{' '}
+                    <span className="text-white/60">
+                      {t.exit} · {t.walk}
+                    </span>
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
-          <div className="flex flex-wrap gap-3">
-            <a href={CLINIC.phoneHref} className="btn-sun">전화 {CLINIC.phone}</a>
-            <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="btn-ghost-dark">네이버 예약</a>
-            <a href={CLINIC.booking.naverTalk} target="_blank" rel="noopener" className="btn-ghost-dark">톡톡 상담</a>
+          {/* 버튼 넷은 같은 크기 — 전화번호를 버튼 안에 넣으면 혼자 길어진다(오너) */}
+          <div className="grid grid-cols-2 gap-3">
+            <a href={CLINIC.phoneHref} className="btn-sun !min-w-[152px] !gap-2">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden>
+                <path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z" fill="currentColor" />
+              </svg>
+              전화
+            </a>
+            <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="btn-ghost-dark !min-w-[152px] !gap-2">
+              <span className="flex h-[18px] w-[18px] items-center justify-center rounded-[5px] bg-[#03C75A] text-white">
+                <svg width="11" height="11" viewBox="0 0 24 24" aria-hidden>
+                  <path d="M4 3h5.2l5.6 8.4V3H20v18h-5.2L9.2 12.6V21H4z" fill="currentColor" />
+                </svg>
+              </span>
+              네이버 예약
+            </a>
+            <a href={CLINIC.booking.naverTalk} target="_blank" rel="noopener" className="btn-ghost-dark !min-w-[152px] !gap-2">
+              <span className="flex h-[18px] w-[18px] items-center justify-center rounded-full bg-[#03C75A] text-white">
+                <svg width="11" height="11" viewBox="0 0 24 24" aria-hidden>
+                  <path d="M12 4c-4.7 0-8.5 3-8.5 6.8 0 2.4 1.6 4.5 4 5.7L6.8 20l4-2.4c.4 0 .8.1 1.2.1 4.7 0 8.5-3 8.5-6.8S16.7 4 12 4z" fill="currentColor" />
+                </svg>
+              </span>
+              톡톡 상담
+            </a>
+            <Link href="/visit" className="btn-ghost-dark !min-w-[152px] !gap-2">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden>
+                <path d="M12 21s6-5.2 6-10a6 6 0 1 0-12 0c0 4.8 6 10 6 10z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
+                <circle cx="12" cy="11" r="2.2" fill="currentColor" />
+              </svg>
+              오시는 길
+            </Link>
           </div>
         </div>
       </div>
@@ -249,10 +295,16 @@ export function ContactBand({ title = '궁금한 점은 편하게 문의해 주�
   );
 }
 
+/**
+ * 의료 고지 — 상담 띠(남색) 아래에 그대로 이어 붙인다. 흰 띠를 끼우지 않아 꼬리말까지 남색이 이어진다(오너).
+ * ⚠️ 문구 자체는 지우지 않는다 — 치료 효과를 말하는 광고에는 부작용·개인차 고지가 함께 있어야 한다(의료법 제56조).
+ */
 export function MedicalNotice() {
   return (
-    <div className="wrap">
-      <p className="rounded-xl bg-canvas px-5 py-4 text-[14px] leading-relaxed text-ink-muted">{MEDICAL_DISCLAIMER}</p>
+    <div className="bg-night pb-14">
+      <div className="wrap">
+        <p className="border-t border-white/10 pt-7 text-[13.5px] leading-relaxed text-white/45">{MEDICAL_DISCLAIMER}</p>
+      </div>
     </div>
   );
 }

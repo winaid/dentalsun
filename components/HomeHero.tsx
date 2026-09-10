@@ -43,7 +43,8 @@ export function HomeHero() {
           <p className="mt-7 max-w-[720px] text-[1.05rem] leading-[1.85] text-white/80 hero-in hero-in-3 md:text-[1.12rem]">
             턱관절 5,000건+ &amp; 고난도 풀아치·임플란트 전문 광화문선치과
           </p>
-          <div className="mt-10 flex flex-wrap gap-3 hero-in hero-in-4">
+          {/* 좁은 화면에서는 아래 빠른메뉴(전화·예약·상담·오시는 길)가 같은 일을 한다 — 첫 화면 버튼은 감춘다(오너) */}
+          <div className="mt-10 hidden flex-wrap gap-3 hero-in hero-in-4 sm:flex">
             <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="btn-sun">네이버 예약</a>
             <Link href="/treatment" className="btn-ghost-dark">진료 안내 보기</Link>
           </div>

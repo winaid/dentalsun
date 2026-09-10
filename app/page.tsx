@@ -139,14 +139,19 @@ export default function HomePage() {
                     <span className="card-img block">
                       <Image src={figSrc(HUB_IMG[h.href])} alt="" fill sizes="(max-width: 1024px) 50vw, 25vw" className="object-cover" />
                     </span>
-                    <span className="flex flex-1 flex-col p-6">
-                      <span className="flex items-center gap-3">
-                        <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-50 text-brand-600 transition-colors group-hover:bg-sun-500 group-hover:text-white">
-                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden><path d={HUB_ICON[h.href] ?? 'M4 12h16'} stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" strokeLinecap="round" /></svg>
+                    {/* 좁은 화면은 두 칸이라 글자 자리가 좁다 — 여백·아이콘·글자를 줄여 이름이 쪼개지지 않게 한다 */}
+                    <span className="flex flex-1 flex-col p-4 sm:p-6">
+                      <span className="flex items-center gap-2.5 sm:gap-3">
+                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-600 transition-colors group-hover:bg-sun-500 group-hover:text-white sm:h-10 sm:w-10">
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden className="sm:h-5 sm:w-5"><path d={HUB_ICON[h.href] ?? 'M4 12h16'} stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" strokeLinecap="round" /></svg>
                         </span>
-                        <span className="text-[1.08rem] font-bold text-ink group-hover:text-brand-700">{h.label}</span>
+                        {/* 폰에서는 짧은 이름(무통&저자극시스템 → 무통치료)이라 낱말이 쪼개지지 않는다 */}
+                        <span className="text-[15px] font-bold text-ink group-hover:text-brand-700 sm:text-[1.08rem]">
+                          <span className="sm:hidden">{HUB_SHORT[h.href] ?? h.label}</span>
+                          <span className="hidden sm:inline">{h.label}</span>
+                        </span>
                       </span>
-                      <span className="mt-3 text-[14.5px] leading-relaxed text-ink-muted">{h.children?.slice(0, 3).map((c) => c.label).join(' · ')}</span>
+                      <span className="mt-2.5 text-[13px] leading-[1.55] text-ink-muted sm:mt-3 sm:text-[14.5px] sm:leading-relaxed">{h.children?.slice(0, 3).map((c) => c.label).join(' · ')}</span>
                     </span>
                   </Link>
                 </li>
@@ -156,9 +161,9 @@ export default function HomePage() {
                   <span className="card-img block">
                     <Image src={figSrc('ai/insight-hub')} alt="" fill sizes="(max-width: 1024px) 50vw, 25vw" className="object-cover" />
                   </span>
-                  <span className="flex flex-1 flex-col p-6">
-                    <span className="text-[1.08rem] font-bold text-brand-700">인사이트 · 증상별 안내 →</span>
-                    <span className="mt-3 text-[14.5px] leading-relaxed text-ink-muted">턱 소리 · 시린 이 · 잇몸 출혈 · 임플란트 과정 · 건강보험</span>
+                  <span className="flex flex-1 flex-col p-4 sm:p-6">
+                    <span className="text-[15px] font-bold text-brand-700 sm:text-[1.08rem]">인사이트 · 증상별 안내 →</span>
+                    <span className="mt-2.5 text-[13px] leading-[1.55] text-ink-muted sm:mt-3 sm:text-[14.5px] sm:leading-relaxed">턱 소리 · 시린 이 · 잇몸 출혈 · 임플란트 과정 · 건강보험</span>
                   </span>
                 </Link>
               </li>
@@ -474,9 +479,7 @@ export default function HomePage() {
         </section>
 
         <ContactBand />
-        <div className="py-8">
-          <MedicalNotice />
-        </div>
+        <MedicalNotice />
       </main>
     </>
   );

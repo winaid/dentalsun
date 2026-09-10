@@ -103,7 +103,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
         >
           <div className="flex flex-wrap gap-3">
             <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="btn-sun">네이버 예약</a>
-            <a href={CLINIC.phoneHref} className="btn-ghost-dark">전화 {CLINIC.phone}</a>
+            <a href={CLINIC.booking.naverTalk} target="_blank" rel="noopener" className="btn-ghost-dark">톡톡 상담</a>
           </div>
         </HeroCollage>
 
@@ -399,9 +399,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
         <div className="mt-24 md:mt-32">
           <ContactBand bg="sun/tmj-explain-skull" title="턱에서 소리가 나거나 입이 잘 안 벌어지시나요?" text="검사 후 원인을 알기 쉽게 설명해 드립니다. 네이버 예약이나 전화로 편하게 문의해 주세요." />
         </div>
-        <div className="py-8">
-          <MedicalNotice />
-        </div>
+        <MedicalNotice />
       </main>
     </>
   );

@@ -15,22 +15,42 @@ export function SiteFooter() {
           <div>
             <Image src="/img/brand/logo.png" alt={CLINIC.name} width={522} height={145} className="h-11 w-auto" />
             <p className="mt-5 max-w-[380px] text-[15px] leading-relaxed text-ink-soft">{CLINIC.description}</p>
-            <div className="mt-6 space-y-1.5 text-[15px] text-ink-soft">
-              <p>
-                <span className="font-bold text-ink">주소</span> {CLINIC.address.full} ({CLINIC.address.landmark})
-              </p>
-              <p>
-                <span className="font-bold text-ink">전화</span> <a href={CLINIC.phoneHref} className="hover:underline">{CLINIC.phone}</a> · <span className="font-bold text-ink">팩스</span> {CLINIC.fax}
-              </p>
-              <p>
-                <span className="font-bold text-ink">진료시간</span>{' '}
-                {HOURS.display.map((h) => `${h.label} ${h.time}`).join(' · ')}
-              </p>
-              <p>{HOURS.closed}</p>
-              <p>
-                <span className="font-bold text-ink">주차</span> {CLINIC.parking.place} {CLINIC.parking.fee}
-              </p>
-            </div>
+            {/* 항목마다 이름표를 왼쪽에 세워 눈이 한 줄씩 따라가게 한다 — 한 문단에 몰아 쓰면 읽히지 않는다(오너) */}
+            <dl className="mt-7 grid grid-cols-[52px_1fr] gap-x-4 gap-y-3 text-[15px] text-ink-soft">
+              <dt className="font-bold text-ink">주소</dt>
+              <dd className="leading-[1.6]">
+                {CLINIC.address.full}
+                <span className="block text-ink-muted">{CLINIC.address.landmark}</span>
+              </dd>
+
+              <dt className="font-bold text-ink">전화</dt>
+              <dd className="leading-[1.6]">
+                <a href={CLINIC.phoneHref} className="font-semibold text-ink hover:underline">
+                  {CLINIC.phone}
+                </a>
+                <span className="block text-ink-muted">팩스 {CLINIC.fax}</span>
+              </dd>
+
+              <dt className="font-bold text-ink">진료시간</dt>
+              <dd>
+                <ul className="space-y-1.5">
+                  {HOURS.display.map((h) => (
+                    <li key={h.label} className="leading-[1.5]">
+                      <span className="inline-block w-[72px] text-ink-muted">{h.label}</span>
+                      <span className="tabular-nums whitespace-nowrap">{h.time}</span>
+                      {/* 단서(야간진료 · 2·4째주)는 시간 아래 줄로 — 옆에 붙이면 시간이 두 줄로 접힌다 */}
+                      {h.note && <span className="block pl-[72px] text-[13px] text-sun-600">{h.note}</span>}
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-2 text-ink-muted">{HOURS.closed}</p>
+              </dd>
+
+              <dt className="font-bold text-ink">주차</dt>
+              <dd className="leading-[1.6]">
+                {CLINIC.parking.place} {CLINIC.parking.fee}
+              </dd>
+            </dl>
           </div>
 
           <nav aria-label="전체 메뉴" className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3 lg:grid-cols-5">

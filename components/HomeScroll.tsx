@@ -70,10 +70,11 @@ export function HomeStage() {
                   </p>
                 )}
               </div>
-              <div className="relative mt-8 hidden w-full aspect-[3/2] max-h-[50svh] overflow-hidden rounded-[28px] bg-canvas-2 shadow-[var(--shadow-lift)] lg:block">
+              {/* 사진은 잘라서 채우지 않고 통째로 넣는다 — 장비 사진이 옆·아래가 잘려 나갔다(오너). 흰 바탕 + 테두리로 액자처럼 */}
+              <div className="relative mt-8 hidden w-full aspect-[4/3] max-h-[52svh] overflow-hidden rounded-[28px] border border-hairline bg-white shadow-[var(--shadow-lift)] lg:block">
                 {STAGE_IMG.map((f, i) => (
                   <div key={f.key} className="stage-img" data-stage-img>
-                    <Image src={figSrc(f.key)} alt={f.alt} fill sizes="50vw" className="object-cover" />
+                    <Image src={figSrc(f.key)} alt={f.alt} fill sizes="50vw" className="object-contain p-3" />
                     <span className="absolute left-5 top-5 rounded-full bg-night/60 px-3 py-1.5 text-[12px] font-bold tracking-[0.12em] text-white backdrop-blur">
                       STEP {String(i + 1).padStart(2, '0')} / {String(steps.length).padStart(2, '0')}
                     </span>
@@ -86,7 +87,11 @@ export function HomeStage() {
           {/* 오른쪽 — 단계 글 (모바일은 사진을 각 단계 아래에) */}
           <ol className="lg:pt-[22vh] lg:pb-[2vh]">
             {steps.map((s, i) => (
-              <li key={s.title} className="stage-step flex gap-5 rounded-3xl px-6 py-7 md:gap-6 lg:my-[6vh] lg:min-h-[36vh] lg:items-center lg:px-8 lg:py-8" data-stage-step>
+              <li
+                key={s.title}
+                className="stage-step flex flex-col items-start gap-3.5 rounded-3xl px-5 py-6 md:gap-6 md:px-6 md:py-7 lg:my-[4vh] lg:min-h-[26vh] lg:flex-row lg:items-center lg:px-8 lg:py-8"
+                data-stage-step
+              >
                 <span className="stage-badge shrink-0">STEP {String(i + 1).padStart(2, '0')}</span>
                 <div className="min-w-0 flex-1">
                   <h3 className="text-[1.3rem] font-bold leading-snug text-ink md:text-[1.55rem]">{s.title}</h3>
@@ -95,8 +100,8 @@ export function HomeStage() {
                       <Sentences text={s.desc} />
                     </p>
                   )}
-                  <div className="relative mt-5 aspect-[3/2] overflow-hidden rounded-2xl bg-canvas-2 lg:hidden">
-                    <Image src={figSrc(STAGE_IMG[i]?.key ?? STAGE_IMG[0].key)} alt={STAGE_IMG[i]?.alt ?? ''} fill sizes="100vw" className="object-cover" />
+                  <div className="relative mt-5 aspect-[4/3] overflow-hidden rounded-2xl border border-hairline bg-white lg:hidden">
+                    <Image src={figSrc(STAGE_IMG[i]?.key ?? STAGE_IMG[0].key)} alt={STAGE_IMG[i]?.alt ?? ''} fill sizes="100vw" className="object-contain p-2" />
                   </div>
                 </div>
               </li>
