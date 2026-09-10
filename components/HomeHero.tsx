@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Sentences } from '@/components/ui';
 import { CLINIC, HOURS } from '@/lib/clinic';
 import { DOCTORS } from '@/lib/doctors';
 import { figSrc } from '@/lib/docs';
@@ -37,15 +36,12 @@ export function HomeHero() {
         {/* 왼쪽 — 글 (스크롤하면 살짝 올라가며 옅어진다) */}
         <div data-scroll-fade>
           <p className="eyebrow on-dark hero-in">SUN DENTAL CLINIC<span className="hidden sm:inline"> · 광화문역 6번 출구 도보 2분</span></p>
-          <h1 className="display mt-6 max-w-[760px] !text-white hero-in hero-in-2 on-photo">
-            더 빠르고, 정확하게,
-            <br />
-            그리고 <span className="accent-sun">편안하게</span>
-            <br />
-            환자중심의 디지털 치과 진료
+          {/* 첫 문장(후킹)은 오너가 준 문구 그대로. ⚠️ 15년 · 5,000건 은 병원이 확인한 숫자여야 한다(허위·과장 광고 금지) */}
+          <h1 className="display mt-6 max-w-[900px] text-balance !text-white hero-in hero-in-2 on-photo">
+            바른 진료 <span className="accent-sun">15년</span>, 결과는 오래도록.
           </h1>
-          <p className="mt-7 max-w-[600px] text-[1.05rem] leading-[1.85] text-white/80 hero-in hero-in-3 md:text-[1.12rem]">
-            <Sentences text="강남성심병원 외래교수 출신 전문의가 이해하기 쉬운 설명과 불편함을 줄인 진료시스템으로 진료합니다. 디지털 임플란트와 턱관절 치료, MTA 신경치료로 자연치아를 지키는 광화문 선치과입니다." />
+          <p className="mt-7 max-w-[720px] text-[1.05rem] leading-[1.85] text-white/80 hero-in hero-in-3 md:text-[1.12rem]">
+            턱관절 5,000건+ &amp; 고난도 풀아치·임플란트 전문 광화문선치과
           </p>
           <div className="mt-10 flex flex-wrap gap-3 hero-in hero-in-4">
             <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="btn-sun">네이버 예약</a>

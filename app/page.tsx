@@ -307,10 +307,21 @@ export default function HomePage() {
                   </div>
                 </div>
                 <div className="relative z-10 mx-auto grid max-w-[1440px] items-center gap-10 md:grid-cols-[minmax(0,360px)_1fr] md:gap-12 lg:grid-cols-[460px_1fr] lg:gap-16 xl:grid-cols-[480px_1fr]">
-                  <div className="reveal">
-                    <div className="wipe relative mx-auto aspect-[4/5] w-full max-w-[360px] overflow-hidden rounded-3xl bg-canvas-2 shadow-[var(--shadow-lift)] lg:max-w-none">
-                      <Image src={d.photo} alt={`${d.name} ${d.role}`} fill sizes="(max-width: 768px) 88vw, 480px" className="object-cover object-top" />
-                    </div>
+                  {/* 배경을 지운 사진(누끼) — 액자 없이 바탕 위에 바로 선다. 뒤에 옅은 빛과 바닥 그림자만 둔다 */}
+                  <div className="reveal relative">
+                    <span
+                      aria-hidden
+                      className="pointer-events-none absolute inset-x-0 bottom-6 top-0 -z-10 bg-[radial-gradient(58%_58%_at_50%_52%,rgba(242,111,30,0.16)_0%,rgba(242,111,30,0)_70%)]"
+                    />
+                    <Image
+                      src={d.cutout ?? d.photo}
+                      alt={`${d.name} ${d.role}`}
+                      width={995}
+                      height={1346}
+                      sizes="(max-width: 768px) 76vw, 480px"
+                      className="mx-auto h-auto w-full max-w-[300px] drop-shadow-[0_26px_36px_rgba(9,14,35,0.16)] md:max-w-[340px] lg:max-w-none"
+                    />
+                    <span aria-hidden className="mx-auto mt-[-14px] block h-4 w-[62%] rounded-[999px] bg-[radial-gradient(50%_50%_at_50%_50%,rgba(19,24,41,0.16)_0%,rgba(19,24,41,0)_72%)]" />
                   </div>
                   <div className="reveal">
                     <p className="text-[1.1rem] font-semibold text-brand-600 md:text-[1.2rem]">{d.specialty}</p>
