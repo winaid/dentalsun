@@ -6,7 +6,7 @@ import { ContactBand } from '@/components/ui';
 import { HeroCollage } from '@/components/HeroCollage';
 import { JsonLd } from '@/components/JsonLd';
 import { SiteHeader } from '@/components/SiteHeader';
-import { breadcrumbSchema, abs, og, alt } from '@/lib/seo';
+import { desc80, breadcrumbSchema, abs, og, alt } from '@/lib/seo';
 
 /**
  * 임상 사례 · 핵심 안내 목록 — 네이버 블로그(sundent21)에서 가져온 글 두 묶음.
@@ -18,7 +18,7 @@ export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: '임상 사례 · 핵심 안내',
-  description: `${CLINIC.name}에서 실제로 진행한 치료 과정을 사진과 함께 정리한 임상 사례와, 상악동거상술·임플란트 구조·틀니와 풀아치 임플란트처럼 치료를 이해하는 데 필요한 핵심 안내 글을 모았습니다.`,
+  description: desc80(`${CLINIC.name}에서 실제로 진행한 치료 과정을 사진과 함께 정리한 임상 사례와, 상악동거상술·임플란트 구조·틀니와 풀아치 임플란트처럼 치료를 이해하는 데 필요한 핵심 안내 글을 모았습니다.`),
   alternates: alt('/insight/clinical'),
   openGraph: og({ title: `임상 사례 · 핵심 안내 | ${CLINIC.name}`, description: '실제 치료 과정과 치료를 이해하는 핵심 안내 글.', path: '/insight/clinical' }),
 };

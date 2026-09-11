@@ -9,7 +9,7 @@ import { ContactBand } from '@/components/ui';
 import { PostArticle } from '@/components/PostArticle';
 import { JsonLd } from '@/components/JsonLd';
 import { SiteHeader } from '@/components/SiteHeader';
-import { breadcrumbSchema, abs, og, medicalWebPageSchema, alt } from '@/lib/seo';
+import { desc80, breadcrumbSchema, abs, og, medicalWebPageSchema, alt } from '@/lib/seo';
 
 /**
  * 임상 사례 · 핵심 안내 한 편 — 네이버 블로그에서 가져온 글(content/clinical, scripts/import-naver.mjs).
@@ -30,11 +30,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const path = `/insight/clinical/${post.slug}`;
   return {
     title: post.title,
-    description: post.summary.slice(0, 155),
+    description: desc80(post.summary),
     alternates: alt(path),
     openGraph: og({
       title: `${post.title} | ${CLINIC.name}`,
-      description: post.summary.slice(0, 155),
+      description: desc80(post.summary),
       path,
       ...(post.image ? { images: [{ url: post.image, alt: post.imageAlt ?? post.title }] } : {}),
     }),

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { DocPage } from '@/components/DocPage';
 import { ALL_DOCS, docByPath } from '@/lib/content';
-import { alt, og, withLocality } from '@/lib/seo';
+import { desc80, alt, og, withLocality } from '@/lib/seo';
 import { figSize, figSrc } from '@/lib/docs';
 
 /**
@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const path = `/insight/${slug.join('/')}`;
   const doc = docByPath(path);
   if (!doc) return {};
-  const description = withLocality(doc.description).slice(0, 155);
+  const description = desc80(withLocality(doc.description));
   const hero = doc.hero ? figSize(doc.hero.key) : null;
   return {
     title: doc.title,

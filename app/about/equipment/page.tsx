@@ -4,12 +4,12 @@ import { HeroCollage } from '@/components/HeroCollage';
 import { JsonLd } from '@/components/JsonLd';
 import { ContactBand, MedicalNotice, Sentences } from '@/components/ui';
 import { EquipShowcase, type EquipItem } from '@/components/EquipShowcase';
-import { alt, articleSchema, breadcrumbSchema, medicalWebPageSchema, og } from '@/lib/seo';
+import { desc80, alt, articleSchema, breadcrumbSchema, medicalWebPageSchema, og } from '@/lib/seo';
 
 const TITLE = '디지털치과 장비소개';
 const DESC = '광화문 선치과 디지털 장비 — 3D 구강스캐너, 3D CT, 컴퓨터 모의수술 분석, 수술 가이드, 당일 디지털 보철(캐드캠·3D 프린터), INOS 실시간 소독, 무통마취기, 에어플로우, PHL-15 레이저.';
 
-export const metadata: Metadata = { title: TITLE, description: DESC, alternates: alt('/about/equipment'), openGraph: og({ title: TITLE, description: DESC, path: '/about/equipment', images: [{ url: '/img/equip/scanner.webp', width: 1400, height: 421, alt: '3D 구강스캐너' }] }) };
+export const metadata: Metadata = { title: TITLE, description: desc80(DESC), alternates: alt('/about/equipment'), openGraph: og({ title: TITLE, description: DESC, path: '/about/equipment', images: [{ url: '/img/equip/scanner.webp', width: 1400, height: 421, alt: '3D 구강스캐너' }] }) };
 
 /**
  * 기존 홈페이지 '디지털치과 장비소개' Point 01~06 + 각 진료 페이지의 장비 배너 원문.

@@ -18,12 +18,12 @@ const HUB_IMG: Record<string, string> = {
 };
 import { ALL_DOCS, docsOfHub } from '@/lib/content';
 import { TREATMENT_HUBS } from '@/lib/nav';
-import { alt, breadcrumbSchema, itemListSchema, medicalWebPageSchema, og } from '@/lib/seo';
+import { desc80, alt, breadcrumbSchema, itemListSchema, medicalWebPageSchema, og } from '@/lib/seo';
 
 const TITLE = '진료 안내';
 const DESC = '광화문 선치과 진료 안내 — 디지털 임플란트, 턱관절 치료, 심미치료, 보험 틀니와 임플란트, 매복사랑니, MTA 신경치료로 자연치아 살리기, 무통·저자극 시스템.';
 
-export const metadata: Metadata = { title: TITLE, description: DESC, alternates: alt('/treatment'), openGraph: og({ title: TITLE, description: DESC, path: '/treatment' }) };
+export const metadata: Metadata = { title: TITLE, description: desc80(DESC), alternates: alt('/treatment'), openGraph: og({ title: TITLE, description: DESC, path: '/treatment' }) };
 
 export default function TreatmentIndex() {
   const trail = [{ name: TITLE, path: '/treatment' }];
@@ -58,7 +58,7 @@ export default function TreatmentIndex() {
               {hubs.map((h, i) => (
                 <li key={h.nav.href} className="card card-hover flex h-full flex-col overflow-hidden">
                   <span className="card-img block">
-                    <Image src={figSrc(HUB_IMG[h.nav.href] ?? 'ai/faq')} alt="" fill sizes="(max-width: 768px) 100vw, 33vw" className={fitsBox(HUB_IMG[h.nav.href] ?? 'ai/faq', 3, 2) ? 'object-cover' : '!object-contain p-3'} />
+                    <Image src={figSrc(HUB_IMG[h.nav.href] ?? 'ai/faq')} alt={`${h.nav.label} 진료 사진`} fill sizes="(max-width: 768px) 100vw, 33vw" className={fitsBox(HUB_IMG[h.nav.href] ?? 'ai/faq', 3, 2) ? 'object-cover' : '!object-contain p-3'} />
                   </span>
                   <div className="flex flex-1 flex-col p-7">
                   <span className="num">{String(i + 1).padStart(2, '0')}</span>
@@ -84,7 +84,7 @@ export default function TreatmentIndex() {
               ))}
               <li className="card card-hover flex h-full flex-col overflow-hidden">
                 <span className="card-img block">
-                  <Image src={figSrc('ai/insight-hub')} alt="" fill sizes="(max-width: 768px) 100vw, 25vw" className="object-cover" />
+                  <Image src={figSrc('ai/insight-hub')} alt="인사이트 — 치료 안내 글과 임상 사례" fill sizes="(max-width: 768px) 100vw, 25vw" className="object-cover" />
                 </span>
                 <div className="flex flex-1 flex-col p-7">
                   <span className="num">08</span>

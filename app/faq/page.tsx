@@ -4,14 +4,14 @@ import { HeroCollage } from '@/components/HeroCollage';
 import { JsonLd } from '@/components/JsonLd';
 import { Breadcrumb, ContactBand, FaqList, MedicalNotice , Sentences } from '@/components/ui';
 import { SITE_FAQ, ALL_FAQ } from '@/lib/faq';
-import { alt, breadcrumbSchema, faqSchema, medicalWebPageSchema, og } from '@/lib/seo';
+import { desc80, alt, breadcrumbSchema, faqSchema, medicalWebPageSchema, og } from '@/lib/seo';
 
 const TITLE = '자주 묻는 질문';
 const DESC = '광화문 선치과에 자주 묻는 질문 — 진료시간·야간진료·주차·임플란트·턱관절·건강보험 임플란트와 틀니·무통마취·수면치료를 문답으로 정리했습니다.';
 
 export const metadata: Metadata = {
   title: TITLE,
-  description: DESC,
+  description: desc80(DESC),
   alternates: alt('/faq'),
   openGraph: og({ title: TITLE, description: DESC, path: '/faq' }),
 };

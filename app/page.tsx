@@ -17,10 +17,12 @@ import { DOCTORS } from '@/lib/doctors';
 import { TREATMENT_HUBS } from '@/lib/nav';
 import { SITE_FAQ } from '@/lib/faq';
 import { figSrc } from '@/lib/docs';
-import { faqSchema, medicalWebPageSchema, physicianSchema } from '@/lib/seo';
+import { faqSchema, medicalWebPageSchema, og, physicianSchema } from '@/lib/seo';
 
 export const metadata: Metadata = {
-  alternates: { canonical: '/', languages: { 'ko-KR': CLINIC.url, 'x-default': CLINIC.url } },
+  alternates: { canonical: '/', languages: { 'ko-KR': CLINIC.url, 'x-default': CLINIC.url }, types: { 'application/rss+xml': `${CLINIC.url}/rss.xml` } },
+  /* 홈 공유 카드 (2026-09-11): 다른 쪽은 og() 가 /api/og 카드를 내는데 홈만 빠져 있었다. 화면 무관. */
+  openGraph: { ...og({ title: `${CLINIC.shortName} | 광화문역 치과 · 디지털 임플란트 · 턱관절 치료`, description: CLINIC.description, path: '/' }), type: 'website' },
 };
 
 /** 홈 FAQ — 사이트 FAQ 에서 묶음마다 첫 질문 하나씩. 화면과 스키마가 같은 배열. */
@@ -136,7 +138,7 @@ export default function HomePage() {
                 <li key={h.href} className="last:col-span-2">
                   <Link href={h.href} className="card card-hover group flex h-full flex-col overflow-hidden">
                     <span className="card-img block">
-                      <Image src={figSrc(HUB_IMG[h.href])} alt="" fill sizes="(max-width: 1024px) 50vw, 25vw" className="object-cover" />
+                      <Image src={figSrc(HUB_IMG[h.href])} alt={`${h.label} 진료 사진`} fill sizes="(max-width: 1024px) 50vw, 25vw" className="object-cover" />
                     </span>
                     {/* 좁은 화면은 두 칸이라 글자 자리가 좁다 — 여백·아이콘·글자를 줄여 이름이 쪼개지지 않게 한다 */}
                     <span className="flex flex-1 flex-col p-4 sm:p-6">

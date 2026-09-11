@@ -14,6 +14,8 @@ import { contentDates } from './contentMeta';
 
 const BASE = CLINIC.url;
 export const abs = (path: string) => (path === '/' ? BASE : `${BASE}${path}`);
+/** 병원 네이버 블로그 — /insight/clinical 글의 원문 출처(scripts/import-naver.mjs). sameAs 로 같은 병원임을 잇는다 (2026-09-11). */
+export const NAVER_BLOG = 'https://blog.naver.com/sundent21';
 
 export const ID = {
   clinic: `${BASE}/#clinic`,
@@ -80,7 +82,7 @@ export function clinicSchema() {
      * sameAs — "이 홈페이지와 저 네이버 예약·플레이스·카카오맵 항목이 같은 병원" 이라는 선언.
      * 전부 기존 홈페이지가 실제로 링크하던 채널이다 (없는 주소를 넣으면 신호가 깨진다).
      */
-    sameAs: [CLINIC.booking.naver, CLINIC.booking.naverTalk, CLINIC.maps.naverPlace, CLINIC.maps.kakaoPlace],
+    sameAs: [CLINIC.booking.naver, CLINIC.booking.naverTalk, CLINIC.maps.naverPlace, CLINIC.maps.kakaoPlace, NAVER_BLOG],
     /* 신뢰 지표 = 자격·학회만. 후기·별점(aggregateRating/review)은 의료법 제56조로 금지 — 절대 넣지 말 것. */
     hasCredential: DOCTORS.map((d) => ({
       '@type': 'EducationalOccupationalCredential',
@@ -125,10 +127,51 @@ export function withLocality(base: string) {
   return base.length + tail.length <= 155 ? base + tail : base;
 }
 
+/**
+ * meta description · og:description 을 80자 안으로 (2026-09-11).
+ *  · 네이버 서치어드바이저 검사 기준 "설명문 80자 이내". 구글은 155자까지 보여 주지만 네이버가 주 대상이다.
+ *  · 문장 끝(. )에서 자르고, 문장이 80자를 넘으면 쉼표·띄어쓰기에서 끊어 말줄임표까지 80자 안에 넣는다. 낱말 중간에서는 안 끊는다.
+ *  · 화면에는 안 보이는 값이다 — 본문·제목은 손대지 않는다.
+ */
+export const DESC_MAX = 80;
+export function desc80(s: string, max = DESC_MAX): string {
+  const t = s.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+  if (t.length <= max) return t;
+  const cut = t.slice(0, max);
+  const end = Math.max(cut.lastIndexOf('. '), cut.lastIndexOf('다. '), cut.lastIndexOf('요. '), cut.endsWith('.') ? cut.length - 1 : -1);
+  if (end > max * 0.5) return cut.slice(0, end + 1).trim();
+  const body = cut.slice(0, max - 1);
+  const pause = Math.max(body.lastIndexOf(', '), body.lastIndexOf(' '));
+  return `${(pause > max * 0.5 ? body.slice(0, pause) : body).trim()}…`;
+}
+
+/**
+ * 근거 출처 — 페이지 주제에 맞는 학회·공공기관 (구조화 데이터 citation, 화면에는 안 나옴).
+ * 2026-09-11 전부 실제로 열어 200 확인. 없는 주소를 넣으면 신호가 깨지므로 확인 안 된 곳은 넣지 않는다.
+ * AI 답변 엔진은 출처가 있는 글을 우선 인용한다(2026 인용 연구). 본문에 보이는 출처가 더 강하지만, 그건 화면이 바뀌므로 오너 결정 뒤.
+ */
+const CITATIONS: Array<[RegExp, Array<{ name: string; url: string }>]> = [
+  [/^\/treatment\/insurance/, [{ name: '국민건강보험공단', url: 'https://www.nhis.or.kr/' }, { name: '건강보험심사평가원', url: 'https://www.hira.or.kr/' }]],
+  [/^\/treatment\/implant/, [{ name: '대한치과의사협회', url: 'https://www.kda.or.kr/' }, { name: '국민건강보험공단 (만 65세 이상 임플란트 급여)', url: 'https://www.nhis.or.kr/' }]],
+  [/^\/treatment\/tmj/, [{ name: '대한안면통증구강내과학회', url: 'https://www.kaom.org/' }]],
+  [/^\/treatment\/natural-tooth/, [{ name: '대한치과보존학회', url: 'https://www.kacd.or.kr/' }]],
+  [/^\/treatment\/wisdom-tooth/, [{ name: '대한구강악안면외과학회', url: 'https://www.kaoms.org/' }]],
+  [/^\/treatment\/aesthetic/, [{ name: '대한치과보철학회', url: 'https://www.kap.or.kr/' }]],
+  [/^\/treatment\/(perio|gum)/, [{ name: '대한치주과학회', url: 'https://www.kperio.org/' }]],
+  [/^\/treatment/, [{ name: '대한치과의사협회', url: 'https://www.kda.or.kr/' }]],
+  [/^\/insight/, [{ name: '질병관리청 국가건강정보포털', url: 'https://health.kdca.go.kr/' }, { name: '대한치과의사협회', url: 'https://www.kda.or.kr/' }]],
+  [/^\/faq/, [{ name: '대한치과의사협회', url: 'https://www.kda.or.kr/' }]],
+];
+export function citationsFor(path: string) {
+  const hit = CITATIONS.find(([re]) => re.test(path));
+  return hit ? hit[1].map((c) => ({ '@type': 'CreativeWork', name: c.name, url: c.url })) : [];
+}
+
 /** 페이지별 alternates — canonical + hreflang. Next 는 alternates 를 통째로 교체하므로 헬퍼로 낸다. */
 export function alt(path: string) {
   const url = abs(path);
-  return { canonical: path, languages: { 'ko-KR': url, 'x-default': url } };
+  /* types: RSS 자동발견 링크 — 전 페이지 <head> 에 <link rel="alternate" type="application/rss+xml"> (app/rss.xml). */
+  return { canonical: path, languages: { 'ko-KR': url, 'x-default': url }, types: { 'application/rss+xml': `${BASE}/rss.xml` } };
 }
 
 /** 페이지별 Open Graph. images 를 생략하면 제목이 박힌 1200×630 카드(/api/og)가 붙는다. */
@@ -138,7 +181,7 @@ export function og(opts: { title: string; description: string; path: string; ima
     locale: 'ko_KR',
     siteName: CLINIC.name,
     title: opts.title,
-    description: opts.description,
+    description: desc80(opts.description),
     url: abs(opts.path),
     images: opts.images ?? [{ url: `/api/og?t=${encodeURIComponent(opts.title)}`, width: 1200, height: 630, alt: `${opts.title} — ${CLINIC.name}` }],
   };
@@ -237,6 +280,8 @@ export function medicalWebPageSchema(opts: {
     /* 소리 내어 읽을 곳 — 제목과 그 아래 '한 줄 답'. 화면 구조와 한 쌍이다. */
     speakable: { '@type': 'SpeakableSpecification', cssSelector: ['h1', 'main p'] },
   };
+  const citation = citationsFor(opts.path);
+  if (citation.length) schema.citation = citation;
   if (opts.about) schema.about = { '@type': opts.about.type, name: opts.about.name };
   if (opts.image) schema.primaryImageOfPage = { '@id': ID.image(opts.path) };
   if (opts.related?.length) schema.relatedLink = opts.related.map(abs);

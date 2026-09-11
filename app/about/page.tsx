@@ -7,12 +7,12 @@ import { JsonLd } from '@/components/JsonLd';
 import { Breadcrumb, ContactBand, Figure , Sentences } from '@/components/ui';
 import { CLINIC, HYGIENE, STRENGTHS } from '@/lib/clinic';
 import { DOCTORS } from '@/lib/doctors';
-import { alt, breadcrumbSchema, medicalWebPageSchema, og, physicianSchema } from '@/lib/seo';
+import { desc80, alt, breadcrumbSchema, medicalWebPageSchema, og, physicianSchema } from '@/lib/seo';
 
 const TITLE = '치과소개';
 const DESC = '광화문 선치과 소개 — 환자중심의 디지털 치과 진료. 강남성심병원 외래교수 출신 전문의, 3D 디지털 장비, 멸균 소독 시스템, 전원 치과위생사. 광화문역 6번 출구 도보 2분.';
 
-export const metadata: Metadata = { title: TITLE, description: DESC, alternates: alt('/about'), openGraph: og({ title: TITLE, description: DESC, path: '/about', images: [{ url: '/img/scene/intro-1.webp', width: 769, height: 495, alt: '광화문선치과 진료 장면' }] }) };
+export const metadata: Metadata = { title: TITLE, description: desc80(DESC), alternates: alt('/about'), openGraph: og({ title: TITLE, description: DESC, path: '/about', images: [{ url: '/img/scene/intro-1.webp', width: 769, height: 495, alt: '광화문선치과 진료 장면' }] }) };
 
 /** 둘러보기 — 기존 홈페이지 '둘러보기' 사진 10장 그대로. 설명은 사진에 보이는 것만. */
 /* 여덟 장 = 4열 두 줄이 딱 맞는다(마지막 줄에 한 장만 남지 않게). 상장·현판 사진은 의료광고 심의를 고려해 빼 두었다. */

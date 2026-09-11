@@ -2,11 +2,11 @@ import type { Metadata } from 'next';
 import { SiteHeader } from '@/components/SiteHeader';
 import { Breadcrumb } from '@/components/ui';
 import { CLINIC } from '@/lib/clinic';
-import { alt } from '@/lib/seo';
+import { desc80, alt } from '@/lib/seo';
 
 export const metadata: Metadata = {
   title: '개인정보처리방침',
-  description: `${CLINIC.name} 개인정보처리방침 — 홈페이지 이용과 예약·상담 과정에서 수집하는 개인정보의 항목, 이용 목적, 보유 기간을 안내합니다.`,
+  description: desc80(`${CLINIC.name} 개인정보처리방침 — 홈페이지 이용과 예약·상담 과정에서 수집하는 개인정보의 항목, 이용 목적, 보유 기간을 안내합니다.`),
   alternates: alt('/privacy'),
   robots: { index: false, follow: true },
 };

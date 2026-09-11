@@ -23,7 +23,7 @@ export function HubAccordion({ items }: { items: HubItem[] }) {
     <div className="acc reveal mt-12 hidden h-[440px] gap-2 lg:flex" role="list">
       {items.map((it, i) => (
         <Link key={it.href} href={it.href} className="acc-item group relative block overflow-hidden rounded-3xl bg-night text-white" role="listitem">
-          <Image src={figSrc(it.fig)} alt="" fill sizes="(max-width: 1280px) 60vw, 800px" className="acc-img object-cover" />
+          <Image src={figSrc(it.fig)} alt={`${it.label} 진료 사진`} fill sizes="(max-width: 1280px) 60vw, 800px" className="acc-img object-cover" />
           <div className="acc-shade absolute inset-0" />
 
           {/* 접힌 상태 — 세로 글씨 */}

@@ -13,7 +13,7 @@ import { ContactBand } from '@/components/ui';
 import { PostArticle } from '@/components/PostArticle';
 import { JsonLd } from '@/components/JsonLd';
 import { SiteHeader } from '@/components/SiteHeader';
-import { breadcrumbSchema, abs, og, medicalWebPageSchema, alt } from '@/lib/seo';
+import { desc80, breadcrumbSchema, abs, og, medicalWebPageSchema, alt } from '@/lib/seo';
 
 /**
  * 블로그 글 한 편.
@@ -48,11 +48,11 @@ export async function generateMetadata({
   const path = `/insight/blog/${post.slug}`;
   return {
     title: post.title,
-    description: post.summary.slice(0, 155),
+    description: desc80(post.summary),
     alternates: alt(path),
     openGraph: og({
       title: `${post.title} | ${CLINIC.name}`,
-      description: post.summary.slice(0, 155),
+      description: desc80(post.summary),
       path,
       /* 대표 사진이 있으면 카카오톡·검색 미리보기에 그 사진이 나간다. 없으면 og() 가 제목 카드를 만든다. */
       ...(post.image ? { images: [{ url: post.image, alt: post.imageAlt ?? post.title }] } : {}),

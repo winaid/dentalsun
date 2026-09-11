@@ -4,6 +4,7 @@ import { SiteFooter } from '@/components/SiteFooter';
 import { QuickMenu } from '@/components/QuickMenu';
 import { RevealScript } from '@/components/RevealScript';
 import { CLINIC } from '@/lib/clinic';
+import { desc80 } from '@/lib/seo';
 
 /**
  * 루트 레이아웃.
@@ -17,15 +18,15 @@ export const metadata: Metadata = {
     default: `${CLINIC.shortName} | 광화문역 치과 · 디지털 임플란트 · 턱관절 치료`,
     template: `%s | ${CLINIC.shortName}`,
   },
-  description: CLINIC.description,
+  description: desc80(CLINIC.description),
   applicationName: CLINIC.name,
-  alternates: { canonical: '/', languages: { 'ko-KR': CLINIC.url, 'x-default': CLINIC.url } },
+  alternates: { canonical: '/', languages: { 'ko-KR': CLINIC.url, 'x-default': CLINIC.url }, types: { 'application/rss+xml': `${CLINIC.url}/rss.xml` } },
   openGraph: {
     type: 'website',
     locale: 'ko_KR',
     siteName: CLINIC.name,
     title: `${CLINIC.shortName} | 광화문역 치과 · 디지털 임플란트 · 턱관절 치료`,
-    description: CLINIC.description,
+    description: desc80(CLINIC.description),
     url: CLINIC.url,
   },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 } },

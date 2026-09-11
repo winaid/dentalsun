@@ -190,7 +190,7 @@ export function BeforeAfter({ groups, note, showTabs = true }: { groups: CaseGro
                 className={`group block w-[104px] overflow-hidden rounded-xl bg-white p-1.5 ring-2 transition-all sm:w-[150px] md:w-[180px] ${k === ci ? 'ring-sun-500 shadow-[var(--shadow-soft)]' : 'ring-hairline opacity-75 hover:opacity-100'}`}
               >
                 <span className="relative block aspect-[12/5] overflow-hidden rounded-lg bg-canvas-2">
-                  <Image src={figSrc(p.after.key)} alt="" fill sizes="180px" className="object-cover" />
+                  <Image src={figSrc(p.after.key)} alt={p.after.alt} fill sizes="180px" className="object-cover" />
                 </span>
                 <span className={`mt-1.5 block text-[12px] font-bold tracking-[0.1em] ${k === ci ? 'text-sun-600' : 'text-ink-muted'}`}>CASE {String(k + 1).padStart(2, '0')}</span>
               </button>

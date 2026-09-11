@@ -8,7 +8,7 @@ import { ContactBand } from '@/components/ui';
 import { HeroCollage } from '@/components/HeroCollage';
 import { JsonLd } from '@/components/JsonLd';
 import { SiteHeader } from '@/components/SiteHeader';
-import { breadcrumbSchema, abs, og, alt } from '@/lib/seo';
+import { desc80, breadcrumbSchema, abs, og, alt } from '@/lib/seo';
 
 /*
  * ★ ISR — 한 시간마다 다시 그린다 (2026-09-07 오너: "매달 자동으로 발행").
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   title: '블로그',
   /* ⚠️ 49자였다(2026-09-07 실측) — 검색 결과 조각이 한 줄로 끝나 무슨 글이 있는지 안 보였다.
      무엇을 다루는지까지 적어 70~160자 안에 둔다. 화면에는 안 나오는 글이다. */
-  description: `${CLINIC.name}이 진료하면서 자주 받는 질문과 알아 두시면 좋은 내용을 정리해 올립니다. 충치와 잇몸, 임플란트와 사랑니처럼 진료실에서 설명이 길어지는 주제를 글로 풀어 두었습니다.`,
+  description: desc80(`${CLINIC.name}이 진료하면서 자주 받는 질문과 알아 두시면 좋은 내용을 정리해 올립니다. 충치와 잇몸, 임플란트와 사랑니처럼 진료실에서 설명이 길어지는 주제를 글로 풀어 두었습니다.`),
   alternates: alt('/insight/blog'),
   openGraph: og({
     title: `블로그 | ${CLINIC.name}`,
