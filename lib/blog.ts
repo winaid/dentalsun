@@ -59,6 +59,15 @@ export interface BlogPost {
    * 관리자 화면은 local 만 고칠 수 있다 — central 글은 중앙에서 발행 취소해야 사라진다.
    */
   source?: 'local' | 'central';
+  /**
+   * 네이버 블로그에서 가져온 글(content/clinical, scripts/import-naver.mjs) 전용.
+   *  · kind: clinical = 임상 사례, notice = 핵심 안내(치료 설명글). 목록에서 두 묶음으로 나눈다.
+   *  · sourceUrl: 네이버 원문 주소 — 상세 아래 '원문 보기' 로 건다.
+   *  · originalTitle: 네이버 원제(검색용 지역명이 붙은 것). 화면에는 안 쓰고 대조용으로 남긴다.
+   */
+  kind?: 'clinical' | 'notice';
+  sourceUrl?: string;
+  originalTitle?: string;
 }
 
 /**
@@ -116,6 +125,19 @@ function slugFromFile(file: string): string {
  *    (블로그를 열어 두고 첫 글을 올리기 전까지가 그렇다.)
  */
 export function allPosts(opts: { includeFuture?: boolean } = {}): BlogPost[] {
+  return readPosts(DIR, opts);
+}
+
+/** 네이버에서 가져온 임상 사례·핵심 안내 (content/clinical). 블로그와 같은 규격, 다른 폴더·다른 주소(/insight/clinical). */
+const CLINICAL_DIR = join(process.cwd(), 'content', 'clinical');
+export function allClinicalPosts(opts: { includeFuture?: boolean } = {}): BlogPost[] {
+  return readPosts(CLINICAL_DIR, opts);
+}
+export function clinicalBySlug(slug: string): BlogPost | undefined {
+  return allClinicalPosts().find((p) => p.slug === slug);
+}
+
+function readPosts(dir: string, opts: { includeFuture?: boolean } = {}): BlogPost[] {
   /*
    * ⚠️ 기본은 **오늘까지의 글만**이다. date 가 미래인 글은 예약 상태라 목록·상세·사이트맵·
    *    llms.txt 어디에도 안 나간다. 관리자 화면만 includeFuture 로 전부 본다.
@@ -123,7 +145,7 @@ export function allPosts(opts: { includeFuture?: boolean } = {}): BlogPost[] {
   const now = nowKST();
   let files: string[];
   try {
-    files = readdirSync(DIR).filter((f) => f.toLowerCase().endsWith('.json'));
+    files = readdirSync(dir).filter((f) => f.toLowerCase().endsWith('.json'));
   } catch {
     return [];
   }
@@ -132,7 +154,7 @@ export function allPosts(opts: { includeFuture?: boolean } = {}): BlogPost[] {
   for (const file of files) {
     let raw: unknown;
     try {
-      raw = JSON.parse(readFileSync(join(DIR, file), 'utf8'));
+      raw = JSON.parse(readFileSync(join(dir, file), 'utf8'));
     } catch {
       /* 깨진 파일 하나가 사이트 전체를 막지 않게 건너뛴다. */
       continue;
@@ -155,6 +177,9 @@ export function allPosts(opts: { includeFuture?: boolean } = {}): BlogPost[] {
       imageAlt: p.imageAlt,
       html: sanitizeBody(p.html),
       source: 'local',
+      kind: p.kind === 'clinical' || p.kind === 'notice' ? p.kind : undefined,
+      sourceUrl: p.sourceUrl && /^https:\/\/blog\.naver\.com\//.test(p.sourceUrl) ? p.sourceUrl : undefined,
+      originalTitle: p.originalTitle,
     });
   }
 

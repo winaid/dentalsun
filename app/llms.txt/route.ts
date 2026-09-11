@@ -3,6 +3,7 @@ import { DOCTORS } from '@/lib/doctors';
 import { ALL_DOCS } from '@/lib/content';
 import { SITE_FAQ } from '@/lib/faq';
 import { allPostsMerged } from '@/lib/insightFeed';
+import { allClinicalPosts } from '@/lib/blog';
 
 /* ★ 한 시간마다 다시 만든다 — 예약 글이 날짜가 되면 여기에도 실려야 한다. */
 export const revalidate = 3600;
@@ -47,6 +48,18 @@ export async function GET() {
       L.push(`### ${p.title}`);
       L.push(p.summary);
       L.push(`- URL: ${CLINIC.url}/insight/blog/${p.slug}`);
+      L.push(`- 발행일: ${p.date}`);
+      L.push('');
+    }
+  }
+  const clinical = allClinicalPosts();
+  if (clinical.length) {
+    L.push('## 임상 사례 · 핵심 안내 (실제 치료 과정과 치료 설명글)');
+    L.push('');
+    for (const p of clinical) {
+      L.push(`### ${p.title}`);
+      L.push(p.summary);
+      L.push(`- URL: ${CLINIC.url}/insight/clinical/${p.slug}`);
       L.push(`- 발행일: ${p.date}`);
       L.push('');
     }

@@ -46,6 +46,16 @@ export const INSIGHT_GUIDES: Doc[] = [
       },
       {
         type: 'links',
+        id: 'clinical',
+        title: '임상 사례 · 핵심 안내',
+        lead: '실제로 진행한 치료 과정을 사진과 함께 정리한 사례와, 치료를 고르기 전에 알아 둘 설명글입니다.',
+        items: [
+          { label: '임상 사례 보기', href: '/insight/clinical', desc: '뼈가 부족한 임플란트 · 신경 가까운 자리 · 치근단절제술 · 풀아치 · 치아미백' },
+          { label: '핵심 안내 보기', href: '/insight/clinical#notice', desc: '상악동거상술 종류 · 임플란트 구조 · 틀니와 풀아치 · 내비게이션 · 발치 후 기다리는 이유' },
+        ],
+      },
+      {
+        type: 'links',
         id: 'symptoms',
         title: '증상별 안내',
         lead: '지금 겪는 증상으로 찾아보세요. 생각해 볼 수 있는 원인, 집에서 먼저 할 수 있는 것, 바로 치과로 와야 하는 신호를 담았습니다.',

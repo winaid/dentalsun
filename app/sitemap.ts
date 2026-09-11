@@ -4,6 +4,7 @@ import { contentDates } from '@/lib/contentMeta';
 import { flatNavPaths } from '@/lib/nav';
 import { ALL_DOCS } from '@/lib/content';
 import { allPostsMerged } from '@/lib/insightFeed';
+import { allClinicalPosts } from '@/lib/blog';
 
 /* ★ 한 시간마다 — 예약 글(lib/blog.ts)이 날짜가 되면 사이트맵에도 실려야 한다. */
 export const revalidate = 3600;
@@ -29,6 +30,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     /* 블로그 — content/blog 글 + 중앙(winaid) 글. 손으로 적지 말 것(lib/insightFeed). lastmod 는 글의 날짜. */
     { ...entry('/insight/blog', 0.7, 'weekly'), lastModified: new Date() },
     ...(await allPostsMerged()).map((p) => ({ ...entry(`/insight/blog/${p.slug}`, 0.6), lastModified: new Date(p.updated ?? p.date) })),
+    /* 임상 사례 · 핵심 안내 — content/clinical (네이버 블로그에서 가져온 글) */
+    { ...entry('/insight/clinical', 0.7, 'weekly'), lastModified: new Date() },
+    ...allClinicalPosts().map((p) => ({ ...entry(`/insight/clinical/${p.slug}`, 0.6), lastModified: new Date(p.updated ?? p.date) })),
   ];
   const seen = new Set<string>();
   return pages.filter((e) => {
