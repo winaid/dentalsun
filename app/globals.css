@@ -555,15 +555,16 @@ details.faq .a {
 }
 
 /* ── 스크롤 연동 연출 2 — 낱말 밝아짐 · 고정 무대 · 가로 흐름 · 숫자 세기 · 첫 화면 옅어짐 (RevealScript) ── */
+/* 아직 밝아지기 전 낱말도 읽혀야 한다 — 0.3 은 남색 위에서 안 보였다(오너 지적 2026-09-11) */
 .scrub .w {
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.62);
   transition: color 0.35s ease;
 }
 .scrub .w.on {
   color: #fff;
 }
 .scrub-light .w {
-  color: rgba(20, 26, 46, 0.22);
+  color: rgba(20, 26, 46, 0.45);
 }
 .scrub-light .w.on {
   color: var(--color-ink);

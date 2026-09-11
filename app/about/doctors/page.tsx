@@ -8,7 +8,7 @@ import { DOCTORS } from '@/lib/doctors';
 import { alt, breadcrumbSchema, medicalWebPageSchema, og, physicianSchema } from '@/lib/seo';
 
 const TITLE = '의료진 소개';
-const DESC = '광화문 선치과 의료진 — 양대일 대표원장(보건복지부 인증 통합치의학과 전문의, 강남성심병원 치과 외래교수). 약력은 기존 홈페이지에 밝힌 내용 그대로입니다.';
+const DESC = '광화문 선치과 의료진 — 양대일 대표원장(보건복지부 인증 통합치의학과 전문의, 강남성심병원 치과 외래교수). 약력과 진료 철학을 소개합니다.';
 
 export const metadata: Metadata = {
   title: TITLE,

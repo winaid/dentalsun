@@ -74,7 +74,8 @@ export function RevealScript() {
       for (const s of scrubs) {
         const r = s.el.getBoundingClientRect();
         if (r.bottom < 0 || r.top > vh) continue;
-        const p = clamp((vh * 0.85 - r.top) / (r.height + vh * 0.3));
+        /* 문단이 화면 아래 15% 에 들어오면 시작해 70% 지점에 닿기 전에 다 밝아진다 — 전에는 55% 까지 올려야 끝나 화면 아래쪽 글이 늘 흐렸다 */
+        const p = clamp((vh * 0.85 - r.top) / (r.height + vh * 0.15));
         const n = Math.round(p * s.words.length);
         if (n === s.last) continue;
         s.last = n;

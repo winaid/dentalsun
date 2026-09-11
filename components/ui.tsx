@@ -25,19 +25,47 @@ const TAIL_MIN = 7;
 /** 이 길이 이하의 마디는 덩어리로 나누지 않는다 */
 const NO_SPLIT_MAX = 22;
 
+/** 여는 괄호 − 닫는 괄호 — 0 보다 크면 괄호 안 */
+function parenDelta(s: string): number {
+  return (s.match(/[(（[]/g)?.length ?? 0) - (s.match(/[)）\]]/g)?.length ?? 0);
+}
+
+/**
+ * 쉼표 마디 나누기 — 괄호 안의 쉼표에서는 나누지 않는다.
+ * "(환자의 자발적 호흡, 외부에 반응)" 이 쉼표에서 두 줄로 갈라졌다(오너 지적 2026-09-11).
+ */
+export function splitClauses(s: string): string[] {
+  const out: string[] = [];
+  let depth = 0;
+  let cur = '';
+  for (let i = 0; i < s.length; i++) {
+    const ch = s[i];
+    cur += ch;
+    depth += parenDelta(ch);
+    if (ch === ',' && depth <= 0 && /^\s+\S/.test(s.slice(i + 1))) {
+      out.push(cur.trim());
+      cur = '';
+    }
+  }
+  if (cur.trim()) out.push(cur.trim());
+  return out;
+}
+
 export function pauseChunks(clause: string): string[] {
   if (clause.length <= NO_SPLIT_MAX) return [clause];
   const words = clause.split(/\s+/).filter(Boolean);
   const chunks: string[] = [];
   let cur: string[] = [];
   let len = 0;
+  let depth = 0; /* 괄호 안에서는 쉬지 않는다 */
   for (let i = 0; i < words.length; i++) {
     const w = words[i];
     const next = words[i + 1];
     cur.push(w);
     len += w.length + 1;
+    depth += parenDelta(w);
     const bare = w.replace(/[,.!?…)”’"']+$/, '');
-    if (len >= CHUNK_MIN && next && PAUSE_END.test(bare) && !NO_BREAK_BEFORE.test(next.replace(/[,.!?…)”’"']+$/, ''))) {
+    if (depth <= 0 && len >= CHUNK_MIN && next && PAUSE_END.test(bare) && !NO_BREAK_BEFORE.test(next.replace(/[,.!?…)”’"']+$/, ''))) {
       chunks.push(cur.join(' '));
       cur = [];
       len = 0;
@@ -68,7 +96,7 @@ export function Sentences({ text, className = '', clauses: useClauses = true }: 
     .split(/(?<=[.!?])\s+(?=\S)/)
     .map((s) => s.trim())
     .filter(Boolean);
-  const clauses = (s: string) => (useClauses ? s.split(/(?<=,)\s+(?=\S)/).filter(Boolean) : [s]);
+  const clauses = (s: string) => (useClauses ? splitClauses(s) : [s]);
   if (sentences.length <= 1) {
     return (
       <span className={`sent-one ${className}`}>
