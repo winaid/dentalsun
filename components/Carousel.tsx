@@ -17,6 +17,7 @@ export function Carousel({ children, label = '좌우로 드래그', itemClass = 
   return (
     <div className="relative">
       <div className="mb-4 flex items-center justify-between">
+        {/* 라벨이 비면 자리만 — "좌우로 드래그" 같은 조작 안내 문구는 오너 지시로 쓰지 않는다 */}
         <p className="text-[12px] font-bold tracking-[0.16em] text-ink-muted uppercase">{label}</p>
         <div className="flex gap-2">
           <button type="button" onClick={() => go(-1)} aria-label="이전" className="flex h-10 w-10 items-center justify-center rounded-full border border-hairline bg-white text-ink transition-colors hover:border-brand-300 hover:text-brand-700">←</button>
