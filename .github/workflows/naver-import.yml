@@ -1,12 +1,14 @@
-# 네이버 블로그(sundent21) 새 글을 매일 아침 자동으로 가져온다 — scripts/import-naver.mjs --auto
+# 네이버 블로그(sundent21) 새 글을 가져온다 (손으로 실행할 때만 — 자동 예약은 꺼 둠) — scripts/import-naver.mjs --auto
 #  · 새 글이 있으면 content/clinical + public/img/clinical 을 커밋해 main 에 올린다 → Vercel 이 자동 배포.
 #  · 새 글이 없으면 아무것도 하지 않는다. 손으로 돌리려면 GitHub → Actions → 이 워크플로 → Run workflow.
 #  · 규칙(기준일·제외 목록·제목 다듬기)은 스크립트 안에 있다.
 name: naver-import
 
 on:
-  schedule:
-    - cron: '0 23 * * *' # 매일 08:00 KST (UTC 23:00)
+  # 2026-09-11 오너: '넣으라고 할 때만 넣자' — 매일 자동 실행(schedule)은 끄고, 손으로 Run workflow 할 때만 돈다.
+  # 다시 켜려면 아래 두 줄의 주석을 푼다.
+  #   schedule:
+  #     - cron: '0 23 * * *' # 매일 08:00 KST
   workflow_dispatch:
 
 permissions:
