@@ -91,7 +91,7 @@ export default async function BlogIndexPage() {
         cardsLead="이런 이야기를 씁니다."
         lines={['진료하면서 자주 받는 질문을', <><span className="accent-sun">글로 정리합니다</span></>]}
         long
-        lead="상담 중에 짧게밖에 말씀드리지 못한 내용을 글로 남깁니다. 읽고 오시면 진료실에서 다음 이야기부터 하실 수 있습니다."
+        lead="상담 중에 짧게밖에 말씀드리지 못한 이야기를 글로 남깁니다. 읽고 오시면 진료실에서는 다음 이야기부터 나눌 수 있습니다."
         bg="ai/wide-insight"
         cards={[
           { fig: { key: 'scene/consult', alt: '환자와 상담하는 장면' }, shape: 'portrait' },

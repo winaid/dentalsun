@@ -49,7 +49,7 @@ export default function AboutPage() {
           long
           cardsLead="광화문 선치과는 이렇게 진료합니다."
           lines={['환자중심의', <>디지털 <span className="accent-sun">치과 진료</span></>]}
-          lead="이해하기 쉬운 설명과 불편함을 줄인 진료시스템. 더 빠르고, 정확하게, 그리고 편안하게 스마트한 진료를 약속 드립니다."
+          lead="검사 결과를 화면으로 함께 보며, 이해될 때까지 쉬운 말로 설명해 드립니다. 디지털 장비로 정확하게, 무통·저자극 시스템으로 편안하게 진료합니다."
           bg="place/place01"
           cards={[
             { fig: { key: 'scene/loupe', alt: '확대경을 착용하고 진료하는 광화문선치과 원장' }, shape: 'portrait' },

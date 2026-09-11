@@ -33,7 +33,7 @@ export default function DoctorsPage() {
           cardsLead="진료를 맡는 의료진입니다."
           lines={[<>보건복지부 인증 <span className="accent-sun">전문의</span>가</>, '직접 진단하고 치료합니다']}
           long
-          lead="양대일 대표원장 — 보건복지부 인증 통합치의학과 전문의, 강남성심병원 치과 외래교수. 아래 약력은 기존 홈페이지에 밝힌 내용 그대로입니다."
+          lead="양대일 대표원장은 보건복지부 인증 통합치의학과 전문의이자 강남성심병원 치과 외래교수입니다. 처음 오신 분도 검사 결과와 치료 방법을 이해하실 때까지 직접 설명해 드립니다."
           bg="ai/wide-clinic"
           cards={[
             { fig: { key: 'orig/doctor-yang', alt: '양대일 대표원장' }, shape: 'portrait' },

@@ -49,7 +49,7 @@ export default function EquipmentPage() {
           cardsLead="이런 장비로 진료합니다."
           lines={['첨단 디지털 장비로 진료하는', <><span className="accent-sun">3D 디지털치과</span></>]}
           long
-          lead="진단부터 치료까지 치과 진료에 디지털을 더해 보다 빠르고 정확한 진료를 약속 드립니다. 아래는 광화문선치과가 실제로 갖추고 있는 장비와 시스템입니다."
+          lead="3D CT 와 구강스캐너로 보고, 컴퓨터로 계획하고, 캐드캠으로 원내에서 만듭니다. 광화문선치과가 실제로 갖춘 장비를, 무엇에 쓰는지와 함께 소개합니다."
           bg="place/place08"
           cards={[
             { fig: { key: 'equip/ct', alt: '3D CT 장비' }, shape: 'portrait' },
