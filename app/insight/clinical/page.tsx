@@ -1,11 +1,9 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import Image from 'next/image';
 import { CLINIC } from '@/lib/clinic';
 import { allClinicalPosts, publishedIso, type BlogPost } from '@/lib/blog';
 import { ContactBand } from '@/components/ui';
 import { HeroCollage } from '@/components/HeroCollage';
-import { Carousel } from '@/components/Carousel';
 import { JsonLd } from '@/components/JsonLd';
 import { SiteHeader } from '@/components/SiteHeader';
 import { breadcrumbSchema, abs, og, alt } from '@/lib/seo';
@@ -31,44 +29,39 @@ const TRAIL = [
   { name: '임상 사례 · 핵심 안내', path: '/insight/clinical' },
 ];
 
-const koDate = (iso: string) => {
-  const [y, m, d] = iso.split('-');
-  return `${y}년 ${Number(m)}월 ${Number(d)}일`;
-};
-
 /**
- * 한 줄 캐러셀 — 카드를 작게 해 한 줄에 넷씩, 좌우 화살표로 넘긴다(오너 2026-09-11: "카드 너무 큰데 한 줄로 하나씩 넘기면서",
- * "핵심 안내가 밑에 있는 줄 몰랐어"). 3열 격자로 두 묶음을 쌓으니 둘째 묶음이 화면 두 장 아래로 내려가 있었다.
+ * 글 목록 — 썸네일 없이 줄로(오너 2026-09-11: "썸네일 없이 네이버 공지 목록처럼, 우리 디자인으로").
+ *  · 한 줄 = 번호 · 분류 칩 · 제목(굵게) · 요약 한 줄(데스크톱) · 날짜(오른쪽, 숫자 정렬).
+ *  · 줄 전체가 링크. 올리면 배경이 살짝 뜨고 제목이 주황으로, 오른쪽에 화살표가 나온다.
+ *  · 카드 격자·캐러셀을 거쳐 여기로 왔다 — 사진 표지가 글마다 겹치고 카드가 커서 둘째 묶음이 안 보였다.
  */
-function Cards({ posts, priority = false, fade = 'from-white' }: { posts: BlogPost[]; priority?: boolean; fade?: string }) {
+function PostList({ posts, onCanvas = false }: { posts: BlogPost[]; onCanvas?: boolean }) {
   return (
-    <Carousel label={`${posts.length}편`} itemClass="w-[264px] md:w-[290px] xl:w-[300px]" fade={fade}>
+    <ol className="reveal-stack divide-y divide-hairline border-y border-hairline">
       {posts.map((p, i) => (
-        <Link key={p.slug} href={`/insight/clinical/${p.slug}`} className="group flex h-full flex-col overflow-hidden rounded-2xl border border-hairline bg-white transition-colors hover:border-brand-300">
-          <div className="relative aspect-[3/2] overflow-hidden bg-canvas-2">
-            {p.image ? (
-              <Image src={p.image} alt={p.imageAlt ?? ''} fill priority={priority && i < 4} sizes="300px" className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
-            ) : (
-              <div className="flex h-full flex-col items-center justify-center gap-1.5 bg-canvas-2">
-                <span className="display-sm text-[20px] text-sun-700">{p.category ?? '임상 사례'}</span>
-                <span className="text-[13px] font-bold text-ink-muted">{CLINIC.name}</span>
-              </div>
-            )}
-          </div>
-          <div className="flex flex-1 flex-col p-5">
-            <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
-              <time dateTime={p.date} className="text-[12.5px] font-bold tabular-nums text-sun-700">{koDate(p.date)}</time>
-              {p.category && <span className="text-[12px] font-bold text-ink-muted">{p.category}</span>}
-            </div>
-            <h3 className="mt-2.5 line-clamp-2 min-h-[2.8em] text-[16.5px] font-extrabold leading-[1.4] tracking-[-0.02em] text-ink transition-colors group-hover:text-sun-700">{p.title}</h3>
-            <p className="mt-2 line-clamp-2 min-h-[3.4em] text-[13.5px] leading-[1.7] text-ink-soft">{p.summary}</p>
-            <span className="mt-auto inline-flex items-center gap-2 pt-4 text-[13.5px] font-black text-sun-700">
-              읽기 <span aria-hidden className="transition-transform group-hover:translate-x-1">→</span>
+        <li key={p.slug}>
+          <Link
+            href={`/insight/clinical/${p.slug}`}
+            className={`group -mx-3 grid grid-cols-[2.6rem_minmax(0,1fr)_auto] items-baseline gap-x-3 rounded-xl px-3 py-4 transition-colors md:-mx-5 md:grid-cols-[3.2rem_minmax(0,1fr)_auto] md:gap-x-5 md:px-5 md:py-5 ${onCanvas ? 'hover:bg-white' : 'hover:bg-canvas'}`}
+          >
+            <span className="num !text-[1.3rem] md:!text-[1.5rem]">{String(i + 1).padStart(2, '0')}</span>
+            <span className="min-w-0">
+              <span className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
+                {p.category && <span className="rounded-full bg-canvas-2 px-2 py-0.5 text-[11.5px] font-bold text-ink-soft">{p.category}</span>}
+                <h3 className="text-[16px] font-extrabold leading-[1.45] tracking-[-0.01em] text-ink transition-colors group-hover:text-sun-700 md:text-[17.5px]">
+                  {p.title}
+                  <span aria-hidden className="ml-2 inline-block translate-x-0 text-sun-500 opacity-0 transition-all group-hover:translate-x-1 group-hover:opacity-100">→</span>
+                </h3>
+              </span>
+              <span className="mt-1 hidden text-[14px] leading-[1.7] text-ink-soft md:line-clamp-1">{p.summary}</span>
             </span>
-          </div>
-        </Link>
+            <time dateTime={p.date} className="shrink-0 text-[12.5px] font-semibold tabular-nums text-ink-muted md:text-[13.5px]">
+              {p.date.replace(/-/g, '. ')}
+            </time>
+          </Link>
+        </li>
       ))}
-    </Carousel>
+    </ol>
   );
 }
 
@@ -131,7 +124,7 @@ export default function ClinicalIndexPage() {
             <h2 className="display-sm reveal mt-4">핵심 안내</h2>
             <p className="lead reveal mt-3 max-w-[46em]">치료를 고르기 전에 알아 두면 좋은 내용을 설명한 글입니다.</p>
             <div className="mt-8">
-              {notices.length ? <Cards posts={notices} priority /> : <p className="text-[17px] leading-[1.9] text-ink-soft">준비 중입니다.</p>}
+              {notices.length ? <PostList posts={notices} /> : <p className="text-[17px] leading-[1.9] text-ink-soft">준비 중입니다.</p>}
             </div>
           </div>
         </section>
@@ -142,7 +135,7 @@ export default function ClinicalIndexPage() {
             <h2 className="display-sm reveal mt-4">임상 사례</h2>
             <p className="lead reveal mt-3 max-w-[46em]">실제로 진행한 치료를 초진부터 마무리까지 순서대로 정리했습니다.</p>
             <div className="mt-8">
-              {cases.length ? <Cards posts={cases} fade="from-canvas" /> : <p className="text-[17px] leading-[1.9] text-ink-soft">첫 사례를 준비하고 있습니다.</p>}
+              {cases.length ? <PostList posts={cases} onCanvas /> : <p className="text-[17px] leading-[1.9] text-ink-soft">첫 사례를 준비하고 있습니다.</p>}
             </div>
           </div>
         </section>
