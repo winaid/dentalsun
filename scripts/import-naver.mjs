@@ -287,15 +287,108 @@ async function importPost([id, kind, slug, category, title, cover, dropImages], 
   console.log(`${id} → ${file}\n   ${date} ${time} | 본문 ${textLen}자 · 블록 ${kept.length}(원 ${blocks.length}) · 사진 ${imgN}장 · 꼬리 ${tailAt}\n   요약: ${summary.slice(0, 90)}`);
 }
 
-const only = process.argv.slice(2);
+/*
+ * ── 자동 모드 (--auto) ──  네이버 RSS 에 새로 올라온 '치과치료' 글을 표 없이 가져온다 (오너 2026-09-11 "자동으로 가져와지게").
+ *  · GitHub Actions(.github/workflows/naver-import.yml)가 매일 아침 돌린다. 새 글이 있으면 파일을 커밋 → Vercel 이 배포.
+ *  · AUTO_SINCE 이후 발행 글만. 그 전 글은 위 POSTS 표에 손으로 고른 것만 싣는다(옛 글 수십 편이 한꺼번에 들어오지 않게).
+ *  · 종류: 제목에 '사례·증례' 가 있으면 임상 사례, 아니면 핵심 안내. 제목은 cleanTitle 로 지역명·대괄호를 뗀다.
+ *  · 빼고 싶은 글은 SKIP 에 번호를 적고 content/clinical 의 파일을 지운다. 제목·표지를 손보려면 POSTS 표로 옮겨 적는다.
+ *  · --auto --dry : 가져오지 않고 무엇이 들어올지만 보여 준다.  --auto --since 2026-09-01 : 기준일을 바꿔 시험.
+ */
+const AUTO_SINCE = '2026-09-11';
+const SKIP = [];
+const AUTO_CATEGORIES = ['치과치료'];
+
+/** 검색용으로 붙은 지역명·대괄호·군더더기를 뗀 제목 */
+export function cleanTitle(t) {
+  let s = clean(t);
+  /* 앞머리 지역명 — "광화문역 치과 ", "명동 치과 ", "광화문치과추천, ", "혜화치과, ", "을지로3가치과, ", "광화문 임플란트" 의 "광화문 " */
+  const PLACE = '광화문역|광화문|서울시청역|시청역|시청|명동역|명동|경복궁역|경복궁|을지로입구역|을지로3가|을지로|혜화역|혜화|서대문역|서대문|종로3가|종로|종각역|종각|서울역|안국역|안국|서울';
+  s = s.replace(new RegExp(`^(?:${PLACE})\\s*(?:치과추천|치과|역)?\\s*[,｜|:\\-–—]*\\s*`), '');
+  s = s.replace(/^[가-힣]+치과(?:추천)?\s*[,｜|:\-–—]+\s*/, '');
+  s = s.replace(/\[[^\]]*(?:사례|증례)[^\]]*\]/g, '');
+  s = s.replace(/광화문\s*선치과에서\s*알려\s*드립니다\.?|광화문\s*선치과에서\s*알려\s*드리는\s*/g, '');
+  s = s.replace(/\d+년\s*광화문\s*선치과,?\s*/g, '');
+  s = s.replace(/\s*[｜|]\s*/g, ', ').replace(/\s+-\s+/g, ', ');
+  s = s.replace(/([?!])\s*,\s*/g, '$1 '); /* "다를까요?, 치료 과정" → "다를까요? 치료 과정" */
+  s = s.replace(/\(\d+\)\s*$/, '');
+  s = s.replace(/치명적일까요/g, '중요할까요').replace(/치명적/g, '중요한').replace(/고난도\s*/g, '');
+  s = s.replace(/\s+/g, ' ').replace(/^[,\s]+|[,\s]+$/g, '').replace(/,\s*,/g, ',');
+  return s;
+}
+
+/** 제목에서 진료 분류 짐작 — 사이드바 '이어지는 진료' 카드가 이 이름으로 진료 갈래를 찾는다(lib/postHub.ts) */
+function guessCategory(t) {
+  if (/턱관절|턱에서|턱이|보톡스|이갈이|입이 잘 벌어지지/.test(t)) return '턱관절';
+  if (/미백/.test(t)) return '치아미백';
+  if (/라미네이트|올세라믹|지르코니아|심미/.test(t)) return '심미치료';
+  if (/사랑니/.test(t)) return '사랑니';
+  if (/신경치료|치근단|자연치아|MTA|시린|시려|충치/.test(t)) return '자연치아';
+  if (/틀니/.test(t) && !/임플란트/.test(t)) return '틀니';
+  if (/스케일링|에어플로우|무통|수면/.test(t)) return '무통·수면치료';
+  if (/임플란트|뼈이식|골이식|상악동|풀아치/.test(t)) return '임플란트';
+  return undefined; /* 모르면 칩을 안 단다 — 틀린 칩이 없는 것보다 나쁘다 */
+}
+
+async function rssNewPosts(since) {
+  const xml = await (await fetch(`https://rss.blog.naver.com/${BLOG_ID}.xml`, { headers: { 'User-Agent': UA } })).text();
+  const get = (it, tag) => {
+    const m = it.match(new RegExp(`<${tag}>([\\s\\S]*?)</${tag}>`));
+    return m ? clean(m[1].replace(/^<!\[CDATA\[|\]\]>$/g, '')) : '';
+  };
+  const have = new Set(POSTS.map((r) => r[0]));
+  for (const f of fs.readdirSync(OUT_DIR)) {
+    try {
+      const j = JSON.parse(fs.readFileSync(`${OUT_DIR}/${f}`, 'utf8'));
+      const id = (j.sourceUrl ?? '').match(/(\d{12})/)?.[1];
+      if (id) have.add(id);
+    } catch {}
+  }
+  const out = [];
+  for (const m of xml.matchAll(/<item>([\s\S]*?)<\/item>/g)) {
+    const it = m[1];
+    const id = (get(it, 'guid').match(/(\d{12})/) || [])[1];
+    if (!id || have.has(id) || SKIP.includes(id)) continue;
+    const category = get(it, 'category');
+    if (!AUTO_CATEGORIES.includes(category)) continue;
+    const pub = new Date(get(it, 'pubDate'));
+    if (isNaN(pub) || kst(pub).date < since) continue;
+    const originalTitle = get(it, 'title');
+    const title = cleanTitle(originalTitle);
+    out.push([id, /사례|증례/.test(originalTitle) ? 'clinical' : 'notice', `post-${id}`, guessCategory(originalTitle), title]);
+  }
+  return out;
+}
+
+const argv = process.argv.slice(2);
+const auto = argv.includes('--auto');
+const dry = argv.includes('--dry');
+const sinceArg = argv[argv.indexOf('--since') + 1];
+const only = argv.filter((a) => /^\d{12}$/.test(a));
 const dates = await rssDates();
 const imported = [];
-for (const row of POSTS) {
-  if (only.length && !only.includes(row[0])) continue;
-  try {
-    await importPost(row, dates);
-  } catch (e) {
-    console.error(`${row[0]} 실패: ${e.message}`);
+if (auto) {
+  const since = argv.includes('--since') && /^\d{4}-\d{2}-\d{2}$/.test(sinceArg) ? sinceArg : AUTO_SINCE;
+  const rows = await rssNewPosts(since);
+  console.log(`자동: ${since} 이후 새 글 ${rows.length}편${dry ? ' (dry — 가져오지 않음)' : ''}`);
+  for (const r of rows) console.log(`  ${r[0]} [${r[1] === 'clinical' ? '임상 사례' : '핵심 안내'} · ${r[3]}] ${r[4]}`);
+  if (!dry) {
+    for (const row of rows) {
+      try {
+        await importPost(row, dates);
+      } catch (e) {
+        console.error(`${row[0]} 실패: ${e.message}`);
+      }
+    }
+  }
+} else {
+  for (const row of POSTS) {
+    if (only.length && !only.includes(row[0])) continue;
+    try {
+      await importPost(row, dates);
+    } catch (e) {
+      console.error(`${row[0]} 실패: ${e.message}`);
+    }
   }
 }
 

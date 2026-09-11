@@ -1,0 +1,41 @@
+# 네이버 블로그(sundent21) 새 글을 매일 아침 자동으로 가져온다 — scripts/import-naver.mjs --auto
+#  · 새 글이 있으면 content/clinical + public/img/clinical 을 커밋해 main 에 올린다 → Vercel 이 자동 배포.
+#  · 새 글이 없으면 아무것도 하지 않는다. 손으로 돌리려면 GitHub → Actions → 이 워크플로 → Run workflow.
+#  · 규칙(기준일·제외 목록·제목 다듬기)은 스크립트 안에 있다.
+name: naver-import
+
+on:
+  schedule:
+    - cron: '0 23 * * *' # 매일 08:00 KST (UTC 23:00)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: naver-import
+  cancel-in-progress: false
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: 새 글 가져오기
+        run: node scripts/import-naver.mjs --auto
+      - name: 커밋 · 푸시 (바뀐 것이 있을 때만)
+        run: |
+          git add content/clinical public/img/clinical
+          if git diff --cached --quiet; then
+            echo "새 글 없음"
+            exit 0
+          fi
+          git config user.name "naver-import bot"
+          git config user.email "actions@users.noreply.github.com"
+          git commit -m "자동 가져오기: 네이버 블로그 새 글 ($(date -u +%Y-%m-%d))"
+          git push
