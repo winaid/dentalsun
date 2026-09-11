@@ -68,7 +68,22 @@ function kst(d) {
   return { date: t.toISOString().slice(0, 10), time: t.toISOString().slice(11, 16) };
 }
 
+/** 사진 지문(dHash 64bit) — 여러 글에 똑같이 들어가는 소개 사진(수술 장면·원장 사진)을 표지에서 피하는 데 쓴다 */
+async function dhash(file) {
+  const buf = await sharp(file).grayscale().resize(9, 8, { fit: 'fill' }).raw().toBuffer();
+  let bits = '';
+  for (let y = 0; y < 8; y++) for (let x = 0; x < 8; x++) bits += buf[y * 9 + x] < buf[y * 9 + x + 1] ? '1' : '0';
+  return bits;
+}
+const hamming = (a, b) => { let n = 0; for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) n++; return n; };
+
 async function fetchImage(src, file) {
+  /* 이미 받은 사진은 다시 받지 않는다(한 편만 다시 돌릴 때 빠르게) */
+  if (fs.existsSync(file)) {
+    const m0 = await sharp(file).metadata();
+    const st0 = await sharp(file).stats();
+    return { w: m0.width, h: m0.height, red: st0.channels.length >= 2 ? st0.channels[0].mean - st0.channels[1].mean : 0 };
+  }
   /* 파라미터를 떼면 100px 썸네일이 온다(실측). ?type=w3840 이 원본(3000px), 없으면 w966 */
   const base = src.replace(/\?.*$/, '');
   let buf = null;
@@ -261,12 +276,14 @@ async function importPost([id, kind, slug, category, title], dates) {
   /* 같은 slug 의 옛 파일(날짜가 바뀐 경우) 정리 */
   for (const f of fs.readdirSync(OUT_DIR)) if (f.endsWith(`-${slug}.json`) && f !== path.basename(file)) fs.unlinkSync(`${OUT_DIR}/${f}`);
   fs.writeFileSync(file, JSON.stringify(doc, null, 2) + '\n');
+  imported.push({ file, slug, title, imgs });
   const textLen = kept.filter((b) => b.type === 'p').reduce((n, b) => n + b.text.length, 0);
   console.log(`${id} → ${file}\n   ${date} ${time} | 본문 ${textLen}자 · 블록 ${kept.length}(원 ${blocks.length}) · 사진 ${imgN}장 · 꼬리 ${tailAt}\n   요약: ${summary.slice(0, 90)}`);
 }
 
 const only = process.argv.slice(2);
 const dates = await rssDates();
+const imported = [];
 for (const row of POSTS) {
   if (only.length && !only.includes(row[0])) continue;
   try {
@@ -274,4 +291,27 @@ for (const row of POSTS) {
   } catch (e) {
     console.error(`${row[0]} 실패: ${e.message}`);
   }
+}
+
+/*
+ * 표지 다시 고르기 — 여러 글에 똑같이 들어가는 사진(수술 장면·원장 사진)은 목록에서 같은 표지가 줄줄이 나온다(오너 2026-09-11 "사진 너무 겹친다").
+ * 폴더의 모든 사진 지문을 모아, 다른 글에도 있는 사진은 빼고 이 글에만 있는 사진 가운데 붉은 기 적은 마지막 것을 표지로 쓴다.
+ */
+const hashes = {}; /* file → { slug, hash } */
+for (const f of fs.readdirSync(IMG_DIR)) {
+  if (!f.endsWith('.webp')) continue;
+  hashes[f] = { slug: f.replace(/-\d\d\.webp$/, ''), hash: await dhash(`${IMG_DIR}/${f}`) };
+}
+const sharedWithOthers = (f) => Object.entries(hashes).some(([g, v]) => g !== f && v.slug !== hashes[f].slug && hamming(v.hash, hashes[f].hash) <= 6);
+for (const it of imported) {
+  const withFile = it.imgs.map((b) => ({ b, file: path.basename(b.src), unique: !sharedWithOthers(path.basename(b.src)) }));
+  const pick = (arr) => (arr.length ? arr[arr.length - 1] : undefined);
+  const chosen =
+    pick(withFile.filter((x) => x.unique && x.b.size.red < 20)) ?? pick(withFile.filter((x) => x.unique)) ?? pick(withFile.filter((x) => x.b.size.red < 20)) ?? withFile[0];
+  if (!chosen) continue;
+  const doc = JSON.parse(fs.readFileSync(it.file, 'utf8'));
+  doc.image = chosen.b.src;
+  doc.imageAlt = chosen.b.cap || it.title;
+  fs.writeFileSync(it.file, JSON.stringify(doc, null, 2) + '\n');
+  console.log(`표지 ${it.slug}: ${chosen.file}${chosen.unique ? '' : ' (다른 글과 겹침)'}`);
 }

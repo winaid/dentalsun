@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 const TRAIL = [
   { name: '홈', path: '/' },
   { name: '인사이트', path: '/insight' },
-  { name: '임상 사례', path: '/insight/clinical' },
+  { name: '임상 사례 · 핵심 안내', path: '/insight/clinical' },
 ];
 
 const koDate = (iso: string) => {
@@ -40,9 +40,9 @@ const koDate = (iso: string) => {
  * 한 줄 캐러셀 — 카드를 작게 해 한 줄에 넷씩, 좌우 화살표로 넘긴다(오너 2026-09-11: "카드 너무 큰데 한 줄로 하나씩 넘기면서",
  * "핵심 안내가 밑에 있는 줄 몰랐어"). 3열 격자로 두 묶음을 쌓으니 둘째 묶음이 화면 두 장 아래로 내려가 있었다.
  */
-function Cards({ posts, priority = false }: { posts: BlogPost[]; priority?: boolean }) {
+function Cards({ posts, priority = false, fade = 'from-white' }: { posts: BlogPost[]; priority?: boolean; fade?: string }) {
   return (
-    <Carousel label={`${posts.length}편`} itemClass="w-[264px] md:w-[290px] xl:w-[300px]">
+    <Carousel label={`${posts.length}편`} itemClass="w-[264px] md:w-[290px] xl:w-[300px]" fade={fade}>
       {posts.map((p, i) => (
         <Link key={p.slug} href={`/insight/clinical/${p.slug}`} className="group flex h-full flex-col overflow-hidden rounded-2xl border border-hairline bg-white transition-colors hover:border-brand-300">
           <div className="relative aspect-[3/2] overflow-hidden bg-canvas-2">
@@ -118,38 +118,31 @@ export default function ClinicalIndexPage() {
             { fig: { key: 'orig/misc-nav-implant-set', alt: '내비게이션 임플란트 모의수술 화면이 뜬 모니터·태블릿과 임플란트 모형' }, shape: 'std' },
           ]}
           items={[
-            { title: '임상 사례', desc: '뼈가 부족한 임플란트, 신경 가까운 자리, 자연치아 보존처럼 실제 치료 과정을 단계별 사진으로 보여 드립니다.' },
             { title: '핵심 안내', desc: '상악동거상술의 종류, 임플란트의 구조, 틀니와 풀아치 임플란트의 차이처럼 치료를 고르기 전에 알아 둘 내용입니다.' },
+            { title: '임상 사례', desc: '뼈가 부족한 임플란트, 신경 가까운 자리, 자연치아 보존처럼 실제 치료 과정을 단계별 사진으로 보여 드립니다.' },
             { title: '개인차가 있습니다', desc: '사례의 결과는 그 환자분의 것입니다. 내 경우는 검사 뒤에 함께 정합니다.' },
           ]}
         />
 
-        {/* 두 묶음이 한 화면에 이어 보이도록 위아래 여백을 줄이고, 첫 묶음 머리에 둘째 묶음으로 가는 길을 둔다 */}
-        <section className="section !pb-10 lg:!pb-12" id="cases">
-          <div className="wrap">
-            <div className="flex flex-wrap items-end justify-between gap-4">
-              <div>
-                <p className="eyebrow reveal">CASES</p>
-                <h2 className="display-sm reveal mt-4">임상 사례</h2>
-                <p className="lead reveal mt-3 max-w-[46em]">실제로 진행한 치료를 초진부터 마무리까지 순서대로 정리했습니다.</p>
-              </div>
-              <a href="#notice" className="reveal inline-flex items-center gap-2 rounded-full border border-hairline bg-white px-4 py-2 text-[14px] font-bold text-ink-soft hover:border-brand-300 hover:text-brand-700">
-                핵심 안내 {notices.length}편 <span aria-hidden>↓</span>
-              </a>
-            </div>
-            <div className="mt-8">
-              {cases.length ? <Cards posts={cases} priority /> : <p className="text-[17px] leading-[1.9] text-ink-soft">첫 사례를 준비하고 있습니다.</p>}
-            </div>
-          </div>
-        </section>
-
-        <section className="section bg-canvas !pt-10 lg:!pt-12 scroll-mt-[96px]" id="notice">
+        {/* 핵심 안내가 먼저, 임상 사례가 다음(오너 2026-09-11). 두 묶음이 한 화면에 이어 보이도록 사이 여백을 줄였다 */}
+        <section className="section !pb-10 lg:!pb-12 scroll-mt-[96px]" id="notice">
           <div className="wrap">
             <p className="eyebrow reveal">GUIDE</p>
             <h2 className="display-sm reveal mt-4">핵심 안내</h2>
             <p className="lead reveal mt-3 max-w-[46em]">치료를 고르기 전에 알아 두면 좋은 내용을 설명한 글입니다.</p>
             <div className="mt-8">
-              {notices.length ? <Cards posts={notices} /> : <p className="text-[17px] leading-[1.9] text-ink-soft">준비 중입니다.</p>}
+              {notices.length ? <Cards posts={notices} priority /> : <p className="text-[17px] leading-[1.9] text-ink-soft">준비 중입니다.</p>}
+            </div>
+          </div>
+        </section>
+
+        <section className="section bg-canvas !pt-10 lg:!pt-12 scroll-mt-[96px]" id="cases">
+          <div className="wrap">
+            <p className="eyebrow reveal">CASES</p>
+            <h2 className="display-sm reveal mt-4">임상 사례</h2>
+            <p className="lead reveal mt-3 max-w-[46em]">실제로 진행한 치료를 초진부터 마무리까지 순서대로 정리했습니다.</p>
+            <div className="mt-8">
+              {cases.length ? <Cards posts={cases} fade="from-canvas" /> : <p className="text-[17px] leading-[1.9] text-ink-soft">첫 사례를 준비하고 있습니다.</p>}
             </div>
           </div>
         </section>
