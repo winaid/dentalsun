@@ -18,21 +18,27 @@ import sharp from 'sharp';
 const BLOG_ID = 'sundent21';
 const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/128 Safari/537.36';
 
-/** [글 번호, 종류, 주소 이름, 진료 분류, 다듬은 제목(없으면 원제)] */
+/**
+ * [글 번호, 종류, 주소 이름, 진료 분류, 다듬은 제목(없으면 원제), 표지 사진 번호, 본문에서 뺄 사진 번호들]
+ *  · 사진 번호는 네이버 글에 실린 순서(01부터). 한눈에 보려면 node scripts/contact-sheet.mjs → C:/tmp/sheets/<slug>.jpg
+ *  · 표지는 사람이 고른다(2026-09-11 오너 "이미지 좀 너가 잘 판단해서") — 완성 사진·모형·도해 우선, 수술 중 사진과 글자 많은 표는 피한다.
+ *  · 뺄 사진: 가격 이벤트 배너(의료광고 심의 대상), "직접 작성합니다" 고지 그림, 소개용 원장 사진처럼 그 글의 내용이 아닌 것.
+ *    여러 글에 똑같이 들어간 사진은 번호를 안 적어도 자동으로 빠진다.
+ */
 const POSTS = [
-  ['224407031158', 'clinical', 'sinus-lift-thin-bone', '임플란트', '뼈가 1~2mm밖에 없는 상악 어금니 임플란트, 상악동거상술 사례'],
-  ['224396261424', 'clinical', 'molar-implant-bone-graft', '임플란트', '어금니 임플란트, 뼈가 부족하다면? 뼈이식과 함께 심은 사례'],
-  ['224401079678', 'clinical', 'nerve-proximity-navigation', '임플란트', '하치조신경과 가까운 임플란트, 내비게이션으로 식립한 사례'],
-  ['224384458305', 'clinical', 'apicoectomy-natural-tooth', '자연치아', '치근단 염증, 치근단절제술로 자연치아를 보존한 사례'],
-  ['224375227677', 'clinical', 'full-arch-both-jaws', '임플란트', '상·하악 풀아치 임플란트 치료 사례, 골이식과 디지털 가이드'],
-  ['224356465023', 'clinical', 'one-day-whitening', '치아미백', '원데이 치아미백 과정, A3에서 B1까지 밝아진 사례'],
-  ['224323427138', 'clinical', 'lower-full-arch-staged', '임플란트', '전신질환과 턱관절까지 고려한 하악 풀아치 임플란트, 단계적 치료 과정'],
-  ['224297615769', 'clinical', 'implant-mobility-reimplant', '임플란트', '임플란트 흔들림, 알고 보니 구조물 파절? 재식립 사례'],
-  ['224405846212', 'notice', 'sinus-lift-types', '임플란트', '상악동거상술의 종류, 치조정 접근과 측방 접근은 무엇이 다를까요?'],
-  ['224136248545', 'notice', 'implant-structure-types', '임플란트', '임플란트의 구조와 종류, 쉽게 이해하기'],
-  ['224147685214', 'notice', 'denture-vs-full-arch', '임플란트', '틀니와 풀아치 임플란트, 무엇이 다를까요? 치료 과정 총정리'],
-  ['224060248093', 'notice', 'navigation-implant-accuracy', '임플란트', '내비게이션 임플란트, 0.1mm 의 오차가 왜 중요할까요?'],
-  ['224058740151', 'notice', 'why-wait-after-extraction', '임플란트', '발치 즉시 임플란트 대신 4~5주를 기다리는 이유'],
+  ['224407031158', 'clinical', 'sinus-lift-thin-bone', '임플란트', '뼈가 1~2mm밖에 없는 상악 어금니 임플란트, 상악동거상술 사례', 7],
+  ['224396261424', 'clinical', 'molar-implant-bone-graft', '임플란트', '어금니 임플란트, 뼈가 부족하다면? 뼈이식과 함께 심은 사례', 8],
+  ['224401079678', 'clinical', 'nerve-proximity-navigation', '임플란트', '하치조신경과 가까운 임플란트, 내비게이션으로 식립한 사례', 5],
+  ['224384458305', 'clinical', 'apicoectomy-natural-tooth', '자연치아', '치근단 염증, 치근단절제술로 자연치아를 보존한 사례', 2],
+  ['224375227677', 'clinical', 'full-arch-both-jaws', '임플란트', '상·하악 풀아치 임플란트 치료 사례, 골이식과 디지털 가이드', 8],
+  ['224356465023', 'clinical', 'one-day-whitening', '치아미백', '원데이 치아미백 과정, A3에서 B1까지 밝아진 사례', 4, [5]],
+  ['224323427138', 'clinical', 'lower-full-arch-staged', '임플란트', '전신질환과 턱관절까지 고려한 하악 풀아치 임플란트, 단계적 치료 과정', 8],
+  ['224297615769', 'clinical', 'implant-mobility-reimplant', '임플란트', '임플란트 흔들림, 알고 보니 구조물 파절? 재식립 사례', 11, [1, 12]],
+  ['224405846212', 'notice', 'sinus-lift-types', '임플란트', '상악동거상술의 종류, 치조정 접근과 측방 접근은 무엇이 다를까요?', 4],
+  ['224136248545', 'notice', 'implant-structure-types', '임플란트', '임플란트의 구조와 종류, 쉽게 이해하기', 2],
+  ['224147685214', 'notice', 'denture-vs-full-arch', '임플란트', '틀니와 풀아치 임플란트, 무엇이 다를까요? 치료 과정 총정리', 4, [11]],
+  ['224060248093', 'notice', 'navigation-implant-accuracy', '임플란트', '내비게이션 임플란트, 0.1mm 의 오차가 왜 중요할까요?', 2],
+  ['224058740151', 'notice', 'why-wait-after-extraction', '임플란트', '발치 즉시 임플란트 대신 4~5주를 기다리는 이유', 4],
 ];
 
 const OUT_DIR = 'content/clinical';
@@ -132,7 +138,7 @@ function lineHtml($, p) {
   return { html, text, allBold: text.length > 0 && boldLen >= text.length * 0.9, big };
 }
 
-async function importPost([id, kind, slug, category, title], dates) {
+async function importPost([id, kind, slug, category, title, cover, dropImages], dates) {
   const url = `https://blog.naver.com/PostView.naver?blogId=${BLOG_ID}&logNo=${id}`;
   const html = await (await fetch(url, { headers: { 'User-Agent': UA, 'Accept-Language': 'ko' } })).text();
   const $ = cheerio.load(html);
@@ -276,7 +282,7 @@ async function importPost([id, kind, slug, category, title], dates) {
   /* 같은 slug 의 옛 파일(날짜가 바뀐 경우) 정리 */
   for (const f of fs.readdirSync(OUT_DIR)) if (f.endsWith(`-${slug}.json`) && f !== path.basename(file)) fs.unlinkSync(`${OUT_DIR}/${f}`);
   fs.writeFileSync(file, JSON.stringify(doc, null, 2) + '\n');
-  imported.push({ file, slug, title, imgs });
+  imported.push({ file, slug, title, imgs, cover, dropImages });
   const textLen = kept.filter((b) => b.type === 'p').reduce((n, b) => n + b.text.length, 0);
   console.log(`${id} → ${file}\n   ${date} ${time} | 본문 ${textLen}자 · 블록 ${kept.length}(원 ${blocks.length}) · 사진 ${imgN}장 · 꼬리 ${tailAt}\n   요약: ${summary.slice(0, 90)}`);
 }
@@ -302,16 +308,28 @@ for (const f of fs.readdirSync(IMG_DIR)) {
   if (!f.endsWith('.webp')) continue;
   hashes[f] = { slug: f.replace(/-\d\d\.webp$/, ''), hash: await dhash(`${IMG_DIR}/${f}`) };
 }
-const sharedWithOthers = (f) => Object.entries(hashes).some(([g, v]) => g !== f && v.slug !== hashes[f].slug && hamming(v.hash, hashes[f].hash) <= 6);
+const sharedWithOthers = (f) => Object.entries(hashes).some(([g, v]) => g !== f && v.slug !== hashes[f].slug && hamming(v.hash, hashes[f].hash) <= 2);
 for (const it of imported) {
-  const withFile = it.imgs.map((b) => ({ b, file: path.basename(b.src), unique: !sharedWithOthers(path.basename(b.src)) }));
-  const pick = (arr) => (arr.length ? arr[arr.length - 1] : undefined);
-  const chosen =
-    pick(withFile.filter((x) => x.unique && x.b.size.red < 20)) ?? pick(withFile.filter((x) => x.unique)) ?? pick(withFile.filter((x) => x.b.size.red < 20)) ?? withFile[0];
-  if (!chosen) continue;
   const doc = JSON.parse(fs.readFileSync(it.file, 'utf8'));
-  doc.image = chosen.b.src;
-  doc.imageAlt = chosen.b.cap || it.title;
+  /* 여러 글에 똑같이 들어가는 사진(소개 수술 장면·원장 사진·"직접 작성" 고지 그림·지도)은 본문에서도 뺀다 — 글마다 되풀이되는 장식이지 그 사례의 사진이 아니다 */
+  const withFile = it.imgs.map((b) => ({ b, file: path.basename(b.src), unique: !sharedWithOthers(path.basename(b.src)) }));
+  const drop = new Set([...withFile.filter((x) => !x.unique).map((x) => x.file), ...(it.dropImages ?? []).map((n) => `${it.slug}-${String(n).padStart(2, '0')}.webp`)]);
+  for (const f of drop) {
+    doc.html = doc.html.replace(new RegExp(`\\n?<figure><img src="/img/clinical/${f.replace(/\./g, '\\.')}"[^>]*>(?:<figcaption>[^<]*</figcaption>)?</figure>`, 'g'), '');
+    try { if (fs.existsSync(`${IMG_DIR}/${f}`)) fs.unlinkSync(`${IMG_DIR}/${f}`); } catch { /* 로컬 서버가 파일을 잡고 있으면(EBUSY) 다음 실행 때 지워진다 */ }
+  }
+  const left = withFile.filter((x) => !drop.has(x.file));
+  /* 표지: 표에 정한 번호가 있으면 그것, 없으면 붉은 기 적은 마지막 사진 */
+  const pick = (arr) => (arr.length ? arr[arr.length - 1] : undefined);
+  const manual = it.cover ? left.find((x) => x.file === `${it.slug}-${String(it.cover).padStart(2, '0')}.webp`) : undefined;
+  const chosen = manual ?? pick(left.filter((x) => x.b.size.red < 20)) ?? left[0];
+  if (chosen) {
+    doc.image = chosen.b.src;
+    doc.imageAlt = chosen.b.cap || it.title;
+  } else {
+    delete doc.image;
+    delete doc.imageAlt;
+  }
   fs.writeFileSync(it.file, JSON.stringify(doc, null, 2) + '\n');
-  console.log(`표지 ${it.slug}: ${chosen.file}${chosen.unique ? '' : ' (다른 글과 겹침)'}`);
+  console.log(`표지 ${it.slug}: ${chosen?.file ?? '없음'}${manual ? ' (지정)' : ''} · 본문에서 뺀 사진 ${drop.size}장`);
 }
