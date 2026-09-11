@@ -8,8 +8,11 @@ export const revalidate = 3600;
 import { CLINIC } from '@/lib/clinic';
 import { DOCTORS } from '@/lib/doctors';
 import { allPosts, publishedIso } from '@/lib/blog';
-import { postBySlugMerged, extractFaq } from '@/lib/insightFeed';
+import { allPostsMerged, postBySlugMerged, extractFaq } from '@/lib/insightFeed';
+import { docByPath, docsOfHub } from '@/lib/content';
+import { TREATMENT_HUBS } from '@/lib/nav';
 import { ContactBand, Breadcrumb, Sentences } from '@/components/ui';
+import { ContactCard, DoctorCard, LinkListCard } from '@/components/SideRail';
 import { JsonLd } from '@/components/JsonLd';
 import { SiteHeader } from '@/components/SiteHeader';
 import { breadcrumbSchema, abs, og, medicalWebPageSchema, alt } from '@/lib/seo';
@@ -34,6 +37,31 @@ export function generateStaticParams() {
 
 /** 중앙 글의 표지는 절대 주소 — abs() 를 다시 붙이지 않는다. */
 const imgUrl = (s: string) => (/^https?:\/\//.test(s) ? s : abs(s));
+
+/**
+ * 글의 분류(category) → 이어지는 진료 갈래. 사이드바 '이 글과 이어지는 진료' 카드가 쓴다.
+ * 분류 이름은 글쓴이가 자유롭게 적으므로 표에 없으면 메뉴 이름과 겹치는 쪽을 고른다.
+ */
+const CATEGORY_HUB: Record<string, string> = {
+  '무통·수면치료': '/treatment/painless',
+  '무통': '/treatment/painless',
+  '수면치료': '/treatment/painless',
+  '임플란트': '/treatment/implant',
+  '턱관절': '/treatment/tmj',
+  '심미치료': '/treatment/aesthetic',
+  '보험': '/treatment/insurance',
+  '틀니': '/treatment/insurance',
+  '사랑니': '/treatment/wisdom-tooth',
+  '자연치아': '/treatment/natural-tooth',
+  '신경치료': '/treatment/natural-tooth',
+};
+function hubForCategory(category?: string): string | undefined {
+  if (!category) return undefined;
+  if (CATEGORY_HUB[category]) return CATEGORY_HUB[category];
+  const key = Object.keys(CATEGORY_HUB).find((k) => category.includes(k));
+  if (key) return CATEGORY_HUB[key];
+  return TREATMENT_HUBS.find((h) => category.includes(h.label) || h.label.includes(category))?.href;
+}
 
 export async function generateMetadata({
   params,
@@ -64,6 +92,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   if (!post) notFound();
   /* 본문 끝 '자주 묻는 질문' 이 있으면 FAQPage 로도 낸다(중앙 글 문서 권고 — AI 검색이 질문·답을 그대로 읽는다). */
   const faq = extractFaq(post.html);
+
+  /* 사이드바 — 이 글의 분류와 이어지는 진료 갈래(허브 + 하위 문서 넷), 다른 글 넷 */
+  const hubPath = hubForCategory(post.category);
+  const hub = hubPath ? docByPath(hubPath) : undefined;
+  const hubLinks = hub ? [{ label: `${hub.title} 안내`, href: hub.path }, ...docsOfHub(hub.path).slice(0, 4).map((d) => ({ label: d.title, href: d.path }))] : [];
+  const others = (await allPostsMerged())
+    .filter((p) => p.slug !== post.slug)
+    .slice(0, 4)
+    .map((p) => ({ label: p.title, href: `/insight/blog/${p.slug}`, meta: p.date.replace(/-/g, '. ') }));
 
   const path = `/insight/blog/${post.slug}`;
   const trail = [
@@ -114,8 +151,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       {/* ⚠️ pb — 없으면 '블로그 목록' 단추가 아래 예약 띠에 붙는다(2026-09-07 오너 지적). */}
       <main id="main">
       <div className="wrap pt-[110px] pb-16 sm:pb-20 lg:pt-[130px] lg:pb-24">
-        <Breadcrumb trail={trail} />
+        {/* 홈은 Breadcrumb 이 스스로 붙인다 — trail 의 '홈' 까지 주면 '홈 › 홈' 으로 나왔다 */}
+        <Breadcrumb trail={trail.slice(1)} />
 
+        {/* 오른쪽 사이드바 — 턱관절 화면과 같은 짜임(오너 2026-09-11: "오른쪽 여백 많은데 턱관절 오른쪽처럼") */}
+        <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-16 xl:grid-cols-[minmax(0,1fr)_360px]">
+        <article className="min-w-0">
         <div className="mt-9 flex flex-wrap items-baseline gap-x-4 gap-y-2">
           <time dateTime={post.date} className="font-bold text-[15px] tabular-nums text-sun-600">
             {post.date.replace(/-/g, '. ')}
@@ -167,6 +208,18 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             </span>
             블로그 목록
           </Link>
+        </div>
+        </article>
+
+        {/* aside 는 글 높이만큼 늘어나고(self-stretch), 마지막 상담 카드만 sticky 로 글을 따라 내려온다 — 긴 글 아래쪽 오른쪽이 비지 않게 */}
+        <aside className="mt-12 space-y-6 lg:mt-9" aria-label="진료 안내">
+          <DoctorCard />
+          <LinkListCard title="이 글과 이어지는" accent="진료" items={hubLinks} />
+          <LinkListCard title="다른" accent="글" items={others} />
+          <div className="lg:sticky lg:top-[96px]">
+            <ContactCard />
+          </div>
+        </aside>
         </div>
       </div>
 

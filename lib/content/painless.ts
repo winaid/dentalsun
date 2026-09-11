@@ -19,7 +19,7 @@ export const PAINLESS_DOCS: Doc[] = [
     description:
       '광화문 선치과 무통 & 저자극 시스템 — 무통마취기 NO-PAIN III, 도포·가글마취, 수면치료, 에어플로우 스케일러로 통증을 줄인 마취와 시린 증상을 줄인 치석 제거를 안내합니다.',
     keywords: ['무통마취', '광화문 무통치과', '저자극 스케일링', '수면치료', '에어플로우', 'NO-PAIN III', '광화문 치과'],
-    hero: { key: 'scene/nopain', alt: '무통마취기 NO-PAIN 장비와 진료 장면' },
+    hero: { key: 'orig/pain-hero', alt: '무통마취기 NO-PAIN 장비와 진료 장면' },
     isHub: true,
     blocks: [
       {
@@ -30,7 +30,7 @@ export const PAINLESS_DOCS: Doc[] = [
           '광화문선치과는 무통 & 저자극 시스템으로 통증을 줄인 치료를 도와 드립니다. 무통마취기와 저자극 스케일러를 이용한 통증을 줄인 마취, 시린 증상을 줄인 치석 제거가 편안한 치과 치료의 시작입니다.',
           '치과 치료의 통증은 한 가지가 아닙니다. 마취 주사 바늘이 들어갈 때의 통증, 마취액이 주입될 때의 압력, 스케일링 중 시린 느낌, 그리고 치료 자체에 대한 두려움까지 서로 다른 원인이 겹쳐 있습니다. 광화문선치과는 원인마다 다른 방법으로 통증과 자극을 줄입니다.',
         ],
-        figure: { key: 'scene/nopain', alt: '무통마취기 NO-PAIN 장비를 이용한 진료 장면' },
+        figure: { key: 'orig/pain-hero', alt: '무통마취기 NO-PAIN 장비를 이용한 진료 장면' },
       },
       {
         type: 'points',
@@ -113,7 +113,7 @@ export const PAINLESS_DOCS: Doc[] = [
     description:
       '광화문 선치과 무통마취 — 무통마취기 NO-PAIN III 가 일정한 속도와 압력으로 마취액을 주입해 주사 통증을 줄입니다. 리도카겔 도포마취·리도카글액 가글마취까지 통증을 줄인 마취를 안내합니다.',
     keywords: ['무통마취', 'NO-PAIN III', '광화문 무통마취', '도포마취', '가글마취', '리도카겔', '치과 마취 통증', '광화문 치과'],
-    hero: { key: 'scene/nopain', alt: '무통마취기 NO-PAIN 장비와 진료 장면' },
+    hero: { key: 'orig/pain-hero', alt: '무통마취기 NO-PAIN 장비와 진료 장면' },
     procedure: '무통마취',
     blocks: [
       {
@@ -124,7 +124,7 @@ export const PAINLESS_DOCS: Doc[] = [
           '자동 주입으로 통증을 줄인 마취 주사입니다. 컴퓨터 자동 시스템이 일정한 속도와 압력으로 마취액을 주입하여 통증을 줄여 마취를 진행합니다.',
           '광화문선치과는 무통마취기 NO-PAIN III 를 이용합니다. 사람의 손힘으로 누르는 일반 주사기와 달리 장비가 주입 속도와 압력을 제어하므로, 마취액이 조직으로 퍼질 때 느끼는 압력 통증이 줄어듭니다.',
         ],
-        figure: { key: 'scene/nopain', alt: '무통마취기 NO-PAIN III 를 이용한 진료 장면' },
+        figure: { key: 'orig/pain-hero', alt: '무통마취기 NO-PAIN III 를 이용한 진료 장면' },
       },
       {
         type: 'compare',

@@ -333,8 +333,9 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
                 ))}
               </div>
             </div>
+            {/* 글이 사진보다 길면 사진이 따라 내려온다(sticky) — 긴 글 옆에 작은 사진 하나가 떠 있던 것(오너 2026-09-11) */}
             {b.figure && (
-              <div className={b.figureSide === 'left' ? 'lg:order-1' : ''}>
+              <div className={`lg:sticky lg:top-[120px] lg:self-center ${b.figureSide === 'left' ? 'lg:order-1' : ''}`}>
                 <TextFigure fig={b.figure} />
               </div>
             )}
