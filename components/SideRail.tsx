@@ -41,11 +41,18 @@ export function ContactCard() {
         ))}
       </dl>
       <p className="mt-3 text-[12.5px] leading-[1.6] text-ink-muted">{HOURS.closed}</p>
-      <p className="mt-4 rounded-xl bg-sun-50 px-4 py-3 text-[12.5px] leading-[1.6] text-sun-700">
-        <span className="font-bold">{MONTHLY_NOTICE.title}</span>
-        <br />
-        {MONTHLY_NOTICE.items.map((it) => `${it.dates} ${it.label}`).join(' · ')}
-      </p>
+      {/* 이달 진료일정 — 날짜 | 내용 을 줄마다 표처럼(오너 2026-09-11: "줄바꿈 잘 해줘 표처럼"). 한 줄에 · 로 이어 붙였더니 어디서 끊기는지 안 보였다 */}
+      <div className="mt-4 rounded-xl bg-sun-50 px-4 py-3 text-[12.5px] leading-[1.6] text-sun-700">
+        <p className="font-bold">{MONTHLY_NOTICE.title}</p>
+        <dl className="mt-1.5 divide-y divide-sun-200/70">
+          {MONTHLY_NOTICE.items.map((it) => (
+            <div key={it.dates} className="flex items-baseline justify-between gap-3 py-1">
+              <dt className="shrink-0 font-semibold tabular-nums">{it.dates}</dt>
+              <dd className="text-right">{it.label}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
       <div className="mt-4 grid grid-cols-2 gap-2">
         <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="btn-sun !px-3 !py-2.5 text-center text-[14px]">네이버 예약</a>
         <a href={CLINIC.booking.naverTalk} target="_blank" rel="noopener" className="btn-ghost !px-3 !py-2.5 text-center text-[14px]">톡톡 상담</a>

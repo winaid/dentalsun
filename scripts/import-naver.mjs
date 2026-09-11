@@ -188,7 +188,9 @@ async function importPost([id, kind, slug, category, title], dates) {
         imgN++;
         const file = `${IMG_DIR}/${slug}-${String(imgN).padStart(2, '0')}.webp`;
         const size = await fetchImage(src, file);
-        const cap = clean(c.find('.se-caption').first().text());
+        /* "※ 이미지 클릭시 예약 페이지로 연결됩니다" 같은 네이버 전용 안내는 여기서는 거짓말이 된다(오너 지적 2026-09-11) */
+        const cap0 = clean(c.find('.se-caption').first().text());
+        const cap = /클릭|예약 페이지|문의/.test(cap0) ? '' : cap0;
         blocks.push({ type: 'img', src: `/img/clinical/${slug}-${String(imgN).padStart(2, '0')}.webp`, size, cap, text: cap });
       }
     } else if (c.hasClass('se-table')) {
