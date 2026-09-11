@@ -254,7 +254,8 @@ function gridVars(n: number, opt: { max?: number; compact?: boolean } = {}): CSS
 function TextFigure({ fig }: { fig: Fig }) {
   const s = figSize(fig.key);
   const portrait = s.h > s.w * 1.1;
-  const cap = Math.min(portrait ? 340 : 560, s.w);
+  /* 세로 사진은 340px 까지, 다만 폭 600px 넘는 진짜 사진은 420px 까지 — 긴 글 옆에 작게 떠 있던 것(오너 2026-09-11) */
+  const cap = Math.min(portrait ? (s.w >= 600 ? 420 : 340) : 560, s.w);
   return (
     <div className="mx-auto w-full" style={{ maxWidth: `${cap}px` }}>
       <Figure fig={fig} sizes="(max-width: 1024px) 90vw, 560px" />

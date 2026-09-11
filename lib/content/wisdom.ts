@@ -43,7 +43,7 @@ export const WISDOM_DOCS: Doc[] = [
           '첨단 3D CT를 이용해 사랑니의 위치와 뿌리 모양, 주변 신경과의 거리를 정확하게 진단한 뒤 발치를 진행합니다.',
           '아래턱에는 하치조신경이라는 감각 신경이 위치해 있어, 발치 중에 신경이 눌리거나 자극을 받을 수 있으므로 조심해야 합니다. 본원에서는 다수의 임상경험을 가진 의료진이 정확한 진단 후 안전하게 발치를 진행하고 있습니다.',
         ],
-        figure: { key: 'scene/xray-wisdom', alt: '사랑니와 신경 위치가 보이는 CT 영상' },
+        figure: { key: 'orig/wisdom-ct-screen', alt: '3D CT 판독 화면 — 사랑니와 하치조신경 위치 확인' },
         figureSide: 'left',
       },
       {

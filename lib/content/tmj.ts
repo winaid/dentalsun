@@ -111,7 +111,7 @@ export const TMJ_DOCS: Doc[] = [
           '턱관절은 겉에서 만져 보는 것만으로는 관절 안의 상태를 알기 어렵습니다. 광화문선치과는 저선량 첨단 디지털 CT로 턱관절을 3D로 촬영해 보다 정확하고 안전하게 진단합니다.',
           '여러 가지 영상을 제공하는 올인원 시스템으로 3D, 부비동(Sinus), 턱관절(TMJ), 3D 얼굴(3D Face), 코(Nose), 척추(Vertebrae) 영상까지 확인할 수 있고, 파노라마와 CT를 함께 촬영할 수 있습니다. 촬영 시간이 짧고 방사선 노출량이 적어 부담을 덜었습니다.',
         ],
-        figure: { key: 'equip/ct', alt: '저선량 디지털 CT 장비' },
+        figure: { key: 'place/place08', alt: '저선량 3D CT 촬영실' },
         figureSide: 'left',
       },
       {

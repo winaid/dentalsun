@@ -135,8 +135,8 @@ export default function AboutPage() {
         <section className="section bg-canvas" id="hygiene">
           <div className="wrap grid items-center gap-10 lg:grid-cols-2">
             <div className="reveal grid grid-cols-2 gap-4">
-              <Figure fig={{ key: 'scene/sterile', alt: '멸균 소독한 진료 기구' }} ratio="aspect-[4/5]" sizes="25vw" effect="img-in" />
-              <Figure fig={{ key: 'scene/sterile2', alt: '개별 포장된 1인 1기구' }} ratio="aspect-[4/5]" sizes="25vw" effect="img-in" />
+              <Figure fig={{ key: 'scene/sterile', alt: '멸균 소독한 진료 기구' }} ratio="aspect-[9/16]" sizes="25vw" effect="img-in" />
+              <Figure fig={{ key: 'scene/sterile2', alt: '개별 포장된 1인 1기구' }} ratio="aspect-[9/16]" sizes="25vw" effect="img-in" />
             </div>
             <div className="reveal">
               <p className="eyebrow">STERILIZATION</p>
