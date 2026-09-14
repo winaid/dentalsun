@@ -183,6 +183,7 @@ export function Figure({
   ratio,
   effect = 'wipe',
   caption = true,
+  fill = false,
 }: {
   fig: Fig;
   sizes?: string;
@@ -193,6 +194,19 @@ export function Figure({
   ratio?: string;
   effect?: 'wipe' | 'img-in' | 'none';
   caption?: boolean;
+  /**
+   * 작은 원본이라도 **상자를 꽉 채운다**(아래 '작은 원본' 안전장치를 이 자리에서만 끈다).
+   *
+   * ★★ 왜 필요한가 (2026-09-14 오너: "사진들이 좀 별로야. 카드에 딱 맞게") ★★
+   *   안전장치는 폭 600px 미만이면 무조건 통째로(contain) 놓는데, 그 기준은
+   *   **옛 배너에서 잘라 낸 111~200px 짜리 도해** 를 막으려고 만든 것이다.
+   *   그런데 세로로 자른 진짜 사진(422·384px)까지 걸려서, /about 위생 구역의 두 장이
+   *   318x565 카드 안에서 **41% · 38% 만 채우고** 회색 여백에 둥둥 떠 있었다(실측).
+   * ⚠️ 원본이 상자보다 작은 자리에는 주지 말 것 — 늘려서 흐려진다. 여기 두 장은
+   *    원본 폭(422·384)이 상자 폭(318)보다 커서 늘어나지 않는다.
+   * ⚠️ 글자가 박힌 도해(equip/·illust/)에는 절대 주지 말 것 — 바깥 라벨이 잘려 나간다.
+   */
+  fill?: boolean;
 }) {
   const s = figSize(fig.key);
   const fx = effect === 'none' ? '' : effect;
@@ -208,7 +222,8 @@ export function Figure({
   /* 상자 비율과 1.4배 넘게 다른 사진도 통째로 — 세로 사진이 4:3 에서 머리가 잘리거나, 긴 배너가 반 토막 나지 않게 */
   const ar = ratio?.match(/\[(\d+)\/(\d+)\]/);
   const mismatch = ar ? !fitsBox(fig.key, Number(ar[1]), Number(ar[2])) : false;
-  const framed = !!ratio && (s.w < 600 || diagram || mismatch);
+  /* ⚠️ fill 은 '작은 원본' 안전장치만 끈다 — 도해(diagram)와 비율 어긋남(mismatch)은 그대로 막는다. */
+  const framed = !!ratio && ((s.w < 600 && !fill) || diagram || mismatch);
   return (
     <figure className={className}>
       {ratio && framed ? (

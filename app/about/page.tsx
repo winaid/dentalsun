@@ -104,7 +104,10 @@ export default function AboutPage() {
               </ul>
               <Link href="/about/doctors" className="btn-brand mt-8">의료진 소개 자세히</Link>
             </div>
-            <Figure fig={{ key: 'scene/loupe', alt: '확대경을 착용하고 진료하는 광화문선치과 원장' }} ratio="aspect-[960/767]" />
+            {/* ⚠️ 3/2 — 옛값은 원본과 같은 aspect-[960/767](1.25)이라 사진이 왼쪽 글 칸보다
+                84px 더 길었다(1440px 에서 글 437 · 사진 521, 실측 2026-09-14). 두 칸 높이를 맞춘다.
+                ⚠️ 더 납작하게(16/9 등) 가지 말 것 — 원장 머리 위 여백이 없어 모자가 잘린다. */}
+            <Figure fig={{ key: 'scene/loupe', alt: '확대경을 착용하고 진료하는 광화문선치과 원장' }} ratio="aspect-[3/2]" />
           </div>
         </section>
 
@@ -134,9 +137,11 @@ export default function AboutPage() {
 
         <section className="section bg-canvas" id="hygiene">
           <div className="wrap grid items-center gap-10 lg:grid-cols-2">
+            {/* ⚠️ fill — 두 장 다 세로 사진인데 폭이 422·384px 이라 '작은 원본' 안전장치에 걸려
+                카드의 41%·38% 만 채우고 회색 여백에 떠 있었다(2026-09-14 실측). 자세한 내력은 Figure 의 fill 주석에. */}
             <div className="reveal grid grid-cols-2 gap-4">
-              <Figure fig={{ key: 'scene/sterile', alt: '멸균 소독한 진료 기구' }} ratio="aspect-[9/16]" sizes="25vw" effect="img-in" />
-              <Figure fig={{ key: 'scene/sterile2', alt: '개별 포장된 1인 1기구' }} ratio="aspect-[9/16]" sizes="25vw" effect="img-in" />
+              <Figure fig={{ key: 'scene/sterile', alt: '멸균 소독한 진료 기구' }} ratio="aspect-[9/16]" sizes="25vw" effect="img-in" fill />
+              <Figure fig={{ key: 'scene/sterile2', alt: '개별 포장된 1인 1기구' }} ratio="aspect-[9/16]" sizes="25vw" effect="img-in" fill />
             </div>
             <div className="reveal">
               <p className="eyebrow">STERILIZATION</p>

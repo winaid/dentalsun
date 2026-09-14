@@ -445,32 +445,42 @@ body {
 .tbl tbody tr:nth-child(even) td {
   @apply bg-canvas/60;
 }
-/* ── 표 입체감 (오너: 너무 밋밋) — 종이 위에 살짝 떠 있고, 머리칸은 위에서 아래로 짙어진다 ── */
+/* ── 표 입체감 ──
+   내력: 처음엔 밋밋하다는 지적으로 그림자·그러데이션을 넣었고(오너),
+        2026-09-14 에 "너무 3D 라 살짝만 낮춰" 로 다시 반값 정도로 줄였다.
+   ★ 걷어내지는 않는다 — 종이 위에 살짝 떠 있는 느낌은 남기고 세기만 낮춘 것이다.
+   ⚠️ 다시 올릴 일이 생기면 아래 괄호 안의 옛 값이 그 전 단계다. */
 .tbl-scroll {
   border-radius: 16px;
-  box-shadow: 0 22px 44px -28px rgba(19, 24, 41, 0.5), 0 3px 8px -5px rgba(19, 24, 41, 0.18);
+  /* 옛값: 0 22px 44px -28px / 0.5 · 0 3px 8px -5px / 0.18 */
+  box-shadow: 0 12px 26px -24px rgba(19, 24, 41, 0.28), 0 2px 5px -4px rgba(19, 24, 41, 0.1);
 }
 .tbl thead th {
-  background-image: linear-gradient(180deg, #27478a 0%, var(--color-brand-800) 100%);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  /* 옛값: #27478a → brand-800 (위아래 차이가 커서 기둥이 튀어나와 보였다) */
+  background-image: linear-gradient(180deg, #20396f 0%, var(--color-brand-800) 100%);
+  /* 옛값: rgba(255,255,255,0.18) — 머리칸 윗변의 흰 하이라이트 */
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.09);
 }
 /* 강조 열(내비게이션·무통 등 우리 쪽 칸)은 주황으로 — 머리칸도 같은 방식으로 도드라지게 */
 .tbl thead th.tbl-hl {
-  background-image: linear-gradient(180deg, #f9873f 0%, #e8670f 100%);
+  /* 옛값: #f9873f → #e8670f */
+  background-image: linear-gradient(180deg, #f47a2d 0%, #ec6f16 100%);
 }
-/* 머리칸 바로 아래 한 줄에 그림자를 드리워 표가 눌린 듯 보이게 */
+/* 머리칸 바로 아래 한 줄에 드리운 그림자 — 옛값: inset 0 7px 9px -8px / 0.45 */
 .tbl tbody tr:first-child > * {
-  box-shadow: inset 0 7px 9px -8px rgba(19, 24, 41, 0.45);
+  box-shadow: inset 0 4px 6px -6px rgba(19, 24, 41, 0.22);
 }
 .tbl tbody th {
-  background-image: linear-gradient(180deg, #ffffff 0%, #eceff6 100%);
+  /* 옛값: #ffffff → #eceff6 */
+  background-image: linear-gradient(180deg, #ffffff 0%, #f4f6fa 100%);
 }
 /* 강조 열의 몸통 칸 — 옅은 주황 기둥이 세로로 이어진다.
    ★ 짝수 줄 회색(.tbl tbody tr:nth-child(even) td)과 무게가 같아야 이기므로 tr 을 넣어 자릿수를 맞춘다 */
 .tbl tbody tr td.tbl-hl {
   background-color: #fff6ee;
-  background-image: linear-gradient(180deg, rgba(242, 111, 30, 0.11) 0%, rgba(242, 111, 30, 0.04) 100%);
-  border-inline-color: rgba(242, 111, 30, 0.3);
+  /* 옛값: 0.11 → 0.04 */
+  background-image: linear-gradient(180deg, rgba(242, 111, 30, 0.06) 0%, rgba(242, 111, 30, 0.025) 100%);
+  border-inline-color: rgba(242, 111, 30, 0.22);
 }
 .tbl tbody tr {
   transition: background-color 0.18s ease;
