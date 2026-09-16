@@ -427,22 +427,9 @@ export function CardLink({ href, label, desc, external = false, fig, num }: { hr
   );
 }
 
-/** 흐르는 키워드 띠 — 구역 사이의 숨 고르기. */
-export function Marquee({ items, dark = false, overlap = false }: { items: string[]; dark?: boolean; overlap?: boolean }) {
-  const row = [...items, ...items];
-  return (
-    <div className={`overflow-hidden border-y ${dark ? 'border-white/10 bg-night text-white/70' : 'border-hairline bg-white text-ink-soft'} py-4 ${overlap ? 'relative z-10 -mt-8 rounded-t-[32px] border-t-0 shadow-[0_-24px_48px_rgba(13,20,51,0.35)]' : ''}`} aria-hidden>
-      <div className="marquee">
-        {row.map((t, i) => (
-          <span key={i} className="flex items-center gap-6 px-6 text-[15px] font-bold tracking-wide whitespace-nowrap">
-            <span className="h-1.5 w-1.5 rounded-full bg-sun-500" />
-            {t}
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
+/* 흐르는 키워드 띠(Marquee) 는 지웠다 — 오너가 두 번 빼라고 한 것이라 부품째 없앤다.
+   홈 2026-09-10(94a9157), 허브 6쪽 2026-09-16. 되살리지 말 것.
+   .marquee CSS 는 남는다 — 홈 의료진 뒤 큰 글자(오너가 따로 요청한 것)가 쓴다. */
 
 /**
  * 스크롤 따라 낱말이 차례로 밝아지는 글(레퍼런스의 문단 강조) — RevealScript 가 [data-scrub] 안의 .w 에 .on 을 붙인다.

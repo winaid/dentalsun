@@ -2,7 +2,7 @@ import Image from 'next/image';
 import type { CSSProperties, ReactNode } from 'react';
 import { SiteHeader } from '@/components/SiteHeader';
 import { JsonLd } from '@/components/JsonLd';
-import { Breadcrumb, CardLink, ContactBand, FaqList, Figure, Marquee, MedicalNotice, ScrubText, Sentences } from '@/components/ui';
+import { Breadcrumb, CardLink, ContactBand, FaqList, Figure, MedicalNotice, ScrubText, Sentences } from '@/components/ui';
 import { docCharCount, figSize, figSrc, fitsBox, type Block, type Doc, type Fig } from '@/lib/docs';
 import { docByPath, docsOfHub } from '@/lib/content';
 import { caseGroup } from '@/lib/cases';
@@ -141,8 +141,9 @@ export function DocPage({ doc }: { doc: Doc }) {
           </div>
         </HeroCollage>
 
-        {/* 허브: 홈처럼 흐르는 띠로 첫 화면과 잇고, 하위 문서 카드 (같은 높이·같은 사진 비율) */}
-        {doc.isHub && children.length > 0 && <Marquee items={[doc.title, ...children.map((c) => c.title), CLINIC.nameEn]} overlap />}
+        {/* 허브: 하위 문서 카드 (같은 높이·같은 사진 비율).
+            ★ 첫 화면 아래 '흐르는 낱말 띠' 는 오너 지시로 뺐다 — 홈 2026-09-10(94a9157), 허브 2026-09-16.
+              되살리지 말 것. */}
         {doc.isHub && children.length > 0 && (
           <section className="section bg-canvas">
             <div className="wrap">

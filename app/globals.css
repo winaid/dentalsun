@@ -387,7 +387,8 @@ body {
   animation: scroll-hint 1.8s ease-in-out infinite;
 }
 
-/* 흐르는 띠 (레퍼런스의 키워드 마퀴) */
+/* 저절로 흐르는 가로 움직임 — 지금은 홈 의료진 뒤 큰 영문 이름(app/page.tsx)만 쓴다.
+   구역 사이의 '키워드 띠' 는 오너 지시로 전부 뺐다(홈 2026-09-10 · 허브 2026-09-16). */
 @keyframes marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
