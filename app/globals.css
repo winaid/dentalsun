@@ -783,7 +783,7 @@ details.faq .a {
 .stage-step {
   /* 테두리는 늘 있고(오너: 사진·카드에 테두리), 지금 보는 단계만 흰 바탕에 그림자가 얹힌다 */
   position: relative;
-  border: 1px solid var(--color-hairline);
+  border: 1px solid rgba(19, 24, 41, 0.1);
   background: rgba(255, 255, 255, 0.55);
   transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1), background-color 0.5s ease, box-shadow 0.5s ease,
     border-color 0.5s ease;
@@ -793,10 +793,10 @@ details.faq .a {
   content: '';
   position: absolute;
   left: 0;
-  top: 16px;
-  bottom: 16px;
-  width: 3px;
-  border-radius: 0 3px 3px 0;
+  top: 14px;
+  bottom: 14px;
+  width: 5px;
+  border-radius: 0 4px 4px 0;
   background: linear-gradient(180deg, var(--color-sun-500), var(--color-sun-300));
   transform: scaleY(0);
   transform-origin: top;
@@ -805,10 +805,14 @@ details.faq .a {
 .stage-step.on::before {
   transform: scaleY(1);
 }
+/*
+ * 지금 단계는 테두리가 주황으로 진해진다(오너: 스텝 넘어가는 게 잘 안 보인다).
+ * 두께는 안쪽 그림자로 한 겹 더 얹어 2px 처럼 보이게 한다 — border-width 를 키우면 글이 1px 씩 밀린다.
+ */
 .stage-step.on {
   background: #fff;
-  border-color: var(--color-hairline);
-  box-shadow: var(--shadow-lift);
+  border-color: var(--color-sun-400);
+  box-shadow: var(--shadow-lift), inset 0 0 0 1px var(--color-sun-400);
 }
 .stage-step.on .stage-badge {
   @apply bg-sun-500 text-white;

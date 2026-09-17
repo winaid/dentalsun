@@ -100,12 +100,18 @@ export function HomeStage() {
             </div>
           </div>
 
-          {/* 오른쪽 — 단계 글 (모바일은 사진을 각 단계 아래에) */}
-          <ol className="lg:pt-[22vh] lg:pb-[2vh]">
+          {/*
+            오른쪽 — 단계 글 (모바일은 사진을 각 단계 아래에).
+            단계가 바뀌는 속도 = 칸 하나가 차지하는 스크롤 높이(칸 높이 + 칸 사이 간격). 전에는 30vh(화면의 0.3배) 뿐이라
+            구역이 화면 위에 붙는 순간 이미 2번 칸이 판정 띠(화면 가운데 42~58%)에 걸쳐 "도착하자마자 2번"이 됐다(오너).
+            칸 36vh + 간격 16vh = 52vh(화면 반 바퀴)로 넓히고, 위 여백 34vh 는 구역이 붙는 그 순간 1번 칸이 띠에 걸리도록 맞춘 값이다.
+            (아래 여백 36vh 는 마지막 칸도 앞 칸들만큼 머물다 고정이 풀리게 하는 값 — 숫자를 바꿀 땐 네 값을 함께 다시 맞춰야 한다)
+          */}
+          <ol className="lg:pt-[34vh] lg:pb-[36vh]">
             {steps.map((s, i) => (
               <li
                 key={s.title}
-                className="stage-step flex flex-col items-start gap-3.5 rounded-3xl px-5 py-6 md:gap-6 md:px-6 md:py-7 lg:my-[4vh] lg:min-h-[26vh] lg:flex-row lg:items-center lg:px-8 lg:py-8"
+                className="stage-step flex flex-col items-start gap-3.5 rounded-3xl px-5 py-6 md:gap-6 md:px-6 md:py-7 lg:my-[16vh] lg:min-h-[36vh] lg:flex-row lg:items-center lg:px-8 lg:py-8"
                 data-stage-step
               >
                 <span className="stage-badge shrink-0">STEP {String(i + 1).padStart(2, '0')}</span>
