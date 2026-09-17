@@ -19,6 +19,7 @@ import {
   TMJ_PROCESS,
   TMJ_RELATED_SYMPTOMS,
   TMJ_SELF_CHECK,
+  TMJ_SELF_TESTS,
   TMJ_SPLINT_TIPS,
   TMJ_STEPS,
   TMJ_SYMPTOMS,
@@ -159,7 +160,42 @@ export function TmjPage({ doc }: { doc: Doc }) {
                   <li key={s} className="rounded-full bg-canvas px-4 py-2 text-[14px] font-semibold text-ink-soft">{s}</li>
                 ))}
               </ul>
-              <div className="reveal mx-auto mt-12 max-w-[820px]">
+              {/* 거울 앞 자가진단 5단계 — 방법(이렇게) → 뜻(이러면) → 정상 범위 칩. 점검표(아래)보다 먼저 두어 '해 보고 표시' 흐름 */}
+              <div className="mt-16 md:mt-20" aria-labelledby="tmj-self-tests">
+                <div className="reveal text-center">
+                  <p className="text-[12px] font-bold tracking-[0.2em] text-sun-600">SELF TEST · 5 STEPS</p>
+                  <h3 id="tmj-self-tests" className="mt-2 text-[1.5rem] font-extrabold leading-tight text-ink md:text-[1.9rem]">
+                    거울 앞에서 <span className="accent-sun">이렇게 확인</span>해 보세요
+                  </h3>
+                  <p className="mx-auto mt-3 max-w-[640px] text-[15px] leading-[1.75] text-ink-soft">
+                    <Sentences text="병원에 오기 전 거울 앞에서 스스로 확인해 볼 수 있는 다섯 가지입니다. 하나씩 해 보고 아래 점검표에 표시해 보세요." clauses={false} />
+                  </p>
+                </div>
+                <ol className="reveal-stack mt-10 grid gap-4 md:grid-cols-2">
+                  {TMJ_SELF_TESTS.map((t, i) => (
+                    <li key={t.n} className={`card flex flex-col gap-4 p-5 sm:flex-row md:p-6 ${i === TMJ_SELF_TESTS.length - 1 ? 'md:col-span-2 md:flex-row' : ''}`}>
+                      {/* 사진 대신 번호 타일 — 바로 위 증상 사진 4장을 또 쓰면 '같은 사진 반복' */}
+                      <span className="hidden h-[120px] w-[120px] shrink-0 items-center justify-center rounded-xl bg-night text-[2.2rem] font-extrabold text-white sm:flex md:h-[136px] md:w-[136px]" aria-hidden>{t.n}</span>
+                      <div className="min-w-0 flex-1">
+                        <p className="flex items-center gap-2 text-[12px] font-extrabold tracking-[0.18em] text-sun-500">
+                          STEP {t.n}
+                          {t.normal && <span className="rounded-full bg-brand-50 px-2.5 py-0.5 text-[12px] font-bold tracking-normal text-brand-700">{t.normal}</span>}
+                        </p>
+                        <h4 className="mt-1.5 text-[1.1rem] font-extrabold leading-snug text-ink md:text-[1.2rem]">{t.title}</h4>
+                        <p className="mt-2.5 text-[14.5px] leading-[1.75] text-ink-soft">
+                          <span className="mr-1.5 inline-block rounded-md bg-night px-1.5 py-0.5 text-[11px] font-extrabold tracking-[0.08em] text-white align-[2px]">이렇게</span>
+                          {t.how}
+                        </p>
+                        <p className="mt-2 text-[14.5px] leading-[1.75] text-ink-soft">
+                          <span className="mr-1.5 inline-block rounded-md bg-sun-500 px-1.5 py-0.5 text-[11px] font-extrabold tracking-[0.08em] text-white align-[2px]">이러면</span>
+                          {t.means}
+                        </p>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+              <div className="reveal mx-auto mt-10 max-w-[820px]">
                 <TmjSelfCheck items={TMJ_SELF_CHECK} />
               </div>
             </section>
