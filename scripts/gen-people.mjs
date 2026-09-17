@@ -56,6 +56,10 @@ const SCENES = {
   "insight-cost": "Top-down view of hands over a light wooden desk with a printed treatment plan, a pen and a cup of tea, the sheet shows only soft blurred lines and no readable text.",
   "insight-glossary": "Close-up of hands turning the pages of an open dental reference book beside a small tooth model on a light desk, soft window light, no readable text.",
   "insight-denture": "An elderly person seen from the nose down smiling gently at a bright table, hands folded, a small glass of water nearby, warm daylight.",
+  /* 2026-09-17 턱관절 자가진단 5단계 — 확인 동작 사진 3장(참고 사이트의 정중선·개구량·관절 촉진 사진에 대응). 눈은 안 보이게 */
+  'tmj-check-midline': 'Close-up of a young East Asian woman from the nose down, mouth opened halfway showing upper and lower front teeth aligned, lips relaxed, looking straight ahead, plain light background, soft daylight.',
+  'tmj-check-open': 'Close-up from the nose down of a young East Asian man with mouth open wide, inserting three fingers stacked vertically between the front teeth to measure how far the mouth opens, plain light background, soft daylight.',
+  'tmj-check-joint': 'Side view from the nose down of a young East Asian woman with both index and middle fingers resting on the jaw joints just in front of each ear, mouth slightly open, plain light background, soft daylight.',
   'painless-hub': 'A patient reclined in a dental chair seen from the nose down, relaxed and calm with lips gently closed, a clinician\'s gloved hand resting reassuringly on the chair, soft light.',
 };
 

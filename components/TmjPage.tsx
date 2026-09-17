@@ -19,6 +19,11 @@ import {
   TMJ_PROCESS,
   TMJ_RELATED_SYMPTOMS,
   TMJ_SELF_CHECK,
+  TMJ_SELF_CTA,
+  TMJ_SELF_INTRO,
+  TMJ_SELF_KEY,
+  TMJ_SELF_PHOTO_NOTE,
+  TMJ_SELF_PHOTOS,
   TMJ_SELF_TESTS,
   TMJ_SPLINT_TIPS,
   TMJ_STEPS,
@@ -160,40 +165,75 @@ export function TmjPage({ doc }: { doc: Doc }) {
                   <li key={s} className="rounded-full bg-canvas px-4 py-2 text-[14px] font-semibold text-ink-soft">{s}</li>
                 ))}
               </ul>
-              {/* 거울 앞 자가진단 5단계 — 방법(이렇게) → 뜻(이러면) → 정상 범위 칩. 점검표(아래)보다 먼저 두어 '해 보고 표시' 흐름 */}
+              {/* 거울 앞 자가진단 5단계 — 참고 사이트 짜임새 그대로: 소개 → 핵심 한 줄 → 확인 사진 3장(캡션) → 5단계(방법·뜻·정상 범위) → 안내.
+                  단계 카드는 한 줄에 하나(2+2+1 로 놓으면 마지막 줄만 넓어져 행이 안 맞는다). 점검표(아래)보다 먼저 두어 '해 보고 표시' 흐름 */}
               <div className="mt-16 md:mt-20" aria-labelledby="tmj-self-tests">
                 <div className="reveal text-center">
                   <p className="text-[12px] font-bold tracking-[0.2em] text-sun-600">SELF TEST · 5 STEPS</p>
                   <h3 id="tmj-self-tests" className="mt-2 text-[1.5rem] font-extrabold leading-tight text-ink md:text-[1.9rem]">
-                    거울 앞에서 <span className="accent-sun">이렇게 확인</span>해 보세요
+                    턱관절 장애 <span className="accent-sun">자가진단법</span>
                   </h3>
                   <p className="mx-auto mt-3 max-w-[640px] text-[15px] leading-[1.75] text-ink-soft">
-                    <Sentences text="병원에 오기 전 거울 앞에서 스스로 확인해 볼 수 있는 다섯 가지입니다. 하나씩 해 보고 아래 점검표에 표시해 보세요." clauses={false} />
+                    <Sentences text={TMJ_SELF_INTRO} clauses={false} />
                   </p>
                 </div>
-                <ol className="reveal-stack mt-10 grid gap-4 md:grid-cols-2">
-                  {TMJ_SELF_TESTS.map((t, i) => (
-                    <li key={t.n} className={`card flex flex-col gap-4 p-5 sm:flex-row md:p-6 ${i === TMJ_SELF_TESTS.length - 1 ? 'md:col-span-2 md:flex-row' : ''}`}>
-                      {/* 사진 대신 번호 타일 — 바로 위 증상 사진 4장을 또 쓰면 '같은 사진 반복' */}
-                      <span className="hidden h-[120px] w-[120px] shrink-0 items-center justify-center rounded-xl bg-night text-[2.2rem] font-extrabold text-white sm:flex md:h-[136px] md:w-[136px]" aria-hidden>{t.n}</span>
-                      <div className="min-w-0 flex-1">
-                        <p className="flex items-center gap-2 text-[12px] font-extrabold tracking-[0.18em] text-sun-500">
+                {/* 핵심 한 줄 — 참고 사이트의 '자가진단 핵심' */}
+                <div className="reveal mt-8 grid gap-4 rounded-2xl bg-night p-6 text-white md:grid-cols-[auto_1fr] md:items-center md:gap-6 md:p-7">
+                  <span className="inline-flex w-max items-center rounded-full bg-sun-500 px-3 py-1 text-[12px] font-extrabold tracking-[0.16em]">자가진단 핵심</span>
+                  <p className="text-[15.5px] font-semibold leading-[1.75] text-white/90 md:text-[16.5px]">
+                    <Sentences text={TMJ_SELF_KEY} clauses={false} />
+                  </p>
+                </div>
+                {/* 확인 사진 3장 — 같은 4:3 상자, 캡션 한 줄 */}
+                <ul className="reveal-stack mt-8 grid gap-4 sm:grid-cols-3">
+                  {TMJ_SELF_PHOTOS.map((f) => (
+                    <li key={f.key} className="card overflow-hidden">
+                      <span className="relative block aspect-[4/3] overflow-hidden bg-canvas-2">
+                        <Image src={figSrc(f.key)} alt={f.alt} fill sizes="(max-width: 640px) 100vw, 33vw" className="object-cover" />
+                      </span>
+                      <p className="px-4 py-3 text-center text-[14px] font-semibold leading-snug text-ink-soft">{f.caption}</p>
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-3 text-[12.5px] text-ink-muted">{TMJ_SELF_PHOTO_NOTE}</p>
+                <p className="reveal mt-10 text-center text-[1.2rem] font-extrabold text-ink md:text-[1.35rem]">이렇게 확인해 보세요</p>
+                <ol className="reveal-stack mt-6 grid gap-4">
+                  {TMJ_SELF_TESTS.map((t) => (
+                    <li key={t.n} className="card grid gap-5 p-5 md:grid-cols-[112px_1fr] md:gap-7 md:p-6">
+                      {/* 번호 타일 — 위 증상 사진을 또 쓰지 않는다(같은 사진 반복 금지) */}
+                      <span className="flex h-[64px] w-[64px] items-center justify-center rounded-xl bg-night text-[1.5rem] font-extrabold text-white md:h-[112px] md:w-[112px] md:text-[2.4rem]" aria-hidden>{t.n}</span>
+                      <div className="min-w-0">
+                        <p className="flex flex-wrap items-center gap-2 text-[12px] font-extrabold tracking-[0.18em] text-sun-500">
                           STEP {t.n}
                           {t.normal && <span className="rounded-full bg-brand-50 px-2.5 py-0.5 text-[12px] font-bold tracking-normal text-brand-700">{t.normal}</span>}
                         </p>
-                        <h4 className="mt-1.5 text-[1.1rem] font-extrabold leading-snug text-ink md:text-[1.2rem]">{t.title}</h4>
-                        <p className="mt-2.5 text-[14.5px] leading-[1.75] text-ink-soft">
-                          <span className="mr-1.5 inline-block rounded-md bg-night px-1.5 py-0.5 text-[11px] font-extrabold tracking-[0.08em] text-white align-[2px]">이렇게</span>
-                          {t.how}
-                        </p>
-                        <p className="mt-2 text-[14.5px] leading-[1.75] text-ink-soft">
-                          <span className="mr-1.5 inline-block rounded-md bg-sun-500 px-1.5 py-0.5 text-[11px] font-extrabold tracking-[0.08em] text-white align-[2px]">이러면</span>
-                          {t.means}
-                        </p>
+                        <h4 className="mt-1.5 text-[1.15rem] font-extrabold leading-snug text-ink md:text-[1.25rem]">{t.title}</h4>
+                        {/* '이렇게'(방법) · '이러면'(뜻) — 라벨 열 + 글 열, 두 줄의 시작선이 같게 */}
+                        <dl className="mt-3 grid gap-2.5">
+                          <div className="grid grid-cols-[56px_1fr] items-start gap-3">
+                            <dt className="mt-[3px] inline-flex justify-center rounded-md bg-night px-1.5 py-0.5 text-[11px] font-extrabold tracking-[0.08em] text-white">이렇게</dt>
+                            <dd className="text-[14.5px] leading-[1.75] text-ink-soft"><Sentences text={t.how} clauses={false} /></dd>
+                          </div>
+                          <div className="grid grid-cols-[56px_1fr] items-start gap-3">
+                            <dt className="mt-[3px] inline-flex justify-center rounded-md bg-sun-500 px-1.5 py-0.5 text-[11px] font-extrabold tracking-[0.08em] text-white">이러면</dt>
+                            <dd className="text-[14.5px] leading-[1.75] text-ink-soft"><Sentences text={t.means} clauses={false} /></dd>
+                          </div>
+                        </dl>
                       </div>
                     </li>
                   ))}
                 </ol>
+                {/* 마무리 안내 — 참고 사이트의 '이상이 느껴지면 정밀 진단' */}
+                <div className="reveal mt-6 grid gap-4 rounded-2xl border border-hairline bg-canvas p-6 md:grid-cols-[1fr_auto] md:items-center md:p-7">
+                  <div>
+                    <p className="text-[1.15rem] font-extrabold text-ink">{TMJ_SELF_CTA.title}</p>
+                    <p className="mt-1.5 text-[14.5px] leading-[1.7] text-ink-soft">{TMJ_SELF_CTA.desc}</p>
+                  </div>
+                  <div className="flex flex-wrap gap-2.5">
+                    <a href={CLINIC.phoneHref} className="btn-ghost !px-4 !py-2.5 text-[14px]">{CLINIC.phone}</a>
+                    <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="btn-sun !px-4 !py-2.5 text-[14px]">네이버 예약</a>
+                  </div>
+                </div>
               </div>
               <div className="reveal mx-auto mt-10 max-w-[820px]">
                 <TmjSelfCheck items={TMJ_SELF_CHECK} />

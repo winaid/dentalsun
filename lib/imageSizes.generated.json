@@ -978,5 +978,17 @@
  "fit/tmj-ct3d": {
   "w": 900,
   "h": 1200
+ },
+ "ai/tmj-check-midline": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/tmj-check-open": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/tmj-check-joint": {
+  "w": 1200,
+  "h": 800
  }
 }
