@@ -46,7 +46,7 @@ import { CLINIC, HOURS, MONTHLY_NOTICE } from '@/lib/clinic';
 /**
  * 턱관절 — 허브 1 + 하위 6쪽이 **이 한 화면**을 쓴다(2026-09-21 분할, 오너 GO). 경로별로 보여 줄 구역을 VIEWS 에서 고른다.
  *  09-09 에 한 페이지로 합쳤다가, 참고 사이트(4dortho 턱관절 7쪽) 내용을 다 옮기며 18,700px 이 되자 다시 나눴다.
- *  허브(장애란?): 특징 3 → 장애란?+3대 증상 → 하위 6쪽 카드 → 노하우 3 → 치료 5 → 장비 2 → FAQ
+ *  허브(장애란?): 특징 3 → 장애란?+3대 증상 → 노하우 3 → 치료 5 → 장비 2 → FAQ → 하위 6쪽 카드(맨 끝 — 다른 쪽으로 보내는 카드는 다 읽은 뒤에, 오너)
  *  하위: anatomy 구조 · symptoms 증상 4+점검표 · causes 원인 · self-check 거울 앞 5단계+점검표 · whole-body 전신 · treatment 치료 5+상세+생활습관
  *  첫 화면은 하위 쪽이면 lib/heroCollage 표, 허브면 TMJ_HERO. 구조화 데이터·FAQ 는 쪽마다의 Doc(lib/content/tmj.ts).
  *  오른쪽 사이드바: 원장 배너 · 일곱 쪽 안내(메뉴와 같은 순서, 지금 쪽 진하게) · 진단 과정 · 진료시간 · 질문.
@@ -254,30 +254,6 @@ export function TmjPage({ doc }: { doc: Doc }) {
                   lead="턱관절 장애란 귀 바로 앞쪽에 위치한 턱관절에 통증과 기능 이상이 생기는 질환입니다. 하악과두의 위치가 틀어지거나 디스크가 제자리를 벗어나면서 소리와 통증, 입 벌리기 제한으로 나타납니다."
                 />
                 <Triad className="mt-10" />
-              </section>
-            )}
-
-            {/* ── 허브: 하위 6쪽 카드 — 메뉴와 같은 순서 ── */}
-            {show('children') && children.length > 0 && (
-              <section className="pt-20 md:pt-28" aria-labelledby="tmj-children">
-                <Head id="tmj-children" big={<Big unit="갈래">6</Big>} title={<>턱관절, <span className="accent-sun">더 자세히</span> 알아보기</>} lead="구조부터 치료법까지 여섯 갈래로 나눠 정리했습니다. 궁금한 것부터 읽어 보세요." />
-                <ul className="reveal-stack mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                  {children.map((c) => (
-                    <li key={c.path}>
-                      <Link href={c.path} className="card card-hover flex h-full flex-col overflow-hidden">
-                        <span className="relative block aspect-[4/3] overflow-hidden bg-canvas-2">
-                          <Image src={figSrc(CHILD_FIG[c.path] ?? c.hero?.key ?? 'ai/tmj-hub')} alt={c.hero?.alt ?? c.title} fill sizes="(max-width: 640px) 100vw, 33vw" className="object-cover" />
-                        </span>
-                        <span className="flex flex-1 flex-col p-6">
-                          <span className="text-[12px] font-bold tracking-[0.2em] text-sun-600">{c.eyebrow}</span>
-                          <span className="mt-2 text-[1.15rem] font-extrabold text-ink">{c.title}</span>
-                          <span className="mt-2 text-[14px] leading-[1.7] text-ink-soft">{first(c.summary)}</span>
-                          <span className="mt-auto pt-4 text-[13.5px] font-bold text-brand-700">자세히 보기 ›</span>
-                        </span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
               </section>
             )}
 
@@ -813,6 +789,30 @@ export function TmjPage({ doc }: { doc: Doc }) {
                 <div className="reveal mt-10 rounded-[28px] border border-hairline bg-canvas p-5 md:p-10">
                   <FaqList items={doc.faq} />
                 </div>
+              </section>
+            )}
+
+            {/* ── 허브: 하위 6쪽 카드 — 본문 맨 끝(FAQ 뒤). 다른 쪽으로 보내는 카드는 다 읽은 뒤에 (오너 2026-09-21) ── */}
+            {show('children') && children.length > 0 && (
+              <section className="pt-20 md:pt-28" aria-labelledby="tmj-children">
+                <Head id="tmj-children" big={<Big unit="갈래">6</Big>} title={<>턱관절, <span className="accent-sun">더 자세히</span> 알아보기</>} lead="구조부터 치료법까지 여섯 갈래로 나눠 정리했습니다. 궁금한 것부터 읽어 보세요." />
+                <ul className="reveal-stack mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                  {children.map((c) => (
+                    <li key={c.path}>
+                      <Link href={c.path} className="card card-hover flex h-full flex-col overflow-hidden">
+                        <span className="relative block aspect-[4/3] overflow-hidden bg-canvas-2">
+                          <Image src={figSrc(CHILD_FIG[c.path] ?? c.hero?.key ?? 'ai/tmj-hub')} alt={c.hero?.alt ?? c.title} fill sizes="(max-width: 640px) 100vw, 33vw" className="object-cover" />
+                        </span>
+                        <span className="flex flex-1 flex-col p-6">
+                          <span className="text-[12px] font-bold tracking-[0.2em] text-sun-600">{c.eyebrow}</span>
+                          <span className="mt-2 text-[1.15rem] font-extrabold text-ink">{c.title}</span>
+                          <span className="mt-2 text-[14px] leading-[1.7] text-ink-soft">{first(c.summary)}</span>
+                          <span className="mt-auto pt-4 text-[13.5px] font-bold text-brand-700">자세히 보기 ›</span>
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </section>
             )}
           </div>
