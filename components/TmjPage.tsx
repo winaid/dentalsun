@@ -72,6 +72,25 @@ function Head({ big, title, lead, id }: { big: ReactNode; title: ReactNode; lead
     </div>
   );
 }
+/** 전신 증상 체크리스트 갈래 아이콘 — 단순한 선 그림만(이모지 금지, 오너). 이름이 안 맞으면 점 세 개 */
+function BodyIcon({ name }: { name: string }) {
+  const p = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.8, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const };
+  const d: Record<string, ReactNode> = {
+    '입안': <><path d="M4 9c2.5-1.5 13.5-1.5 16 0-1 6-3.5 9-8 9s-7-3-8-9Z" /><path d="M7 10.5c3 1 7 1 10 0" /></>,
+    '귀': <><path d="M8 18a4 4 0 0 0 4-3c.3-1.6 1.2-2.2 2.2-3.2A5 5 0 0 0 7 7.5" /><path d="M11 12a2 2 0 1 1 3-2" /></>,
+    '호흡기·목': <><path d="M4 8h9a2.5 2.5 0 1 0-2.5-2.5" /><path d="M4 13h13a2.5 2.5 0 1 1-2.5 2.5" /><path d="M4 18h6" /></>,
+    '눈': <><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z" /><circle cx="12" cy="12" r="2.6" /></>,
+    '통증·소화': <path d="M13 3 5 13h6l-1 8 8-11h-6l1-7Z" />,
+    '피부·부인과': <><path d="M12 3c2 4 6 6 6 11a6 6 0 0 1-12 0c0-5 4-7 6-11Z" /></>,
+    '심리': <path d="M12 20s-7-4.4-7-9.5A3.9 3.9 0 0 1 12 8a3.9 3.9 0 0 1 7 2.5C19 15.6 12 20 12 20Z" />,
+  };
+  return (
+    <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" aria-hidden {...p}>
+      {d[name] ?? <><circle cx="6" cy="12" r="1.2" /><circle cx="12" cy="12" r="1.2" /><circle cx="18" cy="12" r="1.2" /></>}
+    </svg>
+  );
+}
+
 const Big = ({ children, unit }: { children: ReactNode; unit?: string }) => (
   <p className="tmj-big" aria-hidden>
     {children}
@@ -428,22 +447,41 @@ export function TmjPage({ doc }: { doc: Doc }) {
               </div>
               {/* 전신 증상 체크리스트 8갈래 — 참고 사이트 전문. 인과를 단정하지 않는 안내문을 반드시 함께 둔다 */}
               <div className="reveal mt-4 rounded-[28px] border border-hairline bg-canvas p-6 md:p-9">
-                <h3 className="text-[1.2rem] font-extrabold text-ink md:text-[1.3rem]">턱관절 장애와 함께 나타날 수 있는 증상</h3>
-                <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+                <div className="flex flex-wrap items-end justify-between gap-3">
+                  <div>
+                    <p className="text-[12px] font-bold tracking-[0.2em] text-sun-600">CHECKLIST</p>
+                    <h3 className="mt-1.5 text-[1.2rem] font-extrabold text-ink md:text-[1.3rem]">턱관절 장애와 함께 나타날 수 있는 증상</h3>
+                  </div>
+                  <p className="text-[13px] font-semibold text-ink-muted">8갈래 · {TMJ_BODY_CHECK.reduce((n, g) => n + g.items.length, 0)}항목</p>
+                </div>
+                {/* 갈래마다 타일 하나 — 아이콘·이름·항목 수 머리 + 체크 목록. 글자만 4열로 늘어놓으니 어디서 갈래가 바뀌는지 안 보였다 */}
+                <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                   {TMJ_BODY_CHECK.map((g) => (
-                    <div key={g.group}>
-                      <p className="border-b border-hairline pb-2 text-[14px] font-extrabold text-brand-700">{g.group}</p>
-                      <ul className="mt-3 space-y-2">
+                    <div key={g.group} className="rounded-2xl border border-hairline bg-white p-5">
+                      <div className="flex items-center gap-2.5">
+                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-700">
+                          <BodyIcon name={g.group} />
+                        </span>
+                        <span className="min-w-0 flex-1 text-[15px] font-extrabold text-ink">{g.group}</span>
+                        <span className="rounded-full bg-canvas px-2 py-0.5 text-[11.5px] font-bold text-ink-muted">{g.items.length}</span>
+                      </div>
+                      <ul className="mt-4 space-y-2">
                         {g.items.map((it) => (
-                          <li key={it} className="text-[13.5px] leading-[1.65] text-ink-soft">{it}</li>
+                          <li key={it} className="flex gap-2 text-[13.5px] leading-[1.6] text-ink-soft">
+                            <span aria-hidden className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-sun-400" />
+                            <span>{it}</span>
+                          </li>
                         ))}
                       </ul>
                     </div>
                   ))}
                 </div>
-                <p className="mt-7 border-t border-hairline pt-5 text-[13.5px] leading-[1.8] text-ink-muted">
-                  <Sentences text={TMJ_BODY_NOTE} clauses={false} />
-                </p>
+                <div className="mt-5 flex gap-3 rounded-2xl bg-white p-4 md:p-5">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand-700 text-[13px] font-extrabold text-white" aria-hidden>i</span>
+                  <p className="text-[13.5px] leading-[1.8] text-ink-soft">
+                    <Sentences text={TMJ_BODY_NOTE} clauses={false} />
+                  </p>
+                </div>
               </div>
             </section>
 
