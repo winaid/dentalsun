@@ -9,7 +9,7 @@ import { FlipCard } from '@/components/FlipCard';
 import { HubAccordion } from '@/components/HubAccordion';
 import { docByPath } from '@/lib/content';
 import { CardLink, ContactBand, FaqList, Figure, MedicalNotice, ScrubText, Sentences } from '@/components/ui';
-import { HomeStage, HomeStats, HomeTourPan } from '@/components/HomeScroll';
+import { HomeStage, HomeStats } from '@/components/HomeScroll';
 import { BeforeAfter } from '@/components/BeforeAfter';
 import { CASE_GROUPS, CASE_NOTE } from '@/lib/cases';
 import { CLINIC, HOURS, HYGIENE, MONTHLY_NOTICE, STRENGTHS } from '@/lib/clinic';
@@ -376,22 +376,6 @@ export default function HomePage() {
               <Link href="/about/equipment" className="btn-ghost-dark mt-8">디지털 장비 · 소독 시스템 보기</Link>
             </div>
           </div>
-        </section>
-
-        {/* ── 둘러보기 — 스크롤하는 만큼 사진 띠가 옆으로 흐른다 ── */}
-        <section className="section overflow-hidden">
-          <div className="wrap">
-            <div className="reveal flex flex-wrap items-end justify-between gap-4">
-              <div>
-                <p className="eyebrow">CLINIC TOUR</p>
-                <h2 className="display-sm mt-4">
-                  광화문선치과 <span className="accent">둘러보기</span>
-                </h2>
-              </div>
-              <Link href="/about#tour" className="btn-ghost">전체 사진 보기</Link>
-            </div>
-          </div>
-          <HomeTourPan />
         </section>
 
         {/* ── FAQ ── */}
