@@ -290,18 +290,61 @@ export function CustomImplantPage({ doc }: { doc: Doc }) {
             {/* ── 5. 왜 중요할까요 + 시술 받을 경우 ── */}
             <section id="why" className="scroll-mt-[96px] pt-24 md:pt-32" aria-labelledby="ci-why">
               <Head id="ci-why" big={<Word>WHY</Word>} title={<>맞춤 임플란트, <span className="accent-sun">왜 중요할까요</span>?</>} />
-              <div className="reveal-stack mt-12 grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-stretch">
-                <span className="img-in relative block min-h-[320px] overflow-hidden rounded-[24px] bg-canvas-2">
-                  <Image src={figSrc(CI_WHY.fig.key)} alt={CI_WHY.fig.alt} fill sizes="(max-width: 1024px) 100vw, 380px" className="object-cover" />
+              {/* 사진(왼쪽) · 낱말 라벨을 단 세 칸(오른쪽) — 글 덩어리 대신(오너 "문구만 있어서 디자인 다듬자") */}
+              <div className="reveal-stack mt-12 grid gap-6 lg:grid-cols-[0.72fr_1.28fr] lg:items-stretch">
+                <span className="img-in relative block min-h-[300px] overflow-hidden rounded-[24px] bg-canvas-2">
+                  <Image src={figSrc(CI_WHY.fig.key)} alt={CI_WHY.fig.alt} fill sizes="(max-width: 1024px) 100vw, 360px" className="object-cover" />
                 </span>
-                <div className="card flex flex-col justify-center p-7 md:p-9">
-                  <Paras text={CI_WHY.paragraphs} className="text-[15.5px] leading-[1.85] text-ink-soft" />
-                </div>
+                <ol className="grid gap-3">
+                  {CI_WHY.points.map((p, i) => (
+                    <li key={p.title} className="card grid gap-3 p-5 sm:grid-cols-[132px_1fr] sm:items-center md:p-6">
+                      <span className="flex h-full min-h-[64px] items-center justify-center rounded-xl bg-night px-3 text-center text-[13px] font-extrabold leading-snug text-sun-300">{p.label}</span>
+                      <span className="min-w-0">
+                        <span className="flex items-center gap-2 text-[12px] font-extrabold tracking-[0.16em] text-sun-600">0{i + 1}</span>
+                        <span className="mt-0.5 block text-[1.05rem] font-extrabold text-ink">{p.title}</span>
+                        <span className="mt-1 block text-[14.5px] leading-[1.7] text-ink-soft">{p.desc}</span>
+                      </span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+              {/* 상담 한 줄 + 단추 — 참고 두 쪽의 마지막 문장 */}
+              <div className="reveal mt-6 flex flex-col items-start gap-4 rounded-2xl bg-sun-50/70 p-6 md:flex-row md:items-center md:justify-between md:p-7">
+                <p className="text-[15.5px] font-semibold leading-[1.7] text-ink">
+                  <Sentences text={CI_WHY.cta} clauses={false} />
+                </p>
+                <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="btn-sun shrink-0">네이버 예약</a>
               </div>
 
+              {/* 기성품이라면 → 맞춤이라면 대비 + 달라지는 것 셋 */}
               <SubHead eyebrow="IF CUSTOM" title={<>{CI_IF_CUSTOM.title}</>} />
-              <div className="reveal card mt-8 p-7 md:p-9">
-                <Paras text={CI_IF_CUSTOM.paragraphs} className="text-[15.5px] leading-[1.85] text-ink-soft" />
+              <div className="reveal card mt-8 overflow-hidden">
+                <div className="relative grid md:grid-cols-2">
+                  <div className="bg-canvas p-7 md:p-9">
+                    <span className="inline-flex rounded-full bg-white px-3 py-1 text-[12px] font-extrabold tracking-[0.06em] text-ink-muted">{CI_IF_CUSTOM.stock.label}</span>
+                    <p className="mt-4 text-[15px] leading-[1.8] text-ink-soft">
+                      <Sentences text={CI_IF_CUSTOM.stock.desc} clauses={false} />
+                    </p>
+                  </div>
+                  <div className="bg-night p-7 text-white md:p-9">
+                    <span className="inline-flex rounded-full bg-sun-500 px-3 py-1 text-[12px] font-extrabold tracking-[0.06em] text-white">{CI_IF_CUSTOM.custom.label}</span>
+                    <p className="mt-4 text-[15px] leading-[1.8] text-white/85">
+                      <Sentences text={CI_IF_CUSTOM.custom.desc} clauses={false} />
+                    </p>
+                  </div>
+                  <span aria-hidden className="absolute left-1/2 top-1/2 hidden h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-4 border-white bg-sun-500 text-[1.2rem] font-extrabold text-white md:flex">›</span>
+                </div>
+                <ul className="grid gap-4 p-6 sm:grid-cols-3 md:p-7">
+                  {CI_IF_CUSTOM.results.map((r, i) => (
+                    <li key={r.title} className="flex gap-3">
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-50 text-[12.5px] font-extrabold text-brand-700">0{i + 1}</span>
+                      <span className="min-w-0">
+                        <span className="block text-[12.5px] font-semibold text-ink-muted">{r.desc}</span>
+                        <span className="block text-[15px] font-extrabold text-ink">{r.title}</span>
+                      </span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </section>
 
@@ -322,9 +365,28 @@ export function CustomImplantPage({ doc }: { doc: Doc }) {
 
               {/* 주위염 — 설명(왼쪽) · 신호 4 + 관리 3(오른쪽) */}
               <SubHead eyebrow="PERI-IMPLANTITIS" title={<>임플란트 <span className="accent-sun">주위염</span>이란</>} />
+              <p className="reveal mx-auto mt-4 max-w-[640px] text-center text-[15px] leading-[1.75] text-ink-soft">
+                <Sentences text={CI_PERI.lead} clauses={false} />
+              </p>
+              {/* 진행 3단계(왼쪽, 세로 흐름) · 신호 4 + 관리 3(오른쪽) */}
               <div className="reveal card mt-8 grid gap-8 p-7 md:grid-cols-2 md:gap-10 md:p-9">
                 <div>
-                  <Paras text={CI_PERI.paragraphs} className="text-[14.5px] leading-[1.8] text-ink-soft" />
+                  <p className="text-[12.5px] font-extrabold tracking-[0.06em] text-brand-700">이렇게 진행됩니다</p>
+                  <ol className="mt-3">
+                    {CI_PERI.stages.map((s, i) => (
+                      <li key={s.title} className="relative flex gap-4 pb-5 last:pb-0">
+                        {i < CI_PERI.stages.length - 1 && <span aria-hidden className="absolute left-[15px] top-8 h-[calc(100%-16px)] w-px bg-hairline" />}
+                        <span className={`relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[12.5px] font-extrabold ${i === CI_PERI.stages.length - 1 ? 'bg-sun-500 text-white' : 'bg-night text-white'}`}>{i + 1}</span>
+                        <span className="min-w-0 pt-1">
+                          <span className="block text-[15px] font-extrabold text-ink">{s.title}</span>
+                          <span className="mt-0.5 block text-[14px] leading-[1.65] text-ink-soft">{s.desc}</span>
+                        </span>
+                      </li>
+                    ))}
+                  </ol>
+                  <p className="mt-5 rounded-xl bg-sun-50/70 px-4 py-3 text-[14px] leading-[1.7] text-ink">
+                    <Sentences text={CI_PERI.prevent} clauses={false} />
+                  </p>
                 </div>
                 <div className="border-t border-hairline pt-7 md:border-l md:border-t-0 md:pl-10 md:pt-0">
                   <p className="text-[12.5px] font-extrabold tracking-[0.06em] text-brand-700">이런 신호가 있으면 미루지 마세요</p>
