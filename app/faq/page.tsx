@@ -29,7 +29,7 @@ export default function FaqPage() {
           long
           cardsLead="자주 묻는 질문을 모았습니다."
           lines={['광화문 선치과에', <><span className="accent-sun">자주 묻는 질문</span></>]}
-          lead="진료시간과 예약, 오시는 길, 비용과 보험, 마취와 수면치료까지 자주 받는 질문을 모았습니다. 여기에 없는 궁금증은 톡톡이나 전화로 편하게 물어보세요."
+          lead="진료시간과 예약, 오시는 길, 비용과 보험, 마취와 수면치료까지 자주 받는 질문을 모았습니다. 여기에 없는 궁금증은 전화로 편하게 물어보세요."
           bg="ai/wide-visit"
           cards={[
             { fig: { key: 'place/place09', alt: '광화문선치과 대기실' }, shape: 'portrait' },
@@ -55,7 +55,7 @@ export default function FaqPage() {
             </div>
           </section>
         ))}
-        <ContactBand title="여기에 없는 질문은 톡톡이나 전화로 물어보세요" />
+        <ContactBand title="여기에 없는 질문은 전화로 물어보세요" />
         <MedicalNotice />
       </main>
     </>

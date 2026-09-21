@@ -15,7 +15,6 @@ import {
   CI_COMPARE,
   CI_DESIGN,
   CI_DIGITAL,
-  CI_GLANCE,
   CI_HERO_ITEMS,
   CI_IF_CUSTOM,
   CI_NOTICE,
@@ -24,15 +23,23 @@ import {
   CI_PROCESS,
   CI_WHEN,
   CI_WHY,
+  NAVI_BENEFITS,
+  NAVI_COMPARE,
+  NAVI_NOTICE,
+  NAVI_PROCESS,
+  NAVI_SYSTEM,
+  NAVI_WHAT,
 } from '@/lib/content/customImplantLanding';
 import { articleSchema, breadcrumbSchema, faqSchema, imageObjectSchema, medicalWebPageSchema } from '@/lib/seo';
 import { CLINIC } from '@/lib/clinic';
 
 /**
- * 맞춤 임플란트(커스텀 어버트먼트) 전용 화면 (2026-09-21, 오너 "턱관절 했듯이 내용 몰리지 않게 나누고 깔끔하게").
+ * 디지털 맞춤 임플란트 전용 화면 — 내비게이션(계획) + 맞춤 기둥(마무리) 한 쪽 (2026-09-21 오너 "두 개 합쳐, 비슷한 내용").
  *  DocPage 의 글·사진 번갈아 놓기 대신 턱관절 화면과 같은 짜임 — 구역마다 큰 머리(Head), 덩어리마다 소제목(SubHead)+큰 여백.
- *  구역: 세 부분 → 커스텀 어버트먼트란 → 장점 6 → 한눈에 6 → 비교표 → 디지털 제작·과정 4·디자인 4 → 왜 중요한가·시술 받을 경우 →
+ *  PART 1 계획: 모의수술 정의 → 장점 4 → 과정 4 → 일반 vs 내비게이션 → 디지털 시스템·안내
+ *  PART 2 기둥: 세 부분 → 커스텀 어버트먼트란 → 장점 6 → 비교표 → 디지털 제작·과정 4·디자인 4 → 왜 중요한가·시술 받을 경우 →
  *        권하는 경우 4 → 주위염 → FAQ → 관련 임플란트 쪽 카드(맨 끝 — 다른 쪽으로 보내는 카드는 다 읽은 뒤에, 오너).
+ *  ('한눈에 6' 은 합치며 뺐다 — 장점 6 과 같은 말이라 쪽이 길어질 뿐. 본문 데이터(CI_BLOCKS)에는 남아 AI 용 본문에는 나간다)
  *  데이터는 lib/content/customImplantLanding — Doc.blocks·faq 도 거기서 만들어 스키마·llms.txt 와 화면이 같은 자료를 쓴다.
  *  ★ 페이지 안 구역 이동 목차(점프 메뉴)는 두지 않는다(오너 지시). 사이드바 안내는 임플란트 **쪽** 링크다.
  *  ★ 같은 사진 반복 금지(오너) — 첫 화면 배경 ai/implant-custom·카드 3장(implant/custom·custom-fit·custom-stock)은 본문에 다시 쓰지 않는다.
@@ -87,6 +94,34 @@ const Word = ({ children }: { children: ReactNode }) => (
   <span className="tmj-big !text-[2.4rem] md:!text-[3.4rem]" aria-hidden>{children}</span>
 );
 
+/** 두 열 비교표 — 항목 | A(옅게) | B(주황 강조). 일반 vs 내비게이션, 기성 vs 커스텀 두 곳이 같은 표를 쓴다 */
+function Compare({ columns, rows }: { columns: [string, string]; rows: Array<{ label: string; a: string; b: string }> }) {
+  return (
+    <div className="reveal mt-8 overflow-hidden rounded-[24px] border border-hairline">
+      <div className="hidden grid-cols-[150px_1fr_1fr] bg-night text-white md:grid">
+        <div className="px-5 py-4 text-[12px] font-bold tracking-[0.16em] text-white/55">항목</div>
+        <div className="px-5 py-4 text-[15px] font-bold text-white/75">{columns[0]}</div>
+        <div className="bg-sun-500 px-5 py-4 text-[15px] font-extrabold">{columns[1]}</div>
+      </div>
+      <dl>
+        {rows.map((r, i) => (
+          <div key={r.label} className={`grid md:grid-cols-[150px_1fr_1fr] ${i > 0 ? 'border-t border-hairline' : ''}`}>
+            <dt className="bg-canvas px-5 pb-1 pt-4 text-[14px] font-extrabold text-ink md:py-5">{r.label}</dt>
+            <dd className="px-5 pb-2 text-[14.5px] leading-[1.7] text-ink-muted md:py-5">
+              <span className="mr-2 inline-block rounded-md bg-canvas px-1.5 py-0.5 text-[11.5px] font-bold text-ink-muted md:hidden">{columns[0]}</span>
+              {r.a}
+            </dd>
+            <dd className="bg-sun-50/60 px-5 pb-4 pt-2 text-[14.5px] font-semibold leading-[1.7] text-ink md:py-5">
+              <span className="mr-2 inline-block rounded-md bg-sun-500 px-1.5 py-0.5 text-[11.5px] font-bold text-white md:hidden">{columns[1]}</span>
+              {r.b}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  );
+}
+
 const renderAccent = (line: string): ReactNode =>
   splitAccent(line).map((p, i) => (p.accent ? <span key={i} className="accent-sun">{p.text}</span> : <span key={i}>{p.text}</span>));
 
@@ -124,7 +159,7 @@ export function CustomImplantPage({ doc }: { doc: Doc }) {
   ];
   if (doc.faq?.length) schema.push(faqSchema(doc.faq, doc.path));
 
-  /* 사이드바 안내 — 메뉴와 같은 임플란트 일곱 쪽(허브 + 하위 6). 지금 쪽은 진하게 */
+  /* 사이드바 안내 — 메뉴와 같은 임플란트 쪽들(허브 + 하위). 지금 쪽은 진하게 */
   const hubDoc = docByPath(doc.hub);
   const guides = [
     ...(hubDoc ? [{ label: '임플란트 안내', href: hubDoc.path }] : []),
@@ -150,16 +185,82 @@ export function CustomImplantPage({ doc }: { doc: Doc }) {
         >
           <div className="flex flex-wrap gap-3">
             <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="btn-sun">네이버 예약</a>
-            <a href={CLINIC.booking.naverTalk} target="_blank" rel="noopener" className="btn-ghost-dark">톡톡 상담</a>
+            <a href={CLINIC.phoneHref} className="btn-ghost-dark">전화 {CLINIC.phone}</a>
           </div>
         </HeroCollage>
 
         <div className="wrap grid gap-14 pt-16 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-16 lg:pt-24 xl:grid-cols-[minmax(0,1fr)_360px]">
           {/* ───────── 본문 ───────── */}
           <div className="min-w-0">
+            {/* ══ PART 1 · 계획 — 옛 '내비게이션 임플란트' 쪽 (2026-09-21 합침) ══ */}
+            <section id="navigation" className="scroll-mt-[96px]" aria-labelledby="ci-navi">
+              <Head id="ci-navi" big={<Word>PART 1 · 3D PLAN</Word>} title={<>수술 전에 컴퓨터로 <span className="accent-sun">먼저 심어 봅니다</span></>} lead="CT와 3D 구강스캔 데이터로 컴퓨터가 모의수술을 하고, 그 계획대로 만든 수술 유도장치를 대고 심습니다. 경험과 감각 대신 화면에서 확인한 위치·각도·깊이입니다." />
+              <div className="reveal-stack mt-12 grid gap-8 lg:grid-cols-[1fr_1.1fr] lg:items-center">
+                <span className="img-in relative block aspect-[4/3] overflow-hidden rounded-[24px] bg-canvas-2">
+                  <Image src={figSrc(NAVI_WHAT.fig.key)} alt={NAVI_WHAT.fig.alt} fill sizes="(max-width: 1024px) 100vw, 480px" className={fitsBox(NAVI_WHAT.fig.key, 4, 3) ? 'object-cover' : '!object-contain p-3'} />
+                </span>
+                <div className="card p-7 md:p-8">
+                  <h3 className="text-[1.15rem] font-extrabold text-ink">{NAVI_WHAT.title}</h3>
+                  <div className="mt-3">
+                    <Paras text={NAVI_WHAT.paragraphs} className="text-[15px] leading-[1.85] text-ink-soft" />
+                  </div>
+                </div>
+              </div>
+
+              <SubHead eyebrow="GUIDED SURGERY" title={<>통증은 줄이고 <span className="accent-sun">정확도는 높인</span> 네 가지</>} />
+              <ul className="reveal-stack mt-8 grid gap-4 md:grid-cols-2">
+                {NAVI_BENEFITS.items.map((b, i) => (
+                  <li key={b.title} className="card card-3d flex gap-4 p-6">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-[14px] font-extrabold text-brand-700">{String(i + 1).padStart(2, '0')}</span>
+                    <span className="min-w-0">
+                      <span className="block text-[1.05rem] font-extrabold text-ink">{b.title}</span>
+                      <span className="mt-1.5 block text-[14.5px] leading-[1.7] text-ink-soft">{b.desc}</span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+
+              <SubHead eyebrow="PROCESS · 4 STEPS" title={<>내비게이션 임플란트, <span className="accent-sun">무엇이 다를까요</span></>} lead={NAVI_PROCESS.lead} />
+              <ol className="reveal-stack mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                {NAVI_PROCESS.steps.map((s, i) => (
+                  <li key={s.title} className="card relative flex flex-col overflow-hidden">
+                    <span className="relative block aspect-[16/9] overflow-hidden bg-canvas-2">
+                      <Image src={figSrc(s.figure.key)} alt={s.figure.alt} fill sizes="(max-width: 640px) 100vw, 260px" className={fitsBox(s.figure.key, 16, 9) ? 'object-cover' : '!object-contain p-2'} />
+                    </span>
+                    <span className="flex flex-1 flex-col p-5">
+                      <span className="text-[11.5px] font-extrabold tracking-[0.18em] text-sun-600">STEP {i + 1}</span>
+                      <span className="mt-1.5 block text-[1.05rem] font-extrabold text-ink">{s.title}</span>
+                      <span className="mt-2 block text-[14px] leading-[1.7] text-ink-soft">{s.desc}</span>
+                    </span>
+                    {i < NAVI_PROCESS.steps.length - 1 && <span aria-hidden className="absolute -right-3.5 top-1/2 z-10 hidden -translate-y-1/2 text-[1.3rem] text-ink-muted lg:block">›</span>}
+                  </li>
+                ))}
+              </ol>
+
+              <SubHead eyebrow="VS" title={<>일반 임플란트 <span className="accent-sun">VS</span> 내비게이션 임플란트</>} />
+              <Compare columns={NAVI_COMPARE.columns} rows={NAVI_COMPARE.rows} />
+
+              <SubHead eyebrow="DIGITAL SYSTEM" title={<>{NAVI_SYSTEM.title}</>} />
+              <ul className="reveal-stack mt-8 grid gap-4 md:grid-cols-2">
+                {NAVI_SYSTEM.items.map((s, i) => (
+                  <li key={s.title} className="rounded-2xl bg-night p-6 text-white md:p-7">
+                    <span className="text-[11.5px] font-extrabold tracking-[0.18em] text-sun-300">0{i + 1}</span>
+                    <span className="mt-2 block text-[1.1rem] font-extrabold">{s.title}</span>
+                    <span className="mt-2 block text-[14.5px] leading-[1.75] text-white/70">{s.desc}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="reveal mt-6 rounded-2xl border border-sun-200 bg-sun-50/60 p-6 md:p-7">
+                <p className="text-[12px] font-bold tracking-[0.18em] text-sun-700">NOTICE</p>
+                <p className="mt-1.5 text-[1.05rem] font-extrabold text-ink">{NAVI_NOTICE.title}</p>
+                <Paras text={NAVI_NOTICE.paragraphs} className="mt-2 text-[14.5px] leading-[1.8] text-ink-soft" />
+              </div>
+            </section>
+
+            {/* ══ PART 2 · 기둥 — 옛 '맞춤 임플란트' 쪽 ══ */}
             {/* ── 1. 세 부분 — 맞춤이 바꾸는 것은 기둥 ── */}
-            <section id="what" className="scroll-mt-[96px]" aria-labelledby="ci-what">
-              <Head id="ci-what" big={<Big unit="부분">3</Big>} title={<>임플란트는 세 부분,<br /><span className="accent-sun">맞춤은 기둥</span>이 다릅니다</>} lead={CI_PARTS.lead} />
+            <section id="what" className="scroll-mt-[96px] pt-24 md:pt-32" aria-labelledby="ci-what">
+              <Head id="ci-what" big={<Word>PART 2 · CUSTOM</Word>} title={<>심은 뒤에는 <span className="accent-sun">내 잇몸에 맞는 기둥</span>으로</>} lead={CI_PARTS.lead} />
               {/* 세 부분 — 어두운 상자 한 개에 세 칸(턱관절 3대 증상과 같은 꼴). 가운데 '기둥' 칸을 주황으로 짚는다 */}
               <div className="reveal mt-12 rounded-[28px] bg-night p-7 text-white md:p-10">
                 <p className="text-[12px] font-bold tracking-[0.2em] text-sun-300">3 PARTS OF AN IMPLANT</p>
@@ -203,46 +304,12 @@ export function CustomImplantPage({ doc }: { doc: Doc }) {
                 ))}
               </ul>
 
-              {/* 한눈에 — 짧은 여섯 줄. 위 카드와 같은 내용을 한 줄씩 다시 보여 주는 요약이라 가벼운 줄 목록으로 */}
-              <SubHead eyebrow="AT A GLANCE" title={<>{CI_GLANCE.title}</>} lead="한눈에 보는 여섯 가지입니다." />
-              <ol className="reveal mt-8 grid gap-x-8 rounded-[24px] border border-hairline bg-canvas p-6 sm:grid-cols-2 md:p-8">
-                {CI_GLANCE.items.map((g, i) => (
-                  <li key={g.title} className="flex items-start gap-4 border-b border-hairline py-3.5 last:border-b-0 sm:[&:nth-last-child(2)]:border-b-0">
-                    <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-night text-[12.5px] font-extrabold text-white">{String(i + 1).padStart(2, '0')}</span>
-                    <span className="min-w-0">
-                      <span className="block text-[15px] font-extrabold text-ink">{g.title}</span>
-                      <span className="mt-0.5 block text-[14px] leading-[1.65] text-ink-soft">{g.desc}</span>
-                    </span>
-                  </li>
-                ))}
-              </ol>
             </section>
 
             {/* ── 3. 비교표 — 왼쪽 기성(옅게) · 오른쪽 커스텀(강조) ── */}
             <section id="compare" className="scroll-mt-[96px] pt-24 md:pt-32" aria-labelledby="ci-compare">
               <Head id="ci-compare" big={<Word>VS</Word>} title={<>커스텀 어버트먼트 <span className="accent-sun">VS</span> 기성 어버트먼트</>} lead={CI_COMPARE.lead} />
-              <div className="reveal mt-12 overflow-hidden rounded-[24px] border border-hairline">
-                <div className="hidden grid-cols-[150px_1fr_1fr] bg-night text-white md:grid">
-                  <div className="px-5 py-4 text-[12px] font-bold tracking-[0.16em] text-white/55">항목</div>
-                  <div className="px-5 py-4 text-[15px] font-bold text-white/75">{CI_COMPARE.columns[0]}</div>
-                  <div className="bg-sun-500 px-5 py-4 text-[15px] font-extrabold">{CI_COMPARE.columns[1]}</div>
-                </div>
-                <dl>
-                  {CI_COMPARE.rows.map((r, i) => (
-                    <div key={r.label} className={`grid md:grid-cols-[150px_1fr_1fr] ${i > 0 ? 'border-t border-hairline' : ''}`}>
-                      <dt className="bg-canvas px-5 pb-1 pt-4 text-[14px] font-extrabold text-ink md:py-5">{r.label}</dt>
-                      <dd className="px-5 pb-2 text-[14.5px] leading-[1.7] text-ink-muted md:py-5">
-                        <span className="mr-2 inline-block rounded-md bg-canvas px-1.5 py-0.5 text-[11.5px] font-bold text-ink-muted md:hidden">{CI_COMPARE.columns[0]}</span>
-                        {r.a}
-                      </dd>
-                      <dd className="bg-sun-50/60 px-5 pb-4 pt-2 text-[14.5px] font-semibold leading-[1.7] text-ink md:py-5">
-                        <span className="mr-2 inline-block rounded-md bg-sun-500 px-1.5 py-0.5 text-[11.5px] font-bold text-white md:hidden">{CI_COMPARE.columns[1]}</span>
-                        {r.b}
-                      </dd>
-                    </div>
-                  ))}
-                </dl>
-              </div>
+              <Compare columns={CI_COMPARE.columns} rows={CI_COMPARE.rows} />
             </section>
 
             {/* ── 4. 디지털 제작 → 과정 4 → 디자인에서 살피는 것 4 ── */}

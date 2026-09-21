@@ -82,7 +82,7 @@ export function clinicSchema() {
      * sameAs — "이 홈페이지와 저 네이버 예약·플레이스·카카오맵 항목이 같은 병원" 이라는 선언.
      * 전부 기존 홈페이지가 실제로 링크하던 채널이다 (없는 주소를 넣으면 신호가 깨진다).
      */
-    sameAs: [CLINIC.booking.naver, CLINIC.booking.naverTalk, CLINIC.maps.naverPlace, CLINIC.maps.kakaoPlace, NAVER_BLOG],
+    sameAs: [CLINIC.booking.naver, CLINIC.maps.naverPlace, CLINIC.maps.kakaoPlace, NAVER_BLOG],
     /* 신뢰 지표 = 자격·학회만. 후기·별점(aggregateRating/review)은 의료법 제56조로 금지 — 절대 넣지 말 것. */
     hasCredential: DOCTORS.map((d) => ({
       '@type': 'EducationalOccupationalCredential',

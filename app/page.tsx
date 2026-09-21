@@ -36,6 +36,7 @@ const HUB_ICON: Record<string, string> = {
   '/treatment/wisdom-tooth': 'M8 4c-3 0-4 3-3 7l2 9h2l1-6 1 6h2l2-9c1-4 0-7-3-7-1 0-2 1-2 1s-1-1-2-1z',
   '/treatment/natural-tooth': 'M12 3c-4 0-6 3-5 7l2 11h2l1-6 1 6h2l2-11c1-4-1-7-5-7z',
   '/treatment/painless': 'M12 4v16m-6-8h12',
+  '/treatment/general': 'M12 3c-4 0-6 3-5 7l2 11h2l1-6 1 6h2l2-11c1-4-1-7-5-7z',
 };
 /** 아코디언 접힌 띠의 짧은 이름 */
 const HUB_SHORT: Record<string, string> = {
@@ -46,6 +47,7 @@ const HUB_SHORT: Record<string, string> = {
   '/treatment/wisdom-tooth': '사랑니',
   '/treatment/natural-tooth': '자연치아',
   '/treatment/painless': '무통치료',
+  '/treatment/general': '일반진료',
 };
 const HUB_IMG: Record<string, string> = {
   '/treatment/implant': 'ai/implant-hub',
@@ -55,15 +57,15 @@ const HUB_IMG: Record<string, string> = {
   '/treatment/wisdom-tooth': 'ai/wisdom',
   '/treatment/natural-tooth': 'ai/natural-hub',
   '/treatment/painless': 'ai/painless-hub',
+  '/treatment/general': 'orig/mta-hero',
 };
 
 export default function HomePage() {
   const featured = [
-    { href: '/treatment/implant/navigation', label: '내비게이션 임플란트', desc: '모의수술로 오차를 줄인 무절개 임플란트.', fig: 'orig/misc-nav-implant-set' },
+    { href: '/treatment/implant/navigation', label: '디지털 맞춤 임플란트', desc: '모의수술로 심고, 내 잇몸에 맞춘 기둥으로 마무리.', fig: 'orig/misc-nav-implant-set' },
     { href: '/treatment/implant/full-arch', label: '풀아치(전체) 임플란트', desc: '4~6개 최소식립으로 무치악 해결.', fig: 'orig/implant-fa-fixed' },
     { href: '/treatment/implant/uv', label: 'UV 임플란트', desc: '잇몸이 좋지 않다면.', fig: 'ai/implant-uv' },
     { href: '/treatment/implant/prf', label: '자가혈 임플란트', desc: '뼈이식이 필요하다면.', fig: 'ai/implant-prf' },
-    { href: '/treatment/implant/custom', label: '맞춤 임플란트', desc: '내 잇몸에 꼭 맞게 제작.', fig: 'ai/implant-custom' },
     { href: '/treatment/implant/warranty', label: '보증제도', desc: '치료 후 철저한 사후 관리.', fig: 'ai/implant-warranty' },
   ];
 

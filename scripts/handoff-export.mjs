@@ -45,6 +45,11 @@ const CONVENTIONAL = [
   ['/implant', '/treatment/implant'],
   ['/tmj', '/treatment/tmj'],
   ['/treatment/tmj/treatments', '/treatment/tmj/treatment'],
+  ['/treatment/implant/custom', '/treatment/implant/navigation'],
+  ['/treatment/tmj/anatomy', '/treatment/tmj'],
+  ['/treatment/tmj/causes', '/treatment/tmj'],
+  ['/treatment/tmj/self-check', '/treatment/tmj/symptoms'],
+  ['/treatment/tmj/whole-body', '/treatment/tmj/symptoms'],
 ];
 
 const EXPORT_CONFIG = `import type { NextConfig } from 'next';

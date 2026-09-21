@@ -50,7 +50,7 @@ export default function VisitPage() {
           {/* 다른 쪽과 같은 버튼 두 개(오너: 첫 화면마다 CTA 통일) */}
           <div className="mt-4 flex flex-wrap gap-3">
             <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="btn-sun">네이버 예약</a>
-            <a href={CLINIC.booking.naverTalk} target="_blank" rel="noopener" className="btn-ghost-dark">톡톡 상담</a>
+            <a href={CLINIC.phoneHref} className="btn-ghost-dark">전화 {CLINIC.phone}</a>
           </div>
         </HeroCollage>
 
@@ -126,12 +126,12 @@ export default function VisitPage() {
             <div className="reveal max-w-[760px]">
               <p className="eyebrow">CONTACT</p>
               <h2 className="display-sm mt-4">상담 · 예약 창구</h2>
-              <p className="lead mt-4"><Sentences text="기존 홈페이지의 온라인상담·온라인예약·치료후기 창구를 그대로 잇습니다." /></p>
+              <p className="lead mt-4"><Sentences text="전화 상담·온라인 예약·치료후기 세 창구입니다." /></p>
             </div>
             <div className="reveal-stack mt-8 grid gap-5 sm:grid-cols-3">
-              <a href={CLINIC.booking.naverTalk} target="_blank" rel="noopener" className="card card-hover p-6">
-                <p className="text-[1.05rem] font-bold text-ink">1:1 톡 상담 ↗</p>
-                <p className="mt-1.5 text-[15px] text-ink-soft">네이버 톡톡으로 궁금한 점을 남겨 주세요.</p>
+              <a href={CLINIC.phoneHref} className="card card-hover p-6">
+                <p className="text-[1.05rem] font-bold text-ink">전화 상담</p>
+                <p className="mt-1.5 text-[15px] text-ink-soft">{CLINIC.phone} — 진료시간에 바로 연결됩니다.</p>
               </a>
               <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="card card-hover p-6">
                 <p className="text-[1.05rem] font-bold text-ink">온라인 예약 ↗</p>

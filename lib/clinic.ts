@@ -39,8 +39,7 @@ export const CLINIC = {
    */
   booking: {
     naver: 'https://booking.naver.com/booking/13/bizes/610939',
-    /** 온라인상담 메뉴 → 네이버 톡톡 */
-    naverTalk: 'https://talk.naver.com/ct/w4mcd2',
+    /* 네이버 톡톡(talk.naver.com/ct/w4mcd2)은 2026-09-21 오너 "이제 안 한대" 로 사이트 전체에서 뺐다 — 되살리려면 git 이력 */
     /** 치료후기 메뉴 → 네이버 플레이스 방문자 리뷰 (플레이스 ID 37932471) */
     naverReview: 'https://m.place.naver.com/hospital/37932471/review/visitor',
   },

@@ -368,7 +368,7 @@ export function ContactBand({ title = '궁금한 점은 편하게 문의해 주�
               ))}
             </ul>
           </div>
-          {/* 문의 카드 넷 — 가운데가 휑해 보여 버튼을 카드로 키웠다(오너). 이름 아래 한 줄로 무엇인지 알려 준다 */}
+          {/* 문의 카드 넷 — 가운데가 휑해 보여 버튼을 카드로 키웠다(오너). 이름 아래 한 줄로 무엇인지 알려 준다. 톡톡 상담 자리는 치료 후기(2026-09-21) */}
           <div className="grid gap-3.5 sm:grid-cols-2 lg:min-w-[560px]">
             <a
               href={CLINIC.phoneHref}
@@ -403,19 +403,19 @@ export function ContactBand({ title = '궁금한 점은 편하게 문의해 주�
             </a>
 
             <a
-              href={CLINIC.booking.naverTalk}
+              href={CLINIC.booking.naverReview}
               target="_blank"
               rel="noopener"
               className="group flex items-center gap-4 rounded-2xl border border-white/15 bg-white/8 px-5 py-4 backdrop-blur transition-all duration-200 hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/14"
             >
               <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#03C75A] text-white">
-                <svg width="19" height="19" viewBox="0 0 24 24" aria-hidden>
-                  <path d="M12 4c-4.7 0-8.5 3-8.5 6.8 0 2.4 1.6 4.5 4 5.7L6.8 20l4-2.4c.4 0 .8.1 1.2.1 4.7 0 8.5-3 8.5-6.8S16.7 4 12 4z" fill="currentColor" />
+                <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden>
+                  <path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1.1 5.9L12 16.9l-5.3 2.8 1.1-5.9-4.3-4.1 5.9-.8z" fill="currentColor" />
                 </svg>
               </span>
               <span className="min-w-0">
-                <span className="block text-[16.5px] font-extrabold">톡톡 상담</span>
-                <span className="block text-[13.5px] text-white/60">메시지로 물어보기</span>
+                <span className="block text-[16.5px] font-extrabold">치료 후기</span>
+                <span className="block text-[13.5px] text-white/60">네이버 플레이스 방문자 리뷰</span>
               </span>
             </a>
 

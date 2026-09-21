@@ -55,7 +55,7 @@ export function ContactCard() {
       </div>
       <div className="mt-4 grid grid-cols-2 gap-2">
         <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="btn-sun !px-3 !py-2.5 text-center text-[14px]">네이버 예약</a>
-        <a href={CLINIC.booking.naverTalk} target="_blank" rel="noopener" className="btn-ghost !px-3 !py-2.5 text-center text-[14px]">톡톡 상담</a>
+        <a href={CLINIC.phoneHref} className="btn-ghost !px-3 !py-2.5 text-center text-[14px]">전화하기</a>
       </div>
     </div>
   );

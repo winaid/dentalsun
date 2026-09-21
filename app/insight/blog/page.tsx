@@ -108,7 +108,7 @@ export default async function BlogIndexPage() {
       <section className="section"><div className="wrap">
         {posts.length === 0 ? (
           <p className="max-w-[46em] text-[17px] leading-[1.9] text-ink-soft">
-            첫 글을 준비하고 있습니다. 궁금한 점은 전화나 네이버 톡톡으로 먼저 물어보셔도 됩니다.
+            첫 글을 준비하고 있습니다. 궁금한 점은 전화로 먼저 물어보셔도 됩니다.
           </p>
         ) : (
           /*

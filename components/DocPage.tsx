@@ -29,6 +29,7 @@ const HUB_BG: Record<string, string> = {
   '/treatment/wisdom-tooth': 'ai/wide-wisdom',
   '/treatment/natural-tooth': 'ai/wide-natural',
   '/treatment/painless': 'ai/wide-painless',
+  '/treatment/general': 'ai/wide-natural',
   '/insight': 'ai/wide-insight',
 };
 /** 문서 경로별 대표 AI 사진 — 원본 사진이 없거나 반복될 때 hero 로 쓴다. */
@@ -38,7 +39,6 @@ const DOC_AI: Record<string, string> = {
   '/treatment/implant/full-arch': 'orig/implant-fa-fixed',
   '/treatment/implant/uv': 'ai/implant-uv',
   '/treatment/implant/prf': 'ai/implant-prf',
-  '/treatment/implant/custom': 'ai/implant-custom',
   '/treatment/implant/warranty': 'ai/implant-warranty',
   '/treatment/tmj': 'sun/tmj-explain-skull-2',
   '/treatment/tmj/symptoms': 'ai/tmj-symptoms',
@@ -137,7 +137,7 @@ export function DocPage({ doc }: { doc: Doc }) {
         >
           <div className="flex flex-wrap gap-3">
             <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="btn-sun">네이버 예약</a>
-            <a href={CLINIC.booking.naverTalk} target="_blank" rel="noopener" className="btn-ghost-dark">톡톡 상담</a>
+            <a href={CLINIC.phoneHref} className="btn-ghost-dark">전화 {CLINIC.phone}</a>
           </div>
         </HeroCollage>
 
@@ -179,7 +179,7 @@ export function DocPage({ doc }: { doc: Doc }) {
                   <span className="accent">자주 묻는 질문</span>
                 </h2>
                 <p className="lead mt-4">
-                  <Sentences text="환자분들이 자주 물어보시는 내용을 정리했습니다. 더 궁금한 점은 톡톡이나 전화로 문의해 주세요." />
+                  <Sentences text="환자분들이 자주 물어보시는 내용을 정리했습니다. 더 궁금한 점은 전화로 물어봐 주세요." />
                 </p>
               </div>
               <div className="reveal">

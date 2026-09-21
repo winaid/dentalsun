@@ -133,7 +133,7 @@ export function HomeStage() {
         </div>
 
         <div className="reveal mt-6 flex flex-wrap gap-3 lg:mt-2">
-          <Link href="/treatment/implant/navigation" className="btn-brand">내비게이션 임플란트 자세히</Link>
+          <Link href="/treatment/implant/navigation" className="btn-brand">디지털 맞춤 임플란트 자세히</Link>
           <Link href="/treatment/implant" className="btn-ghost">임플란트 전체 안내</Link>
         </div>
       </div>

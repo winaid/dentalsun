@@ -119,7 +119,7 @@ export function HomeHero() {
             <h1 className="display mt-6 text-balance !text-white on-photo">{SLIDES[i].title}</h1>
             <p className="mt-7 text-[1.05rem] leading-[1.85] text-white/75 md:text-[1.1rem]">{SLIDES[i].lead}</p>
           </div>
-          {/* 예약 두 갈래 — 왼쪽은 네이버 예약(플레이스와 연결), 오른쪽은 네이버 톡톡 상담.
+          {/* 예약 두 갈래 — 왼쪽은 네이버 예약(플레이스와 연결), 오른쪽은 오시는 길·진료시간(톡톡 상담은 2026-09-21 뺐다).
               폰에서는 아래 빠른메뉴(전화·예약·상담·오시는 길)가 같은 일을 하므로 감춘다(오너) */}
           <div className="mt-10 hidden gap-3 hero-in hero-in-4 sm:flex sm:flex-wrap sm:gap-3.5">
             <a
@@ -135,19 +135,18 @@ export function HomeHero() {
               </svg>
               네이버 예약
             </a>
-            <a
-              href={CLINIC.booking.naverTalk}
-              target="_blank"
-              rel="noopener"
+            <Link
+              href="/visit"
               className="inline-flex items-center justify-center gap-2 rounded-full bg-white/95 px-4 py-[16px] text-[15.5px] font-bold text-brand-800 shadow-[0_14px_34px_rgba(9,14,35,0.35)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-white sm:min-w-[186px] sm:gap-2.5 sm:px-7 sm:py-[16px] sm:text-[16px]"
             >
-              <span className="flex h-[22px] w-[22px] items-center justify-center rounded-full bg-[#03C75A] text-white">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
-                  <path d="M12 4c-4.7 0-8.5 3-8.5 6.8 0 2.4 1.6 4.5 4 5.7L6.8 20l4-2.4c.4 0 .8.1 1.2.1 4.7 0 8.5-3 8.5-6.8S16.7 4 12 4z" fill="currentColor" />
+              <span className="flex h-[22px] w-[22px] items-center justify-center rounded-full bg-brand-700 text-white">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
+                  <path d="M12 21s6-5.2 6-10a6 6 0 1 0-12 0c0 4.8 6 10 6 10z" fill="currentColor" />
+                  <circle cx="12" cy="11" r="2.2" fill="#fff" />
                 </svg>
               </span>
-              톡톡 상담
-            </a>
+              오시는 길 · 진료시간
+            </Link>
           </div>
         </div>
       </div>

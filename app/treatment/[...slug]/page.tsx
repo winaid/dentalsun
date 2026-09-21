@@ -43,7 +43,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string[
   if (!doc) notFound();
   /* 턱관절 허브와 하위 6쪽은 전용 화면(components/TmjPage, 경로별로 구역을 고른다) — 데이터·FAQ·스키마는 같은 Doc 을 쓴다 */
   if (doc.hub === '/treatment/tmj') return <TmjPage doc={doc} />;
-  /* 맞춤 임플란트도 전용 화면(components/CustomImplantPage) — 2026-09-21 */
-  if (doc.path === '/treatment/implant/custom') return <CustomImplantPage doc={doc} />;
+  /* 디지털 맞춤 임플란트(내비게이션+맞춤, 2026-09-21 합침)도 전용 화면(components/CustomImplantPage) */
+  if (doc.path === '/treatment/implant/navigation') return <CustomImplantPage doc={doc} />;
   return <DocPage doc={doc} />;
 }

@@ -1,5 +1,6 @@
 /**
- * 턱관절 — 허브 1 + 하위 6 (2026-09-21 분할, 오너 GO "나눠봐").
+ * 턱관절 — 허브 1 + 하위 2 (2026-09-21 오전 7쪽으로 나눴다가, 오후 오너 "하위 메뉴 너무 많다" 로 3쪽으로 합침).
+ *   허브 = 장애란? + 구조·기능 + 원인 + 노하우 + 장비 · symptoms = 증상 + 자가진단 + 전신증상 · treatment = 치료법.
  *
  * 09-09 에 한 페이지로 합쳤던 것을 되돌렸다. 그때 8,000px 이던 페이지가 참고 사이트(4dortho 턱관절 7쪽)
  * 내용을 항목 단위로 다 옮기면서 18,700px 이 됐고, "턱관절 구조 / 원인 / 전신증상 / 자가진단" 은 서로 다른
@@ -236,71 +237,28 @@ export const TMJ_DOCS: Doc[] = [
         items: [{ title: '여러 가지 영상을 제공하는 올인원 시스템' }, { title: '파노라마와 CT를 함께 촬영 가능' }, { title: '짧은 촬영시간과 적은 방사선 노출량으로 안전한 CT' }],
         numbered: false,
       },
+      /* 2026-09-21 — 구조·기능과 원인 쪽을 허브로 합쳤다(메뉴 7 → 3) */
+      ...ANATOMY_BLOCKS.filter((b) => !('id' in b && b.id === 'triad')),
+      ...CAUSES_BLOCKS,
     ],
-    faq: FAQ_HUB,
-    related: ['/treatment/painless', '/treatment/natural-tooth'],
+    faq: [...FAQ_HUB, ...FAQ_ANATOMY, ...FAQ_CAUSES],
+    related: [`${HUB}/symptoms`, `${HUB}/treatment`, '/treatment/painless'],
   },
 
   // ───────────────────────── 하위 6쪽 — 참고 사이트 7쪽 중 '장애란?' 은 허브가 맡는다 ─────────────────────────
-  sub({
-    slug: 'anatomy',
-    title: '턱관절의 구조와 기능',
-    eyebrow: 'TMJ · 구조와 기능',
-    summary: '턱관절은 귀 바로 앞에 있는 하악측두관절로, 측두골·하악과두·관절원판(디스크)으로 이루어져 회전운동과 활주운동을 함께 하는 인체에서 가장 복잡한 관절입니다. 구조를 알면 왜 소리가 나고 왜 귀·머리까지 아픈지가 읽힙니다.',
-    description: '광화문 선치과 — 턱관절의 구조와 기능. 측두골·하악과두·관절원판(디스크), 회전·활주운동, 3대 증상, 턱관절 뒤 혈관·신경으로 두통과 귀 통증이 이어지는 경로.',
-    keywords: ['턱관절 구조', '턱관절 디스크', '관절원판', '하악측두관절', '하악과두', '턱관절 기능', '광화문 턱관절'],
-    hero: { key: 'sun/tmj-explain-monitor', alt: '모니터의 두개골·턱관절 도해를 짚어 가며 환자에게 설명하는 양대일 원장' },
-    blocks: ANATOMY_BLOCKS,
-    faq: FAQ_ANATOMY,
-    related: [`${HUB}/symptoms`, `${HUB}/causes`],
-  }),
+  /* 2026-09-21 오너 "하위 메뉴 너무 많다" — 증상 + 자가진단 + 전신증상을 한 쪽으로. 구조·원인은 허브로 갔다 */
   sub({
     slug: 'symptoms',
-    title: '턱관절 장애의 증상',
-    eyebrow: 'TMJ · 증상',
-    summary: '턱관절 장애는 입을 벌리거나 다물 때 나는 소리, 씹거나 하품할 때의 통증, 입이 잘 벌어지지 않는 개구 제한으로 나타나고, 두통·귀 통증·목과 어깨 결림 같은 연관통으로 이어지기도 합니다. 여덟 가지 점검 항목 가운데 두 가지 이상 해당되면 검사를 권합니다.',
-    description: '광화문 선치과 — 턱관절 장애의 증상. 소리·통증·입 벌리기 힘듦·연관통 네 가지와 자가 점검 8항목, 턱관절이 귀와 머리 통증으로 이어지는 이유.',
-    keywords: ['턱관절 증상', '턱에서 소리', '턱관절 통증', '입이 안 벌어짐', '턱관절 두통', '턱관절 장애 증상', '광화문 턱관절'],
+    title: '턱관절 장애의 증상과 자가진단',
+    eyebrow: 'TMJ · 증상 · 자가진단 · 전신증상',
+    summary: '턱관절 장애는 입을 벌리거나 다물 때 나는 소리, 씹거나 하품할 때의 통증, 입이 잘 벌어지지 않는 개구 제한으로 나타나고, 두통·귀 통증·목과 어깨 결림 같은 연관통으로 이어지기도 합니다. 병원에 가기 전 거울 앞에서 중심선·관절 소리·불룩 튀어나옴·개구량(40~60mm)·앞옆 움직임 다섯 가지를 확인해 볼 수 있고, 턱관절이 한쪽으로 틀어지면 안면비대칭과 일자목, 척추와 골반까지 이어지기도 합니다.',
+    description: '광화문 선치과 — 턱관절 장애의 증상(소리·통증·입 벌리기 힘듦·연관통), 거울 앞 자가진단 5단계와 점검표 8항목, 안면비대칭·일자목·척추와 골반으로 이어지는 전신증상.',
+    keywords: ['턱관절 증상', '턱에서 소리', '턱관절 통증', '입이 안 벌어짐', '턱관절 자가진단', '개구량', '턱관절 두통', '턱관절 안면비대칭', '턱관절 일자목', '광화문 턱관절'],
     hero: { key: 'ai/tmj-symptoms', alt: '귀 앞 턱관절 부위를 손가락으로 짚어 보는 모습' },
-    blocks: SYMPTOMS_BLOCKS,
-    faq: FAQ_SYMPTOMS,
-    related: [`${HUB}/self-check`, `${HUB}/causes`],
-  }),
-  sub({
-    slug: 'causes',
-    title: '턱관절 장애의 원인',
-    eyebrow: 'TMJ · 원인',
-    summary: '턱관절 장애의 원인은 크게 세 갈래입니다. 위아래 치아가 맞물리지 않는 부정교합, 교통사고나 타박상 같은 외상, 그리고 이갈이·이악물기·한쪽 씹기·턱 괴기 같은 습관과 스트레스입니다. 원인이 겹쳐서 생기는 경우가 많아 진단에서 무엇이 주된 원인인지 가려냅니다.',
-    description: '광화문 선치과 — 턱관절 장애의 원인 3가지. 부정교합(교합평면·조기접촉·과개교합·무턱·개구교합·주걱턱), 외상(교통사고·타박상·턱 빠짐), 습관과 스트레스(이갈이·이악물기·편측저작·턱 괴기).',
-    keywords: ['턱관절 장애 원인', '부정교합 턱관절', '턱관절 외상', '이갈이 턱관절', '턱 괴기', '교합평면', '광화문 턱관절'],
-    hero: { key: 'ai/tmj-cause-habit', alt: '책상에 턱을 괴고 있는 모습' },
-    blocks: CAUSES_BLOCKS,
-    faq: FAQ_CAUSES,
-    related: [`${HUB}/anatomy`, `${HUB}/whole-body`],
-  }),
-  sub({
-    slug: 'self-check',
-    title: '턱관절 장애 자가진단법',
-    eyebrow: 'TMJ · 자가진단',
-    summary: '병원에 가기 전 거울 앞에서 다섯 가지를 확인해 볼 수 있습니다. 입을 벌릴 때 중심선이 똑바른지, 관절에서 소리가 나는지, 크게 벌릴 때 불룩 튀어나오는지, 세 손가락이 세로로 들어갈 만큼(40~60mm) 벌어지는지, 아래턱이 앞·옆으로 10mm쯤 움직이는지 봅니다.',
-    description: '광화문 선치과 — 턱관절 장애 자가진단법 5단계. 중심선·관절 소리·불룩 튀어나옴·개구량(정상 40~60mm)·앞옆 움직임(정상 약 10mm)과 자가 점검표 8항목.',
-    keywords: ['턱관절 자가진단', '턱관절 장애 자가진단법', '개구량', '입 벌어지는 정도', '턱관절 체크리스트', '광화문 턱관절'],
-    hero: { key: 'ai/tmj-check-open', alt: '입을 크게 벌려 세 손가락으로 개구량을 확인하는 자가진단 동작' },
-    blocks: SELF_BLOCKS,
-    faq: FAQ_SELF,
-    related: [`${HUB}/symptoms`, `${HUB}/treatment`],
-  }),
-  sub({
-    slug: 'whole-body',
-    title: '턱관절과 전신증상',
-    eyebrow: 'TMJ · 전신증상',
-    summary: '턱관절 장애는 턱에만 머물지 않습니다. 턱관절이 한쪽으로 틀어지면 안면비대칭이 생기고, 아래턱 운동의 축인 제1·제2경추의 위치가 바뀌어 일자목과 목디스크로, 도미노처럼 척추와 골반까지 이어지기도 합니다. 함께 관찰되는 전신 증상 여덟 갈래를 정리했습니다.',
-    description: '광화문 선치과 — 턱관절과 전신증상. 안면비대칭·경추(목뼈)·일자목과 목디스크·척추와 골반으로 이어지는 네 갈래와, 함께 나타날 수 있는 증상 체크리스트 8갈래.',
-    keywords: ['턱관절 전신증상', '턱관절 안면비대칭', '턱관절 일자목', '턱관절 목디스크', '턱관절 척추측만', '턱관절 두통', '광화문 턱관절'],
-    hero: { key: 'ai/wide-tmj', alt: '턱관절 진료 장면(연출 사진)' },
-    blocks: BODY_BLOCKS,
-    faq: FAQ_BODY,
-    related: [`${HUB}/causes`, `${HUB}/treatment`],
+    /* 점검표(check)는 증상·자가진단 두 묶음에 같은 것이 있어 한 번만 */
+    blocks: [...SYMPTOMS_BLOCKS, ...SELF_BLOCKS.filter((b) => !('id' in b && b.id === 'check')), ...BODY_BLOCKS],
+    faq: [...FAQ_SYMPTOMS, ...FAQ_SELF, ...FAQ_BODY],
+    related: [`${HUB}/treatment`, HUB],
   }),
   sub({
     slug: 'treatment',
@@ -312,6 +270,6 @@ export const TMJ_DOCS: Doc[] = [
     hero: { key: 'ai/tmj-treatments', alt: '턱관절 치료 도구(연출 사진)' },
     blocks: TREATMENT_BLOCKS,
     faq: FAQ_TREATMENT,
-    related: [`${HUB}/self-check`, '/treatment/painless'],
+    related: [`${HUB}/symptoms`, '/treatment/painless'],
   }),
 ];

@@ -83,15 +83,15 @@ export function HeroCollage({
             <p className="mt-8 max-w-[560px] text-[1.08rem] leading-[1.8] text-white/80 hero-in hero-in-4 md:text-[1.16rem] lg:mt-10 lg:min-h-[3.6em] lg:max-w-[720px]">
               <Sentences text={lead} clauses={false} />
             </p>
-            {/* 버튼 두 개는 모든 첫 화면에 — 따로 주지 않으면 네이버 예약 · 톡톡 상담(오너: 소개 쪽도 다른 쪽처럼) */}
+            {/* 버튼 두 개는 모든 첫 화면에 — 따로 주지 않으면 네이버 예약 · 전화(오너: 소개 쪽도 다른 쪽처럼). 톡톡 상담은 2026-09-21 사이트 전체에서 뺐다 */}
             <div className="mt-8 hero-in hero-in-4 lg:mt-9">
               {children ?? (
                 <div className="flex flex-wrap gap-3">
                   <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="btn-sun">
                     네이버 예약
                   </a>
-                  <a href={CLINIC.booking.naverTalk} target="_blank" rel="noopener" className="btn-ghost-dark">
-                    톡톡 상담
+                  <a href={CLINIC.phoneHref} className="btn-ghost-dark">
+                    전화 {CLINIC.phone}
                   </a>
                 </div>
               )}

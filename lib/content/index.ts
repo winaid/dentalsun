@@ -10,6 +10,7 @@ import { INSURANCE_DOCS } from './insurance';
 import { WISDOM_DOCS } from './wisdom';
 import { NATURAL_DOCS } from './natural';
 import { PAINLESS_DOCS } from './painless';
+import { GENERAL_DOCS } from './general';
 import { INSIGHT_DOCS } from './insight';
 
 export const ALL_DOCS: Doc[] = [
@@ -20,6 +21,7 @@ export const ALL_DOCS: Doc[] = [
   ...WISDOM_DOCS,
   ...NATURAL_DOCS,
   ...PAINLESS_DOCS,
+  ...GENERAL_DOCS,
   ...INSIGHT_DOCS,
 ];
 

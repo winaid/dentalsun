@@ -15,6 +15,7 @@ const HUB_IMG: Record<string, string> = {
   '/treatment/wisdom-tooth': 'orig/wisdom-doctor',
   '/treatment/natural-tooth': 'orig/mta-hero',
   '/treatment/painless': 'fit/pain-hero',
+  '/treatment/general': 'orig/mta-hero',
 };
 import { ALL_DOCS, docsOfHub } from '@/lib/content';
 import { TREATMENT_HUBS } from '@/lib/nav';
@@ -39,7 +40,7 @@ export default function TreatmentIndex() {
           long
           cardsLead="진료 갈래를 한눈에 봅니다."
           lines={['광화문 선치과', <><span className="accent-sun">진료 안내</span></>]}
-          lead="임플란트부터 턱관절, 자연치아 살리기, 무통 시스템까지 일곱 갈래로 나눴습니다. 무엇을 어떻게 하는지, 어떤 경우에 필요한지 미리 읽고 오시면 상담이 편해집니다."
+          lead="임플란트부터 턱관절, 자연치아 살리기, 무통 시스템까지 세 갈래(임플란트 · 턱관절 · 일반진료)로 나눴습니다. 무엇을 어떻게 하는지, 어떤 경우에 필요한지 미리 읽고 오시면 상담이 편해집니다."
           bg="ai/wide-implant"
           cards={[
             { fig: { key: 'orig/mta-hero', alt: '확대경을 쓰고 MTA 신경치료를 하는 원장' }, shape: 'portrait' },

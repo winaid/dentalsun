@@ -226,3 +226,79 @@ export const CI_BLOCKS: Block[] = [
   { type: 'points', id: 'peri-care', title: '임플란트를 오래 쓰는 관리', items: CI_PERI.care.map((s) => ({ title: s })), columns: 3 },
   { type: 'notice', title: CI_NOTICE.title, paragraphs: CI_NOTICE.paragraphs },
 ];
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * 내비게이션(계획) 부분 — 2026-09-21 오너 "내비게이션·맞춤 두 개 합쳐, 비슷한 내용".
+ * 옛 내비게이션 임플란트 문서(implant.ts)의 본문을 그대로 옮겼다(숫자·장비명 원문). 화면은 CustomImplantPage 의 PART 1.
+ * ★ NAVI_BLOCKS 의 steps 블록 id 'process' 는 홈 첫 화면 무대(HomeScroll)가 그대로 읽는다 — id 를 바꾸지 말 것.
+ * ═══════════════════════════════════════════════════════════════════════════ */
+export const NAVI_WHAT = {
+  title: '컴퓨터 모의수술로 오차를 줄인 내비게이션 임플란트',
+  paragraphs: [
+    '내비게이션 임플란트는 수술 전 CT와 3D 구강카메라로 촬영한 3차원 데이터를 가지고 컴퓨터가 모의 수술을 진행한 뒤, 그 계획대로 실제 수술을 진행하는 방식입니다. 광화문 선치과는 컴퓨터 모의수술을 통해 미리 결과를 예측하고 구강 상태에 맞는 수술 방법을 결정합니다.',
+    '경험과 감각에만 의존하는 대신 뼈의 두께와 신경의 위치를 미리 화면에서 확인하고 식립 위치·각도·깊이를 정한 뒤 수술하므로, 계획과 실제 수술 사이의 오차를 줄일 수 있습니다.',
+  ],
+  fig: { key: 'orig/intro-p04-guide', alt: '하악 모형 위의 투명 수술 가이드와 드릴' } as Fig,
+};
+
+export const NAVI_BENEFITS = {
+  title: '통증은 줄이고 정확도는 높인 내비게이션 임플란트',
+  items: [
+    { title: '수술 전 컴퓨터 모의수술 진행', desc: '실제 수술과 같은 조건으로 컴퓨터에서 먼저 식립을 계획합니다.' },
+    { title: '무절개 임플란트 수술 가능', desc: '잇몸을 크게 절개하지 않고 작은 홈을 통해 식립할 수 있습니다.' },
+    { title: '계획한 위치 그대로 식립', desc: '모의수술로 정한 위치와 각도를 수술 유도장치가 그대로 따라갑니다.' },
+    { title: '붓기 · 통증 부담이 적음', desc: '절개를 최소화해 출혈과 붓기 부담을 줄입니다. 회복 속도는 개인차가 있습니다.' },
+  ],
+};
+
+export const NAVI_PROCESS = {
+  title: '내비게이션 임플란트, 무엇이 다를까요?',
+  lead: '3D 컴퓨터 분석을 통한 모의 수술 — 수술 전 완성된 치아 결과를 예측하여 시술할 임플란트 종류와 위치, 길이, 뼈이식까지 수술에 필요한 계획을 꼼꼼하게 준비합니다.',
+  steps: [
+    { title: 'CT 및 구강 스캐너 촬영', desc: 'CT로 잇몸뼈와 신경의 위치를, 3D 구강 스캐너로 치아와 잇몸의 형태를 촬영해 3차원 데이터를 만듭니다.', figure: { key: 'place/place08', alt: 'CT와 파노라마를 함께 찍는 광화문선치과 3D CT 촬영실' } as Fig },
+    { title: '임플란트 식립경로 분석', desc: '3차원 데이터 위에서 임플란트의 종류, 위치, 길이, 각도와 뼈이식 필요 여부를 분석합니다.', figure: { key: 'orig/misc-nav-implant-set', alt: '모니터에 뜬 임플란트 식립 계획 화면과 임플란트 모형' } as Fig },
+    { title: '3D 디지털 보철 디자인', desc: '완성될 치아의 모양을 먼저 디자인하고, 그 보철물에 맞춰 식립 위치를 확정합니다.', figure: { key: 'equip/printer', alt: '3D 프린터와 CAD 디자인 화면' } as Fig },
+    { title: '개인 맞춤형 수술 유도장치 제작', desc: '확정된 계획을 그대로 옮긴 수술 유도장치(가이드)를 제작해 수술 시 계획한 위치와 각도로 식립합니다.', figure: { key: 'orig/implant-nav-guide', alt: '하악 모형에 씌운 투명 수술 유도장치와 드릴' } as Fig },
+  ],
+};
+
+export const NAVI_COMPARE = {
+  title: '일반 임플란트 VS 내비게이션 임플란트',
+  columns: ['일반 임플란트', '내비게이션 임플란트'] as [string, string],
+  rows: [
+    { label: '절개', a: '잇몸절개', b: '작은 홈을 통한 최소절개' },
+    { label: '출혈', a: '많은 출혈과 붓기', b: '최소절개로 출혈 및 붓기 거의 없음' },
+    { label: '감염', a: '염증 및 감염 우려가 있음', b: '염증 및 감염 위험 현저히 낮음' },
+    { label: '회복', a: '절개 범위가 넓어 부담이 큼', b: '절개가 작아 부담이 적은 편' },
+  ],
+};
+
+export const NAVI_SYSTEM = {
+  title: '광화문 선치과 디지털 시스템',
+  items: [
+    { title: '오차를 줄인 디지털 분석 시스템', desc: '임플란트 수술 시 컴퓨터가 모의수술을 통해 미리 결과를 예측할 수 있어 오차를 최소화할 수 있습니다.' },
+    { title: '안전한 디지털 수술 가이드 시스템', desc: '임플란트 수술 시 수술유도장치(가이드)를 이용하여 출혈 및 붓기를 최소화합니다.' },
+  ],
+};
+
+export const NAVI_NOTICE = {
+  title: '수술 전에 알아두실 점',
+  paragraphs: ['내비게이션 임플란트도 잇몸뼈의 양이 부족하면 뼈이식을 함께 계획하며, 모의수술 단계에서 뼈이식 필요 여부까지 확인합니다. 무절개 수술이 가능한지는 잇몸뼈의 상태에 따라 달라지므로 CT 촬영 후 상담에서 안내드립니다.'],
+};
+
+export const NAVI_FAQ: QA[] = [
+  { q: '내비게이션 임플란트는 정말 잇몸을 안 째나요?', a: '잇몸을 넓게 절개하는 대신 수술 유도장치가 정한 위치에 작은 홈을 내어 식립하는 최소절개 방식입니다. 그래서 출혈과 붓기가 거의 없고 회복이 빠릅니다. 다만 잇몸뼈가 많이 부족해 뼈이식이 필요한 경우에는 절개가 필요할 수 있습니다.' },
+  { q: '모의수술은 어떻게 하는 건가요?', a: 'CT와 3D 구강 스캐너로 촬영한 3차원 데이터를 컴퓨터에 올려, 시술할 임플란트의 종류와 위치, 길이, 뼈이식 여부까지 화면에서 먼저 계획하는 과정입니다. 완성될 보철물의 모양을 먼저 디자인한 뒤 거기에 맞춰 식립 위치를 정합니다.' },
+  { q: '수술 유도장치(가이드)는 무엇인가요?', a: '모의수술로 확정한 식립 위치와 각도, 깊이를 그대로 옮겨 만든 개인 맞춤형 장치입니다. 수술 때 입안에 끼우고 그 구멍을 따라 식립하므로 계획한 대로 임플란트를 심을 수 있습니다.' },
+  { q: '일반 임플란트보다 회복이 빠른가요?', a: '최소절개로 출혈과 붓기가 거의 없어 일반 임플란트보다 회복이 빠른 편입니다. 염증과 감염 위험도 낮습니다. 회복 속도는 개인의 건강 상태와 뼈이식 여부에 따라 차이가 있습니다.' },
+  { q: '수술 당일 임시 치아도 가능한가요?', a: '광화문 선치과는 캐드캠 디지털 시스템을 구축해 수술 당일 임시 보철 장착까지 진행할 수 있습니다. 구강 스캐닝, CAD 디자인, 3D 프린터 제작, 부착으로 이어지는 디지털 올인원 시스템 덕분입니다. 적용 여부는 식립 후 안정도에 따라 결정합니다.' },
+];
+
+export const NAVI_BLOCKS: Block[] = [
+  { type: 'text', id: 'navi-what', title: NAVI_WHAT.title, paragraphs: NAVI_WHAT.paragraphs, figure: NAVI_WHAT.fig },
+  { type: 'points', id: 'navi-benefits', title: NAVI_BENEFITS.title, items: NAVI_BENEFITS.items, columns: 4 },
+  { type: 'steps', id: 'process', title: NAVI_PROCESS.title, lead: NAVI_PROCESS.lead, steps: NAVI_PROCESS.steps },
+  { type: 'compare', id: 'navi-compare', title: NAVI_COMPARE.title, lead: '무엇이 다를까요?', columns: NAVI_COMPARE.columns, rows: NAVI_COMPARE.rows, highlight: 'b' },
+  { type: 'points', id: 'digital-system', title: NAVI_SYSTEM.title, items: NAVI_SYSTEM.items, columns: 2 },
+  { type: 'notice', title: NAVI_NOTICE.title, paragraphs: NAVI_NOTICE.paragraphs },
+];

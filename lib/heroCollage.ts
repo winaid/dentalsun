@@ -32,9 +32,9 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     ],
   },
   '/treatment/implant/navigation': {
-    lines: ['수술 전 모의수술로 자리를 정하는', '{내비게이션} 임플란트'],
-    lead: '수술 전에 컴퓨터로 모의수술을 마치고, 그 계획대로 만든 유도장치를 대고 심습니다. 몇 개를 어디에 어떤 각도로 심는지, 미리 화면으로 함께 확인하고 시작합니다.',
-    cardsLead: '내비게이션 임플란트는 이렇게 진행합니다.',
+    lines: ['3D 로 계획하고 내 잇몸에 맞춰 만드는', '{디지털 맞춤} 임플란트'],
+    lead: '수술 전에 컴퓨터로 모의수술을 마치고 그 계획대로 만든 유도장치를 대고 심습니다. 심은 뒤에는 기성품 기둥 대신 내 잇몸 선에 맞춘 기둥으로 마무리합니다.',
+    cardsLead: '디지털 맞춤 임플란트는 이런 점이 다릅니다.',
     cards: [
       { fig: { key: 'orig/implant-nav-guide', alt: '하악 모형에 투명 수술 가이드를 얹고 드릴을 맞춘 모습' }, shape: 'portrait' },
       { fig: { key: 'orig/implant-nav-plan', alt: 'CT 위에 임플란트 식립 경로를 잡는 계획 소프트웨어 화면' }, shape: 'wide' },
@@ -102,7 +102,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     ],
   },
   '/treatment/tmj/symptoms': {
-    lines: ['턱에서 나는 소리와 통증', '{턱관절 장애}의 증상'],
+    lines: ['소리·통증부터 거울 앞 자가진단까지', '{턱관절 장애} 증상과 자가진단'],
     lead: '딱딱 소리, 씹을 때 통증, 두통과 목 결림까지 턱관절에서 시작되기도 합니다. 관절·근육·디스크 중 어디가 문제인지 확인하면 치료 방향이 정해집니다.',
     cardsLead: '이런 증상이 턱관절에서 옵니다.',
     cards: [

@@ -5,22 +5,21 @@ import Link from 'next/link';
 import { CLINIC } from '@/lib/clinic';
 
 /**
- * 퀵메뉴 — 기존 홈페이지 오른쪽 세로 퀵메뉴(네이버톡톡·진료시간·온라인예약·오시는길·대표전화)를
+ * 퀵메뉴 — 기존 홈페이지 오른쪽 세로 퀵메뉴(진료시간·온라인예약·오시는길·대표전화, 톡톡은 2026-09-21 제거)를
  * 레퍼런스 결(둥근 떠 있는 버튼)로 옮겼다. 데스크톱은 오른쪽 아래 세로, 모바일은 아래 띠.
  */
 const ITEMS = [
-  { label: '톡톡 상담', href: CLINIC.booking.naverTalk, external: true, kind: 'talk' as const },
   { label: '네이버 예약', href: CLINIC.booking.naver, external: true, kind: 'naver' as const },
   { label: '진료시간', href: '/visit#hours', external: false, kind: 'clock' as const },
   { label: '오시는 길', href: '/visit', external: false, kind: 'map' as const },
 ];
 
-/** 색 있는 둥근 아이콘 — 네이버 초록(톡톡·예약), 남색(진료시간), 주황(오시는 길). 선 아이콘 대신 브랜드 마크(오너: 더 잘 보이게). */
-function Icon({ kind }: { kind: 'talk' | 'naver' | 'clock' | 'map' }) {
-  if (kind === 'talk')
+/** 색 있는 둥근 아이콘 — 네이버 초록(예약·후기), 남색(진료시간), 주황(오시는 길). 선 아이콘 대신 브랜드 마크(오너: 더 잘 보이게). */
+function Icon({ kind }: { kind: 'star' | 'naver' | 'clock' | 'map' }) {
+  if (kind === 'star')
     return (
       <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#03C75A] text-white">
-        <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden><path d="M12 4c-4.7 0-8.5 3-8.5 6.8 0 2.4 1.6 4.5 4 5.7L6.8 20l4-2.4c.4 0 .8.1 1.2.1 4.7 0 8.5-3 8.5-6.8S16.7 4 12 4z" fill="currentColor" /></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1.1 5.9L12 16.9l-5.3 2.8 1.1-5.9-4.3-4.1 5.9-.8z" fill="currentColor" /></svg>
       </span>
     );
   if (kind === 'naver')
@@ -82,7 +81,7 @@ export function QuickMenu() {
       </div>
 
       {/* 모바일 — 아래 띠 */}
-      {/* 이모지 대신 선 아이콘·브랜드 마크(네이버 초록 N·톡톡 말풍선). 손가락에 맞게 높이 64px. */}
+      {/* 이모지 대신 선 아이콘·브랜드 마크(네이버 초록 N·별). 손가락에 맞게 높이 64px. 톡톡 상담 자리는 치료 후기 */}
       <div className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-4 border-t border-hairline bg-white/95 backdrop-blur md:hidden" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
         <a href={CLINIC.phoneHref} className="flex min-h-[72px] flex-col items-center justify-center gap-1.5 text-[13px] font-bold text-sun-600 active:bg-sun-50">
           <span className="flex h-8 w-8 items-center justify-center rounded-full bg-sun-500 text-white">
@@ -96,11 +95,11 @@ export function QuickMenu() {
           </span>
           예약
         </a>
-        <a href={CLINIC.booking.naverTalk} target="_blank" rel="noopener" className="flex min-h-[72px] flex-col items-center justify-center gap-1.5 text-[13px] font-bold text-ink active:bg-canvas">
+        <a href={CLINIC.booking.naverReview} target="_blank" rel="noopener" className="flex min-h-[72px] flex-col items-center justify-center gap-1.5 text-[13px] font-bold text-ink active:bg-canvas">
           <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#03C75A] text-white">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M12 4c-4.7 0-8.5 3-8.5 6.8 0 2.4 1.6 4.5 4 5.7L6.8 20l4-2.4c.4 0 .8.1 1.2.1 4.7 0 8.5-3 8.5-6.8S16.7 4 12 4z" fill="currentColor" /></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1.1 5.9L12 16.9l-5.3 2.8 1.1-5.9-4.3-4.1 5.9-.8z" fill="currentColor" /></svg>
           </span>
-          상담
+          후기
         </a>
         <Link href="/visit" className="flex min-h-[72px] flex-col items-center justify-center gap-1.5 text-[13px] font-bold text-ink active:bg-canvas">
           <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-600 text-white">

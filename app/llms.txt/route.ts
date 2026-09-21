@@ -22,7 +22,7 @@ export async function GET() {
   for (const t of CLINIC.transit) L.push(`- 교통: ${t.line} ${t.station} ${t.exit} ${t.walk}`);
   L.push(`- 주차: ${CLINIC.parking.place} ${CLINIC.parking.fee}`);
   L.push(`- 전화: ${CLINIC.phone} / 팩스: ${CLINIC.fax}`);
-  L.push(`- 예약: 네이버 예약 ${CLINIC.booking.naver} / 온라인 상담(네이버 톡톡) ${CLINIC.booking.naverTalk}`);
+  L.push(`- 예약: 네이버 예약 ${CLINIC.booking.naver} / 전화 ${CLINIC.phone}`);
   L.push(`- 의료진: ${DOCTORS.map((d) => `${d.name} ${d.role} (${d.specialty})`).join(', ')}`);
   L.push(`- 홈페이지: ${CLINIC.url}`);
   L.push('- 진료시간:');
