@@ -341,26 +341,37 @@ export function TmjPage({ doc }: { doc: Doc }) {
                 ))}
               </ul>
               {/* 3대 원인 상세 (2026-09-21 보완) — 위 카드 셋이 '무엇' 이라면 여기는 '왜 그것이 턱관절을 망가뜨리나' */}
+              {/* 좌우 짜임 (오너 지적 2026-09-21 "디자인 다듬자") — 왼쪽 남색 패널에 번호·제목·핵심 한 줄, 오른쪽에 설명과 항목 목록.
+                  항목은 알약 나열 대신 체크 목록 2열 — 알약이 줄바꿈되며 어수선했다 */}
               <ol className="reveal-stack mt-6 grid gap-4">
                 {TMJ_CAUSE_DETAIL.map((c) => (
-                  <li key={c.n} className="card p-6 md:p-8">
-                    <div className="flex flex-wrap items-center gap-3">
-                      <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-night text-[1.05rem] font-extrabold text-white">{c.n}</span>
-                      <h3 className="text-[1.2rem] font-extrabold text-ink md:text-[1.35rem]">{c.title}</h3>
-                      <span className="rounded-full bg-sun-50 px-3 py-1 text-[12.5px] font-bold text-sun-700">{c.tag}</span>
+                  <li key={c.n} className="card grid overflow-hidden md:grid-cols-[250px_1fr]">
+                    <div className="relative bg-night p-6 text-white md:p-7">
+                      <span aria-hidden className="absolute -right-2 -top-4 text-[6rem] font-extrabold leading-none text-white/[0.06] md:text-[7rem]">{c.n}</span>
+                      <span className="relative inline-block rounded-full bg-sun-500 px-3 py-1 text-[12px] font-bold text-white">{c.tag}</span>
+                      <h3 className="relative mt-3 text-[1.35rem] font-extrabold leading-tight md:text-[1.5rem]">{c.title}</h3>
+                      <p className="relative mt-3 text-[13.5px] leading-[1.65] text-white/70" style={{ wordBreak: 'keep-all' }}>{c.key}</p>
                     </div>
-                    {c.paragraphs.map((p) => (
-                      <p key={p} className="mt-3 text-[15px] leading-[1.85] text-ink-soft">
-                        <Sentences text={p} clauses={false} />
-                      </p>
-                    ))}
-                    {c.items && (
-                      <ul className="mt-4 flex flex-wrap gap-2">
-                        {c.items.map((it) => (
-                          <li key={it} className="rounded-full bg-canvas px-3.5 py-1.5 text-[13.5px] font-semibold text-ink-soft">{it}</li>
-                        ))}
-                      </ul>
-                    )}
+                    <div className="p-6 md:p-7">
+                      {c.paragraphs.map((p) => (
+                        <p key={p} className="mt-0 text-[14.5px] leading-[1.8] text-ink-soft [&:not(:first-child)]:mt-2.5">
+                          <Sentences text={p} clauses={false} />
+                        </p>
+                      ))}
+                      {c.items && (
+                        <ul className="mt-4 grid gap-x-6 gap-y-2 border-t border-hairline pt-4 sm:grid-cols-2">
+                          {c.items.map((it) => (
+                            <li key={it} className="flex gap-2.5 text-[14px] leading-[1.6] text-ink">
+                              <svg aria-hidden viewBox="0 0 20 20" className="mt-[3px] h-4 w-4 shrink-0 text-sun-500" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                                <circle cx="10" cy="10" r="8.5" className="opacity-30" />
+                                <path d="m6.5 10.3 2.4 2.4 4.8-5" />
+                              </svg>
+                              <span>{it}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
                   </li>
                 ))}
               </ol>

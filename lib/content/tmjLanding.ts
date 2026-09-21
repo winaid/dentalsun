@@ -230,12 +230,13 @@ export const TMJ_ANATOMY = {
 };
 
 /** 턱관절 장애의 3대 원인 — 참고 /tmj-causes 전문. 기존 원인 카드 3장(생활습관·이갈이·스트레스) 아래에 붙는 상세 */
-export interface TmjCauseDetail { n: string; title: string; tag: string; paragraphs: string[]; items?: string[] }
+export interface TmjCauseDetail { n: string; title: string; tag: string; key: string; paragraphs: string[]; items?: string[] }
 export const TMJ_CAUSE_DETAIL: TmjCauseDetail[] = [
   {
     n: '01',
     title: '부정교합',
     tag: '가장 큰 원인',
+    key: '치아가 맞물리지 않으면 관절이 틀어진 채 움직입니다',
     paragraphs: [
       '위아래 치아가 잘 맞물리지 않으면 턱관절이 틀어진 채 움직이고, 이것이 오래 이어지면 턱관절 장애가 됩니다. 톱니바퀴의 이가 맞지 않으면 기계가 망가지는 것과 같습니다.',
       '교합평면(위턱 치아 씹는 면이 이루는 가상의 평면)의 좌우·앞뒤 높낮이가 다르면 턱관절이 한쪽으로 기울어 움직입니다. 타이어 좌우 공기압이 다른 채 오래 달리면 차축이 틀어지는 것과 같은 원리입니다.',
@@ -253,6 +254,7 @@ export const TMJ_CAUSE_DETAIL: TmjCauseDetail[] = [
     n: '02',
     title: '외상',
     tag: '사고·충격',
+    key: '한 번의 큰 충격이 반년 뒤 증상으로 나타나기도 합니다',
     paragraphs: [
       '타박상이나 교통사고의 충격(Whiplash Injury)은 목뼈·척추뿐 아니라 턱관절에도 손상을 줍니다. 당시에는 대수롭지 않다가 6개월~1년 뒤 두통·뒷목 뻐근함·허리 통증·손발 저림·현기증·어깨 결림으로 나타나기도 합니다. 턱을 크게 다친 적이 있다면 진료 때 알려 주세요.',
     ],
@@ -267,6 +269,7 @@ export const TMJ_CAUSE_DETAIL: TmjCauseDetail[] = [
     n: '03',
     title: '습관 및 스트레스',
     tag: '매일 쌓이는 부담',
+    key: '자각하지 못한 습관이 관절을 조금씩 망가뜨립니다',
     paragraphs: [
       '매일 조금씩 쌓이는 힘도 턱관절을 망가뜨립니다. 대개 자각하지 못한 습관이라, 치료와 함께 습관을 찾아 고치는 과정이 필요합니다.',
     ],
