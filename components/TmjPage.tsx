@@ -286,7 +286,12 @@ export function TmjPage({ doc }: { doc: Doc }) {
                   ))}
                 </ol>
               </div>
-              <ul className="reveal-stack mt-4 grid gap-4 md:grid-cols-2">
+              {/* 구역 사이를 띄운다 — 사진·운동·3대 증상·통증 경로가 mt-4 로 붙어 한 덩어리로 보였다(오너 "너무 몰려 있다") */}
+              <div className="reveal mt-16 text-center md:mt-24">
+                <p className="text-[12px] font-bold tracking-[0.2em] text-sun-600">MOTION</p>
+                <h3 className="mt-2 text-[1.4rem] font-extrabold leading-tight text-ink md:text-[1.7rem]">턱관절은 <span className="accent-sun">이렇게 움직입니다</span></h3>
+              </div>
+              <ul className="reveal-stack mt-8 grid gap-4 md:grid-cols-2">
                 {TMJ_ANATOMY.motions.map((m) => (
                   <li key={m.title} className="card card-3d p-6 md:p-7">
                     <h3 className="text-[1.1rem] font-extrabold text-ink">{m.title}</h3>
@@ -297,9 +302,12 @@ export function TmjPage({ doc }: { doc: Doc }) {
                 ))}
               </ul>
               {/* 3대 증상 — 참고 사이트의 '턱관절 장애의 3대 증상' */}
-              <Triad className="mt-4" />
-              <div className="reveal card mt-4 p-7 md:p-9">
-                <h3 className="text-[1.2rem] font-extrabold text-ink md:text-[1.3rem]">{TMJ_ANATOMY.pain.title}</h3>
+              <Triad className="mt-16 md:mt-24" />
+              <div className="reveal mt-16 text-center md:mt-24">
+                <p className="text-[12px] font-bold tracking-[0.2em] text-sun-600">REFERRED PAIN</p>
+                <h3 className="mt-2 text-[1.4rem] font-extrabold leading-tight text-ink md:text-[1.7rem]">{TMJ_ANATOMY.pain.title}</h3>
+              </div>
+              <div className="reveal card mt-8 p-7 md:p-9">
                 <p className="mt-3 text-[15px] leading-[1.8] text-ink-soft">
                   <Sentences text={TMJ_ANATOMY.pain.lead} clauses={false} />
                 </p>

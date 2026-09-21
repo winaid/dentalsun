@@ -14,16 +14,37 @@ import { CLINIC, MEDICAL_DISCLAIMER } from '@/lib/clinic';
  *     → "…치료 방법을 제시해 / 드리고 있습니다." 같은 꼬리 고아 줄이 안 생긴다.
  * ★ split 은 경계에서만 자르므로 글자를 잃지 않는다. 좁은 화면에서는 덩어리를 풀어(inline) 자연스럽게 흐르게 둔다(globals.css).
  */
-/** 말하다 쉬는 자리 — 조사·연결어미로 끝나는 낱말 뒤 */
-const PAUSE_END = /(은|는|이|가|을|를|에|에서|으로|로|과|와|도|의|고|며|면|서|까지|부터|처럼|보다|에게|한테|마다|조차|이나|나|든|라서|해서|하면|해도|지만|는데|은데|더라도|으며|이며|하고|이고|라면|이라|다가|자마자)$/;
-/** 앞말과 한 덩어리로 읽히는 낱말 — 이 앞에서는 끊지 않는다("오차로 | 인해" 방지) */
-const NO_BREAK_BEFORE = /^(인해|인한|통해|통한|위해|위한|위해서|의해|의한|대해|대한|대해서|따라|따른|따라서|비해|비하면|걸쳐|관해|관한|함께|같이|더불어|이상|이하|이내|정도|만큼|때문|때문에|덕분|덕분에|이후|이전|동안|사이|뒤|후|전|중|안|밖|없이|없는|없어|있는|있어|있을|있습니다|없습니다|것|수|줄|지|등|및|또는|혹은|그리고|그래서|하지만|다른|같은|위|아래|옆)$/;
+/**
+ * 쉬는 자리 두 등급 (오너 규칙 보강 2026-09-21: "최대한 마침표·쉼표에서, 균형 맞출 때만 말 쉬는 데서")
+ *  - 센 쉼: 연결어미(…하고 | …지만 | …는데) — 절이 갈리는 자리라 여기서 끊어도 말이 안 끊긴다.
+ *  - 약한 쉼: 조사(…을 | …에서) — "운동을 | 하기 때문에" 처럼 목적어와 동사가 갈라진다. 센 쉼으로 잘라도
+ *    덩어리가 너무 길 때(LONG_MAX)만 보조로 쓴다.
+ */
+const STRONG_PAUSE_END = /(고|며|면|서|라서|해서|하면|해도|지만|는데|은데|더라도|으며|이며|하고|이고|라면|다가|자마자|니까|므로)$/;
+/* '의'(소유격)는 뒷말과 한 덩어리라 쉼 자리에서 뺐다("끝의 | 둥근 부분" 방지) */
+const PAUSE_END = /(은|는|이|가|을|를|에|에서|으로|로|과|와|도|고|며|면|서|까지|부터|처럼|보다|에게|한테|마다|조차|이나|나|든|라서|해서|하면|해도|지만|는데|은데|더라도|으며|이며|하고|이고|라면|이라|다가|자마자|니까|므로)$/;
+/** 앞말과 한 덩어리로 읽히는 낱말 — 이 앞에서는 끊지 않는다("오차로 | 인해", "가지고 | 있고" 방지) */
+const NO_BREAK_BEFORE = /^(인해|인한|통해|통한|위해|위한|위해서|의해|의한|대해|대한|대해서|따라|따른|따라서|비해|비하면|걸쳐|관해|관한|함께|같이|더불어|이상|이하|이내|정도|만큼|때문|때문에|덕분|덕분에|이후|이전|동안|사이|뒤|후|전|중|안|밖|없이|없는|없어|없고|없다|없으며|없기|있는|있어|있을|있고|있다|있으며|있어서|있으면|있기|있습니다|없습니다|않고|않는|않은|않아|않으면|못한|못하는|것|수|줄|지|등|및|또는|혹은|그리고|그래서|하지만|다른|같은|위|아래|옆)$/;
+/** 뒷말을 꾸미는 낱말 — 이 뒤에서는 끊지 않는다("볼 베어링 같은 | 구조로" 방지). 관형사·관형형·부사 몇 개 */
+const NO_BREAK_AFTER = /^(같은|다른|이런|그런|저런|어떤|모든|여러|각|매|새|첫|두|세|네|한|그|이|저|및|또는|혹은|가장|더|덜|안|못|바로|아주|매우|너무|약|총|전|후|약간|다소|주로|대개|대부분|거의|보다|훨씬|꼭|늘|자주|다시|먼저|미리|함께)$/;
+/** 관형형 어미로 끝나는 낱말 — 뒤의 명사를 꾸미므로 뒤에서 끊지 않는다("돌아가는 | 운동", "많은 | 사람" 방지) */
+const NO_BREAK_AFTER_END = /(하는|되는|가는|오는|지는|나는|보는|주는|받는|이는|리는|르는|치는|우는|내는|키는|시는|하던|되던|작은|많은|적은|높은|낮은|좋은|나쁜|넓은|좁은|깊은|짧은|젊은|밝은|굵은|얇은|굳은|굽은|틀어진|벗어난|눌린|밀린|남은|둥근|[가-힣]된|[가-힣]한|적인|스러운|[가-힣]할|[가-힣]될)$/;
+/** "사소하고 | 다양한 원인", "딱딱하고 | 질긴 음식" — '고' 로 이어진 꾸밈말 짝은 안 가른다 */
+const COORD_MODIFIER = /(한|된|스러운|적인|긴|운|는|은|진|린|든)$/;
+/** 앞말에 붙어 읽히는 뒷말 꼴 — "자기도 | 모르게", "…을 | 싣는" 방지 */
+const NO_BREAK_BEFORE_END = /(게|듯|채)$/;
+const OBJECT_MARK = /(을|를)$/;
+const VERB_LIKE = /(는|은|던|을|고|며|면|서|해|여|아|어|다|지|게|기|려|러|니다|습니다)$/;
 /** 한 덩어리는 이 길이를 넘긴 뒤 처음 만나는 쉼 자리에서 닫는다 */
 const CHUNK_MIN = 13;
+/** 센 쉼으로만 잘라도 덩어리가 이보다 길면 약한 쉼(조사)에서 한 번 더 나눈다 — 좁은 카드(≈24자)에 한 덩어리가 들어가는 길이 */
+const LONG_MAX = 24;
 /** 마지막 덩어리가 이보다 짧으면 앞 덩어리에 붙인다(꼬리 고아 방지) */
-const TAIL_MIN = 7;
+const TAIL_MIN = 9;
 /** 이 길이 이하의 마디는 덩어리로 나누지 않는다 */
-const NO_SPLIT_MAX = 22;
+const NO_SPLIT_MAX = 24;
+/** 쉼표 앞 조각이 이보다 짧으면 나열(소리, 통증, 개구 제한)로 보고 마디를 가르지 않는다 */
+const ENUM_MAX = 8;
 
 /** 여는 괄호 − 닫는 괄호 — 0 보다 크면 괄호 안 */
 function parenDelta(s: string): number {
@@ -48,30 +69,72 @@ export function splitClauses(s: string): string[] {
     }
   }
   if (cur.trim()) out.push(cur.trim());
-  return out;
+  /*
+   * 나열 쉼표는 마디 경계가 아니다 (오너 2026-09-21: "나열되는 쉼표마다 줄바꿈하지 말고").
+   * 쉼표 앞 조각이 짧으면("부정교합," "외상,") 다음 조각에 붙여 한 마디로 둔다.
+   */
+  const merged: string[] = [];
+  for (const piece of out) {
+    const prev = merged[merged.length - 1];
+    if (prev && prev.endsWith(',') && prev.slice(0, -1).trim().length <= ENUM_MAX) merged[merged.length - 1] = `${prev} ${piece}`;
+    else merged.push(piece);
+  }
+  return merged;
 }
 
-export function pauseChunks(clause: string): string[] {
-  if (clause.length <= NO_SPLIT_MAX) return [clause];
-  const words = clause.split(/\s+/).filter(Boolean);
+const strip = (w: string) => w.replace(/[,.!?…)”’"']+$/, '');
+
+/** 낱말 배열을 쉼 자리(pause 판정)에서 덩어리로 — 괄호 안·꾸밈말 뒤·붙는 말 앞에서는 쉬지 않는다 */
+/** 두 낱말 사이를 끊어도 되는가 — 꾸밈말 뒤·붙는 말 앞·소유격 뒤·'고' 짝·목적어+동사는 안 된다 */
+function canBreakBetween(w: string, next: string): boolean {
+  const bare = strip(w);
+  const nx = strip(next);
+  if (NO_BREAK_AFTER.test(bare) || NO_BREAK_AFTER_END.test(bare) || /의$/.test(bare)) return false;
+  if (NO_BREAK_BEFORE.test(nx) || NO_BREAK_BEFORE_END.test(nx)) return false;
+  if (/고$/.test(bare) && COORD_MODIFIER.test(nx)) return false;
+  /* 목적어와 그것을 받는 동사("힘을 싣는", "구조를 가지고", "치료를 시작합니다")는 한 덩어리 */
+  if (OBJECT_MARK.test(bare) && VERB_LIKE.test(nx)) return false;
+  return true;
+}
+
+/**
+ * 낱말을 한 덩어리 글자열로 — 끊으면 안 되는 짝은 **붙임 공백**(U+00A0)으로 묶는다.
+ * 덩어리가 칸보다 넓어 브라우저가 안에서 줄을 바꿔야 할 때도, 그 자리는 우리가 허락한 곳뿐이다.
+ * (예전엔 "딱딱하고 | 질긴", "잘못된 | 자세로" 처럼 덩어리 안의 아무 공백에서나 꺾였다)
+ */
+const glue = (words: string[]) => words.map((w, i) => (i === 0 ? w : (canBreakBetween(words[i - 1], w) ? ' ' : ' ') + w)).join('');
+const unglue = (s: string) => s.split(/[  ]+/).filter(Boolean);
+
+function chunkBy(words: string[], pause: RegExp, min: number): string[] {
   const chunks: string[] = [];
   let cur: string[] = [];
   let len = 0;
-  let depth = 0; /* 괄호 안에서는 쉬지 않는다 */
+  let depth = 0;
   for (let i = 0; i < words.length; i++) {
     const w = words[i];
     const next = words[i + 1];
     cur.push(w);
     len += w.length + 1;
     depth += parenDelta(w);
-    const bare = w.replace(/[,.!?…)”’"']+$/, '');
-    if (depth <= 0 && len >= CHUNK_MIN && next && PAUSE_END.test(bare) && !NO_BREAK_BEFORE.test(next.replace(/[,.!?…)”’"']+$/, ''))) {
-      chunks.push(cur.join(' '));
+    /* 쉼표는 길이와 상관없이 첫째 쉼 자리 — 오너: "최대한 마침표·쉼표에서". 마디를 안 나누는 자리(clauses=false)에서도 */
+    const isComma = /[,，]$/.test(w);
+    const isPause = isComma || pause.test(strip(w));
+    if (depth <= 0 && next && isPause && (isComma || len >= min) && canBreakBetween(w, next)) {
+      chunks.push(glue(cur));
       cur = [];
       len = 0;
     }
   }
-  if (cur.length) chunks.push(cur.join(' '));
+  if (cur.length) chunks.push(glue(cur));
+  return chunks;
+}
+
+export function pauseChunks(clause: string): string[] {
+  const words = clause.split(/\s+/).filter(Boolean);
+  /* 짧은 마디는 덩어리로 안 나누되, 금지 자리는 붙임 공백으로 묶어 둔다(좁은 칸에서 아무 데서나 꺾이지 않게) */
+  if (clause.length <= NO_SPLIT_MAX) return [glue(words)];
+  /* 1차: 센 쉼(연결어미·쉼표)에서만. 2차: 그래도 긴 덩어리만 약한 쉼(조사)에서 한 번 더 */
+  const chunks = chunkBy(words, STRONG_PAUSE_END, CHUNK_MIN).flatMap((c) => (c.length > LONG_MAX ? chunkBy(unglue(c), PAUSE_END, CHUNK_MIN) : [c]));
   if (chunks.length >= 2 && chunks[chunks.length - 1].length < TAIL_MIN) {
     const tail = chunks.pop()!;
     chunks[chunks.length - 1] += ' ' + tail;
