@@ -14,7 +14,7 @@ import { BeforeAfter } from '@/components/BeforeAfter';
 import { CASE_GROUPS, CASE_NOTE } from '@/lib/cases';
 import { CLINIC, HOURS, HYGIENE, MONTHLY_NOTICE, STRENGTHS } from '@/lib/clinic';
 import { DOCTORS } from '@/lib/doctors';
-import { TREATMENT_HUBS } from '@/lib/nav';
+import type { NavItem } from '@/lib/nav';
 import { SITE_FAQ } from '@/lib/faq';
 import { figSrc } from '@/lib/docs';
 import { faqSchema, medicalWebPageSchema, og, physicianSchema } from '@/lib/seo';
@@ -27,6 +27,36 @@ export const metadata: Metadata = {
 
 /** 홈 FAQ — 사이트 FAQ 에서 묶음마다 첫 질문 하나씩. 화면과 스키마가 같은 배열. */
 const HOME_FAQ = SITE_FAQ.map((g) => g.items[0]);
+
+/**
+ * 홈 '진료과목' 7 갈래 — 2026-09-21 메뉴가 5개로 줄었지만 홈의 이 구역은 예전 일곱 갈래 그대로(오너 "너무 적으니 이전처럼").
+ * 메뉴(lib/nav)와 따로 두는 유일한 목록이다. 하위 이름은 아코디언 접힌 띠·폰 카드의 한 줄 요약에만 쓴다.
+ */
+const HOME_HUBS: NavItem[] = [
+  { label: '임플란트', href: '/treatment/implant', children: [
+    { label: '디지털 맞춤 임플란트', href: '/treatment/implant/navigation' }, { label: '풀아치 임플란트', href: '/treatment/implant/full-arch' },
+    { label: 'UV 임플란트', href: '/treatment/implant/uv' }, { label: '자가혈 임플란트', href: '/treatment/implant/prf' }, { label: '보증제도', href: '/treatment/implant/warranty' },
+  ] },
+  { label: '턱관절', href: '/treatment/tmj', children: [
+    { label: '턱관절 장애란?', href: '/treatment/tmj' }, { label: '증상과 자가진단', href: '/treatment/tmj/symptoms' }, { label: '치료법', href: '/treatment/tmj/treatment' },
+  ] },
+  { label: '심미치료', href: '/treatment/aesthetic', children: [
+    { label: '심미보철', href: '/treatment/aesthetic/prosthetics' }, { label: '치아미백', href: '/treatment/aesthetic/whitening' },
+  ] },
+  { label: '보험 틀니&임플란트', href: '/treatment/insurance', children: [
+    { label: '보험틀니', href: '/treatment/insurance/denture' }, { label: '보험임플란트', href: '/treatment/insurance/implant' },
+  ] },
+  { label: '매복사랑니', href: '/treatment/wisdom-tooth', children: [
+    { label: '사랑니발치 노하우', href: '/treatment/wisdom-tooth' }, { label: '발생되는 문제', href: '/treatment/wisdom-tooth#problems' }, { label: '발치과정', href: '/treatment/wisdom-tooth#process' },
+  ] },
+  { label: '자연치아살리기', href: '/treatment/natural-tooth', children: [
+    { label: 'MTA 신경치료', href: '/treatment/natural-tooth/mta' }, { label: '엔도소닉 초음파 세척기', href: '/treatment/natural-tooth/endosonic' },
+  ] },
+  { label: '무통&저자극시스템', href: '/treatment/painless', children: [
+    { label: '무통마취', href: '/treatment/painless/anesthesia' }, { label: '도포 & 가글마취', href: '/treatment/painless/anesthesia#topical' },
+    { label: '수면마취', href: '/treatment/painless/sedation' }, { label: '에어 플로우', href: '/treatment/painless/airflow' },
+  ] },
+];
 
 const HUB_ICON: Record<string, string> = {
   '/treatment/implant': 'M12 3l3 4h-6l3-4zm-3 6h6v6a3 3 0 0 1-6 0V9z',
@@ -66,6 +96,7 @@ export default function HomePage() {
     { href: '/treatment/implant/full-arch', label: '풀아치(전체) 임플란트', desc: '4~6개 최소식립으로 무치악 해결.', fig: 'orig/implant-fa-fixed' },
     { href: '/treatment/implant/uv', label: 'UV 임플란트', desc: '잇몸이 좋지 않다면.', fig: 'ai/implant-uv' },
     { href: '/treatment/implant/prf', label: '자가혈 임플란트', desc: '뼈이식이 필요하다면.', fig: 'ai/implant-prf' },
+    { href: '/treatment/insurance', label: '보험 틀니 · 임플란트', desc: '만 65세 이상 건강보험 적용.', fig: 'ai/insurance-hub' },
     { href: '/treatment/implant/warranty', label: '보증제도', desc: '치료 후 철저한 사후 관리.', fig: 'ai/implant-warranty' },
   ];
 
@@ -123,7 +154,7 @@ export default function HomePage() {
             {/* 넓은 화면: 펼침 아코디언 띠(오너 선택). 좁은 화면: 아래 카드 격자. */}
             <HubAccordion
               items={[
-                ...TREATMENT_HUBS.map((h) => ({
+                ...HOME_HUBS.map((h) => ({
                   href: h.href,
                   label: h.label,
                   short: HUB_SHORT[h.href] ?? h.label,
@@ -136,7 +167,7 @@ export default function HomePage() {
             {/* ★ .grid-cards 의 display:grid 가 lg:hidden 을 이기므로 감싸는 상자에서 숨긴다 */}
             <div className="lg:hidden">
             <ul className="reveal-stack grid-cards mt-12 grid-cols-2">
-              {TREATMENT_HUBS.map((h) => (
+              {HOME_HUBS.map((h) => (
                 <li key={h.href} className="last:col-span-2">
                   <Link href={h.href} className="card card-hover group flex h-full flex-col overflow-hidden">
                     <span className="card-img block">
