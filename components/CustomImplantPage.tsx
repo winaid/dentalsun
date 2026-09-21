@@ -247,12 +247,30 @@ export function CustomImplantPage({ doc }: { doc: Doc }) {
 
             {/* ── 4. 디지털 제작 → 과정 4 → 디자인에서 살피는 것 4 ── */}
             <section id="digital" className="scroll-mt-[96px] pt-24 md:pt-32" aria-labelledby="ci-digital">
-              <Head id="ci-digital" big={<Word>CAD / CAM</Word>} title={<>보철물 제작도 <span className="accent-sun">디지털로</span> 정밀하게</>} />
-              <div className="reveal mt-10 rounded-[28px] bg-night p-7 text-white md:p-10">
-                <Paras text={CI_DIGITAL.paragraphs} className="text-[15.5px] leading-[1.85] text-white/85" />
+              <Head id="ci-digital" big={<Word>CAD / CAM</Word>} title={<>보철물 제작도 <span className="accent-sun">디지털로</span> 정밀하게</>} lead={CI_DIGITAL.lead} />
+              {/* 장비 흐름 한 줄 — 스캐너 › CAD › 프린터 = 수술 당일 임시 보철 (두 단락 띠는 오너 "너무 안 보이고 문구 많고") */}
+              <div className="reveal mt-10 rounded-[24px] border border-hairline bg-canvas p-5 md:p-6">
+                <div className="flex flex-col items-stretch gap-3 lg:flex-row lg:items-center">
+                  <ol className="flex flex-1 flex-col gap-2 sm:flex-row sm:items-center">
+                    {CI_DIGITAL.chain.map((c, i) => (
+                      <li key={c} className="flex flex-1 items-center gap-2">
+                        <span className="flex h-[52px] flex-1 items-center justify-center gap-2 rounded-xl bg-white px-4 text-[15px] font-extrabold text-ink shadow-[var(--shadow-soft)]">
+                          <span className="text-[12px] font-extrabold tracking-[0.12em] text-sun-500">0{i + 1}</span>
+                          {c}
+                        </span>
+                        {i < CI_DIGITAL.chain.length - 1 && <span aria-hidden className="hidden text-[1.3rem] text-ink-muted sm:block">›</span>}
+                      </li>
+                    ))}
+                  </ol>
+                  <span aria-hidden className="hidden text-[1.5rem] font-light text-ink-muted lg:block">=</span>
+                  <span className="flex h-[52px] items-center justify-center rounded-xl bg-night px-6 text-[15px] font-extrabold text-white lg:min-w-[240px]">
+                    <span className="mr-2 text-sun-300">✓</span>{CI_DIGITAL.result}
+                  </span>
+                </div>
+                <p className="mt-4 text-center text-[13.5px] text-ink-muted">{CI_DIGITAL.note}</p>
               </div>
 
-              <SubHead eyebrow="PROCESS · 4 STEPS" title={<>맞춤 기둥이 <span className="accent-sun">만들어지는 과정</span></>} lead={CI_PROCESS.lead} />
+              <SubHead eyebrow="PROCESS · 4 STEPS" title={<>맞춤 기둥이 <span className="accent-sun">만들어지는 과정</span></>} />
               <ol className="reveal-stack mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 {CI_PROCESS.steps.map((s, i) => (
                   <li key={s.title} className="card relative flex flex-col overflow-hidden">
@@ -290,30 +308,33 @@ export function CustomImplantPage({ doc }: { doc: Doc }) {
             {/* ── 5. 왜 중요할까요 + 시술 받을 경우 ── */}
             <section id="why" className="scroll-mt-[96px] pt-24 md:pt-32" aria-labelledby="ci-why">
               <Head id="ci-why" big={<Word>WHY</Word>} title={<>맞춤 임플란트, <span className="accent-sun">왜 중요할까요</span>?</>} />
-              {/* 사진(왼쪽) · 낱말 라벨을 단 세 칸(오른쪽) — 글 덩어리 대신(오너 "문구만 있어서 디자인 다듬자") */}
-              <div className="reveal-stack mt-12 grid gap-6 lg:grid-cols-[0.72fr_1.28fr] lg:items-stretch">
-                <span className="img-in relative block min-h-[300px] overflow-hidden rounded-[24px] bg-canvas-2">
-                  <Image src={figSrc(CI_WHY.fig.key)} alt={CI_WHY.fig.alt} fill sizes="(max-width: 1024px) 100vw, 360px" className="object-cover" />
-                </span>
-                <ol className="grid gap-3">
-                  {CI_WHY.points.map((p, i) => (
-                    <li key={p.title} className="card grid gap-3 p-5 sm:grid-cols-[132px_1fr] sm:items-center md:p-6">
-                      <span className="flex h-full min-h-[64px] items-center justify-center rounded-xl bg-night px-3 text-center text-[13px] font-extrabold leading-snug text-sun-300">{p.label}</span>
-                      <span className="min-w-0">
-                        <span className="flex items-center gap-2 text-[12px] font-extrabold tracking-[0.16em] text-sun-600">0{i + 1}</span>
-                        <span className="mt-0.5 block text-[1.05rem] font-extrabold text-ink">{p.title}</span>
-                        <span className="mt-1 block text-[14.5px] leading-[1.7] text-ink-soft">{p.desc}</span>
-                      </span>
-                    </li>
-                  ))}
-                </ol>
-              </div>
-              {/* 상담 한 줄 + 단추 — 참고 두 쪽의 마지막 문장 */}
-              <div className="reveal mt-6 flex flex-col items-start gap-4 rounded-2xl bg-sun-50/70 p-6 md:flex-row md:items-center md:justify-between md:p-7">
-                <p className="text-[15.5px] font-semibold leading-[1.7] text-ink">
-                  <Sentences text={CI_WHY.cta} clauses={false} />
-                </p>
-                <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="btn-sun shrink-0">네이버 예약</a>
+              {/* 어두운 한 판 — 사진(왼쪽) · 큰 숫자 세 줄(오른쪽) · 아래 상담 띠. 세 부분 상자와 같은 결 (라벨 상자 세 줄은 오너 "너무 별론데") */}
+              <div className="reveal mt-12 overflow-hidden rounded-[28px] bg-night text-white">
+                <div className="grid lg:grid-cols-[0.78fr_1.22fr]">
+                  <span className="relative block min-h-[260px] lg:min-h-0">
+                    <Image src={figSrc(CI_WHY.fig.key)} alt={CI_WHY.fig.alt} fill sizes="(max-width: 1024px) 100vw, 400px" className="object-cover" />
+                    <span aria-hidden className="absolute inset-0 bg-gradient-to-t from-night/70 via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:via-transparent lg:to-night" />
+                  </span>
+                  <ol className="p-7 md:p-10">
+                    {CI_WHY.points.map((p, i) => (
+                      <li key={p.title} className={`grid gap-4 py-6 first:pt-0 last:pb-0 sm:grid-cols-[88px_1fr] ${i > 0 ? 'border-t border-white/12' : ''}`}>
+                        <span className="text-[2.6rem] font-extralight leading-none tracking-[-0.04em] text-sun-300" aria-hidden>0{i + 1}</span>
+                        <span className="min-w-0">
+                          <span className="block text-[12px] font-bold tracking-[0.16em] text-white/50">{p.label}</span>
+                          <span className="mt-1 block text-[1.15rem] font-extrabold">{p.title}</span>
+                          <span className="mt-1.5 block text-[14.5px] leading-[1.75] text-white/70">{p.desc}</span>
+                        </span>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+                {/* 상담 한 줄 + 단추 — 참고 두 쪽의 마지막 문장 */}
+                <div className="flex flex-col items-start gap-4 border-t border-white/12 bg-white/[0.04] px-7 py-6 md:flex-row md:items-center md:justify-between md:px-10">
+                  <p className="text-[15.5px] font-semibold leading-[1.7] text-white/90">
+                    <Sentences text={CI_WHY.cta} clauses={false} />
+                  </p>
+                  <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="btn-sun shrink-0">네이버 예약</a>
+                </div>
               </div>
 
               {/* 기성품이라면 → 맞춤이라면 대비 + 달라지는 것 셋 */}
