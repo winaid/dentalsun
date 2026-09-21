@@ -202,11 +202,18 @@ export function TmjPage({ doc }: { doc: Doc }) {
               </div>
               <div className="reveal card mt-4 p-7 md:p-9">
                 <h3 className="text-[1.2rem] font-extrabold text-ink md:text-[1.3rem]">{TMJ_ANATOMY.pain.title}</h3>
-                {TMJ_ANATOMY.pain.paragraphs.map((p) => (
-                  <p key={p} className="mt-3 text-[15px] leading-[1.85] text-ink-soft">
-                    <Sentences text={p} clauses={false} />
-                  </p>
-                ))}
+                <p className="mt-3 text-[15px] leading-[1.8] text-ink-soft">
+                  <Sentences text={TMJ_ANATOMY.pain.lead} clauses={false} />
+                </p>
+                {/* 경로 3 — 긴 문단 대신 '증상 ← 이유' 한 줄씩 */}
+                <ul className="mt-5 grid gap-3 md:grid-cols-3">
+                  {TMJ_ANATOMY.pain.routes.map((r) => (
+                    <li key={r.label} className="rounded-2xl bg-canvas p-4">
+                      <span className="block text-[15px] font-extrabold text-ink">{r.label}</span>
+                      <span className="mt-1 block text-[13.5px] leading-[1.65] text-ink-soft">{r.desc}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </section>
 
@@ -370,9 +377,13 @@ export function TmjPage({ doc }: { doc: Doc }) {
               <ol className="reveal-stack mt-12 grid gap-4 md:grid-cols-2">
                 {TMJ_BODY_CHAIN.map((b) => (
                   <li key={b.n} className="card p-6 md:p-7">
-                    <span className="text-[13px] font-extrabold tracking-[0.18em] text-sun-500">{b.n}</span>
-                    <h3 className="mt-1.5 text-[1.15rem] font-extrabold text-ink md:text-[1.25rem]">{b.title}</h3>
-                    <p className="mt-2.5 text-[14.5px] leading-[1.85] text-ink-soft">
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+                      <span className="text-[13px] font-extrabold tracking-[0.18em] text-sun-500">{b.n}</span>
+                      <h3 className="text-[1.15rem] font-extrabold text-ink md:text-[1.25rem]">{b.title}</h3>
+                    </div>
+                    {/* 이어지는 순서를 한 줄로 — 긴 설명을 읽기 전에 흐름부터 보이게 */}
+                    <p className="mt-3 inline-block rounded-full bg-brand-50 px-3 py-1 text-[12.5px] font-bold text-brand-700">{b.chain}</p>
+                    <p className="mt-3 text-[14.5px] leading-[1.8] text-ink-soft">
                       <Sentences text={b.desc} clauses={false} />
                     </p>
                   </li>
@@ -517,43 +528,58 @@ export function TmjPage({ doc }: { doc: Doc }) {
                 <div className="card p-7 md:p-8">
                   <p className="text-[12px] font-bold tracking-[0.2em] text-brand-700">STEP 1 · SPLINT</p>
                   <h3 className="mt-2 text-[1.2rem] font-extrabold text-ink">{TMJ_SPLINT_ROLE.title}</h3>
-                  {TMJ_SPLINT_ROLE.paragraphs.map((p) => (
-                    <p key={p} className="mt-3 text-[14.5px] leading-[1.85] text-ink-soft">
-                      <Sentences text={p} clauses={false} />
-                    </p>
-                  ))}
+                  <p className="mt-3 text-[14.5px] leading-[1.8] text-ink-soft">
+                    <Sentences text={TMJ_SPLINT_ROLE.lead} clauses={false} />
+                  </p>
+                  {/* 라벨 열 + 글 열 — 자가진단 카드와 같은 짜임 */}
+                  <dl className="mt-5 space-y-3">
+                    {TMJ_SPLINT_ROLE.points.map((p) => (
+                      <div key={p.label} className="grid grid-cols-[64px_1fr] gap-3">
+                        <dt className="pt-0.5 text-[12.5px] font-extrabold tracking-[0.06em] text-brand-700">{p.label}</dt>
+                        <dd className="text-[14px] leading-[1.7] text-ink-soft">{p.desc}</dd>
+                      </div>
+                    ))}
+                  </dl>
                 </div>
                 <div className="card p-7 md:p-8">
                   <p className="text-[12px] font-bold tracking-[0.2em] text-sun-600">ARTHROCENTESIS</p>
                   <h3 className="mt-2 text-[1.2rem] font-extrabold text-ink">{TMJ_ARTHRO.title}</h3>
-                  {TMJ_ARTHRO.paragraphs.map((p) => (
-                    <p key={p} className="mt-3 text-[14.5px] leading-[1.85] text-ink-soft">
-                      <Sentences text={p} clauses={false} />
-                    </p>
-                  ))}
-                  <p className="mt-5 text-[13px] font-extrabold tracking-[0.12em] text-ink">이런 점이 있습니다</p>
-                  <ul className="mt-2.5 space-y-2">
-                    {TMJ_ARTHRO.merits.map((m) => (
-                      <li key={m} className="flex gap-2.5 text-[14px] leading-[1.7] text-ink-soft">
-                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-sun-500" aria-hidden />
-                        <span>{m}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <ul className="mt-4 flex flex-wrap gap-2">
-                    {TMJ_ARTHRO.effects.map((e) => (
-                      <li key={e} className="rounded-full bg-brand-50 px-3 py-1.5 text-[13px] font-semibold text-brand-700">{e}</li>
-                    ))}
-                  </ul>
+                  <p className="mt-3 text-[14.5px] leading-[1.8] text-ink-soft">
+                    <Sentences text={TMJ_ARTHRO.lead} clauses={false} />
+                  </p>
+                  <div className="mt-5 grid gap-4 sm:grid-cols-[1fr_auto]">
+                    <div>
+                      <p className="text-[12.5px] font-extrabold tracking-[0.06em] text-brand-700">장점</p>
+                      <ul className="mt-2 space-y-1.5">
+                        {TMJ_ARTHRO.merits.map((m) => (
+                          <li key={m} className="flex gap-2 text-[14px] leading-[1.6] text-ink-soft">
+                            <span className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-sun-500" aria-hidden />
+                            <span>{m}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="sm:min-w-[150px]">
+                      <p className="text-[12.5px] font-extrabold tracking-[0.06em] text-brand-700">효과</p>
+                      <ul className="mt-2 space-y-1.5">
+                        {TMJ_ARTHRO.effects.map((e) => (
+                          <li key={e} className="rounded-xl bg-brand-50 px-3 py-2 text-[13px] font-semibold leading-snug text-brand-700">{e}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
                 </div>
               </div>
               {/* 보조적인 치료 3 — 행동 조절·물리치료·약물치료 */}
               <ul className="reveal-stack mt-4 grid gap-4 md:grid-cols-3">
                 {TMJ_SUPPORT_CARE.map((s, i) => (
                   <li key={s.title} className="card p-6 md:p-7">
-                    <span className="num">{String(i + 1).padStart(2, '0')}</span>
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="num">{String(i + 1).padStart(2, '0')}</span>
+                      <span className="rounded-full bg-sun-50 px-3 py-1 text-[12px] font-bold text-sun-700">{s.tag}</span>
+                    </div>
                     <h3 className="mt-3 text-[1.1rem] font-extrabold text-ink">{s.title}</h3>
-                    <p className="mt-2 text-[14.5px] leading-[1.8] text-ink-soft">
+                    <p className="mt-2 text-[14.5px] leading-[1.75] text-ink-soft">
                       <Sentences text={s.desc} clauses={false} />
                     </p>
                   </li>
