@@ -10,6 +10,14 @@ import { ContactCard, DoctorCard } from '@/components/SideRail';
 import { figSize, figSrc, fitsBox, type Doc } from '@/lib/docs';
 import { docByPath } from '@/lib/content';
 import {
+  TMJ_ANATOMY,
+  TMJ_ARTHRO,
+  TMJ_ASYMMETRY_CAUSES,
+  TMJ_ASYMMETRY_SIGNS,
+  TMJ_BODY_CHAIN,
+  TMJ_BODY_CHECK,
+  TMJ_BODY_NOTE,
+  TMJ_CAUSE_DETAIL,
   TMJ_CAUSES,
   TMJ_EQUIP,
   TMJ_HABITS,
@@ -25,8 +33,10 @@ import {
   TMJ_SELF_PHOTO_NOTE,
   TMJ_SELF_PHOTOS,
   TMJ_SELF_TESTS,
+  TMJ_SPLINT_ROLE,
   TMJ_SPLINT_TIPS,
   TMJ_STEPS,
+  TMJ_SUPPORT_CARE,
   TMJ_SYMPTOMS,
 } from '@/lib/content/tmjLanding';
 import { breadcrumbSchema, faqSchema, imageObjectSchema, medicalWebPageSchema } from '@/lib/seo';
@@ -35,7 +45,10 @@ import { CLINIC, HOURS, MONTHLY_NOTICE } from '@/lib/clinic';
 /**
  * 턱관절 — 한 페이지(2026-09-09 통합). 레퍼런스(tmjdoctor.co.kr 턱관절)의 짜임새를 따르되 글·사진은 옛 홈페이지와 오너 실사.
  *  메뉴의 하위 항목은 이 페이지의 구역으로 간다: #knowhow(노하우) · #symptoms(주요증상) · #treatments(치료방법).
- *  흐름: 콜라주 히어로 → TMJ → 증상 4 + 함께 오는 증상 + 자가 점검 → 원인 3 → 노하우 3 → 치료 5 + 원칙·스플린트 → 장비 2 → 생활습관 6 → FAQ 12.
+ *  흐름: 콜라주 히어로 → TMJ → 구조와 기능(#anatomy) → 증상 4 + 자가 점검 → 원인 3 + 3대 원인 상세
+ *        → 전신 연결(#whole-body) → 노하우 3 → 치료 5 + 원칙·스플린트·세척술·보조치료 → 장비 2 → 생활습관 6 → FAQ 17.
+ *  2026-09-21: 오너가 준 참고(4dortho.co.kr 턱관절 메뉴 7쪽)를 항목 단위로 대조해 빠진 쪽(구조와 기능·
+ *  원인 상세·전신증상·치료 상세)을 채웠다. 옮기지 않은 것과 그 이유는 lib/content/tmjLanding.ts 주석 참조.
  *  오른쪽 사이드바: 원장 배너 · 구역 안내 · 진단 과정 · 진료시간 · 질문. 구조화 데이터·FAQ 는 Doc(lib/content/tmj.ts)에서.
  *  ★ 구역 이동 목차(점프 메뉴)는 두지 않는다(오너 지시) — 사이드바 안내는 메뉴와 같은 세 구역 링크뿐.
  */
@@ -133,6 +146,68 @@ export function TmjPage({ doc }: { doc: Doc }) {
                   </li>
                 ))}
               </ul>
+            </section>
+
+            {/* ── #anatomy — 턱관절의 구조와 기능 (2026-09-21 보완) ──
+                 증상·원인을 읽기 전에 "턱관절이 어떤 관절인가" 를 먼저 둔다. 디스크가 무엇인지 모르면
+                 "디스크가 제자리를 벗어났다" 는 뒤의 설명이 읽히지 않는다. */}
+            <section id="anatomy" className="scroll-mt-[96px] pt-20 md:pt-28" aria-labelledby="tmj-anatomy">
+              <Head
+                id="tmj-anatomy"
+                big={<span className="tmj-big !text-[2.4rem] md:!text-[3.4rem]" aria-hidden>ANATOMY</span>}
+                title={<>턱관절은 <span className="accent-sun">어떤 관절</span>일까요</>}
+                lead={TMJ_ANATOMY.lead}
+              />
+              <div className="reveal-stack mt-12 grid gap-8 lg:grid-cols-[1.02fr_1fr] lg:items-center">
+                <span className="img-in relative block aspect-[3/2] overflow-hidden rounded-[24px] bg-canvas-2">
+                  <Image src={figSrc(TMJ_ANATOMY.fig.key)} alt={TMJ_ANATOMY.fig.alt} fill sizes="(max-width: 1024px) 100vw, 560px" className="object-cover" />
+                </span>
+                <ol className="grid gap-4">
+                  {TMJ_ANATOMY.parts.map((p, i) => (
+                    <li key={p.title} className="card flex gap-4 p-5 md:p-6">
+                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-[14px] font-extrabold text-brand-700">{String(i + 1).padStart(2, '0')}</span>
+                      <span className="min-w-0">
+                        <span className="block text-[1.05rem] font-extrabold text-ink">{p.title}</span>
+                        <span className="mt-1.5 block text-[14.5px] leading-[1.75] text-ink-soft">
+                          <Sentences text={p.desc} clauses={false} />
+                        </span>
+                      </span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+              <ul className="reveal-stack mt-4 grid gap-4 md:grid-cols-2">
+                {TMJ_ANATOMY.motions.map((m) => (
+                  <li key={m.title} className="card card-3d p-6 md:p-7">
+                    <h3 className="text-[1.1rem] font-extrabold text-ink">{m.title}</h3>
+                    <p className="mt-2 text-[14.5px] leading-[1.8] text-ink-soft">
+                      <Sentences text={m.desc} clauses={false} />
+                    </p>
+                  </li>
+                ))}
+              </ul>
+              {/* 3대 증상 — 참고 사이트의 '턱관절 장애의 3대 증상' */}
+              <div className="reveal mt-4 rounded-[28px] bg-night p-7 text-white md:p-10">
+                <p className="text-[12px] font-bold tracking-[0.2em] text-sun-300">3 MAJOR SIGNS</p>
+                <h3 className="mt-2 text-[1.3rem] font-extrabold md:text-[1.5rem]">턱관절 장애의 3대 증상</h3>
+                <ol className="mt-6 grid gap-5 sm:grid-cols-3">
+                  {TMJ_ANATOMY.triad.map((t) => (
+                    <li key={t.n} className="border-t border-white/15 pt-4">
+                      <span className="block text-[13px] font-extrabold tracking-[0.18em] text-sun-300">{t.n}</span>
+                      <span className="mt-1.5 block text-[1.1rem] font-bold">{t.title}</span>
+                      <span className="mt-1.5 block text-[14.5px] leading-[1.7] text-white/70">{t.desc}</span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+              <div className="reveal card mt-4 p-7 md:p-9">
+                <h3 className="text-[1.2rem] font-extrabold text-ink md:text-[1.3rem]">{TMJ_ANATOMY.pain.title}</h3>
+                {TMJ_ANATOMY.pain.paragraphs.map((p) => (
+                  <p key={p} className="mt-3 text-[15px] leading-[1.85] text-ink-soft">
+                    <Sentences text={p} clauses={false} />
+                  </p>
+                ))}
+              </div>
             </section>
 
             {/* ── #symptoms — ! + 증상 4 + 함께 오는 증상 + 자가 점검 ── */}
@@ -258,6 +333,96 @@ export function TmjPage({ doc }: { doc: Doc }) {
                   </li>
                 ))}
               </ul>
+              {/* 3대 원인 상세 (2026-09-21 보완) — 위 카드 셋이 '무엇' 이라면 여기는 '왜 그것이 턱관절을 망가뜨리나' */}
+              <ol className="reveal-stack mt-6 grid gap-4">
+                {TMJ_CAUSE_DETAIL.map((c) => (
+                  <li key={c.n} className="card p-6 md:p-8">
+                    <div className="flex flex-wrap items-center gap-3">
+                      <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-night text-[1.05rem] font-extrabold text-white">{c.n}</span>
+                      <h3 className="text-[1.2rem] font-extrabold text-ink md:text-[1.35rem]">{c.title}</h3>
+                      <span className="rounded-full bg-sun-50 px-3 py-1 text-[12.5px] font-bold text-sun-700">{c.tag}</span>
+                    </div>
+                    {c.paragraphs.map((p) => (
+                      <p key={p} className="mt-3 text-[15px] leading-[1.85] text-ink-soft">
+                        <Sentences text={p} clauses={false} />
+                      </p>
+                    ))}
+                    {c.items && (
+                      <ul className="mt-4 flex flex-wrap gap-2">
+                        {c.items.map((it) => (
+                          <li key={it} className="rounded-full bg-canvas px-3.5 py-1.5 text-[13.5px] font-semibold text-ink-soft">{it}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                ))}
+              </ol>
+            </section>
+
+            {/* ── #whole-body — 턱관절과 전신 (2026-09-21 보완) ── */}
+            <section id="whole-body" className="scroll-mt-[96px] pt-24 md:pt-32" aria-labelledby="tmj-body">
+              <Head
+                id="tmj-body"
+                big={<Big unit="갈래">4</Big>}
+                title={<>턱관절 장애는 <span className="accent-sun">턱에만 머물지 않습니다</span></>}
+                lead="턱관절이 한쪽으로 틀어지면 얼굴의 좌우 균형과 목뼈의 위치가 바뀌고, 도미노처럼 척추와 골반까지 이어지기도 합니다."
+              />
+              <ol className="reveal-stack mt-12 grid gap-4 md:grid-cols-2">
+                {TMJ_BODY_CHAIN.map((b) => (
+                  <li key={b.n} className="card p-6 md:p-7">
+                    <span className="text-[13px] font-extrabold tracking-[0.18em] text-sun-500">{b.n}</span>
+                    <h3 className="mt-1.5 text-[1.15rem] font-extrabold text-ink md:text-[1.25rem]">{b.title}</h3>
+                    <p className="mt-2.5 text-[14.5px] leading-[1.85] text-ink-soft">
+                      <Sentences text={b.desc} clauses={false} />
+                    </p>
+                  </li>
+                ))}
+              </ol>
+              <div className="reveal-stack mt-4 grid gap-4 md:grid-cols-2">
+                <div className="card p-6 md:p-7">
+                  <p className="text-[12px] font-bold tracking-[0.2em] text-brand-700">WHY</p>
+                  <h3 className="mt-2 text-[1.1rem] font-extrabold text-ink">이런 경로로 얼굴이 틀어집니다</h3>
+                  <ul className="mt-3 space-y-2.5">
+                    {TMJ_ASYMMETRY_CAUSES.map((c) => (
+                      <li key={c} className="flex gap-2.5 text-[14.5px] leading-[1.7] text-ink-soft">
+                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-400" aria-hidden />
+                        <span>{c}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="card p-6 md:p-7">
+                  <p className="text-[12px] font-bold tracking-[0.2em] text-sun-600">SIGNS</p>
+                  <h3 className="mt-2 text-[1.1rem] font-extrabold text-ink">거울에서 보이는 비대칭 신호</h3>
+                  <ul className="mt-3 space-y-2.5">
+                    {TMJ_ASYMMETRY_SIGNS.map((s) => (
+                      <li key={s} className="flex gap-2.5 text-[14.5px] leading-[1.7] text-ink-soft">
+                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-sun-500" aria-hidden />
+                        <span>{s}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+              {/* 전신 증상 체크리스트 8갈래 — 참고 사이트 전문. 인과를 단정하지 않는 안내문을 반드시 함께 둔다 */}
+              <div className="reveal mt-4 rounded-[28px] border border-hairline bg-canvas p-6 md:p-9">
+                <h3 className="text-[1.2rem] font-extrabold text-ink md:text-[1.3rem]">턱관절 장애와 함께 나타날 수 있는 증상</h3>
+                <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+                  {TMJ_BODY_CHECK.map((g) => (
+                    <div key={g.group}>
+                      <p className="border-b border-hairline pb-2 text-[14px] font-extrabold text-brand-700">{g.group}</p>
+                      <ul className="mt-3 space-y-2">
+                        {g.items.map((it) => (
+                          <li key={it} className="text-[13.5px] leading-[1.65] text-ink-soft">{it}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+                <p className="mt-7 border-t border-hairline pt-5 text-[13.5px] leading-[1.8] text-ink-muted">
+                  <Sentences text={TMJ_BODY_NOTE} clauses={false} />
+                </p>
+              </div>
             </section>
 
             {/* ── #knowhow — 3 + 실사 띠 + 원 3 ── */}
@@ -347,6 +512,53 @@ export function TmjPage({ doc }: { doc: Doc }) {
                   </ul>
                 </div>
               </div>
+              {/* 스플린트가 하는 일 · 관절강 세척술 (2026-09-21 보완) — 위 5가지 가운데 설명이 가장 많이 필요한 둘 */}
+              <div className="reveal-stack mt-4 grid gap-4 md:grid-cols-2">
+                <div className="card p-7 md:p-8">
+                  <p className="text-[12px] font-bold tracking-[0.2em] text-brand-700">STEP 1 · SPLINT</p>
+                  <h3 className="mt-2 text-[1.2rem] font-extrabold text-ink">{TMJ_SPLINT_ROLE.title}</h3>
+                  {TMJ_SPLINT_ROLE.paragraphs.map((p) => (
+                    <p key={p} className="mt-3 text-[14.5px] leading-[1.85] text-ink-soft">
+                      <Sentences text={p} clauses={false} />
+                    </p>
+                  ))}
+                </div>
+                <div className="card p-7 md:p-8">
+                  <p className="text-[12px] font-bold tracking-[0.2em] text-sun-600">ARTHROCENTESIS</p>
+                  <h3 className="mt-2 text-[1.2rem] font-extrabold text-ink">{TMJ_ARTHRO.title}</h3>
+                  {TMJ_ARTHRO.paragraphs.map((p) => (
+                    <p key={p} className="mt-3 text-[14.5px] leading-[1.85] text-ink-soft">
+                      <Sentences text={p} clauses={false} />
+                    </p>
+                  ))}
+                  <p className="mt-5 text-[13px] font-extrabold tracking-[0.12em] text-ink">이런 점이 있습니다</p>
+                  <ul className="mt-2.5 space-y-2">
+                    {TMJ_ARTHRO.merits.map((m) => (
+                      <li key={m} className="flex gap-2.5 text-[14px] leading-[1.7] text-ink-soft">
+                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-sun-500" aria-hidden />
+                        <span>{m}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <ul className="mt-4 flex flex-wrap gap-2">
+                    {TMJ_ARTHRO.effects.map((e) => (
+                      <li key={e} className="rounded-full bg-brand-50 px-3 py-1.5 text-[13px] font-semibold text-brand-700">{e}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+              {/* 보조적인 치료 3 — 행동 조절·물리치료·약물치료 */}
+              <ul className="reveal-stack mt-4 grid gap-4 md:grid-cols-3">
+                {TMJ_SUPPORT_CARE.map((s, i) => (
+                  <li key={s.title} className="card p-6 md:p-7">
+                    <span className="num">{String(i + 1).padStart(2, '0')}</span>
+                    <h3 className="mt-3 text-[1.1rem] font-extrabold text-ink">{s.title}</h3>
+                    <p className="mt-2 text-[14.5px] leading-[1.8] text-ink-soft">
+                      <Sentences text={s.desc} clauses={false} />
+                    </p>
+                  </li>
+                ))}
+              </ul>
             </section>
 
             {/* ── 장비 2 ── */}
