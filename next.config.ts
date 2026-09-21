@@ -45,9 +45,8 @@ const nextConfig: NextConfig = {
     return [
       ...OLD_SITE.map(([source, destination]) => ({ source, destination, permanent: true })),
       ...CONVENTIONAL.map(([source, destination]) => ({ source, destination, permanent: true })),
-      /* 턱관절은 한 페이지로 통합(2026-09-09) — 옛 하위 주소는 구역으로 */
-      { source: '/treatment/tmj/symptoms', destination: '/treatment/tmj#symptoms', permanent: true },
-      { source: '/treatment/tmj/treatments', destination: '/treatment/tmj#treatments', permanent: true },
+      /* 턱관절 7쪽 분할(2026-09-21) — 09-09 통합 때 쓰던 옛 하위 주소 하나만 새 이름으로. /symptoms 는 다시 진짜 쪽이 됐다 */
+      { source: '/treatment/tmj/treatments', destination: '/treatment/tmj/treatment', permanent: true },
     ];
   },
   async headers() {

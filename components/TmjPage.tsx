@@ -7,8 +7,9 @@ import { JsonLd } from '@/components/JsonLd';
 import { TmjSelfCheck } from '@/components/TmjSelfCheck';
 import { ContactBand, FaqList, MedicalNotice, Sentences } from '@/components/ui';
 import { ContactCard, DoctorCard } from '@/components/SideRail';
-import { figSize, figSrc, fitsBox, type Doc } from '@/lib/docs';
-import { docByPath } from '@/lib/content';
+import { docCharCount, figSize, figSrc, fitsBox, type Doc } from '@/lib/docs';
+import { docByPath, docsOfHub } from '@/lib/content';
+import { HERO_COLLAGE, splitAccent } from '@/lib/heroCollage';
 import {
   TMJ_ANATOMY,
   TMJ_ARTHRO,
@@ -39,18 +40,17 @@ import {
   TMJ_SUPPORT_CARE,
   TMJ_SYMPTOMS,
 } from '@/lib/content/tmjLanding';
-import { breadcrumbSchema, faqSchema, imageObjectSchema, medicalWebPageSchema } from '@/lib/seo';
+import { articleSchema, breadcrumbSchema, faqSchema, imageObjectSchema, itemListSchema, medicalWebPageSchema } from '@/lib/seo';
 import { CLINIC, HOURS, MONTHLY_NOTICE } from '@/lib/clinic';
 
 /**
- * 턱관절 — 한 페이지(2026-09-09 통합). 레퍼런스(tmjdoctor.co.kr 턱관절)의 짜임새를 따르되 글·사진은 옛 홈페이지와 오너 실사.
- *  메뉴의 하위 항목은 이 페이지의 구역으로 간다: #knowhow(노하우) · #symptoms(주요증상) · #treatments(치료방법).
- *  흐름: 콜라주 히어로 → TMJ → 구조와 기능(#anatomy) → 증상 4 + 자가 점검 → 원인 3 + 3대 원인 상세
- *        → 전신 연결(#whole-body) → 노하우 3 → 치료 5 + 원칙·스플린트·세척술·보조치료 → 장비 2 → 생활습관 6 → FAQ 17.
- *  2026-09-21: 오너가 준 참고(4dortho.co.kr 턱관절 메뉴 7쪽)를 항목 단위로 대조해 빠진 쪽(구조와 기능·
- *  원인 상세·전신증상·치료 상세)을 채웠다. 옮기지 않은 것과 그 이유는 lib/content/tmjLanding.ts 주석 참조.
- *  오른쪽 사이드바: 원장 배너 · 구역 안내 · 진단 과정 · 진료시간 · 질문. 구조화 데이터·FAQ 는 Doc(lib/content/tmj.ts)에서.
- *  ★ 구역 이동 목차(점프 메뉴)는 두지 않는다(오너 지시) — 사이드바 안내는 메뉴와 같은 세 구역 링크뿐.
+ * 턱관절 — 허브 1 + 하위 6쪽이 **이 한 화면**을 쓴다(2026-09-21 분할, 오너 GO). 경로별로 보여 줄 구역을 VIEWS 에서 고른다.
+ *  09-09 에 한 페이지로 합쳤다가, 참고 사이트(4dortho 턱관절 7쪽) 내용을 다 옮기며 18,700px 이 되자 다시 나눴다.
+ *  허브(장애란?): 특징 3 → 장애란?+3대 증상 → 하위 6쪽 카드 → 노하우 3 → 치료 5 → 장비 2 → FAQ
+ *  하위: anatomy 구조 · symptoms 증상 4+점검표 · causes 원인 · self-check 거울 앞 5단계+점검표 · whole-body 전신 · treatment 치료 5+상세+생활습관
+ *  첫 화면은 하위 쪽이면 lib/heroCollage 표, 허브면 TMJ_HERO. 구조화 데이터·FAQ 는 쪽마다의 Doc(lib/content/tmj.ts).
+ *  오른쪽 사이드바: 원장 배너 · 일곱 쪽 안내(메뉴와 같은 순서, 지금 쪽 진하게) · 진단 과정 · 진료시간 · 질문.
+ *  ★ 페이지 안 구역 이동 목차(점프 메뉴)는 두지 않는다(오너 지시) — 사이드바 안내는 메뉴와 같은 **쪽** 링크다.
  */
 const HERO_CARDS: [CollageCard, CollageCard, CollageCard] = [
   { fig: { key: 'sun/circle-treatment', alt: '확대경을 쓰고 치료하는 양대일 원장' }, shape: 'portrait' },
@@ -91,6 +91,25 @@ function BodyIcon({ name }: { name: string }) {
   );
 }
 
+/** 턱관절 장애의 3대 증상 — 허브(장애란?)와 구조 쪽이 같은 상자를 쓴다 */
+function Triad({ className = '' }: { className?: string }) {
+  return (
+    <div className={`reveal rounded-[28px] bg-night p-7 text-white md:p-10 ${className}`}>
+      <p className="text-[12px] font-bold tracking-[0.2em] text-sun-300">3 MAJOR SIGNS</p>
+      <h3 className="mt-2 text-[1.3rem] font-extrabold md:text-[1.5rem]">턱관절 장애의 3대 증상</h3>
+      <ol className="mt-6 grid gap-5 sm:grid-cols-3">
+        {TMJ_ANATOMY.triad.map((t) => (
+          <li key={t.n} className="border-t border-white/15 pt-4">
+            <span className="block text-[13px] font-extrabold tracking-[0.18em] text-sun-300">{t.n}</span>
+            <span className="mt-1.5 block text-[1.1rem] font-bold">{t.title}</span>
+            <span className="mt-1.5 block text-[14.5px] leading-[1.7] text-white/70">{t.desc}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
 const Big = ({ children, unit }: { children: ReactNode; unit?: string }) => (
   <p className="tmj-big" aria-hidden>
     {children}
@@ -98,11 +117,68 @@ const Big = ({ children, unit }: { children: ReactNode; unit?: string }) => (
   </p>
 );
 
+/**
+ * 쪽마다 보여 줄 구역 (2026-09-21 7쪽 분할). 한 파일의 구역을 경로별로 골라 쓴다 —
+ * 구역 JSX 를 쪽마다 복사하면 디자인을 고칠 때 일곱 군데를 고쳐야 한다.
+ *   intro 특징 3 · what 장애란+3대 증상 · children 하위 6쪽 카드 · anatomy 구조 · symptoms 증상 4+점검표 ·
+ *   self-tests 거울 앞 5단계 · causes 원인 · whole-body 전신 · knowhow 노하우 · steps 치료 5 · steps-detail 원칙·스플린트·세척술·보조 ·
+ *   equip 장비 · habits 생활습관
+ */
+const VIEWS: Record<string, string[]> = {
+  '/treatment/tmj': ['intro', 'what', 'children', 'knowhow', 'steps', 'equip'],
+  '/treatment/tmj/anatomy': ['anatomy'],
+  '/treatment/tmj/symptoms': ['symptoms'],
+  '/treatment/tmj/causes': ['causes'],
+  '/treatment/tmj/self-check': ['self-tests'],
+  '/treatment/tmj/whole-body': ['whole-body'],
+  '/treatment/tmj/treatment': ['steps', 'steps-detail', 'habits'],
+};
+
+/** 메뉴와 같은 일곱 쪽 — 사이드바 안내가 이 순서를 그대로 쓴다(메뉴 = 목차) */
+const PAGES = [
+  { label: '턱관절 장애란?', href: '/treatment/tmj' },
+  { label: '턱관절의 구조와 기능', href: '/treatment/tmj/anatomy' },
+  { label: '턱관절 장애의 증상', href: '/treatment/tmj/symptoms' },
+  { label: '턱관절 장애의 원인', href: '/treatment/tmj/causes' },
+  { label: '자가진단법', href: '/treatment/tmj/self-check' },
+  { label: '턱관절과 전신증상', href: '/treatment/tmj/whole-body' },
+  { label: '턱관절 장애의 치료법', href: '/treatment/tmj/treatment' },
+];
+
+/** 하위 쪽 카드 사진 — 허브 '하위 6쪽' 카드에 쓴다. 쪽마다 다른 사진(같은 사진 반복 금지) */
+const CHILD_FIG: Record<string, string> = {
+  '/treatment/tmj/anatomy': 'sun/tmj-explain-monitor',
+  '/treatment/tmj/symptoms': 'scene/tmj-sym-3',
+  '/treatment/tmj/causes': 'ai/tmj-cause-habit',
+  '/treatment/tmj/self-check': 'ai/tmj-check-midline',
+  '/treatment/tmj/whole-body': 'scene/tmj-sym-2',
+  '/treatment/tmj/treatment': 'orig/tmj-tx-splint',
+};
+
+const renderAccent = (line: string): ReactNode =>
+  splitAccent(line).map((p, i) => (p.accent ? <span key={i} className="accent-sun">{p.text}</span> : <span key={i}>{p.text}</span>));
+
 export function TmjPage({ doc }: { doc: Doc }) {
+  const isHub = doc.path === doc.hub;
+  const show = (key: string) => (VIEWS[doc.path] ?? []).includes(key);
   const trail = [{ name: '진료 안내', path: '/treatment' }, { name: doc.hubLabel, path: doc.hub }];
-  const hero = TMJ_HERO.fig;
+  if (!isHub) trail.push({ name: doc.title, path: doc.path });
+  /* 대표 사진 — 허브는 오너 실사, 하위 쪽은 문서가 지정한 사진 */
+  const hero = isHub ? TMJ_HERO.fig : (doc.hero ?? TMJ_HERO.fig);
   const heroSize = figSize(hero.key);
   const first = (s: string) => s.split(/(?<=다\.)\s/)[0];
+  const children = isHub ? docsOfHub(doc.hub) : [];
+  /* 첫 화면 — 하위 쪽은 lib/heroCollage 표(제목 두 줄·사진 3장), 허브는 기존 문구 그대로 */
+  const collage = isHub ? null : HERO_COLLAGE[doc.path];
+  const heroLines: [ReactNode, ReactNode?] = collage
+    ? (collage.lines.map((l) => (l ? renderAccent(l) : undefined)) as [ReactNode, ReactNode?])
+    : [TMJ_HERO.line1, <span key="l2" className="accent-sun">{TMJ_HERO.line2}</span>];
+  const heroCards = collage?.cards ?? HERO_CARDS;
+  const heroLead = collage?.lead ?? TMJ_HERO.desc;
+  const heroCardsLead = collage?.cardsLead ?? '이런 증상이 있다면 턱관절을 확인해 보세요.';
+  const heroItems = isHub
+    ? TMJ_KNOWHOW.items.map((k) => ({ title: k.title, desc: first(k.desc) }))
+    : [{ title: doc.title, desc: first(doc.summary) }];
 
   const schema: unknown[] = [
     breadcrumbSchema(trail),
@@ -111,20 +187,20 @@ export function TmjPage({ doc }: { doc: Doc }) {
       description: doc.description,
       path: doc.path,
       image: { src: figSrc(hero.key), caption: hero.alt, width: heroSize.w, height: heroSize.h },
-      related: doc.related ?? [],
+      related: [...(doc.related ?? []), ...children.map((c) => c.path)],
     }),
     imageObjectSchema({ path: doc.path, src: figSrc(hero.key), caption: hero.alt, width: heroSize.w, height: heroSize.h }),
   ];
+  if (!isHub) schema.push(articleSchema({ path: doc.path, title: doc.title, description: doc.description, wordCount: docCharCount(doc), hasImage: true, keywords: doc.keywords }));
+  if (isHub && children.length) schema.push(itemListSchema(doc.path, children.map((c) => ({ name: c.title, path: c.path })), `${doc.title} 세부 안내`));
   if (doc.faq?.length) schema.push(faqSchema(doc.faq, doc.path));
 
-  /* 사이드바 안내 — 메뉴와 같은 세 구역 + 인사이트 두 편 */
+  /* 사이드바 안내 — 메뉴와 같은 일곱 쪽 + 인사이트 두 편. 지금 쪽은 진하게 */
   const guides = [
-    { label: '턱관절 치료 노하우', href: '#knowhow' },
-    { label: '주요 증상과 자가 점검', href: '#symptoms' },
-    { label: '치료 방법 5가지', href: '#treatments' },
+    ...PAGES,
     { label: '턱에서 딱딱 소리가 나요', href: '/insight/symptom/jaw-clicking' },
     { label: '턱관절 치료는 어떤 순서로 하나요', href: '/insight/guide/tmj-treatment-flow' },
-  ].filter((g) => g.href.startsWith('#') || docByPath(g.href));
+  ].filter((g) => g.href.startsWith('/treatment/tmj') || docByPath(g.href));
 
   return (
     <>
@@ -133,14 +209,14 @@ export function TmjPage({ doc }: { doc: Doc }) {
       <main id="main" className="bg-white">
         <HeroCollage
           trail={trail}
-          eyebrow="TMJ · 턱관절"
-          cardsLead="이런 증상이 있다면 턱관절을 확인해 보세요."
-          lines={[TMJ_HERO.line1, <span key="l2" className="accent-sun">{TMJ_HERO.line2}</span>]}
-          lead={TMJ_HERO.desc}
+          eyebrow={doc.eyebrow}
+          cardsLead={heroCardsLead}
+          lines={heroLines}
+          lead={heroLead}
           long
           bg={TMJ_HERO.bg.key}
-          cards={HERO_CARDS}
-          items={TMJ_KNOWHOW.items.map((k) => ({ title: k.title, desc: first(k.desc) }))}
+          cards={heroCards}
+          items={heroItems}
         >
           <div className="flex flex-wrap gap-3">
             <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="btn-sun">네이버 예약</a>
@@ -152,6 +228,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
           {/* ───────── 본문 ───────── */}
           <div className="min-w-0">
             {/* TMJ — 레퍼런스 첫 구역. 제목·설명은 히어로가 맡았으니 글자와 특징 세 개만 */}
+            {show('intro') && (
             <section className="text-center" aria-label="턱관절 진료 특징">
               <p className="tmj-big reveal" aria-hidden>{TMJ_HERO.letters}</p>
               <p className="lead reveal mx-auto mt-5 max-w-[640px]">
@@ -166,10 +243,48 @@ export function TmjPage({ doc }: { doc: Doc }) {
                 ))}
               </ul>
             </section>
+            )}
+            {/* ── 허브: 턱관절 장애란? + 3대 증상 (참고 사이트 첫 쪽 '턱관절 장애란?') ── */}
+            {show('what') && (
+              <section className="pt-20 md:pt-28" aria-labelledby="tmj-what">
+                <Head
+                  id="tmj-what"
+                  big={<span className="tmj-big !text-[2.4rem] md:!text-[3.4rem]" aria-hidden>TMD</span>}
+                  title={<>턱관절 장애란 <span className="accent-sun">무엇일까요</span></>}
+                  lead="턱관절 장애란 귀 바로 앞쪽에 위치한 턱관절에 통증과 기능 이상이 생기는 질환입니다. 하악과두의 위치가 틀어지거나 디스크가 제자리를 벗어나면서 소리와 통증, 입 벌리기 제한으로 나타납니다."
+                />
+                <Triad className="mt-10" />
+              </section>
+            )}
+
+            {/* ── 허브: 하위 6쪽 카드 — 메뉴와 같은 순서 ── */}
+            {show('children') && children.length > 0 && (
+              <section className="pt-20 md:pt-28" aria-labelledby="tmj-children">
+                <Head id="tmj-children" big={<Big unit="갈래">6</Big>} title={<>턱관절, <span className="accent-sun">더 자세히</span> 알아보기</>} lead="구조부터 치료법까지 여섯 갈래로 나눠 정리했습니다. 궁금한 것부터 읽어 보세요." />
+                <ul className="reveal-stack mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                  {children.map((c) => (
+                    <li key={c.path}>
+                      <Link href={c.path} className="card card-hover flex h-full flex-col overflow-hidden">
+                        <span className="relative block aspect-[4/3] overflow-hidden bg-canvas-2">
+                          <Image src={figSrc(CHILD_FIG[c.path] ?? c.hero?.key ?? 'ai/tmj-hub')} alt={c.hero?.alt ?? c.title} fill sizes="(max-width: 640px) 100vw, 33vw" className="object-cover" />
+                        </span>
+                        <span className="flex flex-1 flex-col p-6">
+                          <span className="text-[12px] font-bold tracking-[0.2em] text-sun-600">{c.eyebrow}</span>
+                          <span className="mt-2 text-[1.15rem] font-extrabold text-ink">{c.title}</span>
+                          <span className="mt-2 text-[14px] leading-[1.7] text-ink-soft">{first(c.summary)}</span>
+                          <span className="mt-auto pt-4 text-[13.5px] font-bold text-brand-700">자세히 보기 ›</span>
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
 
             {/* ── #anatomy — 턱관절의 구조와 기능 (2026-09-21 보완) ──
                  증상·원인을 읽기 전에 "턱관절이 어떤 관절인가" 를 먼저 둔다. 디스크가 무엇인지 모르면
                  "디스크가 제자리를 벗어났다" 는 뒤의 설명이 읽히지 않는다. */}
+            {show('anatomy') && (
             <section id="anatomy" className="scroll-mt-[96px] pt-20 md:pt-28" aria-labelledby="tmj-anatomy">
               <Head
                 id="tmj-anatomy"
@@ -206,19 +321,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                 ))}
               </ul>
               {/* 3대 증상 — 참고 사이트의 '턱관절 장애의 3대 증상' */}
-              <div className="reveal mt-4 rounded-[28px] bg-night p-7 text-white md:p-10">
-                <p className="text-[12px] font-bold tracking-[0.2em] text-sun-300">3 MAJOR SIGNS</p>
-                <h3 className="mt-2 text-[1.3rem] font-extrabold md:text-[1.5rem]">턱관절 장애의 3대 증상</h3>
-                <ol className="mt-6 grid gap-5 sm:grid-cols-3">
-                  {TMJ_ANATOMY.triad.map((t) => (
-                    <li key={t.n} className="border-t border-white/15 pt-4">
-                      <span className="block text-[13px] font-extrabold tracking-[0.18em] text-sun-300">{t.n}</span>
-                      <span className="mt-1.5 block text-[1.1rem] font-bold">{t.title}</span>
-                      <span className="mt-1.5 block text-[14.5px] leading-[1.7] text-white/70">{t.desc}</span>
-                    </li>
-                  ))}
-                </ol>
-              </div>
+              <Triad className="mt-4" />
               <div className="reveal card mt-4 p-7 md:p-9">
                 <h3 className="text-[1.2rem] font-extrabold text-ink md:text-[1.3rem]">{TMJ_ANATOMY.pain.title}</h3>
                 <p className="mt-3 text-[15px] leading-[1.8] text-ink-soft">
@@ -235,9 +338,12 @@ export function TmjPage({ doc }: { doc: Doc }) {
                 </ul>
               </div>
             </section>
+            )}
 
             {/* ── #symptoms — ! + 증상 4 + 함께 오는 증상 + 자가 점검 ── */}
+            {(show('symptoms') || show('self-tests')) && (
             <section id="symptoms" className="scroll-mt-[96px] pt-20 md:pt-28" aria-labelledby="tmj-symptoms">
+              {show('symptoms') && (<>
               <Head
                 id="tmj-symptoms"
                 big={<span className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-sun-500 text-[2.2rem] font-extrabold leading-none text-white shadow-[0_12px_30px_rgba(242,111,30,0.35)]" aria-hidden>!</span>}
@@ -266,14 +372,23 @@ export function TmjPage({ doc }: { doc: Doc }) {
                   <li key={s} className="rounded-full bg-canvas px-4 py-2 text-[14px] font-semibold text-ink-soft">{s}</li>
                 ))}
               </ul>
+              </>)}
               {/* 거울 앞 자가진단 5단계 — 참고 사이트 짜임새 그대로: 소개 → 핵심 한 줄 → 확인 사진 3장(캡션) → 5단계(방법·뜻·정상 범위) → 안내.
                   단계 카드는 한 줄에 하나(2+2+1 로 놓으면 마지막 줄만 넓어져 행이 안 맞는다). 점검표(아래)보다 먼저 두어 '해 보고 표시' 흐름 */}
-              <div className="mt-16 md:mt-20" aria-labelledby="tmj-self-tests">
+              {show('self-tests') && (
+              <div className={show('symptoms') ? 'mt-16 md:mt-20' : ''} aria-labelledby="tmj-self-tests">
                 <div className="reveal text-center">
                   <p className="text-[12px] font-bold tracking-[0.2em] text-sun-600">SELF TEST · 5 STEPS</p>
-                  <h3 id="tmj-self-tests" className="mt-2 text-[1.5rem] font-extrabold leading-tight text-ink md:text-[1.9rem]">
-                    턱관절 장애 <span className="accent-sun">자가진단법</span>
-                  </h3>
+                  {/* 자가진단 쪽에서는 이것이 그 쪽의 큰 제목(h2)이고, 증상 쪽에 딸려 나올 때는 h3 */}
+                  {show('symptoms') ? (
+                    <h3 id="tmj-self-tests" className="mt-2 text-[1.5rem] font-extrabold leading-tight text-ink md:text-[1.9rem]">
+                      턱관절 장애 <span className="accent-sun">자가진단법</span>
+                    </h3>
+                  ) : (
+                    <h2 id="tmj-self-tests" className="display-sm mt-2">
+                      턱관절 장애 <span className="accent-sun">자가진단법</span>
+                    </h2>
+                  )}
                   <p className="mx-auto mt-3 max-w-[640px] text-[15px] leading-[1.75] text-ink-soft">
                     <Sentences text={TMJ_SELF_INTRO} clauses={false} />
                   </p>
@@ -336,12 +451,15 @@ export function TmjPage({ doc }: { doc: Doc }) {
                   </div>
                 </div>
               </div>
+              )}
               <div className="reveal mx-auto mt-10 max-w-[820px]">
                 <TmjSelfCheck items={TMJ_SELF_CHECK} />
               </div>
             </section>
+            )}
 
             {/* ── ? 원인 3 ── */}
+            {show('causes') && (
             <section className="pt-24 md:pt-32" aria-labelledby="tmj-causes">
               <Head id="tmj-causes" big={<span className="tmj-big !text-[4.5rem] md:!text-[6rem]" aria-hidden>?</span>} title={<>원인을 알아야<br /><span className="accent-sun">근본 치료</span>가 가능합니다</>} lead="턱관절 장애는 한 가지 원인보다 관절에 가는 부담, 생활 습관, 심리적인 긴장이 겹쳐서 생기는 경우가 많습니다." />
               <ul className="reveal-stack mt-12 grid gap-6 sm:grid-cols-3">
@@ -395,8 +513,10 @@ export function TmjPage({ doc }: { doc: Doc }) {
                 ))}
               </ol>
             </section>
+            )}
 
             {/* ── #whole-body — 턱관절과 전신 (2026-09-21 보완) ── */}
+            {show('whole-body') && (
             <section id="whole-body" className="scroll-mt-[96px] pt-24 md:pt-32" aria-labelledby="tmj-body">
               <Head
                 id="tmj-body"
@@ -484,8 +604,10 @@ export function TmjPage({ doc }: { doc: Doc }) {
                 </div>
               </div>
             </section>
+            )}
 
             {/* ── #knowhow — 3 + 실사 띠 + 원 3 ── */}
+            {show('knowhow') && (
             <section id="knowhow" className="scroll-mt-[96px] pt-24 md:pt-32" aria-labelledby="tmj-knowhow">
               <Head id="tmj-knowhow" big={<Big unit="가지">3</Big>} title={<>광화문선치과<br />턱관절 진료 <span className="accent-sun">노하우</span></>} lead={TMJ_KNOWHOW.title} />
               <div className="reveal relative mt-12 overflow-hidden rounded-[28px] bg-night">
@@ -514,8 +636,10 @@ export function TmjPage({ doc }: { doc: Doc }) {
                 ))}
               </ol>
             </section>
+            )}
 
             {/* ── #treatments — 5 STEP + 원칙·스플린트 ── */}
+            {show('steps') && (
             <section id="treatments" className="scroll-mt-[96px] pt-24 md:pt-32" aria-labelledby="tmj-steps">
               <Head id="tmj-steps" big={<Big unit="가지">5</Big>} title={<>턱관절, <span className="accent-sun">어떻게 치료</span>해야 할까요?</>} lead="약물치료와 물리치료부터 보톡스, 스플린트 장치치료, 관절강 세척술까지 한곳에서 이어서 진행합니다. 부담이 적은 치료부터 시작해 진단 결과에 따라 조합합니다." />
               <ol className="reveal-stack mt-12 grid gap-4">
@@ -537,6 +661,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                   </li>
                 ))}
               </ol>
+              {show('steps-detail') && (<>
               <div className="reveal-stack mt-6 grid gap-4 md:grid-cols-[1.2fr_1fr]">
                 <div className="rounded-2xl bg-night p-7 text-white md:p-8">
                   <p className="text-[12px] font-bold tracking-[0.2em] text-sun-300">PRINCIPLE</p>
@@ -634,9 +759,12 @@ export function TmjPage({ doc }: { doc: Doc }) {
                   </li>
                 ))}
               </ul>
+              </>)}
             </section>
+            )}
 
             {/* ── 장비 2 ── */}
+            {show('equip') && (
             <section className="pt-20 md:pt-28" aria-labelledby="tmj-equip">
               <h2 id="tmj-equip" className="sr-only">턱관절 진료 장비</h2>
               <ul className="reveal-stack grid gap-5 md:grid-cols-2">
@@ -660,8 +788,10 @@ export function TmjPage({ doc }: { doc: Doc }) {
                 ))}
               </ul>
             </section>
+            )}
 
             {/* ── 생활습관 6 ── */}
+            {show('habits') && (
             <section className="pt-24 md:pt-32" aria-labelledby="tmj-habits">
               <Head id="tmj-habits" big={<Big unit="가지">6</Big>} title={<>치료 효과를 지키는<br /><span className="accent-sun">생활습관</span></>} lead="증상이 나아진 뒤에도 습관이 돌아오면 재발할 수 있습니다. 일상에서 지키면 좋은 여섯 가지입니다." />
               <ul className="reveal-stack mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -674,6 +804,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                 ))}
               </ul>
             </section>
+            )}
 
             {/* ── FAQ — 화면 = FAQPage 스키마 ── */}
             {doc.faq && doc.faq.length > 0 && (
@@ -696,10 +827,17 @@ export function TmjPage({ doc }: { doc: Doc }) {
               <ul className="mt-3 divide-y divide-hairline">
                 {guides.map((g) => (
                   <li key={g.href}>
-                    <a href={g.href} className="flex items-center justify-between gap-3 py-2.5 text-[14.5px] font-semibold text-ink-soft hover:text-brand-700">
-                      <span className="truncate">{g.label}</span>
+                    <Link
+                      href={g.href}
+                      aria-current={g.href === doc.path ? 'page' : undefined}
+                      className={`flex items-center justify-between gap-3 py-2.5 text-[14.5px] font-semibold hover:text-brand-700 ${g.href === doc.path ? 'text-brand-700' : 'text-ink-soft'}`}
+                    >
+                      <span className="flex min-w-0 items-center gap-2">
+                        {g.href === doc.path && <span aria-hidden className="h-1.5 w-1.5 shrink-0 rounded-full bg-sun-500" />}
+                        <span className="truncate">{g.label}</span>
+                      </span>
                       <span aria-hidden className="text-ink-muted">›</span>
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>

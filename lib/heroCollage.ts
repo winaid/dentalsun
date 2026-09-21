@@ -102,7 +102,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     ],
   },
   '/treatment/tmj/symptoms': {
-    lines: ['턱에서 나는 소리와 통증', '{턱관절} 주요 증상과 원인'],
+    lines: ['턱에서 나는 소리와 통증', '{턱관절 장애}의 증상'],
     lead: '딱딱 소리, 씹을 때 통증, 두통과 목 결림까지 턱관절에서 시작되기도 합니다. 관절·근육·디스크 중 어디가 문제인지 확인하면 치료 방향이 정해집니다.',
     cardsLead: '이런 증상이 턱관절에서 옵니다.',
     cards: [
@@ -111,7 +111,47 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
       { fig: { key: 'scene/tmj-sym-2', alt: '턱관절 통증과 두통 증상' }, shape: 'std' },
     ],
   },
-  '/treatment/tmj/treatments': {
+  '/treatment/tmj/anatomy': {
+    lines: ['귀 바로 앞, 가장 복잡한 관절', '{턱관절}의 구조와 기능'],
+    lead: '측두골과 하악과두 사이에서 디스크가 함께 움직이며 돌아가고 미끄러지는 관절입니다. 구조를 알면 왜 소리가 나고 왜 귀·머리까지 아픈지가 읽힙니다.',
+    cardsLead: '턱관절은 이렇게 생겼습니다.',
+    cards: [
+      { fig: { key: 'sun/tmj-explain-skull-2', alt: '두개골 모형으로 턱관절을 설명하는 양대일 원장' }, shape: 'portrait' },
+      { fig: { key: 'sun/tmj-explain-monitor', alt: '모니터의 턱관절 도해를 짚어 가며 설명하는 모습' }, shape: 'wide' },
+      { fig: { key: 'orig/misc-tmj-skull', alt: '두개골 모형의 턱관절을 펜으로 가리키는 모습' }, shape: 'std' },
+    ],
+  },
+  '/treatment/tmj/causes': {
+    lines: ['원인을 알아야 근본 치료가 됩니다', '{턱관절 장애}의 원인'],
+    lead: '부정교합, 외상, 그리고 매일 쌓이는 습관과 스트레스. 한 가지보다 겹쳐서 생기는 경우가 많아 진단에서 주된 원인을 가려냅니다.',
+    cardsLead: '이런 것이 턱관절을 망가뜨립니다.',
+    cards: [
+      { fig: { key: 'ai/tmj-cause-habit', alt: '책상에 턱을 괴고 있는 모습' }, shape: 'portrait' },
+      { fig: { key: 'ai/tmj-cause-stress', alt: '책상 앞에서 머리를 감싸 쥔 모습' }, shape: 'wide' },
+      { fig: { key: 'ai/tmj-cause-grind', alt: '옆으로 누워 자는 모습' }, shape: 'std' },
+    ],
+  },
+  '/treatment/tmj/self-check': {
+    lines: ['병원 가기 전, 거울 앞에서', '{턱관절} 자가진단법'],
+    lead: '입을 벌릴 때 턱이 한쪽으로 돌아가거나, 소리가 나거나, 세 손가락이 세로로 안 들어갈 만큼 안 벌어지면 턱관절 장애를 의심해 볼 수 있습니다.',
+    cardsLead: '다섯 가지만 확인해 보세요.',
+    cards: [
+      { fig: { key: 'ai/tmj-check-open', alt: '입을 크게 벌려 세 손가락으로 개구량을 확인하는 동작' }, shape: 'portrait' },
+      { fig: { key: 'ai/tmj-check-midline', alt: '앞니 정중선과 개구 상태를 확인하는 동작' }, shape: 'wide' },
+      { fig: { key: 'ai/tmj-check-joint', alt: '양쪽 턱관절 부위에 손가락을 대고 확인하는 동작' }, shape: 'std' },
+    ],
+  },
+  '/treatment/tmj/whole-body': {
+    lines: ['턱에만 머물지 않습니다', '{턱관절}과 전신증상'],
+    lead: '턱관절이 틀어지면 얼굴의 좌우 균형과 목뼈의 위치가 바뀌고, 도미노처럼 척추와 골반까지 이어지기도 합니다.',
+    cardsLead: '턱에서 몸으로 이어지는 네 갈래.',
+    cards: [
+      { fig: { key: 'scene/tmj-sym-2', alt: '턱관절 통증과 두통 증상' }, shape: 'portrait' },
+      { fig: { key: 'sun/tmj-explain-skull', alt: '두개골 모형을 들고 턱관절 구조를 설명하는 양대일 원장' }, shape: 'wide' },
+      { fig: { key: 'scene/tmj-2', alt: '턱을 만지며 불편해하는 모습' }, shape: 'std' },
+    ],
+  },
+  '/treatment/tmj/treatment': {
     lines: ['원인에 맞춰 단계적으로', '{턱관절} 치료 방법'],
     lead: '약물·물리치료부터 스플린트, 보톡스, 관절강 세척술까지 한곳에서 이어서 진행합니다. 부담이 적은 치료부터 시작해, 반응을 보며 필요한 만큼만 단계를 올립니다.',
     cardsLead: '턱관절은 이런 순서로 치료합니다.',

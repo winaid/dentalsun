@@ -44,10 +44,15 @@ export const NAV: NavItem[] = [
   {
     label: '턱관절',
     href: '/treatment/tmj',
+    /* 2026-09-21 오너 GO — 한 페이지 구역(#앵커)이던 것을 참고 사이트(4dortho)처럼 7쪽으로 나눴다. 허브가 '장애란?' 을 맡는다 */
     children: [
-      { label: '턱관절치료 노하우', href: '/treatment/tmj#knowhow', desc: '근본적인 원인을 찾는 개인별 맞춤 진료' },
-      { label: '주요증상', href: '/treatment/tmj#symptoms', desc: '소리 · 통증 · 입 벌리기 힘듦' },
-      { label: '치료방법', href: '/treatment/tmj#treatments', desc: '약물 · 물리치료 · 보톡스 · 스플린트 · 관절강 세척' },
+      { label: '턱관절 장애란?', href: '/treatment/tmj', desc: '정의 · 3대 증상 · 근본 원인을 찾는 진료 노하우' },
+      { label: '턱관절의 구조와 기능', href: '/treatment/tmj/anatomy', desc: '측두골 · 하악과두 · 디스크, 회전과 활주' },
+      { label: '턱관절 장애의 증상', href: '/treatment/tmj/symptoms', desc: '소리 · 통증 · 입 벌리기 힘듦 · 연관통' },
+      { label: '턱관절 장애의 원인', href: '/treatment/tmj/causes', desc: '부정교합 · 외상 · 습관과 스트레스' },
+      { label: '자가진단법', href: '/treatment/tmj/self-check', desc: '거울 앞 5단계 · 점검표 8항목' },
+      { label: '턱관절과 전신증상', href: '/treatment/tmj/whole-body', desc: '안면비대칭 · 일자목 · 척추와 골반' },
+      { label: '턱관절 장애의 치료법', href: '/treatment/tmj/treatment', desc: '약물 · 물리치료 · 보톡스 · 스플린트 · 관절강 세척' },
     ],
   },
   {

@@ -235,7 +235,7 @@ export default function HomePage() {
               </ul>
               <div className="mt-10 flex flex-wrap justify-center gap-3">
                 <Link href="/treatment/tmj" className="btn-sun">턱관절 치료 안내</Link>
-                <Link href="/treatment/tmj#symptoms" className="btn-ghost-dark">주요 증상 확인</Link>
+                <Link href="/treatment/tmj/symptoms" className="btn-ghost-dark">주요 증상 확인</Link>
               </div>
             </div>
           </div>

@@ -44,8 +44,7 @@ const CONVENTIONAL = [
   ['/doctors', '/about/doctors'],
   ['/implant', '/treatment/implant'],
   ['/tmj', '/treatment/tmj'],
-  ['/treatment/tmj/symptoms', '/treatment/tmj#symptoms'],
-  ['/treatment/tmj/treatments', '/treatment/tmj#treatments'],
+  ['/treatment/tmj/treatments', '/treatment/tmj/treatment'],
 ];
 
 const EXPORT_CONFIG = `import type { NextConfig } from 'next';

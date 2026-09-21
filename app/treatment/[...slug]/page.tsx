@@ -40,7 +40,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string[
   const { slug } = await params;
   const doc = docByPath(`/treatment/${slug.join('/')}`);
   if (!doc) notFound();
-  /* 턱관절 허브는 레퍼런스(tmjdoctor) 짜임새의 전용 화면 — 데이터·FAQ·스키마는 같은 Doc 을 쓴다 */
-  if (doc.path === '/treatment/tmj') return <TmjPage doc={doc} />;
+  /* 턱관절 허브와 하위 6쪽은 전용 화면(components/TmjPage, 경로별로 구역을 고른다) — 데이터·FAQ·스키마는 같은 Doc 을 쓴다 */
+  if (doc.hub === '/treatment/tmj') return <TmjPage doc={doc} />;
   return <DocPage doc={doc} />;
 }
