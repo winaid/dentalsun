@@ -8,11 +8,10 @@ import { CLINIC, MEDICAL_DISCLAIMER } from '@/lib/clinic';
 /**
  * 문장·마디·쉼 줄바꿈 (오너 규칙, 2026-09-09)
  *  1) 마침표에서 줄을 바꾼다(.sent = block).
- *  2) 문장 안에서는 쉼표 마디(.clause)가 통째로 내려간다.
- *  3) 쉼표가 없는 긴 마디는 **말하다 쉬는 구간**(조사·연결어미 뒤)에서만 끊기도록 쉼 덩어리(.chunk)로 묶는다.
- *     덩어리 사이에서만 줄이 바뀌고, .sent 의 text-wrap: balance 가 줄 길이를 고르게 맞춘다.
- *     → "…치료 방법을 제시해 / 드리고 있습니다." 같은 꼬리 고아 줄이 안 생긴다.
- * ★ split 은 경계에서만 자르므로 글자를 잃지 않는다. 좁은 화면에서는 덩어리를 풀어(inline) 자연스럽게 흐르게 둔다(globals.css).
+ *  2) 문장 안에서는 절 쉼표 마디(.clause)가 통째로 내려간다. 나열 쉼표("수술, 보철, 정기검진")는 마디를 가르지 않는다(isListComma).
+ *  3) 마디 안에서는 **말하다 쉬는 자리**(연결어미·조사 뒤)만 보통 공백, 나머지는 붙임 공백(pauseGlue) —
+ *     .clause 의 text-wrap: balance 가 쉬는 자리들 가운데 줄 길이가 고른 조합을 고른다(2026-09-29 개편, 옛 .chunk 덩어리 방식 폐기).
+ * ★ split 은 경계에서만 자르므로 글자를 잃지 않는다. 좁은 화면에서는 마디를 풀어(inline) 흐르게 두되 붙임 공백은 그대로 지킨다.
  */
 /**
  * 쉬는 자리 두 등급 (오너 규칙 보강 2026-09-21: "최대한 마침표·쉼표에서, 균형 맞출 때만 말 쉬는 데서")
@@ -24,27 +23,51 @@ const STRONG_PAUSE_END = /(고|며|면|서|라서|해서|하면|해도|지만|�
 /* '의'(소유격)는 뒷말과 한 덩어리라 쉼 자리에서 뺐다("끝의 | 둥근 부분" 방지) */
 const PAUSE_END = /(은|는|이|가|을|를|에|에서|으로|로|과|와|도|고|며|면|서|까지|부터|처럼|보다|에게|한테|마다|조차|이나|나|든|라서|해서|하면|해도|지만|는데|은데|더라도|으며|이며|하고|이고|라면|이라|다가|자마자|니까|므로)$/;
 /** 앞말과 한 덩어리로 읽히는 낱말 — 이 앞에서는 끊지 않는다("오차로 | 인해", "가지고 | 있고" 방지) */
-const NO_BREAK_BEFORE = /^(인해|인한|통해|통한|위해|위한|위해서|의해|의한|대해|대한|대해서|따라|따른|따라서|비해|비하면|걸쳐|관해|관한|함께|같이|더불어|이상|이하|이내|정도|만큼|때문|때문에|덕분|덕분에|이후|이전|동안|사이|뒤|후|전|중|안|밖|없이|없는|없어|없고|없다|없으며|없기|있는|있어|있을|있고|있다|있으며|있어서|있으면|있기|있습니다|없습니다|않고|않는|않은|않아|않으면|못한|못하는|것|수|줄|지|등|및|또는|혹은|그리고|그래서|하지만|다른|같은|위|아래|옆)$/;
+const NO_BREAK_BEFORE = /^(인해|인한|통해|통한|위해|위한|위해서|의해|의한|대해|대한|대해서|따라|따른|따라서|비해|비하면|걸쳐|관해|관한|더불어|이상|이하|이내|정도|만큼|때문|때문에|덕분|덕분에|이후|이전|동안|사이|뒤|후|전|중|안|밖|없이|없는|없어|없고|없다|없으며|없기|있는|있어|있을|있고|있다|있으며|있어서|있으면|있기|있습니다|없습니다|않고|않는|않은|않아|않으면|못한|못하는|것|수|줄|지|등|및|또는|혹은|그리고|그래서|하지만|다른|같은|위|아래|옆)$/;
 /** 뒷말을 꾸미는 낱말 — 이 뒤에서는 끊지 않는다("볼 베어링 같은 | 구조로" 방지). 관형사·관형형·부사 몇 개 */
 const NO_BREAK_AFTER = /^(같은|다른|이런|그런|저런|어떤|모든|여러|각|매|새|첫|두|세|네|한|그|이|저|및|또는|혹은|가장|더|덜|안|못|바로|아주|매우|너무|약|총|전|후|약간|다소|주로|대개|대부분|거의|보다|훨씬|꼭|늘|자주|다시|먼저|미리|함께)$/;
 /** 관형형 어미로 끝나는 낱말 — 뒤의 명사를 꾸미므로 뒤에서 끊지 않는다("돌아가는 | 운동", "많은 | 사람" 방지) */
-const NO_BREAK_AFTER_END = /(하는|되는|가는|오는|지는|나는|보는|주는|받는|이는|리는|르는|치는|우는|내는|키는|시는|하던|되던|작은|많은|적은|높은|낮은|좋은|나쁜|넓은|좁은|깊은|짧은|젊은|밝은|굵은|얇은|굳은|굽은|틀어진|벗어난|눌린|밀린|남은|둥근|[가-힣]된|[가-힣]한|적인|스러운|[가-힣]할|[가-힣]될)$/;
+const NO_BREAK_AFTER_END = /(하는|되는|가는|오는|지는|나는|보는|주는|받는|이는|리는|르는|치는|우는|내는|키는|시는|하던|되던|작은|많은|적은|높은|낮은|좋은|나쁜|넓은|좁은|깊은|짧은|젊은|밝은|굵은|얇은|굳은|굽은|틀어진|벗어난|눌린|밀린|남은|둥근|[가-힣]된|[가-힣]한|적인|스러운|[가-힣]할|[가-힣]될|[가-힣]인)$/;
 /** "사소하고 | 다양한 원인", "딱딱하고 | 질긴 음식" — '고' 로 이어진 꾸밈말 짝은 안 가른다 */
 const COORD_MODIFIER = /(한|된|스러운|적인|긴|운|는|은|진|린|든)$/;
 /** 앞말에 붙어 읽히는 뒷말 꼴 — "자기도 | 모르게", "…을 | 싣는" 방지 */
 const NO_BREAK_BEFORE_END = /(게|듯|채)$/;
 const OBJECT_MARK = /(을|를)$/;
 const VERB_LIKE = /(는|은|던|을|고|며|면|서|해|여|아|어|다|지|게|기|려|러|니다|습니다)$/;
-/** 한 덩어리는 이 길이를 넘긴 뒤 처음 만나는 쉼 자리에서 닫는다 */
-const CHUNK_MIN = 13;
-/** 센 쉼으로만 잘라도 덩어리가 이보다 길면 약한 쉼(조사)에서 한 번 더 나눈다 — 좁은 카드(≈24자)에 한 덩어리가 들어가는 길이 */
-const LONG_MAX = 24;
-/** 마지막 덩어리가 이보다 짧으면 앞 덩어리에 붙인다(꼬리 고아 방지) */
-const TAIL_MIN = 9;
-/** 이 길이 이하의 마디는 덩어리로 나누지 않는다 */
-const NO_SPLIT_MAX = 24;
-/** 쉼표 앞 조각이 이보다 짧으면 나열(소리, 통증, 개구 제한)로 보고 마디를 가르지 않는다 */
+/** 쉼표 앞(또는 뒤) 조각이 이보다 짧으면 나열(소리, 통증, 개구 제한)로 본다 */
 const ENUM_MAX = 8;
+/** 서술 없는 명사구가 이 길이 이하면 나열 항목으로 본다("모의 식립과 수술 가이드,") */
+const ENUM_PHRASE_MAX = 16;
+/** 쉼표 앞 낱말이 연결어미로 끝나면 **절이 갈리는 쉼표**(…하고, …지만,) — 줄을 바꿔도 되는 첫째 자리 */
+const CLAUSE_COMMA_END = /(고|며|면|서|해|여|지만|는데|은데|더라도|으며|이며|니|듯|도|게|거나|든지|면서|려고|다가|도록|므로|니까)$/;
+/** 문장 머리 부사 뒤 쉼표("또한," "특히,")는 뒷말에 붙인다 — 한 낱말만 한 줄에 서지 않게 */
+const LEAD_ADVERB = /^(또한|특히|다만|그리고|그래서|하지만|그러나|즉|이때|반면|따라서|한편|물론|대신|예를 들어|그러므로|이처럼)$/;
+/** 서술이 든 낱말(관형형·연결어미·종결·주제) — 나열 항목은 보통 명사구라 이것이 없다 */
+const PREDICATE_END = /(는|은|던|인|된|진|온|린|난|적인|하고|하며|하여|해|고|며|서|면|다|니다|요)$/;
+
+/**
+ * 나열 쉼표의 종류 (오너 2026-09-21 "나열되는 쉼표마다 줄바꿈하지 말고" · 2026-09-29 재지적).
+ *   'hard' = 짧은 나열("수술, 보철, 정기검진")·문장 머리 부사("또한,") — 여기서는 줄을 바꾸지 않는다.
+ *   'long' = 항목 자체가 긴 명사구 나열("모의 식립과 수술 가이드, CAD/CAM 보철 제작까지") — 조사 등급의 쉼 자리로만 친다.
+ *   null   = 절 쉼표(…하고, …지만,)·긴 동격("…지켜온 광화문 선치과,") — 쉼 자리 가운데 1순위.
+ *   예전엔 '쉼표 앞 조각이 8자 이하'만 봐서 "첫 상담부터 수술, | 보철," 처럼 첫 항목 앞에 다른 말이 붙으면 나열을 못 알아봤다.
+ * before = 앞 쉼표(또는 마디 머리)부터 이 쉼표까지, after = 이 쉼표 뒤부터 다음 쉼표(또는 끝)까지.
+ */
+function listCommaKind(before: string, after: string): 'hard' | 'long' | null {
+  const b = before.replace(/[,，]\s*$/, '').trim();
+  const last = strip(b.split(/\s+/).pop() ?? '');
+  if (LEAD_ADVERB.test(b)) return 'hard';
+  if (CLAUSE_COMMA_END.test(last)) return null;
+  /* '·' 로 이미 나열한 뒤의 쉼표는 나열을 닫는 쉼표다("관절잡음·개구장애·턱 통증, 원인부터…") */
+  if (/[·ㆍ]/.test(b)) return null;
+  const a = after.replace(/[,，]\s*$/, '').trim();
+  if (a.length <= ENUM_MAX || b.length <= ENUM_MAX) return 'hard';
+  const predicate = b.split(/\s+/).some((w) => { const x = strip(w); return x.length >= 2 && PREDICATE_END.test(x); });
+  if (b.length <= ENUM_PHRASE_MAX && !predicate) return 'long';
+  return null;
+}
+/** 나열 쉼표면 마디를 가르지 않는다(splitClauses) */
+const isListComma = (before: string, after: string) => listCommaKind(before, after) !== null;
 
 /** 여는 괄호 − 닫는 괄호 — 0 보다 크면 괄호 안 */
 function parenDelta(s: string): number {
@@ -71,13 +94,13 @@ export function splitClauses(s: string): string[] {
   if (cur.trim()) out.push(cur.trim());
   /*
    * 나열 쉼표는 마디 경계가 아니다 (오너 2026-09-21: "나열되는 쉼표마다 줄바꿈하지 말고").
-   * 쉼표 앞 조각이 짧으면("부정교합," "외상,") 다음 조각에 붙여 한 마디로 둔다.
+   * 나열이면(isListComma) 다음 조각에 붙여 한 마디로 둔다. 판정은 **바로 앞 조각**만 본다(합친 덩어리 전체가 아니라).
    */
   const merged: string[] = [];
-  for (const piece of out) {
-    const prev = merged[merged.length - 1];
-    if (prev && prev.endsWith(',') && prev.slice(0, -1).trim().length <= ENUM_MAX) merged[merged.length - 1] = `${prev} ${piece}`;
-    else merged.push(piece);
+  for (let k = 0; k < out.length; k++) {
+    const prevRaw = out[k - 1];
+    if (merged.length && prevRaw && prevRaw.endsWith(',') && isListComma(prevRaw, out[k])) merged[merged.length - 1] += ` ${out[k]}`;
+    else merged.push(out[k]);
   }
   return merged;
 }
@@ -91,67 +114,108 @@ function canBreakBetween(w: string, next: string): boolean {
   const nx = strip(next);
   if (NO_BREAK_AFTER.test(bare) || NO_BREAK_AFTER_END.test(bare) || /의$/.test(bare)) return false;
   if (NO_BREAK_BEFORE.test(nx) || NO_BREAK_BEFORE_END.test(nx)) return false;
+  /* "…와 함께" 는 한 덩어리, "습관이 | 함께 얽혀" 는 끊어도 된다 — 함께·같이 앞은 와·과 뒤일 때만 막는다(09-29) */
+  if (/^(함께|같이)$/.test(nx) && /[와과]$/.test(bare)) return false;
   if (/고$/.test(bare) && COORD_MODIFIER.test(nx)) return false;
   /* 목적어와 그것을 받는 동사("힘을 싣는", "구조를 가지고", "치료를 시작합니다")는 한 덩어리 */
   if (OBJECT_MARK.test(bare) && VERB_LIKE.test(nx)) return false;
+  /* 목적어 + 받침 ㄴ·ㄹ 로 끝나는 꾸밈 동사("면허를 가진", "치아를 살릴")도 한 덩어리 (2026-09-29) */
+  const lastCh = nx.charCodeAt(nx.length - 1) - 0xac00;
+  if (OBJECT_MARK.test(bare) && nx.length >= 2 && lastCh >= 0 && lastCh < 11172 && [4, 8].includes(lastCh % 28)) return false;
   return true;
 }
 
-/**
- * 낱말을 한 덩어리 글자열로 — 끊으면 안 되는 짝은 **붙임 공백**(U+00A0)으로 묶는다.
- * 덩어리가 칸보다 넓어 브라우저가 안에서 줄을 바꿔야 할 때도, 그 자리는 우리가 허락한 곳뿐이다.
- * (예전엔 "딱딱하고 | 질긴", "잘못된 | 자세로" 처럼 덩어리 안의 아무 공백에서나 꺾였다)
- */
-const glue = (words: string[]) => words.map((w, i) => (i === 0 ? w : (canBreakBetween(words[i - 1], w) ? ' ' : ' ') + w)).join('');
-const unglue = (s: string) => s.split(/[  ]+/).filter(Boolean);
-
-function chunkBy(words: string[], pause: RegExp, min: number): string[] {
-  const chunks: string[] = [];
-  let cur: string[] = [];
-  let len = 0;
+/** 마디 안의 나열 쉼표 자리와 종류(괄호 안 쉼표는 'hard') */
+function listCommaKinds(words: string[]): Map<number, 'hard' | 'long'> {
+  const at = new Map<number, 'hard' | 'long'>();
+  let segStart = 0;
   let depth = 0;
   for (let i = 0; i < words.length; i++) {
-    const w = words[i];
-    const next = words[i + 1];
-    cur.push(w);
-    len += w.length + 1;
-    depth += parenDelta(w);
-    /* 쉼표는 길이와 상관없이 첫째 쉼 자리 — 오너: "최대한 마침표·쉼표에서". 마디를 안 나누는 자리(clauses=false)에서도 */
-    const isComma = /[,，]$/.test(w);
-    const isPause = isComma || pause.test(strip(w));
-    if (depth <= 0 && next && isPause && (isComma || len >= min) && canBreakBetween(w, next)) {
-      chunks.push(glue(cur));
-      cur = [];
-      len = 0;
-    }
+    depth += parenDelta(words[i]);
+    if (!/[,，]$/.test(words[i])) continue;
+    if (depth > 0) { at.set(i, 'hard'); continue; }
+    let j = i + 1;
+    while (j < words.length - 1 && !/[,，]$/.test(words[j])) j++;
+    const kind = listCommaKind(words.slice(segStart, i + 1).join(' '), words.slice(i + 1, j + 1).join(' '));
+    if (kind) at.set(i, kind);
+    segStart = i + 1;
   }
-  if (cur.length) chunks.push(glue(cur));
-  return chunks;
+  return at;
 }
 
-export function pauseChunks(clause: string): string[] {
+/** 글자 폭 어림(em) — Pretendard 실측: 한글·한자 ≈1(15자+문장부호가 263px@15.5px 에 꽉 참), 라틴·숫자 0.55, 공백 0.28, 문장부호 0.3 */
+function emWidth(t: string): number {
+  let w = 0;
+  for (const ch of t) w += /[ㄱ-ㆎ가-힣一-鿿]/.test(ch) ? 1 : /[A-Za-z0-9]/.test(ch) ? 0.55 : /\s/.test(ch) ? 0.28 : 0.3;
+  return w;
+}
+/**
+ * 이 길이를 넘는 토막에만 쉼 자리를 하나 더 연다. 홈 강점 카드 글 칸이 263px(15.5px 글씨 ≈ 17em) — 그 안에 여유 있게 들어가는 길이.
+ * ⚠️ 본문이 keep-all 이라 열린 자리가 없는 긴 토막은 좁은 칸에서 가로로 넘친다. 이 값을 크게 올리지 말 것.
+ */
+const RUN_MAX_EM = 15.5;
+/** '치의학과'·'보철과' 처럼 과(科)로 끝나는 이름은 조사 '과' 가 아니다 */
+const NOT_PARTICLE = /(학과|보철과|보존과|교정과|내과|외과|치과|안과|피부과)$/;
+/** 쉼 자리 등급별 벌점(em) — 절 쉼표 0 < 연결어미 2 < 조사·긴 나열 쉼표 4 < 그냥 끊어도 되는 공백 8 < 마지막 수단 14 */
+const TIER_PENALTY = [0, 2, 4, 8, 14];
+
+/**
+ * ★★ 줄바꿈 자리는 '꼭 필요한 만큼만, 좋은 순서대로' 연다 (오너 규칙 2026-09-09 → 09-21 → 09-29) ★★
+ *   오너: "나열되는 쉼표에서 전부 하지 말고, 최대한 길이 균형 맞춰서 말 쉬는 텀에 줄바꿈 하되 쉼표나 마침표 쪽에서 하면 좋다."
+ *   · 마침표 = 문장(.sent, block) 경계라 늘 갈린다.
+ *   · 절 쉼표(…하고, …지만,) = 늘 연다.
+ *   · 그 사이 토막이 한 줄(RUN_MAX_EM)보다 길 때만, 가운데에 가깝고 등급이 좋은 자리(연결어미 > 조사 > 그 밖) 하나를 열고 양쪽을 다시 본다.
+ *   · 나머지 공백은 전부 붙임 공백(U+00A0) — 브라우저는 열린 자리에서만 줄을 바꾸고, .clause 의 text-wrap: balance 가 그중 고른 조합을 고른다.
+ * ★ 쉬는 자리를 모두 열어 두면 브라우저 balance 가 "원판이 앞으로 | 밀리고," 처럼 쉼표를 두고 엉뚱한 조사에서 갈랐다(09-29 실측 986마디 비교).
+ * ★ 옛 방식(앞에서부터 덩어리를 채워 inline-block)은 글자 수로 재 한글 폭을 못 맞췄고, 칸보다 넓은 덩어리는 브라우저가 아무 공백에서나 꺾었다.
+ * ⚠️ 짧은 나열 쉼표·꾸밈말 뒤·붙는 말 앞·괄호 안은 마지막 수단(등급 4) — 다른 자리가 전혀 없을 때만.
+ */
+export function pauseGlue(clause: string): string {
   const words = clause.split(/\s+/).filter(Boolean);
-  /* 짧은 마디는 덩어리로 안 나누되, 금지 자리는 붙임 공백으로 묶어 둔다(좁은 칸에서 아무 데서나 꺾이지 않게) */
-  if (clause.length <= NO_SPLIT_MAX) return [glue(words)];
-  /* 1차: 센 쉼(연결어미·쉼표)에서만. 2차: 그래도 긴 덩어리만 약한 쉼(조사)에서 한 번 더 */
-  const chunks = chunkBy(words, STRONG_PAUSE_END, CHUNK_MIN).flatMap((c) => (c.length > LONG_MAX ? chunkBy(unglue(c), PAUSE_END, CHUNK_MIN) : [c]));
-  if (chunks.length >= 2 && chunks[chunks.length - 1].length < TAIL_MIN) {
-    const tail = chunks.pop()!;
-    chunks[chunks.length - 1] += ' ' + tail;
+  if (words.length < 2) return clause.trim();
+  const n = words.length - 1;
+  const lists = listCommaKinds(words);
+  /* 공백마다 등급 — 0 절 쉼표 · 1 연결어미 · 2 조사·긴 나열 쉼표 · 3 끊어도 되는 공백 · 4 마지막 수단 */
+  const tier = new Array<number>(n);
+  let depth = 0;
+  for (let i = 0; i < n; i++) {
+    depth += parenDelta(words[i]);
+    const bare = strip(words[i]);
+    const kind = lists.get(i);
+    if (depth > 0 || kind === 'hard' || !canBreakBetween(words[i], words[i + 1])) tier[i] = 4;
+    else if (/[,，]$/.test(words[i])) tier[i] = kind === 'long' ? 2 : 0;
+    else if (STRONG_PAUSE_END.test(bare)) tier[i] = 1;
+    /* 명사를 잇는 '와·과'("뼈와 신경의")는 조사보다 약한 쉼 — 이것만 남았을 때 쓴다 */
+    else if (/[와과]$/.test(bare) && !NOT_PARTICLE.test(bare)) tier[i] = 3;
+    else if (PAUSE_END.test(bare) && !NOT_PARTICLE.test(bare)) tier[i] = 2;
+    else tier[i] = 3;
   }
-  return chunks;
+  const open = tier.map((t) => t === 0);
+  const width = (a: number, b: number) => emWidth(words.slice(a, b + 1).join(' '));
+  const openIn = (a: number, b: number) => {
+    const total = width(a, b);
+    if (b <= a || total <= RUN_MAX_EM) return;
+    let best = a;
+    let bestScore = Infinity;
+    for (let i = a; i < b; i++) {
+      const score = Math.abs(width(a, i) - total / 2) + TIER_PENALTY[tier[i]];
+      if (score < bestScore) { bestScore = score; best = i; }
+    }
+    open[best] = true;
+    openIn(a, best);
+    openIn(best + 1, b);
+  };
+  let start = 0;
+  for (let i = 0; i <= n; i++) {
+    if (i === n || open[i]) { openIn(start, i); start = i + 1; }
+  }
+  /* 가운뎃점·빗금 앞뒤는 단어 잇기표(U+2060)로 묶는다 — keep-all 이어도 '뼈 | ·신경', 'CAD/ | CAM' 처럼 꺾였다(09-29 실측) */
+  const join = (w: string) => w.replace(/([^\s])([·ㆍ/])(?=[^\s])/g, '$1⁠$2⁠');
+  return words.map((w, i) => (i === 0 ? join(w) : (open[i - 1] ? ' ' : ' ') + join(w))).join('');
 }
 
 function Clause({ text }: { text: string }) {
-  const parts = pauseChunks(text);
-  if (parts.length === 1) return <span className="clause">{text}</span>;
-  return (
-    <span className="clause clause-open">
-      {parts.map((c, i) => (
-        <Fragment key={i}><span className="chunk">{c}</span>{i < parts.length - 1 ? ' ' : ''}</Fragment>
-      ))}
-    </span>
-  );
+  return <span className="clause">{pauseGlue(text)}</span>;
 }
 
 export function Sentences({ text, className = '', clauses: useClauses = true }: { text: string; className?: string; /** 좁은 카드에서는 쉼표 마디를 풀어 자연스럽게 흐르게 한다 */ clauses?: boolean }) {

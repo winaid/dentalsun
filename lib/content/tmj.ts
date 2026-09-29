@@ -42,6 +42,7 @@ import {
   TMJ_SPLINT_TIPS,
   TMJ_STEPS,
   TMJ_SUPPORT_CARE,
+  TMJ_PHYSIO,
   TMJ_SYMPTOMS,
   TMJ_TYPES,
   plainTitle,
@@ -150,6 +151,7 @@ const TREATMENT_BLOCKS: Block[] = [
   points('splint-tips', '교합안정장치, 이렇게 씁니다', TMJ_SPLINT_TIPS, undefined, 2),
   text('arthro', TMJ_ARTHRO.title, [TMJ_ARTHRO.lead, `특징: ${TMJ_ARTHRO.merits.join(' · ')}.`, `기대 효과: ${TMJ_ARTHRO.effects.join(' · ')}.`]),
   points('support', T('support'), TMJ_SUPPORT_CARE.map((s) => ({ title: `${s.title} (${s.tag})`, desc: s.desc })), L('support')),
+  points('physio', T('physio'), TMJ_PHYSIO.map((p) => ({ title: p.title, desc: p.desc })), L('physio')),
   points('habits', T('habits'), TMJ_HABITS, L('habits')),
 ];
 

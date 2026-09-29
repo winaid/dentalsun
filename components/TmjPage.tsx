@@ -37,6 +37,9 @@ import {
   TMJ_DISC,
   TMJ_EQUIP,
   TMJ_FAQ_HEAD,
+  TMJ_PHYSIO,
+  TMJ_LETTER,
+  TMJ_AWARD,
   TMJ_HABITS,
   TMJ_HERO,
   TMJ_HERO_ITEMS,
@@ -203,6 +206,69 @@ function Triad({ className = '' }: { className?: string }) {
 }
 
 /**
+ * 상장 자리 — 사진이 오면(TMJ_AWARD.photo) 그 사진을, 오기 전에는 글자로 그린 액자를 둔다.
+ * ★ 액자 틀은 사진 비율(세로 3:4)과 같은 크기라 사진이 와도 짜임이 흔들리지 않는다.
+ */
+function AwardCard() {
+  const a = TMJ_AWARD;
+  return (
+    <div className="reveal mx-auto mt-10 flex max-w-[640px] items-center gap-5 rounded-2xl border border-hairline bg-white p-4 text-left shadow-[var(--shadow-soft)] md:gap-7 md:p-5">
+      <span className="relative block aspect-[3/4] w-[108px] shrink-0 overflow-hidden rounded-lg md:w-[132px]">
+        {a.photo ? (
+          <Image src={figSrc(a.photo.key)} alt={a.photo.alt} fill sizes="140px" className="object-cover" />
+        ) : (
+          <span aria-hidden className="absolute inset-0 flex flex-col items-center justify-center gap-1 rounded-lg bg-gradient-to-br from-[#eef0f4] via-[#d9dde5] to-[#eef0f4] p-2">
+            <span className="flex h-full w-full flex-col items-center justify-center rounded-[5px] border border-[#c6ccd6] bg-white px-2 text-center">
+              <span className="text-[9px] font-bold tracking-[0.12em] text-ink-muted">{a.year}</span>
+              <span className="mt-1 block h-5 w-5 rounded-full bg-gradient-to-br from-sun-400 to-brand-600 opacity-80" />
+              <span className="mt-1.5 text-[10.5px] font-extrabold leading-tight text-ink">{a.title}</span>
+              <span className="mt-1 text-[9px] leading-tight text-ink-soft">{a.category}</span>
+            </span>
+          </span>
+        )}
+      </span>
+      <div className="min-w-0">
+        <p className="text-[13px] font-bold text-sun-600">
+          {a.year} {a.by}
+        </p>
+        <p className="mt-1 text-[1.2rem] font-extrabold leading-snug text-ink md:text-[1.35rem]">{a.title}</p>
+        <p className="mt-1.5 text-[15px] font-semibold text-brand-700">{a.category} 수상</p>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * 맺음 편지 — 원장이 좋다고 한 참고 캡처의 짜임(어두운 진료실 사진 + 가운데 큰 글 + 단락). 글은 TMJ_LETTER.
+ * ★ 본문 칸 안의 둥근 판 — 바로 아래 문의 띠(ContactBand)도 어두운 전폭 띠라, 전폭으로 두면 어두운 띠가 둘 겹친다.
+ */
+function TmjLetter() {
+  const l = TMJ_LETTER;
+  return (
+    <section className="pt-24 md:pt-32" aria-labelledby="tmj-letter">
+      <div className="reveal relative isolate overflow-hidden rounded-[28px] bg-night px-6 py-14 text-center text-white md:px-14 md:py-20">
+        <Image src={figSrc(l.bg.key)} alt="" fill sizes="(max-width: 1024px) 100vw, 960px" className="-z-20 object-cover" />
+        <div aria-hidden className="absolute inset-0 -z-10 bg-[rgba(9,11,20,0.8)]" />
+        <h2 id="tmj-letter" className="mx-auto max-w-[780px] text-[1.4rem] font-bold leading-[1.6] tracking-[-0.01em] md:text-[1.85rem]">
+          <Sentences text={l.title} />
+        </h2>
+        <span aria-hidden className="mx-auto mt-8 block h-px w-12 bg-sun-500 md:mt-10" />
+        <div className="mx-auto mt-8 max-w-[720px] space-y-5 text-[15.5px] leading-[2] text-white/85 md:mt-10 md:text-[17px]">
+          {l.body.map((p) => (
+            <p key={p.slice(0, 12)}>
+              <Sentences text={p} />
+            </p>
+          ))}
+        </div>
+        <p className="mt-10 text-[14.5px] font-semibold text-white/75 md:mt-12">
+          {l.sign.role} <span className="ml-1 text-[1.2rem] font-extrabold text-white">{l.sign.name}</span>
+        </p>
+      </div>
+    </section>
+  );
+}
+
+/**
  * 쪽마다 보여 줄 구역. 한 파일의 구역을 경로별로 골라 쓴다 — 구역 JSX 를 쪽마다 복사하면 디자인을 고칠 때 여러 군데를 고쳐야 한다.
  * 목록 첫 구역은 위 여백을 두지 않는다(본문 격자의 위 여백만).
  */
@@ -315,6 +381,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                     </li>
                   ))}
                 </ul>
+                {TMJ_AWARD.show && <AwardCard />}
               </section>
             )}
 
@@ -964,6 +1031,33 @@ export function TmjPage({ doc }: { doc: Doc }) {
                         </li>
                       ))}
                     </ul>
+
+                    {/* ── 물리치료 세 가지 — 번호 붙은 사진 카드(원장 참고 캡처 짜임, 2026-09-29) ── */}
+                    <SubHead s={SECTIONS.physio} />
+                    <ul className="reveal-stack mt-8 grid gap-5 md:grid-cols-3">
+                      {TMJ_PHYSIO.map((p, i) => (
+                        <li key={p.title} className="card flex h-full flex-col overflow-hidden">
+                          <span className="relative block aspect-[4/3] overflow-hidden border-b border-hairline bg-white">
+                            <Image
+                              src={figSrc(p.fig.key)}
+                              alt={p.fig.alt}
+                              fill
+                              sizes="(max-width: 768px) 100vw, 30vw"
+                              className={fitsBox(p.fig.key, 4, 3) ? 'object-cover' : '!object-contain p-3'}
+                            />
+                            <span aria-hidden className="absolute left-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-sun-500 text-[14px] font-extrabold text-white shadow-[var(--shadow-soft)]">
+                              {String(i + 1).padStart(2, '0')}
+                            </span>
+                          </span>
+                          <span className="flex flex-1 flex-col p-6">
+                            <h3 className="text-[1.15rem] font-extrabold text-sun-600">{p.title}</h3>
+                            <span className="mt-2 text-[14.5px] leading-[1.75] text-ink-soft">
+                              <Sentences text={p.desc} clauses={false} />
+                            </span>
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
                   </>
                 )}
               </section>
@@ -1031,6 +1125,9 @@ export function TmjPage({ doc }: { doc: Doc }) {
                 </div>
               </section>
             )}
+
+            {/* ── 맺음 편지 — 어두운 사진 판 위 대표원장의 글(원장 요청 2026-09-29). 모든 턱관절 쪽의 본문 끝 ── */}
+            <TmjLetter />
 
             {/* ── 허브: 하위 쪽 카드 — 본문 맨 끝(FAQ 뒤). 다른 쪽으로 보내는 카드는 다 읽은 뒤에 (오너 2026-09-21) ── */}
             {show('children') && children.length > 0 && (

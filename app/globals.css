@@ -161,22 +161,18 @@ figcaption {
     text-wrap: balance;
   }
 }
-.clause,
-.chunk {
+.clause {
   display: inline;
 }
+/*
+ * 마디 안 공백 중 '말이 쉬는 자리'만 보통 공백이고 나머지는 붙임 공백이다(components/ui.tsx pauseGlue).
+ * 마디를 inline-block 으로 두면 들어갈 땐 통째로(절 쉼표에서 먼저 갈림), 안 들어가면 안에서 쉬는 자리끼리 줄 길이를 고르게 나눈다.
+ */
 @media (min-width: 768px) {
   .clause {
     display: inline-block;
     max-width: 100%;
-  }
-  /* 쉼 덩어리로 나뉜 마디는 덩어리 단위로만 줄이 바뀐다 — 마디 자체는 inline 으로 풀어 덩어리가 줄을 넘나들게 */
-  .clause-open {
-    display: inline;
-  }
-  .chunk {
-    display: inline-block;
-    max-width: 100%;
+    text-wrap: balance;
   }
 }
 

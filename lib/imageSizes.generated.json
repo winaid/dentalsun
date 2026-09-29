@@ -1110,5 +1110,13 @@
  "illust/fullarch-hero": {
   "w": 1536,
   "h": 1024
+ },
+ "ai/tmj-physio-tens": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/tmj-physio-spray": {
+  "w": 1200,
+  "h": 800
  }
 }
