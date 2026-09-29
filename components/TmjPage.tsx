@@ -247,7 +247,7 @@ function TmjLetter() {
   return (
     <section className="pt-24 md:pt-32" aria-labelledby="tmj-letter">
       <div className="reveal relative isolate overflow-hidden rounded-[28px] bg-night px-6 py-14 text-center text-white md:px-14 md:py-20">
-        <Image src={figSrc(l.bg.key)} alt="" fill sizes="(max-width: 1024px) 100vw, 960px" className="-z-20 object-cover" />
+        <Image src={figSrc(l.bg.key)} alt="" fill sizes="(max-width: 1024px) 380vw, 960px" className="-z-20 object-cover" />
         <div aria-hidden className="absolute inset-0 -z-10 bg-[rgba(9,11,20,0.8)]" />
         <h2 id="tmj-letter" className="mx-auto max-w-[780px] text-[1.4rem] font-bold leading-[1.6] tracking-[-0.01em] md:text-[1.85rem]">
           <Sentences text={l.title} />

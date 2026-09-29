@@ -66,6 +66,24 @@ dd,
 figcaption {
   text-wrap: pretty;
 }
+/* 2026-09-29 전체 점검 — 제목·표 칸 끝줄에 한 낱말만 남던 곳 약 70곳('…다시 세우는 / 치료', '…함께 / 보는', '음식이 / 낌').
+   제목·표 머리칸은 줄 길이를 고르게(balance), 표 본문 칸은 끝줄 한 낱말만 막는다(pretty). */
+h1,
+h2,
+h3,
+h4,
+th {
+  text-wrap: balance;
+}
+td {
+  text-wrap: pretty;
+}
+/* 표 칸은 낱말을 통째로 — body 의 overflow-wrap:anywhere 는 표가 칸 폭을 정할 때 첫 칸을 한 글자 폭까지 줄여
+   '재근관치 / 료'·'치근단절 / 제술' 이 됐다(break-word 는 칸 최소 폭을 가장 긴 낱말로 잡는다). */
+th,
+td {
+  overflow-wrap: break-word;
+}
 ::selection {
   background: var(--color-sun-200);
 }

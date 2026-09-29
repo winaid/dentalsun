@@ -469,7 +469,8 @@ export function CustomImplantPage({ doc, part }: { doc: Doc; part: 'navigation' 
               <div className="reveal mt-12 overflow-hidden rounded-[28px] bg-night text-white">
                 <div className="grid lg:grid-cols-[0.78fr_1.22fr]">
                   <span className="relative block min-h-[260px] lg:min-h-0">
-                    <Image src={figSrc(CI_WHY.fig.key)} alt={CI_WHY.fig.alt} fill sizes="(max-width: 1024px) 100vw, 400px" className="object-cover" />
+                    {/* 폰·태블릿은 이 칸이 넓고 낮아(260px) 세로 사진 가운데 — 가운만 — 보였다(09-29 점검). 위쪽을 보여 원장 얼굴이 들어오게 */}
+                    <Image src={figSrc(CI_WHY.fig.key)} alt={CI_WHY.fig.alt} fill sizes="(max-width: 1024px) 100vw, 400px" className="object-cover object-[50%_25%] lg:object-center" />
                     <span aria-hidden className="absolute inset-0 bg-gradient-to-t from-night/70 via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:via-transparent lg:to-night" />
                   </span>
                   <ol className="p-7 md:p-10">

@@ -171,6 +171,14 @@ const RUN_MAX_EM = 15.5;
 const NOT_PARTICLE = /(학과|보철과|보존과|교정과|내과|외과|치과|안과|피부과)$/;
 /** 쉼 자리 등급별 벌점(em) — 절 쉼표 0 < 연결어미 2 < 조사·긴 나열 쉼표 4 < 그냥 끊어도 되는 공백 8 < 마지막 수단 14 */
 const TIER_PENALTY = [0, 2, 4, 8, 14];
+/** 붙여 쓴 가운뎃점·빗금("소독·밀폐", "CAD/CAM")을 앞뒤 글자와 묶는다(U+2060) — 줄바꿈 규칙을 안 거치는 표 칸 글용. "다시 소독 / ·밀폐하는" 처럼 점 앞에서 꺾였다(09-29 점검). */
+const WJ = String.fromCharCode(0x2060);
+export const keepDots = (s: string) =>
+  s
+    .replace(/([^\s])([·ㆍ])(?=[^\s])/g, `$1${WJ}$2`) // 가운뎃점은 앞 글자에만 묶는다 — 점 뒤에서 줄이 바뀌는 건 괜찮다("…개구장애· / 저작근 통증,")
+    .replace(/([^\s])(\/)(?=[^\s])/g, `$1${WJ}$2${WJ}`); // 빗금은 앞뒤 모두("CAD/CAM")
+/** 띄어 쓴 나열 구분 기호 한 글자("A · B", "A | B") */
+const SEPARATOR = /^[·ㆍ|/–—]$/;
 
 /**
  * ★★ 줄바꿈 자리는 '꼭 필요한 만큼만, 좋은 순서대로' 연다 (오너 규칙 2026-09-09 → 09-21 → 09-29) ★★
@@ -204,7 +212,14 @@ export function pauseGlue(clause: string, maxEm = RUN_MAX_EM): string {
     else if (PAUSE_END.test(bare) && !NOT_PARTICLE.test(bare)) tier[i] = 2;
     else tier[i] = 3;
   }
-  const open = tier.map((t) => t === 0);
+  /* 나열 구분 기호(" · ", " | ", " / ") 앞 공백은 절대 열지 않는다 — 열면 "· 대한 구강…", "· 토요일" 처럼 점이 줄 첫머리에 떨어졌다(09-29 전체 점검).
+     기호 뒤 공백은 긴 나열 쉼표와 같은 등급(2)으로 둔다. */
+  const glued = new Array<boolean>(n).fill(false);
+  for (let i = 0; i < n; i++) {
+    if (SEPARATOR.test(words[i + 1])) { glued[i] = true; tier[i] = 4; }
+    if (SEPARATOR.test(words[i]) && tier[i] > 2) tier[i] = 2;
+  }
+  const open = tier.map((t, i) => t === 0 && !glued[i]);
   const width = (a: number, b: number) => emWidth(words.slice(a, b + 1).join(' '));
   const openIn = (a: number, b: number) => {
     const total = width(a, b);
@@ -212,6 +227,7 @@ export function pauseGlue(clause: string, maxEm = RUN_MAX_EM): string {
     let best = a;
     let bestScore = Infinity;
     for (let i = a; i < b; i++) {
+      if (glued[i]) continue;
       const score = Math.abs(width(a, i) - total / 2) + TIER_PENALTY[tier[i]];
       if (score < bestScore) { bestScore = score; best = i; }
     }
@@ -475,7 +491,7 @@ export function ContactBand({ title = '예약과 상담은 전화·네이버로'
   return (
     <section className="relative isolate overflow-hidden bg-night text-white">
       <div className="absolute inset-0 -z-10">
-        <Image src={figSrc(bg)} alt="" fill sizes="100vw" className="object-cover opacity-30" data-parallax="0.18" />
+        <Image src={figSrc(bg)} alt="" fill sizes="(max-width: 1023px) 200vw, 100vw" className="object-cover opacity-30" data-parallax="0.18" />
         <div className="absolute inset-0 bg-gradient-to-r from-night via-night/85 to-night/50" />
       </div>
       <div className="wrap py-20 md:py-28">

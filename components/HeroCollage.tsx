@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import type { ReactNode } from 'react';
-import { Breadcrumb, Sentences } from '@/components/ui';
+import { Breadcrumb, Sentences, keepDots } from '@/components/ui';
 import { figSrc, type Fig } from '@/lib/docs';
 import { CLINIC } from '@/lib/clinic';
 
@@ -58,8 +58,14 @@ export function HeroCollage({
       <div className="relative min-h-[100svh] overflow-hidden">
         {/* 배경 — 사진은 오른쪽이 또렷, 글 자리는 남색 */}
         <div className="absolute inset-0 -z-10">
-          <div className={`absolute inset-0 ${bgSoft ? 'hero-soft' : ''}`}>
-            <Image src={figSrc(bg)} alt="" fill priority sizes="100vw" className="kenburns object-cover object-[60%_50%]" />
+          {/*
+            ★ 폰·태블릿(lg 아래)은 글·카드 때문에 이 구역이 1,300~1,500px 로 길다. 사진이 구역 전체를 덮으면 가로 사진이 세로로 늘어나
+              원본의 16~24%만 1.3~2배로 확대돼 흐릿한 덩어리가 됐다(2026-09-29 전체 점검, 하위 쪽 50여 곳). → 사진 판은 첫 화면 한 장 높이까지만,
+              아래 끝은 남색으로 녹인다(카드 아래는 원래도 거의 남색 막이라 보이는 짜임은 같다). 받는 파일도 그려지는 폭(화면 높이×1.5)에 맞춘다.
+          */}
+          <div className={`absolute inset-x-0 top-0 h-[100svh] lg:inset-0 lg:h-auto ${bgSoft ? 'hero-soft' : ''}`}>
+            <Image src={figSrc(bg)} alt="" fill priority sizes="(max-width: 1023px) 330vw, 100vw" className="kenburns object-cover object-[60%_50%]" />
+            <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-night to-transparent lg:hidden" />
           </div>
           <div className="absolute inset-0 bg-gradient-to-t from-night via-night/80 to-night/40 lg:hidden" />
           <div className="absolute inset-0 hidden bg-gradient-to-r from-night via-night/85 to-night/35 lg:block" />
@@ -76,8 +82,8 @@ export function HeroCollage({
             <p className="eyebrow on-dark mt-6 hero-in">{eyebrow}</p>
             {/* 제목은 한 줄이든 두 줄이든 같은 높이를 차지한다 — 쪽마다 글이 튀지 않게(오너: 행열 규격 통일). 둘째 줄 어긋남은 오너가 좋아해서 유지 */}
             <h1 className={`display-xl mt-4 on-photo lg:flex lg:min-h-[138px] lg:flex-col lg:justify-end 2xl:min-h-[158px] ${longer ? 'is-longer' : long ? 'is-long' : ''}`}>
-              <span className="block hero-in hero-in-2">{lines[0]}</span>
-              {lines[1] && <span className="block hero-in hero-in-3 lg:pl-[14vw]">{lines[1]}</span>}
+              <span className="block hero-in hero-in-2">{typeof lines[0] === 'string' ? keepDots(lines[0]) : lines[0]}</span>
+              {lines[1] && <span className="block hero-in hero-in-3 lg:pl-[14vw]">{typeof lines[1] === 'string' ? keepDots(lines[1]) : lines[1]}</span>}
             </h1>
             {/* 설명은 두 줄 높이를 잡아 두어 한 문장이든 두 문장이든 버튼 자리가 같다 */}
             <p className="mt-8 max-w-[560px] text-[1.08rem] leading-[1.8] text-white/80 hero-in hero-in-4 md:text-[1.16rem] lg:mt-10 lg:min-h-[3.6em] lg:max-w-[720px]">

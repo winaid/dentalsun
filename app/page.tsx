@@ -307,7 +307,7 @@ export default function HomePage() {
         {/* ── 턱관절 — 어두운 사진 띠 ── */}
         <section className="relative isolate overflow-hidden bg-night py-24 text-white md:py-32">
           <div className="absolute inset-0 -z-10">
-            <Image src={figSrc('ai/wide-tmj')} alt="" fill sizes="100vw" className="object-cover opacity-50" data-parallax="0.2" />
+            <Image src={figSrc('ai/wide-tmj')} alt="" fill sizes="(max-width: 1023px) 250vw, 100vw" className="object-cover opacity-50" data-parallax="0.2" />
             <div className="absolute inset-0 bg-gradient-to-b from-night/85 via-night/65 to-night/90" />
           </div>
           {/* 사진 카드 없이 글만 가운데(오너: 억지로 맞춘 사진 카드 제거). 배경 사진이 분위기를 맡는다. */}
@@ -396,7 +396,7 @@ export default function HomePage() {
         {/* ── 위생·소독 — AI 사진 배경 띠 ── */}
         <section className="relative isolate overflow-hidden bg-night py-24 text-white md:py-32">
           <div className="absolute inset-0 -z-10">
-            <Image src={figSrc('ai/wide-clinic')} alt="" fill sizes="100vw" className="object-cover opacity-30" data-parallax="0.2" />
+            <Image src={figSrc('ai/wide-clinic')} alt="" fill sizes="(max-width: 1023px) 250vw, 100vw" className="object-cover opacity-30" data-parallax="0.2" />
             <div className="absolute inset-0 bg-gradient-to-l from-night via-night/85 to-night/50" />
           </div>
           <div className="wrap grid items-center gap-12 lg:grid-cols-2 lg:gap-20">

@@ -3,6 +3,7 @@ import './globals.css';
 import { SiteFooter } from '@/components/SiteFooter';
 import { QuickMenu } from '@/components/QuickMenu';
 import { RevealScript } from '@/components/RevealScript';
+import { WrapGuard } from '@/components/WrapGuard';
 import { CLINIC } from '@/lib/clinic';
 import { desc80 } from '@/lib/seo';
 
@@ -56,6 +57,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SiteFooter />
         <QuickMenu />
         <RevealScript />
+        <WrapGuard />
       </body>
     </html>
   );

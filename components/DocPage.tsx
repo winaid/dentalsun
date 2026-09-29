@@ -2,7 +2,7 @@ import Image from 'next/image';
 import type { CSSProperties, ReactNode } from 'react';
 import { SiteHeader } from '@/components/SiteHeader';
 import { JsonLd } from '@/components/JsonLd';
-import { Breadcrumb, CardLink, ContactBand, FaqList, Figure, MedicalNotice, ScrubText, Sentences, splitSentences } from '@/components/ui';
+import { Breadcrumb, CardLink, ContactBand, FaqList, Figure, MedicalNotice, ScrubText, Sentences, keepDots, splitSentences } from '@/components/ui';
 import { docCharCount, figSize, figSrc, fitsBox, type Block, type Doc, type Fig } from '@/lib/docs';
 import { docByPath, docsOfHub } from '@/lib/content';
 import { caseGroup } from '@/lib/cases';
@@ -276,7 +276,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
   const Bg = () =>
     band ? (
       <div className="absolute inset-0 -z-10">
-        <Image src={figSrc(band)} alt="" fill sizes="100vw" className="object-cover opacity-25" data-parallax="0.18" />
+        <Image src={figSrc(band)} alt="" fill sizes="(max-width: 1023px) 200vw, 100vw" className="object-cover opacity-25" data-parallax="0.18" />
         <div className="absolute inset-0 bg-gradient-to-b from-night/90 via-night/80 to-night/95" />
       </div>
     ) : null;
@@ -304,7 +304,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
         return (
           <section id={id} className="relative isolate overflow-hidden bg-night py-28 text-white md:py-36">
             <div className="absolute inset-0 -z-10">
-              <Image src={figSrc(photoBand)} alt="" fill sizes="100vw" className="object-cover" data-parallax="0.15" />
+              <Image src={figSrc(photoBand)} alt="" fill sizes="(max-width: 1023px) 250vw, 100vw" className="object-cover" data-parallax="0.15" />
               <div className="absolute inset-0 bg-night/70" />
               <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-night/70 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-night/70 to-transparent" />
@@ -457,7 +457,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
                 <tbody>
                   {b.rows.map((r, i) => (
                     <tr key={i}>
-                      {r.map((c, j) => (j === 0 ? <th key={j} scope="row">{c}</th> : <td key={j} className="text-ink-soft">{typeof c === 'string' && splitSentences(c).length > 1 ? <Sentences text={c} clauses={false} /> : c}</td>))}
+                      {r.map((c, j) => (j === 0 ? <th key={j} scope="row">{typeof c === 'string' ? keepDots(c) : c}</th> : <td key={j} className="text-ink-soft">{typeof c === 'string' && splitSentences(c).length > 1 ? <Sentences text={c} clauses={false} /> : typeof c === 'string' ? keepDots(c) : c}</td>))}
                     </tr>
                   ))}
                 </tbody>
@@ -516,7 +516,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
       return (
         <section className="relative isolate overflow-hidden bg-brand-900 py-20 text-white">
           <div className="absolute inset-0 -z-10">
-            <Image src={figSrc('ai/wide-philosophy')} alt="" fill sizes="100vw" className="object-cover opacity-20" data-parallax="0.15" />
+            <Image src={figSrc('ai/wide-philosophy')} alt="" fill sizes="(max-width: 1023px) 200vw, 100vw" className="object-cover opacity-20" data-parallax="0.15" />
           </div>
           <div className="wrap reveal text-center">
             <p className="mx-auto max-w-[900px] text-[1.3rem] leading-[1.6] font-bold md:text-[1.8rem]">

@@ -106,7 +106,8 @@ export function HomeHero() {
               alt={n === i ? s.alt : ''}
               fill
               priority={n === 0}
-              sizes="100vw"
+              /* 폰은 세로 화면을 가로 사진으로 채워 그려지는 폭이 화면의 4배쯤 — 100vw 로 받으면 작은 파일을 8배 늘려 흐렸다(09-29 점검) */
+              sizes="(max-width: 1023px) 300vw, 100vw"
               className={`object-cover ${s.fit} ${n === i ? 'hero-zoom' : ''}`}
             />
           </div>
