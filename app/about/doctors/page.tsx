@@ -66,13 +66,6 @@ export default function DoctorsPage() {
                 <h2 className="display-sm mt-2">
                   {d.name} <span className="font-bold">{d.role}</span>
                 </h2>
-                {/* 약력 외에 소개 글 하나(2026-09-29 원장 피드백 6번) — 홈 의료진 구역과 같은 문구(lib/doctors.ts) */}
-                <p className="mt-6 text-[1.25rem] font-extrabold leading-[1.45] text-ink md:text-[1.45rem]">
-                  {d.headline[0]} <span className="accent">{d.headline[1]}</span>
-                </p>
-                <p className="mt-3 max-w-[560px] text-[16px] leading-[1.85] text-ink-soft">
-                  <Sentences text={d.intro} />
-                </p>
                 <div className="mt-8 rounded-2xl border border-hairline bg-white p-7 shadow-[var(--shadow-lift)] md:p-9 lg:-ml-[22%]">
                   <h3 className="text-[1.15rem] font-bold text-ink">주요 약력</h3>
                   <ul className="mt-5 space-y-2.5">

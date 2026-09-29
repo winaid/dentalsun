@@ -120,19 +120,20 @@ export default function HomePage() {
         {/* 첫 화면 아래 흐르는 낱말 띠는 오너 지시로 뺐다(2026-09-10) */}
 
         {/* ── 의료진 ── 2026-09-29 원장 피드백 6번: 첫 화면 바로 아래로 올리고, 약력 외에 소개 글을 넣는다.
-             머리 문구는 병원이 고른 것 — "15년 이상 / 한결같은 마음으로 한자리를 지켜온 / 광화문 선치과"(두 안 중 오른쪽). */}
-        <section className="section relative overflow-hidden bg-canvas !py-16 lg:!py-24">
+             ★★ 짜임은 원래 판(2c41690) 그대로 — 가운데 머리말(OUR DOCTORS·제목·한 줄 설명) + 사진 | 이름·약력 카드.
+                '15년 이상' 을 큰 숫자로 세운 판은 오너 반려("이런 식으로 디자인 바뀌는 건 안 돼", 2026-09-29).
+                새 문구는 원래 자리에 넣는다 — 제목 = 병원이 고른 문구(lib/doctors headline), 설명 = '15년 이상 … 한자리를 지켜온'. */}
+        <section className="section relative overflow-hidden bg-canvas !py-14 lg:!py-20">
           <div className="wrap">
             <div className="reveal mx-auto max-w-[820px] text-center">
-              <p className="text-[clamp(2.8rem,6.4vw,5rem)] font-extrabold leading-none tracking-[-0.03em] text-brand-800">
-                15년 <span className="text-sun-500">이상</span>
+              <p className="eyebrow justify-center">OUR DOCTORS</p>
+              <h2 className="display-sm mt-4">
+                {DOCTORS[0].headline[0]}
+                <br className="md:hidden" /> <span className="accent">{DOCTORS[0].headline[1]}</span>
+              </h2>
+              <p className="lead mt-3">
+                <Sentences text="15년 이상 한결같은 마음으로 한자리를 지켜온 광화문 선치과, 보건복지부 인증 통합치의학과 전문의가 직접 진료합니다." />
               </p>
-              <p className="mt-5 text-[1.2rem] font-semibold leading-[1.6] text-ink-soft md:text-[1.4rem]">
-                한결같은 마음으로
-                <br />
-                한자리를 지켜온
-              </p>
-              <p className="mt-4 text-[1.5rem] font-extrabold tracking-[-0.01em] text-ink md:text-[1.8rem]">광화문 선치과</p>
             </div>
             {/* 가운데에 적당한 크기(오너: 너무 컸다). 뒤에는 병원 영문 이름이 저절로 흐르는 큰 글자 띠(동그라미치과처럼). */}
             {DOCTORS.map((d) => (
@@ -164,22 +165,15 @@ export default function HomePage() {
                     <span aria-hidden className="mx-auto mt-[-14px] block h-4 w-[62%] rounded-[999px] bg-[radial-gradient(50%_50%_at_50%_50%,rgba(19,24,41,0.16)_0%,rgba(19,24,41,0)_72%)]" />
                   </div>
                   <div className="reveal">
-                    <p className="text-[13px] font-bold tracking-[0.18em] text-sun-600">GWANGHWAMUN SUN DENTAL · 대표원장</p>
-                    <h2 className="mt-3 text-[1.75rem] font-extrabold leading-[1.35] tracking-[-0.02em] text-ink md:text-[2.2rem]">
-                      {d.headline[0]}
-                      <br />
-                      <span className="accent">{d.headline[1]}</span>
-                    </h2>
-                    <span aria-hidden className="mt-6 block h-px w-12 bg-ink/25" />
-                    <p className="mt-6 flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
-                      <span className="text-[1.6rem] font-extrabold tracking-[-0.02em] text-ink md:text-[1.9rem]">{d.name}</span>
-                      <span className="text-[1.1rem] font-bold text-ink-soft">{d.role}</span>
-                      <span className="text-[15px] font-semibold text-brand-600">· {d.specialty}</span>
-                    </p>
-                    <p className="mt-4 max-w-[640px] text-[16.5px] leading-[1.85] text-ink-soft">
+                    <p className="text-[1.1rem] font-semibold text-brand-600 md:text-[1.2rem]">{d.specialty}</p>
+                    <h3 className="mt-2 text-[2.1rem] font-extrabold tracking-[-0.02em] text-ink md:text-[2.6rem] lg:text-[2.9rem]">
+                      {d.name} <span className="text-[1.3rem] font-bold text-ink-soft md:text-[1.5rem]">{d.role}</span>
+                    </h3>
+                    {/* 소개 글 한 단락(원장 피드백 6번) — 이름과 약력 카드 사이, 본문 글씨로만 */}
+                    <p className="mt-3 max-w-[640px] text-[16px] leading-[1.8] text-ink-soft md:text-[16.5px]">
                       <Sentences text={d.intro} />
                     </p>
-                    <div className="mt-6 rounded-2xl border border-hairline bg-white/95 p-6 shadow-[var(--shadow-soft)] backdrop-blur md:mt-6 md:p-8">
+                    <div className="mt-5 rounded-2xl border border-hairline bg-white/95 p-6 shadow-[var(--shadow-soft)] backdrop-blur md:mt-6 md:p-8">
                       <p className="text-[14.5px] font-bold tracking-wide text-ink-muted md:text-[15px]">주요 약력</p>
                       <ul className="mt-4 grid gap-x-8 gap-y-3 sm:grid-cols-2 md:mt-5 md:gap-x-10 md:gap-y-3.5">
                         {d.career.map((c) => (

@@ -20,6 +20,7 @@ export interface Doctor {
   /**
    * 원장 소개 — 2026-09-29 원장 피드백 6번으로 신설: 약력 외에 소개 글 한 단락.
    * headline 은 병원이 고른 문구, intro 는 병원이 보내 준 예시 문구 그대로(띄어쓰기만 다듬음).
+   * 쓰는 곳 = 홈 의료진 구역뿐(headline = 가운데 머리말 제목, intro = 이름 아래). 의료진 쪽은 원래 짜임 유지(2026-09-29 오너).
    */
   headline: [string, string];
   intro: string;
