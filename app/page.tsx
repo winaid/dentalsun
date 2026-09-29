@@ -34,11 +34,13 @@ const HOME_FAQ = SITE_FAQ.map((g) => g.items[0]);
  */
 const HOME_HUBS: NavItem[] = [
   { label: '임플란트', href: '/treatment/implant', children: [
-    { label: '디지털 맞춤 임플란트', href: '/treatment/implant/navigation' }, { label: '풀아치 임플란트', href: '/treatment/implant/full-arch' },
-    { label: 'UV 임플란트', href: '/treatment/implant/uv' }, { label: '자가혈 임플란트', href: '/treatment/implant/prf' }, { label: '보증제도', href: '/treatment/implant/warranty' },
+    { label: '내비게이션 임플란트', href: '/treatment/implant/navigation' }, { label: '맞춤 임플란트', href: '/treatment/implant/custom' },
+    { label: '풀아치 임플란트', href: '/treatment/implant/full-arch' }, { label: 'UV 임플란트', href: '/treatment/implant/uv' },
+    { label: '자가혈 임플란트', href: '/treatment/implant/prf' }, { label: '보증제도', href: '/treatment/implant/warranty' },
   ] },
   { label: '턱관절', href: '/treatment/tmj', children: [
-    { label: '턱관절 장애란?', href: '/treatment/tmj' }, { label: '증상과 자가진단', href: '/treatment/tmj/symptoms' }, { label: '치료법', href: '/treatment/tmj/treatment' },
+    { label: '턱관절 장애란?', href: '/treatment/tmj' }, { label: '증상과 자가진단', href: '/treatment/tmj/symptoms' },
+    { label: '이갈이 · 이악물기', href: '/treatment/tmj/bruxism' }, { label: '치료법', href: '/treatment/tmj/treatment' },
   ] },
   { label: '심미치료', href: '/treatment/aesthetic', children: [
     { label: '심미보철', href: '/treatment/aesthetic/prosthetics' }, { label: '치아미백', href: '/treatment/aesthetic/whitening' },
@@ -50,11 +52,13 @@ const HOME_HUBS: NavItem[] = [
     { label: '사랑니발치 노하우', href: '/treatment/wisdom-tooth' }, { label: '발생되는 문제', href: '/treatment/wisdom-tooth#problems' }, { label: '발치과정', href: '/treatment/wisdom-tooth#process' },
   ] },
   { label: '자연치아살리기', href: '/treatment/natural-tooth', children: [
-    { label: 'MTA 신경치료', href: '/treatment/natural-tooth/mta' }, { label: '엔도소닉 초음파 세척기', href: '/treatment/natural-tooth/endosonic' },
+    { label: 'MTA 근관치료', href: '/treatment/natural-tooth/mta' }, { label: '엔도소닉 초음파 세척', href: '/treatment/natural-tooth/endosonic' },
+    { label: '재근관치료', href: '/treatment/re-root-canal' }, { label: '치주치료', href: '/treatment/periodontal' },
   ] },
+  /* 수면마취는 2026-09-29 원장 확인(시행하지 않음)으로 뺐다 */
   { label: '무통&저자극시스템', href: '/treatment/painless', children: [
     { label: '무통마취', href: '/treatment/painless/anesthesia' }, { label: '도포 & 가글마취', href: '/treatment/painless/anesthesia#topical' },
-    { label: '수면마취', href: '/treatment/painless/sedation' }, { label: '에어 플로우', href: '/treatment/painless/airflow' },
+    { label: '에어 플로우', href: '/treatment/painless/airflow' },
   ] },
 ];
 
@@ -92,12 +96,13 @@ const HUB_IMG: Record<string, string> = {
 
 export default function HomePage() {
   const featured = [
-    { href: '/treatment/implant/navigation', label: '디지털 맞춤 임플란트', desc: '모의수술로 심고, 내 잇몸에 맞춘 기둥으로 마무리.', fig: 'orig/misc-nav-implant-set' },
-    { href: '/treatment/implant/full-arch', label: '풀아치(전체) 임플란트', desc: '4~6개 최소식립으로 무치악 해결.', fig: 'orig/implant-fa-fixed' },
-    { href: '/treatment/implant/uv', label: 'UV 임플란트', desc: '잇몸이 좋지 않다면.', fig: 'ai/implant-uv' },
-    { href: '/treatment/implant/prf', label: '자가혈 임플란트', desc: '뼈이식이 필요하다면.', fig: 'ai/implant-prf' },
-    { href: '/treatment/insurance', label: '보험 틀니 · 임플란트', desc: '만 65세 이상 건강보험 적용.', fig: 'ai/insurance-hub' },
-    { href: '/treatment/implant/warranty', label: '보증제도', desc: '치료 후 철저한 사후 관리.', fig: 'ai/implant-warranty' },
+    /* 2026-09-29 맞춤 임플란트가 다시 독립 → 여섯 장 유지를 위해 보증제도는 아래 버튼으로 */
+    { href: '/treatment/implant/navigation', label: '내비게이션 임플란트', desc: 'CBCT 모의 식립 후 수술 가이드로 식립합니다.', fig: 'orig/misc-nav-implant-set' },
+    { href: '/treatment/implant/custom', label: '맞춤 임플란트', desc: '잇몸 라인에 맞춘 맞춤 지대주로 완성합니다.', fig: 'ai/implant-custom' },
+    { href: '/treatment/implant/full-arch', label: '풀아치(전체) 임플란트', desc: '무치악에 4~6개를 식립해 고정성 보철을 연결합니다.', fig: 'orig/implant-fa-fixed' },
+    { href: '/treatment/implant/uv', label: 'UV 임플란트', desc: '광활성화한 픽스처로 골유착 환경을 돕습니다.', fig: 'ai/implant-uv' },
+    { href: '/treatment/implant/prf', label: '자가혈 임플란트', desc: '골이식 부위에 자가혈 농축 성분(PRF)을 씁니다.', fig: 'ai/implant-prf' },
+    { href: '/treatment/insurance', label: '보험 틀니 · 임플란트', desc: '만 65세 이상 건강보험 적용 기준을 안내합니다.', fig: 'ai/insurance-hub' },
   ];
 
   return (
@@ -115,19 +120,97 @@ export default function HomePage() {
 
         {/* 첫 화면 아래 흐르는 낱말 띠는 오너 지시로 뺐다(2026-09-10) */}
 
-        {/* ── 강점 4 ── */}
+        {/* ── 의료진 ── 2026-09-29 원장 피드백 6번: 첫 화면 바로 아래로 올리고, 약력 외에 소개 글을 넣는다.
+             머리 문구는 병원이 고른 것 — "15년 이상 / 한결같은 마음으로 한자리를 지켜온 / 광화문 선치과"(두 안 중 오른쪽). */}
+        <section className="section relative overflow-hidden bg-canvas !py-16 lg:!py-24">
+          <div className="wrap">
+            <div className="reveal mx-auto max-w-[820px] text-center">
+              <p className="text-[clamp(2.8rem,6.4vw,5rem)] font-extrabold leading-none tracking-[-0.03em] text-brand-800">
+                15년 <span className="text-sun-500">이상</span>
+              </p>
+              <p className="mt-5 text-[1.2rem] font-semibold leading-[1.6] text-ink-soft md:text-[1.4rem]">
+                한결같은 마음으로
+                <br />
+                한자리를 지켜온
+              </p>
+              <p className="mt-4 text-[1.5rem] font-extrabold tracking-[-0.01em] text-ink md:text-[1.8rem]">광화문 선치과</p>
+            </div>
+            {/* 가운데에 적당한 크기(오너: 너무 컸다). 뒤에는 병원 영문 이름이 저절로 흐르는 큰 글자 띠(동그라미치과처럼). */}
+            {DOCTORS.map((d) => (
+              <div key={d.slug} className="relative mt-6 py-6 md:py-8">
+                <div aria-hidden className="pointer-events-none absolute left-1/2 top-1/2 z-0 w-screen -translate-x-1/2 -translate-y-1/2 select-none">
+                  <div className="marquee">
+                    {[0, 1].map((k) => (
+                      <span key={k} className="whitespace-nowrap pr-10 text-[110px] font-extrabold leading-none tracking-[-0.04em] text-brand-900/[0.11] md:text-[160px]">
+                        GWANGHWAMUN SUN DENTAL CLINIC&nbsp;·&nbsp;
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div className="relative z-10 mx-auto grid max-w-[1440px] items-center gap-10 md:grid-cols-[minmax(0,360px)_1fr] md:gap-12 lg:grid-cols-[460px_1fr] lg:gap-16 xl:grid-cols-[480px_1fr]">
+                  {/* 배경을 지운 사진(누끼) — 액자 없이 바탕 위에 바로 선다. 뒤에 옅은 빛과 바닥 그림자만 둔다 */}
+                  <div className="reveal relative">
+                    <span
+                      aria-hidden
+                      className="pointer-events-none absolute inset-x-0 bottom-6 top-0 -z-10 bg-[radial-gradient(58%_58%_at_50%_52%,rgba(242,111,30,0.16)_0%,rgba(242,111,30,0)_70%)]"
+                    />
+                    <Image
+                      src={d.cutout ?? d.photo}
+                      alt={`${d.name} ${d.role}`}
+                      width={995}
+                      height={1346}
+                      sizes="(max-width: 768px) 76vw, 480px"
+                      className="mx-auto h-auto w-full max-w-[300px] drop-shadow-[0_26px_36px_rgba(9,14,35,0.16)] md:max-w-[340px] lg:max-w-none"
+                    />
+                    <span aria-hidden className="mx-auto mt-[-14px] block h-4 w-[62%] rounded-[999px] bg-[radial-gradient(50%_50%_at_50%_50%,rgba(19,24,41,0.16)_0%,rgba(19,24,41,0)_72%)]" />
+                  </div>
+                  <div className="reveal">
+                    <p className="text-[13px] font-bold tracking-[0.18em] text-sun-600">GWANGHWAMUN SUN DENTAL · 대표원장</p>
+                    <h2 className="mt-3 text-[1.75rem] font-extrabold leading-[1.35] tracking-[-0.02em] text-ink md:text-[2.2rem]">
+                      {d.headline[0]}
+                      <br />
+                      <span className="accent">{d.headline[1]}</span>
+                    </h2>
+                    <span aria-hidden className="mt-6 block h-px w-12 bg-ink/25" />
+                    <p className="mt-6 flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
+                      <span className="text-[1.6rem] font-extrabold tracking-[-0.02em] text-ink md:text-[1.9rem]">{d.name}</span>
+                      <span className="text-[1.1rem] font-bold text-ink-soft">{d.role}</span>
+                      <span className="text-[15px] font-semibold text-brand-600">· {d.specialty}</span>
+                    </p>
+                    <p className="mt-4 max-w-[640px] text-[16.5px] leading-[1.85] text-ink-soft">
+                      <Sentences text={d.intro} />
+                    </p>
+                    <div className="mt-6 rounded-2xl border border-hairline bg-white/95 p-6 shadow-[var(--shadow-soft)] backdrop-blur md:mt-6 md:p-8">
+                      <p className="text-[14.5px] font-bold tracking-wide text-ink-muted md:text-[15px]">주요 약력</p>
+                      <ul className="mt-4 grid gap-x-8 gap-y-3 sm:grid-cols-2 md:mt-5 md:gap-x-10 md:gap-y-3.5">
+                        {d.career.map((c) => (
+                          <li key={c} className="flex items-start gap-3 text-[15.5px] leading-[1.5] text-ink md:text-[16.5px]">
+                            <span className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-brand-600 md:mt-[10px]" />
+                            {c}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <Link href={`/about/doctors#${d.slug}`} className="btn-brand mt-6 md:mt-7">의료진 소개 자세히</Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ── 강점 4 ── 2026-09-29 원장 피드백: '네 가지 약속' 문구는 오글거린다 → 뺐다. 숫자 카드(HomeStats)는 맨 아래 오시는 길로 내렸다. */}
         <section className="section">
           <div className="wrap">
             <div className="reveal max-w-[820px]">
               <p className="eyebrow">WHY SUN DENTAL</p>
               <h2 className="display-sm mt-4">
-                치과치료, <span className="accent">광화문선치과</span>는 다릅니다
+                같은 치료라도 <span className="accent">누가 하느냐</span>가 다릅니다
               </h2>
               <p className="lead mt-4">
-                <Sentences text="다년간의 임상경험으로 믿을 수 있는 진료, 환자분이 이해하기 쉬운 친절한 설명. 광화문선치과가 지켜 온 네 가지 약속입니다." />
+                <Sentences text="진단과 수술, 보철과 정기검진을 대표원장이 직접 맡습니다. 검사 영상을 함께 보며 원인과 치료 순서를 설명하고, 지금 필요한 치료부터 권해 드립니다." />
               </p>
             </div>
-            <HomeStats />
             <ul className="reveal-stack grid-cards mt-12 sm:grid-cols-2 lg:grid-cols-4">
               {STRENGTHS.map((s, i) => (
                 <li key={s.title} className="card card-3d flex h-full flex-col p-5 sm:p-7">
@@ -201,21 +284,13 @@ export default function HomePage() {
             <div className="reveal mx-auto max-w-[820px] text-center">
               <p className="eyebrow justify-center">PREMIUM DIGITAL IMPLANT</p>
               <h2 className="display-sm mt-4">
-                광화문선치과의 임플란트, <span className="accent">왜 특별할까요?</span>
+                잇몸뼈가 부족해도, <span className="accent">방법은 계측에서 나옵니다</span>
               </h2>
               <p className="lead mt-4">
-                <Sentences text="내 치아 상태에 따른 다양한 수술 방법으로, 치아가 안 좋아도 잇몸뼈가 부족해도 구강 상태에 맞는 임플란트를 제안합니다." />
+                <Sentences text="CBCT로 잔존 골량과 신경관·상악동의 위치를 먼저 계측합니다. 골이식이나 상악동거상술이 필요한 경우, 치아가 모두 빠진 무치악까지 구강 상태에 맞는 식립 방법을 정하고 대표원장이 직접 수술합니다." />
               </p>
             </div>
-            {/* 폰에서는 영상 네 편을 옆으로 넘기는 한 줄로(세로로 쌓으면 1,000px 넘게 길어진다) — 넓은 화면은 2×2 */}
-            <div className="reveal-stack mt-12 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 sm:grid sm:grid-cols-2 sm:gap-6 sm:overflow-visible sm:pb-0">
-              {CLINIC.videos.map((v) => (
-                <div key={v.id} className="w-[84%] shrink-0 snap-start sm:w-auto sm:shrink">
-                  <VideoFacade id={v.id} poster={v.thumb} title={v.title} />
-                  <p className="mt-3 text-[15px] font-semibold text-ink sm:text-[15.5px]">{v.title}</p>
-                </div>
-              ))}
-            </div>
+            {/* 유튜브 영상은 2026-09-29 원장 피드백 7번으로 FAQ 바로 위 구역으로 옮겼다 */}
             <div className="mt-10 sm:mt-14">
               {/* 뒤집기 카드 3×2 — 앞면은 번호·제목만, 마우스를 올리면 사진 배경과 설명이 나온다(오너 요청). 폰은 2열 */}
               <ul className="reveal-stack mt-2 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">
@@ -226,8 +301,9 @@ export default function HomePage() {
                 ))}
               </ul>
             </div>
-            <div className="mt-6 text-center">
+            <div className="mt-6 flex flex-wrap justify-center gap-3">
               <Link href="/treatment/implant" className="btn-brand">임플란트 전체 안내</Link>
+              <Link href="/treatment/implant/warranty" className="btn-ghost">임플란트 보증제도</Link>
             </div>
           </div>
         </section>
@@ -246,18 +322,18 @@ export default function HomePage() {
             <div className="reveal mx-auto max-w-[880px] text-center">
               <p className="eyebrow on-dark justify-center">TMJ · 턱관절</p>
               <h2 className="display-sm mt-4 !text-white on-photo">
-                원인부터 해결하는
+                관절잡음 · 개구장애 · 저작근 통증,
                 <br />
-                <span className="accent-sun">턱관절 진료</span>
+                <span className="accent-sun">원인 감별</span>이 치료의 시작입니다
               </h2>
               <p className="mx-auto mt-6 max-w-[720px] text-[1.05rem] leading-[1.85] text-white md:text-[1.15rem]">
-                <ScrubText text="정확한 진단과 근본적인 치료로 재발률을 낮춘 턱관절 진료. 기본적인 진료부터 어려운 장치치료까지, 다수의 환자분들을 진료하며 얻은 노하우로 개인별 맞춤 진료를 합니다." />
+                <ScrubText text="턱관절 장애는 관절원판의 변위, 저작근의 과긴장, 이갈이·이악물기, 교합 이상이 함께 얽혀 나타납니다. 턱관절 CT와 개구량·교합·근육 촉진 검사로 원인을 나눈 뒤, 약물·물리치료부터 교합안정장치와 관절강 세척술까지 단계적으로 치료합니다." />
               </p>
               <ul className="reveal-stack mx-auto mt-10 grid max-w-[860px] gap-4 sm:grid-cols-3">
                 {[
-                  ['01', '정확한 진단'],
-                  ['02', '전반적인 턱관절 치료 진행'],
-                  ['03', '오랜 기간 다수의 턱관절 환자 진료'],
+                  ['01', '턱관절 CT · 교합 · 근육 검사'],
+                  ['02', '교합안정장치 · 관절강 세척술'],
+                  ['03', '턱관절 진료 5,000건 이상'],
                 ].map(([n, t]) => (
                   /* 폰에서는 번호·글이 한 줄로 나란히(세 장을 세로로 쌓아도 얇게) — 넓은 화면은 가운데 정렬 상자 */
                   <li key={n} className="flex items-center gap-4 rounded-2xl border border-white/15 bg-white/8 px-5 py-3.5 text-left backdrop-blur-md sm:min-h-[110px] sm:flex-col sm:justify-center sm:gap-0 sm:py-5 sm:text-center">
@@ -268,7 +344,8 @@ export default function HomePage() {
               </ul>
               <div className="mt-10 flex flex-wrap justify-center gap-3">
                 <Link href="/treatment/tmj" className="btn-sun">턱관절 치료 안내</Link>
-                <Link href="/treatment/tmj/symptoms" className="btn-ghost-dark">주요 증상 확인</Link>
+                <Link href="/treatment/tmj/symptoms" className="btn-ghost-dark">증상 자가진단</Link>
+                <Link href="/treatment/tmj/bruxism" className="btn-ghost-dark">이갈이 · 이악물기</Link>
               </div>
             </div>
           </div>
@@ -278,18 +355,23 @@ export default function HomePage() {
         <section className="section bg-canvas">
           <div className="wrap">
             <div className="reveal max-w-[820px]">
-              <p className="eyebrow">COMFORT & CARE</p>
+              <p className="eyebrow">GENERAL CARE</p>
               <h2 className="display-sm mt-4">
-                통증은 줄이고, <span className="accent">내 치아는 지키는</span> 진료
+                발치를 말하기 전에 <span className="accent">살릴 수 있는지</span>부터 봅니다
               </h2>
+              <p className="lead mt-4">
+                <Sentences text="근관치료와 재근관치료, 치주치료로 자연치아를 보존할 수 있는지 먼저 확인합니다. 보존이 어려운 경우에만 발치와 보철을 이야기합니다." />
+              </p>
             </div>
             {/* 폰도 두 칸 — 진료과목 카드와 같은 격자(한 칸씩 쌓으면 사진 네 장에 2,000px) */}
-            <ul className="reveal-stack grid-cards mt-12 !gap-3 grid-cols-2 sm:!gap-5 lg:grid-cols-4">
+            <ul className="reveal-stack grid-cards mt-12 !gap-3 grid-cols-2 sm:!gap-5 lg:grid-cols-3">
               {[
-                { href: '/treatment/painless', label: '무통 & 저자극 치료', desc: '무통마취기, 저자극 스케일러 등을 이용한 편안한 치과 치료.', fig: 'ai/painless-hub' },
-                { href: '/treatment/natural-tooth', label: '자연치아 살리기', desc: 'MTA 치료를 통해 내 치아를 최대한 보존합니다.', fig: 'ai/natural-hub' },
+                { href: '/treatment/natural-tooth', label: '자연치아 살리기', desc: 'MTA와 엔도소닉 세척으로 근관을 소독하고 밀폐합니다.', fig: 'ai/natural-hub' },
+                { href: '/treatment/re-root-canal', label: '재근관치료', desc: '근관치료 후 재발한 치근단 염증을 다시 치료합니다.', fig: 'ai/natural-mta' },
+                { href: '/treatment/periodontal', label: '치주치료', desc: '치석제거와 치근활택술로 치주낭을 관리합니다.', fig: 'ai/insight-gum' },
+                { href: '/treatment/wisdom-tooth', label: '매복사랑니', desc: 'CBCT로 하치조신경과의 거리를 계측한 뒤 발치합니다.', fig: 'ai/wisdom' },
                 { href: '/treatment/aesthetic', label: '심미치료', desc: '라미네이트 · 올세라믹 · 지르코니아 · 치아미백.', fig: 'ai/aesthetic-hub' },
-                { href: '/treatment/wisdom-tooth', label: '매복사랑니', desc: '까다로운 매복 사랑니도 3D CT 진단 후 안전하게 발치합니다.', fig: 'ai/wisdom' },
+                { href: '/treatment/painless', label: '무통 & 저자극 치료', desc: '무통마취기와 도포마취로 주사 자극을 줄입니다.', fig: 'ai/painless-hub' },
               ].map((c) => (
                 <li key={c.href}>
                   <CardLink href={c.href} label={c.label} desc={c.desc} fig={{ key: c.fig, alt: c.label }} />
@@ -315,69 +397,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── 의료진 ── */}
-        <section className="section relative overflow-hidden bg-canvas !py-14 lg:!py-20">
-          <div className="wrap">
-            <div className="reveal mx-auto max-w-[820px] text-center">
-              <p className="eyebrow justify-center">OUR DOCTORS</p>
-              <h2 className="display-sm mt-4">
-                보건복지부 인증 <span className="accent">전문의</span>가 직접 진료합니다
-              </h2>
-              <p className="lead mt-3">보건복지부 인증 통합치의학과 전문의 · 강남성심병원 외래교수 출신의 다년간 임상경험으로 진료합니다.</p>
-            </div>
-            {/* 가운데에 적당한 크기(오너: 너무 컸다). 뒤에는 병원 영문 이름이 저절로 흐르는 큰 글자 띠(동그라미치과처럼). */}
-            {DOCTORS.map((d) => (
-              <div key={d.slug} className="relative mt-6 py-6 md:py-8">
-                <div aria-hidden className="pointer-events-none absolute left-1/2 top-1/2 z-0 w-screen -translate-x-1/2 -translate-y-1/2 select-none">
-                  <div className="marquee">
-                    {[0, 1].map((k) => (
-                      <span key={k} className="whitespace-nowrap pr-10 text-[110px] font-extrabold leading-none tracking-[-0.04em] text-brand-900/[0.11] md:text-[160px]">
-                        GWANGHWAMUN SUN DENTAL CLINIC&nbsp;·&nbsp;
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                <div className="relative z-10 mx-auto grid max-w-[1440px] items-center gap-10 md:grid-cols-[minmax(0,360px)_1fr] md:gap-12 lg:grid-cols-[460px_1fr] lg:gap-16 xl:grid-cols-[480px_1fr]">
-                  {/* 배경을 지운 사진(누끼) — 액자 없이 바탕 위에 바로 선다. 뒤에 옅은 빛과 바닥 그림자만 둔다 */}
-                  <div className="reveal relative">
-                    <span
-                      aria-hidden
-                      className="pointer-events-none absolute inset-x-0 bottom-6 top-0 -z-10 bg-[radial-gradient(58%_58%_at_50%_52%,rgba(242,111,30,0.16)_0%,rgba(242,111,30,0)_70%)]"
-                    />
-                    <Image
-                      src={d.cutout ?? d.photo}
-                      alt={`${d.name} ${d.role}`}
-                      width={995}
-                      height={1346}
-                      sizes="(max-width: 768px) 76vw, 480px"
-                      className="mx-auto h-auto w-full max-w-[300px] drop-shadow-[0_26px_36px_rgba(9,14,35,0.16)] md:max-w-[340px] lg:max-w-none"
-                    />
-                    <span aria-hidden className="mx-auto mt-[-14px] block h-4 w-[62%] rounded-[999px] bg-[radial-gradient(50%_50%_at_50%_50%,rgba(19,24,41,0.16)_0%,rgba(19,24,41,0)_72%)]" />
-                  </div>
-                  <div className="reveal">
-                    <p className="text-[1.1rem] font-semibold text-brand-600 md:text-[1.2rem]">{d.specialty}</p>
-                    <h3 className="mt-2 text-[2.1rem] font-extrabold tracking-[-0.02em] text-ink md:text-[2.6rem] lg:text-[2.9rem]">
-                      {d.name} <span className="text-[1.3rem] font-bold text-ink-soft md:text-[1.5rem]">{d.role}</span>
-                    </h3>
-                    <div className="mt-5 rounded-2xl border border-hairline bg-white/95 p-6 shadow-[var(--shadow-soft)] backdrop-blur md:mt-6 md:p-8">
-                      <p className="text-[14.5px] font-bold tracking-wide text-ink-muted md:text-[15px]">주요 약력</p>
-                      <ul className="mt-4 grid gap-x-8 gap-y-3 sm:grid-cols-2 md:mt-5 md:gap-x-10 md:gap-y-3.5">
-                        {d.career.map((c) => (
-                          <li key={c} className="flex items-start gap-3 text-[15.5px] leading-[1.5] text-ink md:text-[16.5px]">
-                            <span className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-brand-600 md:mt-[10px]" />
-                            {c}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <Link href={`/about/doctors#${d.slug}`} className="btn-brand mt-6 md:mt-7">의료진 소개 자세히</Link>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
         {/* ── 위생·소독 — AI 사진 배경 띠 ── */}
         <section className="relative isolate overflow-hidden bg-night py-24 text-white md:py-32">
           <div className="absolute inset-0 -z-10">
@@ -393,9 +412,9 @@ export default function HomePage() {
             <div className="reveal order-1 lg:order-2">
               <p className="eyebrow on-dark">STERILIZATION</p>
               <h2 className="display-sm mt-4 !text-white">
-                철저한 위생관리 <span className="accent-sun">멸균 소독 시스템</span>
+                환자마다 <span className="accent-sun">멸균한 기구</span>로 진료합니다
               </h2>
-              <p className="mt-4 text-[1.05rem] leading-[1.8] text-white/75">교차감염을 차단하여 환자의 안전을 최우선으로 생각합니다.</p>
+              <p className="mt-4 text-[1.05rem] leading-[1.8] text-white/75">진료 기구는 멸균 후 개별 포장해 1인 1기구로 사용하고, 유니트체어 용수와 진료실 공기까지 관리합니다.</p>
               <ul className="mt-6 space-y-2.5">
                 {HYGIENE.map((h) => (
                   <li key={h} className="flex items-center gap-3 text-[16px] text-white/90">
@@ -405,6 +424,30 @@ export default function HomePage() {
                 ))}
               </ul>
               <Link href="/about/equipment" className="btn-ghost-dark mt-8">디지털 장비 · 소독 시스템 보기</Link>
+            </div>
+          </div>
+        </section>
+
+        {/* ── 영상 — 2026-09-29 원장 피드백 7번: 임플란트 구역에서 빼서 FAQ 바로 위로 내렸다 ── */}
+        <section className="section">
+          <div className="wrap">
+            <div className="reveal mx-auto max-w-[820px] text-center">
+              <p className="eyebrow justify-center">YOUTUBE</p>
+              <h2 className="display-sm mt-4">
+                영상으로 보는 <span className="accent">광화문 선치과 임플란트</span>
+              </h2>
+              <p className="lead mt-4">
+                <Sentences text="디지털 임플란트와 풀아치 임플란트의 진료 과정을 영상으로 확인하실 수 있습니다." />
+              </p>
+            </div>
+            {/* 폰에서는 영상 네 편을 옆으로 넘기는 한 줄로(세로로 쌓으면 1,000px 넘게 길어진다) — 넓은 화면은 2×2 */}
+            <div className="reveal-stack mt-12 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 sm:grid sm:grid-cols-2 sm:gap-6 sm:overflow-visible sm:pb-0">
+              {CLINIC.videos.map((v) => (
+                <div key={v.id} className="w-[84%] shrink-0 snap-start sm:w-auto sm:shrink">
+                  <VideoFacade id={v.id} poster={v.thumb} title={v.title} />
+                  <p className="mt-3 text-[15px] font-semibold text-ink sm:text-[15.5px]">{v.title}</p>
+                </div>
+              ))}
             </div>
           </div>
         </section>
@@ -420,7 +463,7 @@ export default function HomePage() {
                 <span className="accent">자주 묻는 질문</span>
               </h2>
               <p className="lead mt-4">
-                <Sentences text="진료시간·주차·임플란트·턱관절·건강보험·수면치료. 더 많은 문답은 FAQ 페이지에 있습니다." />
+                <Sentences text="진료시간과 주차, 임플란트와 턱관절, 건강보험 적용 기준까지 자주 받는 질문을 모았습니다. 더 많은 문답은 FAQ 페이지에 있습니다." />
               </p>
               <Link href="/faq" className="btn-ghost mt-6">전체 FAQ 보기</Link>
             </div>
@@ -486,6 +529,9 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
+            {/* 숫자 카드 — 2026-09-29 원장 피드백 4번 "의미 없는 숫자, 맨 아래로" → 강점 구역에서 여기(맨 아래)로 내리고
+                오시는 길에 쓸모 있는 숫자만 남겼다(HomeStats) */}
+            <HomeStats />
           </div>
         </section>
 

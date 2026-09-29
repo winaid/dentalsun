@@ -990,5 +990,33 @@
  "ai/tmj-check-joint": {
   "w": 1200,
   "h": 800
+ },
+ "place2/reception": {
+  "w": 1227,
+  "h": 816
+ },
+ "place2/waiting": {
+  "w": 1407,
+  "h": 936
+ },
+ "place2/entrance": {
+  "w": 1137,
+  "h": 757
+ },
+ "place2/treatment-bays": {
+  "w": 1317,
+  "h": 875
+ },
+ "place2/physio-room": {
+  "w": 1317,
+  "h": 876
+ },
+ "place2/doctor-scan": {
+  "w": 2200,
+  "h": 1467
+ },
+ "place2/surgery-color": {
+  "w": 966,
+  "h": 649
  }
 }

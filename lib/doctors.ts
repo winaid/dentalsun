@@ -17,6 +17,12 @@ export interface Doctor {
   career: string[];
   /** 진료 초점 — 기존 홈페이지 메뉴에서 이 원장이 다루는 것으로 표시된 영역 */
   focus: string[];
+  /**
+   * 원장 소개 — 2026-09-29 원장 피드백 6번으로 신설: 약력 외에 소개 글 한 단락.
+   * headline 은 병원이 고른 문구, intro 는 병원이 보내 준 예시 문구 그대로(띄어쓰기만 다듬음).
+   */
+  headline: [string, string];
+  intro: string;
 }
 
 export const DOCTORS: Doctor[] = [
@@ -44,6 +50,9 @@ export const DOCTORS: Doctor[] = [
       'ATC 심미보철 course 수료',
     ],
     focus: ['디지털 임플란트', '턱관절 치료', '자연치아 살리기', '심미치료'],
+    headline: ['경험과 시간이 만든 차이,', '치료 결과로 증명합니다'],
+    intro:
+      '찾아주시는 한 분 한 분께 더욱 세심하고 정확한 진료를 드리기 위해 끊임없이 노력하고 있습니다. 한 번 치료하면 오래 유지될 수 있도록, 기본에 충실한 진료를 약속드립니다.',
   },
 ];
 

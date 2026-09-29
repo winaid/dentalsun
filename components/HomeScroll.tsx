@@ -4,7 +4,7 @@ import { Sentences } from '@/components/ui';
 import { figSrc, type Block } from '@/lib/docs';
 import { docByPath } from '@/lib/content';
 import { CLINIC } from '@/lib/clinic';
-import { TREATMENT_HUBS } from '@/lib/nav';
+
 
 /**
  * 홈의 스크롤 연동 구역 세 가지 — 레퍼런스(one-dental)의 숫자 세기(dwc-counter) · 고정 무대(sd-stage) · 가로 흐름을
@@ -12,21 +12,26 @@ import { TREATMENT_HUBS } from '@/lib/nav';
  * 'process' 블록을 그대로 쓴다(글 중복 0). 동작은 RevealScript 가 붙인다.
  */
 
-/** 한눈에 보는 숫자 — 전부 사실 기록에서 센다 */
+/**
+ * 오시는 길 숫자 — 2026-09-29 원장 피드백 4번: 강점 구역의 숫자 카드('6가지 시스템'·'3분야')가 "의미 없는 숫자"라 싫다 →
+ * 홈 맨 아래 오시는 길로 내리고, 찾아오는 데 실제로 쓰는 숫자(역·출구·야간·토요 진료)만 남겼다. 올라가며 세는 효과(data-count)도 뺐다.
+ * 값은 전부 lib/clinic.ts 에서 읽는다.
+ */
 export function HomeStats() {
-  const walk = Number((CLINIC.transit[0].walk.match(/\d+/) ?? ['2'])[0]);
+  const walkOf = (i: number) => Number((CLINIC.transit[i].walk.match(/\d+/) ?? ['0'])[0]);
+  const city = CLINIC.transit.find((t) => t.station !== CLINIC.transit[0].station);
   const stats = [
-    { n: 6, unit: '가지', label: '3D 디지털 진료 시스템 (Point 01~06)' },
-    { n: walk, unit: '분', label: `${CLINIC.transit[0].station} ${CLINIC.transit[0].exit} 도보` },
-    { n: 21, unit: '시', label: '화·목 야간진료 (21:00 까지)' },
-    { n: TREATMENT_HUBS.length, unit: '분야', label: '임플란트 · 턱관절 등 진료 분야' },
+    { n: walkOf(0), unit: '분', label: `${CLINIC.transit[0].station} ${CLINIC.transit[0].exit} 도보` },
+    ...(city ? [{ n: walkOf(CLINIC.transit.indexOf(city)), unit: '분', label: `${city.station} ${city.exit} 도보` }] : []),
+    { n: 21, unit: '시', label: '화 · 목 야간진료 (21:00 까지)' },
+    { n: 14, unit: '시', label: '토요일 진료 (격주, 14:00 까지)' },
   ];
   return (
-    <ul className="reveal-stack mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
+    <ul className="reveal-stack mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
       {stats.map((s) => (
-        <li key={s.label} className="card card-3d px-6 py-7">
+        <li key={s.label} className="card px-6 py-6">
           <p className="flex items-baseline gap-1 text-brand-800">
-            <span className="text-[2.6rem] font-extrabold leading-none tracking-[-0.03em] tabular-nums md:text-[3rem]" data-count={s.n}>
+            <span className="text-[2.2rem] font-extrabold leading-none tracking-[-0.03em] tabular-nums md:text-[2.5rem]">
               {s.n}
             </span>
             <span className="text-[1.05rem] font-bold text-sun-600">{s.unit}</span>

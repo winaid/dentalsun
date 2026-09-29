@@ -32,7 +32,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     ],
   },
   '/treatment/implant/navigation': {
-    lines: ['3D 로 계획하고 내 잇몸에 맞춰 만드는', '{디지털 맞춤} 임플란트'],
+    lines: ['CBCT 로 먼저 계획하고 가이드로 식립하는', '{내비게이션} 임플란트'],
     lead: '수술 전에 컴퓨터로 모의수술을 마치고 그 계획대로 만든 유도장치를 대고 심습니다. 심은 뒤에는 기성품 기둥 대신 내 잇몸 선에 맞춘 기둥으로 마무리합니다.',
     cardsLead: '디지털 맞춤 임플란트는 이런 점이 다릅니다.',
     cards: [
@@ -99,6 +99,37 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
       { fig: { key: 'fit/tmj-hero', alt: '확대경을 쓰고 환자를 진료하는 원장' }, shape: 'portrait' },
       { fig: { key: 'orig/misc-tmj-skull', alt: '두개골 모형의 턱관절을 펜으로 가리키는 모습' }, shape: 'wide' },
       { fig: { key: 'orig/tmj-tx-laser', alt: '물리치료 — 관절 팔이 달린 레이저 장비' }, shape: 'std' },
+    ],
+  },
+  /* ── 2026-09-29 신설 쪽 세 개 — 문구는 재작성 단계에서 다시 다듬는다 ── */
+  '/treatment/tmj/bruxism': {
+    lines: ['자는 동안 가는 이, 낮에 무는 이', '{이갈이 · 이악물기}'],
+    lead: '수면 이갈이와 주간 이악물기는 치아 마모와 파절, 저작근 통증, 턱관절 증상으로 이어질 수 있습니다. 치아 마모 양상과 저작근 상태를 확인한 뒤 교합안정장치와 근육 치료를 계획합니다.',
+    cardsLead: '이갈이·이악물기는 이런 흔적을 남깁니다.',
+    cards: [
+      { fig: { key: 'illust/bruxism-wear', alt: '이갈이로 교합면이 닳고 금이 간 어금니 도해' }, shape: 'portrait' },
+      { fig: { key: 'illust/bruxism-muscle', alt: '과긴장한 교근과 측두근 도해' }, shape: 'wide' },
+      { fig: { key: 'illust/bruxism-splint', alt: '위턱 치열에 끼운 교합안정장치 도해' }, shape: 'std' },
+    ],
+  },
+  '/treatment/re-root-canal': {
+    lines: ['신경치료한 치아가 다시 아프다면', '{재근관치료}'],
+    lead: '근관치료 후 치근단 병소가 다시 생기거나 놓친 근관이 있으면, 기존 충전재를 제거하고 근관을 다시 소독·충전합니다. 발치를 결정하기 전에 재치료로 보존할 수 있는지 먼저 확인합니다.',
+    cardsLead: '재근관치료는 이런 경우에 검토합니다.',
+    cards: [
+      { fig: { key: 'illust/reendo-causes', alt: '재근관치료가 필요한 원인 — 놓친 근관과 치근단 병소 도해' }, shape: 'portrait' },
+      { fig: { key: 'illust/reendo-steps', alt: '재근관치료 과정 도해' }, shape: 'wide' },
+      { fig: { key: 'orig/endo-handpiece', alt: '엔도소닉 초음파 세척기 핸드피스' }, shape: 'std' },
+    ],
+  },
+  '/treatment/periodontal': {
+    lines: ['잇몸이 붓고 피가 난다면', '{치주치료}'],
+    lead: '치주질환은 치은염에서 치주염으로 진행하면서 치조골이 흡수됩니다. 치주낭 깊이와 방사선 사진으로 진행 단계를 확인하고, 치석제거와 치근활택술로 염증의 원인을 제거합니다.',
+    cardsLead: '치주질환은 이렇게 진행됩니다.',
+    cards: [
+      { fig: { key: 'illust/perio-stages', alt: '건강한 잇몸에서 치주염까지 진행 단계 도해' }, shape: 'wide' },
+      { fig: { key: 'illust/perio-pocket', alt: '치주낭 깊이를 재는 탐침 도해' }, shape: 'portrait' },
+      { fig: { key: 'illust/perio-srp', alt: '치석제거와 치근활택술 도해' }, shape: 'std' },
     ],
   },
   '/treatment/tmj/symptoms': {

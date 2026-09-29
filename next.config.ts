@@ -48,7 +48,7 @@ const nextConfig: NextConfig = {
       /* 턱관절 7쪽 분할(2026-09-21) — 09-09 통합 때 쓰던 옛 하위 주소 하나만 새 이름으로. /symptoms 는 다시 진짜 쪽이 됐다 */
       { source: '/treatment/tmj/treatments', destination: '/treatment/tmj/treatment', permanent: true },
       /* 2026-09-21 메뉴 개편 — 합쳐진 쪽의 옛 주소 */
-      { source: '/treatment/implant/custom', destination: '/treatment/implant/navigation', permanent: true },
+      /* /treatment/implant/custom 은 2026-09-29 다시 진짜 쪽(맞춤 임플란트) — 09-21 의 301 은 뺐다 */
       { source: '/treatment/tmj/anatomy', destination: '/treatment/tmj', permanent: true },
       { source: '/treatment/tmj/causes', destination: '/treatment/tmj', permanent: true },
       { source: '/treatment/tmj/self-check', destination: '/treatment/tmj/symptoms', permanent: true },

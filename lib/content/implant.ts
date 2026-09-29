@@ -166,8 +166,8 @@ export const IMPLANT_DOCS: Doc[] = [
     path: '/treatment/implant/navigation',
     hub: '/treatment/implant',
     hubLabel: '임플란트',
-    title: '디지털 맞춤 임플란트',
-    eyebrow: 'IMPLANT · DIGITAL CUSTOM',
+    title: '내비게이션 임플란트',
+    eyebrow: 'IMPLANT · NAVIGATION',
     /*
      * 2026-09-21 오너 "내비게이션·맞춤 두 개 합쳐 — 비슷한 내용". 계획(CT·모의수술·가이드 식립)과 마무리(내 잇몸에 맞춘 기둥)를
      * 한 쪽으로. 본문·FAQ 는 lib/content/customImplantLanding 에서 만들고(NAVI_* + CI_*), 화면은 components/CustomImplantPage.
@@ -189,10 +189,31 @@ export const IMPLANT_DOCS: Doc[] = [
       '광화문 선치과',
     ],
     hero: { key: 'equip/guide', alt: '하악 모형에 얹은 수술 가이드와 임플란트' },
-    procedure: '디지털 맞춤 임플란트',
-    blocks: [...NAVI_BLOCKS, ...CI_BLOCKS],
-    faq: [...NAVI_FAQ, ...CI_FAQ],
-    related: ['/treatment/implant/full-arch', '/treatment/implant/uv', '/treatment/implant/warranty', '/treatment/implant'],
+    procedure: '내비게이션 임플란트',
+    blocks: NAVI_BLOCKS,
+    faq: NAVI_FAQ,
+    related: ['/treatment/implant/custom', '/treatment/implant/full-arch', '/treatment/implant/uv', '/treatment/implant'],
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // 2-2. 맞춤 임플란트 (2026-09-29 원장 피드백으로 다시 독립 — 화면은 CustomImplantPage part='custom')
+  // ─────────────────────────────────────────────────────────────
+  {
+    path: '/treatment/implant/custom',
+    hub: '/treatment/implant',
+    hubLabel: '임플란트',
+    title: '맞춤 임플란트',
+    eyebrow: 'IMPLANT · CUSTOM ABUTMENT',
+    summary:
+      '맞춤 임플란트는 기성품 지대주 대신 환자의 잇몸 라인과 치아 형태, 교합에 맞춰 CAD/CAM 으로 설계·제작한 맞춤 지대주(커스텀 어버트먼트)로 보철을 완성하는 방식입니다. 보철물과 잇몸 사이의 틈을 줄이고 씹는 힘을 고르게 분산하도록 설계해, 음식물 정체와 임플란트 주위염의 위험 요인을 줄이는 데 목적이 있습니다.',
+    description:
+      '광화문 선치과 맞춤 임플란트 — 잇몸 라인·치아 형태·교합에 맞춰 CAD/CAM 으로 제작한 맞춤 지대주(커스텀 어버트먼트). 기성 지대주와의 차이, 제작 과정, 임플란트 주위염 관리까지 안내합니다.',
+    keywords: ['맞춤 임플란트', '커스텀 어버트먼트', '맞춤 지대주', '기성 지대주', '임플란트 주위염', '광화문 임플란트', '광화문 선치과'],
+    hero: { key: 'ai/implant-custom', alt: '맞춤 지대주와 크라운을 올린 임플란트 모형' },
+    procedure: '맞춤 임플란트(커스텀 어버트먼트)',
+    blocks: CI_BLOCKS,
+    faq: CI_FAQ,
+    related: ['/treatment/implant/navigation', '/treatment/implant/full-arch', '/treatment/implant/warranty', '/treatment/implant'],
   },
 
   // ─────────────────────────────────────────────────────────────

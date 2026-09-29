@@ -24,6 +24,7 @@ import {
   CI_WHEN,
   CI_WHY,
   NAVI_BENEFITS,
+  NAVI_HERO_ITEMS,
   NAVI_COMPARE,
   NAVI_NOTICE,
   NAVI_PROCESS,
@@ -44,7 +45,8 @@ import { CLINIC } from '@/lib/clinic';
  *  ★ 페이지 안 구역 이동 목차(점프 메뉴)는 두지 않는다(오너 지시). 사이드바 안내는 임플란트 **쪽** 링크다.
  *  ★ 같은 사진 반복 금지(오너) — 첫 화면 배경 ai/implant-custom·카드 3장(implant/custom·custom-fit·custom-stock)은 본문에 다시 쓰지 않는다.
  */
-const HERO_BG = 'ai/implant-custom';
+/** 첫 화면 배경 — 쪽마다 다른 사진(같은 사진 반복 금지) */
+const HERO_BG_OF = { navigation: 'ai/implant-navigation', custom: 'ai/implant-custom' } as const;
 
 /** 관련 쪽 카드 사진 — DocPage 의 DOC_AI 와 같은 사진(쪽마다 다른 사진) */
 const REL_FIG: Record<string, string> = {
@@ -138,9 +140,14 @@ function Paras({ text, className = '' }: { text: string[]; className?: string })
   );
 }
 
-export function CustomImplantPage({ doc }: { doc: Doc }) {
+/**
+ * ★ 2026-09-29 원장 피드백 "맞춤 임플란트를 카테고리로 새로 추가" — 09-21 에 합쳤던 두 쪽을 다시 나눈다.
+ *   화면(짜임·부품)은 이 파일 하나를 그대로 쓰고, part 로 PART 1(내비게이션) / PART 2(맞춤 기둥) 중 하나만 그린다.
+ */
+export function CustomImplantPage({ doc, part }: { doc: Doc; part: 'navigation' | 'custom' }) {
   const trail = [{ name: '진료 안내', path: '/treatment' }, { name: doc.hubLabel, path: doc.hub }, { name: doc.title, path: doc.path }];
   const first = (s: string) => s.split(/(?<=다\.)\s/)[0];
+  const HERO_BG = HERO_BG_OF[part];
   const heroSize = figSize(HERO_BG);
   const collage = HERO_COLLAGE[doc.path];
   const heroLines = collage.lines.map((l) => (l ? renderAccent(l) : undefined)) as [ReactNode, ReactNode?];
@@ -181,7 +188,7 @@ export function CustomImplantPage({ doc }: { doc: Doc }) {
           long
           bg={HERO_BG}
           cards={collage.cards}
-          items={CI_HERO_ITEMS}
+          items={part === 'custom' ? CI_HERO_ITEMS : NAVI_HERO_ITEMS}
         >
           <div className="flex flex-wrap gap-3">
             <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="btn-sun">네이버 예약</a>
@@ -192,7 +199,8 @@ export function CustomImplantPage({ doc }: { doc: Doc }) {
         <div className="wrap grid gap-14 pt-16 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-16 lg:pt-24 xl:grid-cols-[minmax(0,1fr)_360px]">
           {/* ───────── 본문 ───────── */}
           <div className="min-w-0">
-            {/* ══ PART 1 · 계획 — 옛 '내비게이션 임플란트' 쪽 (2026-09-21 합침) ══ */}
+            {/* ══ PART 1 · 계획 — 내비게이션 임플란트 쪽 ══ */}
+            {part === 'navigation' && (
             <section id="navigation" className="scroll-mt-[96px]" aria-labelledby="ci-navi">
               <Head id="ci-navi" big={<Word>PART 1 · 3D PLAN</Word>} title={<>수술 전에 컴퓨터로 <span className="accent-sun">먼저 심어 봅니다</span></>} lead="CT와 3D 구강스캔 데이터로 컴퓨터가 모의수술을 하고, 그 계획대로 만든 수술 유도장치를 대고 심습니다. 경험과 감각 대신 화면에서 확인한 위치·각도·깊이입니다." />
               <div className="reveal-stack mt-12 grid gap-8 lg:grid-cols-[1fr_1.1fr] lg:items-center">
@@ -256,8 +264,10 @@ export function CustomImplantPage({ doc }: { doc: Doc }) {
                 <Paras text={NAVI_NOTICE.paragraphs} className="mt-2 text-[14.5px] leading-[1.8] text-ink-soft" />
               </div>
             </section>
+            )}
 
-            {/* ══ PART 2 · 기둥 — 옛 '맞춤 임플란트' 쪽 ══ */}
+            {/* ══ PART 2 · 기둥 — 맞춤 임플란트 쪽 ══ */}
+            {part === 'custom' && (<>
             {/* ── 1. 세 부분 — 맞춤이 바꾸는 것은 기둥 ── */}
             <section id="what" className="scroll-mt-[96px] pt-24 md:pt-32" aria-labelledby="ci-what">
               <Head id="ci-what" big={<Word>PART 2 · CUSTOM</Word>} title={<>심은 뒤에는 <span className="accent-sun">내 잇몸에 맞는 기둥</span>으로</>} lead={CI_PARTS.lead} />
@@ -501,6 +511,7 @@ export function CustomImplantPage({ doc }: { doc: Doc }) {
                 <Paras text={CI_NOTICE.paragraphs} className="mt-2 text-[14.5px] leading-[1.8] text-ink-soft" />
               </div>
             </section>
+            </>)}
 
             {/* ── FAQ — 화면 = FAQPage 스키마 ── */}
             {doc.faq && doc.faq.length > 0 && (

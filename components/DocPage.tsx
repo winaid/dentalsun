@@ -7,6 +7,8 @@ import { docCharCount, figSize, figSrc, fitsBox, type Block, type Doc, type Fig 
 import { docByPath, docsOfHub } from '@/lib/content';
 import { caseGroup } from '@/lib/cases';
 import { BeforeAfter } from '@/components/BeforeAfter';
+import { CaseGallery } from '@/components/CaseGallery';
+import { casesOf } from '@/lib/caseLibrary';
 import { HeroCollage, type CollageItem } from '@/components/HeroCollage';
 import { HERO_COLLAGE, splitAccent, type HeroCollageSpec } from '@/lib/heroCollage';
 import { articleSchema, breadcrumbSchema, faqSchema, imageObjectSchema, itemListSchema, medicalWebPageSchema } from '@/lib/seo';
@@ -495,6 +497,18 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
                 <p className="mt-4 rounded-xl bg-sun-50 px-5 py-3.5 text-[14.5px] leading-relaxed text-sun-700">{b.note}</p>
               </div>
             )}
+          </div>
+        </section>
+      );
+    case 'caseGallery':
+      if (!casesOf(b.categories).length) return null;
+      return (
+        <section id={id} className={wrapCls}>
+          <div className="wrap">
+            <Head title={b.title ?? '실제 치료 전후 사례'} lead={b.lead} />
+            <div className="reveal mt-8">
+              <CaseGallery categories={b.categories} />
+            </div>
           </div>
         </section>
       );

@@ -39,6 +39,11 @@ export type Block =
   | { type: 'gallery'; id?: string; title?: string; lead?: string; figures: Fig[]; columns?: 2 | 3 | 4 }
   /** 치료 전후 등 사례 사진 한 장 + 고지문(필수) */
   | { type: 'cases'; id?: string; title?: string; lead?: string; figure: Fig; note: string; /** lib/cases.ts 의 묶음 id — 있으면 전후 비교 슬라이더로 보여 준다 */ caseGroup?: string }
+  /**
+   * 실제 치료 전후 사례(구내 / 방사선 두 영역, 위=전·아래=후) — 목록은 lib/caseLibrary.ts.
+   * categories 에 해당하는 사례만 나온다. 사례가 하나도 없으면 구역째 안 나온다.
+   */
+  | { type: 'caseGallery'; id?: string; title?: string; lead?: string; categories: Array<'implant' | 'fullarch' | 'endo' | 'reendo' | 'wisdom' | 'anterior' | 'fracture' | 'resin' | 'tmj'> }
   /** 강조 한 줄 */
   | { type: 'quote'; text: string; by?: string }
   /** 다른 문서로 가는 카드 */
