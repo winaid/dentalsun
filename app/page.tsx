@@ -465,7 +465,7 @@ export default function HomePage() {
                 <span className="accent">자주 묻는 질문</span>
               </h2>
               <p className="lead mt-4">
-                <Sentences text="진료시간과 주차, 임플란트와 턱관절, 건강보험 적용 기준까지 자주 받는 질문을 모았습니다. 더 많은 문답은 FAQ 페이지에 있습니다." />
+                <Sentences text="진료시간과 주차부터 건강보험 적용 기준까지, 자주 받는 질문을 모았습니다. 더 많은 문답은 FAQ 페이지에 있습니다." />
               </p>
               <Link href="/faq" className="btn-ghost mt-6">전체 FAQ 보기</Link>
             </div>

@@ -58,6 +58,14 @@ body {
   word-break: keep-all;
   overflow-wrap: anywhere;
 }
+/* 2026-09-29 원장 피드백 'AI 줄바꿈 보완' — Sentences 를 타지 않는 좁은 카드 글도 마지막 줄에 한 낱말만 남지 않게(예: '바뀌지 / 않습니다').
+   .sent 의 balance 규칙(아래)이 더 구체적이라 그쪽이 이긴다. */
+p,
+li,
+dd,
+figcaption {
+  text-wrap: pretty;
+}
 ::selection {
   background: var(--color-sun-200);
 }
