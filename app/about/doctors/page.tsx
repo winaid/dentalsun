@@ -30,14 +30,15 @@ export default function DoctorsPage() {
         <HeroCollage
           trail={trail}
           eyebrow="OUR DOCTORS"
-          cardsLead="진료를 맡는 의료진입니다."
-          lines={[<>보건복지부 인증 <span className="accent-sun">전문의</span>가</>, '직접 진단하고 치료합니다']}
+          cardsLead="진단부터 보철, 정기검진까지 한 원장이 맡습니다."
+          lines={[<>통합치의학과 <span className="accent-sun">전문의</span>가</>, '처음부터 끝까지 직접 진료합니다']}
           long
-          lead="양대일 대표원장은 보건복지부 인증 통합치의학과 전문의이자 강남성심병원 치과 외래교수입니다. 처음 오신 분도 검사 결과와 치료 방법을 이해하실 때까지 직접 설명해 드립니다."
+          lead="양대일 대표원장은 보건복지부 인증 통합치의학과 전문의이며 강남성심병원 치과 외래교수로 일했습니다. 15년 넘게 광화문 한자리에서 임플란트와 턱관절, 자연치아 보존 치료를 직접 진료하고 있습니다."
           bg="ai/wide-clinic"
           cards={[
+            /* ★ 2026-09-29 원장 피드백 10번: orig/intro-monitor-pair 는 퇴사한 페이닥터가 함께 나와 뺐다 — 다시 쓰지 말 것 */
             { fig: { key: 'orig/doctor-yang', alt: '양대일 대표원장' }, shape: 'portrait' },
-            { fig: { key: 'orig/intro-monitor-pair', alt: '마스크를 쓴 두 사람이 로고 모니터 앞에서 스캔 화면을 함께 보는 장면' }, shape: 'wide' },
+            { fig: { key: 'place2/doctor-scan', alt: '구강스캐너로 스캔하며 모니터의 3D 치열 모형을 확인하는 양대일 대표원장' }, shape: 'wide' },
             { fig: { key: 'scene/loupe', alt: '확대경을 착용하고 진료하는 양대일 대표원장' }, shape: 'std' },
           ]}
           items={[
@@ -65,6 +66,13 @@ export default function DoctorsPage() {
                 <h2 className="display-sm mt-2">
                   {d.name} <span className="font-bold">{d.role}</span>
                 </h2>
+                {/* 약력 외에 소개 글 하나(2026-09-29 원장 피드백 6번) — 홈 의료진 구역과 같은 문구(lib/doctors.ts) */}
+                <p className="mt-6 text-[1.25rem] font-extrabold leading-[1.45] text-ink md:text-[1.45rem]">
+                  {d.headline[0]} <span className="accent">{d.headline[1]}</span>
+                </p>
+                <p className="mt-3 max-w-[560px] text-[16px] leading-[1.85] text-ink-soft">
+                  <Sentences text={d.intro} />
+                </p>
                 <div className="mt-8 rounded-2xl border border-hairline bg-white p-7 shadow-[var(--shadow-lift)] md:p-9 lg:-ml-[22%]">
                   <h3 className="text-[1.15rem] font-bold text-ink">주요 약력</h3>
                   <ul className="mt-5 space-y-2.5">
@@ -83,15 +91,16 @@ export default function DoctorsPage() {
 
         <section className="section">
           <div className="wrap grid items-center gap-10 lg:grid-cols-2">
-            <Figure fig={{ key: 'orig/intro-monitor-pair', alt: '모니터의 3D 구강 스캔 화면을 함께 보며 설명하는 모습' }} ratio="aspect-[2/1]" />
+            {/* ★ 옛 사진(orig/intro-monitor-pair)은 퇴사한 페이닥터가 함께 나와 뺐다(2026-09-29 원장 피드백 10번) */}
+            <Figure fig={{ key: 'sun/consult-monitor', alt: '모니터에 치아 차트를 띄워 놓고 환자에게 설명하는 양대일 대표원장' }} ratio="aspect-[3/2]" />
             <div className="reveal">
               <p className="eyebrow">PHILOSOPHY</p>
               <h2 className="display-sm mt-4">
-                다년간의 임상경험으로 믿을 수 있는 진료,
+                살릴 수 있는 치아인지
                 <br />
-                <span className="accent">이해하기 쉬운 친절한 설명</span>
+                <span className="accent">먼저 확인합니다</span>
               </h2>
-              <p className="lead mt-4"><Sentences text="내 치아만큼 좋은 것은 없기에 자연치아를 살릴 수 있는지 먼저 살피고, 환자분이 이해하실 수 있도록 검사 결과와 치료 방법을 설명해 드립니다." /></p>
+              <p className="lead mt-4"><Sentences text="발치와 임플란트를 이야기하기 전에 근관치료나 치주치료로 보존할 수 있는지부터 확인합니다. 방사선 사진과 구강 사진을 함께 보며 현재 상태와 치료 순서를 설명하고, 지금 필요한 치료만 권해 드립니다." /></p>
             </div>
           </div>
         </section>

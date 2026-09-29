@@ -5,9 +5,8 @@ import { TREATMENT_HUBS } from '@/lib/nav';
  * 분류 이름은 글쓴이가 자유롭게 적으므로 표에 없으면 메뉴 이름과 겹치는 쪽을 고른다.
  */
 const CATEGORY_HUB: Record<string, string> = {
-  '무통·수면치료': '/treatment/painless',
+  '무통치료': '/treatment/painless',
   '무통': '/treatment/painless',
-  '수면치료': '/treatment/painless',
   '임플란트': '/treatment/implant',
   '턱관절': '/treatment/tmj',
   '심미치료': '/treatment/aesthetic',

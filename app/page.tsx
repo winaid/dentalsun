@@ -10,8 +10,7 @@ import { HubAccordion } from '@/components/HubAccordion';
 import { docByPath } from '@/lib/content';
 import { CardLink, ContactBand, FaqList, Figure, MedicalNotice, ScrubText, Sentences } from '@/components/ui';
 import { HomeStage, HomeStats } from '@/components/HomeScroll';
-import { BeforeAfter } from '@/components/BeforeAfter';
-import { CASE_GROUPS, CASE_NOTE } from '@/lib/cases';
+import { CaseGallery } from '@/components/CaseGallery';
 import { CLINIC, HOURS, HYGIENE, MONTHLY_NOTICE, STRENGTHS } from '@/lib/clinic';
 import { DOCTORS } from '@/lib/doctors';
 import type { NavItem } from '@/lib/nav';
@@ -99,7 +98,7 @@ export default function HomePage() {
     /* 2026-09-29 맞춤 임플란트가 다시 독립 → 여섯 장 유지를 위해 보증제도는 아래 버튼으로 */
     { href: '/treatment/implant/navigation', label: '내비게이션 임플란트', desc: 'CBCT 모의 식립 후 수술 가이드로 식립합니다.', fig: 'orig/misc-nav-implant-set' },
     { href: '/treatment/implant/custom', label: '맞춤 임플란트', desc: '잇몸 라인에 맞춘 맞춤 지대주로 완성합니다.', fig: 'ai/implant-custom' },
-    { href: '/treatment/implant/full-arch', label: '풀아치(전체) 임플란트', desc: '무치악에 4~6개를 식립해 고정성 보철을 연결합니다.', fig: 'orig/implant-fa-fixed' },
+    { href: '/treatment/implant/full-arch', label: '풀아치 임플란트', desc: '무치악에 4~6개를 식립해 고정성 보철을 연결합니다.', fig: 'orig/implant-fa-fixed' },
     { href: '/treatment/implant/uv', label: 'UV 임플란트', desc: '광활성화한 픽스처로 골유착 환경을 돕습니다.', fig: 'ai/implant-uv' },
     { href: '/treatment/implant/prf', label: '자가혈 임플란트', desc: '골이식 부위에 자가혈 농축 성분(PRF)을 씁니다.', fig: 'ai/implant-prf' },
     { href: '/treatment/insurance', label: '보험 틀니 · 임플란트', desc: '만 65세 이상 건강보험 적용 기준을 안내합니다.', fig: 'ai/insurance-hub' },
@@ -381,18 +380,21 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── 치료 전후 사례 — 실제 환자 사진, 손잡이를 끌어 비교 ── */}
-        <section className="section">
+        {/* ── 치료 전후 사례 — 2026-09-29 원장 요청: 병원이 보낸 실제 사진을 '구내 / 방사선' 두 영역, 위=전·아래=후로.
+             목록은 lib/caseLibrary.ts (빼고 싶은 사례는 거기서 한 줄 지우면 된다) ── */}
+        <section className="section" id="cases">
           <div className="wrap">
             <div className="reveal mx-auto max-w-[820px] text-center">
               <p className="eyebrow justify-center">BEFORE &amp; AFTER</p>
               <h2 className="display-sm mt-4">
-                광화문선치과 <span className="accent">실제 치료 전후 사례</span>
+                광화문 선치과 <span className="accent">실제 치료 전후</span>
               </h2>
-              <p className="lead mt-4">환자분이 경험한 치료 전후의 변화를 실제 사례로 확인해 보세요.</p>
+              <p className="lead mt-4">
+                <Sentences text="대표원장이 직접 진료한 환자분의 구내 사진과 방사선 사진입니다. 위가 치료 전, 아래가 치료 후입니다." />
+              </p>
             </div>
             <div className="reveal mt-10">
-              <BeforeAfter groups={CASE_GROUPS} note={CASE_NOTE} />
+              <CaseGallery filter />
             </div>
           </div>
         </section>

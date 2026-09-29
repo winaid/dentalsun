@@ -11,6 +11,7 @@ import { WISDOM_DOCS } from './wisdom';
 import { NATURAL_DOCS } from './natural';
 import { PAINLESS_DOCS } from './painless';
 import { GENERAL_DOCS } from './general';
+import { ENDO_PERIO_DOCS } from './endoPerio';
 import { INSIGHT_DOCS } from './insight';
 
 export const ALL_DOCS: Doc[] = [
@@ -22,6 +23,7 @@ export const ALL_DOCS: Doc[] = [
   ...NATURAL_DOCS,
   ...PAINLESS_DOCS,
   ...GENERAL_DOCS,
+  ...ENDO_PERIO_DOCS,
   ...INSIGHT_DOCS,
 ];
 

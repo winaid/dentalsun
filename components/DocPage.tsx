@@ -36,9 +36,10 @@ const HUB_BG: Record<string, string> = {
 };
 /** 문서 경로별 대표 AI 사진 — 원본 사진이 없거나 반복될 때 hero 로 쓴다. */
 const DOC_AI: Record<string, string> = {
-  '/treatment/implant': 'orig/implant-hero',
+  '/treatment/implant': 'sun/surgery-loupe',
   '/treatment/implant/navigation': 'orig/misc-nav-implant-set',
-  '/treatment/implant/full-arch': 'orig/implant-fa-fixed',
+  /* 2026-09-29 원장 피드백 11번: 이해가 잘 되는 이미지로 — 원장이 예로 든 이고운 첫 화면처럼 보철·임플란트가 한눈에 보이는 렌더 */
+  '/treatment/implant/full-arch': 'illust/fullarch-hero',
   '/treatment/implant/uv': 'ai/implant-uv',
   '/treatment/implant/prf': 'ai/implant-prf',
   '/treatment/implant/warranty': 'ai/implant-warranty',
@@ -57,7 +58,6 @@ const DOC_AI: Record<string, string> = {
   '/treatment/natural-tooth/endosonic': 'orig/endo-handpiece',
   '/treatment/painless': 'ai/painless-hub',
   '/treatment/painless/anesthesia': 'orig/pain-nopain',
-  '/treatment/painless/sedation': 'fit/sleep-hero',
   '/treatment/painless/airflow': 'fit/airflow-device',
   '/insight': 'ai/insight-hub',
 };

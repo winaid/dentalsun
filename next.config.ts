@@ -53,6 +53,8 @@ const nextConfig: NextConfig = {
       { source: '/treatment/tmj/causes', destination: '/treatment/tmj', permanent: true },
       { source: '/treatment/tmj/self-check', destination: '/treatment/tmj/symptoms', permanent: true },
       { source: '/treatment/tmj/whole-body', destination: '/treatment/tmj/symptoms', permanent: true },
+      /* 2026-09-29 원장 확인(피드백 #14) — 병원이 하지 않는 진료라 쪽을 없앴다. 옛 주소는 무통 & 저자극 허브로 */
+      { source: '/treatment/painless/sedation', destination: '/treatment/painless', permanent: true },
     ];
   },
   async headers() {

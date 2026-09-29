@@ -11,7 +11,8 @@ import { ALL_DOCS } from '@/lib/content';
  */
 export const MODEL = process.env.GEMINI_MODEL || 'gemini-3.1-pro-preview';
 
-export const CATEGORIES = ['임플란트', '턱관절', '심미치료', '보험 틀니·임플란트', '사랑니', '자연치아 살리기', '무통·수면치료', '잇몸·예방', '치과 선택'];
+/* 2026-09-29 — '무통·수면치료' → '무통치료'. 광화문 선치과는 수면치료(의식하 진정)를 하지 않는다 — 분류·주제에 되살리지 말 것 */
+export const CATEGORIES = ['임플란트', '턱관절', '심미치료', '보험 틀니·임플란트', '사랑니', '자연치아 살리기', '무통치료', '잇몸·예방', '치과 선택'];
 
 export function siteContext(): string {
   const lines: string[] = [];

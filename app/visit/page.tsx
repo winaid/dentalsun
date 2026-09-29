@@ -3,9 +3,28 @@ import Image from 'next/image';
 import { SiteHeader } from '@/components/SiteHeader';
 import { HeroCollage } from '@/components/HeroCollage';
 import { JsonLd } from '@/components/JsonLd';
-import { Breadcrumb, ContactBand , Sentences } from '@/components/ui';
+import { Breadcrumb, ContactBand, Figure, Sentences } from '@/components/ui';
 import { CLINIC, HOURS, MONTHLY_NOTICE } from '@/lib/clinic';
 import { desc80, alt, breadcrumbSchema, medicalWebPageSchema, og, withLocality } from '@/lib/seo';
+
+/** 처음 오시는 날의 순서 — 사진은 네이버 플레이스 실사(place2/). 대기실 사진은 거울의 다른 원장 이름을 지운 판 */
+const FIRST_VISIT = [
+  {
+    fig: { key: 'place2/entrance', alt: '금색 광화문 선치과 로고가 붙은 거울 기둥과 유리문이 있는 입구' },
+    title: '입구',
+    desc: '건물 3층, 금색 광화문 선치과 로고와 SUN DENTAL CLINIC 유리문이 있는 곳이 병원 입구입니다.',
+  },
+  {
+    fig: { key: 'place2/reception', alt: '곡선형 나무 접수대와 광화문 선치과 간판' },
+    title: '접수 · 문진',
+    desc: '복용 중인 약이나 치료 중인 질환이 있으면 접수 때 알려 주세요. 다른 치과에서 찍은 X-ray나 CT가 있다면 가져오셔도 됩니다.',
+  },
+  {
+    fig: { key: 'place2/waiting', alt: '창가에 가죽 벤치가 놓인 대기실' },
+    title: '검사 · 상담',
+    desc: '대표원장이 증상을 듣고 필요한 검사를 정합니다. 촬영한 영상은 모니터로 함께 보며 설명합니다.',
+  },
+];
 
 const TITLE = '오시는 길 · 진료시간';
 const DESC = withLocality('광화문선치과 오시는 길과 진료시간 — 5호선 광화문역 6번 출구 도보 2분, 1·2호선 시청역 3번 출구 도보 5분. 화·목 야간진료 21시, 코리아나 호텔 야외주차장 무료주차.');
@@ -24,14 +43,14 @@ export default function VisitPage() {
           trail={trail}
           eyebrow="VISIT US"
           long
-          cardsLead="찾아오실 때 필요한 것들입니다."
+          cardsLead="내원 전에 확인해 주세요."
           lines={['광화문역 6번 출구', <><span className="accent-sun">도보 2분</span></>]}
-          lead={`${CLINIC.address.full}에 있습니다 (${CLINIC.address.landmark}). 화·목은 밤 9시까지 진료하니 퇴근 뒤에 오셔도 되고, 주차는 ${CLINIC.parking.place} 무료입니다.`}
+          lead={`${CLINIC.address.street} ${CLINIC.address.landmark.replace(' · ', ', ')}입니다. 화·목요일은 오후 9시까지 진료하며, 주차는 ${CLINIC.parking.place}을 무료로 이용하실 수 있습니다.`}
           bg="ai/wide-visit"
           cards={[
-            { fig: { key: 'place/place03', alt: '광화문선치과 진료실과 간판' }, shape: 'portrait' },
-            { fig: { key: 'place/place01', alt: '광화문선치과 진료실 복도' }, shape: 'wide' },
-            { fig: { key: 'place/place09', alt: '광화문선치과 대기실' }, shape: 'std' },
+            { fig: { key: 'place/place03', alt: '광화문 선치과 진료실과 간판' }, shape: 'portrait' },
+            { fig: { key: 'place2/reception', alt: '곡선형 나무 접수대와 광화문 선치과 간판' }, shape: 'wide' },
+            { fig: { key: 'place2/waiting', alt: '창가에 가죽 벤치가 놓인 대기실' }, shape: 'std' },
           ]}
           items={[
             { title: '주소', desc: `${CLINIC.address.full} · ${CLINIC.address.landmark}` },
@@ -100,12 +119,37 @@ export default function VisitPage() {
           </div>
         </section>
 
-        <section className="section bg-canvas" id="notice">
+        {/* 처음 오시는 날 — 2026-09-29 네이버 플레이스 실사(입구·접수·대기실)로 신설. 설명은 사진에 보이는 것과 환자에게 드리는 부탁만 쓴다 */}
+        <section className="section bg-canvas" id="first-visit">
+          <div className="wrap">
+            <div className="reveal max-w-[760px]">
+              <p className="eyebrow">FIRST VISIT</p>
+              <h2 className="display-sm mt-4">
+                처음 오시는 날, <span className="accent whitespace-nowrap">이렇게 진행합니다</span>
+              </h2>
+              <p className="lead mt-4"><Sentences text="첫날은 문진과 검사, 상담이 중심입니다. 치료를 바로 시작할지는 검사 결과를 함께 본 뒤에 정합니다." /></p>
+            </div>
+            <ol className="reveal-stack grid-cards mt-10 sm:grid-cols-3">
+              {FIRST_VISIT.map((s, i) => (
+                <li key={s.fig.key} className="card flex h-full flex-col overflow-hidden">
+                  <Figure fig={s.fig} ratio="aspect-[4/3]" sizes="(max-width: 640px) 100vw, 33vw" rounded="rounded-none" effect="img-in" caption={false} />
+                  <div className="flex flex-1 flex-col p-6">
+                    <span className="num">{String(i + 1).padStart(2, '0')}</span>
+                    <p className="mt-3 text-[1.05rem] font-bold text-ink">{s.title}</p>
+                    <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">{s.desc}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
+        <section className="section" id="notice">
           <div className="wrap grid items-start gap-10 lg:grid-cols-[1fr_1.2fr]">
             <div className="reveal">
               <p className="eyebrow">MONTHLY SCHEDULE</p>
               <h2 className="display-sm mt-4">{MONTHLY_NOTICE.title}</h2>
-              <p className="lead mt-4"><Sentences text="진료 일정 참고하셔서 내원 및 예약에 착오 없으시길 바랍니다." /></p>
+              <p className="lead mt-4"><Sentences text="휴진일과 야간진료일을 확인하신 뒤 예약해 주세요. 명절 연휴 등으로 달마다 휴진일이 달라질 수 있습니다." /></p>
               <ul className="mt-6 divide-y divide-hairline rounded-2xl border border-hairline bg-white">
                 {MONTHLY_NOTICE.items.map((it) => (
                   <li key={it.dates} className="flex items-center justify-between px-5 py-3.5 text-[16px]">
@@ -121,21 +165,21 @@ export default function VisitPage() {
           </div>
         </section>
 
-        <section className="section" id="contact">
+        <section className="section bg-canvas" id="contact">
           <div className="wrap">
             <div className="reveal max-w-[760px]">
               <p className="eyebrow">CONTACT</p>
               <h2 className="display-sm mt-4">상담 · 예약 창구</h2>
-              <p className="lead mt-4"><Sentences text="전화 상담·온라인 예약·치료후기 세 창구입니다." /></p>
+              <p className="lead mt-4"><Sentences text="예약은 전화와 네이버 예약으로 받습니다. 다녀가신 분들의 후기는 네이버 플레이스에서 보실 수 있습니다." /></p>
             </div>
             <div className="reveal-stack mt-8 grid gap-5 sm:grid-cols-3">
               <a href={CLINIC.phoneHref} className="card card-hover p-6">
                 <p className="text-[1.05rem] font-bold text-ink">전화 상담</p>
-                <p className="mt-1.5 text-[15px] text-ink-soft">{CLINIC.phone} — 진료시간에 바로 연결됩니다.</p>
+                <p className="mt-1.5 text-[15px] text-ink-soft">{CLINIC.phone} — 진료시간 중에 증상 상담과 예약 변경을 받습니다.</p>
               </a>
               <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="card card-hover p-6">
                 <p className="text-[1.05rem] font-bold text-ink">온라인 예약 ↗</p>
-                <p className="mt-1.5 text-[15px] text-ink-soft">네이버 예약에서 원하는 시간을 고르세요.</p>
+                <p className="mt-1.5 text-[15px] text-ink-soft">네이버 예약에서 날짜와 시간을 직접 고를 수 있습니다. 처음이시면 불편한 부위를 짧게 남겨 주세요.</p>
               </a>
               <a href={CLINIC.booking.naverReview} target="_blank" rel="noopener" className="card card-hover p-6">
                 <p className="text-[1.05rem] font-bold text-ink">치료후기 ↗</p>

@@ -335,7 +335,7 @@ export function FaqList({ items, id = 'faq' }: { items: QA[]; id?: string }) {
 }
 
 /** 마무리 상담 띠 — 페이지당 하나. AI 정물 사진을 배경으로 깐다. */
-export function ContactBand({ title = '궁금한 점은 편하게 문의해 주세요', text, bg = 'ai/wide-visit' }: { title?: string; text?: string; bg?: string }) {
+export function ContactBand({ title = '예약과 상담은 전화·네이버로', text, bg = 'ai/wide-visit' }: { title?: string; text?: string; bg?: string }) {
   return (
     <section className="relative isolate overflow-hidden bg-night text-white">
       <div className="absolute inset-0 -z-10">

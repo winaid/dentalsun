@@ -53,9 +53,10 @@ function Area({ title, sub, items }: { title: string; sub: string; items: CaseIt
         </h3>
         <span className="shrink-0 text-[13px] font-semibold text-ink-muted">{items.length}건 · 옆으로 넘겨 보기</span>
       </div>
-      <ul className="mt-4 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-3 md:gap-5" data-lenis-prevent-horizontal>
+      {/* 사진 한 장의 높이를 줄마다 같게(--case-h) — 폭은 사진 비율로 정한다. 세로로 긴 치근단 사진이 줄 전체를 늘이지 않게 */}
+      <ul className="mt-4 flex snap-x snap-mandatory items-start gap-4 overflow-x-auto pb-3 [--case-h:150px] sm:[--case-h:210px] md:gap-5" data-lenis-prevent-horizontal>
         {items.map((c) => (
-          <li key={c.id} className={`shrink-0 snap-start ${width(c)}`}>
+          <li key={c.id} className="shrink-0 snap-start" style={{ width: `calc(var(--case-h) * ${((c.before.w / c.before.h) * (2 / (2 + (c.middle?.length ?? 0)))).toFixed(3)})`, minWidth: 150 }}>
             <figure className="overflow-hidden rounded-2xl border border-hairline bg-white">
               <Shot img={c.before} label="치료 전" alt={`${c.caption} — 치료 전`} dark={c.type === 'xray'} />
               {c.middle?.map((m, i) => <Shot key={m.key} img={m} label={`경과 ${i + 1}`} alt={`${c.caption} — 경과 ${i + 1}`} dark={c.type === 'xray'} />)}
@@ -75,15 +76,9 @@ function Area({ title, sub, items }: { title: string; sub: string; items: CaseIt
 function Shot({ img, label, alt, after = false, dark }: { img: { key: string; w: number; h: number }; label: string; alt: string; after?: boolean; dark: boolean }) {
   return (
     <div className={`relative ${dark ? 'bg-black' : 'bg-canvas-2'}`}>
-      <Image src={figSrc(img.key)} alt={alt} width={img.w} height={img.h} sizes="(max-width: 640px) 90vw, 560px" className="block h-auto w-full" />
+      <Image src={figSrc(img.key)} alt={alt} width={img.w} height={img.h} sizes="(max-width: 640px) 360px, 520px" className="block h-auto w-full" />
       <span className={`absolute left-2.5 top-2.5 rounded-md px-2 py-0.5 text-[12px] font-extrabold text-white ${after ? 'bg-sun-500' : 'bg-night/75'}`}>{label}</span>
     </div>
   );
 }
 
-/** 카드 폭 — 사진 종류마다 비율이 달라 폭을 따로 준다(파노라마는 가로로 길다) */
-function width(c: CaseItem) {
-  if (c.type === 'intraoral') return 'w-[78vw] max-w-[380px] sm:w-[360px]';
-  if (c.xrayKind === 'panorama') return 'w-[86vw] max-w-[560px] sm:w-[520px]';
-  return 'w-[70vw] max-w-[340px] sm:w-[320px]';
-}

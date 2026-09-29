@@ -22,9 +22,9 @@ export interface HeroCollageSpec {
 
 export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   '/treatment/implant': {
-    lines: ['3D 로 계획하고 가이드로 식립하는', '{디지털 임플란트}'],
-    lead: '어디에 어떻게 심을지, 수술 전에 컴퓨터로 먼저 심어 보고 정합니다. 3D CT 와 구강스캐너 자료를 화면으로 함께 보며 천천히 설명해 드립니다.',
-    cardsLead: '광화문 선치과 임플란트는 이렇게 다릅니다.',
+    lines: ['진단부터 보철까지 대표원장이 직접 하는', '{디지털 임플란트}'],
+    lead: '통합치의학과 전문의인 대표원장이 CBCT 판독부터 식립, 보철, 정기검진까지 직접 맡습니다. 치조골을 계측해 식립 위치를 먼저 정하고, 골이식은 필요한 경우에만 계획합니다.',
+    cardsLead: '광화문 선치과 임플란트는 이렇게 진료합니다.',
     cards: [
       { fig: { key: 'scene/surgery', alt: '수술 가운과 확대경을 착용하고 임플란트 수술 중인 광화문선치과 원장' }, shape: 'portrait' },
       { fig: { key: 'orig/implant-hero', alt: '확대경을 쓴 의료진이 파노라마 모니터 앞에서 임플란트 수술을 하는 장면' }, shape: 'wide' },
@@ -32,29 +32,29 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     ],
   },
   '/treatment/implant/navigation': {
-    lines: ['CBCT 로 먼저 계획하고 가이드로 식립하는', '{내비게이션} 임플란트'],
-    lead: '수술 전에 컴퓨터로 모의수술을 마치고 그 계획대로 만든 유도장치를 대고 심습니다. 심은 뒤에는 기성품 기둥 대신 내 잇몸 선에 맞춘 기둥으로 마무리합니다.',
-    cardsLead: '디지털 맞춤 임플란트는 이런 점이 다릅니다.',
+    lines: ['식립 위치를 수술 전에 정하는', '{내비게이션} 임플란트'],
+    lead: 'CBCT와 구강스캔 데이터로 모의 식립을 마친 뒤, 그 계획을 옮긴 수술 가이드로 식립합니다. 신경관과 상악동까지의 거리를 수술 전에 계측하고, 골량이 충분하면 무절개로 진행합니다.',
+    cardsLead: '가이드 식립은 이렇게 진행합니다.',
     cards: [
-      { fig: { key: 'orig/implant-nav-guide', alt: '하악 모형에 투명 수술 가이드를 얹고 드릴을 맞춘 모습' }, shape: 'portrait' },
+      { fig: { key: 'scene/surgery', alt: '확대경을 끼고 임플란트를 식립하는 양대일 대표원장' }, shape: 'portrait' },
       { fig: { key: 'orig/implant-nav-plan', alt: 'CT 위에 임플란트 식립 경로를 잡는 계획 소프트웨어 화면' }, shape: 'wide' },
-      { fig: { key: 'orig/misc-nav-implant-set', alt: '내비게이션 임플란트 모의수술 화면이 뜬 모니터·태블릿과 임플란트 모형' }, shape: 'std' },
+      { fig: { key: 'equip/guide', alt: '하악 모형에 얹은 수술 가이드와 임플란트' }, shape: 'std' },
     ],
   },
   '/treatment/implant/full-arch': {
-    lines: ['최소식립으로 전체 치아를 회복하는', '{풀아치} 임플란트'],
-    lead: '치아가 거의 남지 않았어도, 임플란트 4~6개로 한 턱 전체의 씹는 기능을 되찾는 방법입니다. 남은 뼈 상태에 따라 계획이 달라지니, CT 검사 뒤 맞는 방법을 함께 정합니다.',
-    cardsLead: '이런 경우, 풀아치 임플란트를 고려합니다.',
+    lines: ['4~6개의 임플란트로 한 턱 전체를 복원하는', '{풀아치} 임플란트'],
+    lead: '틀니가 들뜨고 빠져 식사가 불편하셨다면, 고정 방식을 검토해 볼 수 있습니다. 치아가 전혀 없는 무치악도 CBCT로 골량을 계측한 뒤, 4~6개의 임플란트로 한 턱 전체를 복원합니다.',
+    cardsLead: '이런 경우 풀아치 임플란트를 검토합니다.',
     cards: [
-      { fig: { key: 'orig/implant-fa-surgery', alt: '수술실에서 임플란트 수술 중인 의료진' }, shape: 'portrait' },
-      { fig: { key: 'orig/implant-fa-fixed', alt: '임플란트 여섯 개로 고정한 전악 보철 렌더' }, shape: 'wide' },
-      { fig: { key: 'orig/implant-fa-models', alt: '상악·하악 전악 임플란트 보철 모형' }, shape: 'std' },
+      { fig: { key: 'orig/main-fa-surgeon-right', alt: '진료실에서 환자를 진료하는 양대일 대표원장' }, shape: 'portrait' },
+      { fig: { key: 'place2/surgery-color', alt: '수술실에서 확대경을 끼고 임플란트 수술 중인 대표원장, 뒤편 모니터에 파노라마 영상' }, shape: 'wide' },
+      { fig: { key: 'place2/doctor-scan', alt: '대표원장이 구강스캐너로 환자의 치아를 스캔하고 벽 모니터에 3D 스캔 화면이 떠 있는 진료실' }, shape: 'std' },
     ],
   },
   '/treatment/implant/uv': {
-    lines: ['잇몸뼈가 약할 때 쓰는', '{UV} 임플란트'],
-    lead: '뼈가 약해 임플란트가 어렵다는 말을 들으셨나요? 심기 직전 자외선으로 표면을 활성화해, 뼈와 붙는 과정을 돕는 임플란트입니다.',
-    cardsLead: 'UV 임플란트는 이런 점이 다릅니다.',
+    lines: ['골질이 약할 때 골유착을 돕는', '{UV} 임플란트'],
+    lead: '식립 직전 픽스처 표면에 자외선을 조사해, 표면에 쌓인 유기물을 제거합니다. 골질이 약하거나 연세가 많아 골유착이 걱정되는 경우에 검토합니다.',
+    cardsLead: 'UV 표면 처리에서 기대하는 점입니다.',
     cards: [
       { fig: { key: 'implant/uv', alt: 'UV 임플란트 표면 처리 개념도' }, shape: 'portrait' },
       { fig: { key: 'ai/implant-uv', alt: 'UV 활성화 장비에 임플란트 픽스처를 넣는 장갑 낀 손' }, shape: 'wide' },
@@ -62,9 +62,9 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     ],
   },
   '/treatment/implant/prf': {
-    lines: ['내 피에서 뽑아 쓰는', '{자가혈(PRF)} 임플란트'],
-    lead: '내 혈액을 소량 뽑아 원심분리한 자가혈(PRF)을 뼈이식 재료와 함께 넣습니다. 뼈이식이 필요한 자리의 회복을 돕는 방법으로, 검사 뒤 필요한 경우에만 권해 드립니다.',
-    cardsLead: '자가혈 임플란트는 이런 경우에 씁니다.',
+    lines: ['골이식 부위의 회복을 돕는', '{자가혈(PRF)} 임플란트'],
+    lead: '환자의 혈액을 소량 채취해 분리한 PRF를 골이식재와 함께 넣습니다. 골이식 부위의 회복을 돕는 방법으로, CBCT로 골량이 부족한 경우에만 계획합니다.',
+    cardsLead: '자가혈(PRF)에서 기대하는 점입니다.',
     cards: [
       { fig: { key: 'implant/prf', alt: '자가혈(PRF) 추출 개념도' }, shape: 'portrait' },
       { fig: { key: 'ai/implant-prf', alt: '원심분리기에서 혈액 튜브를 꺼내는 장갑 낀 손' }, shape: 'wide' },
@@ -72,9 +72,9 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     ],
   },
   '/treatment/implant/custom': {
-    lines: ['내 잇몸 선에 맞춰 만드는', '{맞춤} 임플란트'],
-    lead: '기성품 기둥 대신, 내 잇몸 선과 치아 모양에 맞춰 기둥(어버트먼트)을 따로 만듭니다. 잇몸과 보철 사이 틈을 줄여, 오래 편하게 쓰도록 돕는 선택입니다.',
-    cardsLead: '맞춤 기둥은 이런 점이 다릅니다.',
+    lines: ['잇몸 라인과 교합에 맞춰 설계하는', '{맞춤} 임플란트'],
+    lead: '기성 지대주 대신, 잇몸 라인과 교합에 맞춰 CAD/CAM으로 지대주를 설계합니다. 잇몸 경계의 틈을 줄이고 보철이 고른 두께로 얹히도록, 대표원장이 설계 단계에서 직접 확인합니다.',
+    cardsLead: '맞춤 지대주는 이렇게 설계합니다.',
     cards: [
       { fig: { key: 'implant/custom', alt: '맞춤 어버트먼트 개념도' }, shape: 'portrait' },
       { fig: { key: 'orig/implant-custom-fit', alt: '잇몸 선에 맞춘 맞춤 어버트먼트 단면 일러스트' }, shape: 'wide' },
@@ -82,9 +82,9 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     ],
   },
   '/treatment/implant/warranty': {
-    lines: ['치료 뒤에도 이어지는', '광화문 선치과 {보증제도}'],
-    lead: '임플란트는 심고 끝이 아니라, 오래 쓰는 것까지가 치료입니다. 정기 점검과 보증 기준을 치료 전에 미리 알려 드리니, 편한 마음으로 시작하세요.',
-    cardsLead: '임플란트 보증은 이렇게 운영합니다.',
+    lines: ['치료 후의 점검과 관리까지', '광화문 선치과 {보증제도}'],
+    lead: '임플란트 수술관련은 장착일부터 최대 10년, 보철관련은 5년까지 기간별로 보증합니다. 보증 기준과 정기검진 주기는 치료 전에 먼저 안내합니다.',
+    cardsLead: '보증은 이런 조건에서 유지됩니다.',
     cards: [
       { fig: { key: 'orig/misc-consult-desk', alt: '책상에서 의사가 환자에게 서류를 설명하는 모습' }, shape: 'portrait' },
       { fig: { key: 'scene/intro-1', alt: '광화문선치과 진료 장면' }, shape: 'wide' },
@@ -92,9 +92,9 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     ],
   },
   '/treatment/tmj': {
-    lines: ['원인을 먼저 찾는', '광화문 선치과 {턱관절 치료}'],
-    lead: '턱에서 소리가 나고, 입 벌리기가 불편하고, 아침마다 턱이 뻐근하신가요? 원인을 먼저 찾고, 되돌릴 수 있는 치료부터 차근차근 맞춰 드립니다.',
-    cardsLead: '이런 증상이 있다면 턱관절을 확인해 보세요.',
+    lines: ['관절잡음·개구장애·저작근 통증,', '원인부터 가려내는 {턱관절 진료}'],
+    lead: '턱에서 딸깍 소리가 나거나 입이 끝까지 벌어지지 않고, 아침마다 턱이 뻐근하다면 턱관절 장애를 의심해 볼 수 있습니다. 대표원장이 촉진과 개구량 측정, 필요하면 3D CT로 원인을 확인한 뒤 가역적인 치료부터 시작합니다.',
+    cardsLead: '광화문 선치과 턱관절 진료는 이렇게 합니다.',
     cards: [
       { fig: { key: 'fit/tmj-hero', alt: '확대경을 쓰고 환자를 진료하는 원장' }, shape: 'portrait' },
       { fig: { key: 'orig/misc-tmj-skull', alt: '두개골 모형의 턱관절을 펜으로 가리키는 모습' }, shape: 'wide' },
@@ -103,8 +103,8 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   },
   /* ── 2026-09-29 신설 쪽 세 개 — 문구는 재작성 단계에서 다시 다듬는다 ── */
   '/treatment/tmj/bruxism': {
-    lines: ['자는 동안 가는 이, 낮에 무는 이', '{이갈이 · 이악물기}'],
-    lead: '수면 이갈이와 주간 이악물기는 치아 마모와 파절, 저작근 통증, 턱관절 증상으로 이어질 수 있습니다. 치아 마모 양상과 저작근 상태를 확인한 뒤 교합안정장치와 근육 치료를 계획합니다.',
+    lines: ['수면 이갈이와 주간 이악물기,', '치아와 {턱관절}을 함께 살핍니다'],
+    lead: '이갈이와 이악물기는 교합면 마모와 치아 균열, 저작근 통증과 턱관절 증상으로 이어질 수 있습니다. 대표원장이 마모 양상과 저작근·턱관절 상태를 확인한 뒤, 맞춤 교합안정장치와 근육 치료를 계획합니다.',
     cardsLead: '이갈이·이악물기는 이런 흔적을 남깁니다.',
     cards: [
       { fig: { key: 'illust/bruxism-wear', alt: '이갈이로 교합면이 닳고 금이 간 어금니 도해' }, shape: 'portrait' },
@@ -113,9 +113,9 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     ],
   },
   '/treatment/re-root-canal': {
-    lines: ['신경치료한 치아가 다시 아프다면', '{재근관치료}'],
-    lead: '근관치료 후 치근단 병소가 다시 생기거나 놓친 근관이 있으면, 기존 충전재를 제거하고 근관을 다시 소독·충전합니다. 발치를 결정하기 전에 재치료로 보존할 수 있는지 먼저 확인합니다.',
-    cardsLead: '재근관치료는 이런 경우에 검토합니다.',
+    lines: ['신경치료한 치아가 다시 아플 때', '{재근관치료}'],
+    lead: '근관치료 후 치근단 병소가 재발했다고 해서 바로 발치해야 하는 것은 아닙니다. 3D CT 로 놓친 근관과 병소의 범위를 확인하고, 다시 치료해 보존할 수 있는지부터 판단합니다.',
+    cardsLead: '이런 증상이라면 재근관치료를 검토합니다.',
     cards: [
       { fig: { key: 'illust/reendo-causes', alt: '재근관치료가 필요한 원인 — 놓친 근관과 치근단 병소 도해' }, shape: 'portrait' },
       { fig: { key: 'illust/reendo-steps', alt: '재근관치료 과정 도해' }, shape: 'wide' },
@@ -123,9 +123,9 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     ],
   },
   '/treatment/periodontal': {
-    lines: ['잇몸이 붓고 피가 난다면', '{치주치료}'],
-    lead: '치주질환은 치은염에서 치주염으로 진행하면서 치조골이 흡수됩니다. 치주낭 깊이와 방사선 사진으로 진행 단계를 확인하고, 치석제거와 치근활택술로 염증의 원인을 제거합니다.',
-    cardsLead: '치주질환은 이렇게 진행됩니다.',
+    lines: ['치주낭 깊이부터 재고 시작하는', '{치주치료}'],
+    lead: '잇몸 출혈과 부기는 치은염의 신호이고, 치아가 흔들린다면 치조골 흡수까지 진행했을 수 있습니다. 치주낭 측정과 방사선 사진으로 단계를 확인한 뒤, 스케일링과 치근활택술로 치료합니다.',
+    cardsLead: '이런 증상이라면 잇몸 상태를 확인합니다.',
     cards: [
       { fig: { key: 'illust/perio-stages', alt: '건강한 잇몸에서 치주염까지 진행 단계 도해' }, shape: 'wide' },
       { fig: { key: 'illust/perio-pocket', alt: '치주낭 깊이를 재는 탐침 도해' }, shape: 'portrait' },
@@ -133,9 +133,9 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     ],
   },
   '/treatment/tmj/symptoms': {
-    lines: ['소리·통증부터 거울 앞 자가진단까지', '{턱관절 장애} 증상과 자가진단'],
-    lead: '딱딱 소리, 씹을 때 통증, 두통과 목 결림까지 턱관절에서 시작되기도 합니다. 관절·근육·디스크 중 어디가 문제인지 확인하면 치료 방향이 정해집니다.',
-    cardsLead: '이런 증상이 턱관절에서 옵니다.',
+    lines: ['관절잡음과 통증, 개구장애까지', '{턱관절 장애}의 증상과 자가진단'],
+    lead: '딸깍하는 관절잡음과 씹을 때의 통증, 입이 충분히 벌어지지 않는 개구장애는 턱관절 장애의 대표 증상입니다. 근육과 관절원판, 관절 뼈 가운데 어디에 문제가 있는지 확인하면 치료 방향이 정해집니다.',
+    cardsLead: '턱관절 장애는 이런 증상으로 나타납니다.',
     cards: [
       { fig: { key: 'scene/tmj-sym-1', alt: '턱관절에서 소리가 나는 증상' }, shape: 'portrait' },
       { fig: { key: 'scene/tmj-1', alt: '턱관절 통증을 호소하는 모습' }, shape: 'wide' },
@@ -183,9 +183,9 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     ],
   },
   '/treatment/tmj/treatment': {
-    lines: ['원인에 맞춰 단계적으로', '{턱관절} 치료 방법'],
-    lead: '약물·물리치료부터 스플린트, 보톡스, 관절강 세척술까지 한곳에서 이어서 진행합니다. 부담이 적은 치료부터 시작해, 반응을 보며 필요한 만큼만 단계를 올립니다.',
-    cardsLead: '턱관절은 이런 순서로 치료합니다.',
+    lines: ['가역적인 치료부터 단계적으로', '{턱관절 장애}의 치료'],
+    lead: '약물·물리치료부터 교합안정장치, 보툴리눔 톡신 주사, 관절강 세척술까지 원내에서 이어서 진행합니다. 부담이 적은 치료부터 시작해, 반응을 확인하며 필요한 단계만 진행합니다.',
+    cardsLead: '턱관절 장애는 이런 순서로 치료합니다.',
     cards: [
       { fig: { key: 'orig/tmj-tx-botox', alt: '보톡스 치료 — 바이알에서 주사기로 약을 뽑는 장갑 낀 손' }, shape: 'portrait' },
       { fig: { key: 'orig/tmj-tx-laser', alt: '물리치료 — 관절 팔이 달린 레이저 장비' }, shape: 'wide' },
@@ -193,9 +193,9 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     ],
   },
   '/treatment/aesthetic': {
-    lines: ['치아 모양 · 색 · 배열을 함께 보는', '{심미치료}'],
-    lead: '앞니 모양과 색, 잇몸선과 배열까지 함께 보고 나에게 어울리는 방법을 찾습니다. 라미네이트·올세라믹·지르코니아·전문가 미백 가운데 꼭 필요한 만큼만 권해 드립니다.',
-    cardsLead: '이런 고민이라면 심미치료를 고려합니다.',
+    lines: ['치아의 모양·색과 교합을 함께 보는', '{심미치료}'],
+    lead: '앞니의 모양과 색은 물론, 잇몸선과 위아래 치아의 교합까지 확인한 뒤 계획합니다. 치아를 적게 깎는 방법부터 검토해, 라미네이트·올세라믹·지르코니아·미백 가운데 필요한 방법을 권합니다.',
+    cardsLead: '치아 상태에 따라 방법을 고릅니다.',
     cards: [
       { fig: { key: 'orig/misc-whitening-model', alt: '하얀 치아를 드러내며 웃는 여성 모델' }, shape: 'portrait' },
       { fig: { key: 'orig/misc-veneer-teeth', alt: '라미네이트를 붙이는 앞니 일러스트' }, shape: 'wide' },
@@ -203,9 +203,9 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     ],
   },
   '/treatment/aesthetic/prosthetics': {
-    lines: ['내 치아 상태에 따른 다양한', '{심미보철} 치료'],
-    lead: '손톱처럼 얇은 라미네이트부터 치아 전체를 덮는 올세라믹·지르코니아까지 있습니다. 내 치아를 얼마나 남길 수 있는지 먼저 보고, 가장 적게 깎는 방법부터 고릅니다.',
-    cardsLead: '이런 경우, 심미보철이 필요합니다.',
+    lines: ['남은 치아 구조부터 확인하는', '{심미보철}'],
+    lead: '보철의 수명은 경계가 얼마나 잘 맞는지, 그 아래 치아 구조가 얼마나 남았는지에 달려 있습니다. 충치와 균열, 교합을 먼저 확인하고 라미네이트·올세라믹·지르코니아 가운데 재료를 정합니다.',
+    cardsLead: '이런 경우, 심미보철을 고려합니다.',
     cards: [
       { fig: { key: 'aesthetic/zirconia', alt: '지르코니아 크라운' }, shape: 'portrait' },
       { fig: { key: 'aesthetic/laminate', alt: '라미네이트' }, shape: 'wide' },
@@ -213,8 +213,8 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     ],
   },
   '/treatment/aesthetic/whitening': {
-    lines: ['전문가가 직접 진행하는', '{치아미백}'],
-    lead: '커피와 차로 누레진 치아, 셀프 미백으로 아쉬웠다면 치과 미백을 고려해 보세요. 전문가용 미백제를 바르고 광선으로 활성화해, 변색된 색을 자연스럽게 밝힙니다.',
+    lines: ['치아를 깎지 않고 색만 밝히는', '{전문가 치아미백}'],
+    lead: '전문가용 미백제를 바르고 광선으로 활성화해, 변색된 치아 색을 밝힙니다. 보철물과 레진은 색이 변하지 않아 미백 전에 앞니 상태를 먼저 확인합니다.',
     cardsLead: '이런 경우, 치아미백을 고려합니다.',
     cards: [
       { fig: { key: 'orig/misc-whitening-model', alt: '하얀 치아를 드러내며 웃는 여성 모델' }, shape: 'portrait' },
@@ -253,9 +253,9 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     ],
   },
   '/treatment/wisdom-tooth': {
-    lines: ['3D CT 로 보고 빼는', '{매복사랑니} 발치'],
-    lead: '누워서 난 사랑니, 신경 가까이 있는 사랑니도 3D CT 로 위치를 보고 계획을 세웁니다. 신경과 옆 치아를 피하는 순서로 빼내고, 빼기 전에 사진을 보며 설명해 드립니다.',
-    cardsLead: '이런 경우, 사랑니를 빼는 것이 좋습니다.',
+    lines: ['하치조신경관과의 거리를 확인하고 빼는', '{매복사랑니} 발치'],
+    lead: '누운 사랑니, 뿌리가 신경관에 가까운 사랑니도 3D CT 로 방향과 깊이, 신경관까지의 거리를 먼저 확인합니다. 대표원장이 영상을 직접 판독하고 절개부터 봉합까지 진행합니다.',
+    cardsLead: '이런 문제가 있다면 발치를 검토합니다.',
     cards: [
       { fig: { key: 'orig/wisdom-doctor', alt: '확대경을 쓰고 사랑니를 발치하는 원장' }, shape: 'portrait' },
       { fig: { key: 'orig/wisdom-ct-screen', alt: '3D CT 판독 화면 — 사랑니와 하치조신경 위치 확인' }, shape: 'wide' },
@@ -263,29 +263,29 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     ],
   },
   '/treatment/natural-tooth': {
-    lines: ['뽑기 전에 남길 수 있는지 먼저 보는', '{자연치아 살리기}'],
-    lead: '뽑는 게 답이라고 생각했던 치아도, 남길 수 있는지 한 번 더 살펴봅니다. 확대경 아래 MTA 신경치료와 초음파 세척으로, 내 치아를 지키는 길을 먼저 찾습니다.',
-    cardsLead: '이런 경우, 자연치아를 살릴 수 있습니다.',
+    lines: ['발치 전에 보존 가능성을 먼저 확인하는', '{자연치아 살리기}'],
+    lead: '치수까지 번진 충치도 뿌리와 치조골이 건강하면 근관치료로 치아를 남길 수 있습니다. 3D CT 로 근관과 치근단 병소를 확인하고, 엔도소닉 세척과 MTA 밀폐로 치료합니다.',
+    cardsLead: '이런 증상이 있다면 치수 상태를 확인합니다.',
     cards: [
       { fig: { key: 'orig/mta-hero', alt: '확대경을 쓰고 MTA 신경치료를 하는 원장' }, shape: 'portrait' },
       { fig: { key: 'orig/endo-hero', alt: '엔도소닉 초음파 세척기로 근관을 세척하는 진료 장면' }, shape: 'wide' },
-      { fig: { key: 'orig/misc-mta-tooth', alt: '치수(신경)가 비치는 투명 치아 일러스트' }, shape: 'std' },
+      { fig: { key: 'orig/misc-mta-tooth', alt: '치아 속 치수가 비치는 투명 치아 일러스트' }, shape: 'std' },
     ],
   },
   '/treatment/natural-tooth/mta': {
-    lines: ['재신경치료까지 보는', '{MTA} 신경치료'],
-    lead: '신경치료를 했는데 다시 아프거나, 뿌리 끝에 염증이 남았을 때 쓰는 방법입니다. 생체친화 재료 MTA 로 신경관을 꼼꼼히 밀봉해, 치아를 뽑지 않고 지키는 것이 목표입니다.',
-    cardsLead: '이런 경우, MTA 를 씁니다.',
+    lines: ['바이오 세라믹으로 근관을 밀폐하는', '{MTA} 근관치료'],
+    lead: '근관치료의 결과는 근관을 얼마나 깨끗이 비우고, 얼마나 빈틈없이 막느냐에 달려 있습니다. 수분 속에서도 굳는 MTA 로 근관을 밀폐해 재감염의 여지를 줄입니다.',
+    cardsLead: 'MTA 는 이런 성질을 가진 재료입니다.',
     cards: [
       { fig: { key: 'orig/mta-hero', alt: '확대경을 쓰고 MTA 신경치료를 하는 원장' }, shape: 'portrait' },
       { fig: { key: 'orig/case-mta1-after', alt: 'MTA 로 신경을 덮고 보철로 마무리한 어금니 — 치료 후' }, shape: 'wide' },
-      { fig: { key: 'orig/misc-mta-tooth', alt: '치수(신경)가 비치는 투명 치아 일러스트' }, shape: 'std' },
+      { fig: { key: 'orig/misc-mta-tooth', alt: '치아 속 치수가 비치는 투명 치아 일러스트' }, shape: 'std' },
     ],
   },
   '/treatment/natural-tooth/endosonic': {
-    lines: ['초음파로 신경관을 씻어 내는', '{엔도소닉}'],
-    lead: '신경관은 가늘고 굽어 있어 기구만으로는 닿지 않는 구석이 남습니다. 초음파로 세척액을 흔들어 그 구석까지 씻어 내는 것이 엔도소닉입니다.',
-    cardsLead: '엔도소닉은 이런 점이 다릅니다.',
+    lines: ['기구가 닿지 않는 근관까지 씻어 내는', '{엔도소닉} 초음파 세척'],
+    lead: '근관은 가늘고 휘어 있어 파일만으로는 닿지 않는 벽이 남습니다. 초음파로 세척액을 진동시켜 곁가지와 좁은 통로까지 세척합니다.',
+    cardsLead: '엔도소닉 세척은 이런 점이 다릅니다.',
     cards: [
       { fig: { key: 'scene/endosonic', alt: '엔도소닉 초음파 세척기로 근관을 세척하는 장면' }, shape: 'portrait' },
       { fig: { key: 'orig/endo-hero', alt: '엔도소닉 초음파 세척기로 근관을 세척하는 진료 장면' }, shape: 'wide' },
@@ -293,9 +293,9 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     ],
   },
   '/treatment/painless': {
-    lines: ['통증을 줄이는', '{무통 & 저자극} 시스템'],
-    lead: '치과가 무서워 미루고 계셨나요? 마취 순간의 통증, 스케일링의 긁는 느낌, 진료 중의 긴장을 하나씩 줄여 두었습니다.',
-    cardsLead: '이런 방법으로 줄입니다.',
+    lines: ['통증의 원인마다 방법을 달리하는', '{무통 & 저자극} 시스템'],
+    lead: '바늘이 들어갈 때의 통증, 마취액이 퍼질 때의 압박, 스케일링의 시림은 원인이 서로 다릅니다. 무통마취기 NO-PAIN III, 도포·가글마취, 에어플로우로 각각 줄입니다.',
+    cardsLead: '통증의 원인에 따라 방법을 나눕니다.',
     cards: [
       { fig: { key: 'fit/pain-hero', alt: '파노라마 모니터 앞에서 무통마취기(NO PAIN III)로 마취하는 원장' }, shape: 'portrait' },
       { fig: { key: 'equip/painless-set', alt: '무통 & 저자극 시스템 장비' }, shape: 'wide' },
@@ -303,8 +303,8 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     ],
   },
   '/treatment/painless/anesthesia': {
-    lines: ['컴퓨터가 속도를 맞추는', '{무통마취} NO-PAIN III'],
-    lead: '치과에서 제일 아픈 순간이 마취 주사라는 분이 많습니다. 컴퓨터가 일정한 속도로 천천히 넣고 극세사 바늘을 써서, 그 순간의 통증을 줄입니다.',
+    lines: ['주입 속도와 압력을 컴퓨터가 조절하는', '{무통마취} NO-PAIN III'],
+    lead: '마취 주사의 통증은 바늘이 들어갈 때와 마취액이 퍼질 때 생깁니다. 리도카겔 도포마취와 무통마취기의 일정한 자동 주입으로 두 순간의 통증을 줄입니다.',
     cardsLead: '마취가 아픈 두 순간을 이렇게 줄입니다.',
     cards: [
       { fig: { key: 'fit/pain-hero', alt: '파노라마 모니터 앞에서 무통마취기(NO PAIN III)로 마취하는 원장' }, shape: 'portrait' },
@@ -312,20 +312,10 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
       { fig: { key: 'orig/add-lidoca-gargle', alt: '가글마취제 리도카글액 2% 병(파란 치아 아이콘 포함)' }, shape: 'std' },
     ],
   },
-  '/treatment/painless/sedation': {
-    lines: ['긴장을 낮춘 상태로 받는', '{수면치료} 의식하 진정요법'],
-    lead: '기계 소리만 들어도 몸이 굳는다면, 긴장을 낮춘 상태로 진료받을 수 있습니다. 잠든 듯 편안하지만 의료진의 말에는 반응하는 상태에서, 필요한 만큼만 진행합니다.',
-    cardsLead: '이런 분들이 수면치료를 고려합니다.',
-    cards: [
-      { fig: { key: 'fit/sleep-hero', alt: '눈을 감고 편안하게 진료받는 여성 환자' }, shape: 'portrait' },
-      { fig: { key: 'sun/consult-monitor', alt: '모니터로 촬영 사진을 보며 환자에게 설명하는 원장' }, shape: 'wide' },
-      { fig: { key: 'orig/add-korea-map', alt: '지역별 핀이 꽂힌 한국 지도 일러스트' }, shape: 'std' },
-    ],
-  },
   '/treatment/painless/airflow': {
-    lines: ['긁지 않고 씻어 내는', '{에어플로우} · GBT'],
-    lead: '스케일링의 긁는 소리와 시린 느낌 때문에 미루고 계셨나요? 고운 파우더와 물로 치석과 세균막을 씻어 내니, 치아와 잇몸에 자극이 적습니다.',
-    cardsLead: '에어플로우 스케일링은 이런 점이 다릅니다.',
+    lines: ['세균막을 먼저 씻어 내는', '{에어플로우} · GBT'],
+    lead: '공기와 물, 미세 파우더로 치아와 잇몸 경계의 세균막을 씻어 내고, 남은 치석만 초음파로 제거합니다. 10단계 강도와 물 온도를 조절해 시림과 자극을 줄입니다.',
+    cardsLead: '에어플로우는 이런 기능으로 자극을 줄입니다.',
     cards: [
       { fig: { key: 'fit/airflow-device', alt: 'EMS 에어플로우 프로필락시스 마스터 장비' }, shape: 'portrait' },
       { fig: { key: 'equip/airflow', alt: 'EMS 에어플로우 장비' }, shape: 'wide' },
@@ -451,7 +441,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     cards: [
       { fig: { key: 'scene/endo', alt: '신경치료 중인 진료 장면' }, shape: 'portrait' },
       { fig: { key: 'ai/natural-hub', alt: '자연치아 모형을 살펴보는 장갑 낀 손' }, shape: 'wide' },
-      { fig: { key: 'orig/misc-mta-tooth', alt: '치수(신경)가 비치는 투명 치아 일러스트' }, shape: 'std' },
+      { fig: { key: 'orig/misc-mta-tooth', alt: '치아 속 치수가 비치는 투명 치아 일러스트' }, shape: 'std' },
     ],
   },
   '/insight/symptom/wisdom-tooth-pain': {

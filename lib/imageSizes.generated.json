@@ -1018,5 +1018,97 @@
  "place2/surgery-color": {
   "w": 966,
   "h": 649
+ },
+ "illust/custom-abutment-overview": {
+  "w": 1200,
+  "h": 800
+ },
+ "illust/custom-abutment-compare": {
+  "w": 1200,
+  "h": 800
+ },
+ "illust/custom-abutment-half": {
+  "w": 1200,
+  "h": 800
+ },
+ "illust/custom-abutment-seal": {
+  "w": 1200,
+  "h": 800
+ },
+ "illust/implant-structure": {
+  "w": 1200,
+  "h": 800
+ },
+ "illust/navigation-guide": {
+  "w": 1200,
+  "h": 800
+ },
+ "illust/sinus-lift": {
+  "w": 1200,
+  "h": 800
+ },
+ "illust/bone-graft": {
+  "w": 1200,
+  "h": 800
+ },
+ "illust/fullarch-concept": {
+  "w": 1200,
+  "h": 800
+ },
+ "illust/fullarch-options": {
+  "w": 1200,
+  "h": 800
+ },
+ "illust/endo-steps": {
+  "w": 1200,
+  "h": 800
+ },
+ "illust/reendo-causes": {
+  "w": 1200,
+  "h": 800
+ },
+ "illust/reendo-steps": {
+  "w": 1200,
+  "h": 800
+ },
+ "illust/perio-stages": {
+  "w": 1200,
+  "h": 800
+ },
+ "illust/perio-srp": {
+  "w": 1200,
+  "h": 800
+ },
+ "illust/perio-pocket": {
+  "w": 1200,
+  "h": 800
+ },
+ "illust/wisdom-impacted": {
+  "w": 1200,
+  "h": 800
+ },
+ "illust/tmj-anatomy": {
+  "w": 1200,
+  "h": 800
+ },
+ "illust/tmj-disc": {
+  "w": 1200,
+  "h": 800
+ },
+ "illust/bruxism-wear": {
+  "w": 1200,
+  "h": 800
+ },
+ "illust/bruxism-muscle": {
+  "w": 1200,
+  "h": 800
+ },
+ "illust/bruxism-splint": {
+  "w": 1200,
+  "h": 800
+ },
+ "illust/fullarch-hero": {
+  "w": 1536,
+  "h": 1024
  }
 }
