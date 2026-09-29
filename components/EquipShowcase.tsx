@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FlipCard } from '@/components/FlipCard';
 import { figSrc, type Fig } from '@/lib/docs';
+import { Sentences } from '@/components/ui';
 
 /**
  * 장비 진열 — 두 가지 모양을 한 부품에서 고른다(오너 2026-09-10: "둘 다 아코디언일 필요는 없다").
@@ -71,7 +72,7 @@ export function EquipShowcase({ items, variant = 'accordion' }: { items: EquipIt
               <div className="acc-open absolute inset-x-0 bottom-0 p-7 lg:p-8">
                 <span className="inline-flex rounded-full bg-sun-500/90 px-3 py-1 text-[11.5px] font-extrabold tracking-[0.12em] text-white">{it.n}</span>
                 <p className="mt-3 text-[1.45rem] font-extrabold leading-tight tracking-[-0.02em] on-photo xl:text-[1.7rem]">{it.title}</p>
-                <p className="mt-3 max-w-[520px] text-[15px] leading-[1.75] text-white/85">{it.desc}</p>
+                <p className="mt-3 max-w-[520px] text-[15px] leading-[1.75] text-white/85"><Sentences text={it.desc} /></p>
                 {it.more && it.more.length > 0 && (
                   <ul className="mt-4 flex flex-wrap gap-2">
                     {it.more.map((m) => (
@@ -113,7 +114,7 @@ export function EquipShowcase({ items, variant = 'accordion' }: { items: EquipIt
                 <span className="flex flex-1 flex-col p-5">
                   <span className="pill-sun w-fit !py-0.5 !text-[11px]">{it.n}</span>
                   <span className="mt-2.5 block text-[1.05rem] font-bold leading-snug text-ink">{it.title}</span>
-                  <span className="mt-2 block text-[14.5px] leading-[1.7] text-ink-soft">{it.desc}</span>
+                  <span className="mt-2 block text-[14.5px] leading-[1.7] text-ink-soft"><Sentences text={it.desc} /></span>
                   {it.more && it.more.length > 0 && (
                     <span className="mt-3 block space-y-1.5">
                       {it.more.map((m) => (

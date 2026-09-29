@@ -2,34 +2,62 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react';
 import { figSrc } from '@/lib/docs';
+import { Sentences } from '@/components/ui';
 import type { CaseGroup } from '@/lib/cases';
 
 /**
- * 치료 전후 비교 — 우리 방식(오너: 레퍼런스와 다르게, 가운데에 크게).
- *  · 무대를 가운데에 넓게(최대 1000px), 그 아래 사례 선택 줄, 위에는 진료 갈래 탭을 가운데 정렬.
- *  · 손잡이는 주황 알약(세로로 긴 막대 + 양쪽 화살표), BEFORE/AFTER 는 아래 모서리의 큰 낱말.
- *  · 마우스·터치로 끌고, 키보드 ←→ 로도 움직인다. 사진은 옛 홈페이지의 실제 환자 사진만 쓴다.
- * ★ 원본이 폭 590~820px 이라 1000px 까지 키우면 살짝 부드러워진다 — 오너가 크기를 우선했다. 원본 파일을 받으면 그대로 또렷해진다.
+ * 전후 비교 무대 — 사진 두 장을 겹쳐 두고 갈림선(주황 알약 손잡이)을 마우스·손가락으로 좌우로 끈다.
+ *  · 처음 화면에 들어오면 갈림선이 한 번 좌우로 지나간다('끌 수 있다' 안내, 오너).
+ *  · 키보드 ←→ 로도 움직인다. 손가락으로 끌 때 화면이 따라 스크롤되지 않게 붙잡는다(오너).
+ *  · resetKey 가 바뀌면(다른 사례를 고르면) 갈림선을 가운데로 되돌린다.
+ * 홈 옛 전후 비교(BeforeAfter)와 2026-09-29 전후 사례 모음(CaseGallery)이 같이 쓴다 — 오너: "이전처럼 마우스로 끄는 모션".
  */
-export function BeforeAfter({ groups, note, showTabs = true }: { groups: CaseGroup[]; note: string; showTabs?: boolean }) {
-  const [gi, setGi] = useState(0);
-  const [ci, setCi] = useState(0);
+export function CompareStage({
+  before,
+  after,
+  badge,
+  resetKey,
+  className = 'aspect-[12/5]',
+  style,
+  fit = 'cover',
+  backdrop = false,
+  bg = 'bg-night',
+  sizes = '(max-width: 1024px) 100vw, 800px',
+}: {
+  before: { src: string; alt: string };
+  after: { src: string; alt: string };
+  /** 위 왼쪽 표시(예: "임플란트 · CASE 01 / 07") */
+  badge?: string;
+  resetKey?: string;
+  /** 무대 상자 비율 등 */
+  className?: string;
+  style?: CSSProperties;
+  /** contain = 사진을 자르지 않고 통째로(임상 사진은 치료 부위가 잘리면 안 된다) */
+  fit?: 'cover' | 'contain';
+  /** contain 일 때 남는 자리를 같은 사진을 흐리게 깔아 메운다(구내 사진) */
+  backdrop?: boolean;
+  /** 무대 바탕색 — 방사선 사진은 검정(사진 바탕과 같게) */
+  bg?: string;
+  sizes?: string;
+}) {
   const [pos, setPos] = useState(50);
   const [dragging, setDragging] = useState(false);
   /** 처음 이 구역에 닿았을 때 한 번만 좌우로 흔들어 '끌 수 있다'를 알린다(오너) */
   const [hintDone, setHintDone] = useState(false);
   const stage = useRef<HTMLDivElement>(null);
   const touched = useRef(false);
-  const group = groups[Math.min(gi, groups.length - 1)];
-  const pair = group.pairs[Math.min(ci, group.pairs.length - 1)];
 
   const moveTo = useCallback((clientX: number) => {
     const r = stage.current?.getBoundingClientRect();
     if (!r) return;
     setPos(Math.min(97, Math.max(3, ((clientX - r.left) / r.width) * 100)));
   }, []);
+
+  useEffect(() => {
+    setPos(50);
+  }, [resetKey]);
 
   useEffect(() => {
     if (!dragging) return;
@@ -84,10 +112,96 @@ export function BeforeAfter({ groups, note, showTabs = true }: { groups: CaseGro
     };
   }, [hintDone]);
 
+  const imgCls = fit === 'contain' ? 'object-contain' : 'object-cover';
+
+  return (
+    <div
+      ref={stage}
+      className={`relative cursor-ew-resize touch-none select-none overflow-hidden rounded-[28px] ${bg} shadow-[var(--shadow-lift)] ${className}`}
+      style={style}
+      onPointerDown={(e) => {
+        /* 손가락으로 사진을 끌 때는 화면이 따라 스크롤되지 않게 붙잡는다(오너) */
+        e.currentTarget.setPointerCapture?.(e.pointerId);
+        touched.current = true;
+        setHintDone(true);
+        setDragging(true);
+        moveTo(e.clientX);
+      }}
+    >
+      {backdrop && (
+        <Image key={`bd-${after.src}`} src={after.src} alt="" aria-hidden fill sizes="200px" className="scale-110 object-cover opacity-45 blur-2xl" />
+      )}
+      <Image key={after.src} src={after.src} alt={after.alt} fill sizes={sizes} className={imgCls} />
+      <div className="absolute inset-0" style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}>
+        {backdrop && <Image key={`bd-${before.src}`} src={before.src} alt="" aria-hidden fill sizes="200px" className="scale-110 object-cover opacity-45 blur-2xl" />}
+        {/* 겹친 두 장의 바탕이 같아야 갈림선 양쪽 여백 색이 맞는다 */}
+        {!backdrop && fit === 'contain' && <div className={`absolute inset-0 ${bg}`} />}
+        <Image key={before.src} src={before.src} alt={before.alt} fill sizes={sizes} className={imgCls} />
+      </div>
+
+      {/* 갈림선 + 주황 알약 손잡이 */}
+      <div className="pointer-events-none absolute inset-y-0 w-[3px] bg-sun-500 shadow-[0_0_0_1px_rgba(0,0,0,0.25)]" style={{ left: `calc(${pos}% - 1.5px)` }} />
+      {/* 손잡이 — 손가락으로 잡기 쉽게 크게(48×80), 둘레에 보이지 않는 여유 칸까지.
+          touch-action:none 이라 손잡이를 끌면 화면이 스크롤되지 않는다 */}
+      <button
+        type="button"
+        role="slider"
+        aria-label="전후 비교 손잡이 — 좌우로 끌어 보세요"
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={Math.round(pos)}
+        onPointerDown={(e) => {
+          e.stopPropagation();
+          e.currentTarget.setPointerCapture?.(e.pointerId);
+          touched.current = true;
+          setHintDone(true);
+          setDragging(true);
+        }}
+        onKeyDown={(e) => {
+          touched.current = true;
+          if (e.key === 'ArrowLeft') setPos((p) => Math.max(3, p - 3));
+          if (e.key === 'ArrowRight') setPos((p) => Math.min(97, p + 3));
+        }}
+        className="absolute top-1/2 flex h-20 w-12 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize touch-none items-center justify-center rounded-full bg-sun-500 text-white shadow-[0_8px_24px_rgba(0,0,0,0.35)] ring-2 ring-white/70 before:absolute before:-inset-4 before:content-[''] focus-visible:outline-2 focus-visible:outline-white"
+        style={{ left: `${pos}%` }}
+      >
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+          <path d="M10 6l-6 6 6 6M14 6l6 6-6 6" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
+
+      {/* 처음 한 번만 보이는 안내 — 손을 대면 사라진다 */}
+      {!hintDone && (
+        <span className="pointer-events-none absolute left-1/2 top-[calc(50%+62px)] -translate-x-1/2 rounded-full bg-night/70 px-3.5 py-1.5 text-[12.5px] font-bold text-white backdrop-blur">
+          좌우로 끌어 보세요
+        </span>
+      )}
+
+      {/* 아래 모서리의 큰 낱말 + 위 왼쪽의 사례 표시 */}
+      <span className="pointer-events-none absolute bottom-4 left-5 text-[15px] font-extrabold tracking-[0.22em] text-white drop-shadow md:text-[18px]">BEFORE</span>
+      <span className="pointer-events-none absolute bottom-4 right-5 text-[15px] font-extrabold tracking-[0.22em] text-sun-300 drop-shadow md:text-[18px]">AFTER</span>
+      {badge && (
+        <span className="pointer-events-none absolute left-5 top-4 rounded-full bg-white/92 px-3.5 py-1.5 text-[12.5px] font-bold text-ink">{badge}</span>
+      )}
+    </div>
+  );
+}
+
+/**
+ * 치료 전후 비교 — 우리 방식(오너: 레퍼런스와 다르게, 가운데에 크게).
+ *  · 무대를 가운데에 넓게(최대 800px), 그 아래 사례 선택 줄, 위에는 진료 갈래 탭을 가운데 정렬.
+ *  · 손잡이는 주황 알약(세로로 긴 막대 + 양쪽 화살표), BEFORE/AFTER 는 아래 모서리의 큰 낱말.
+ * ★ 원본이 폭 590~820px 이라 크게 키우면 살짝 부드러워진다 — 오너가 크기를 우선했다. 원본 파일을 받으면 그대로 또렷해진다.
+ */
+export function BeforeAfter({ groups, note, showTabs = true }: { groups: CaseGroup[]; note: string; showTabs?: boolean }) {
+  const [gi, setGi] = useState(0);
+  const [ci, setCi] = useState(0);
+  const group = groups[Math.min(gi, groups.length - 1)];
+  const pair = group.pairs[Math.min(ci, group.pairs.length - 1)];
+
   const pick = (g: number, c: number) => {
     setGi(g);
     setCi(c);
-    setPos(50);
   };
 
   return (
@@ -113,69 +227,12 @@ export function BeforeAfter({ groups, note, showTabs = true }: { groups: CaseGro
         </div>
       )}
 
-      {/* 무대 */}
-      <div
-        ref={stage}
-        className="relative aspect-[12/5] cursor-ew-resize touch-none select-none overflow-hidden rounded-[28px] bg-night shadow-[var(--shadow-lift)]"
-        onPointerDown={(e) => {
-          /* 손가락으로 사진을 끌 때는 화면이 따라 스크롤되지 않게 붙잡는다(오너) */
-          e.currentTarget.setPointerCapture?.(e.pointerId);
-          touched.current = true;
-          setHintDone(true);
-          setDragging(true);
-          moveTo(e.clientX);
-        }}
-      >
-        <Image key={pair.after.key} src={figSrc(pair.after.key)} alt={pair.after.alt} fill sizes="(max-width: 1024px) 100vw, 1000px" className="object-cover" />
-        <div className="absolute inset-0" style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}>
-          <Image key={pair.before.key} src={figSrc(pair.before.key)} alt={pair.before.alt} fill sizes="(max-width: 1024px) 100vw, 1000px" className="object-cover" />
-        </div>
-
-        {/* 갈림선 + 주황 알약 손잡이 */}
-        <div className="pointer-events-none absolute inset-y-0 w-[3px] bg-sun-500 shadow-[0_0_0_1px_rgba(0,0,0,0.25)]" style={{ left: `calc(${pos}% - 1.5px)` }} />
-        {/* 손잡이 — 손가락으로 잡기 쉽게 크게(48×80), 둘레에 보이지 않는 여유 칸까지.
-            touch-action:none 이라 손잡이를 끌면 화면이 스크롤되지 않는다 */}
-        <button
-          type="button"
-          role="slider"
-          aria-label="전후 비교 손잡이 — 좌우로 끌어 보세요"
-          aria-valuemin={0}
-          aria-valuemax={100}
-          aria-valuenow={Math.round(pos)}
-          onPointerDown={(e) => {
-            e.stopPropagation();
-            e.currentTarget.setPointerCapture?.(e.pointerId);
-            touched.current = true;
-            setHintDone(true);
-            setDragging(true);
-          }}
-          onKeyDown={(e) => {
-            touched.current = true;
-            if (e.key === 'ArrowLeft') setPos((p) => Math.max(3, p - 3));
-            if (e.key === 'ArrowRight') setPos((p) => Math.min(97, p + 3));
-          }}
-          className="absolute top-1/2 flex h-20 w-12 -translate-x-1/2 -translate-y-1/2 cursor-ew-resize touch-none items-center justify-center rounded-full bg-sun-500 text-white shadow-[0_8px_24px_rgba(0,0,0,0.35)] ring-2 ring-white/70 before:absolute before:-inset-4 before:content-[''] focus-visible:outline-2 focus-visible:outline-white"
-          style={{ left: `${pos}%` }}
-        >
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
-            <path d="M10 6l-6 6 6 6M14 6l6 6-6 6" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </button>
-
-        {/* 처음 한 번만 보이는 안내 — 손을 대면 사라진다 */}
-        {!hintDone && (
-          <span className="pointer-events-none absolute left-1/2 top-[calc(50%+62px)] -translate-x-1/2 rounded-full bg-night/70 px-3.5 py-1.5 text-[12.5px] font-bold text-white backdrop-blur">
-            좌우로 끌어 보세요
-          </span>
-        )}
-
-        {/* 아래 모서리의 큰 낱말 + 위 왼쪽의 사례 표시 */}
-        <span className="pointer-events-none absolute bottom-4 left-5 text-[15px] font-extrabold tracking-[0.22em] text-white drop-shadow md:text-[18px]">BEFORE</span>
-        <span className="pointer-events-none absolute bottom-4 right-5 text-[15px] font-extrabold tracking-[0.22em] text-sun-300 drop-shadow md:text-[18px]">AFTER</span>
-        <span className="pointer-events-none absolute left-5 top-4 rounded-full bg-white/92 px-3.5 py-1.5 text-[12.5px] font-bold text-ink">
-          {group.label} · CASE {String(ci + 1).padStart(2, '0')} / {String(group.pairs.length).padStart(2, '0')}
-        </span>
-      </div>
+      <CompareStage
+        before={{ src: figSrc(pair.before.key), alt: pair.before.alt }}
+        after={{ src: figSrc(pair.after.key), alt: pair.after.alt }}
+        badge={`${group.label} · CASE ${String(ci + 1).padStart(2, '0')} / ${String(group.pairs.length).padStart(2, '0')}`}
+        resetKey={pair.after.key}
+      />
 
       {/* 사례 선택 — 무대 아래 한 줄, 가운데.
           w-max + mx-auto: 다 들어오면 가운데, 넘치면 왼쪽부터 밀어 본다(justify-center 로 넘치면 첫 장이 잘려 못 보던 사고) */}
@@ -199,7 +256,7 @@ export function BeforeAfter({ groups, note, showTabs = true }: { groups: CaseGro
         </ul>
       )}
 
-      <p className="mx-auto mt-6 max-w-[760px] text-center text-[13.5px] leading-relaxed text-ink-muted">※ {note}</p>
+      <p className="mx-auto mt-6 max-w-[760px] text-center text-[13.5px] leading-relaxed text-ink-muted"><Sentences text={`※ ${note}`} /></p>
       {showTabs && (
         <p className="mt-4 text-center">
           <Link href={group.href} className="btn-ghost">{group.label} 자세히 보기</Link>

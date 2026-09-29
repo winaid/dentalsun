@@ -118,7 +118,7 @@ export function HeroCollage({
               >
                 <span className="num-xl">{String(i + 1).padStart(2, '0')}</span>
                 <p className="mt-3 text-[16.5px] font-bold leading-snug text-white">{it.title}</p>
-                <p className="mt-2 text-[14px] leading-[1.7] text-white/70">{it.desc}</p>
+                <p className="mt-2 text-[14px] leading-[1.7] text-white/70"><Sentences text={it.desc} /></p>
               </li>
             ))}
           </ol>

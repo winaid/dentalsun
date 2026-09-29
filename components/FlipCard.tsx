@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { figSrc, type Fig } from '@/lib/docs';
+import { Sentences } from '@/components/ui';
 
 /**
  * 뒤집기 카드 — 앞면은 번호·제목·한 줄(사진 없음), 마우스를 올리면(키보드 초점·터치 누름 포함) 뒤집히며
@@ -31,7 +32,7 @@ export function FlipCard({ href, num, label, desc, back, fig }: { href: string; 
           <div className="relative flex h-full flex-col p-7 md:p-8">
             <span className="text-[12px] font-bold tracking-[0.2em] text-sun-300">{num}</span>
             <p className="mt-auto text-[1.15rem] font-bold leading-snug on-photo">{label}</p>
-            <p className="mt-2 text-[14.5px] leading-[1.7] text-white/85">{back}</p>
+            <p className="mt-2 text-[14.5px] leading-[1.7] text-white/85"><Sentences text={back} /></p>
             <span className="mt-4 inline-flex items-center gap-1.5 text-[14px] font-bold text-sun-300">
               자세히 보기
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>

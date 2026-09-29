@@ -23,11 +23,11 @@ const STRONG_PAUSE_END = /(고|며|면|서|라서|해서|하면|해도|지만|�
 /* '의'(소유격)는 뒷말과 한 덩어리라 쉼 자리에서 뺐다("끝의 | 둥근 부분" 방지) */
 const PAUSE_END = /(은|는|이|가|을|를|에|에서|으로|로|과|와|도|고|며|면|서|까지|부터|처럼|보다|에게|한테|마다|조차|이나|나|든|라서|해서|하면|해도|지만|는데|은데|더라도|으며|이며|하고|이고|라면|이라|다가|자마자|니까|므로)$/;
 /** 앞말과 한 덩어리로 읽히는 낱말 — 이 앞에서는 끊지 않는다("오차로 | 인해", "가지고 | 있고" 방지) */
-const NO_BREAK_BEFORE = /^(인해|인한|통해|통한|위해|위한|위해서|의해|의한|대해|대한|대해서|따라|따른|따라서|비해|비하면|걸쳐|관해|관한|더불어|이상|이하|이내|정도|만큼|때문|때문에|덕분|덕분에|이후|이전|동안|사이|뒤|후|전|중|안|밖|없이|없는|없어|없고|없다|없으며|없기|있는|있어|있을|있고|있다|있으며|있어서|있으면|있기|있습니다|없습니다|않고|않는|않은|않아|않으면|못한|못하는|것|수|줄|지|등|및|또는|혹은|그리고|그래서|하지만|다른|같은|위|아래|옆)$/;
+const NO_BREAK_BEFORE = /^(인해|인한|통해|통한|위해|위한|위해서|의해|의한|대해|대한|대해서|따라|따른|따라서|비해|비하면|걸쳐|관해|관한|더불어|이상|이하|이내|정도|만큼|때문|때문에|덕분|덕분에|이후|이전|동안|사이|뒤|후|전|중|안|밖|없이|없는|없어|없고|없다|없으며|없기|있는|있어|있을|있고|있다|있으며|있어서|있으면|있기|있습니다|없습니다|않고|않는|않은|않아|않으면|못한|못하는|것|수|줄|지|때|데|적|뿐|아니라|아니고|아닌|아닙니다|주는|주고|주며|주면|줍니다|주세요|주시면|주시기|드립니다|드리고|드리며|드려|드리는|드릴|봅니다|보세요|보시면|보시길|두고|둡니다|등|및|또는|혹은|그리고|그래서|하지만|다른|같은|위|아래|옆)$/;
 /** 뒷말을 꾸미는 낱말 — 이 뒤에서는 끊지 않는다("볼 베어링 같은 | 구조로" 방지). 관형사·관형형·부사 몇 개 */
 const NO_BREAK_AFTER = /^(같은|다른|이런|그런|저런|어떤|모든|여러|각|매|새|첫|두|세|네|한|그|이|저|및|또는|혹은|가장|더|덜|안|못|바로|아주|매우|너무|약|총|전|후|약간|다소|주로|대개|대부분|거의|보다|훨씬|꼭|늘|자주|다시|먼저|미리|함께)$/;
 /** 관형형 어미로 끝나는 낱말 — 뒤의 명사를 꾸미므로 뒤에서 끊지 않는다("돌아가는 | 운동", "많은 | 사람" 방지) */
-const NO_BREAK_AFTER_END = /(하는|되는|가는|오는|지는|나는|보는|주는|받는|이는|리는|르는|치는|우는|내는|키는|시는|하던|되던|작은|많은|적은|높은|낮은|좋은|나쁜|넓은|좁은|깊은|짧은|젊은|밝은|굵은|얇은|굳은|굽은|틀어진|벗어난|눌린|밀린|남은|둥근|[가-힣]된|[가-힣]한|적인|스러운|[가-힣]할|[가-힣]될|[가-힣]인)$/;
+const NO_BREAK_AFTER_END = /(하는|되는|가는|오는|지는|나는|보는|주는|받는|이는|리는|르는|치는|우는|내는|키는|시는|하던|되던|작은|많은|적은|높은|낮은|좋은|나쁜|넓은|좁은|깊은|짧은|젊은|밝은|굵은|얇은|굳은|굽은|틀어진|벗어난|눌린|밀린|남은|둥근|[가-힣]된|[가-힣]한|적인|스러운|[가-힣]할|[가-힣]될|[가-힣]인|있는|없는|않는|않은)$/;
 /** "사소하고 | 다양한 원인", "딱딱하고 | 질긴 음식" — '고' 로 이어진 꾸밈말 짝은 안 가른다 */
 const COORD_MODIFIER = /(한|된|스러운|적인|긴|운|는|은|진|린|든)$/;
 /** 앞말에 붙어 읽히는 뒷말 꼴 — "자기도 | 모르게", "…을 | 싣는" 방지 */
@@ -53,7 +53,7 @@ const PREDICATE_END = /(는|은|던|인|된|진|온|린|난|적인|하고|하며
  *   예전엔 '쉼표 앞 조각이 8자 이하'만 봐서 "첫 상담부터 수술, | 보철," 처럼 첫 항목 앞에 다른 말이 붙으면 나열을 못 알아봤다.
  * before = 앞 쉼표(또는 마디 머리)부터 이 쉼표까지, after = 이 쉼표 뒤부터 다음 쉼표(또는 끝)까지.
  */
-function listCommaKind(before: string, after: string): 'hard' | 'long' | null {
+function listCommaKind(before: string, after: string, single = false): 'hard' | 'long' | null {
   const b = before.replace(/[,，]\s*$/, '').trim();
   const last = strip(b.split(/\s+/).pop() ?? '');
   if (LEAD_ADVERB.test(b)) return 'hard';
@@ -61,13 +61,19 @@ function listCommaKind(before: string, after: string): 'hard' | 'long' | null {
   /* '·' 로 이미 나열한 뒤의 쉼표는 나열을 닫는 쉼표다("관절잡음·개구장애·턱 통증, 원인부터…") */
   if (/[·ㆍ]/.test(b)) return null;
   const a = after.replace(/[,，]\s*$/, '').trim();
+  /*
+   * 쉼표가 **하나뿐**이고 뒤가 서술(절)이면 나열이 아니다 — "어금니 임플란트, 뼈가 부족하다면?" "서울 중구 세종대로, 광화문역 … 의원입니다."
+   * 나열은 보통 쉼표가 둘 이상(수술, 보철, 정기검진)이다. 이걸 짧은 나열로 잘못 봐서 제목 전체가 붙어 버렸고,
+   * 폰에서 칸을 넘치자 브라우저가 물음표만 다음 줄로 떼어 냈다(2026-09-29).
+   */
+  if (single && a.split(/\s+/).some((w) => { const x = strip(w); return x.length >= 2 && PREDICATE_END.test(x); })) return null;
   if (a.length <= ENUM_MAX || b.length <= ENUM_MAX) return 'hard';
   const predicate = b.split(/\s+/).some((w) => { const x = strip(w); return x.length >= 2 && PREDICATE_END.test(x); });
   if (b.length <= ENUM_PHRASE_MAX && !predicate) return 'long';
   return null;
 }
 /** 나열 쉼표면 마디를 가르지 않는다(splitClauses) */
-const isListComma = (before: string, after: string) => listCommaKind(before, after) !== null;
+const isListComma = (before: string, after: string, single = false) => listCommaKind(before, after, single) !== null;
 
 /** 여는 괄호 − 닫는 괄호 — 0 보다 크면 괄호 안 */
 function parenDelta(s: string): number {
@@ -99,7 +105,7 @@ export function splitClauses(s: string): string[] {
   const merged: string[] = [];
   for (let k = 0; k < out.length; k++) {
     const prevRaw = out[k - 1];
-    if (merged.length && prevRaw && prevRaw.endsWith(',') && isListComma(prevRaw, out[k])) merged[merged.length - 1] += ` ${out[k]}`;
+    if (merged.length && prevRaw && prevRaw.endsWith(',') && isListComma(prevRaw, out[k], out.length === 2)) merged[merged.length - 1] += ` ${out[k]}`;
     else merged.push(out[k]);
   }
   return merged;
@@ -109,14 +115,19 @@ const strip = (w: string) => w.replace(/[,.!?…)”’"']+$/, '');
 
 /** 낱말 배열을 쉼 자리(pause 판정)에서 덩어리로 — 괄호 안·꾸밈말 뒤·붙는 말 앞에서는 쉬지 않는다 */
 /** 두 낱말 사이를 끊어도 되는가 — 꾸밈말 뒤·붙는 말 앞·소유격 뒤·'고' 짝·목적어+동사는 안 된다 */
-function canBreakBetween(w: string, next: string): boolean {
+function canBreakBetween(w: string, next: string, prev = ''): boolean {
   const bare = strip(w);
   const nx = strip(next);
+  /* 목적어 뒤의 -는/-은 은 조사가 아니라 뒤 명사를 꾸미는 말("턱을 괴는 | 자세", "음식을 즐기는 | 식습관") */
+  if (prev && OBJECT_MARK.test(strip(prev)) && /[는은]$/.test(bare) && !/[,，]$/.test(w)) return false;
   if (NO_BREAK_AFTER.test(bare) || NO_BREAK_AFTER_END.test(bare) || /의$/.test(bare)) return false;
   if (NO_BREAK_BEFORE.test(nx) || NO_BREAK_BEFORE_END.test(nx)) return false;
   /* "…와 함께" 는 한 덩어리, "습관이 | 함께 얽혀" 는 끊어도 된다 — 함께·같이 앞은 와·과 뒤일 때만 막는다(09-29) */
   if (/^(함께|같이)$/.test(nx) && /[와과]$/.test(bare)) return false;
-  if (/고$/.test(bare) && COORD_MODIFIER.test(nx)) return false;
+  /* "6번 | 출구", "도보 | 2분" — 길 안내 숫자 묶음은 한 덩어리 (2026-09-29 꼬리말) */
+  if (/\d+번$/.test(bare) && /^출구/.test(nx)) return false;
+  if (/^(도보|차로|걸어서)$/.test(bare) && /^\d/.test(nx)) return false;
+  if (/(고|거나)$/.test(bare) && COORD_MODIFIER.test(nx)) return false;
   /* 목적어와 그것을 받는 동사("힘을 싣는", "구조를 가지고", "치료를 시작합니다")는 한 덩어리 */
   if (OBJECT_MARK.test(bare) && VERB_LIKE.test(nx)) return false;
   /* 목적어 + 받침 ㄴ·ㄹ 로 끝나는 꾸밈 동사("면허를 가진", "치아를 살릴")도 한 덩어리 (2026-09-29) */
@@ -130,13 +141,15 @@ function listCommaKinds(words: string[]): Map<number, 'hard' | 'long'> {
   const at = new Map<number, 'hard' | 'long'>();
   let segStart = 0;
   let depth = 0;
+  let d0 = 0;
+  const single = words.filter((w) => { d0 += parenDelta(w); return d0 <= 0 && /[,，]$/.test(w); }).length === 1;
   for (let i = 0; i < words.length; i++) {
     depth += parenDelta(words[i]);
     if (!/[,，]$/.test(words[i])) continue;
     if (depth > 0) { at.set(i, 'hard'); continue; }
     let j = i + 1;
     while (j < words.length - 1 && !/[,，]$/.test(words[j])) j++;
-    const kind = listCommaKind(words.slice(segStart, i + 1).join(' '), words.slice(i + 1, j + 1).join(' '));
+    const kind = listCommaKind(words.slice(segStart, i + 1).join(' '), words.slice(i + 1, j + 1).join(' '), single);
     if (kind) at.set(i, kind);
     segStart = i + 1;
   }
@@ -170,7 +183,8 @@ const TIER_PENALTY = [0, 2, 4, 8, 14];
  * ★ 옛 방식(앞에서부터 덩어리를 채워 inline-block)은 글자 수로 재 한글 폭을 못 맞췄고, 칸보다 넓은 덩어리는 브라우저가 아무 공백에서나 꺾었다.
  * ⚠️ 짧은 나열 쉼표·꾸밈말 뒤·붙는 말 앞·괄호 안은 마지막 수단(등급 4) — 다른 자리가 전혀 없을 때만.
  */
-export function pauseGlue(clause: string): string {
+/** maxEm — 붙임 덩어리 최대 길이. 큰 제목(글씨가 커 한 줄에 드는 글자 수가 적다)은 짧게 준다 */
+export function pauseGlue(clause: string, maxEm = RUN_MAX_EM): string {
   const words = clause.split(/\s+/).filter(Boolean);
   if (words.length < 2) return clause.trim();
   const n = words.length - 1;
@@ -182,7 +196,7 @@ export function pauseGlue(clause: string): string {
     depth += parenDelta(words[i]);
     const bare = strip(words[i]);
     const kind = lists.get(i);
-    if (depth > 0 || kind === 'hard' || !canBreakBetween(words[i], words[i + 1])) tier[i] = 4;
+    if (depth > 0 || kind === 'hard' || !canBreakBetween(words[i], words[i + 1], words[i - 1])) tier[i] = 4;
     else if (/[,，]$/.test(words[i])) tier[i] = kind === 'long' ? 2 : 0;
     else if (STRONG_PAUSE_END.test(bare)) tier[i] = 1;
     /* 명사를 잇는 '와·과'("뼈와 신경의")는 조사보다 약한 쉼 — 이것만 남았을 때 쓴다 */
@@ -194,7 +208,7 @@ export function pauseGlue(clause: string): string {
   const width = (a: number, b: number) => emWidth(words.slice(a, b + 1).join(' '));
   const openIn = (a: number, b: number) => {
     const total = width(a, b);
-    if (b <= a || total <= RUN_MAX_EM) return;
+    if (b <= a || total <= maxEm) return;
     let best = a;
     let bestScore = Infinity;
     for (let i = a; i < b; i++) {
@@ -218,12 +232,70 @@ function Clause({ text }: { text: string }) {
   return <span className="clause">{pauseGlue(text)}</span>;
 }
 
-export function Sentences({ text, className = '', clauses: useClauses = true }: { text: string; className?: string; /** 좁은 카드에서는 쉼표 마디를 풀어 자연스럽게 흐르게 한다 */ clauses?: boolean }) {
-  const sentences = text
-    .split(/(?<=[.!?])\s+(?=\S)/)
-    .map((s) => s.trim())
-    .filter(Boolean);
+/**
+ * 문장 나누기 — 마침표·물음표·느낌표(뒤따르는 닫는 따옴표·괄호까지) 다음 공백에서 자른다.
+ * 예전 정규식은 `?"` 처럼 닫는 따옴표가 붙으면 못 잘랐다("…건가요?" "뼈에…" 가 한 문장으로 이어짐, 2026-09-29).
+ * "1. " 같은 번호, 말줄임표(...)는 문장 끝이 아니다.
+ */
+export function splitSentences(text: string): string[] {
+  const out: string[] = [];
+  /* 뒤가 '(' 면 앞 문장의 덧붙임("…없습니다. (확인 후 식립)")이라 자르지 않는다 */
+  const re = /([.!?])(["'”’)\]]*)\s+(?=[^\s(])/g;
+  let last = 0;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(text))) {
+    const before = text.slice(last, m.index);
+    if (m[1] === '.' && (/(^|\s)\d{1,2}$/.test(before) || /[.…]$/.test(before))) continue;
+    out.push(text.slice(last, m.index + m[1].length + m[2].length).trim());
+    last = re.lastIndex;
+  }
+  out.push(text.slice(last).trim());
+  return out.filter(Boolean);
+}
+
+export function Sentences({
+  text,
+  className = '',
+  clauses: useClauses = true,
+  soft = false,
+  br = false,
+}: {
+  text: string;
+  className?: string;
+  /** 좁은 카드에서는 쉼표 마디를 풀어 자연스럽게 흐르게 한다 */
+  clauses?: boolean;
+  /**
+   * 제목·질문처럼 짧은 글 — 한 줄에 다 들어가면 그대로 두고, 줄을 바꿔야 할 때만 문장 경계에서 바꾼다(.sent-soft = inline-block).
+   * 한 문장뿐이면 손대지 않는다.
+   */
+  soft?: boolean;
+  /**
+   * 줄 수를 자르는 카드(line-clamp) — 문장 사이를 <br> 로만 가른다.
+   * .sent·.clause 상자(block·inline-block)를 쓰면 line-clamp 가 상자 안 줄을 세지 못해 말줄임이 깨진다.
+   */
+  br?: boolean;
+}) {
+  const sentences = splitSentences(text);
   const clauses = (s: string) => (useClauses ? splitClauses(s) : [s]);
+  if (br) {
+    return (
+      <>
+        {sentences.map((s, i) => (
+          <Fragment key={i}>{i > 0 && <br />}{s}</Fragment>
+        ))}
+      </>
+    );
+  }
+  if (soft) {
+    if (sentences.length <= 1) return <>{text}</>;
+    return (
+      <span className={className}>
+        {sentences.map((s, i) => (
+          <Fragment key={i}><span className="sent-soft">{pauseGlue(s, 11)}</span>{i < sentences.length - 1 ? ' ' : ''}</Fragment>
+        ))}
+      </span>
+    );
+  }
   if (sentences.length <= 1) {
     return (
       <span className={`sent-one ${className}`}>
@@ -384,7 +456,7 @@ export function FaqList({ items, id = 'faq' }: { items: QA[]; id?: string }) {
         <details key={i} className="faq" open={i === 0}>
           <summary>
             <span className="q" aria-hidden>Q</span>
-            <span>{it.q}</span>
+            <span><Sentences text={it.q} soft /></span>
             <svg className="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
               <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
@@ -411,7 +483,7 @@ export function ContactBand({ title = '예약과 상담은 전화·네이버로'
           <div>
             <p className="eyebrow on-dark">CONTACT</p>
             <h2 className="display-sm mt-4 !text-white">{title}</h2>
-            <p className="mt-3 text-white/70">{text ?? `화·목 야간진료 21:00 · ${CLINIC.parking.place} ${CLINIC.parking.fee}`}</p>
+            <p className="mt-3 text-white/70">{text ? <Sentences text={text} /> : `화·목 야간진료 21:00 · ${CLINIC.parking.place} ${CLINIC.parking.fee}`}</p>
             {/* 빈 자리에 지하철 안내 — 기존 홈페이지 오시는 길 표기 그대로, 호선 색 동그라미 */}
             <ul className="mt-6 flex flex-wrap gap-2.5">
               {CLINIC.transit.map((t) => (
@@ -515,7 +587,7 @@ export function MedicalNotice() {
   return (
     <div className="bg-night pb-14">
       <div className="wrap">
-        <p className="border-t border-white/10 pt-7 text-[13.5px] leading-relaxed text-white/45">{MEDICAL_DISCLAIMER}</p>
+        <p className="border-t border-white/10 pt-7 text-[13.5px] leading-relaxed text-white/45"><Sentences text={MEDICAL_DISCLAIMER} /></p>
       </div>
     </div>
   );
@@ -563,10 +635,7 @@ export function CardLink({ href, label, desc, external = false, fig, num }: { hr
  * 문장 단위 줄바꿈은 Sentences 와 같다. 어두운 배경이 기본, 밝은 배경은 light.
  */
 export function ScrubText({ text, className = '', light = false }: { text: string; className?: string; light?: boolean }) {
-  const sentences = text
-    .split(/(?<=[.!?])\s+(?=\S)/)
-    .map((s) => s.trim())
-    .filter(Boolean);
+  const sentences = splitSentences(text);
   return (
     <span className={`scrub ${light ? 'scrub-light' : ''} ${className}`} data-scrub>
       {sentences.map((s, i) => (

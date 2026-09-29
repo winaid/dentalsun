@@ -102,7 +102,7 @@ export default function VisitPage() {
                     </li>
                   ))}
                 </ul>
-                <p className="mt-3 text-[14px] text-ink-muted">{HOURS.closed} · 토요일은 2·4째주 진료입니다. 휴진일이 바뀌는 달도 있으니 아래 이달의 진료일정을 확인해 주세요.</p>
+                <p className="mt-3 text-[14px] text-ink-muted"><Sentences text={`${HOURS.closed} · 토요일은 2·4째주 진료입니다. 휴진일이 바뀌는 달도 있으니 아래 이달의 진료일정을 확인해 주세요.`} /></p>
               </div>
               <div className="card p-6">
                 <p className="text-[14px] font-bold tracking-wide text-ink-muted">주차</p>
@@ -136,7 +136,7 @@ export default function VisitPage() {
                   <div className="flex flex-1 flex-col p-6">
                     <span className="num">{String(i + 1).padStart(2, '0')}</span>
                     <p className="mt-3 text-[1.05rem] font-bold text-ink">{s.title}</p>
-                    <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">{s.desc}</p>
+                    <p className="mt-2 text-[15px] leading-relaxed text-ink-soft"><Sentences text={s.desc} /></p>
                   </div>
                 </li>
               ))}
@@ -179,7 +179,7 @@ export default function VisitPage() {
               </a>
               <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="card card-hover p-6">
                 <p className="text-[1.05rem] font-bold text-ink">온라인 예약 ↗</p>
-                <p className="mt-1.5 text-[15px] text-ink-soft">네이버 예약에서 날짜와 시간을 직접 고를 수 있습니다. 처음이시면 불편한 부위를 짧게 남겨 주세요.</p>
+                <p className="mt-1.5 text-[15px] text-ink-soft"><Sentences text="네이버 예약에서 날짜와 시간을 직접 고를 수 있습니다. 처음이시면 불편한 부위를 짧게 남겨 주세요." /></p>
               </a>
               <a href={CLINIC.booking.naverReview} target="_blank" rel="noopener" className="card card-hover p-6">
                 <p className="text-[1.05rem] font-bold text-ink">치료후기 ↗</p>

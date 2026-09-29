@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { CLINIC, HOURS } from '@/lib/clinic';
 import { figSrc } from '@/lib/docs';
+import { Sentences } from '@/components/ui';
 
 /**
  * 홈 첫 화면 — 전폭 실사 한 장이 화면을 채우고, 아래 띠에서 장면이 바뀐다.
@@ -17,6 +18,7 @@ import { figSrc } from '@/lib/docs';
  * ★ 2026-09-29 원장 피드백 13번: "히어로 세 문구에 치과의 강점이 드러나야 한다 — 지금은 중립적인 설명 위주".
  *   세 장 = 선치과가 스스로 내세우는 강점 세 가지(네이버 플레이스 배너의 병원 문구와 같은 축):
  *   ① 대표원장 1:1 책임진료(통합치의학과 전문의·강남성심병원 외래교수) ② 고난도 임플란트를 계측·가이드로 ③ 턱관절 진료 경험.
+ *   ★ 2026-09-29 밤 오너가 세 장의 제목·설명 문구를 직접 줬다 — 그대로 넣었다(바꾸려면 오너 확인).
  *   ⚠️ 15년 · 5,000건 은 병원이 스스로 쓰는 숫자다(치과 배너·옛 첫 화면). 바뀌면 여기부터 고친다.
  */
 const SLIDES = [
@@ -29,12 +31,12 @@ const SLIDES = [
     fit: 'object-[56%_50%] md:object-[58%_50%]',
     title: (
       <>
-        진단한 원장이
+        15년째 광화문 같은 자리,
         <br />
-        <span className="accent-sun">끝까지</span> 책임집니다
+        <span className="accent-sun">끝까지</span> 함께할 치과를 찾으신다면
       </>
     ),
-    lead: '보건복지부 인증 통합치의학과 전문의, 강남성심병원 치과 외래교수 출신. 15년 넘게 광화문 한자리에서 상담·수술·보철·정기검진까지 대표원장이 직접 진료합니다.',
+    lead: '보건복지부 인증 전문의이자 성심병원 외래교수. 페이닥터에게 위임하지 않고, 대표원장이 처음부터 끝까지 진료합니다.',
   },
   {
     key: 'sun/hero-scan',
@@ -44,12 +46,12 @@ const SLIDES = [
     fit: 'object-[30%_50%] md:object-[62%_50%]',
     title: (
       <>
-        뼈가 부족해도, 치아가 없어도
+        임플란트 재수술이 두렵다면,
         <br />
-        <span className="accent-sun">계측</span>으로 답을 찾습니다
+        시작부터 오차 없는 <span className="accent-sun">디지털</span>로
       </>
     ),
-    lead: 'CBCT로 잔존 골량과 신경관·상악동의 위치를 계측하고, 모의 식립과 수술 가이드로 골이식·상악동거상술·풀아치 임플란트까지 계획대로 진행합니다.',
+    lead: '감이나 경험에만 의존하지 않습니다. 3D CBCT 정밀 분석과 모의 식립 가이드로 뼈 흡수, 신경 손상 걱정 없이 한 번에 정확하게 식립합니다.',
   },
   {
     key: 'sun/hero-tmj',
@@ -59,12 +61,12 @@ const SLIDES = [
     fit: 'object-[72%_50%] md:object-[62%_50%]',
     title: (
       <>
-        관절잡음·개구장애·턱 통증,
+        턱관절 5,000례의 해답,
         <br />
-        <span className="accent-sun">원인</span>부터 구분합니다
+        턱만 보지 않고 &lsquo;<span className="accent-sun">원인</span>&rsquo;을 봅니다
       </>
     ),
-    lead: '턱관절 진료 5,000건 이상의 경험으로 관절원판·저작근·교합·이갈이 중 원인을 가려내고, 약물·물리치료부터 교합안정장치·관절강 세척술까지 단계적으로 치료합니다.',
+    lead: '소리, 개구장애, 편두통까지 이어지는 턱관절 질환. 풍부한 임상 경험을 바탕으로 비수술 단계별 맞춤 치료를 진행합니다.',
   },
 ];
 
@@ -123,7 +125,7 @@ export function HomeHero() {
           {/* 장면이 바뀌면 글도 같이 바뀐다 — key 를 바꿔 다시 그리면서 짧게 올라온다 */}
           <div key={i} className="hero-swap">
             <h1 className="display mt-6 text-balance !text-white on-photo">{SLIDES[i].title}</h1>
-            <p className="mt-7 text-[1.05rem] leading-[1.85] text-white/75 md:text-[1.1rem]">{SLIDES[i].lead}</p>
+            <p className="mt-7 text-[1.05rem] leading-[1.85] text-white/75 md:text-[1.1rem]"><Sentences text={SLIDES[i].lead} /></p>
           </div>
           {/* 예약 두 갈래 — 왼쪽은 네이버 예약(플레이스와 연결), 오른쪽은 오시는 길·진료시간(톡톡 상담은 2026-09-21 뺐다).
               폰에서는 아래 빠른메뉴(전화·예약·상담·오시는 길)가 같은 일을 하므로 감춘다(오너) */}

@@ -175,6 +175,25 @@ figcaption {
     text-wrap: balance;
   }
 }
+/*
+ * 제목·질문의 문장 경계(Sentences soft) — 한 줄에 들어가면 그대로, 넘치면 다음 문장이 통째로 다음 줄로 (2026-09-29 오너: "마침표에서 줄바꿈").
+ * 본문(.sent)처럼 늘 가르면 짧은 질문까지 두 줄이 된다.
+ */
+.sent-soft {
+  display: inline-block;
+  max-width: 100%;
+  text-wrap: balance;
+}
+/*
+ * 블로그·임상 글 본문(.blog-body)의 문장 — 긴 문장이 여러 줄이라 balance 로 고르면 오른쪽이 들쭉날쭉해진다. pretty 로만 끝줄 한 낱말을 막는다.
+ * 문단 사이(1.35em)보다 좁게 띄워 문단 구분은 그대로 보인다.
+ */
+.blog-body .sent {
+  text-wrap: pretty;
+}
+.blog-body .sent + .sent {
+  margin-top: 0.35em;
+}
 
 /* ── 버튼·알약 ── */
 .btn-sun {

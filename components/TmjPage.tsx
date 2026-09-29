@@ -197,7 +197,7 @@ function Triad({ className = '' }: { className?: string }) {
           <li key={t.n} className="border-t border-white/15 pt-4">
             <span className="block text-[13px] font-extrabold tracking-[0.18em] text-sun-300">{t.n}</span>
             <span className="mt-1.5 block text-[1.1rem] font-bold">{t.title}</span>
-            <span className="mt-1.5 block text-[14.5px] leading-[1.7] text-white/70">{t.desc}</span>
+            <span className="mt-1.5 block text-[14.5px] leading-[1.7] text-white/70"><Sentences text={t.desc} /></span>
           </li>
         ))}
       </ol>
@@ -522,7 +522,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                     </li>
                   ))}
                 </ul>
-                <p className="mt-3 text-[12.5px] text-ink-muted">{TMJ_SELF_PHOTO_NOTE}</p>
+                <p className="mt-3 text-[12.5px] text-ink-muted"><Sentences text={TMJ_SELF_PHOTO_NOTE} /></p>
                 <p className="reveal mt-10 text-center text-[1.2rem] font-extrabold text-ink md:text-[1.35rem]">이렇게 확인해 보세요</p>
                 <ol className="reveal-stack mt-6 grid gap-4">
                   {TMJ_SELF_TESTS.map((t) => (
@@ -840,7 +840,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                     </li>
                   ))}
                 </ol>
-                <p className="reveal mt-4 text-[13px] leading-[1.75] text-ink-muted">{BRUX_TREATMENT_NOTE}</p>
+                <p className="reveal mt-4 text-[13px] leading-[1.75] text-ink-muted"><Sentences text={BRUX_TREATMENT_NOTE} /></p>
 
                 {/* 기성 마우스피스와의 차이 — 우열이 아니라 차이만(의료광고) */}
                 <SubHead s={SECTIONS['brux-compare']} />
@@ -949,7 +949,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                         <li key={s.n} className="relative rounded-2xl bg-night p-6 text-white">
                           <span className="text-[12.5px] font-extrabold text-sun-300">{s.n}</span>
                           <span className="mt-2 block text-[15.5px] font-bold leading-snug">{s.label}</span>
-                          <span className="mt-2 block text-[13.5px] leading-[1.7] text-white/70">{s.desc}</span>
+                          <span className="mt-2 block text-[13.5px] leading-[1.7] text-white/70"><Sentences text={s.desc} /></span>
                           {i < TMJ_PRINCIPLE.steps.length - 1 && <span aria-hidden className="absolute -right-3.5 top-1/2 hidden -translate-y-1/2 text-[1.3rem] text-ink-muted md:block">›</span>}
                         </li>
                       ))}
@@ -967,7 +967,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                           {TMJ_SPLINT_ROLE.points.map((p) => (
                             <div key={p.label} className="grid grid-cols-[64px_1fr] gap-3">
                               <dt className="pt-0.5 text-[13px] font-extrabold text-brand-700">{p.label}</dt>
-                              <dd className="text-[14px] leading-[1.7] text-ink-soft">{p.desc}</dd>
+                              <dd className="text-[14px] leading-[1.7] text-ink-soft"><Sentences text={p.desc} /></dd>
                             </div>
                           ))}
                         </dl>
@@ -980,7 +980,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                               <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-sun-500" aria-hidden />
                               <span>
                                 <span className="block text-[15px] font-bold text-ink">{t.title}</span>
-                                <span className="block text-[13.5px] leading-[1.6] text-ink-soft">{t.desc}</span>
+                                <span className="block text-[13.5px] leading-[1.6] text-ink-soft"><Sentences text={t.desc} /></span>
                               </span>
                             </li>
                           ))}
@@ -1077,7 +1077,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                       <div className="min-w-0">
                         <p className="text-[13px] font-bold text-sun-600">{e.eyebrow}</p>
                         <h3 className="mt-1.5 text-[1.15rem] font-extrabold leading-snug text-ink">{e.title}</h3>
-                        <p className="mt-2 text-[14.5px] leading-[1.7] text-ink-soft">{e.lead}</p>
+                        <p className="mt-2 text-[14.5px] leading-[1.7] text-ink-soft"><Sentences text={e.lead} /></p>
                         <ul className="mt-3 flex flex-wrap gap-1.5">
                           {e.points.map((p) => (
                             <li key={p} className="rounded-full bg-brand-50 px-2.5 py-1 text-[12.5px] font-semibold text-brand-700">{p}</li>

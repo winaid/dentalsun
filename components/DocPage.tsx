@@ -2,7 +2,7 @@ import Image from 'next/image';
 import type { CSSProperties, ReactNode } from 'react';
 import { SiteHeader } from '@/components/SiteHeader';
 import { JsonLd } from '@/components/JsonLd';
-import { Breadcrumb, CardLink, ContactBand, FaqList, Figure, MedicalNotice, ScrubText, Sentences } from '@/components/ui';
+import { Breadcrumb, CardLink, ContactBand, FaqList, Figure, MedicalNotice, ScrubText, Sentences, splitSentences } from '@/components/ui';
 import { docCharCount, figSize, figSrc, fitsBox, type Block, type Doc, type Fig } from '@/lib/docs';
 import { docByPath, docsOfHub } from '@/lib/content';
 import { caseGroup } from '@/lib/cases';
@@ -434,7 +434,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
                 </tbody>
               </table>
             </div>
-            {b.note && <p className="mt-4 text-[14.5px] leading-relaxed text-ink-muted">※ {b.note}</p>}
+            {b.note && <p className="mt-4 text-[14.5px] leading-relaxed text-ink-muted"><Sentences text={`※ ${b.note}`} /></p>}
           </div>
         </section>
       );
@@ -457,13 +457,13 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
                 <tbody>
                   {b.rows.map((r, i) => (
                     <tr key={i}>
-                      {r.map((c, j) => (j === 0 ? <th key={j} scope="row">{c}</th> : <td key={j} className="text-ink-soft">{c}</td>))}
+                      {r.map((c, j) => (j === 0 ? <th key={j} scope="row">{c}</th> : <td key={j} className="text-ink-soft">{typeof c === 'string' && splitSentences(c).length > 1 ? <Sentences text={c} clauses={false} /> : c}</td>))}
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
-            {b.note && <p className="mt-4 text-[14.5px] leading-relaxed text-ink-muted">※ {b.note}</p>}
+            {b.note && <p className="mt-4 text-[14.5px] leading-relaxed text-ink-muted"><Sentences text={`※ ${b.note}`} /></p>}
           </div>
         </section>
       );
@@ -494,7 +494,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
             ) : (
               <div className="reveal mt-10 max-w-[1000px]">
                 <Figure fig={b.figure} sizes="(max-width: 1024px) 100vw, 1000px" />
-                <p className="mt-4 rounded-xl bg-sun-50 px-5 py-3.5 text-[14.5px] leading-relaxed text-sun-700">{b.note}</p>
+                <p className="mt-4 rounded-xl bg-sun-50 px-5 py-3.5 text-[14.5px] leading-relaxed text-sun-700"><Sentences text={b.note} /></p>
               </div>
             )}
           </div>

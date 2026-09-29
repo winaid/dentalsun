@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { CLINIC } from '@/lib/clinic';
+import { Sentences } from '@/components/ui';
 
 /**
  * 자가 점검표 — 항목에 표시하면 개수에 따라 안내가 바뀐다. 턱관절(증상 쪽)과 이갈이(이갈이 쪽)가 같이 쓴다.
@@ -55,12 +56,12 @@ export function TmjSelfCheck({
         ))}
       </ul>
       <div className={`mt-5 flex flex-wrap items-center justify-between gap-3 rounded-xl px-5 py-4 text-[15px] font-semibold leading-snug ${verdict.tone}`} aria-live="polite">
-        <span>{verdict.text}</span>
+        <span><Sentences text={verdict.text} /></span>
         {n >= 2 && (
           <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="btn-sun !px-4 !py-2 text-[14px]">검사 예약하기</a>
         )}
       </div>
-      <p className="mt-3 text-[12.5px] text-ink-muted">※ 참고용 점검이며 진단이 아닙니다. 정확한 상태는 검사로 확인합니다.</p>
+      <p className="mt-3 text-[12.5px] text-ink-muted"><Sentences text="※ 참고용 점검이며 진단이 아닙니다. 정확한 상태는 검사로 확인합니다." /></p>
     </div>
   );
 }

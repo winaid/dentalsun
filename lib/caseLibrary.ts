@@ -39,8 +39,9 @@ export const CASE_CATEGORY_LABEL: Record<CaseCategory, string> = {
   tmj: '턱관절',
 };
 
+/** 보는 법(끄는 비교·위아래 경과)은 CaseGallery 가 보여 주는 방식에 맞춰 뒤에 붙인다 */
 export const CASE_NOTE =
-  '광화문 선치과에서 진료받은 환자분의 실제 사진입니다. 위가 치료 전, 아래가 치료 후입니다. 치료 결과와 경과는 구강 상태와 치료 방법에 따라 개인마다 다르며, 모든 의료 행위에는 부작용이 따를 수 있습니다.';
+  '광화문 선치과에서 진료받은 환자분의 실제 사진입니다. 치료 결과와 경과는 구강 상태와 치료 방법에 따라 개인마다 다르며, 모든 의료 행위에는 부작용이 따를 수 있습니다.';
 
 /** 사례 목록 — scripts 가 만든 manifest 에서 옮긴다(C:/tmp/sun-fb-0929/cases-work/manifest.json) */
 export const CASES: CaseItem[] = [

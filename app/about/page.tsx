@@ -78,7 +78,7 @@ export default function AboutPage() {
                 <li key={s.title} className="card flex h-full flex-col p-6">
                   <span className="num">{String(i + 1).padStart(2, '0')}</span>
                   <p className="mt-4 text-[1.05rem] font-bold text-ink">{s.title}</p>
-                  <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">{s.desc}</p>
+                  <p className="mt-2 text-[15px] leading-relaxed text-ink-soft"><Sentences text={s.desc} /></p>
                 </li>
               ))}
             </ul>
@@ -132,7 +132,7 @@ export default function AboutPage() {
                 <li key={p.n} className="card flex h-full flex-col p-6">
                   <span className="pill-sun">Point {p.n}</span>
                   <p className="mt-3 text-[1.05rem] font-bold text-ink">{p.title}</p>
-                  <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">{p.desc}</p>
+                  <p className="mt-2 text-[15px] leading-relaxed text-ink-soft"><Sentences text={p.desc} /></p>
                 </li>
               ))}
             </ol>
@@ -165,7 +165,8 @@ export default function AboutPage() {
                 ))}
               </ul>
               <p className="mt-6 rounded-2xl bg-white p-5 text-[15.5px] leading-relaxed text-ink-soft">
-                <span className="font-bold text-ink">전원 치과위생사</span> — 진료 스태프는 모두 치과위생사 면허를 가지고 있습니다. 진료 보조는 면허를 가진 인력이 맡습니다.
+                <span className="sent"><span className="font-bold text-ink">전원 치과위생사</span> — 진료 스태프는 모두 치과위생사 면허를 가지고 있습니다.</span>
+                <span className="sent">진료 보조는 면허를 가진 인력이 맡습니다.</span>
               </p>
             </div>
           </div>

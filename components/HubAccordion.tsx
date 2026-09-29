@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { figSrc } from '@/lib/docs';
+import { Sentences } from '@/components/ui';
 
 /**
  * 진료과목 — 펼침 아코디언 띠(오너 선택). 8개 띠가 가로로 붙어 한 화면을 채운다.
@@ -37,7 +38,7 @@ export function HubAccordion({ items }: { items: HubItem[] }) {
           <div className="acc-open absolute inset-x-0 bottom-0 p-7 lg:p-8">
             <span className="text-[12px] font-extrabold tracking-[0.2em] text-sun-300">{String(i + 1).padStart(2, '0')}</span>
             <p className="mt-2 text-[1.7rem] font-extrabold leading-tight tracking-[-0.02em] on-photo md:text-[2rem]">{it.label}</p>
-            <p className="mt-3 max-w-[520px] text-[15.5px] leading-[1.75] text-white/85">{it.desc}</p>
+            <p className="mt-3 max-w-[520px] text-[15.5px] leading-[1.75] text-white/85"><Sentences text={it.desc} /></p>
             {it.subs.length > 0 && (
               <ul className="mt-5 flex flex-wrap gap-2">
                 {it.subs.map((s) => (

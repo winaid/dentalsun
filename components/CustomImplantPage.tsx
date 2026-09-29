@@ -179,7 +179,7 @@ function StepCards({ steps }: { steps: Array<{ title: string; desc: string; fig:
           <span className="flex flex-1 flex-col p-5">
             <span className="text-[11.5px] font-extrabold tracking-[0.18em] text-sun-600">STEP {i + 1}</span>
             <span className="mt-1.5 block text-[1.05rem] font-extrabold text-ink">{s.title}</span>
-            <span className="mt-2 block text-[14px] leading-[1.7] text-ink-soft">{s.desc}</span>
+            <span className="mt-2 block text-[14px] leading-[1.7] text-ink-soft"><Sentences text={s.desc} /></span>
           </span>
           {i < steps.length - 1 && <span aria-hidden className="absolute -right-3.5 top-1/2 z-10 hidden -translate-y-1/2 text-[1.3rem] text-ink-muted lg:block">›</span>}
         </li>
@@ -281,7 +281,7 @@ export function CustomImplantPage({ doc, part }: { doc: Doc; part: 'navigation' 
                         <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-[13px] font-extrabold ${key ? 'bg-sun-500 text-white' : 'bg-night text-white'}`}>{String(i + 1).padStart(2, '0')}</span>
                         <span className="min-w-0">
                           <span className="block text-[1.05rem] font-extrabold text-ink">{p.title}</span>
-                          <span className="mt-1 block text-[14.5px] leading-[1.7] text-ink-soft">{p.desc}</span>
+                          <span className="mt-1 block text-[14.5px] leading-[1.7] text-ink-soft"><Sentences text={p.desc} /></span>
                         </span>
                       </li>
                     );
@@ -296,7 +296,7 @@ export function CustomImplantPage({ doc, part }: { doc: Doc; part: 'navigation' 
                     <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-[14px] font-extrabold text-brand-700">{String(i + 1).padStart(2, '0')}</span>
                     <span className="min-w-0">
                       <span className="block text-[1.05rem] font-extrabold text-ink">{b.title}</span>
-                      <span className="mt-1.5 block text-[14.5px] leading-[1.7] text-ink-soft">{b.desc}</span>
+                      <span className="mt-1.5 block text-[14.5px] leading-[1.7] text-ink-soft"><Sentences text={b.desc} /></span>
                     </span>
                   </li>
                 ))}
@@ -312,7 +312,7 @@ export function CustomImplantPage({ doc, part }: { doc: Doc; part: 'navigation' 
                   <li key={p.title} className="rounded-2xl bg-canvas p-5">
                     <span className="text-[12px] font-extrabold tracking-[0.12em] text-sun-600">{String(i + 1).padStart(2, '0')}</span>
                     <span className="mt-1.5 block text-[1.02rem] font-extrabold text-ink">{p.title}</span>
-                    <span className="mt-1.5 block text-[14px] leading-[1.7] text-ink-soft">{p.desc}</span>
+                    <span className="mt-1.5 block text-[14px] leading-[1.7] text-ink-soft"><Sentences text={p.desc} /></span>
                   </li>
                 ))}
               </ol>
@@ -322,7 +322,7 @@ export function CustomImplantPage({ doc, part }: { doc: Doc; part: 'navigation' 
 
               <SubHead eyebrow="방식 비교" title={<>절개식 식립과 <span className="accent-sun">가이드 식립의 차이</span></>} />
               <Compare columns={NAVI_COMPARE.columns} rows={NAVI_COMPARE.rows} />
-              <p className="reveal mt-4 text-[14px] leading-[1.7] text-ink-muted">※ {NAVI_COMPARE.note}</p>
+              <p className="reveal mt-4 text-[14px] leading-[1.7] text-ink-muted"><Sentences text={`※ ${NAVI_COMPARE.note}`} /></p>
 
               <SubHead eyebrow="장비와 위생" title={<>{NAVI_SYSTEM.title}</>} />
               <ul className="reveal-stack mt-8 grid gap-4 md:grid-cols-2">
@@ -330,7 +330,7 @@ export function CustomImplantPage({ doc, part }: { doc: Doc; part: 'navigation' 
                   <li key={s.title} className="rounded-2xl bg-night p-6 text-white md:p-7">
                     <span className="text-[11.5px] font-extrabold tracking-[0.18em] text-sun-300">0{i + 1}</span>
                     <span className="mt-2 block text-[1.1rem] font-extrabold">{s.title}</span>
-                    <span className="mt-2 block text-[14.5px] leading-[1.75] text-white/70">{s.desc}</span>
+                    <span className="mt-2 block text-[14.5px] leading-[1.75] text-white/70"><Sentences text={s.desc} /></span>
                   </li>
                 ))}
               </ul>
@@ -360,7 +360,7 @@ export function CustomImplantPage({ doc, part }: { doc: Doc; part: 'navigation' 
                       <span className={`block text-[13px] font-extrabold tracking-[0.18em] ${p.n === '02' ? 'text-sun-300' : 'text-white/55'}`}>{p.n}</span>
                       <span className="mt-1.5 block text-[1.1rem] font-bold">{p.title}</span>
                       {/* 세 칸짜리 좁은 카드 — 마디 줄바꿈을 태우면 두세 낱말짜리 줄이 생겨 그냥 흐르게 둔다 */}
-                      <span className="mt-2 block text-[14.5px] leading-[1.7] text-white/70">{p.desc}</span>
+                      <span className="mt-2 block text-[14.5px] leading-[1.7] text-white/70"><Sentences text={p.desc} /></span>
                     </li>
                   ))}
                 </ol>
@@ -378,7 +378,7 @@ export function CustomImplantPage({ doc, part }: { doc: Doc; part: 'navigation' 
                   <li key={b.title} className="card p-6">
                     <span className="num">{String(i + 1).padStart(2, '0')}</span>
                     <h3 className="mt-3 text-[1.05rem] font-extrabold leading-snug text-ink">{b.title}</h3>
-                    <p className="mt-2 text-[14.5px] leading-[1.75] text-ink-soft">{b.desc}</p>
+                    <p className="mt-2 text-[14.5px] leading-[1.75] text-ink-soft"><Sentences text={b.desc} /></p>
                   </li>
                 ))}
               </ul>
@@ -413,7 +413,7 @@ export function CustomImplantPage({ doc, part }: { doc: Doc; part: 'navigation' 
                 </figcaption>
               </figure>
               <Compare columns={CI_COMPARE.columns} rows={CI_COMPARE.rows} />
-              <p className="reveal mt-4 text-[14px] leading-[1.7] text-ink-muted">※ {CI_COMPARE.note}</p>
+              <p className="reveal mt-4 text-[14px] leading-[1.7] text-ink-muted"><Sentences text={`※ ${CI_COMPARE.note}`} /></p>
             </section>
 
             {/* ── 4. 디지털 제작(로이스 S4) → 과정 4 → 설계에서 확인하는 것 4 ── */}
@@ -438,7 +438,7 @@ export function CustomImplantPage({ doc, part }: { doc: Doc; part: 'navigation' 
                     <span className="mr-2 text-sun-300">✓</span>{CI_DIGITAL.result}
                   </span>
                 </div>
-                <p className="mt-4 text-center text-[13.5px] text-ink-muted">{CI_DIGITAL.note}</p>
+                <p className="mt-4 text-center text-[13.5px] text-ink-muted"><Sentences text={CI_DIGITAL.note} /></p>
               </div>
 
               <SubHead eyebrow="제작 순서" title={<>맞춤 지대주 <span className="accent-sun">제작 과정</span></>} lead={CI_PROCESS.lead} />
@@ -479,7 +479,7 @@ export function CustomImplantPage({ doc, part }: { doc: Doc; part: 'navigation' 
                         <span className="min-w-0">
                           <span className="block text-[12.5px] font-bold tracking-[0.08em] text-white/50">{p.label}</span>
                           <span className="mt-1 block text-[1.15rem] font-extrabold">{p.title}</span>
-                          <span className="mt-1.5 block text-[14.5px] leading-[1.75] text-white/70">{p.desc}</span>
+                          <span className="mt-1.5 block text-[14.5px] leading-[1.75] text-white/70"><Sentences text={p.desc} /></span>
                         </span>
                       </li>
                     ))}
@@ -529,7 +529,7 @@ export function CustomImplantPage({ doc, part }: { doc: Doc; part: 'navigation' 
                     </li>
                   ))}
                 </ul>
-                <p className="border-t border-hairline px-6 py-3 text-[13px] text-ink-muted md:px-7">※ {CI_IF_CUSTOM.note}</p>
+                <p className="border-t border-hairline px-6 py-3 text-[13px] text-ink-muted md:px-7"><Sentences text={`※ ${CI_IF_CUSTOM.note}`} /></p>
               </div>
             </section>
 
@@ -542,7 +542,7 @@ export function CustomImplantPage({ doc, part }: { doc: Doc; part: 'navigation' 
                     <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-[14px] font-extrabold text-brand-700">{String(i + 1).padStart(2, '0')}</span>
                     <span className="min-w-0">
                       <span className="block text-[1.05rem] font-extrabold text-ink">{w.title}</span>
-                      <span className="mt-1.5 block text-[14.5px] leading-[1.7] text-ink-soft">{w.desc}</span>
+                      <span className="mt-1.5 block text-[14.5px] leading-[1.7] text-ink-soft"><Sentences text={w.desc} /></span>
                     </span>
                   </li>
                 ))}
@@ -563,7 +563,7 @@ export function CustomImplantPage({ doc, part }: { doc: Doc; part: 'navigation' 
                         <span className={`relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[12.5px] font-extrabold ${i === CI_PERI.stages.length - 1 ? 'bg-sun-500 text-white' : 'bg-night text-white'}`}>{i + 1}</span>
                         <span className="min-w-0 pt-1">
                           <span className="block text-[15px] font-extrabold text-ink">{s.title}</span>
-                          <span className="mt-0.5 block text-[14px] leading-[1.65] text-ink-soft">{s.desc}</span>
+                          <span className="mt-0.5 block text-[14px] leading-[1.65] text-ink-soft"><Sentences text={s.desc} /></span>
                         </span>
                       </li>
                     ))}

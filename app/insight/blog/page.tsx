@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { CLINIC } from '@/lib/clinic';
 import { publishedIso } from '@/lib/blog';
 import { allPostsMerged } from '@/lib/insightFeed';
-import { ContactBand } from '@/components/ui';
+import { ContactBand, Sentences } from '@/components/ui';
 import { HeroCollage } from '@/components/HeroCollage';
 import { JsonLd } from '@/components/JsonLd';
 import { SiteHeader } from '@/components/SiteHeader';
@@ -155,8 +155,8 @@ export default async function BlogIndexPage() {
                     <h2 className="mt-3 line-clamp-2 min-h-[2.8em] text-[20px] font-extrabold leading-[1.4] tracking-[-0.02em] text-ink transition-colors group-hover:text-sun-700">
                       {p.title}
                     </h2>
-                    {/* ⚠️ Sentences 를 쓰지 않는다 — 카드 폭에서 쉼표마다 줄이 갈려 계단이 된다(증상 허브와 같은 이유). */}
-                    <p className="mt-3 line-clamp-3 min-h-[5.4em] text-[15.5px] leading-[1.8] text-ink-soft">{p.summary}</p>
+                    {/* ⚠️ 쉼표 마디(.clause)는 쓰지 않는다 — 카드 폭에서 쉼표마다 줄이 갈려 계단이 된다(증상 허브와 같은 이유). 문장 사이만 <br> 로 가른다(line-clamp 가 깨지지 않게). */}
+                    <p className="mt-3 line-clamp-3 min-h-[5.4em] text-[15.5px] leading-[1.8] text-ink-soft"><Sentences text={p.summary} br /></p>
                     <span className="mt-auto inline-flex items-center gap-2 pt-5 text-[14.5px] font-black text-sun-700">
                       읽기 <span aria-hidden className="transition-transform group-hover:translate-x-1">→</span>
                     </span>

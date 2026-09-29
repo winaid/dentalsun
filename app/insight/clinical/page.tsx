@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { CLINIC } from '@/lib/clinic';
 import { allClinicalPosts, publishedIso, type BlogPost } from '@/lib/blog';
-import { ContactBand } from '@/components/ui';
+import { ContactBand, Sentences } from '@/components/ui';
 import { HeroCollage } from '@/components/HeroCollage';
 import { JsonLd } from '@/components/JsonLd';
 import { SiteHeader } from '@/components/SiteHeader';
@@ -49,7 +49,7 @@ function PostList({ posts, onCanvas = false }: { posts: BlogPost[]; onCanvas?: b
               <span className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
                 {p.category && <span className="rounded-full bg-canvas-2 px-2 py-0.5 text-[11.5px] font-bold text-ink-soft">{p.category}</span>}
                 <h3 className="text-[16px] font-extrabold leading-[1.45] tracking-[-0.01em] text-ink transition-colors group-hover:text-sun-700 md:text-[17.5px]">
-                  {p.title}
+                  <Sentences text={p.title} soft />
                   <span aria-hidden className="ml-2 inline-block translate-x-0 text-sun-500 opacity-0 transition-all group-hover:translate-x-1 group-hover:opacity-100">→</span>
                 </h3>
               </span>

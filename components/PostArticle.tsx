@@ -3,6 +3,7 @@ import Image from 'next/image';
 import type { BlogPost } from '@/lib/blog';
 import { Breadcrumb, Sentences } from '@/components/ui';
 import { ContactCard, DoctorCard, LinkListCard } from '@/components/SideRail';
+import { sentenceHtml } from '@/lib/sentenceHtml';
 
 /**
  * 글 한 편의 본문 화면 — 블로그(/insight/blog)와 임상 글(/insight/clinical)이 같이 쓴다.
@@ -50,7 +51,7 @@ export function PostArticle({
               {post.kind === 'notice' && <span className="rounded-full bg-canvas-2 px-2.5 py-0.5 text-[12.5px] font-bold text-ink-soft">핵심 안내</span>}
             </div>
 
-            <h1 className="display-sm mt-4 max-w-[20em] text-[clamp(28px,3.6vw,44px)] leading-[1.25] tracking-[-0.02em] text-ink">{post.title}</h1>
+            <h1 className="display-sm mt-4 max-w-[20em] text-[clamp(28px,3.6vw,44px)] leading-[1.25] tracking-[-0.02em] text-ink"><Sentences text={post.title} soft /></h1>
             <p className="mt-6 max-w-[46em] text-[18px] leading-[1.9] text-ink-soft">
               <Sentences text={post.summary} />
             </p>
@@ -64,9 +65,9 @@ export function PostArticle({
               </figure>
             )}
 
-            <div className="blog-body mt-12 max-w-[42em]" dangerouslySetInnerHTML={{ __html: post.html }} />
+            <div className="blog-body mt-12 max-w-[42em]" dangerouslySetInnerHTML={{ __html: sentenceHtml(post.html) }} />
 
-            {note && <p className="mt-10 max-w-[42em] rounded-xl bg-canvas-2 px-5 py-4 text-[13.5px] leading-[1.7] text-ink-muted">※ {note}</p>}
+            {note && <p className="mt-10 max-w-[42em] rounded-xl bg-canvas-2 px-5 py-4 text-[13.5px] leading-[1.7] text-ink-muted"><Sentences text={`※ ${note}`} /></p>}
 
             <div className="mt-14 flex flex-wrap items-center justify-between gap-4 border-t border-hairline pt-8">
               <Link href={back.href} className="group inline-flex items-center gap-2 text-[16px] font-bold text-sun-700">
