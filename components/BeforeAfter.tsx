@@ -119,7 +119,10 @@ export function CompareStage({
       ref={stage}
       className={`relative cursor-ew-resize touch-none select-none overflow-hidden rounded-[28px] ${bg} shadow-[var(--shadow-lift)] ${className}`}
       style={style}
+      /* 마우스로 끌 때 브라우저가 사진을 통째로 집어 드는 끌어 놓기(반투명 사진이 따라옴)를 막는다(오너 09-30) */
+      onDragStart={(e) => e.preventDefault()}
       onPointerDown={(e) => {
+        if (e.pointerType === 'mouse') e.preventDefault();
         /* 손가락으로 사진을 끌 때는 화면이 따라 스크롤되지 않게 붙잡는다(오너) */
         e.currentTarget.setPointerCapture?.(e.pointerId);
         touched.current = true;
@@ -129,14 +132,14 @@ export function CompareStage({
       }}
     >
       {backdrop && (
-        <Image key={`bd-${after.src}`} src={after.src} alt="" aria-hidden fill sizes="200px" className="scale-110 object-cover opacity-45 blur-2xl" />
+        <Image key={`bd-${after.src}`} src={after.src} alt="" aria-hidden draggable={false} fill sizes="200px" className="scale-110 object-cover opacity-45 blur-2xl" />
       )}
-      <Image key={after.src} src={after.src} alt={after.alt} fill sizes={sizes} className={imgCls} />
+      <Image key={after.src} draggable={false} src={after.src} alt={after.alt} fill sizes={sizes} className={imgCls} />
       <div className="absolute inset-0" style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}>
-        {backdrop && <Image key={`bd-${before.src}`} src={before.src} alt="" aria-hidden fill sizes="200px" className="scale-110 object-cover opacity-45 blur-2xl" />}
+        {backdrop && <Image key={`bd-${before.src}`} src={before.src} alt="" aria-hidden draggable={false} fill sizes="200px" className="scale-110 object-cover opacity-45 blur-2xl" />}
         {/* 겹친 두 장의 바탕이 같아야 갈림선 양쪽 여백 색이 맞는다 */}
         {!backdrop && fit === 'contain' && <div className={`absolute inset-0 ${bg}`} />}
-        <Image key={before.src} src={before.src} alt={before.alt} fill sizes={sizes} className={imgCls} />
+        <Image key={before.src} draggable={false} src={before.src} alt={before.alt} fill sizes={sizes} className={imgCls} />
       </div>
 
       {/* 갈림선 + 주황 알약 손잡이 */}
@@ -152,6 +155,7 @@ export function CompareStage({
         aria-valuenow={Math.round(pos)}
         onPointerDown={(e) => {
           e.stopPropagation();
+          if (e.pointerType === 'mouse') e.preventDefault();
           e.currentTarget.setPointerCapture?.(e.pointerId);
           touched.current = true;
           setHintDone(true);
