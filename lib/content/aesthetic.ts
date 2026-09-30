@@ -293,7 +293,7 @@ export const AESTHETIC_DOCS: Doc[] = [
         ],
       },
       {
-        /* 2026-09-30 병원이 새 미백 사진을 보내 옴 → 다른 진료 쪽처럼 사례 모음(lib/caseLibrary.ts)으로. 옛 3쌍도 그리로 옮겼다 */
+        /* 2026-09-30 병원이 새 미백 사진을 보내 옴 → 다른 진료 쪽처럼 사례 모음(lib/caseLibrary.ts)으로. 옛 3쌍은 오너 지시로 뺐다 */
         type: 'caseGallery',
         id: 'cases',
         title: '치아미백 전후',

@@ -100,12 +100,9 @@ export const CASES: CaseItem[] = [
   { id: 'resin-07-intraoral-close', category: 'resin', type: 'intraoral', caption: '상악 중절치 절단연 파절 레진 수복 — 근접 사진', before: { key: 'cases2/resin-07-intraoral-close-before', w: 1400, h: 700 }, after: { key: 'cases2/resin-07-intraoral-close-after', w: 1400, h: 700 }, edits: '전·후 모두: 견인기 얼룩·타액 기포만 제거, 치아 표면은 손대지 않음' },
   { id: 'resin-07-intraoral-wide', category: 'resin', type: 'intraoral', caption: '상악 중절치 절단연 파절 레진 수복 — 전체 사진', before: { key: 'cases2/resin-07-intraoral-wide-before', w: 1400, h: 933 }, after: { key: 'cases2/resin-07-intraoral-wide-after', w: 1400, h: 933 }, edits: '전·후 모두: 견인기 얼룩·타액 기포만 제거, 치아 표면은 손대지 않음' },
   { id: 'resin-08-intraoral', category: 'resin', type: 'intraoral', caption: '상악 전치부 치경부 레진 수복', before: { key: 'cases2/resin-08-intraoral-before', w: 1250, h: 625 }, after: { key: 'cases2/resin-08-intraoral-after', w: 1250, h: 625 } },
-  /* 치아미백 — 01·02 는 2026-09-30 병원이 보낸 사진(더 넓게 찍힌 쪽을 다른 쪽 화각에 맞춰 잘랐다), old-1~3 은 옛 홈페이지 미백 사례(lib/cases.ts 에서 옮김, 원본 약 590px) */
+  /* 치아미백 — 2026-09-30 병원이 보낸 사진(더 넓게 찍힌 쪽을 다른 쪽 화각에 맞춰 잘랐다). 옛 홈페이지 미백 3쌍(cases/whitening-*)은 해상도가 낮아 오너가 뺐다(09-30) */
   { id: 'whitening-01-intraoral', category: 'whitening', type: 'intraoral', caption: '전문가 치아미백 — 전체적으로 누렇게 변색된 치아', before: { key: 'cases2/whitening-01-intraoral-before', w: 871, h: 417 }, after: { key: 'cases2/whitening-01-intraoral-after', w: 871, h: 417 } },
   { id: 'whitening-02-intraoral', category: 'whitening', type: 'intraoral', caption: '전문가 치아미백 — 색상 견본을 대어 본 전후 치아 색', before: { key: 'cases2/whitening-02-intraoral-before', w: 966, h: 482 }, after: { key: 'cases2/whitening-02-intraoral-after', w: 966, h: 482 } },
-  { id: 'whitening-old-1', category: 'whitening', type: 'intraoral', caption: '전문가 치아미백', before: { key: 'cases/whitening-1-before', w: 591, h: 244 }, after: { key: 'cases/whitening-1-after', w: 584, h: 244 } },
-  { id: 'whitening-old-2', category: 'whitening', type: 'intraoral', caption: '전문가 치아미백', before: { key: 'cases/whitening-2-before', w: 591, h: 244 }, after: { key: 'cases/whitening-2-after', w: 584, h: 244 } },
-  { id: 'whitening-old-3', category: 'whitening', type: 'intraoral', caption: '전문가 치아미백', before: { key: 'cases/whitening-3-before', w: 591, h: 244 }, after: { key: 'cases/whitening-3-after', w: 584, h: 244 } },
   { id: 'tmj-01-xray', category: 'tmj', type: 'xray', xrayKind: 'ct', caption: '턱관절 CT 측면 단면 — 세 시점 경과', before: { key: 'cases2/tmj-01-xray-1', w: 578, h: 304 }, middle: [{ key: 'cases2/tmj-01-xray-2', w: 578, h: 304 }], after: { key: 'cases2/tmj-01-xray-3', w: 578, h: 304 } },
 ];
 
