@@ -293,13 +293,12 @@ export const AESTHETIC_DOCS: Doc[] = [
         ],
       },
       {
-        type: 'cases',
+        /* 2026-09-30 병원이 새 미백 사진을 보내 옴 → 다른 진료 쪽처럼 사례 모음(lib/caseLibrary.ts)으로. 옛 3쌍도 그리로 옮겼다 */
+        type: 'caseGallery',
         id: 'cases',
         title: '치아미백 전후',
         lead: '광화문 선치과에서 진료한 치아미백 사례입니다.',
-        figure: { key: 'aesthetic/whitening-cases', alt: '치아미백 전과 후를 비교한 사례 사진 3쌍' },
-        caseGroup: 'whitening',
-        note: CASE_NOTE,
+        categories: ['whitening'],
       },
       {
         type: 'points',

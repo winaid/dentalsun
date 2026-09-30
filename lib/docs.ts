@@ -43,7 +43,7 @@ export type Block =
    * 실제 치료 전후 사례(구내 / 방사선 두 영역, 위=전·아래=후) — 목록은 lib/caseLibrary.ts.
    * categories 에 해당하는 사례만 나온다. 사례가 하나도 없으면 구역째 안 나온다.
    */
-  | { type: 'caseGallery'; id?: string; title?: string; lead?: string; categories: Array<'implant' | 'fullarch' | 'endo' | 'reendo' | 'wisdom' | 'anterior' | 'fracture' | 'resin' | 'tmj'> }
+  | { type: 'caseGallery'; id?: string; title?: string; lead?: string; categories: Array<'implant' | 'fullarch' | 'endo' | 'reendo' | 'wisdom' | 'anterior' | 'fracture' | 'resin' | 'whitening' | 'tmj'> }
   /** 강조 한 줄 */
   | { type: 'quote'; text: string; by?: string }
   /** 다른 문서로 가는 카드 */
