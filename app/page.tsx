@@ -376,7 +376,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── 치료 전후 사례 — 2026-09-29 원장 요청: 병원이 보낸 실제 사진을 '구내 / 방사선' 두 영역, 위=전·아래=후로.
+        {/* ── 치료 전후 사례 — 2026-09-29 원장 요청: 병원이 보낸 실제 사진을 '구내 / 방사선' 두 영역. 영역마다 좌우로 끄는 비교(왼쪽=전·오른쪽=후, 보는 법은 CaseGallery 아래 안내가 맡는다).
              목록은 lib/caseLibrary.ts (빼고 싶은 사례는 거기서 한 줄 지우면 된다) ── */}
         <section className="section" id="cases">
           <div className="wrap">
@@ -386,7 +386,7 @@ export default function HomePage() {
                 광화문 선치과 <span className="accent">실제 치료 전후</span>
               </h2>
               <p className="lead mt-4">
-                <Sentences text="대표원장이 직접 진료한 환자분의 구내 사진과 방사선 사진입니다. 위가 치료 전, 아래가 치료 후입니다." />
+                <Sentences text="대표원장이 직접 진료한 환자분의 실제 치료 전후입니다. 입안을 찍은 구내 사진과 방사선 사진으로 나눠, 같은 부위의 치료 전과 후를 한 화면에서 비교합니다." />
               </p>
             </div>
             <div className="reveal mt-10">

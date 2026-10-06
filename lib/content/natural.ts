@@ -102,7 +102,7 @@ export const NATURAL_DOCS: Doc[] = [
         type: 'caseGallery',
         id: 'cases',
         title: '근관치료 · 전치부 파절 치료 전후',
-        lead: '광화문 선치과에서 치료한 실제 사례입니다. 위가 치료 전, 아래가 치료 후입니다.',
+        lead: '광화문 선치과에서 치료한 실제 사례입니다. 같은 부위의 치료 전과 후를 한 화면에서 비교합니다.',
         categories: ['endo', 'fracture'],
       },
       {
@@ -254,7 +254,7 @@ export const NATURAL_DOCS: Doc[] = [
         type: 'caseGallery',
         id: 'case-gallery',
         title: '근관치료 전후 사례',
-        lead: '구내 사진과 방사선 사진으로 본 근관치료 전후입니다. 위가 치료 전, 아래가 치료 후입니다.',
+        lead: '구내 사진과 방사선 사진으로 본 근관치료 전후입니다. 같은 치아의 치료 전과 후를 한 화면에서 비교합니다.',
         categories: ['endo'],
       },
       {
