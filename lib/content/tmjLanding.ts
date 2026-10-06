@@ -364,6 +364,16 @@ export const TMJ_KNOWHOW = {
   ] as TmjCard[],
 };
 
+/**
+ * 허브 첫 화면 카드 세 장 — 2026-10-06 원장 PPT 47쪽 문구 그대로(띄어쓰기까지).
+ * 전에는 아래 노하우 구역(TMJ_KNOWHOW)의 첫 문장을 빌려 썼다. 지시는 첫 화면뿐이라 노하우 구역은 그대로 두고 따로 뗐다.
+ */
+export const TMJ_HUB_HERO_ITEMS: Array<{ title: string; desc: string }> = [
+  { title: '정확한 진단에서 시작하는 맞춤 치료', desc: '통합치의학과 전문의이자 대한 턱관절교합학회 정회원인 대표원장이 턱관절의 상태와 증상의 원인을 정확히 진단합니다.' },
+  { title: '오랜 기간 다수의 턱관절 진료', desc: '다양한 턱관절 진료 경험과 노하우를 바탕으로 환자별 최적의 치료 계획을 세웁니다.' },
+  { title: '증상 완화를 넘어, 기능 회복까지', desc: '턱관절 뿐 아니라 주변 근육과 구강 구조까지 함께 고려해 편안하고 안정적인 턱의 기능 회복을 목표로 치료합니다.' },
+];
+
 /** 장비 두 가지 — 원본 배너(jaw-join-treatment06·07)의 사실(원적외선 5배·치료 모드·건강보험·올인원·짧은 촬영) 그대로 */
 export const TMJ_EQUIP: Array<{ eyebrow: string; title: string; lead: string; points: string[]; fig: Fig }> = [
   {

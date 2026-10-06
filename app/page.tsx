@@ -276,11 +276,12 @@ export default function HomePage() {
           <div className="wrap">
             <div className="reveal mx-auto max-w-[820px] text-center">
               <p className="eyebrow justify-center">PREMIUM DIGITAL IMPLANT</p>
+              {/* 2026-10-06 원장 PPT 56쪽 — 제목·설명 모두 병원 문구 그대로("계측에서 방법이 나온다는 표현이 어렵다") */}
               <h2 className="display-sm mt-4">
-                잇몸뼈가 부족해도, <span className="accent">방법은 계측에서 나옵니다</span>
+                임플란트 10년 보증, <span className="accent">오래 쓸 결과까지 생각합니다</span>
               </h2>
               <p className="lead mt-4">
-                <Sentences text="CBCT로 잔존 골량과 신경관·상악동의 위치를 먼저 계측합니다. 골이식이나 상악동거상술이 필요한 경우, 치아가 모두 빠진 무치악까지 구강 상태에 맞는 식립 방법을 정하고 대표원장이 직접 수술합니다." />
+                <Sentences text="임플란트는 식립하는 것으로 끝나는 치료가 아닙니다. 오래 안정적으로 사용할 수 있도록 정확한 진단과 환자의 구강 상태에 맞는 치료를 원칙으로 하며, 치료 후에도 10년 보증제도로 책임을 이어갑니다." />
               </p>
             </div>
             {/* 유튜브 영상은 2026-09-29 원장 피드백 7번으로 FAQ 바로 위 구역으로 옮겼다 */}

@@ -43,6 +43,7 @@ import {
   TMJ_HABITS,
   TMJ_HERO,
   TMJ_HERO_ITEMS,
+  TMJ_HUB_HERO_ITEMS,
   TMJ_KNOWHOW,
   TMJ_PRINCIPLE,
   TMJ_PROCESS,
@@ -316,7 +317,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
   const heroLead = collage?.lead ?? TMJ_HERO.desc;
   const heroCardsLead = collage?.cardsLead ?? TMJ_HERO.cardsLead;
   const heroItems = isHub
-    ? TMJ_KNOWHOW.items.map((k) => ({ title: k.title, desc: first(k.desc) }))
+    ? TMJ_HUB_HERO_ITEMS
     : (TMJ_HERO_ITEMS[doc.path] ?? [{ title: doc.title, desc: first(doc.summary) }]);
   const faqHead = TMJ_FAQ_HEAD[doc.path] ?? TMJ_FAQ_HEAD['/treatment/tmj'];
   const contact = TMJ_CONTACT[doc.path] ?? TMJ_CONTACT['/treatment/tmj'];
