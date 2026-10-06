@@ -32,7 +32,7 @@ const SLIDES = [
     fit: 'object-[56%_50%] md:object-[58%_50%]',
     title: (
       <>
-        15년째 광화문 같은 자리,
+        15년 이상 광화문 같은 자리,
         <br />
         <span className="accent-sun">끝까지</span> 함께할 치과를 찾으신다면
       </>
