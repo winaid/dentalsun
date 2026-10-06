@@ -201,17 +201,30 @@ export default function HomePage() {
                 같은 치료라도 <span className="accent">누가 하느냐</span>가 다릅니다
               </h2>
               <p className="lead mt-4">
-                <Sentences text="진단과 수술, 보철과 정기검진을 대표원장이 직접 맡습니다. 검사 영상을 함께 보며 원인과 치료 순서를 설명하고, 지금 필요한 치료부터 권해 드립니다." />
+                {/* 2026-10-06 원장 PPT 53쪽 '보철 >> 치료' — 둘째 문장(오너 지시: '검사 영상을 치료 순으로 설명하고') */}
+                <Sentences text="진단과 수술, 보철과 정기검진을 대표원장이 직접 맡습니다. 검사 영상을 치료 순으로 설명하고, 지금 필요한 치료부터 권해 드립니다." />
               </p>
             </div>
-            <ul className="reveal-stack grid-cards mt-12 sm:grid-cols-2 lg:grid-cols-4">
+            {/* 카드 다섯 장 — 넓은 화면은 3칸 + 2칸(아래 줄 가운데), 태블릿은 2칸(마지막 한 장 가운데), 폰은 1칸.
+                 사진은 54쪽 예시처럼 글 아래에 붙여, 줄마다 사진 높이가 맞도록 카드 맨 아래로 민다. */}
+            <ul className="reveal-stack grid-cards mt-12 sm:grid-cols-2 lg:grid-cols-6">
               {STRENGTHS.map((s, i) => (
-                <li key={s.title} className="card card-3d flex h-full flex-col p-5 sm:p-7">
-                  <span className="num">{String(i + 1).padStart(2, '0')}</span>
-                  <p className="mt-3 text-[1.12rem] font-bold leading-snug text-ink sm:mt-5">{s.title}</p>
-                  <p className="mt-2 text-[15.5px] leading-relaxed text-ink-soft sm:mt-3">
-                    <Sentences text={s.desc} />
-                  </p>
+                <li
+                  key={s.title}
+                  className={`card card-3d flex h-full flex-col lg:col-span-2 ${i === 3 ? 'lg:col-start-2' : ''} ${i === STRENGTHS.length - 1 ? 'sm:col-span-2 sm:w-[calc(50%-0.625rem)] sm:justify-self-center lg:w-auto lg:justify-self-stretch' : ''}`}
+                >
+                  <div className="p-5 sm:p-7">
+                    <span className="num">{String(i + 1).padStart(2, '0')}</span>
+                    <p className="mt-3 text-[1.12rem] font-bold leading-snug text-ink sm:mt-5">{s.title}</p>
+                    <p className="mt-2 text-[15.5px] leading-relaxed text-ink-soft sm:mt-3">
+                      <Sentences text={s.desc} />
+                    </p>
+                  </div>
+                  {/* 54쪽 예시처럼 사진 위쪽이 흰 카드에 녹아들게 — 얼굴이 흐려지지 않도록 위 1/5 만 */}
+                  <span className="relative mt-auto block aspect-[4/3] w-full overflow-hidden bg-white">
+                    <Image src={figSrc(s.fig.key)} alt={s.fig.alt} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className={s.fig.pos.startsWith('object-contain') ? s.fig.pos : `object-cover ${s.fig.pos}`} />
+                    <span aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-1/5 bg-gradient-to-b from-white to-transparent" />
+                  </span>
                 </li>
               ))}
             </ul>

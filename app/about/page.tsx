@@ -73,9 +73,13 @@ export default function AboutPage() {
               </h2>
               <p className="lead mt-4"><Sentences text="진단한 의사가 수술과 보철, 정기검진까지 이어서 봅니다. 치료 계획을 세운 사람이 경과도 같은 기준으로 확인합니다." /></p>
             </div>
-            <ul className="reveal-stack grid-cards mt-10 sm:grid-cols-2 lg:grid-cols-4">
+            {/* 2026-10-06 카드 05 신설로 다섯 장 — 홈과 같이 3칸 + 2칸(넓은 화면), 2칸(태블릿, 마지막 가운데) */}
+            <ul className="reveal-stack grid-cards mt-10 sm:grid-cols-2 lg:grid-cols-6">
               {STRENGTHS.map((s, i) => (
-                <li key={s.title} className="card flex h-full flex-col p-6">
+                <li
+                  key={s.title}
+                  className={`card flex h-full flex-col p-6 lg:col-span-2 ${i === 3 ? 'lg:col-start-2' : ''} ${i === STRENGTHS.length - 1 ? 'sm:col-span-2 sm:w-[calc(50%-0.625rem)] sm:justify-self-center lg:w-auto lg:justify-self-stretch' : ''}`}
+                >
                   <span className="num">{String(i + 1).padStart(2, '0')}</span>
                   <p className="mt-4 text-[1.05rem] font-bold text-ink">{s.title}</p>
                   <p className="mt-2 text-[15px] leading-relaxed text-ink-soft"><Sentences text={s.desc} /></p>
