@@ -26,6 +26,8 @@ export function CaseGallery({ categories, filter = false }: { categories?: CaseC
   if (!all.length) return null;
   /* 영역마다 끌어 보기인지(사례가 섞여 있으면) 위아래 차례인지(경과 사례뿐이면) — 아래 Area 와 같은 판정 */
   const areas = [intra, xray].filter((a) => a.length);
+  /** 두 영역이 다 있을 때만 넓은 화면에서 나란히 둔다(한 영역뿐이면 가운데 한 칸) */
+  const paired = areas.length === 2;
   const hasSlider = areas.some((a) => !a.every((c) => c.middle?.length));
   const hasStack = areas.some((a) => a.every((c) => c.middle?.length));
   const how = [hasSlider && '가운데 손잡이를 좌우로 끌면 왼쪽이 치료 전, 오른쪽이 치료 후입니다.', hasStack && '경과 사진은 위에서 아래로 시간 순서입니다.'].filter(Boolean).join(' ');
@@ -47,9 +49,13 @@ export function CaseGallery({ categories, filter = false }: { categories?: CaseC
           ))}
         </div>
       )}
-      {/* key 로 거르기가 바뀌면 영역을 새로 — 고른 사례가 첫 장으로 돌아간다 */}
-      {intra.length > 0 && <Area key={`i-${cat}`} title="구내 사진 전후" sub="입안을 직접 찍은 사진" items={intra} kind="intraoral" />}
-      {xray.length > 0 && <Area key={`x-${cat}`} title="방사선 사진 전후" sub="파노라마 · 치근단 · CT" items={xray} kind="xray" />}
+      {/* key 로 거르기가 바뀌면 영역을 새로 — 고른 사례가 첫 장으로 돌아간다.
+           2026-10-06 원장 PPT 46쪽 "방사선 왼쪽, 구내사진 오른쪽으로 한화면에 양옆으로", "크기 작게" —
+           넓은 화면은 방사선 | 구내 나란히, 좁은 화면은 방사선 위·구내 아래(오너). 무대는 예전(800px)보다 작게. */}
+      <div className={`mx-auto grid max-w-[1180px] grid-cols-1 ${paired ? 'lg:grid-cols-2 lg:gap-10' : ''}`}>
+        {xray.length > 0 && <Area key={`x-${cat}`} title="방사선 사진 전후" sub="파노라마 · 치근단 · CT" items={xray} kind="xray" paired={paired} />}
+        {intra.length > 0 && <Area key={`i-${cat}`} title="구내 사진 전후" sub="입안을 직접 찍은 사진" items={intra} kind="intraoral" paired={paired} />}
+      </div>
       <p className="mx-auto mt-8 max-w-[900px] rounded-xl bg-sun-50 px-5 py-3.5 text-center text-[13.5px] leading-relaxed text-sun-700"><Sentences text={`${CASE_NOTE} ${how}`} /></p>
     </div>
   );
@@ -57,7 +63,7 @@ export function CaseGallery({ categories, filter = false }: { categories?: CaseC
 
 const pad = (n: number) => String(n).padStart(2, '0');
 
-function Area({ title, sub, items, kind }: { title: string; sub: string; items: CaseItem[]; kind: 'intraoral' | 'xray' }) {
+function Area({ title, sub, items, kind, paired = false }: { title: string; sub: string; items: CaseItem[]; kind: 'intraoral' | 'xray'; paired?: boolean }) {
   /* 경과 사례(턱관절 CT 세 시점)는 다른 사례와 함께 있으면 처음↔최근 두 장으로 끌어 보고, 그것뿐일 때(턱관절 쪽)만 위아래 차례로 둔다 */
   const onlyStacks = items.every((c) => c.middle?.length);
   const pairs = onlyStacks ? [] : items;
@@ -73,7 +79,7 @@ function Area({ title, sub, items, kind }: { title: string; sub: string; items: 
   const thumbRatio = xr ? 'aspect-[11/5]' : 'aspect-[16/10]';
   return (
     <section className="mt-12" aria-label={title}>
-      <div className="mx-auto flex max-w-[800px] items-baseline justify-between gap-4">
+      <div className="mx-auto flex max-w-[640px] items-baseline justify-between gap-4">
         <h3 className="text-[1.2rem] font-extrabold text-ink md:text-[1.35rem]">
           {title} <span className="ml-1 text-[14px] font-semibold text-ink-muted">{sub}</span>
         </h3>
@@ -81,14 +87,15 @@ function Area({ title, sub, items, kind }: { title: string; sub: string; items: 
       </div>
 
       {cur && (
-        <div className="mx-auto mt-4 max-w-[800px]">
+        <div className="mx-auto mt-4 max-w-[640px]">
           <CompareStage
             before={{ src: figSrc(cur.before.key), alt: `${cur.caption} — 치료 전` }}
             after={{ src: figSrc(cur.after.key), alt: `${cur.caption} — 치료 후` }}
             badge={`${CASE_CATEGORY_LABEL[cur.category]} · CASE ${pad(ci + 1)} / ${pad(pairs.length)}`}
             resetKey={cur.id}
             style={{ aspectRatio: String(stageRatio(cur)) }}
-            className=""
+            /* 나란히 놓일 때는 두 무대 높이를 맞춘다(사진은 통째로 놓이므로 남는 자리는 바탕색) */
+            className={paired ? 'lg:!aspect-[16/10]' : ''}
             fit="contain"
             backdrop={!xr}
             bg={xr ? 'bg-black' : 'bg-night'}
