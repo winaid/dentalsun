@@ -49,7 +49,8 @@ export function HomeStats() {
  *  · 2~4단계는 흰 바탕 제품 사진이라 잘라 채우지 않고 통째로 놓는다(fit='contain').
  */
 const STAGE_IMG: Array<{ key: string; alt: string; fit: 'cover' | 'contain' }> = [
-  { key: 'place/place08', alt: '광화문선치과 3D CT 촬영실', fit: 'cover' },
+  /* 2026-10-06 카톡 '메인페이지 CT사진은 깔끔한걸로' — 병원 CT 촬영실 실사(place/place08)를 바탕으로 방만 정돈한 AI 사진(장비는 원본 그대로). 원본 C:/tmp/sun-ppt-1006/gen */
+  { key: 'ai/ct-room', alt: '광화문선치과 3D CT 촬영 장비', fit: 'cover' },
   { key: 'orig/misc-nav-implant-set', alt: '내비게이션 임플란트 모의수술 화면이 뜬 모니터·태블릿과 임플란트 모형', fit: 'contain' },
   { key: 'orig/intro-p05-group', alt: '당일 보철 제작 장비 — 3D 프린터·CAD 모니터·후처리기', fit: 'contain' },
   { key: 'equip/guide', alt: '하악 모형에 씌운 투명 수술 유도장치', fit: 'contain' },
