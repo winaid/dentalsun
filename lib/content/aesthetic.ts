@@ -71,7 +71,7 @@ export const AESTHETIC_DOCS: Doc[] = [
         type: 'caseGallery',
         id: 'cases',
         title: '전치부 보철 · 레진 치료 전후',
-        lead: '광화문 선치과에서 치료한 실제 사례입니다. 같은 부위의 치료 전과 후를 한 화면에서 비교합니다.',
+        lead: '광화문 선치과에서 치료한 실제 사례입니다.',
         categories: ['anterior', 'resin'],
       },
       {

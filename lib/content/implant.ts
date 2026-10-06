@@ -94,7 +94,7 @@ export const IMPLANT_DOCS: Doc[] = [
         type: 'caseGallery',
         id: 'cases',
         title: '광화문 선치과 임플란트 치료 사례',
-        lead: '대표원장이 진단부터 보철까지 진행한 실제 사례입니다. 같은 부위의 치료 전과 후를 한 화면에서 비교하며, 결과는 구강 상태에 따라 개인차가 있습니다.',
+        lead: '대표원장이 진단부터 보철까지 진행한 실제 사례입니다. 결과는 구강 상태에 따라 개인차가 있습니다.',
         categories: ['implant', 'fullarch'],
       },
       {
@@ -289,7 +289,7 @@ export const IMPLANT_DOCS: Doc[] = [
         type: 'caseGallery',
         id: 'cases',
         title: '광화문 선치과 풀아치 임플란트 사례',
-        lead: '대표원장이 CBCT 진단부터 식립, 최종 보철까지 진행한 실제 사례입니다. 같은 부위의 치료 전과 후를 한 화면에서 비교합니다.',
+        lead: '대표원장이 CBCT 진단부터 식립, 최종 보철까지 진행한 실제 사례입니다.',
         categories: ['fullarch'],
       },
       {

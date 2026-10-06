@@ -386,7 +386,7 @@ export default function HomePage() {
                 광화문 선치과 <span className="accent">실제 치료 전후</span>
               </h2>
               <p className="lead mt-4">
-                <Sentences text="대표원장이 직접 진료한 사례입니다. 입안을 찍은 구내 사진과 방사선 사진으로 나눠, 같은 부위의 치료 전과 후를 한 화면에서 비교합니다." />
+                <Sentences text="대표원장이 직접 진료한 사례입니다." />
               </p>
             </div>
             <div className="reveal mt-10">

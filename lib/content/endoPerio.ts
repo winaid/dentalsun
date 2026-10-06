@@ -149,7 +149,7 @@ export const ENDO_PERIO_DOCS: Doc[] = [
         type: 'caseGallery',
         id: 'cases',
         title: '재근관치료 전후 사례',
-        lead: '광화문 선치과에서 재근관치료를 받은 실제 사례입니다. 같은 치아의 치료 전과 후를 한 화면에서 비교합니다.',
+        lead: '광화문 선치과에서 재근관치료를 받은 실제 사례입니다.',
         categories: ['reendo'],
       },
       {
