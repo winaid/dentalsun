@@ -278,7 +278,8 @@ export default function HomePage() {
               <p className="eyebrow justify-center">PREMIUM DIGITAL IMPLANT</p>
               {/* 2026-10-06 원장 PPT 56쪽 — 제목·설명 모두 병원 문구 그대로("계측에서 방법이 나온다는 표현이 어렵다") */}
               <h2 className="display-sm mt-4">
-                임플란트 10년 보증, <span className="accent">오래 쓸 결과까지 생각합니다</span>
+                임플란트 10년 보증,
+                <br className="md:hidden" /> <span className="accent">오래 쓸 결과까지 생각합니다</span>
               </h2>
               <p className="lead mt-4">
                 <Sentences text="임플란트는 식립하는 것으로 끝나는 치료가 아닙니다. 오래 안정적으로 사용할 수 있도록 정확한 진단과 환자의 구강 상태에 맞는 치료를 원칙으로 하며, 치료 후에도 10년 보증제도로 책임을 이어갑니다." />
