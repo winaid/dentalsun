@@ -232,6 +232,27 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* ── 국가자격 치과위생사 — 2026-10-07 원장 PPT 61쪽 '추가 희망 · 내용 변경 가능'(예시 띠). 예시 문구를 우리 말로 다듬었다(스탭→스태프, 치위생사→치과위생사).
+             바로 위 강점 카드 04·05 가 스태프 이야기라 그 뒤에 둔다. 배경은 AI 사진(병원 사진은 전부 원장이라 스태프 사진이 없다, 얼굴 없음).
+             ⚠️ '스태프 전원이 국가자격 치과위생사' 는 병원 확인 대기 — 사실이 아니면 거짓 광고(의료법 제56조). 오너에게 알림(2026-10-07). ── */}
+        <section className="relative isolate overflow-hidden bg-night py-24 text-white md:py-28">
+          <div className="absolute inset-0 -z-10">
+            <Image src={figSrc('ai/wide-hygienist')} alt="" fill sizes="(max-width: 1023px) 250vw, 100vw" className="object-cover opacity-45" data-parallax="0.2" />
+            <div className="absolute inset-0 bg-gradient-to-b from-night/80 via-night/60 to-night/85" />
+          </div>
+          <div className="wrap">
+            <div className="reveal mx-auto max-w-[860px] text-center">
+              <p className="eyebrow on-dark justify-center">COMFORT &amp; CARE</p>
+              <h2 className="display-sm mt-4 !text-white on-photo">
+                전문의 의료진은 물론,
+                <br />
+                스태프 전원이 <span className="accent-sun whitespace-nowrap">국가자격 치과위생사</span>로 구성됩니다
+              </h2>
+              <p className="mx-auto mt-6 max-w-[640px] text-[1.05rem] leading-[1.8] text-white/80 md:text-[1.12rem]">편안하고 친절하게, 안심하실 수 있도록 함께 돌봅니다.</p>
+            </div>
+          </div>
+        </section>
+
         {/* ── 진료과목 — 사진 카드 ── */}
         <section className="section bg-canvas">
           <div className="wrap">
@@ -310,9 +331,52 @@ export default function HomePage() {
                 ))}
               </ul>
             </div>
+            {/* 보증제도 단추는 바로 아래 보증 기간 띠로 옮겼다(2026-10-07) */}
             <div className="mt-6 flex flex-wrap justify-center gap-3">
               <Link href="/treatment/implant" className="btn-brand">임플란트 전체 안내</Link>
-              <Link href="/treatment/implant/warranty" className="btn-ghost">임플란트 보증제도</Link>
+            </div>
+          </div>
+        </section>
+
+        {/* ── 보증 기간 띠 — 2026-10-07 원장 PPT 62쪽 '추가 희망'(예시: 본플란트치과 띠). 카톡 보증서 줄은 '지우기' → 뺐다.
+             제목과 맨 아래 단서는 PPT 글자 그대로(제목 끝 마침표만 다른 제목들처럼 뺐다). 숫자는 예시(남의 병원 값)가 아니라
+             우리 보증표(lib/content/implant.ts 보증제도 table) 값 — 임플란트 수술관련 10년 · 임플란트 보철관련 5년 · 보존 및 보철 5년.
+             10년은 전부 무상이 아니라 기간별 지원(무상 → 50·30·15%)이라 한 줄로 밝히고 보증표로 잇는다(과장 소지 방지). ── */}
+        <section className="relative isolate overflow-hidden bg-night py-24 text-white md:py-28">
+          <div className="absolute inset-0 -z-10">
+            <Image src={figSrc('place2/treatment-bays')} alt="" fill sizes="(max-width: 1023px) 250vw, 100vw" className="object-cover opacity-35" data-parallax="0.2" />
+            <div className="absolute inset-0 bg-gradient-to-b from-night/85 via-night/70 to-night/90" />
+          </div>
+          <div className="wrap">
+            <div className="reveal mx-auto max-w-[880px] text-center">
+              <p className="eyebrow on-dark justify-center">WARRANTY</p>
+              <h2 className="display-sm mt-4 !text-white on-photo">
+                치료에 대한 자신감,
+                <br />
+                보증기간으로 약속합니다
+              </h2>
+              <p className="mt-10 text-[19px] font-bold text-white md:text-[22px]">
+                임플란트
+                <span className="mx-1.5 inline-block align-[-0.12em] text-[64px] font-extrabold leading-none text-sun-300 md:text-[84px]">10</span>년
+              </p>
+              <ul className="mx-auto mt-8 grid max-w-[520px] grid-cols-2 divide-x divide-white/20">
+                {[
+                  ['임플란트 보철', '5'],
+                  ['보존 · 보철 치료', '5'],
+                ].map(([label, years]) => (
+                  <li key={label} className="px-3">
+                    <p className="text-[15px] font-bold text-white/85 md:text-[16px]">{label}</p>
+                    <p className="mt-2 text-[16px] text-white/85">
+                      <span className="mr-1 align-[-0.1em] text-[44px] font-extrabold leading-none text-sun-300 md:text-[52px]">{years}</span>년
+                    </p>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-10 text-[14px] text-white/65 md:text-[15px]">기간에 따라 무상 · 50% · 30% · 15%로 나눠 지원합니다.</p>
+              <p className="mx-auto mt-2 max-w-[640px] text-balance text-[15px] font-bold leading-[1.7] text-white md:text-[16px]">(단, 본원의 치료계획을 준수하고 정기검진을 지속적으로 받는 경우에 한합니다)</p>
+              <div className="mt-8 flex justify-center">
+                <Link href="/treatment/implant/warranty" className="btn-sun">보증표 자세히 보기</Link>
+              </div>
             </div>
           </div>
         </section>

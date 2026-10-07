@@ -1130,5 +1130,9 @@
  "illust/abutment-custom": {
   "w": 720,
   "h": 770
+ },
+ "ai/wide-hygienist": {
+  "w": 1536,
+  "h": 1024
  }
 }
