@@ -1142,5 +1142,9 @@
  "ai/fullarch-band-bridge": {
   "w": 797,
   "h": 352
+ },
+ "place/award-banner": {
+  "w": 1340,
+  "h": 410
  }
 }

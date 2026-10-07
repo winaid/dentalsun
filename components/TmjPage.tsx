@@ -213,6 +213,24 @@ function Triad({ className = '' }: { className?: string }) {
  */
 export function AwardCard({ className = 'mt-10' }: { className?: string }) {
   const a = TMJ_AWARD;
+  /* 가로로 긴 사진(대기실 수상 현수막 등)은 카드 위에 크게, 수상 내용은 그 아래 — 세로 상장 칸(3:4)에 넣으면 글자가 잘린다 */
+  const size = a.photo ? figSize(a.photo.key) : null;
+  if (a.photo && size && size.w / size.h > 1.4)
+    return (
+      <figure className={`reveal mx-auto max-w-[720px] overflow-hidden rounded-2xl border border-hairline bg-white text-left shadow-[var(--shadow-soft)] ${className}`}>
+        <span className="relative block w-full" style={{ aspectRatio: `${size.w} / ${size.h}` }}>
+          <Image src={figSrc(a.photo.key)} alt={a.photo.alt} fill sizes="(max-width: 767px) 100vw, 720px" className="object-cover" />
+        </span>
+        <figcaption className="px-5 py-4 md:px-7 md:py-5">
+          <p className="text-[13px] font-bold text-sun-600">
+            {a.year} {a.by}
+          </p>
+          <p className="mt-1 text-[1.15rem] font-extrabold leading-snug text-ink md:text-[1.3rem]">
+            {a.title} <span className="whitespace-nowrap text-[15px] font-semibold text-brand-700 md:text-[16px]">{a.category} 수상</span>
+          </p>
+        </figcaption>
+      </figure>
+    );
   return (
     <div className={`reveal mx-auto flex max-w-[640px] items-center gap-5 rounded-2xl border border-hairline bg-white p-4 text-left shadow-[var(--shadow-soft)] md:gap-7 md:p-5 ${className}`}>
       <span className="relative block aspect-[3/4] w-[108px] shrink-0 overflow-hidden rounded-lg md:w-[132px]">
