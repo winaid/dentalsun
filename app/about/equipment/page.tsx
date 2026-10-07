@@ -69,7 +69,7 @@ export default function EquipmentPage() {
             <div className="reveal max-w-[820px]">
               <p className="eyebrow">DIGITAL SYSTEM</p>
               <h2 className="display-sm mt-4">
-                계측에서 보철까지, <span className="accent whitespace-nowrap">한 데이터로 잇습니다</span>
+                검사부터 보철까지, <span className="accent whitespace-nowrap">디지털 데이터 하나로 잇습니다</span>
               </h2>
               <p className="lead mt-4">
                 <Sentences text="구강스캔과 CT로 얻은 데이터가 모의 식립, 수술 가이드, 보철 설계까지 그대로 이어집니다. 단계가 바뀌어도 같은 데이터를 기준으로 삼아, 계획과 결과 사이의 차이를 줄입니다." />

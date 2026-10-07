@@ -28,7 +28,8 @@ export const NATURAL_DOCS: Doc[] = [
       {
         type: 'text',
         id: 'what',
-        title: '치수까지 상한 치아도 남길 수 있는지 먼저 봅니다',
+        title: '신경까지 상한 치아도 살릴 수 있는지 먼저 봅니다',
+        accent: '살릴 수 있는지',
         paragraphs: [
           '충치가 깊어 치수가 감염되더라도, 흔히 신경치료라 부르는 근관치료로 치아를 남길 수 있습니다. 감염된 치수를 제거하고 근관을 세척·소독한 뒤 밀폐하는 치료입니다. 뿌리와 치조골이 건강하다면 발치는 마지막에 검토합니다.',
           '충치가 잇몸 아래까지 진행해 보철을 씌울 자리가 부족하면, 치관 길이 확장술이나 근단 변위 판막술로 치아를 드러낸 뒤 치료합니다. 어떤 방법이 맞는지는 디지털 엑스레이와 3D CT 로 확인하고 정합니다.',
@@ -51,7 +52,8 @@ export const NATURAL_DOCS: Doc[] = [
       {
         type: 'table',
         id: 'diagnosis',
-        title: '치수 상태에 따라 치료가 달라집니다',
+        title: '신경 상태에 따라 치료가 달라집니다',
+        accent: '신경 상태',
         lead: '자극에 대한 반응과 통증의 양상, 방사선 사진으로 치수와 치근단 상태를 구분합니다.',
         head: ['상태', '특징', '치료 방향'],
         rows: [
@@ -79,7 +81,8 @@ export const NATURAL_DOCS: Doc[] = [
       {
         type: 'steps',
         id: 'flow',
-        title: '근관치료는 이렇게 진행합니다',
+        title: '신경치료는 이렇게 진행합니다',
+        accent: '이렇게 진행합니다',
         lead: '근관의 수와 염증 정도에 따라 내원 횟수는 달라집니다.',
         steps: [
           { title: '진단', desc: '디지털 엑스레이와 3D CT 로 근관의 수와 치근단 병소를 확인합니다.' },
@@ -93,6 +96,7 @@ export const NATURAL_DOCS: Doc[] = [
         type: 'text',
         id: 'keep',
         title: '자연치아를 먼저 지키는 이유',
+        accent: '먼저 지키는 이유',
         paragraphs: [
           '자연치아는 뿌리를 감싼 치주인대가 씹는 힘을 완충하고, 음식의 단단함을 미세하게 느끼게 합니다. 임플란트는 치조골에 직접 붙는 골유착 구조여서, 이 완충과 감각을 그대로 대신하지는 못합니다.',
           '그래서 보존할 수 있는 치아는 먼저 보존을 시도합니다. 다만 뿌리가 세로로 갈라졌거나 치조골 소실이 심하면, 무리하게 남기기보다 발치 후 임플란트를 함께 의논합니다.',
@@ -101,7 +105,7 @@ export const NATURAL_DOCS: Doc[] = [
       {
         type: 'caseGallery',
         id: 'cases',
-        title: '근관치료 · 전치부 파절 치료 전후',
+        title: '신경치료 · 앞니 깨짐 치료 전후',
         lead: '광화문 선치과에서 치료한 실제 사례입니다.',
         categories: ['endo', 'fracture'],
       },
@@ -184,7 +188,7 @@ export const NATURAL_DOCS: Doc[] = [
       {
         type: 'text',
         id: 'endo',
-        title: '근관치료의 원리',
+        title: '신경치료의 원리',
         paragraphs: [
           '치아 속에는 신경과 혈관으로 이루어진 치수가 지나는 근관이 있습니다. 충치나 외상으로 치수가 감염되면, 치수를 제거하고 근관을 세척·소독한 뒤 빈 공간을 밀폐하는 근관치료가 필요합니다.',
           '밀폐가 불완전하면 남은 틈으로 세균이 다시 자리 잡아 치근단 병소가 재발할 수 있습니다. 그래서 마지막 충전 재료와 밀폐 방법이 치료 결과에 영향을 줍니다.',
@@ -195,7 +199,7 @@ export const NATURAL_DOCS: Doc[] = [
       {
         type: 'compare',
         id: 'compare',
-        title: 'MTA 근관치료와 일반 근관치료의 차이',
+        title: 'MTA 신경치료와 일반 신경치료의 차이',
         lead: '근관을 비우고 소독하는 과정은 같고, 마지막 충전 재료와 쓰임에서 차이가 납니다.',
         columns: ['MTA 근관치료', '일반 근관치료'],
         rows: [
@@ -211,7 +215,7 @@ export const NATURAL_DOCS: Doc[] = [
       {
         type: 'steps',
         id: 'process',
-        title: 'MTA 근관치료 과정',
+        title: 'MTA 신경치료 과정',
         lead: '근관치료의 순서는 같고, 마지막 충전을 MTA 로 합니다.',
         steps: [
           { title: '근관 개방', desc: '무통마취 후 충치를 제거하고 치수가 있는 공간을 엽니다.' },
@@ -253,7 +257,7 @@ export const NATURAL_DOCS: Doc[] = [
       {
         type: 'caseGallery',
         id: 'case-gallery',
-        title: '근관치료 전후 사례',
+        title: '신경치료 전후 사례',
         lead: '구내 사진과 방사선 사진으로 본 근관치료 전후입니다.',
         categories: ['endo'],
       },
@@ -313,7 +317,8 @@ export const NATURAL_DOCS: Doc[] = [
       {
         type: 'text',
         id: 'what',
-        title: '근관세척이 근관치료의 결과를 좌우합니다',
+        title: '신경치료는 뿌리 속을 얼마나 깨끗이 씻느냐가 중요합니다',
+        accent: '얼마나 깨끗이 씻느냐',
         paragraphs: [
           '근관은 가늘고 휘어 있으며, 곁가지와 근관끼리 이어진 좁은 통로가 있습니다. 파일로 근관을 넓혀도 기구가 닿지 않는 벽이 남기 때문에, 세척액으로 씻어 내는 과정이 함께 필요합니다.',
           '엔도소닉은 초음파로 세척액을 미세하게 진동시켜, 이런 구석까지 세척액이 퍼지도록 돕습니다. 광화문 선치과는 이렇게 세척한 근관을 MTA 로 밀폐합니다.',
@@ -345,7 +350,7 @@ export const NATURAL_DOCS: Doc[] = [
       {
         type: 'steps',
         id: 'in-process',
-        title: '근관치료 중 초음파 세척의 위치',
+        title: '신경치료 중 초음파 세척을 하는 단계',
         lead: '엔도소닉은 별도의 치료가 아니라, 근관치료의 세척·소독 단계를 보강하는 과정입니다.',
         steps: [
           { title: '근관 개방', desc: '무통마취 후 충치를 제거하고 치수가 있는 공간을 엽니다.' },

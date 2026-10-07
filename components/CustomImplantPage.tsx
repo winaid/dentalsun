@@ -226,7 +226,7 @@ export function CustomImplantPage({ doc, part }: { doc: Doc; part: 'navigation' 
   const band =
     part === 'custom'
       ? { title: '내 잇몸에 맞는 지대주가 궁금하시다면', text: '검사 후 기성 지대주와 맞춤 지대주 가운데 어느 쪽이 알맞은지 설명해 드립니다. 네이버 예약이나 전화로 문의해 주세요.' }
-      : { title: '가이드 식립이 가능한지, CBCT로 먼저 확인합니다', text: '골량과 신경관까지의 거리를 계측한 뒤, 무절개가 가능한지와 골이식이 필요한지를 화면으로 보여 드리며 설명합니다.' };
+      : { title: '가이드 수술이 가능한지, 3D CT로 먼저 확인합니다', text: '골량과 신경관까지의 거리를 계측한 뒤, 무절개가 가능한지와 골이식이 필요한지를 화면으로 보여 드리며 설명합니다.' };
 
   return (
     <>
@@ -256,7 +256,7 @@ export function CustomImplantPage({ doc, part }: { doc: Doc; part: 'navigation' 
             {/* ══ 내비게이션 임플란트 쪽 ══ */}
             {part === 'navigation' && (
             <section id="navigation" className="scroll-mt-[96px]" aria-labelledby="ci-navi">
-              <Head id="ci-navi" label="수술 계획" title={<>식립 위치는 수술 전에, <span className="accent-sun">CBCT 위에서 정합니다</span></>} lead="CBCT와 구강스캔 데이터를 겹쳐 모의 식립을 마치고, 그 계획을 옮긴 수술 가이드로 식립합니다. 계획과 식립은 대표원장이 직접 맡습니다." />
+              <Head id="ci-navi" label="수술 계획" title={<>임플란트 위치는 수술 전에, <span className="accent-sun">3D CT로 정합니다</span></>} lead="CBCT와 구강스캔 데이터를 겹쳐 모의 식립을 마치고, 그 계획을 옮긴 수술 가이드로 식립합니다. 계획과 식립은 대표원장이 직접 맡습니다." />
               <div className="reveal-stack mt-12 grid gap-8 lg:grid-cols-[1fr_1.1fr] lg:items-center">
                 <span className="img-in relative block aspect-[4/3] overflow-hidden rounded-[24px] bg-canvas-2">
                   <Image src={figSrc(NAVI_WHAT.fig.key)} alt={NAVI_WHAT.fig.alt} fill sizes="(max-width: 1024px) 100vw, 480px" className={fitsBox(NAVI_WHAT.fig.key, 4, 3) ? 'object-cover' : '!object-contain p-3'} />

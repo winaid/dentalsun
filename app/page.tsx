@@ -98,11 +98,11 @@ const HUB_IMG: Record<string, string> = {
 export default function HomePage() {
   const featured = [
     /* 2026-09-29 맞춤 임플란트가 다시 독립 → 여섯 장 유지를 위해 보증제도는 아래 버튼으로 */
-    { href: '/treatment/implant/navigation', label: '내비게이션 임플란트', desc: 'CBCT 모의 식립 후 수술 가이드로 식립합니다.', fig: 'orig/misc-nav-implant-set' },
+    { href: '/treatment/implant/navigation', label: '내비게이션 임플란트', desc: '3D CT로 미리 계획하고, 수술 가이드로 심습니다.', fig: 'orig/misc-nav-implant-set' },
     { href: '/treatment/implant/custom', label: '맞춤 임플란트', desc: '잇몸 라인에 맞춘 맞춤 지대주로 완성합니다.', fig: 'ai/implant-custom' },
-    { href: '/treatment/implant/full-arch', label: '풀아치 임플란트', desc: '무치악에 4~6개를 식립해 고정성 보철을 연결합니다.', fig: 'orig/implant-fa-fixed' },
-    { href: '/treatment/implant/uv', label: 'UV 임플란트', desc: '광활성화한 픽스처로 골유착 환경을 돕습니다.', fig: 'ai/implant-uv' },
-    { href: '/treatment/implant/prf', label: '자가혈 임플란트', desc: '골이식 부위에 자가혈 농축 성분(PRF)을 씁니다.', fig: 'ai/implant-prf' },
+    { href: '/treatment/implant/full-arch', label: '풀아치 임플란트', desc: '치아가 없는 턱에 4~6개를 심고, 고정된 치아를 연결합니다.', fig: 'orig/implant-fa-fixed' },
+    { href: '/treatment/implant/uv', label: 'UV 임플란트', desc: '자외선으로 표면을 처리해, 뼈와 잘 붙도록 돕습니다.', fig: 'ai/implant-uv' },
+    { href: '/treatment/implant/prf', label: '자가혈 임플란트', desc: '뼈이식 부위에 내 혈액에서 얻은 PRF를 함께 넣습니다.', fig: 'ai/implant-prf' },
     { href: '/treatment/insurance', label: '보험 틀니 · 임플란트', desc: '만 65세 이상 건강보험 적용 기준을 안내합니다.', fig: 'ai/insurance-hub' },
   ];
 
@@ -424,17 +424,18 @@ export default function HomePage() {
             <div className="reveal mx-auto max-w-[880px] text-center">
               <p className="eyebrow on-dark justify-center">TMJ · 턱관절</p>
               <h2 className="display-sm mt-4 !text-white on-photo">
-                관절잡음 · 개구장애 · 저작근 통증,
+                {/* 2026-10-07 46쪽 '어렵다' — 예전: '관절잡음 · 개구장애 · 저작근 통증, 원인 감별이 치료의 시작입니다' */}
+                턱에서 소리가 나거나 아프다면,
                 <br />
-                <span className="accent-sun">원인 감별</span>이 치료의 시작입니다
+                <span className="accent-sun">원인부터</span> 정확히 찾습니다
               </h2>
               <p className="mx-auto mt-6 max-w-[720px] text-[1.05rem] leading-[1.85] text-white md:text-[1.15rem]">
-                <ScrubText text="턱관절 장애는 관절원판의 변위, 저작근의 과긴장, 이갈이·이악물기, 교합 이상이 함께 얽혀 나타납니다. 턱관절 CT와 개구량·교합·근육 촉진 검사로 원인을 나눈 뒤, 약물·물리치료부터 교합안정장치와 관절강 세척술까지 단계적으로 치료합니다." />
+                <ScrubText text="턱관절 질환은 턱관절 디스크의 위치, 턱 근육의 긴장, 이갈이·이악물기, 치아 맞물림이 함께 얽혀 생깁니다. 턱관절 CT와 입 벌리는 폭·맞물림·근육 검사로 원인을 나눈 뒤, 약과 물리치료부터 장치 치료, 관절 세척까지 필요한 단계만 진행합니다." />
               </p>
               <ul className="reveal-stack mx-auto mt-10 grid max-w-[860px] gap-4 sm:grid-cols-3">
                 {[
-                  ['01', '턱관절 CT · 교합 · 근육 검사'],
-                  ['02', '교합안정장치 · 관절강 세척술'],
+                  ['01', '턱관절 CT · 맞물림 · 근육 검사'],
+                  ['02', '맞춤 장치 치료 · 관절 세척'],
                   ['03', '턱관절 진료 5,000건 이상'],
                 ].map(([n, t]) => (
                   /* 폰에서는 번호·글이 한 줄로 나란히(세 장을 세로로 쌓아도 얇게) — 넓은 화면은 가운데 정렬 상자 */
@@ -465,16 +466,16 @@ export default function HomePage() {
                 발치를 말하기 전에 <span className="accent">살릴 수 있는지</span>부터 봅니다
               </h2>
               <p className="lead mt-4">
-                <Sentences text="근관치료와 재근관치료, 치주치료로 자연치아를 보존할 수 있는지 먼저 확인합니다. 보존이 어려운 경우에만 발치와 보철을 이야기합니다." />
+                <Sentences text="신경치료와 잇몸치료로 내 치아를 살릴 수 있는지 먼저 확인합니다. 살리기 어려운 경우에만 발치와 보철을 이야기합니다." />
               </p>
             </div>
             {/* 폰도 두 칸 — 진료과목 카드와 같은 격자(한 칸씩 쌓으면 사진 네 장에 2,000px) */}
             <ul className="reveal-stack grid-cards mt-12 !gap-3 grid-cols-2 sm:!gap-5 lg:grid-cols-3">
               {[
-                { href: '/treatment/natural-tooth', label: '자연치아 살리기', desc: 'MTA와 엔도소닉 세척으로 근관을 소독하고 밀폐합니다.', fig: 'ai/natural-hub' },
-                { href: '/treatment/re-root-canal', label: '재근관치료', desc: '근관치료 후 재발한 치근단 염증을 다시 치료합니다.', fig: 'ai/natural-mta' },
-                { href: '/treatment/periodontal', label: '치주치료', desc: '치석제거와 치근활택술로 치주낭을 관리합니다.', fig: 'ai/insight-gum' },
-                { href: '/treatment/wisdom-tooth', label: '매복사랑니', desc: 'CBCT로 하치조신경과의 거리를 계측한 뒤 발치합니다.', fig: 'ai/wisdom' },
+                { href: '/treatment/natural-tooth', label: '자연치아 살리기', desc: '치아 뿌리 속을 초음파로 깨끗이 씻고, MTA로 단단히 막습니다.', fig: 'ai/natural-hub' },
+                { href: '/treatment/re-root-canal', label: '재근관치료', desc: '신경치료 후 다시 생긴 뿌리 끝 염증을 치료합니다.', fig: 'ai/natural-mta' },
+                { href: '/treatment/periodontal', label: '치주치료', desc: '치석을 없애고, 잇몸 속 뿌리 표면까지 깨끗하게 치료합니다.', fig: 'ai/insight-gum' },
+                { href: '/treatment/wisdom-tooth', label: '매복사랑니', desc: '3D CT로 신경과의 거리를 확인한 뒤 뽑습니다.', fig: 'ai/wisdom' },
                 { href: '/treatment/aesthetic', label: '심미치료', desc: '라미네이트 · 올세라믹 · 지르코니아 · 치아미백.', fig: 'ai/aesthetic-hub' },
                 { href: '/treatment/painless', label: '무통 & 저자극 치료', desc: '무통마취기와 도포마취로 주사 자극을 줄입니다.', fig: 'ai/painless-hub' },
               ].map((c) => (

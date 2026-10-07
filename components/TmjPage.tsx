@@ -223,7 +223,8 @@ export function AwardCard({ className = 'mt-10' }: { className?: string }) {
             <span className="flex h-full w-full flex-col items-center justify-center rounded-[5px] border border-[#c6ccd6] bg-white px-2 text-center">
               <span className="text-[9px] font-bold tracking-[0.12em] text-ink-muted">{a.year}</span>
               <span className="mt-1 block h-5 w-5 rounded-full bg-gradient-to-br from-sun-400 to-brand-600 opacity-80" />
-              <span className="mt-1.5 text-[10.5px] font-extrabold leading-tight text-ink">{a.title}</span>
+              {/* 좁은 액자 안 — 붙여 쓴 상 이름이 끝 글자 하나만 넘어가지 않게 '대상' 앞에서만 끊는다(폭 없는 띄어쓰기) */}
+              <span className="mt-1.5 text-[10.5px] font-extrabold leading-tight text-ink">{a.title.replace(/(\S)(대상)$/, '$1​$2')}</span>
               <span className="mt-1 text-[9px] leading-tight text-ink-soft">{a.category}</span>
             </span>
           </span>

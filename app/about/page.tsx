@@ -127,7 +127,7 @@ export default function AboutPage() {
             <div className="reveal mx-auto max-w-[760px] text-center">
               <p className="eyebrow justify-center">3D DIGITAL</p>
               <h2 className="display-sm mt-4">
-                CBCT로 계측하고, <span className="accent whitespace-nowrap">계획대로 심습니다</span>
+                3D CT로 먼저 보고, <span className="accent whitespace-nowrap">계획대로 심습니다</span>
               </h2>
               <p className="lead mt-4"><Sentences text="잇몸뼈의 폭과 높이, 신경관까지의 거리를 CBCT로 잰 뒤, 식립 위치를 컴퓨터에서 먼저 정합니다. 수술은 그 계획으로 만든 가이드를 따라 진행합니다." /></p>
             </div>

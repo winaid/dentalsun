@@ -32,7 +32,8 @@ export const AESTHETIC_DOCS: Doc[] = [
       {
         type: 'text',
         id: 'intro',
-        title: '보기 좋은 치아는 건강한 교합 위에 만듭니다',
+        title: '보기 좋은 치아는 잘 맞물리는 치아 위에 만듭니다',
+        accent: '잘 맞물리는 치아',
         paragraphs: [
           '앞니의 모양과 색은 웃을 때 가장 먼저 보이지만, 보철은 매일 씹는 힘도 견뎌야 합니다. 그래서 심미치료는 치아의 모양·색·배열과 잇몸선, 위아래 치아가 맞물리는 교합을 함께 봅니다.',
           '미국 심미치과 학회(AACD) 정회원인 대표원장이 상담부터 보철 장착까지 직접 맡습니다. 색만 문제라면 미백을, 모양과 배열까지 바꿔야 하면 보철을 고려하며, 치아를 적게 깎는 방법부터 검토합니다.',
@@ -70,7 +71,7 @@ export const AESTHETIC_DOCS: Doc[] = [
       {
         type: 'caseGallery',
         id: 'cases',
-        title: '전치부 보철 · 레진 치료 전후',
+        title: '앞니 보철 · 레진 치료 전후',
         lead: '광화문 선치과에서 치료한 실제 사례입니다.',
         categories: ['anterior', 'resin'],
       },
