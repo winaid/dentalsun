@@ -167,13 +167,15 @@ function Paras({ text, className = '' }: { text: string[]; className?: string })
   );
 }
 
-/** 순서 카드 네 장 — 사진 + STEP + 제목 + 글 */
+/** 순서 카드 네 장 — 사진 + STEP + 제목 + 글.
+ *  카드 사이 '›' 는 카드 밖(-right)에 놓이므로 카드(li)를 overflow-hidden 으로 자르면 안 보인다(2026-10-07 PPT 재대조에서 발견) —
+ *  둥근 모서리 자르기는 사진 칸(rounded-t-[inherit])에서만 한다. */
 function StepCards({ steps }: { steps: Array<{ title: string; desc: string; fig: Fig }> }) {
   return (
     <ol className="reveal-stack mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {steps.map((s, i) => (
-        <li key={s.title} className="card relative flex flex-col overflow-hidden">
-          <span className="relative block aspect-[16/9] overflow-hidden bg-canvas-2">
+        <li key={s.title} className="card relative flex flex-col">
+          <span className="relative block aspect-[16/9] overflow-hidden rounded-t-[inherit] bg-canvas-2">
             <Image src={figSrc(s.fig.key)} alt={s.fig.alt} fill sizes="(max-width: 640px) 100vw, 260px" className={fitsBox(s.fig.key, 16, 9) ? 'object-cover' : '!object-contain p-2'} />
           </span>
           <span className="flex flex-1 flex-col p-5">

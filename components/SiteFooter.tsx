@@ -42,7 +42,7 @@ export function SiteFooter() {
       <div className="wrap py-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_2.6fr]">
           <div>
-            <Image src="/img/brand/logo.png" alt={CLINIC.name} width={522} height={145} className="h-11 w-auto" />
+            <Image src="/img/brand/logo.png" alt={CLINIC.name} width={522} height={145} sizes="160px" className="h-11 w-auto" />
             <p className="mt-5 max-w-[380px] text-[15px] leading-relaxed text-ink-soft"><Sentences text={CLINIC.description} /></p>
             {/* 항목마다 이름표를 왼쪽에 세워 눈이 한 줄씩 따라가게 한다 — 한 문단에 몰아 쓰면 읽히지 않는다(오너) */}
             <dl className="mt-7 grid grid-cols-[52px_1fr] gap-x-4 gap-y-3 text-[15px] text-ink-soft">

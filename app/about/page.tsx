@@ -151,8 +151,8 @@ export default function AboutPage() {
             {/* ⚠️ fill — 두 장 다 세로 사진인데 폭이 422·384px 이라 '작은 원본' 안전장치에 걸려
                 카드의 41%·38% 만 채우고 회색 여백에 떠 있었다(2026-09-14 실측). 자세한 내력은 Figure 의 fill 주석에. */}
             <div className="reveal grid grid-cols-2 gap-4">
-              <Figure fig={{ key: 'scene/sterile', alt: '멸균 소독한 진료 기구' }} ratio="aspect-[9/16]" sizes="25vw" effect="img-in" fill />
-              <Figure fig={{ key: 'scene/sterile2', alt: '개별 포장된 1인 1기구' }} ratio="aspect-[9/16]" sizes="25vw" effect="img-in" fill />
+              <Figure fig={{ key: 'scene/sterile', alt: '멸균 소독한 진료 기구' }} ratio="aspect-[9/16]" sizes="(max-width: 1023px) 45vw, 25vw" effect="img-in" fill />
+              <Figure fig={{ key: 'scene/sterile2', alt: '개별 포장된 1인 1기구' }} ratio="aspect-[9/16]" sizes="(max-width: 1023px) 45vw, 25vw" effect="img-in" fill />
             </div>
             <div className="reveal">
               <p className="eyebrow">STERILIZATION</p>

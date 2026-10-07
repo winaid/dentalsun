@@ -390,7 +390,7 @@ export const TMJ_EQUIP: Array<{ eyebrow: string; title: string; lead: string; po
     title: '저선량 3D 디지털 CT',
     lead: '아래턱뼈 끝의 모양과 뼈의 변화를 입체로 확인합니다. 파노라마와 CT를 한 장비로 촬영합니다.',
     points: ['파노라마·CT 겸용 올인원 시스템', '아래턱뼈 끝의 모양·변화 확인', '짧은 촬영 시간, 적은 방사선 노출량'],
-    fig: { key: 'fit/tmj-ct3d', alt: '3D 디지털 CT 로 촬영한 두개골·턱관절 3차원 영상' },
+    fig: { key: 'fit/tmj-ct3d', alt: '3D 디지털 CT로 촬영한 두개골·턱관절 3차원 영상' },
   },
 ];
 

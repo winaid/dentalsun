@@ -4,6 +4,7 @@ import type { BlogPost } from '@/lib/blog';
 import { Breadcrumb, Sentences } from '@/components/ui';
 import { ContactCard, DoctorCard, LinkListCard } from '@/components/SideRail';
 import { sentenceHtml } from '@/lib/sentenceHtml';
+import { optimizeBodyImages } from '@/lib/bodyImages';
 
 /**
  * 글 한 편의 본문 화면 — 블로그(/insight/blog)와 임상 글(/insight/clinical)이 같이 쓴다.
@@ -65,7 +66,7 @@ export function PostArticle({
               </figure>
             )}
 
-            <div className="blog-body mt-12 max-w-[42em]" dangerouslySetInnerHTML={{ __html: sentenceHtml(post.html) }} />
+            <div className="blog-body mt-12 max-w-[42em]" dangerouslySetInnerHTML={{ __html: optimizeBodyImages(sentenceHtml(post.html), { eagerFirst: !showCover }) }} />
 
             {note && <p className="mt-10 max-w-[42em] rounded-xl bg-canvas-2 px-5 py-4 text-[13.5px] leading-[1.7] text-ink-muted"><Sentences text={`※ ${note}`} /></p>}
 

@@ -306,7 +306,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     cardsLead: 'MTA는 이런 성질을 가진 재료입니다.',
     cards: [
       { fig: { key: 'orig/mta-hero', alt: '확대경을 쓰고 MTA 신경치료를 하는 원장' }, shape: 'portrait' },
-      { fig: { key: 'orig/case-mta1-after', alt: 'MTA 로 신경을 덮고 보철로 마무리한 어금니 — 치료 후' }, shape: 'wide' },
+      { fig: { key: 'orig/case-mta1-after', alt: 'MTA로 신경을 덮고 보철로 마무리한 어금니 — 치료 후' }, shape: 'wide' },
       { fig: { key: 'orig/misc-mta-tooth', alt: '치아 속 치수가 비치는 투명 치아 일러스트' }, shape: 'std' },
     ],
   },
@@ -347,7 +347,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     cards: [
       { fig: { key: 'fit/airflow-device', alt: 'EMS 에어플로우 프로필락시스 마스터 장비' }, shape: 'portrait' },
       { fig: { key: 'equip/airflow', alt: 'EMS 에어플로우 장비' }, shape: 'wide' },
-      { fig: { key: 'orig/airflow-piezon', alt: '파란 LED 가 켜진 피에존 스케일러 핸드피스 팁' }, shape: 'std' },
+      { fig: { key: 'orig/airflow-piezon', alt: '파란 LED가 켜진 피에존 스케일러 핸드피스 팁' }, shape: 'std' },
     ],
   },
   '/insight': {
@@ -474,7 +474,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   },
   '/insight/symptom/wisdom-tooth-pain': {
     lines: ['사랑니 자리가', '{붓고 아파요}'],
-    lead: '덜 나온 사랑니를 덮은 잇몸 아래에 음식과 세균이 끼면 붓고 아픕니다. 같은 자리에서 반복되거나 얼굴까지 붓는다면, 3D CT 로 위치를 보고 뺄지 정합니다.',
+    lead: '덜 나온 사랑니를 덮은 잇몸 아래에 음식과 세균이 끼면 붓고 아픕니다. 같은 자리에서 반복되거나 얼굴까지 붓는다면, 3D CT로 위치를 보고 뺄지 정합니다.',
     cards: [
       { fig: { key: 'orig/wisdom-doctor', alt: '확대경을 쓰고 사랑니를 발치하는 원장' }, shape: 'portrait' },
       { fig: { key: 'orig/wisdom-ct-screen', alt: '3D CT 판독 화면 — 사랑니와 하치조신경 위치 확인' }, shape: 'wide' },

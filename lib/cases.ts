@@ -33,8 +33,8 @@ export const CASE_GROUPS: CaseGroup[] = [
     label: 'MTA 신경치료',
     href: '/treatment/natural-tooth/mta',
     pairs: [
-      { before: { key: 'orig/case-mta1-before', alt: '신경이 노출된 어금니의 MTA 치료 전' }, after: { key: 'orig/case-mta1-after', alt: 'MTA 로 신경관을 밀폐한 치료 후' } },
-      { before: { key: 'orig/case-mta2-before', alt: '신경 속 깊이 충치가 진행된 치아의 치료 전 엑스레이' }, after: { key: 'orig/case-mta2-after', alt: 'MTA 로 근관을 채운 치료 후 엑스레이' } },
+      { before: { key: 'orig/case-mta1-before', alt: '신경이 노출된 어금니의 MTA 치료 전' }, after: { key: 'orig/case-mta1-after', alt: 'MTA로 신경관을 밀폐한 치료 후' } },
+      { before: { key: 'orig/case-mta2-before', alt: '신경 속 깊이 충치가 진행된 치아의 치료 전 엑스레이' }, after: { key: 'orig/case-mta2-after', alt: 'MTA로 근관을 채운 치료 후 엑스레이' } },
       { before: { key: 'orig/case-mta3-before', alt: '신경치료 후 뿌리 끝 염증이 재발한 치료 전 엑스레이' }, after: { key: 'orig/case-mta3-after', alt: 'MTA 재신경치료 후 엑스레이' } },
     ],
   },

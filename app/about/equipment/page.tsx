@@ -33,7 +33,7 @@ const DIGITAL: EquipItem[] = [
 
 /** 서로 독립된 장비 네 가지 — 뒤집기 카드(오너: 여기는 카드로). 누르면 그 장비를 쓰는 진료 쪽으로 간다. */
 const COMFORT: EquipItem[] = [
-  { short: '무통마취', n: '마취', title: '무통마취기 NO-PAIN III', front: '마취액을 일정한 속도로 주입합니다.', desc: '컴퓨터가 마취액의 주입 속도와 압력을 일정하게 조절해, 마취액이 들어갈 때의 압력 통증을 줄입니다.', fig: { key: 'orig/pain-hero', alt: '무통마취기 NO-PAIN III 를 이용한 마취 장면' }, shot: 'photo', href: '/treatment/painless/anesthesia' },
+  { short: '무통마취', n: '마취', title: '무통마취기 NO-PAIN III', front: '마취액을 일정한 속도로 주입합니다.', desc: '컴퓨터가 마취액의 주입 속도와 압력을 일정하게 조절해, 마취액이 들어갈 때의 압력 통증을 줄입니다.', fig: { key: 'orig/pain-hero', alt: '무통마취기 NO-PAIN III를 이용한 마취 장면' }, shot: 'photo', href: '/treatment/painless/anesthesia' },
   { short: '에어플로우', n: '치석제거', title: '에어플로우 스케일러 (EMS)', front: '파우더를 분사하는 저자극 치석제거.', desc: '공기와 물의 압력으로 미세 파우더를 분사해 치석과 바이오필름을 제거합니다. 강도는 10단계로, 물 온도도 조절할 수 있습니다.', more: ['10단계 강도조절', '온도조절 기능'], fig: { key: 'equip/airflow', alt: 'EMS 에어플로우 스케일러' }, shot: 'product-dark', href: '/treatment/painless/airflow' },
   { short: '레이저', n: '턱관절', title: 'PHL-15 레이저 물리치료', front: '턱 근육의 통증과 긴장을 완화합니다.', desc: '저출력 레이저와 저주파 전기치료로, 턱을 움직이는 근육의 통증과 긴장을 풀어 줍니다. 증상에 따라 치료 모드를 정하며, 건강보험이 적용됩니다.', more: ['원적외선보다 5배 높은 피부 침투력', '건강보험 적용'], fig: { key: 'place2/physio-room', alt: '턱관절 레이저 물리치료 장비가 있는 광화문 선치과 물리치료실' }, shot: 'photo', href: '/treatment/tmj' },
   { short: '초음파', n: '신경치료', title: '엔도소닉 초음파 세척기', front: '신경관 속을 초음파로 씻어 냅니다.', desc: '신경치료 중 신경관 안에 남은 신경 조직과 세균을, 작은 초음파 진동으로 씻어 내고 소독합니다.', fig: { key: 'orig/endo-handpiece', alt: '엔도소닉 초음파 세척기 핸드피스' }, shot: 'photo', href: '/treatment/natural-tooth/endosonic' },
