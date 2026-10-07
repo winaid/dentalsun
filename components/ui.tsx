@@ -726,24 +726,53 @@ export function CertMark({ className = '' }: { className?: string }) {
  * 글 속 줄바꿈 문자에서 줄을 바꾼다. 풀아치 첫 화면과 홈 풀아치 구역이 같이 쓴다.
  * 2026-10-07 오너 "메인에 너무 그대로 들어갔는데 좀 더 세련되게" — 예시의 주황 덩어리 원 → 흰 유리 원 + 주황 테두리가 그려지며 나타난다(.ring-arc).
  * 글자는 그대로, 윗줄은 작게·아랫줄(무엇이)은 주황 굵게. 테두리는 보이는 순간(.is-shown / .hero-in) 차례로 그린다.
+ * 2026-10-07 오너 "동그라미 네개 디자인 좀 보완하자. 모션그래픽도 넣고" — 유리 원 + 뜻 아이콘(sm 이상) + 움직임 넷:
+ * 차례로 톡 나타남(badge-pop) → 테두리 그리기(ring-draw) → 빛 한 점이 테두리를 따라 계속 돎(ring-orbit) → 뒤 빛이 숨 쉬듯(badge-breathe).
+ * tone='dark' 는 어두운 첫 화면(HeroCollage), 기본은 밝은 바탕(홈 풀아치 구역).
  */
-export function RoundBadges({ items, className = '' }: { items: string[]; className?: string }) {
+/* 배지 뜻 아이콘 — lucide(ISC) utensils · calendar-check · timer · wallet. 글에 든 낱말로 고른다 */
+const BADGE_ICONS: Array<[RegExp, ReactNode]> = [
+  [/식사/, <><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" /><path d="M7 2v20" /><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" /></>],
+  [/내원/, <><path d="M8 2v4" /><path d="M16 2v4" /><rect width="18" height="18" x="3" y="4" rx="2" /><path d="M3 10h18" /><path d="m9 16 2 2 4-4" /></>],
+  [/기간|시간/, <><path d="M10 2h4" /><path d="m12 14 3-3" /><circle cx="12" cy="14" r="8" /></>],
+  [/가격|비용/, <><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1" /><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4" /></>],
+];
+export function RoundBadges({ items, className = '', tone = 'light' }: { items: string[]; className?: string; tone?: 'light' | 'dark' }) {
+  const dark = tone === 'dark';
   return (
-    <ul className={`flex flex-wrap gap-2.5 sm:gap-3.5 ${className}`}>
+    <ul className={`grid max-w-[372px] grid-cols-4 gap-2.5 sm:flex sm:max-w-none sm:flex-wrap sm:gap-4 ${className}`}>
       {items.map((b, i) => {
         const [top, bottom] = b.split('\n');
+        const icon = BADGE_ICONS.find(([re]) => re.test(b))?.[1];
         return (
-          <li
-            key={b}
-            className="ring-badge relative flex h-[80px] w-[80px] flex-col items-center justify-center rounded-full bg-white/85 text-center shadow-[0_14px_30px_-18px_rgba(185,67,12,0.55)] backdrop-blur-sm sm:h-[98px] sm:w-[98px]"
-            style={{ ['--i' as string]: i }}
-          >
-            <svg viewBox="0 0 100 100" aria-hidden className="absolute inset-0 h-full w-full -rotate-90">
-              <circle cx="50" cy="50" r="48" fill="none" stroke="var(--color-sun-100)" strokeWidth="2" />
-              <circle className="ring-arc" cx="50" cy="50" r="48" fill="none" stroke="var(--color-sun-500)" strokeWidth="2.4" strokeLinecap="round" pathLength={100} />
+          <li key={b} className="ring-badge relative flex aspect-square w-full flex-col items-center justify-center text-center sm:h-[112px] sm:w-[112px]" style={{ ['--i' as string]: i }}>
+            {/* 둘레 빛 — 원 둘레에만 퍼지는 고리(가운데는 비워 원 색이 탁해지지 않게), 숨 쉬듯 커졌다 작아진다 */}
+            <span aria-hidden className={`badge-glow absolute -inset-3 rounded-full blur-md ${dark ? 'bg-[radial-gradient(circle_closest-side,transparent_62%,rgba(242,111,30,0.6)_80%,transparent_100%)]' : 'bg-[radial-gradient(circle_closest-side,transparent_62%,rgba(251,135,67,0.55)_80%,transparent_100%)]'}`} />
+            {/* 유리 원 */}
+            <span
+              aria-hidden
+              className={`absolute inset-0 rounded-full backdrop-blur-md ${
+                dark
+                  ? 'bg-[radial-gradient(circle_at_32%_22%,rgba(255,255,255,0.2),rgba(255,255,255,0.05)_58%,rgba(255,255,255,0.02)),linear-gradient(rgba(11,19,46,0.45),rgba(11,19,46,0.45))] shadow-[inset_0_1px_0_rgba(255,255,255,0.22),0_18px_36px_-18px_rgba(0,0,0,0.6)]'
+                  : 'bg-[radial-gradient(circle_at_32%_22%,#fff,rgba(255,255,255,0.9)_55%,rgba(255,246,238,0.92))] shadow-[inset_0_1px_0_#fff,0_16px_32px_-18px_rgba(185,67,12,0.55)]'
+              }`}
+            />
+            <svg viewBox="0 0 100 100" aria-hidden className="absolute inset-0 h-full w-full -rotate-90 overflow-visible">
+              <circle cx="50" cy="50" r="48" fill="none" stroke={dark ? 'rgba(255,255,255,0.16)' : 'var(--color-sun-100)'} strokeWidth="2" />
+              <circle className="ring-arc" cx="50" cy="50" r="48" fill="none" stroke={dark ? 'var(--color-sun-400)' : 'var(--color-sun-500)'} strokeWidth="2.4" strokeLinecap="round" pathLength={100} />
+              {/* 테두리를 따라 도는 흰 광택 — 꼬리(옅게) + 머리(밝게, 주황 번짐). 테두리와 같은 색이면 밝은 바탕에서 안 보였다 */}
+              <g className="ring-comet">
+                <circle cx="50" cy="50" r="48" fill="none" stroke="#fff" strokeOpacity={dark ? 0.5 : 0.75} strokeWidth="2.6" strokeLinecap="round" pathLength={100} strokeDasharray="16 84" />
+                <circle className="ring-comet-head" cx="50" cy="50" r="48" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" pathLength={100} strokeDasharray="1.5 98.5" strokeDashoffset="-14.5" />
+              </g>
             </svg>
-            <span className="relative text-[12px] font-semibold leading-[1.25] text-ink-soft sm:text-[13.5px]">{top}</span>
-            {bottom && <span className="relative text-[14px] font-extrabold leading-[1.3] text-sun-600 sm:text-[16.5px]">{bottom}</span>}
+            {icon && (
+              <svg viewBox="0 0 24 24" aria-hidden fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={`relative mb-1 hidden h-[22px] w-[22px] sm:block ${dark ? 'text-sun-300' : 'text-sun-500'}`}>
+                {icon}
+              </svg>
+            )}
+            <span className={`relative text-[11.5px] font-semibold leading-[1.25] sm:text-[13px] ${dark ? 'text-white/75' : 'text-ink-soft'}`}>{top}</span>
+            {bottom && <span className={`relative text-[13.5px] font-extrabold leading-[1.3] sm:text-[16.5px] ${dark ? 'text-sun-300' : 'text-sun-600'}`}>{bottom}</span>}
           </li>
         );
       })}

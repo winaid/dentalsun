@@ -1125,12 +1125,58 @@ body:has([data-admin]) {
 .reveal-stack:not(.is-shown) .ring-arc {
   stroke-dashoffset: 100;
 }
+/* 2026-10-07 오너 "동그라미 네개 디자인 좀 보완하자. 모션그래픽도 넣고" —
+   ① 차례로 톡 나타남 ② 테두리 그리기(위) ③ 그려진 뒤 빛 한 점이 테두리를 따라 계속 돎 ④ 뒤 빛이 숨 쉬듯.
+   hover 는 transform 대신 translate 로 — 나타남 애니메이션(transform)이 끝 상태를 붙잡고 있어도 겹쳐 움직인다. */
 .ring-badge {
-  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.35s ease;
+  transition: translate 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 .ring-badge:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 18px 34px -16px rgba(185, 67, 12, 0.6);
+  translate: 0 -4px;
+}
+@keyframes badge-pop {
+  from { opacity: 0; transform: scale(0.8); }
+  60% { opacity: 1; transform: scale(1.05); }
+  to { opacity: 1; transform: scale(1); }
+}
+.is-shown .ring-badge,
+.hero-in .ring-badge {
+  animation: badge-pop 0.75s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: calc(0.25s + var(--i, 0) * 0.12s);
+}
+.reveal:not(.is-shown) .ring-badge,
+.reveal-stack:not(.is-shown) .ring-badge {
+  opacity: 0;
+}
+.ring-comet {
+  transform-origin: 50px 50px;
+  opacity: 0;
+}
+.ring-comet-head {
+  filter: drop-shadow(0 0 2.5px var(--color-sun-300));
+}
+@keyframes ring-orbit {
+  to { transform: rotate(360deg); }
+}
+@keyframes comet-in {
+  to { opacity: 1; }
+}
+.is-shown .ring-comet,
+.hero-in .ring-comet {
+  animation: ring-orbit 6s linear infinite, comet-in 0.8s ease forwards;
+  animation-delay: calc(1.7s + var(--i, 0) * 0.35s);
+}
+.badge-glow {
+  opacity: 0;
+}
+@keyframes badge-breathe {
+  0%, 100% { opacity: 0.2; transform: scale(0.9); }
+  50% { opacity: 0.65; transform: scale(1.06); }
+}
+.is-shown .badge-glow,
+.hero-in .badge-glow {
+  animation: badge-breathe 4.2s ease-in-out infinite;
+  animation-delay: calc(1.2s + var(--i, 0) * 0.5s);
 }
 
 /*
@@ -1246,9 +1292,11 @@ mark.hl {
   translate: 0 0;
 }
 @media (prefers-reduced-motion: reduce) {
-  .fa-stage-inner, .fa-bridge, .fa-pulse, .ring-arc { animation: none !important; }
+  .fa-stage-inner, .fa-bridge, .fa-pulse, .ring-arc, .ring-badge, .ring-comet, .badge-glow { animation: none !important; }
   .fa-bridge { transform: none; }
   .ring-arc { stroke-dashoffset: 0 !important; }
+  .ring-badge { opacity: 1 !important; }
+  .ring-comet, .badge-glow { opacity: 0 !important; }
   mark.hl { transition: none; background-size: 100% 0.42em !important; }
 }
 /* 주황 안내 띠(DocPage notice) 위에서는 흰 글씨 + 옅은 흰 띠 */

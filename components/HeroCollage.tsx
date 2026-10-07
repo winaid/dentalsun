@@ -106,7 +106,7 @@ export function HeroCollage({
               </p>
             )}
             {/* 동그라미 배지(풀아치 PPT 50쪽 예시) */}
-            {badges && badges.length > 0 && <RoundBadges items={badges} className="mt-7 hero-in hero-in-4" />}
+            {badges && badges.length > 0 && <RoundBadges items={badges} tone="dark" className="mt-7 hero-in hero-in-4" />}
             {/* 버튼 두 개는 모든 첫 화면에 — 따로 주지 않으면 네이버 예약 · 전화(오너: 소개 쪽도 다른 쪽처럼). 톡톡 상담은 2026-09-21 사이트 전체에서 뺐다 */}
             <div className="mt-8 hero-in hero-in-4 lg:mt-9">
               {children ?? (
