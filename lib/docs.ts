@@ -24,7 +24,12 @@ export interface QA {
   a: string;
 }
 
-export type Block =
+/**
+ * 블록 공통 — accent: 소제목 속 강조할 낱말(그대로 들어 있는 글자). 화면에서 주황 + 밑줄(메인처럼).
+ * 2026-10-07 카톡 '서브 타이틀 강조랑 밑줄 (메인처럼)' — 제목 글자에 표시 문자를 넣지 않아 검색 설명·목차에 새지 않는다.
+ */
+export type Block = BlockBody & { accent?: string };
+type BlockBody =
   /** 소제목 + 줄글 단락(들). 그림은 오른쪽(기본) 또는 왼쪽. */
   | { type: 'text'; id?: string; title?: string; paragraphs: string[]; figure?: Fig; figureSide?: 'left' | 'right' }
   /** 항목 카드 격자 — "이런 경우", "특징", "효과" 같은 나열 */
@@ -43,7 +48,7 @@ export type Block =
    * 실제 치료 전후 사례(구내 / 방사선 두 영역, 위=전·아래=후) — 목록은 lib/caseLibrary.ts.
    * categories 에 해당하는 사례만 나온다. 사례가 하나도 없으면 구역째 안 나온다.
    */
-  | { type: 'caseGallery'; id?: string; title?: string; lead?: string; categories: Array<'implant' | 'fullarch' | 'endo' | 'reendo' | 'wisdom' | 'anterior' | 'fracture' | 'resin' | 'whitening' | 'tmj'> }
+  | { type: 'caseGallery'; id?: string; title?: string; lead?: string; categories: Array<'implant' | 'fullarch' | 'endo' | 'reendo' | 'wisdom' | 'anterior' | 'fracture' | 'resin' | 'whitening' | 'tmj'>; /** 사례 위 상자(굵은 한 줄 + 설명) */ box?: { title: string; text: string } }
   /** 강조 한 줄 */
   | { type: 'quote'; text: string; by?: string }
   /** 다른 문서로 가는 카드 */

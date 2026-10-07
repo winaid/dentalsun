@@ -3,8 +3,8 @@ import Image from 'next/image';
 import { SiteHeader } from '@/components/SiteHeader';
 import { HeroCollage } from '@/components/HeroCollage';
 import { JsonLd } from '@/components/JsonLd';
-import { Breadcrumb, ContactBand, Figure , Sentences } from '@/components/ui';
-import { DOCTORS } from '@/lib/doctors';
+import { Breadcrumb, CertMark, ContactBand, Figure , Sentences } from '@/components/ui';
+import { DOCTORS, isCertCareer } from '@/lib/doctors';
 import { desc80, alt, breadcrumbSchema, medicalWebPageSchema, og, physicianSchema } from '@/lib/seo';
 
 const TITLE = '의료진 소개';
@@ -72,8 +72,12 @@ export default function DoctorsPage() {
                   <ul className="mt-5 space-y-2.5">
                     {d.career.map((c) => (
                       <li key={c} className="flex items-start gap-3 text-[16px] leading-[1.6] text-ink">
-                        <span className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-brand-600" />
-                        {c}
+                        {isCertCareer(c) ? (
+                          <CertMark className="-ml-[5px] mt-[1px] h-6 w-6 text-brand-600" />
+                        ) : (
+                          <span className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-brand-600" />
+                        )}
+                        {isCertCareer(c) ? <strong className="font-bold">{c}</strong> : c}
                       </li>
                     ))}
                   </ul>

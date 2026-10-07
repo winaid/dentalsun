@@ -666,3 +666,38 @@ export function ScrubText({ text, className = '', light = false }: { text: strin
     </span>
   );
 }
+
+/**
+ * 인증 마크 — 약력의 '보건복지부 인증 … 전문의' 줄 앞(원장 PPT 49쪽 '인증마크 이모티콘').
+ * 톱니 둥근 인장 + 체크(lucide badge-check 모양, ISC).
+ */
+export function CertMark({ className = '' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden className={`shrink-0 ${className}`}>
+      <path
+        d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"
+        fill="currentColor"
+      />
+      <path d="m9 12 2 2 4-4" fill="none" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+/**
+ * 동그라미 배지 — 풀아치 PPT 50쪽에 붙인 예시 배지(수술당일 식사가능 · 내원은 최소한 · 치료기간 최소한 · 가격은 합리적).
+ * 글 속 줄바꿈 문자에서 줄을 바꾼다. 풀아치 첫 화면과 홈 풀아치 구역이 같이 쓴다.
+ */
+export function RoundBadges({ items, className = '' }: { items: string[]; className?: string }) {
+  return (
+    <ul className={`flex flex-wrap gap-2.5 sm:gap-3 ${className}`}>
+      {items.map((b) => (
+        <li
+          key={b}
+          className="flex h-[78px] w-[78px] items-center justify-center whitespace-pre-line rounded-full bg-gradient-to-b from-sun-200 to-sun-400 text-center text-[13px] font-extrabold leading-[1.3] text-night shadow-[0_10px_24px_-12px_rgba(242,111,30,0.8)] sm:h-[92px] sm:w-[92px] sm:text-[15px]"
+        >
+          {b}
+        </li>
+      ))}
+    </ul>
+  );
+}

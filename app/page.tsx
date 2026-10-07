@@ -8,11 +8,13 @@ import { VideoFacade } from '@/components/VideoFacade';
 import { FlipCard } from '@/components/FlipCard';
 import { HubAccordion } from '@/components/HubAccordion';
 import { docByPath } from '@/lib/content';
-import { CardLink, ContactBand, FaqList, Figure, MedicalNotice, ScrubText, Sentences } from '@/components/ui';
+import { CardLink, CertMark, ContactBand, FaqList, Figure, MedicalNotice, RoundBadges, ScrubText, Sentences } from '@/components/ui';
+import { AwardCard } from '@/components/TmjPage';
+import { TMJ_AWARD } from '@/lib/content/tmjLanding';
 import { HomeStage, HomeStats } from '@/components/HomeScroll';
 import { CaseGallery } from '@/components/CaseGallery';
 import { CLINIC, HOURS, HYGIENE, MONTHLY_NOTICE, STRENGTHS } from '@/lib/clinic';
-import { DOCTORS } from '@/lib/doctors';
+import { DOCTORS, isCertCareer } from '@/lib/doctors';
 import type { NavItem } from '@/lib/nav';
 import { SITE_FAQ } from '@/lib/faq';
 import { figSrc } from '@/lib/docs';
@@ -178,8 +180,12 @@ export default function HomePage() {
                       <ul className="mt-4 grid gap-x-8 gap-y-3 sm:grid-cols-2 md:mt-5 md:gap-x-10 md:gap-y-3.5">
                         {d.career.map((c) => (
                           <li key={c} className="flex items-start gap-3 text-[15.5px] leading-[1.5] text-ink md:text-[16.5px]">
-                            <span className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-brand-600 md:mt-[10px]" />
-                            {c}
+                            {isCertCareer(c) ? (
+                              <CertMark className="-ml-[5px] mt-[1px] h-[22px] w-[22px] text-brand-600 md:h-6 md:w-6" />
+                            ) : (
+                              <span className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-brand-600 md:mt-[10px]" />
+                            )}
+                            {isCertCareer(c) ? <strong className="font-bold">{c}</strong> : c}
                           </li>
                         ))}
                       </ul>
@@ -338,6 +344,29 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* ── 풀아치 — 2026-10-07 원장 PPT 46쪽 '홈화면에 풀아치 추가'. 제목·두 줄은 50쪽에 병원이 직접 쓴 글 그대로(굵게·주황도 PPT 그대로),
+             배지 네 개는 50쪽에 붙인 예시 배지 그대로(풀아치 첫 화면과 같다). 바로 아래 보증 띠가 어두워 이 구역은 밝게(글 + 사진 2열).
+             ⚠️ '수술 당일 식사까지 가능' · '가격은 합리적' 은 의료법 소지 — 오너에게 알림, 글자는 손대지 않는다. ── */}
+        <section className="section bg-canvas">
+          <div className="wrap grid items-center gap-10 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
+            <div className="reveal">
+              <p className="eyebrow">FULL ARCH IMPLANT</p>
+              <h2 className="display-sm mt-4">
+                틀니, <span className="accent whitespace-nowrap">불편하지 않으신가요?</span>
+              </h2>
+              <p className="mt-5 text-[1.12rem] leading-[1.65] text-ink-soft md:text-[1.3rem]">
+                <span className="block">전체 치아에 필요한 임플란트, <strong className="font-extrabold text-ink">단 4~6개</strong></span>
+                <span className="block"><strong className="font-extrabold text-ink">수술 당일 식사</strong>까지 가능한 <span className="font-extrabold text-sun-600">풀아치</span> 임플란트</span>
+              </p>
+              <RoundBadges items={['수술당일\n식사가능', '내원은\n최소한', '치료기간\n최소한', '가격은\n합리적']} className="mt-7" />
+              <Link href="/treatment/implant/full-arch" className="btn-brand mt-8">풀아치 임플란트 자세히</Link>
+            </div>
+            <span className="img-in relative block aspect-[3/2] overflow-hidden rounded-[28px] bg-canvas-2">
+              <Image src={figSrc('ai/implant-fullarch')} alt="임플란트 네 개 위에 치아 전체를 한 덩어리로 고정한 풀아치 임플란트 모형" fill sizes="(max-width: 1024px) 100vw, 640px" className="object-cover" />
+            </span>
+          </div>
+        </section>
+
         {/* ── 보증 기간 띠 — 2026-10-07 원장 PPT 62쪽 '추가 희망'(예시: 본플란트치과 띠). 카톡 보증서 줄은 '지우기' → 뺐다.
              제목과 맨 아래 단서는 PPT 글자 그대로(제목 끝 마침표만 다른 제목들처럼 뺐다). 숫자는 예시(남의 병원 값)가 아니라
              우리 보증표(lib/content/implant.ts 보증제도 table) 값 — 임플란트 수술관련 10년 · 임플란트 보철관련 5년 · 보존 및 보철 5년.
@@ -415,6 +444,9 @@ export default function HomePage() {
                   </li>
                 ))}
               </ul>
+              {/* 2026-10-07 원장 PPT 46쪽 '홈화면에 턱관절 상장 이미지 추가' — 턱관절 쪽과 같은 상장 카드(사진이 오기 전엔 글자 액자).
+                   ⚠️ 상장 광고는 의료법 제56조 제2항 제14호 소지 — 2026-09-29 오너에게 알렸고 병원 결정으로 싣는다 */}
+              {TMJ_AWARD.show && <AwardCard className="mt-10" />}
               <div className="mt-10 flex flex-wrap justify-center gap-3">
                 <Link href="/treatment/tmj" className="btn-sun">턱관절 치료 안내</Link>
                 <Link href="/treatment/tmj/symptoms" className="btn-ghost-dark">증상 자가진단</Link>

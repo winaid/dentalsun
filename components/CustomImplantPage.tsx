@@ -340,38 +340,8 @@ export function CustomImplantPage({ doc, part }: { doc: Doc; part: 'navigation' 
 
             {/* ══ 맞춤 임플란트 쪽 ══ */}
             {part === 'custom' && (<>
-            {/* ── 1. 커스텀 어버트먼트란(로이스 S2) → 세 부분 ── */}
-            <section id="what" className="scroll-mt-[96px]" aria-labelledby="ci-what">
-              <Head id="ci-what" label="정의" title={<>맞춤 지대주, <span className="accent-sun">커스텀 어버트먼트</span>란</>} />
-              <div className="reveal-stack mt-12 grid gap-8 lg:grid-cols-[1.05fr_1fr] lg:items-center">
-                <Illust fig={CI_ABUTMENT.fig} sizes="(max-width: 1024px) 100vw, 520px" priority />
-                <div className="card p-7 md:p-8">
-                  <Paras text={CI_ABUTMENT.paragraphs} className="text-[15px] leading-[1.85] text-ink-soft" />
-                </div>
-              </div>
-
-              <SubHead eyebrow="임플란트의 세 부분" title={<>임플란트는 세 부분, <span className="accent-sun">맞춤은 지대주가 다릅니다</span></>} lead={CI_PARTS.lead} />
-              {/* 세 부분 — 어두운 상자 한 개에 세 칸. 가운데 '지대주' 칸을 주황으로 짚는다 */}
-              <div className="reveal mt-8 rounded-[28px] bg-night p-7 text-white md:p-10">
-                <p className="text-[12.5px] font-bold tracking-[0.12em] text-sun-300">픽스처 · 지대주 · 크라운</p>
-                <ol className="mt-5 grid gap-5 sm:grid-cols-3">
-                  {CI_PARTS.parts.map((p) => (
-                    <li key={p.n} className={`rounded-2xl border p-5 ${p.n === '02' ? 'border-sun-500/70 bg-sun-500/10' : 'border-white/12 bg-white/[0.04]'}`}>
-                      <span className={`block text-[13px] font-extrabold tracking-[0.18em] ${p.n === '02' ? 'text-sun-300' : 'text-white/55'}`}>{p.n}</span>
-                      <span className="mt-1.5 block text-[1.1rem] font-bold">{p.title}</span>
-                      {/* 세 칸짜리 좁은 카드 — 마디 줄바꿈을 태우면 두세 낱말짜리 줄이 생겨 그냥 흐르게 둔다 */}
-                      <span className="mt-2 block text-[14.5px] leading-[1.7] text-white/70"><Sentences text={p.desc} /></span>
-                    </li>
-                  ))}
-                </ol>
-              </div>
-              <p className="reveal mx-auto mt-8 max-w-[720px] text-center text-[15px] leading-[1.8] text-ink-soft">
-                <Sentences text={CI_PARTS.after} clauses={false} />
-              </p>
-            </section>
-
             {/* ── 2. 장점 6(로이스 S3 + 파손) → 잇몸이 감싸는 경계(도해) ── */}
-            <section id="benefits" className="scroll-mt-[96px] pt-24 md:pt-32" aria-labelledby="ci-benefits">
+            <section id="benefits" className="scroll-mt-[96px]" aria-labelledby="ci-benefits">
               <Head id="ci-benefits" label="장점" title={<>맞춤 임플란트의 <span className="accent-sun">장점</span></>} lead={CI_BENEFITS.lead} />
               <ul className="reveal-stack mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {CI_BENEFITS.items.map((b, i) => (
@@ -610,6 +580,36 @@ export function CustomImplantPage({ doc, part }: { doc: Doc; part: 'navigation' 
               </div>
 
               <NoticeBox title={CI_NOTICE.title} paragraphs={CI_NOTICE.paragraphs} />
+            </section>
+
+            {/* ── 커스텀 어버트먼트란(로이스 S2) → 세 부분 — 2026-10-07 원장 PPT 46쪽 '커스텀 설명을 아래로' → 맨 위에서 FAQ 바로 앞으로 내렸다 ── */}
+            <section id="what" className="scroll-mt-[96px] pt-24 md:pt-32" aria-labelledby="ci-what">
+              <Head id="ci-what" label="정의" title={<>맞춤 지대주, <span className="accent-sun">커스텀 어버트먼트</span>란</>} />
+              <div className="reveal-stack mt-12 grid gap-8 lg:grid-cols-[1.05fr_1fr] lg:items-center">
+                <Illust fig={CI_ABUTMENT.fig} sizes="(max-width: 1024px) 100vw, 520px" />
+                <div className="card p-7 md:p-8">
+                  <Paras text={CI_ABUTMENT.paragraphs} className="text-[15px] leading-[1.85] text-ink-soft" />
+                </div>
+              </div>
+
+              <SubHead eyebrow="임플란트의 세 부분" title={<>임플란트는 세 부분, <span className="accent-sun">맞춤은 지대주가 다릅니다</span></>} lead={CI_PARTS.lead} />
+              {/* 세 부분 — 어두운 상자 한 개에 세 칸. 가운데 '지대주' 칸을 주황으로 짚는다 */}
+              <div className="reveal mt-8 rounded-[28px] bg-night p-7 text-white md:p-10">
+                <p className="text-[12.5px] font-bold tracking-[0.12em] text-sun-300">픽스처 · 지대주 · 크라운</p>
+                <ol className="mt-5 grid gap-5 sm:grid-cols-3">
+                  {CI_PARTS.parts.map((p) => (
+                    <li key={p.n} className={`rounded-2xl border p-5 ${p.n === '02' ? 'border-sun-500/70 bg-sun-500/10' : 'border-white/12 bg-white/[0.04]'}`}>
+                      <span className={`block text-[13px] font-extrabold tracking-[0.18em] ${p.n === '02' ? 'text-sun-300' : 'text-white/55'}`}>{p.n}</span>
+                      <span className="mt-1.5 block text-[1.1rem] font-bold">{p.title}</span>
+                      {/* 세 칸짜리 좁은 카드 — 마디 줄바꿈을 태우면 두세 낱말짜리 줄이 생겨 그냥 흐르게 둔다 */}
+                      <span className="mt-2 block text-[14.5px] leading-[1.7] text-white/70"><Sentences text={p.desc} /></span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+              <p className="reveal mx-auto mt-8 max-w-[720px] text-center text-[15px] leading-[1.8] text-ink-soft">
+                <Sentences text={CI_PARTS.after} clauses={false} />
+              </p>
             </section>
             </>)}
 

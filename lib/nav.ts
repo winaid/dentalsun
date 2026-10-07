@@ -42,6 +42,7 @@ export const NAV: NavItem[] = [
       { label: '풀아치 임플란트', href: '/treatment/implant/full-arch', desc: '무치악 · 다수 치아 상실 시 4~6개 식립 고정성 보철' },
       { label: 'UV 임플란트', href: '/treatment/implant/uv', desc: '픽스처 표면 UV 광활성화 · 골유착 환경 개선' },
       { label: '자가혈 임플란트', href: '/treatment/implant/prf', desc: '골이식 시 자가혈 농축 성분(PRF) 활용' },
+      { label: '뼈이식 · 상악동거상술', href: '/treatment/implant/bone-graft', desc: '잇몸뼈가 부족할 때 · 3D CT로 확인 후 필요한 만큼 채움' },
       { label: '보험 틀니 · 임플란트', href: '/treatment/insurance', desc: '만 65세 이상 건강보험 적용 · 본인부담 30%' },
       { label: '보증제도', href: '/treatment/implant/warranty', desc: '치료 후 사후 관리 보증표' },
     ],

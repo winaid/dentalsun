@@ -136,6 +136,8 @@ export function DocPage({ doc }: { doc: Doc }) {
           cards={collage.cards}
           items={collageItems}
           cardsLead={collage.cardsLead}
+          sub={collage.sub}
+          badges={collage.badges}
         >
           <div className="flex flex-wrap gap-3">
             <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="btn-sun">네이버 예약</a>
@@ -221,6 +223,19 @@ function linkFig(href: string, label: string): Fig | undefined {
   return key ? { key, alt: label } : undefined;
 }
 
+/** 소제목 속 강조 낱말(block.accent)을 주황 밑줄로 — 글자가 제목에 그대로 있을 때만 */
+function titleNode(title: string, accent?: string): ReactNode {
+  const at = accent ? title.indexOf(accent) : -1;
+  if (!accent || at < 0) return title;
+  return (
+    <>
+      {title.slice(0, at)}
+      <span className="accent-sun">{accent}</span>
+      {title.slice(at + accent.length)}
+    </>
+  );
+}
+
 /** {강조} 표기를 주황 밑줄 span 으로 */
 function renderAccent(line: string): ReactNode {
   return splitAccent(line).map((p, i) => (p.accent ? <span key={i} className="accent-sun">{p.text}</span> : <span key={i}>{p.text}</span>));
@@ -280,10 +295,10 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
         <div className="absolute inset-0 bg-gradient-to-b from-night/90 via-night/80 to-night/95" />
       </div>
     ) : null;
-  const Head = ({ title, lead }: { title?: string; lead?: string }) =>
+  const Head = ({ title, lead, accent }: { title?: string; lead?: string; accent?: string }) =>
     title ? (
       <div className="reveal max-w-[820px]">
-        <h2 className={`display-sm ${band ? '!text-white' : ''}`}>{title}</h2>
+        <h2 className={`display-sm ${band ? '!text-white' : ''}`}>{titleNode(title, accent)}</h2>
         {lead && (
           <p className={`lead mt-4 ${band ? '!text-white' : ''}`}>
             {band ? <ScrubText text={lead} /> : <Sentences text={lead} />}
@@ -311,7 +326,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
             </div>
             <div className="wrap">
               <div className="reveal mx-auto max-w-[780px] text-center">
-                {b.title && <h2 className="display-sm !text-white on-photo">{b.title}</h2>}
+                {b.title && <h2 className="display-sm !text-white on-photo">{titleNode(b.title, b.accent)}</h2>}
                 <div className={`prose-ko prose-on-dark ${b.title ? 'mt-7' : ''}`}>
                   {paras(b.paragraphs).map((p, i) => (
                     <p key={i} className="!text-white/85">
@@ -328,7 +343,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
         <section id={id} className={wrapCls}>
           <div className={`wrap grid items-center gap-10 lg:gap-16 ${b.figure ? 'lg:grid-cols-2' : ''}`}>
             <div className={`reveal ${b.figure && b.figureSide === 'left' ? 'lg:order-2' : ''} ${b.figure ? '' : 'max-w-[900px]'}`}>
-              {b.title && <h2 className="display-sm">{b.title}</h2>}
+              {b.title && <h2 className="display-sm">{titleNode(b.title, b.accent)}</h2>}
               <div className={`prose-ko ${b.title ? 'mt-6' : ''}`}>
                 {paras(b.paragraphs).map((p, i) => (
                   <p key={i}>
@@ -355,7 +370,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
         <section id={id} className={wrapCls}>
           <Bg />
           <div className="wrap">
-            <Head title={b.title} lead={b.lead} />
+            <Head title={b.title} lead={b.lead} accent={b.accent} />
             <div className={`mt-10 grid gap-10 ${b.figure ? 'lg:grid-cols-[1fr_1.4fr] lg:items-start' : ''}`}>
               {b.figure && <Figure fig={b.figure} ratio="aspect-[4/3]" />}
               <ul className="reveal-stack cards-flex" style={vars}>
@@ -383,7 +398,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
         <section id={id} className={wrapCls}>
           <Bg />
           <div className="wrap">
-            <Head title={b.title} lead={b.lead} />
+            <Head title={b.title} lead={b.lead} accent={b.accent} />
             <ol className="reveal-stack cards-flex mt-10" style={gridVars(b.steps.length)}>
               {b.steps.map((s, i) => (
                 <li key={i} className={`${withFig ? plainCls : cardCls} overflow-hidden`}>
@@ -411,7 +426,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
       return (
         <section id={id} className={wrapCls}>
           <div className="wrap">
-            <Head title={b.title} lead={b.lead} />
+            <Head title={b.title} lead={b.lead} accent={b.accent} />
             <div className="tbl-scroll reveal mt-10 overflow-x-auto">
               <table className="tbl min-w-[640px]">
                 <caption className="sr-only">{b.title ?? '비교표'}</caption>
@@ -443,7 +458,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
       return (
         <section id={id} className={wrapCls}>
           <div className="wrap">
-            <Head title={b.title} lead={b.lead} />
+            <Head title={b.title} lead={b.lead} accent={b.accent} />
             <div className="tbl-scroll reveal mt-10 overflow-x-auto">
               <table className="tbl min-w-[640px]">
                 <caption className="sr-only">{b.title ?? '표'}</caption>
@@ -472,7 +487,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
       return (
         <section id={id} className={wrapCls}>
           <div className="wrap">
-            <Head title={b.title} lead={b.lead} />
+            <Head title={b.title} lead={b.lead} accent={b.accent} />
             <div className={`reveal-stack mt-10 grid gap-5 ${cols === 4 ? 'grid-cols-2 lg:grid-cols-4' : cols === 2 ? 'sm:grid-cols-2' : 'grid-cols-2 lg:grid-cols-3'}`}>
               {b.figures.map((f, i) => (
                 <Figure key={i} fig={f} ratio="aspect-[4/3]" sizes="(max-width: 640px) 50vw, 33vw" effect="img-in" />
@@ -486,7 +501,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
       return (
         <section id={id} className={wrapCls}>
           <div className="wrap">
-            <Head title={b.title} lead={b.lead} />
+            <Head title={b.title} lead={b.lead} accent={b.accent} />
             {b.caseGroup && caseGroup(b.caseGroup) ? (
               <div className="reveal mt-10">
                 <BeforeAfter groups={[caseGroup(b.caseGroup)!]} note={b.note} showTabs={false} />
@@ -505,7 +520,13 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
       return (
         <section id={id} className={wrapCls}>
           <div className="wrap">
-            <Head title={b.title ?? '실제 치료 전후 사례'} lead={b.lead} />
+            <Head title={b.title ?? '실제 치료 전후 사례'} lead={b.lead} accent={b.accent} />
+            {b.box && (
+              <div className="reveal mt-8 rounded-[24px] bg-canvas px-6 py-6 text-center md:px-10">
+                <p className="text-[16px] font-extrabold text-ink md:text-[17px]">{b.box.title}</p>
+                <p className="mt-2 text-[14.5px] leading-[1.75] text-ink-soft md:text-[15px]"><Sentences text={b.box.text} clauses={false} /></p>
+              </div>
+            )}
             <div className="reveal mt-8">
               <CaseGallery categories={b.categories} />
             </div>
@@ -530,7 +551,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
       return (
         <section id={id} className={wrapCls}>
           <div className="wrap">
-            <Head title={b.title} lead={b.lead} />
+            <Head title={b.title} lead={b.lead} accent={b.accent} />
             <div className="reveal-stack cards-flex mt-10" style={gridVars(b.items.length)}>
               {b.items.map((it) => (
                 <CardLink key={it.href} href={it.href} label={it.label} desc={it.desc} external={it.href.startsWith('http')} fig={linkFig(it.href, it.label)} />
@@ -551,7 +572,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
                 <span className="flex h-6 w-6 items-center justify-center rounded-full border border-white/50 text-[14px]">!</span>
                 NOTICE · 알아두세요
               </p>
-              {b.title && <h2 className="display-sm mt-5 !text-white">{b.title}</h2>}
+              {b.title && <h2 className="display-sm mt-5 !text-white">{titleNode(b.title, b.accent)}</h2>}
             </div>
             <div className="reveal border-l border-white/30 pl-6 md:pl-8">
               {paras(b.paragraphs).map((p, i) => (

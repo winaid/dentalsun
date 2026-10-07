@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import type { ReactNode } from 'react';
-import { Breadcrumb, Sentences, keepDots } from '@/components/ui';
+import { Breadcrumb, RoundBadges, Sentences, keepDots } from '@/components/ui';
 import { figSrc, type Fig } from '@/lib/docs';
 import { CLINIC } from '@/lib/clinic';
 
@@ -35,6 +35,8 @@ export function HeroCollage({
   long = false,
   longer = false,
   bgSoft = false,
+  sub,
+  badges,
 }: {
   trail: Array<{ name: string; path: string }>;
   eyebrow: string;
@@ -52,6 +54,10 @@ export function HeroCollage({
   /** 카드 바로 위 한 줄 — 구역 설명처럼 카드를 연다 (이런 경우, ~합니다.) */
   cardsLead?: string;
   children?: ReactNode;
+  /** 제목 아래 굵은 부제 — {주황} [굵게] 표기 */
+  sub?: [string, string?];
+  /** 동그라미 배지 — 글 속 줄바꿈 문자에서 줄을 바꾼다(whitespace-pre-line) */
+  badges?: string[];
 }) {
   return (
     <section className="relative isolate bg-night text-white" data-hero-full>
@@ -85,10 +91,22 @@ export function HeroCollage({
               <span className="block hero-in hero-in-2">{typeof lines[0] === 'string' ? keepDots(lines[0]) : lines[0]}</span>
               {lines[1] && <span className="block hero-in hero-in-3 lg:pl-[14vw]">{typeof lines[1] === 'string' ? keepDots(lines[1]) : lines[1]}</span>}
             </h1>
+            {/* 병원이 준 부제(풀아치 PPT 50쪽) — 제목 바로 아래 굵은 두 줄 */}
+            {sub && (
+              <p className="mt-6 text-[1.22rem] font-medium leading-[1.55] text-white/90 hero-in hero-in-3 md:text-[1.5rem] lg:mt-8">
+                {sub.filter((l): l is string => !!l).map((l, i) => (
+                  <span key={i} className="block">{richSub(l)}</span>
+                ))}
+              </p>
+            )}
             {/* 설명은 두 줄 높이를 잡아 두어 한 문장이든 두 문장이든 버튼 자리가 같다 */}
-            <p className="mt-8 max-w-[560px] text-[1.08rem] leading-[1.8] text-white/80 hero-in hero-in-4 md:text-[1.16rem] lg:mt-10 lg:min-h-[3.6em] lg:max-w-[720px]">
-              <Sentences text={lead} clauses={false} />
-            </p>
+            {lead && (
+              <p className="mt-8 max-w-[560px] text-[1.08rem] leading-[1.8] text-white/80 hero-in hero-in-4 md:text-[1.16rem] lg:mt-10 lg:min-h-[3.6em] lg:max-w-[720px]">
+                <Sentences text={lead} clauses={false} />
+              </p>
+            )}
+            {/* 동그라미 배지(풀아치 PPT 50쪽 예시) */}
+            {badges && badges.length > 0 && <RoundBadges items={badges} className="mt-7 hero-in hero-in-4" />}
             {/* 버튼 두 개는 모든 첫 화면에 — 따로 주지 않으면 네이버 예약 · 전화(오너: 소개 쪽도 다른 쪽처럼). 톡톡 상담은 2026-09-21 사이트 전체에서 뺐다 */}
             <div className="mt-8 hero-in hero-in-4 lg:mt-9">
               {children ?? (
@@ -137,4 +155,20 @@ export function HeroCollage({
       </div>
     </section>
   );
+}
+
+/** 부제 표기 — {주황 강조} [굵게] */
+function richSub(line: string): ReactNode {
+  return line
+    .split(/(\{[^}]*\}|\[[^\]]*\])/)
+    .filter(Boolean)
+    .map((t, i) =>
+      t.startsWith('{') ? (
+        <span key={i} className="font-extrabold text-sun-400">{t.slice(1, -1)}</span>
+      ) : t.startsWith('[') ? (
+        <strong key={i} className="font-extrabold text-white">{t.slice(1, -1)}</strong>
+      ) : (
+        <span key={i}>{t}</span>
+      ),
+    );
 }

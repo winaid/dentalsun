@@ -37,9 +37,10 @@ export const CI_ABUTMENT = {
     '커스텀 어버트먼트는 환자의 구강 구조를 분석해 3D CAD/CAM으로 맞춤 제작하는 임플란트 연결 부품입니다. 규격대로 만든 기성 어버트먼트와 달리, 치아 형태·잇몸 라인·교합 상태를 반영해 개별 설계합니다. 자연치아에 가까운 형태를 목표로 할 수 있는 이유입니다.',
     '광화문 선치과는 CBCT와 구강스캐너로 얻은 3차원 데이터로, 지대주와 그 위에 올라갈 보철을 함께 설계합니다. 잇몸에 밀착되는 경계와 보철의 두께는 이 설계 단계에서 정해지며, 대표원장이 형태와 교합을 직접 확인합니다.',
   ],
+  /* 2026-10-07 원장 PPT 59쪽 "사진교체" — 치열 한 줄 도해는 맞춤 지대주가 안 보였다 → 크라운을 띄운 분해도(비교 카드와 같은 그림체, 시안 2장 중 1) */
   fig: {
-    key: 'illust/custom-abutment-overview',
-    alt: '하악 치열 가운데 어금니 자리에 픽스처와 맞춤 지대주, 크라운을 올린 3D 도해. 크라운 한쪽을 잘라 내 안쪽의 맞춤 지대주가 보인다.',
+    key: 'illust/custom-abutment-define',
+    alt: '임플란트 분해도. 위에 인공 크라운이 떠 있고, 그 아래 치아 모양으로 넓어지는 은색 맞춤 지대주를 잇몸이 감싸며, 픽스처는 잇몸 아래 뼈에 박혀 있습니다.',
   } as Fig,
 };
 
@@ -256,9 +257,6 @@ export const CI_FAQ: QA[] = [
 
 /* ───────── Doc.blocks — llms.txt·글자 수·AI 가 읽는 본문. 화면 데이터에서 만든다 ───────── */
 export const CI_BLOCKS: Block[] = [
-  { type: 'text', id: 'abutment', title: CI_ABUTMENT.title, paragraphs: CI_ABUTMENT.paragraphs, figure: CI_ABUTMENT.fig, figureSide: 'left' },
-  { type: 'text', id: 'what', title: CI_PARTS.title, paragraphs: [CI_PARTS.lead, CI_PARTS.after] },
-  { type: 'points', id: 'parts', title: '임플란트를 이루는 세 부분', items: CI_PARTS.parts.map((p) => ({ title: p.title, desc: p.desc })), columns: 3, numbered: true },
   { type: 'points', id: 'benefits', title: CI_BENEFITS.title, lead: CI_BENEFITS.lead, items: CI_BENEFITS.items, columns: 3 },
   { type: 'text', id: 'seal', title: CI_BENEFITS.seal.title, paragraphs: CI_BENEFITS.seal.paragraphs, figure: CI_BENEFITS.seal.fig },
   { type: 'compare', id: 'compare', title: CI_COMPARE.title, lead: CI_COMPARE.lead, columns: CI_COMPARE.columns, rows: CI_COMPARE.rows, note: CI_COMPARE.note, highlight: 'b' },
@@ -272,6 +270,10 @@ export const CI_BLOCKS: Block[] = [
   { type: 'points', id: 'peri-signs', title: '이런 신호가 있으면 미루지 마세요', items: CI_PERI.signs.map((s) => ({ title: s })), columns: 2 },
   { type: 'points', id: 'peri-care', title: '임플란트를 오래 쓰는 관리', items: CI_PERI.care.map((s) => ({ title: s })), columns: 3 },
   { type: 'notice', title: CI_NOTICE.title, paragraphs: CI_NOTICE.paragraphs },
+  /* 2026-10-07 원장 PPT 46쪽 '커스텀 설명을 아래로' — 화면과 같이 정의·세 부분을 맨 뒤로 */
+  { type: 'text', id: 'abutment', title: CI_ABUTMENT.title, paragraphs: CI_ABUTMENT.paragraphs, figure: CI_ABUTMENT.fig, figureSide: 'left' },
+  { type: 'text', id: 'what', title: CI_PARTS.title, paragraphs: [CI_PARTS.lead, CI_PARTS.after] },
+  { type: 'points', id: 'parts', title: '임플란트를 이루는 세 부분', items: CI_PARTS.parts.map((p) => ({ title: p.title, desc: p.desc })), columns: 3, numbered: true },
 ];
 
 /* ═══════════════════════════════════════════════════════════════════════════

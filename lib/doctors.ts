@@ -60,3 +60,6 @@ export const DOCTORS: Doctor[] = [
 ];
 
 export const doctorBySlug = (slug: string) => DOCTORS.find((d) => d.slug === slug);
+
+/** 2026-10-07 원장 PPT 49쪽 '(인증마크 이모티콘) 보건복지부 인증 통합치의학과 전문의' — 이 줄에만 인증 마크를 붙인다 */
+export const isCertCareer = (c: string) => c.startsWith('보건복지부 인증');

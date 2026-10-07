@@ -18,6 +18,10 @@ export interface HeroCollageSpec {
   cardsLead?: string;
   cards: [CollageCard, CollageCard, CollageCard];
   items?: CollageItem[];
+  /** 제목 아래 굵은 부제 한두 줄 — 병원이 준 부제를 그대로(풀아치 PPT 50쪽). {중괄호}=주황, [대괄호]=굵게. 주면 lead 는 '' 로 비워도 된다 */
+  sub?: [string, string?];
+  /** 첫 화면 동그라미 배지 — 줄바꿈은 글 속 줄바꿈 문자로(풀아치 PPT 50쪽에 붙인 예시 배지 네 개) */
+  badges?: string[];
 }
 
 export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
@@ -31,9 +35,12 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
       { fig: { key: 'orig/misc-nav-implant-set', alt: '내비게이션 임플란트 모의수술 화면이 뜬 모니터·태블릿과 임플란트 모형' }, shape: 'std' },
     ],
   },
+  /* 2026-10-07 카톡 '0.1mm 오차없이 진행한다'(짧게 쓸 말의 예로 든 문장, PPT 1쪽 더서울치과 캡처의 표현) + 46쪽 '어렵다' — 쉬운 말로.
+     ⚠️ '0.1mm 오차 없이' 는 결과를 보장하는 표현이라 의료법 소지 — 오너에게 알림(2026-10-06), 병원 문구라 그대로 넣는다.
+     예전: '식립 위치를 수술 전에 정하는' / 'CBCT와 구강스캔 데이터로 모의 식립… 신경관과 상악동까지의 거리를 계측… 무절개' */
   '/treatment/implant/navigation': {
-    lines: ['식립 위치를 수술 전에 정하는', '{내비게이션} 임플란트'],
-    lead: 'CBCT와 구강스캔 데이터로 모의 식립을 마친 뒤, 그 계획을 옮긴 수술 가이드로 식립합니다. 신경관과 상악동까지의 거리를 수술 전에 계측하고, 골량이 충분하면 무절개로 진행합니다.',
+    lines: ['수술 전에 위치를 정하는', '{내비게이션} 임플란트'],
+    lead: '3D CT로 컴퓨터에서 미리 수술해 보고, 그 계획대로 만든 수술 가이드로 0.1mm 오차 없이 진행합니다. 잇몸뼈가 충분하면 잇몸을 절개하지 않고 심습니다.',
     cardsLead: '가이드 식립은 이렇게 진행합니다.',
     cards: [
       { fig: { key: 'scene/surgery', alt: '확대경을 끼고 임플란트를 식립하는 양대일 대표원장' }, shape: 'portrait' },
@@ -41,9 +48,16 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
       { fig: { key: 'equip/guide', alt: '하악 모형에 얹은 수술 가이드와 임플란트' }, shape: 'std' },
     ],
   },
+  /* 2026-10-07 원장 PPT 50쪽 — 첫 화면 위에 병원이 직접 쓴 세 줄을 글자 그대로(굵게 '단 4~6개'·'수술 당일 식사', 주황 '풀아치'도 PPT 그대로).
+     배지 네 개는 같은 쪽에 붙인 예시(디오나비 배지) 문구 그대로 — 카톡 '빠르게·비용·임시치아 바로'와 같은 내용.
+     ⚠️ '수술 당일 식사까지 가능' · '수술당일 식사가능' · '가격은 합리적' 은 조건·가격 표현이라 의료법 소지 — 오너에게 알림(2026-10-07), 글자는 손대지 않는다.
+     예전: '4~6개의 임플란트로 한 턱 전체를 복원하는 풀아치 임플란트' + CBCT·골량·무치악 설명 */
   '/treatment/implant/full-arch': {
-    lines: ['4~6개의 임플란트로 한 턱 전체를 복원하는', '{풀아치} 임플란트'],
-    lead: '틀니가 들뜨고 빠져 식사가 불편하셨다면, 고정 방식을 검토해 볼 수 있습니다. 치아가 전혀 없는 무치악도 CBCT로 골량을 계측한 뒤, 4~6개의 임플란트로 한 턱 전체를 복원합니다.',
+    /* '불편하지 않으신가요?' 는 붙여 둔다(줄 바꿈 없는 띄어쓰기) — 폰에서 쉼표 뒤에서만 끊기게 */
+    lines: ['틀니, 불편하지 않으신가요?'],
+    sub: ['전체 치아에 필요한 임플란트, [단 4~6개]', '[수술 당일 식사]까지 가능한 {풀아치} 임플란트'],
+    badges: ['수술당일\n식사가능', '내원은\n최소한', '치료기간\n최소한', '가격은\n합리적'],
+    lead: '',
     cardsLead: '이런 경우 풀아치 임플란트를 검토합니다.',
     cards: [
       { fig: { key: 'orig/main-fa-surgeon-right', alt: '진료실에서 환자를 진료하는 양대일 대표원장' }, shape: 'portrait' },
@@ -71,14 +85,27 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
       { fig: { key: 'equip/ct', alt: '3D CT 장비' }, shape: 'std' },
     ],
   },
+  /* 2026-10-07 원장 PPT 58쪽 "설명이 너무 어려움" — 붙여 온 예시('나에게 꼭 맞는 임플란트', '내 잇몸 형태에 꼭 맞도록 어버트먼트를 1:1 맞춤 제작')
+     길이와 말투로 다시 씀. 예전: '잇몸 라인과 교합에 맞춰 설계하는 맞춤 임플란트' / 'CAD/CAM·잇몸 경계의 틈·고른 두께' 설명 */
   '/treatment/implant/custom': {
-    lines: ['잇몸 라인과 교합에 맞춰 설계하는', '{맞춤} 임플란트'],
-    lead: '기성 지대주 대신, 잇몸 라인과 교합에 맞춰 CAD/CAM으로 지대주를 설계합니다. 잇몸 경계의 틈을 줄이고 보철이 고른 두께로 얹히도록, 대표원장이 설계 단계에서 직접 확인합니다.',
+    lines: ['나에게 꼭 맞는', '{맞춤} 임플란트'],
+    lead: '임플란트와 크라운을 잇는 기둥인 지대주를, 내 잇몸 형태에 꼭 맞도록 1:1로 맞춤 제작합니다. 설계는 대표원장이 직접 확인합니다.',
     cardsLead: '맞춤 지대주는 이렇게 설계합니다.',
     cards: [
       { fig: { key: 'implant/custom', alt: '맞춤 어버트먼트 개념도' }, shape: 'portrait' },
       { fig: { key: 'orig/implant-custom-fit', alt: '잇몸 선에 맞춘 맞춤 어버트먼트 단면 일러스트' }, shape: 'wide' },
       { fig: { key: 'orig/implant-custom-stock', alt: '기성품 어버트먼트 단면 일러스트' }, shape: 'std' },
+    ],
+  },
+  /* 2026-10-07 새 쪽(원장 PPT 46쪽 '상악동, 뼈이식 내용 추가') — 제목은 참고 17쪽 '뼈가 부족하다고 들었다면'의 짜임 */
+  '/treatment/implant/bone-graft': {
+    lines: ['잇몸뼈가 부족하다고 들었다면,', '{뼈이식}으로 자리를 만듭니다'],
+    lead: '어느 부위에 얼마나 부족한지 3D CT로 먼저 확인하고, 모자란 만큼만 채웁니다. 위턱 어금니 쪽 높이가 모자라면 상악동거상술을 합니다.',
+    cardsLead: '이런 경우 뼈이식을 검토합니다.',
+    cards: [
+      { fig: { key: 'illust/bone-graft', alt: '골이식 단면 도해' }, shape: 'portrait' },
+      { fig: { key: 'illust/sinus-lift', alt: '상악동거상술 단면 도해' }, shape: 'wide' },
+      { fig: { key: 'equip/ct', alt: '3D CT 장비' }, shape: 'std' },
     ],
   },
   '/treatment/implant/warranty': {

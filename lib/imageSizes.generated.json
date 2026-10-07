@@ -1019,10 +1019,6 @@
   "w": 966,
   "h": 649
  },
- "illust/custom-abutment-overview": {
-  "w": 1200,
-  "h": 800
- },
  "illust/custom-abutment-half": {
   "w": 1200,
   "h": 800
@@ -1134,5 +1130,9 @@
  "ai/wide-hygienist": {
   "w": 1536,
   "h": 1024
+ },
+ "illust/custom-abutment-define": {
+  "w": 1200,
+  "h": 800
  }
 }

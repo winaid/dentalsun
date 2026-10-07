@@ -209,11 +209,12 @@ function Triad({ className = '' }: { className?: string }) {
 /**
  * 상장 자리 — 사진이 오면(TMJ_AWARD.photo) 그 사진을, 오기 전에는 글자로 그린 액자를 둔다.
  * ★ 액자 틀은 사진 비율(세로 3:4)과 같은 크기라 사진이 와도 짜임이 흔들리지 않는다.
+ * 2026-10-07 원장 PPT 46쪽 '홈화면에 턱관절 상장 이미지 추가' — 홈 턱관절 띠도 이걸 쓴다(사진이 오면 두 곳이 함께 바뀐다).
  */
-function AwardCard() {
+export function AwardCard({ className = 'mt-10' }: { className?: string }) {
   const a = TMJ_AWARD;
   return (
-    <div className="reveal mx-auto mt-10 flex max-w-[640px] items-center gap-5 rounded-2xl border border-hairline bg-white p-4 text-left shadow-[var(--shadow-soft)] md:gap-7 md:p-5">
+    <div className={`reveal mx-auto flex max-w-[640px] items-center gap-5 rounded-2xl border border-hairline bg-white p-4 text-left shadow-[var(--shadow-soft)] md:gap-7 md:p-5 ${className}`}>
       <span className="relative block aspect-[3/4] w-[108px] shrink-0 overflow-hidden rounded-lg md:w-[132px]">
         {a.photo ? (
           <Image src={figSrc(a.photo.key)} alt={a.photo.alt} fill sizes="140px" className="object-cover" />
