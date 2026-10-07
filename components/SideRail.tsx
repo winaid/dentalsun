@@ -17,7 +17,7 @@ export function DoctorCard() {
       <span className="absolute inset-x-0 bottom-0 p-5 text-white">
         <span className="block text-[12px] font-bold tracking-[0.18em] text-sun-300">보건복지부 인증 전문의</span>
         <span className="mt-1 block text-[1.15rem] font-extrabold leading-snug">양대일 원장이 직접 진단하고 치료합니다</span>
-        <span className="mt-1 block text-[13px] text-white/75">강남성심병원 외래교수 출신 · 의료진 소개 ›</span>
+        <span className="mt-1 block text-[13px] text-white/75">강남성심병원 치과 외래교수 · 의료진 소개 ›</span>
       </span>
     </Link>
   );

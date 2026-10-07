@@ -197,6 +197,19 @@ td {
  * 제목·질문의 문장 경계(Sentences soft) — 한 줄에 들어가면 그대로, 넘치면 다음 문장이 통째로 다음 줄로 (2026-09-29 오너: "마침표에서 줄바꿈").
  * 본문(.sent)처럼 늘 가르면 짧은 질문까지 두 줄이 된다.
  */
+/*
+ * 2026-10-07 오너 "길이 균형을 너무 맞춰 가운데에 주르륵 나온다 — 문장 하나를 한 줄로": 넓은 화면의 구역 설명(.lead)·가운데 정렬 글은
+ * 문장 안을 고르게 나누지(balance) 않고 채워 쓴다(pretty) — 한 줄에 들어가면 한 줄, 넘치면 쉼표 마디에서 다음 줄로. 폰은 그대로.
+ * 가운데 설명 칸 폭도 넓혔다(TmjPage·CustomImplantPage Head 640/680 → lg 960/920, 홈 가운데 머리 820 → lg 960).
+ */
+@media (min-width: 1024px) {
+  .lead .sent,
+  .lead .sent-one,
+  .text-center .sent,
+  .text-center .sent-one {
+    text-wrap: pretty;
+  }
+}
 .sent-soft {
   display: inline-block;
   max-width: 100%;

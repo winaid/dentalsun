@@ -81,7 +81,7 @@ function Head({ label, title, lead, id }: { label: string; title: ReactNode; lea
       <Label>{label}</Label>
       <h2 id={id} className="display-sm mt-4">{title}</h2>
       {lead && (
-        <p className="lead mx-auto mt-4 max-w-[680px]">
+        <p className="lead mx-auto mt-4 max-w-[680px] lg:max-w-[920px]">
           <Sentences text={lead} clauses={false} />
         </p>
       )}
@@ -95,7 +95,7 @@ function SubHead({ eyebrow, title, lead }: { eyebrow: string; title: ReactNode; 
       <p className="text-[12.5px] font-bold tracking-[0.12em] text-sun-600">{eyebrow}</p>
       <h3 className="mt-2 text-[1.4rem] font-extrabold leading-tight text-ink md:text-[1.7rem]">{title}</h3>
       {lead && (
-        <p className="mx-auto mt-3 max-w-[660px] text-[15px] leading-[1.75] text-ink-soft">
+        <p className="mx-auto mt-3 max-w-[660px] text-[15px] leading-[1.75] text-ink-soft lg:max-w-[880px]">
           <Sentences text={lead} clauses={false} />
         </p>
       )}
@@ -538,7 +538,7 @@ export function CustomImplantPage({ doc, part }: { doc: Doc; part: 'navigation' 
 
               {/* 주위염 — 진행 3단계(왼쪽) · 신호 4 + 관리 3(오른쪽) */}
               <SubHead eyebrow="치료 후 관리" title={<>임플란트 <span className="accent-sun">주위염</span></>} />
-              <p className="reveal mx-auto mt-4 max-w-[660px] text-center text-[15px] leading-[1.75] text-ink-soft">
+              <p className="reveal mx-auto mt-4 max-w-[660px] text-center text-[15px] leading-[1.75] text-ink-soft lg:max-w-[880px]">
                 <Sentences text={CI_PERI.lead} clauses={false} />
               </p>
               <div className="reveal card mt-8 grid gap-8 p-7 md:grid-cols-2 md:gap-10 md:p-9">

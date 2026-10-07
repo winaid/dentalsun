@@ -128,7 +128,7 @@ export default function HomePage() {
                 새 문구는 원래 자리에 넣는다 — 제목 = 병원이 고른 문구(lib/doctors headline), 설명 = '15년 이상 … 한자리를 지켜온'. */}
         <section className="section relative overflow-hidden bg-canvas !py-14 lg:!py-20">
           <div className="wrap">
-            <div className="reveal mx-auto max-w-[820px] text-center">
+            <div className="reveal mx-auto max-w-[820px] text-center lg:max-w-[960px]">
               <p className="eyebrow justify-center">OUR DOCTORS</p>
               <h2 className="display-sm mt-4">
                 {DOCTORS[0].headline[0]}
@@ -263,7 +263,7 @@ export default function HomePage() {
         {/* ── 진료과목 — 사진 카드 ── */}
         <section className="section bg-canvas">
           <div className="wrap">
-            <div className="reveal mx-auto max-w-[820px] text-center">
+            <div className="reveal mx-auto max-w-[820px] text-center lg:max-w-[960px]">
               <p className="eyebrow justify-center">DEPARTMENTS</p>
               <h2 className="display-sm mt-4">
                 광화문선치과 <span className="accent">진료과목</span>
@@ -316,7 +316,7 @@ export default function HomePage() {
         {/* ── 임플란트 ── */}
         <section className="section">
           <div className="wrap">
-            <div className="reveal mx-auto max-w-[820px] text-center">
+            <div className="reveal mx-auto max-w-[820px] text-center lg:max-w-[960px]">
               <p className="eyebrow justify-center">PREMIUM DIGITAL IMPLANT</p>
               {/* 2026-10-06 원장 PPT 56쪽 — 제목·설명 모두 병원 문구 그대로("계측에서 방법이 나온다는 표현이 어렵다") */}
               <h2 className="display-sm mt-4">
@@ -472,7 +472,7 @@ export default function HomePage() {
              목록은 lib/caseLibrary.ts (빼고 싶은 사례는 거기서 한 줄 지우면 된다) ── */}
         <section className="section" id="cases">
           <div className="wrap">
-            <div className="reveal mx-auto max-w-[820px] text-center">
+            <div className="reveal mx-auto max-w-[820px] text-center lg:max-w-[960px]">
               <p className="eyebrow justify-center">BEFORE &amp; AFTER</p>
               <h2 className="display-sm mt-4">
                 광화문 선치과 <span className="accent">실제 치료 전후</span>
@@ -521,7 +521,7 @@ export default function HomePage() {
         {/* ── 영상 — 2026-09-29 원장 피드백 7번: 임플란트 구역에서 빼서 FAQ 바로 위로 내렸다 ── */}
         <section className="section">
           <div className="wrap">
-            <div className="reveal mx-auto max-w-[820px] text-center">
+            <div className="reveal mx-auto max-w-[820px] text-center lg:max-w-[960px]">
               <p className="eyebrow justify-center">YOUTUBE</p>
               <h2 className="display-sm mt-4">
                 영상으로 보는 <span className="accent">광화문 선치과 임플란트</span>
@@ -566,7 +566,7 @@ export default function HomePage() {
         {/* ── 오시는 길 · 진료시간 ── */}
         <section className="section" id="visit">
           <div className="wrap">
-            <div className="reveal mx-auto max-w-[820px] text-center">
+            <div className="reveal mx-auto max-w-[820px] text-center lg:max-w-[960px]">
               <p className="eyebrow justify-center">VISIT US</p>
               <h2 className="display-sm mt-4">
                 광화문역 <span className="accent">6번 출구 도보 2분</span>, 광화문선치과

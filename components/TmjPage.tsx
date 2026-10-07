@@ -121,7 +121,7 @@ function Head({ id, s, lead }: { id: string; s: TmjSection; lead?: string }) {
         <Title text={s.title} />
       </h2>
       {l && (
-        <p className="lead mx-auto mt-4 max-w-[640px]">
+        <p className="lead mx-auto mt-4 max-w-[640px] lg:max-w-[960px]">
           <Sentences text={l} clauses={false} />
         </p>
       )}
@@ -140,7 +140,7 @@ function SubHead({ s }: { s: TmjSection }) {
         <Title text={s.title} />
       </h3>
       {s.lead && (
-        <p className="mx-auto mt-3 max-w-[640px] text-[15px] leading-[1.75] text-ink-soft">
+        <p className="mx-auto mt-3 max-w-[640px] text-[15px] leading-[1.75] text-ink-soft lg:max-w-[880px]">
           <Sentences text={s.lead} clauses={false} />
         </p>
       )}
