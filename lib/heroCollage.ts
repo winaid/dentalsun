@@ -152,7 +152,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   },
   '/treatment/periodontal': {
     lines: ['잇몸 주머니 깊이부터 재고 시작하는', '{치주치료}'],
-    lead: '양치할 때 피가 나고 잇몸이 붓는다면 잇몸병의 신호이고, 치아가 흔들린다면 잇몸뼈까지 녹았을 수 있습니다. 잇몸 주머니 깊이와 X-ray로 단계를 확인한 뒤, 스케일링과 뿌리 표면 치료로 치료합니다.',
+    lead: '양치할 때 피가 나고 잇몸이 붓는다면 잇몸병의 신호이고, 치아가 흔들린다면 잇몸뼈까지 녹았을 수 있습니다. 잇몸 주머니 깊이와 엑스레이로 단계를 확인한 뒤, 스케일링과 뿌리 표면 치료를 진행합니다.',
     cardsLead: '이런 증상이라면 잇몸 상태를 확인합니다.',
     cards: [
       { fig: { key: 'illust/perio-stages', alt: '건강한 잇몸에서 치주염까지 진행 단계 도해' }, shape: 'wide' },
@@ -232,7 +232,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   },
   '/treatment/aesthetic/prosthetics': {
     lines: ['남은 치아 구조부터 확인하는', '{심미보철}'],
-    lead: '보철을 오래 쓰려면 경계가 잘 맞고, 그 아래 치아가 충분히 남아 있어야 합니다. 충치와 금, 맞물림을 먼저 확인하고 라미네이트·올세라믹·지르코니아 가운데 재료를 정합니다.',
+    lead: '보철을 오래 쓰려면 경계가 잘 맞고, 그 아래 치아가 충분히 남아 있어야 합니다. 충치와 금 간 곳, 맞물림을 먼저 확인하고 라미네이트·올세라믹·지르코니아 가운데 재료를 정합니다.',
     cardsLead: '이런 경우, 심미보철을 고려합니다.',
     cards: [
       { fig: { key: 'aesthetic/zirconia', alt: '지르코니아 크라운' }, shape: 'portrait' },
@@ -252,7 +252,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   },
   '/treatment/insurance': {
     lines: ['만 65세 이상이면 받는', '건강보험 {틀니 · 임플란트}'],
-    lead: '만 65세 이상이면 틀니와 임플란트 2개까지 건강보험으로 받으실 수 있습니다. {본인 부담은 30%}이며, 대상이 되는지는 진료 전에 함께 확인해 드립니다.',
+    lead: '만 65세 이상이면 틀니, 그리고 임플란트 2개까지 건강보험으로 받으실 수 있습니다. {본인 부담은 30%}이며, 대상이 되는지는 진료 전에 함께 확인해 드립니다.',
     cardsLead: '이런 분들이 급여 대상입니다.',
     cards: [
       { fig: { key: 'orig/denture-hero', alt: '확대경을 쓴 원장이 초록 드레이프를 덮은 환자를 진료하는 모습' }, shape: 'portrait' },
@@ -272,8 +272,8 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   },
   '/treatment/insurance/implant': {
     lines: ['1인당 평생 2개까지 적용되는', '{보험임플란트}'],
-    lead: '만 65세 이상이고 치아가 일부라도 남아 있다면, 평생 2개까지 보험이 적용됩니다. 보험 임플란트도 같은 {CT 검사와 계획을 거쳐}, 같은 과정으로 심습니다.',
-    cardsLead: '이런 조건이면 보험이 적용됩니다.',
+    lead: '만 65세 이상이고 치아가 일부라도 남아 있다면, 평생 2개까지 보험이 적용됩니다. 보험 임플란트도 일반 임플란트와 같은 원칙으로 3D {CT 검사와 계획을 거쳐} 심습니다.',
+    cardsLead: '보험임플란트 전에 알아 두실 점입니다.',
     cards: [
       { fig: { key: 'orig/denture-hero', alt: '확대경을 쓴 원장이 초록 드레이프를 덮은 환자를 진료하는 모습' }, shape: 'portrait' },
       { fig: { key: 'orig/implant-fa-denture', alt: '전악 임플란트 보철물과 분홍 틀니' }, shape: 'wide' },
@@ -302,8 +302,8 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   },
   '/treatment/natural-tooth/mta': {
     lines: ['빈틈없이 막아 재감염을 줄이는', '{MTA} 근관치료'],
-    lead: '신경치료는 신경관을 얼마나 깨끗이 비우고, 얼마나 빈틈없이 막느냐가 중요합니다. {물기 속에서도 굳는 MTA}로 신경관을 막아, 다시 감염될 여지를 줄입니다.',
-    cardsLead: 'MTA 는 이런 성질을 가진 재료입니다.',
+    lead: '신경치료는 신경관을 깨끗이 비우고 빈틈없이 막아야 다시 탈이 날 위험이 줄어듭니다. {물기 속에서도 굳는 MTA}로 신경관을 막아, 다시 감염될 여지를 줄입니다.',
+    cardsLead: 'MTA는 이런 성질을 가진 재료입니다.',
     cards: [
       { fig: { key: 'orig/mta-hero', alt: '확대경을 쓰고 MTA 신경치료를 하는 원장' }, shape: 'portrait' },
       { fig: { key: 'orig/case-mta1-after', alt: 'MTA 로 신경을 덮고 보철로 마무리한 어금니 — 치료 후' }, shape: 'wide' },
@@ -321,8 +321,8 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     ],
   },
   '/treatment/painless': {
-    lines: ['아픈 이유마다 방법을 달리하는', '{무통 & 저자극} 시스템'],
-    lead: '바늘이 들어갈 때, 마취액이 퍼질 때, 스케일링할 때 시린 것은 이유가 서로 다릅니다. 무통마취기 NO-PAIN III와 바르는·가글 마취, 에어플로우로 이유마다 따로 줄입니다.',
+    lines: ['덜 아픈 마취, 덜 시린 스케일링', '{무통 & 저자극} 시스템'],
+    lead: '바늘이 들어갈 때, 마취액이 퍼질 때, 스케일링이 시릴 때 아픈 이유는 서로 다릅니다. 무통마취기 NO-PAIN III와 바르는·가글 마취, 에어플로우로 이유마다 따로 줄입니다.',
     cardsLead: '통증의 원인에 따라 방법을 나눕니다.',
     cards: [
       { fig: { key: 'fit/pain-hero', alt: '파노라마 모니터 앞에서 무통마취기(NO PAIN III)로 마취하는 원장' }, shape: 'portrait' },
@@ -359,9 +359,9 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
       { fig: { key: 'orig/misc-online-phone', alt: '노트북 앞에서 스마트폰을 든 손' }, shape: 'std' },
     ],
     items: [
-      { title: '증상별 안내', desc: '턱관절 소리, 시린 이, 잇몸 출혈처럼 자주 겪는 증상을 환자의 말로 풀어 씁니다.' },
+      { title: '증상별 안내', desc: '증상마다 생각해 볼 원인과 집에서 할 일, 바로 와야 할 신호를 정리했습니다.' },
       { title: '치료 가이드', desc: '임플란트 진행 순서와 비용 요인, 건강보험, 턱관절 치료 순서를 정리했습니다.' },
-      { title: '진료로 이어지는 길', desc: '광화문선치과가 실제로 하는 진료와 이어지는 글에는 해당 안내로 가는 길을 함께 둡니다.' },
+      { title: '진료로 이어지는 길', desc: '글을 읽다 궁금한 진료가 있으면, 그 진료 안내로 바로 넘어갈 수 있습니다.' },
     ],
   },
   '/insight/guide/implant-journey': {

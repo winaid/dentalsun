@@ -11,6 +11,7 @@ import { docByPath } from '@/lib/content';
 import { CardLink, CertMark, ContactBand, FaqList, Figure, MedicalNotice, ScrubText, Sentences } from '@/components/ui';
 import { AwardCard } from '@/components/TmjPage';
 import { FullArchBand } from '@/components/FullArchBand';
+import { WarrantyBand } from '@/components/WarrantyBand';
 import { TMJ_AWARD } from '@/lib/content/tmjLanding';
 import { HomeStage, HomeStats } from '@/components/HomeScroll';
 import { CaseGallery } from '@/components/CaseGallery';
@@ -51,7 +52,7 @@ const HOME_HUBS: NavItem[] = [
     { label: '보험틀니', href: '/treatment/insurance/denture' }, { label: '보험임플란트', href: '/treatment/insurance/implant' },
   ] },
   { label: '매복사랑니', href: '/treatment/wisdom-tooth', children: [
-    { label: '사랑니발치 노하우', href: '/treatment/wisdom-tooth' }, { label: '발생되는 문제', href: '/treatment/wisdom-tooth#problems' }, { label: '발치과정', href: '/treatment/wisdom-tooth#process' },
+    { label: '사랑니발치 노하우', href: '/treatment/wisdom-tooth' }, { label: '발생하는 문제', href: '/treatment/wisdom-tooth#problems' }, { label: '발치과정', href: '/treatment/wisdom-tooth#process' },
   ] },
   { label: '자연치아살리기', href: '/treatment/natural-tooth', children: [
     { label: 'MTA 근관치료', href: '/treatment/natural-tooth/mta' }, { label: '엔도소닉 초음파 세척', href: '/treatment/natural-tooth/endosonic' },
@@ -210,7 +211,7 @@ export default function HomePage() {
               </h2>
               <p className="lead mt-4">
                 {/* 2026-10-06 원장 PPT 53쪽 '보철 >> 치료' — 둘째 문장(오너 지시: '검사 영상을 치료 순으로 설명하고') */}
-                <Sentences text="진단과 수술, 보철과 정기검진을 대표원장이 직접 맡습니다. 검사 영상을 치료 순으로 설명하고, 지금 필요한 치료부터 권해 드립니다." />
+                <Sentences text="진단과 수술, 보철과 정기검진을 대표원장이 직접 맡습니다. 검사 영상을 함께 보며 원인과 치료 순서를 설명하고, 지금 필요한 치료부터 권해 드립니다." />
               </p>
             </div>
             {/* 카드 다섯 장 — 넓은 화면은 3칸 + 2칸(아래 줄 가운데), 태블릿은 2칸(마지막 한 장 가운데), 폰은 1칸.
@@ -348,48 +349,8 @@ export default function HomePage() {
         {/* ── 풀아치 — 원장 PPT 46쪽 '홈화면에 풀아치 추가' · 50쪽 글 그대로. 그림 두 겹 모션(components/FullArchBand) ── */}
         <FullArchBand />
 
-        {/* ── 보증 기간 띠 — 2026-10-07 원장 PPT 62쪽 '추가 희망'(예시: 본플란트치과 띠). 카톡 보증서 줄은 '지우기' → 뺐다.
-             제목과 맨 아래 단서는 PPT 글자 그대로(제목 끝 마침표만 다른 제목들처럼 뺐다). 숫자는 예시(남의 병원 값)가 아니라
-             우리 보증표(lib/content/implant.ts 보증제도 table) 값 — 임플란트 수술관련 10년 · 임플란트 보철관련 5년 · 보존 및 보철 5년.
-             10년은 전부 무상이 아니라 기간별 지원(무상 → 50·30·15%)이라 한 줄로 밝히고 보증표로 잇는다(과장 소지 방지). ── */}
-        <section className="relative isolate overflow-hidden bg-night py-24 text-white md:py-28">
-          <div className="absolute inset-0 -z-10">
-            <Image src={figSrc('place2/treatment-bays')} alt="" fill sizes="(max-width: 1023px) 250vw, 100vw" className="object-cover opacity-35" data-parallax="0.2" />
-            <div className="absolute inset-0 bg-gradient-to-b from-night/85 via-night/70 to-night/90" />
-          </div>
-          <div className="wrap">
-            <div className="reveal mx-auto max-w-[880px] text-center">
-              <p className="eyebrow on-dark justify-center">WARRANTY</p>
-              <h2 className="display-sm mt-4 !text-white on-photo">
-                치료에 대한 자신감,
-                <br />
-                보증기간으로 약속합니다
-              </h2>
-              <p className="mt-10 text-[19px] font-bold text-white md:text-[22px]">
-                임플란트
-                <span className="mx-1.5 inline-block align-[-0.12em] text-[64px] font-extrabold leading-none text-sun-300 md:text-[84px]">10</span>년
-              </p>
-              <ul className="mx-auto mt-8 grid max-w-[520px] grid-cols-2 divide-x divide-white/20">
-                {[
-                  ['임플란트 보철', '5'],
-                  ['보존 · 보철 치료', '5'],
-                ].map(([label, years]) => (
-                  <li key={label} className="px-3">
-                    <p className="text-[15px] font-bold text-white/85 md:text-[16px]">{label}</p>
-                    <p className="mt-2 text-[16px] text-white/85">
-                      <span className="mr-1 align-[-0.1em] text-[44px] font-extrabold leading-none text-sun-300 md:text-[52px]">{years}</span>년
-                    </p>
-                  </li>
-                ))}
-              </ul>
-              <p className="mt-10 text-[14px] text-white/65 md:text-[15px]">기간에 따라 무상 · 50% · 30% · 15%로 나눠 지원합니다.</p>
-              <p className="mx-auto mt-2 max-w-[640px] text-balance text-[15px] font-bold leading-[1.7] text-white md:text-[16px]">(단, 본원의 치료계획을 준수하고 정기검진을 지속적으로 받는 경우에 한합니다)</p>
-              <div className="mt-8 flex justify-center">
-                <Link href="/treatment/implant/warranty" className="btn-sun">보증표 자세히 보기</Link>
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* ── 보증 기간 띠 — 원장 PPT 62쪽. 메달·계단 막대 모션(components/WarrantyBand) ── */}
+        <WarrantyBand />
 
         {/* ── 내비게이션 임플란트 과정 — 고정 무대(스크롤하면 사진이 바뀐다) ── */}
         <HomeStage />
@@ -402,7 +363,7 @@ export default function HomePage() {
           </div>
           {/* 사진 카드 없이 글만 가운데(오너: 억지로 맞춘 사진 카드 제거). 배경 사진이 분위기를 맡는다. */}
           <div className="wrap">
-            <div className="reveal mx-auto max-w-[880px] text-center">
+            <div className="reveal mx-auto max-w-[880px] lg:max-w-[1040px] text-center">
               <p className="eyebrow on-dark justify-center">TMJ · 턱관절</p>
               <h2 className="display-sm mt-4 !text-white on-photo">
                 {/* 2026-10-07 46쪽 '어렵다' — 예전: '관절잡음 · 개구장애 · 저작근 통증, 원인 감별이 치료의 시작입니다' */}
@@ -410,8 +371,9 @@ export default function HomePage() {
                 <br />
                 <span className="accent-sun">원인부터</span> 정확히 찾습니다
               </h2>
-              <p className="mx-auto mt-6 max-w-[720px] text-[1.05rem] leading-[1.85] text-white md:text-[1.15rem]">
-                <ScrubText text="턱관절 질환은 턱관절 디스크의 위치, 턱 근육의 긴장, 이갈이·이악물기, 치아 맞물림이 함께 얽혀 생깁니다. 턱관절 CT와 입 벌리는 폭·맞물림·근육 검사로 원인을 나눈 뒤, 약과 물리치료부터 장치 치료, 관절 세척까지 {필요한 단계만} 진행합니다." />
+              {/* 넓은 화면은 문장 하나 = 한 줄(오너 규칙) — 첫 문장이 약 970px 이라 lg 에서 칸을 넓힌다 */}
+              <p className="mx-auto mt-6 max-w-[720px] text-[1.05rem] leading-[1.85] text-white md:text-[1.15rem] lg:max-w-[1000px]">
+                <ScrubText text="턱관절 질환은 턱관절 디스크의 위치, 턱 근육의 긴장, 이갈이·이악물기, 치아 맞물림이 함께 얽혀 생깁니다. 턱관절 CT와 입 벌리는 폭·맞물림·근육 검사로 원인을 가려낸 뒤, 약과 물리치료부터 장치 치료, 관절 세척까지 {필요한 단계만} 진행합니다." />
               </p>
               <ul className="reveal-stack mx-auto mt-10 grid max-w-[860px] gap-4 sm:grid-cols-3">
                 {[

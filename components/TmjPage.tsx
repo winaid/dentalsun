@@ -648,7 +648,6 @@ export function TmjPage({ doc }: { doc: Doc }) {
                         <span className="text-[13px] font-extrabold tracking-[0.18em] text-sun-500">{b.n}</span>
                         <h3 className="text-[1.15rem] font-extrabold text-ink md:text-[1.25rem]">{b.title}</h3>
                       </div>
-                      <p className="mt-3 inline-block rounded-full bg-brand-50 px-3 py-1 text-[12.5px] font-bold text-brand-700">{b.chain}</p>
                       <p className="mt-3 text-[14.5px] leading-[1.8] text-ink-soft">
                         <Sentences text={b.desc} clauses={false} />
                       </p>

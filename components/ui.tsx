@@ -156,6 +156,9 @@ function canBreakBetween(w: string, next: string, prev = ''): boolean {
   /* 목적어 뒤의 -는/-은 은 조사가 아니라 뒤 명사를 꾸미는 말("턱을 괴는 | 자세", "음식을 즐기는 | 식습관") */
   if (prev && OBJECT_MARK.test(strip(prev)) && /[는은]$/.test(bare) && !/[,，]$/.test(w)) return false;
   if (NO_BREAK_AFTER.test(bare) || NO_BREAK_AFTER_END.test(bare) || /의$/.test(bare)) return false;
+  /* 한 글자 낱말(턱·입·귀·뼈·목…)은 뒷말을 꾸미는 경우가 대부분 — "턱 | 근육의", "귀 | 앞" 처럼 떨어지지 않게(2026-10-07 폰 화면) */
+  /* 단, 때·뒤·후·전·중·등·수·것·곳·데·적·만 뒤는 말이 쉬는 자리라 그대로 둔다("확인한 뒤 | 심으며") */
+  if (/^[가-힣]$/.test(bare) && !/^[때뒤후전중등수것곳데적만]$/.test(bare) && !/[,，]$/.test(w)) return false;
   if (NO_BREAK_BEFORE.test(nx) || NO_BREAK_BEFORE_END.test(nx)) return false;
   /* "…와 함께" 는 한 덩어리, "습관이 | 함께 얽혀" 는 끊어도 된다 — 함께·같이 앞은 와·과 뒤일 때만 막는다(09-29) */
   if (/^(함께|같이)$/.test(nx) && /[와과]$/.test(bare)) return false;
@@ -204,8 +207,8 @@ function emWidth(t: string): number {
 const RUN_MAX_EM = 15.5;
 /** '치의학과'·'보철과' 처럼 과(科)로 끝나는 이름은 조사 '과' 가 아니다 */
 const NOT_PARTICLE = /(학과|보철과|보존과|교정과|내과|외과|치과|안과|피부과)$/;
-/** 쉼 자리 등급별 벌점(em) — 절 쉼표 0 < 연결어미 2 < 조사·긴 나열 쉼표 4 < 그냥 끊어도 되는 공백 8 < 마지막 수단 14 */
-const TIER_PENALTY = [0, 2, 4, 8, 14];
+/** 쉼 자리 등급별 벌점(em) — 절 쉼표 0 < 연결어미 2 < 조사·긴 나열 쉼표 4 < 그냥 끊어도 되는 공백 8 < 짧은 나열 쉼표·괄호 안 14 < 낱말 짝 안쪽 22 */
+const TIER_PENALTY = [0, 2, 4, 8, 14, 22];
 /** 붙여 쓴 가운뎃점·빗금("소독·밀폐", "CAD/CAM")을 앞뒤 글자와 묶는다(U+2060) — 줄바꿈 규칙을 안 거치는 표 칸 글용. "다시 소독 / ·밀폐하는" 처럼 점 앞에서 꺾였다(09-29 점검). */
 const WJ = String.fromCharCode(0x2060);
 export const keepDots = (s: string) =>
@@ -239,7 +242,9 @@ export function pauseGlue(clause: string, maxEm = RUN_MAX_EM): string {
     depth += parenDelta(words[i]);
     const bare = strip(words[i]);
     const kind = lists.get(i);
-    if (depth > 0 || kind === 'hard' || !canBreakBetween(words[i], words[i + 1], words[i - 1])) tier[i] = 4;
+    /* 꼭 끊어야 할 때도 '턱 | 근육의' 같은 낱말 짝 안쪽(5)보다 짧은 나열 쉼표·괄호 안(4)을 먼저 고른다(2026-10-07 폰 화면) */
+    if (depth <= 0 && kind !== 'hard' && !canBreakBetween(words[i], words[i + 1], words[i - 1])) tier[i] = 5;
+    else if (depth > 0 || kind === 'hard' || !canBreakBetween(words[i], words[i + 1], words[i - 1])) tier[i] = 4;
     else if (/[,，]$/.test(words[i])) tier[i] = kind === 'long' ? 2 : 0;
     else if (STRONG_PAUSE_END.test(bare)) tier[i] = 1;
     /* 명사를 잇는 '와·과'("뼈와 신경의")는 조사보다 약한 쉼 — 이것만 남았을 때 쓴다 */
@@ -690,31 +695,44 @@ export function CardLink({ href, label, desc, external = false, fig, num }: { hr
 export function ScrubText({ text, className = '', light = false }: { text: string; className?: string; light?: boolean }) {
   let on = false;
   const sentences = splitSentences(toHl(text));
-  /* 낱말(.w)마다 밝아지되, 하이라이트 {…} 는 낱말 여럿을 한 mark 로 감싼다.
-     예전엔 낱말마다 mark 를 따로 달아 띄어쓰기 자리에 띠가 끊기고, 한 말이 조각 여럿으로 보였다(2026-10-07 점검) */
-  const words = (t: string, key: string) =>
-    t.split(/(\s+)/).map((w, j) => (!w ? null : /^\s+$/.test(w) ? ' ' : <span key={`${key}${j}`} className="w">{w}</span>));
+  /*
+   * 줄바꿈은 Sentences 와 같은 엔진 — 문장(.sent) → 절 쉼표 마디(.clause) → 마디 안은 pauseGlue(쉬는 자리만 보통 공백, 나머지 붙임 공백).
+   * 예전엔 낱말을 보통 공백으로만 이어 아무 띄어쓰기에서나 꺾였다("함께 / 얽혀", "관절 / 세척까지", 2026-10-07 오너 지적).
+   * 낱말(.w)마다 밝아지되, 하이라이트 {…} 는 낱말 여럿을 한 mark 로 감싼다(낱말마다 mark 를 달면 띄어쓰기 자리에서 띠가 끊겼다).
+   */
+  const clause = (c: string, key: string) => {
+    const glued = pauseGlue(c);
+    /* 낱말·공백(보통/붙임)을 차례로 — 하이라이트 표시 문자에서 켜짐 상태를 바꾸며 같은 상태끼리 묶는다 */
+    const runs: Array<{ on: boolean; nodes: ReactNode[] }> = [];
+    const push = (node: ReactNode) => {
+      const last = runs[runs.length - 1];
+      if (last && last.on === on) last.nodes.push(node);
+      else runs.push({ on, nodes: [node] });
+    };
+    let n = 0;
+    for (const tok of glued.split(/([ \u00a0]+)/)) {
+      if (!tok) continue;
+      if (/^[ \u00a0]+$/.test(tok)) { push(tok.includes(' ') ? ' ' : '\u00a0'); continue; }
+      for (const piece of tok.split(/([\uE000\uE001])/)) {
+        if (piece === HL_ON || piece === HL_OFF) { on = piece === HL_ON; continue; }
+        if (piece) push(<span key={`${key}w${n++}`} className="w">{piece}</span>);
+      }
+    }
+    return (
+      <span key={key} className="clause">
+        {runs.map((r, k) => (r.on ? <mark key={k} className="hl">{r.nodes}</mark> : <Fragment key={k}>{r.nodes}</Fragment>))}
+      </span>
+    );
+  };
   return (
     <span className={`scrub ${light ? 'scrub-light' : ''} ${className}`} data-scrub>
-      {sentences.map((s, i) => {
-        const segs: Array<{ t: string; on: boolean }> = [];
-        let buf = '';
-        for (const ch of s) {
-          if (ch === HL_ON || ch === HL_OFF) {
-            if (buf) segs.push({ t: buf, on });
-            buf = '';
-            on = ch === HL_ON;
-            continue;
-          }
-          buf += ch;
-        }
-        if (buf) segs.push({ t: buf, on });
-        return (
-          <span key={i} className="sent">
-            {segs.map((g, k) => (g.on ? <mark key={k} className="hl">{words(g.t, `${k}-`)}</mark> : <Fragment key={k}>{words(g.t, `${k}-`)}</Fragment>))}{' '}
-          </span>
-        );
-      })}
+      {sentences.map((s, i) => (
+        <span key={i} className="sent">
+          {splitClauses(s).map((c, j) => (
+            <Fragment key={j}>{clause(c, `${i}-${j}-`)}{' '}</Fragment>
+          ))}
+        </span>
+      ))}
     </span>
   );
 }

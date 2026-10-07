@@ -592,7 +592,7 @@ export function CustomImplantPage({ doc, part }: { doc: Doc; part: 'navigation' 
                 </div>
               </div>
 
-              <SubHead eyebrow="임플란트의 세 부분" title={<>임플란트는 세 부분, <span className="accent-sun">맞춤은 지대주가 다릅니다</span></>} lead={CI_PARTS.lead} />
+              <SubHead eyebrow="임플란트의 세 부분" title={<>임플란트의 세 부분 가운데, <span className="accent-sun">맞춤으로 만드는 것은 지대주</span>입니다</>} lead={CI_PARTS.lead} />
               {/* 세 부분 — 어두운 상자 한 개에 세 칸. 가운데 '지대주' 칸을 주황으로 짚는다 */}
               <div className="reveal mt-8 rounded-[28px] bg-night p-7 text-white md:p-10">
                 <p className="text-[12.5px] font-bold tracking-[0.12em] text-sun-300">픽스처 · 지대주 · 크라운</p>

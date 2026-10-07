@@ -25,8 +25,8 @@ export const metadata: Metadata = { title: TITLE, description: desc80(DESC), alt
 const DIGITAL: EquipItem[] = [
   { short: '스캐너', n: 'Point 01', title: '3D 구강스캐너', desc: '본을 뜨는 재료를 입에 물지 않고, 치아와 잇몸을 스캔해 3차원 데이터로 기록합니다. 이 데이터가 모의 식립과 보철 설계의 기준이 됩니다.', more: ['인상 채득 없이 스캔으로 기록', '구역 반사가 심한 분의 부담 감소'], fig: { key: 'place2/doctor-scan', alt: '양대일 대표원장이 구강스캐너로 환자의 아래턱을 스캔하고, 벽 모니터에 3D 스캔 영상이 떠 있는 모습' }, shot: 'photo' },
   { short: '3D CT', n: 'Point 02', title: '3D CT (CBCT)', desc: '잇몸뼈의 폭과 높이, 신경과 상악동의 위치를 입체로 확인합니다. 임플란트·사랑니·턱관절 진단의 기준이 되는 영상입니다.', more: ['여러 영상을 제공하는 올인원 장비', '파노라마와 CT를 함께 촬영', '짧은 촬영 시간, 적은 방사선 노출량'], fig: { key: 'place/place08', alt: '광화문 선치과 3D CT(CBCT) 촬영실' }, shot: 'photo' },
-  { short: '모의 수술', n: 'Point 03', title: '모의 수술 소프트웨어', desc: 'CT와 스캔 자료를 겹쳐, 임플란트의 위치와 각도, 깊이를 수술 전에 컴퓨터에서 정합니다. 신경까지의 거리도 이 단계에서 잽니다.', fig: { key: 'orig/implant-nav-plan', alt: 'CT 위에 임플란트 식립 경로를 잡는 계획 소프트웨어 화면' }, shot: 'product-light' },
-  { short: '가이드', n: 'Point 04', title: '수술 가이드', desc: '모의 수술 결과대로 만든 가이드를 끼우고, 정해 둔 위치와 각도로 심습니다. 절개 범위를 줄여 출혈과 붓기를 줄이는 데 도움이 됩니다.', fig: { key: 'equip/guide', alt: '개인 맞춤형 수술 가이드 모형' }, shot: 'product-light' },
+  { short: '모의 수술', n: 'Point 03', title: '모의 수술 소프트웨어', desc: 'CT와 스캔 자료를 겹쳐, 임플란트의 위치와 각도, 깊이를 수술 전에 컴퓨터에서 정합니다. 신경까지의 거리도 이 단계에서 확인합니다.', fig: { key: 'orig/implant-nav-plan', alt: 'CT 위에 임플란트 식립 경로를 잡는 계획 소프트웨어 화면' }, shot: 'product-light' },
+  { short: '가이드', n: 'Point 04', title: '수술 가이드', desc: '모의 수술 결과대로 만든 가이드를 끼우고, 정해 둔 위치와 각도로 심습니다. 절개 범위를 줄여, 출혈과 붓기가 덜할 수 있습니다.', fig: { key: 'equip/guide', alt: '개인 맞춤형 수술 가이드 모형' }, shot: 'product-light' },
   { short: 'CAD/CAM', n: 'Point 05', title: '캐드캠 원내 보철 제작', desc: '구강스캔 자료로 보철을 설계(CAD)하고, 원내 3D 프린터로 만듭니다. 임시치아도 원내에서 제작합니다.', fig: { key: 'equip/printer', alt: '3D 프린터와 보철 디자인 CAD 화면' }, shot: 'product-light' },
   { short: '소독', n: 'Point 06', title: 'INOS 실시간 소독기', desc: '진료 기구를 통한 교차감염을 막기 위해, 사용한 기구를 INOS 소독기로 바로 소독합니다.', more: ['최대 99.999% 소독력 — KTR 테스트 완료'], fig: { key: 'orig/intro-p06-inos-group', alt: 'INOS 실시간 소독기 세 종류' }, shot: 'product-light' },
 ];
@@ -53,9 +53,9 @@ export default function EquipmentPage() {
           trail={trail}
           eyebrow="DIGITAL EQUIPMENT"
           cardsLead="진단에서 보철 제작까지 이어지는 장비입니다."
-          lines={['먼저 재고 계획한 뒤', <><span className="accent-sun">원내에서 제작합니다</span></>]}
+          lines={['먼저 측정하고 계획한 뒤', <><span className="accent-sun">원내에서 제작합니다</span></>]}
           long
-          lead="3D CT와 구강스캐너로 잇몸뼈와 치아를 재고, 모의 수술 소프트웨어로 수술을 먼저 계획합니다. 보철은 원내 CAD/CAM 장비로 설계하고 만듭니다. 병원에 실제로 있는 장비를 어디에 쓰는지와 함께 소개합니다."
+          lead="3D CT와 구강스캐너로 잇몸뼈와 치아를 재고, 모의 수술 소프트웨어로 수술을 먼저 계획합니다. 보철은 원내 CAD/CAM 장비로 설계하고 만듭니다. 광화문 선치과가 진료에 쓰는 장비를 쓰임과 함께 소개합니다."
           bg="place/place08"
           cards={[
             { fig: { key: 'equip/ct', alt: '3D CT(CBCT) 장비' }, shape: 'portrait' },
@@ -88,7 +88,7 @@ export default function EquipmentPage() {
                 통증과 자극을 줄이는 <span className="accent">진료 장비</span>
               </h2>
               <p className="lead mt-4">
-                <Sentences text="마취 주사의 압력, 스케일링 때의 시림, 턱 근육의 긴장처럼 진료 중 불편이 생기는 순간마다 쓰는 장비입니다." />
+                <Sentences text="마취 주사, 스케일링, 턱 근육 치료처럼 불편이 큰 진료에 쓰는 장비입니다." />
               </p>
             </div>
             <EquipShowcase items={COMFORT} variant="flip" />
