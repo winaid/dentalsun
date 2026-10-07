@@ -408,8 +408,8 @@ export function CustomImplantPage({ doc, part }: { doc: Doc; part: 'navigation' 
                   return (
                     <li key={c.side} className={`flex flex-col overflow-hidden rounded-[24px] border bg-white ${custom ? 'border-sun-300' : 'border-hairline'}`}>
                       <p className={`px-5 py-3.5 text-center text-[16px] font-extrabold ${custom ? 'bg-sun-500 text-white' : 'bg-canvas-2 text-ink-soft'}`}>{c.side}</p>
-                      <span className="img-in relative block aspect-[4/5] bg-white">
-                        <Image src={figSrc(c.fig.key)} alt={c.fig.alt} fill sizes="(max-width: 640px) 100vw, 400px" className="object-contain p-4" />
+                      <span className="img-in relative block aspect-[4/3] bg-white">
+                        <Image src={figSrc(c.fig.key)} alt={c.fig.alt} fill sizes="(max-width: 640px) 90vw, 360px" className="object-contain px-4 pt-4" />
                       </span>
                       <ul className="grid gap-2.5 border-t border-hairline px-5 py-5 sm:px-6">
                         {c.points.map((p) => (
