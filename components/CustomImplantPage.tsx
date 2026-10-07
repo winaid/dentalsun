@@ -256,7 +256,7 @@ export function CustomImplantPage({ doc, part }: { doc: Doc; part: 'navigation' 
             {/* ══ 내비게이션 임플란트 쪽 ══ */}
             {part === 'navigation' && (
             <section id="navigation" className="scroll-mt-[96px]" aria-labelledby="ci-navi">
-              <Head id="ci-navi" label="수술 계획" title={<>임플란트 위치는 수술 전에, <span className="accent-sun">3D CT로 정합니다</span></>} lead="CBCT와 구강스캔 데이터를 겹쳐 모의 식립을 마치고, 그 계획을 옮긴 수술 가이드로 식립합니다. 계획과 식립은 대표원장이 직접 맡습니다." />
+              <Head id="ci-navi" label="수술 계획" title={<>임플란트 위치는 수술 전에, <span className="accent-sun">3D CT로 정합니다</span></>} lead="3D CT와 구강스캔 자료를 겹쳐 컴퓨터에서 미리 수술해 보고, 그 계획대로 만든 수술 가이드로 심습니다. {계획부터 수술까지 대표원장이 직접} 맡습니다." />
               <div className="reveal-stack mt-12 grid gap-8 lg:grid-cols-[1fr_1.1fr] lg:items-center">
                 <span className="img-in relative block aspect-[4/3] overflow-hidden rounded-[24px] bg-canvas-2">
                   <Image src={figSrc(NAVI_WHAT.fig.key)} alt={NAVI_WHAT.fig.alt} fill sizes="(max-width: 1024px) 100vw, 480px" className={fitsBox(NAVI_WHAT.fig.key, 4, 3) ? 'object-cover' : '!object-contain p-3'} />

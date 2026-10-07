@@ -98,7 +98,7 @@ export default function DoctorsPage() {
                 <br />
                 <span className="accent">먼저 확인합니다</span>
               </h2>
-              <p className="lead mt-4"><Sentences text="발치와 임플란트를 이야기하기 전에 근관치료나 치주치료로 보존할 수 있는지부터 확인합니다. 방사선 사진과 구강 사진을 함께 보며 현재 상태와 치료 순서를 설명하고, 지금 필요한 치료만 권해 드립니다." /></p>
+              <p className="lead mt-4"><Sentences text="발치와 임플란트를 이야기하기 전에 신경치료나 잇몸치료로 살릴 수 있는지부터 확인합니다. 엑스레이와 입안 사진을 함께 보며 지금 상태와 치료 순서를 설명하고, {지금 필요한 치료만} 권해 드립니다." /></p>
             </div>
           </div>
         </section>

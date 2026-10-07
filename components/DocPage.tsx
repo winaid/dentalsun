@@ -365,6 +365,8 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
       const n = b.items.length;
       /* 사진 옆에 붙는 목록은 최대 2열, 아니면 개수에 맞춰 줄마다 고르게(마지막 줄은 가운데) */
       const compact = b.items.every((it) => !it.desc);
+      /* 항목마다 사진이 있으면 사진 카드(위 사진 · 번호 · 제목 · 설명) — 2026-10-07 참고 35~38쪽 풀아치 장점 카드 */
+      const itemFig = b.items.every((it) => it.fig);
       const vars = b.figure ? gridVars(n, { max: 2 }) : b.columns === 2 ? gridVars(n, { max: 2 }) : gridVars(n, { compact });
       return (
         <section id={id} className={wrapCls}>
@@ -375,7 +377,12 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
               {b.figure && <Figure fig={b.figure} ratio="aspect-[4/3]" />}
               <ul className="reveal-stack cards-flex" style={vars}>
                 {b.items.map((it, i) => (
-                  <li key={i} className={cardCls}>
+                  <li key={i} className={`${itemFig ? plainCls : cardCls} ${itemFig ? 'overflow-hidden' : ''}`}>
+                    {itemFig && it.fig && (
+                      <span className="card-img -mx-6 -mt-6 mb-5 !w-auto">
+                        <Image src={figSrc(it.fig.key)} alt={it.fig.alt} fill sizes="(max-width: 640px) 100vw, 25vw" className={fitsBox(it.fig.key, 3, 2) ? 'object-cover' : '!object-contain p-3'} />
+                      </span>
+                    )}
                     {b.numbered !== false && <span className={`num ${band ? '!text-sun-300' : ''}`}>{String(i + 1).padStart(2, '0')}</span>}
                     <p className={`${titleCls} ${b.numbered !== false ? 'mt-3' : ''}`}>{it.title}</p>
                     {it.desc && (

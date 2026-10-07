@@ -325,5 +325,6 @@ export function faqSchema(items: Array<{ q: string; a: string }>, path?: string)
 }
 
 export function serializeJsonLd(data: unknown): string {
-  return JSON.stringify(data).replace(/</g, '\\u003c');
+  /* 글 속 하이라이트 표시({…}, components/ui rich) 는 화면 전용 — 구조화 데이터에는 글자만 */
+  return JSON.stringify(data, (_k, v) => (typeof v === 'string' ? v.replace(/[{}]/g, '') : v)).replace(/</g, '\\u003c');
 }

@@ -1092,3 +1092,154 @@ body:has([data-admin]) {
   line-height: 0.92;
   letter-spacing: -0.045em;
 }
+
+/* ── 동그라미 배지 테두리(ui RoundBadges) — 보이는 순간 주황 테두리가 차례로 그려진다(2026-10-07 오너 "세련되게") ── */
+.ring-arc {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 0;
+}
+@keyframes ring-draw {
+  from { stroke-dashoffset: 100; }
+  to { stroke-dashoffset: 0; }
+}
+.is-shown .ring-arc,
+.hero-in .ring-arc,
+.hero-in.ring-arc {
+  animation: ring-draw 1.3s cubic-bezier(0.6, 0, 0.2, 1) both;
+  animation-delay: calc(0.45s + var(--i, 0) * 0.16s);
+}
+.reveal:not(.is-shown) .ring-arc,
+.reveal-stack:not(.is-shown) .ring-arc {
+  stroke-dashoffset: 100;
+}
+.ring-badge {
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.35s ease;
+}
+.ring-badge:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 34px -16px rgba(185, 67, 12, 0.6);
+}
+
+/*
+ * ── 하이라이트(설명 글 속 끌리는 말) — 글에서 {…} 로 감싼 곳. ui Sentences / rich() 가 <mark class="hl"> 로 바꾼다.
+ * 2026-10-07 오너 "서브 문구에도 환자가 후킹 될 만한 문구들은 좀 하이라이트 처리 해줘. 자연스럽게."
+ * 형광펜처럼 넓게 칠하지 않는다 — 글씨는 진하게, 밑에 옅은 주황 띠(아래 38%)만. 보이는 순간 왼쪽에서 오른쪽으로 칠해진다.
+ */
+mark.hl {
+  background-color: transparent;
+  color: var(--color-ink);
+  font-weight: 700;
+  background-image: linear-gradient(rgba(255, 171, 115, 0.38), rgba(255, 171, 115, 0.38));
+  background-repeat: no-repeat;
+  background-position: 0 88%;
+  background-size: 100% 0.42em;
+  transition: background-size 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 0.35s;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+.reveal:not(.is-shown) mark.hl,
+.reveal-stack:not(.is-shown) mark.hl {
+  background-size: 0% 0.42em;
+}
+/* 어두운 바탕(남색 띠·사진 띠) 위에서는 흰 글씨 + 주황 띠 */
+:is(.bg-night, [class*='bg-night'], .on-dark) mark.hl {
+  color: #fff;
+  background-image: linear-gradient(rgba(242, 111, 30, 0.55), rgba(242, 111, 30, 0.55));
+}
+
+/*
+ * ── 홈 풀아치 구역(components/FullArchBand) — 2026-10-07 오너 "메인에 너무 그대로 … 세련되고 모션그래픽이고 배경에 사진".
+ * 바탕(ai/fullarch-band: 보철을 지운 그림) 위에 보철(ai/fullarch-band-bridge, 투명 오림)을 같은 자리에 얹고,
+ * 보철이 천천히 내려와 임플란트 머리에 '딱' 앉았다가 다시 떠오른다. 앉는 순간 임플란트 머리에서 빛 고리가 퍼진다.
+ * 무대(.fa-stage)는 그림과 같은 2:1 이라 보철·고리·꼬리표의 % 자리가 화면 폭과 상관없이 맞는다.
+ */
+.fa-stage-inner {
+  position: absolute;
+  inset: 0;
+  transform-origin: 70% 50%;
+  animation: fa-drift 22s ease-in-out infinite alternate;
+  animation-play-state: paused;
+}
+@keyframes fa-drift {
+  from { transform: scale(1); }
+  to { transform: scale(1.035) translateX(-0.6%); }
+}
+.fa-bridge {
+  position: absolute;
+  height: auto;
+  transform: translate3d(0, -5%, 0);
+  animation: fa-seat 7.5s cubic-bezier(0.55, 0, 0.25, 1) infinite;
+  animation-play-state: paused;
+  filter: drop-shadow(0 18px 22px rgba(120, 70, 50, 0.16));
+  will-change: transform;
+}
+@keyframes fa-seat {
+  0%, 20% { transform: translate3d(0, -5%, 0); }
+  40% { transform: translate3d(0, 15%, 0); }
+  43% { transform: translate3d(0, 13.2%, 0); }
+  46%, 76% { transform: translate3d(0, 15%, 0); }
+  94%, 100% { transform: translate3d(0, -5%, 0); }
+}
+.fa-pulse {
+  position: absolute;
+  width: 4.6%;
+  aspect-ratio: 2.6 / 1;
+  border-radius: 50%;
+  border: 2px solid var(--color-sun-400);
+  translate: -50% -50%;
+  opacity: 0;
+  animation: fa-pulse 7.5s ease-out infinite;
+  animation-play-state: paused;
+}
+@keyframes fa-pulse {
+  0%, 39% { opacity: 0; transform: scale(0.5); }
+  41% { opacity: 0.95; transform: scale(0.7); }
+  58% { opacity: 0; transform: scale(2.1); }
+  100% { opacity: 0; transform: scale(2.1); }
+}
+.fa-chip {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  white-space: nowrap;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.88);
+  padding: 0.45em 0.95em;
+  font-size: clamp(11px, 1.05vw, 14px);
+  font-weight: 700;
+  color: var(--color-ink);
+  box-shadow: 0 10px 26px -14px rgba(60, 40, 30, 0.45);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  translate: 0 10px;
+  transition: opacity 0.7s ease, translate 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.fa-chip::before {
+  content: '';
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 50%;
+  background: var(--color-sun-500);
+  box-shadow: 0 0 0 0.25em rgba(242, 111, 30, 0.18);
+}
+.is-shown .fa-stage-inner,
+.is-shown .fa-bridge,
+.is-shown .fa-pulse {
+  animation-play-state: running;
+}
+.is-shown .fa-chip {
+  opacity: 1;
+  translate: 0 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .fa-stage-inner, .fa-bridge, .fa-pulse, .ring-arc { animation: none !important; }
+  .fa-bridge { transform: none; }
+  .ring-arc { stroke-dashoffset: 0 !important; }
+  mark.hl { transition: none; background-size: 100% 0.42em !important; }
+}
+/* 주황 안내 띠(DocPage notice) 위에서는 흰 글씨 + 옅은 흰 띠 */
+[class*='bg-[#e8783a]'] mark.hl {
+  color: #fff;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.35));
+}

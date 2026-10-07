@@ -8,8 +8,9 @@ import { VideoFacade } from '@/components/VideoFacade';
 import { FlipCard } from '@/components/FlipCard';
 import { HubAccordion } from '@/components/HubAccordion';
 import { docByPath } from '@/lib/content';
-import { CardLink, CertMark, ContactBand, FaqList, Figure, MedicalNotice, RoundBadges, ScrubText, Sentences } from '@/components/ui';
+import { CardLink, CertMark, ContactBand, FaqList, Figure, MedicalNotice, ScrubText, Sentences } from '@/components/ui';
 import { AwardCard } from '@/components/TmjPage';
+import { FullArchBand } from '@/components/FullArchBand';
 import { TMJ_AWARD } from '@/lib/content/tmjLanding';
 import { HomeStage, HomeStats } from '@/components/HomeScroll';
 import { CaseGallery } from '@/components/CaseGallery';
@@ -344,28 +345,8 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* ── 풀아치 — 2026-10-07 원장 PPT 46쪽 '홈화면에 풀아치 추가'. 제목·두 줄은 50쪽에 병원이 직접 쓴 글 그대로(굵게·주황도 PPT 그대로),
-             배지 네 개는 50쪽에 붙인 예시 배지 그대로(풀아치 첫 화면과 같다). 바로 아래 보증 띠가 어두워 이 구역은 밝게(글 + 사진 2열).
-             ⚠️ '수술 당일 식사까지 가능' · '가격은 합리적' 은 의료법 소지 — 오너에게 알림, 글자는 손대지 않는다. ── */}
-        <section className="section bg-canvas">
-          <div className="wrap grid items-center gap-10 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
-            <div className="reveal">
-              <p className="eyebrow">FULL ARCH IMPLANT</p>
-              <h2 className="display-sm mt-4">
-                틀니, <span className="accent whitespace-nowrap">불편하지 않으신가요?</span>
-              </h2>
-              <p className="mt-5 text-[1.12rem] leading-[1.65] text-ink-soft md:text-[1.3rem]">
-                <span className="block">전체 치아에 필요한 임플란트, <strong className="font-extrabold text-ink">단 4~6개</strong></span>
-                <span className="block"><strong className="font-extrabold text-ink">수술 당일 식사</strong>까지 가능한 <span className="font-extrabold text-sun-600">풀아치</span> 임플란트</span>
-              </p>
-              <RoundBadges items={['수술당일\n식사가능', '내원은\n최소한', '치료기간\n최소한', '가격은\n합리적']} className="mt-7" />
-              <Link href="/treatment/implant/full-arch" className="btn-brand mt-8">풀아치 임플란트 자세히</Link>
-            </div>
-            <span className="img-in relative block aspect-[3/2] overflow-hidden rounded-[28px] bg-canvas-2">
-              <Image src={figSrc('ai/implant-fullarch')} alt="임플란트 네 개 위에 치아 전체를 한 덩어리로 고정한 풀아치 임플란트 모형" fill sizes="(max-width: 1024px) 100vw, 640px" className="object-cover" />
-            </span>
-          </div>
-        </section>
+        {/* ── 풀아치 — 원장 PPT 46쪽 '홈화면에 풀아치 추가' · 50쪽 글 그대로. 그림 두 겹 모션(components/FullArchBand) ── */}
+        <FullArchBand />
 
         {/* ── 보증 기간 띠 — 2026-10-07 원장 PPT 62쪽 '추가 희망'(예시: 본플란트치과 띠). 카톡 보증서 줄은 '지우기' → 뺐다.
              제목과 맨 아래 단서는 PPT 글자 그대로(제목 끝 마침표만 다른 제목들처럼 뺐다). 숫자는 예시(남의 병원 값)가 아니라
@@ -430,7 +411,7 @@ export default function HomePage() {
                 <span className="accent-sun">원인부터</span> 정확히 찾습니다
               </h2>
               <p className="mx-auto mt-6 max-w-[720px] text-[1.05rem] leading-[1.85] text-white md:text-[1.15rem]">
-                <ScrubText text="턱관절 질환은 턱관절 디스크의 위치, 턱 근육의 긴장, 이갈이·이악물기, 치아 맞물림이 함께 얽혀 생깁니다. 턱관절 CT와 입 벌리는 폭·맞물림·근육 검사로 원인을 나눈 뒤, 약과 물리치료부터 장치 치료, 관절 세척까지 필요한 단계만 진행합니다." />
+                <ScrubText text="턱관절 질환은 턱관절 디스크의 위치, 턱 근육의 긴장, 이갈이·이악물기, 치아 맞물림이 함께 얽혀 생깁니다. 턱관절 CT와 입 벌리는 폭·맞물림·근육 검사로 {원인을 나눈 뒤}, 약과 물리치료부터 장치 치료, 관절 세척까지 필요한 단계만 진행합니다." />
               </p>
               <ul className="reveal-stack mx-auto mt-10 grid max-w-[860px] gap-4 sm:grid-cols-3">
                 {[
@@ -466,7 +447,7 @@ export default function HomePage() {
                 발치를 말하기 전에 <span className="accent">살릴 수 있는지</span>부터 봅니다
               </h2>
               <p className="lead mt-4">
-                <Sentences text="신경치료와 잇몸치료로 내 치아를 살릴 수 있는지 먼저 확인합니다. 살리기 어려운 경우에만 발치와 보철을 이야기합니다." />
+                <Sentences text="신경치료와 잇몸치료로 {내 치아를 살릴 수 있는지} 먼저 확인합니다. 살리기 어려운 경우에만 발치와 보철을 이야기합니다." />
               </p>
             </div>
             {/* 폰도 두 칸 — 진료과목 카드와 같은 격자(한 칸씩 쌓으면 사진 네 장에 2,000px) */}
@@ -477,7 +458,7 @@ export default function HomePage() {
                 { href: '/treatment/periodontal', label: '치주치료', desc: '치석을 없애고, 잇몸 속 뿌리 표면까지 깨끗하게 치료합니다.', fig: 'ai/insight-gum' },
                 { href: '/treatment/wisdom-tooth', label: '매복사랑니', desc: '3D CT로 신경과의 거리를 확인한 뒤 뽑습니다.', fig: 'ai/wisdom' },
                 { href: '/treatment/aesthetic', label: '심미치료', desc: '라미네이트 · 올세라믹 · 지르코니아 · 치아미백.', fig: 'ai/aesthetic-hub' },
-                { href: '/treatment/painless', label: '무통 & 저자극 치료', desc: '무통마취기와 도포마취로 주사 자극을 줄입니다.', fig: 'ai/painless-hub' },
+                { href: '/treatment/painless', label: '무통 & 저자극 치료', desc: '무통마취기와 바르는 마취로 주사 자극을 줄입니다.', fig: 'ai/painless-hub' },
               ].map((c) => (
                 <li key={c.href}>
                   <CardLink href={c.href} label={c.label} desc={c.desc} fig={{ key: c.fig, alt: c.label }} />

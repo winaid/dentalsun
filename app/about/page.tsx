@@ -10,7 +10,7 @@ import { DOCTORS } from '@/lib/doctors';
 import { desc80, alt, breadcrumbSchema, medicalWebPageSchema, og, physicianSchema } from '@/lib/seo';
 
 const TITLE = '치과소개';
-const DESC = '광화문 선치과 소개 — 통합치의학과 전문의 양대일 대표원장의 1:1 책임진료. CBCT·구강스캐너 진단, 모의 식립과 수술 가이드, 원내 CAD/CAM 보철, 1인 1기구 멸균. 광화문역 6번 출구 도보 2분.';
+const DESC = '광화문 선치과 소개 — 통합치의학과 전문의 양대일 대표원장의 1:1 책임진료. 3D CT·구강스캐너 진단, 모의 수술과 수술 가이드, 원내 CAD/CAM 보철, 1인 1기구 멸균. 광화문역 6번 출구 도보 2분.';
 
 export const metadata: Metadata = { title: TITLE, description: desc80(DESC), alternates: alt('/about'), openGraph: og({ title: TITLE, description: DESC, path: '/about', images: [{ url: '/img/scene/intro-1.webp', width: 769, height: 495, alt: '광화문선치과 진료 장면' }] }) };
 
@@ -31,13 +31,13 @@ const TOUR = [
   { key: 'place2/physio-room', alt: '턱관절 레이저 물리치료 장비가 있는 물리치료실', caption: '물리치료실' },
 ];
 
-/* 2026-09-29 — 05 '당일 디지털 보철 제작 시스템'은 원장 확인 전이라 '캐드캠 원내 보철 제작'으로 중립화(속도 약속 없음) */
+/* 2026-09-29 — 05 '당일 디지털 보철 제작 시스템'은 원장 확인 전이라 '캐드캠 원내 보철 제작'으로 중립화(속도 약속 없음). 2026-10-07 쉬운 말로 */
 const POINTS = [
   { n: '01', title: '3D 구강스캐너', desc: '본을 뜨는 재료를 입에 물지 않고, 치아와 잇몸을 스캔해 3차원 데이터로 기록합니다. 이 데이터가 모의 식립과 보철 설계의 기준이 됩니다.' },
-  { n: '02', title: '3D CT (CBCT)', desc: '잇몸뼈의 폭과 높이, 하치조신경관과 상악동의 위치를 3차원으로 확인합니다. 파노라마와 CT를 한 장비로 촬영하며, 촬영 시간이 짧고 방사선 노출량이 적습니다.' },
-  { n: '03', title: '모의 식립 소프트웨어', desc: 'CT와 스캔 데이터를 겹쳐, 임플란트의 위치와 각도, 깊이를 수술 전에 컴퓨터에서 정합니다.' },
-  { n: '04', title: '수술 가이드', desc: '모의 식립 결과대로 제작한 가이드를 끼우고 식립합니다. 절개 범위를 줄여 출혈과 붓기를 줄이는 데 도움이 됩니다.' },
-  { n: '05', title: '캐드캠 원내 보철 제작', desc: '구강스캔 데이터로 보철을 설계하고, 원내 3D 프린터로 제작합니다. 임시 보철의 장착 시점은 골질과 초기 고정력에 따라 정합니다.' },
+  { n: '02', title: '3D CT (CBCT)', desc: '잇몸뼈의 폭과 높이, 신경과 상악동의 위치를 입체로 확인합니다. 파노라마와 CT를 한 장비로 찍으며, 촬영 시간이 짧고 방사선이 적습니다.' },
+  { n: '03', title: '모의 수술 소프트웨어', desc: 'CT와 스캔 자료를 겹쳐, 임플란트의 위치와 각도, 깊이를 {수술 전에 컴퓨터에서} 정합니다.' },
+  { n: '04', title: '수술 가이드', desc: '모의 수술 결과대로 만든 가이드를 끼우고 심습니다. 절개 범위를 줄여 출혈과 붓기를 줄이는 데 도움이 됩니다.' },
+  { n: '05', title: '캐드캠 원내 보철 제작', desc: '구강스캔 자료로 보철을 설계하고, 원내 3D 프린터로 만듭니다. 임시치아도 원내에서 제작합니다.' },
   { n: '06', title: 'INOS 실시간 소독', desc: '사용한 진료 기구를 INOS 소독기로 바로 소독해 교차감염을 막습니다. KTR 소독력 테스트를 마친 장비입니다.' },
 ];
 
@@ -54,7 +54,7 @@ export default function AboutPage() {
           long
           cardsLead="광화문 선치과의 진료 원칙입니다."
           lines={['진단부터 정기검진까지', <>대표원장이 <span className="accent-sun">직접 봅니다</span></>]}
-          lead="통합치의학과 전문의 양대일 대표원장이 첫 상담과 CBCT 진단, 수술과 보철, 정기검진까지 맡습니다. 검사 영상을 함께 보며 현재 상태를 설명하고, 살릴 수 있는 치아인지부터 확인합니다."
+          lead="통합치의학과 전문의 양대일 대표원장이 첫 상담과 3D CT 진단, 수술과 보철, 정기검진까지 맡습니다. 검사 영상을 함께 보며 지금 상태를 설명하고, {살릴 수 있는 치아인지부터} 확인합니다."
           bg="place/place01"
           cards={[
             { fig: { key: 'scene/loupe', alt: '확대경을 착용하고 진료하는 양대일 대표원장' }, shape: 'portrait' },
@@ -71,7 +71,7 @@ export default function AboutPage() {
               <h2 className="display-sm mt-4">
                 한 명의 전문의가 <span className="accent whitespace-nowrap">끝까지 책임지는 진료</span>
               </h2>
-              <p className="lead mt-4"><Sentences text="진단한 의사가 수술과 보철, 정기검진까지 이어서 봅니다. 치료 계획을 세운 사람이 경과도 같은 기준으로 확인합니다." /></p>
+              <p className="lead mt-4"><Sentences text="진단한 의사가 수술과 보철, 정기검진까지 이어서 봅니다. {치료 계획을 세운 사람이 경과도} 같은 기준으로 확인합니다." /></p>
             </div>
             {/* 2026-10-06 카드 05 신설로 다섯 장 — 홈과 같이 3칸 + 2칸(넓은 화면), 2칸(태블릿, 마지막 가운데) */}
             <ul className="reveal-stack grid-cards mt-10 sm:grid-cols-2 lg:grid-cols-6">
@@ -98,7 +98,7 @@ export default function AboutPage() {
                 <br />
                 <span className="accent">양대일 대표원장</span>
               </h2>
-              <p className="lead mt-4"><Sentences text="강남성심병원 통합치의학과에서 레지던트 수련을 마치고, 같은 병원 치과 외래교수를 지냈습니다. 임플란트와 턱관절, 근관치료와 보철을 한 사람이 함께 보기 때문에 치료 순서와 교합까지 하나의 계획으로 정합니다." /></p>
+              <p className="lead mt-4"><Sentences text="강남성심병원에서 레지던트 수련을 마친 보건복지부 인증 통합치의학과 전문의로, 현재 강남성심병원 치과 외래교수로 활동하고 있습니다. 임플란트와 턱관절, 신경치료와 보철을 한 사람이 함께 보기 때문에 {치료 순서와 맞물림까지 하나의 계획으로} 정합니다." /></p>
               <ul className="mt-6 space-y-3">
                 {DOCTORS.map((d) => (
                   <li key={d.slug} className="flex items-center gap-4 rounded-2xl bg-white p-4">
@@ -129,7 +129,7 @@ export default function AboutPage() {
               <h2 className="display-sm mt-4">
                 3D CT로 먼저 보고, <span className="accent whitespace-nowrap">계획대로 심습니다</span>
               </h2>
-              <p className="lead mt-4"><Sentences text="잇몸뼈의 폭과 높이, 신경관까지의 거리를 CBCT로 잰 뒤, 식립 위치를 컴퓨터에서 먼저 정합니다. 수술은 그 계획으로 만든 가이드를 따라 진행합니다." /></p>
+              <p className="lead mt-4"><Sentences text="잇몸뼈의 폭과 높이, 신경까지의 거리를 3D CT로 잰 뒤, 심을 자리를 컴퓨터에서 먼저 정합니다. 수술은 {그 계획으로 만든 가이드를 따라} 진행합니다." /></p>
             </div>
             <ol className="reveal-stack grid-cards mt-10 sm:grid-cols-2 lg:grid-cols-3">
               {POINTS.map((p) => (

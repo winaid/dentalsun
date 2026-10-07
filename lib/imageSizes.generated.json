@@ -1134,5 +1134,13 @@
  "illust/custom-abutment-define": {
   "w": 1200,
   "h": 800
+ },
+ "ai/fullarch-band": {
+  "w": 1920,
+  "h": 960
+ },
+ "ai/fullarch-band-bridge": {
+  "w": 797,
+  "h": 352
  }
 }

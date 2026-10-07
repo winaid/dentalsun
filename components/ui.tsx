@@ -6,6 +6,41 @@ import { figSize, figSrc, fitsBox, type Fig, type QA } from '@/lib/docs';
 import { CLINIC, MEDICAL_DISCLAIMER } from '@/lib/clinic';
 
 /**
+ * 하이라이트(끌리는 말) — 글에서 {…} 로 감싼 곳을 <mark class="hl"> 로 (2026-10-07 오너 "서브 문구에도 후킹 될 만한 문구는 하이라이트, 자연스럽게").
+ *  · 줄바꿈 엔진(pauseGlue)은 낱말 끝 조사를 보고 쉼 자리를 고르므로 {} 를 사용 영역 문자 두 개(HL_ON·HL_OFF)로 바꿔 넣고, 엔진은 그 문자를 무시한다.
+ *  · 쉼표에서 마디가 갈려도 켜짐 상태를 이어 받는다(마디마다 mark 하나).
+ *  · 구조화 데이터·llms.txt 에서는 지운다(lib/seo serializeJsonLd). 제목·FAQ·메타 설명에는 쓰지 않는다.
+ */
+const HL_ON = '\uE000';
+const HL_OFF = '\uE001';
+const HL_RE = /[\uE000\uE001]/g;
+const toHl = (s: string) => s.replace(/\{/g, HL_ON).replace(/\}/g, HL_OFF);
+/** 표시 문자를 빼고 글자만 */
+export const plainText = (s: string) => s.replace(/[{}]/g, '').replace(HL_RE, '');
+function marked(str: string, st: { on: boolean }, keyBase = ''): ReactNode {
+  if (!str.includes(HL_ON) && !str.includes(HL_OFF)) return st.on ? <mark className="hl">{str}</mark> : str;
+  const out: ReactNode[] = [];
+  let buf = '';
+  const flush = (k: number) => {
+    if (!buf) return;
+    out.push(st.on ? <mark key={`${keyBase}${k}`} className="hl">{buf}</mark> : <Fragment key={`${keyBase}${k}`}>{buf}</Fragment>);
+    buf = '';
+  };
+  let k = 0;
+  for (const ch of str) {
+    if (ch === HL_ON || ch === HL_OFF) { flush(k++); st.on = ch === HL_ON; continue; }
+    buf += ch;
+  }
+  flush(k++);
+  return out;
+}
+/** 줄바꿈 엔진을 안 거치는 자리(카드 한 줄·표 칸 등)용 — {…} 를 하이라이트로 */
+export function rich(text: string): ReactNode {
+  if (!text.includes('{')) return text;
+  return marked(toHl(text), { on: false });
+}
+
+/**
  * 문장·마디·쉼 줄바꿈 (오너 규칙, 2026-09-09)
  *  1) 마침표에서 줄을 바꾼다(.sent = block).
  *  2) 문장 안에서는 절 쉼표 마디(.clause)가 통째로 내려간다. 나열 쉼표("수술, 보철, 정기검진")는 마디를 가르지 않는다(isListComma).
@@ -111,7 +146,7 @@ export function splitClauses(s: string): string[] {
   return merged;
 }
 
-const strip = (w: string) => w.replace(/[,.!?…)”’"']+$/, '');
+const strip = (w: string) => w.replace(HL_RE, '').replace(/[,.!?…)”’"']+$/, '');
 
 /** 낱말 배열을 쉼 자리(pause 판정)에서 덩어리로 — 괄호 안·꾸밈말 뒤·붙는 말 앞에서는 쉬지 않는다 */
 /** 두 낱말 사이를 끊어도 되는가 — 꾸밈말 뒤·붙는 말 앞·소유격 뒤·'고' 짝·목적어+동사는 안 된다 */
@@ -159,7 +194,7 @@ function listCommaKinds(words: string[]): Map<number, 'hard' | 'long'> {
 /** 글자 폭 어림(em) — Pretendard 실측: 한글·한자 ≈1(15자+문장부호가 263px@15.5px 에 꽉 참), 라틴·숫자 0.55, 공백 0.28, 문장부호 0.3 */
 function emWidth(t: string): number {
   let w = 0;
-  for (const ch of t) w += /[ㄱ-ㆎ가-힣一-鿿]/.test(ch) ? 1 : /[A-Za-z0-9]/.test(ch) ? 0.55 : /\s/.test(ch) ? 0.28 : 0.3;
+  for (const ch of t) w += ch === HL_ON || ch === HL_OFF ? 0 : /[ㄱ-ㆎ가-힣一-鿿]/.test(ch) ? 1 : /[A-Za-z0-9]/.test(ch) ? 0.55 : /\s/.test(ch) ? 0.28 : 0.3;
   return w;
 }
 /**
@@ -244,8 +279,8 @@ export function pauseGlue(clause: string, maxEm = RUN_MAX_EM): string {
   return words.map((w, i) => (i === 0 ? join(w) : (open[i - 1] ? ' ' : ' ') + join(w))).join('');
 }
 
-function Clause({ text }: { text: string }) {
-  return <span className="clause">{pauseGlue(text)}</span>;
+function Clause({ text, st }: { text: string; st: { on: boolean } }) {
+  return <span className="clause">{marked(pauseGlue(text), st)}</span>;
 }
 
 /**
@@ -256,7 +291,7 @@ function Clause({ text }: { text: string }) {
 export function splitSentences(text: string): string[] {
   const out: string[] = [];
   /* 뒤가 '(' 면 앞 문장의 덧붙임("…없습니다. (확인 후 식립)")이라 자르지 않는다 */
-  const re = /([.!?])(["'”’)\]]*)\s+(?=[^\s(])/g;
+  const re = /([.!?])(["'”’)\]\uE001]*)\s+(?=[^\s(])/g;
   let last = 0;
   let m: RegExpExecArray | null;
   while ((m = re.exec(text))) {
@@ -291,23 +326,25 @@ export function Sentences({
    */
   br?: boolean;
 }) {
+  text = toHl(text);
+  const st = { on: false };
   const sentences = splitSentences(text);
   const clauses = (s: string) => (useClauses ? splitClauses(s) : [s]);
   if (br) {
     return (
       <>
         {sentences.map((s, i) => (
-          <Fragment key={i}>{i > 0 && <br />}{s}</Fragment>
+          <Fragment key={i}>{i > 0 && <br />}{marked(s, st, `b${i}-`)}</Fragment>
         ))}
       </>
     );
   }
   if (soft) {
-    if (sentences.length <= 1) return <>{text}</>;
+    if (sentences.length <= 1) return <>{marked(text, st)}</>;
     return (
       <span className={className}>
         {sentences.map((s, i) => (
-          <Fragment key={i}><span className="sent-soft">{pauseGlue(s, 11)}</span>{i < sentences.length - 1 ? ' ' : ''}</Fragment>
+          <Fragment key={i}><span className="sent-soft">{marked(pauseGlue(s, 11), st)}</span>{i < sentences.length - 1 ? ' ' : ''}</Fragment>
         ))}
       </span>
     );
@@ -316,7 +353,7 @@ export function Sentences({
     return (
       <span className={`sent-one ${className}`}>
         {clauses(text).map((c, i) => (
-          <Fragment key={i}><Clause text={c} />{' '}</Fragment>
+          <Fragment key={i}><Clause text={c} st={st} />{' '}</Fragment>
         ))}
       </span>
     );
@@ -326,7 +363,7 @@ export function Sentences({
       {sentences.map((s, i) => (
         <span key={i} className="sent">
           {clauses(s).map((c, j) => (
-            <Fragment key={j}><Clause text={c} />{' '}</Fragment>
+            <Fragment key={j}><Clause text={c} st={st} />{' '}</Fragment>
           ))}
         </span>
       ))}
@@ -651,14 +688,15 @@ export function CardLink({ href, label, desc, external = false, fig, num }: { hr
  * 문장 단위 줄바꿈은 Sentences 와 같다. 어두운 배경이 기본, 밝은 배경은 light.
  */
 export function ScrubText({ text, className = '', light = false }: { text: string; className?: string; light?: boolean }) {
-  const sentences = splitSentences(text);
+  const st = { on: false };
+  const sentences = splitSentences(toHl(text));
   return (
     <span className={`scrub ${light ? 'scrub-light' : ''} ${className}`} data-scrub>
       {sentences.map((s, i) => (
         <span key={i} className="sent">
           {s.split(/\s+/).map((w, j) => (
             <span key={j} className="w">
-              {w}{' '}
+              {marked(w, st, `w${j}-`)}{' '}
             </span>
           ))}
         </span>
@@ -686,18 +724,29 @@ export function CertMark({ className = '' }: { className?: string }) {
 /**
  * 동그라미 배지 — 풀아치 PPT 50쪽에 붙인 예시 배지(수술당일 식사가능 · 내원은 최소한 · 치료기간 최소한 · 가격은 합리적).
  * 글 속 줄바꿈 문자에서 줄을 바꾼다. 풀아치 첫 화면과 홈 풀아치 구역이 같이 쓴다.
+ * 2026-10-07 오너 "메인에 너무 그대로 들어갔는데 좀 더 세련되게" — 예시의 주황 덩어리 원 → 흰 유리 원 + 주황 테두리가 그려지며 나타난다(.ring-arc).
+ * 글자는 그대로, 윗줄은 작게·아랫줄(무엇이)은 주황 굵게. 테두리는 보이는 순간(.is-shown / .hero-in) 차례로 그린다.
  */
 export function RoundBadges({ items, className = '' }: { items: string[]; className?: string }) {
   return (
-    <ul className={`flex flex-wrap gap-2.5 sm:gap-3 ${className}`}>
-      {items.map((b) => (
-        <li
-          key={b}
-          className="flex h-[78px] w-[78px] items-center justify-center whitespace-pre-line rounded-full bg-gradient-to-b from-sun-200 to-sun-400 text-center text-[13px] font-extrabold leading-[1.3] text-night shadow-[0_10px_24px_-12px_rgba(242,111,30,0.8)] sm:h-[92px] sm:w-[92px] sm:text-[15px]"
-        >
-          {b}
-        </li>
-      ))}
+    <ul className={`flex flex-wrap gap-2.5 sm:gap-3.5 ${className}`}>
+      {items.map((b, i) => {
+        const [top, bottom] = b.split('\n');
+        return (
+          <li
+            key={b}
+            className="ring-badge relative flex h-[80px] w-[80px] flex-col items-center justify-center rounded-full bg-white/85 text-center shadow-[0_14px_30px_-18px_rgba(185,67,12,0.55)] backdrop-blur-sm sm:h-[98px] sm:w-[98px]"
+            style={{ ['--i' as string]: i }}
+          >
+            <svg viewBox="0 0 100 100" aria-hidden className="absolute inset-0 h-full w-full -rotate-90">
+              <circle cx="50" cy="50" r="48" fill="none" stroke="var(--color-sun-100)" strokeWidth="2" />
+              <circle className="ring-arc" cx="50" cy="50" r="48" fill="none" stroke="var(--color-sun-500)" strokeWidth="2.4" strokeLinecap="round" pathLength={100} />
+            </svg>
+            <span className="relative text-[12px] font-semibold leading-[1.25] text-ink-soft sm:text-[13.5px]">{top}</span>
+            {bottom && <span className="relative text-[14px] font-extrabold leading-[1.3] text-sun-600 sm:text-[16.5px]">{bottom}</span>}
+          </li>
+        );
+      })}
     </ul>
   );
 }

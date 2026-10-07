@@ -35,7 +35,7 @@ export async function GET() {
   L.push('');
   for (const d of ALL_DOCS) {
     L.push(`### ${d.title}`);
-    L.push(d.summary);
+    L.push(d.summary.replace(/[{}]/g, ''));
     L.push(`- URL: ${CLINIC.url}${d.path}`);
     if (d.faq?.length) L.push(`- 다루는 질문: ${d.faq.map((q) => q.q).join(' / ')}`);
     L.push('');
