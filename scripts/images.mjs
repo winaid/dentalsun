@@ -80,7 +80,7 @@ const FULL = {
   'place/place01': 'place01.JPG', 'place/place02': 'place02.JPG', 'place/place03': 'place03.JPG', 'place/place04': 'place04.JPG', 'place/place05': 'place05.JPG',
   'place/place06': 'place06.JPG', 'place/place07': 'place07.JPG', 'place/place08': 'place08.JPG', 'place/place09': 'place09.JPG', 'place/place10': 'place10.JPG',
   'video/you-1': 'you-1.png', 'video/you-2': 'you-2.png', 'video/you-3': 'you-3.png', 'video/you-4': 'you-4.png',
-  'notice/2026-09': '8_test.png',
+  // 이달 진료일정(notice/YYYY-MM)은 여기서 만들지 않는다 — 예전 홈페이지 팝업(dentalsun.co.kr/img/<달>.jpg)을 달마다 받아 webp 로 바꾼다
 };
 const sizes = {};
 async function crop(key, file, box, maxW, ratio, trim) {

@@ -55,7 +55,7 @@ export default function EquipmentPage() {
           cardsLead="진단에서 보철 제작까지 이어지는 장비입니다."
           lines={['먼저 재고 계획한 뒤', <><span className="accent-sun">원내에서 제작합니다</span></>]}
           long
-          lead="3D CT와 구강스캐너로 잇몸뼈와 치아를 재고, 모의 수술 소프트웨어로 수술을 먼저 계획합니다. 보철은 원내 CAD/CAM 장비로 설계하고 만듭니다. {병원에 실제로 있는 장비}를 어디에 쓰는지와 함께 소개합니다."
+          lead="3D CT와 구강스캐너로 잇몸뼈와 치아를 재고, 모의 수술 소프트웨어로 수술을 먼저 계획합니다. 보철은 원내 CAD/CAM 장비로 설계하고 만듭니다. 병원에 실제로 있는 장비를 어디에 쓰는지와 함께 소개합니다."
           bg="place/place08"
           cards={[
             { fig: { key: 'equip/ct', alt: '3D CT(CBCT) 장비' }, shape: 'portrait' },
@@ -88,7 +88,7 @@ export default function EquipmentPage() {
                 통증과 자극을 줄이는 <span className="accent">진료 장비</span>
               </h2>
               <p className="lead mt-4">
-                <Sentences text="마취 주사의 압력, 스케일링 때의 시림, 턱 근육의 긴장처럼 {진료 중 불편이 생기는 순간마다} 쓰는 장비입니다." />
+                <Sentences text="마취 주사의 압력, 스케일링 때의 시림, 턱 근육의 긴장처럼 진료 중 불편이 생기는 순간마다 쓰는 장비입니다." />
               </p>
             </div>
             <EquipShowcase items={COMFORT} variant="flip" />

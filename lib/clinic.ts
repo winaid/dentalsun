@@ -137,16 +137,19 @@ export const HOURS: { lunch: { start: string; end: string }; rows: HourRow[]; di
 };
 
 /**
- * 이달의 진료 일정 — 기존 홈페이지 팝업(9월 진료일정 이미지)에서 옮김. VERIFIED.
- * ⚠️ 달이 바뀌면 이 표를 바꾼다. 지난 달 일정이 그대로 남으면 틀린 안내가 된다.
+ * 이달의 진료 일정 — 기존 홈페이지 팝업(dentalsun.co.kr/img/10.jpg, 병원이 2026-09-29 올림)에서 옮김. VERIFIED.
+ * ⚠️ 달이 바뀌면 이 표를 바꾼다. 지난 달 일정이 그대로 남으면 틀린 안내가 된다(2026-10-07 점검: 10월에 9월 일정이 9곳에 걸려 있었음).
+ *    1·3·5째 토요일은 원래 쉬는 날이지만 병원 그림에 휴진으로 적혀 있어 그대로 옮긴다.
  */
 export const MONTHLY_NOTICE = {
-  month: '2026-09',
-  title: '2026년 9월 진료일정',
-  image: '/img/notice/2026-09.webp',
+  month: '2026-10',
+  title: '2026년 10월 진료일정',
+  image: '/img/notice/2026-10.webp',
   items: [
-    { dates: '9월 12일(토)', label: '휴진' },
-    { dates: '9월 24일(목) ~ 26일(토)', label: '추석 연휴 휴진' },
+    { dates: '10월 3일(토)', label: '휴진' },
+    { dates: '10월 5일(월)', label: '대체공휴일 정상진료' },
+    { dates: '10월 9일(금)', label: '휴진' },
+    { dates: '10월 17일 · 31일(토)', label: '휴진' },
     { dates: '매주 일요일', label: '정기휴진' },
     { dates: '매주 화 · 목', label: '야간진료 (21:00까지)' },
   ],

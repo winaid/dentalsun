@@ -174,11 +174,9 @@ function BodyIcon({ name }: { name: string }) {
   const d: Record<string, ReactNode> = {
     '입안': <><path d="M4 9c2.5-1.5 13.5-1.5 16 0-1 6-3.5 9-8 9s-7-3-8-9Z" /><path d="M7 10.5c3 1 7 1 10 0" /></>,
     '귀': <><path d="M8 18a4 4 0 0 0 4-3c.3-1.6 1.2-2.2 2.2-3.2A5 5 0 0 0 7 7.5" /><path d="M11 12a2 2 0 1 1 3-2" /></>,
-    '호흡기·목': <><path d="M4 8h9a2.5 2.5 0 1 0-2.5-2.5" /><path d="M4 13h13a2.5 2.5 0 1 1-2.5 2.5" /><path d="M4 18h6" /></>,
-    '눈': <><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z" /><circle cx="12" cy="12" r="2.6" /></>,
-    '통증·소화': <path d="M13 3 5 13h6l-1 8 8-11h-6l1-7Z" />,
-    '피부·부인과': <><path d="M12 3c2 4 6 6 6 11a6 6 0 0 1-12 0c0-5 4-7 6-11Z" /></>,
-    '심리': <path d="M12 20s-7-4.4-7-9.5A3.9 3.9 0 0 1 12 8a3.9 3.9 0 0 1 7 2.5C19 15.6 12 20 12 20Z" />,
+    '머리·눈': <><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z" /><circle cx="12" cy="12" r="2.6" /></>,
+    /* lucide person-standing(ISC) */
+    '목·어깨': <><circle cx="12" cy="5" r="1.6" /><path d="m9 20 3-6 3 6" /><path d="m6 8 6 2 6-2" /><path d="M12 10v4" /></>,
   };
   return (
     <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" aria-hidden {...p}>
@@ -684,7 +682,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                     </ul>
                   </div>
                 </div>
-                {/* 함께 보고되는 증상 8갈래 — 인과를 단정하지 않는 안내문을 반드시 함께 둔다 */}
+                {/* 함께 보고되는 증상 네 갈래(입안·귀·머리·목어깨) — 인과를 단정하지 않는 안내문을 반드시 함께 둔다 */}
                 <SubHead s={SECTIONS['body-check']} />
                 <div className="reveal mt-8 rounded-[28px] border border-hairline bg-canvas p-6 md:p-9">
                   <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">

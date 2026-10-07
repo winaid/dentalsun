@@ -688,19 +688,33 @@ export function CardLink({ href, label, desc, external = false, fig, num }: { hr
  * 문장 단위 줄바꿈은 Sentences 와 같다. 어두운 배경이 기본, 밝은 배경은 light.
  */
 export function ScrubText({ text, className = '', light = false }: { text: string; className?: string; light?: boolean }) {
-  const st = { on: false };
+  let on = false;
   const sentences = splitSentences(toHl(text));
+  /* 낱말(.w)마다 밝아지되, 하이라이트 {…} 는 낱말 여럿을 한 mark 로 감싼다.
+     예전엔 낱말마다 mark 를 따로 달아 띄어쓰기 자리에 띠가 끊기고, 한 말이 조각 여럿으로 보였다(2026-10-07 점검) */
+  const words = (t: string, key: string) =>
+    t.split(/(\s+)/).map((w, j) => (!w ? null : /^\s+$/.test(w) ? ' ' : <span key={`${key}${j}`} className="w">{w}</span>));
   return (
     <span className={`scrub ${light ? 'scrub-light' : ''} ${className}`} data-scrub>
-      {sentences.map((s, i) => (
-        <span key={i} className="sent">
-          {s.split(/\s+/).map((w, j) => (
-            <span key={j} className="w">
-              {marked(w, st, `w${j}-`)}{' '}
-            </span>
-          ))}
-        </span>
-      ))}
+      {sentences.map((s, i) => {
+        const segs: Array<{ t: string; on: boolean }> = [];
+        let buf = '';
+        for (const ch of s) {
+          if (ch === HL_ON || ch === HL_OFF) {
+            if (buf) segs.push({ t: buf, on });
+            buf = '';
+            on = ch === HL_ON;
+            continue;
+          }
+          buf += ch;
+        }
+        if (buf) segs.push({ t: buf, on });
+        return (
+          <span key={i} className="sent">
+            {segs.map((g, k) => (g.on ? <mark key={k} className="hl">{words(g.t, `${k}-`)}</mark> : <Fragment key={k}>{words(g.t, `${k}-`)}</Fragment>))}{' '}
+          </span>
+        );
+      })}
     </span>
   );
 }

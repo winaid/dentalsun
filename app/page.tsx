@@ -14,7 +14,7 @@ import { FullArchBand } from '@/components/FullArchBand';
 import { TMJ_AWARD } from '@/lib/content/tmjLanding';
 import { HomeStage, HomeStats } from '@/components/HomeScroll';
 import { CaseGallery } from '@/components/CaseGallery';
-import { CLINIC, HOURS, HYGIENE, MONTHLY_NOTICE, STRENGTHS } from '@/lib/clinic';
+import { CLINIC, HOURS, HYGIENE, STRENGTHS } from '@/lib/clinic';
 import { DOCTORS, isCertCareer } from '@/lib/doctors';
 import type { NavItem } from '@/lib/nav';
 import { SITE_FAQ } from '@/lib/faq';
@@ -135,7 +135,7 @@ export default function HomePage() {
                 <br className="md:hidden" /> <span className="accent">{DOCTORS[0].headline[1]}</span>
               </h2>
               <p className="lead mt-3">
-                <Sentences text="15년 이상 한결같은 마음으로 한자리를 지켜온 광화문 선치과, 보건복지부 인증 통합치의학과 전문의가 직접 진료합니다." />
+                <Sentences text="{15년 이상 한결같은 마음으로 한자리를 지켜온} 광화문 선치과, 보건복지부 인증 통합치의학과 전문의가 직접 진료합니다." />
               </p>
             </div>
             {/* 가운데에 적당한 크기(오너: 너무 컸다). 뒤에는 병원 영문 이름이 저절로 흐르는 큰 글자 띠(동그라미치과처럼). */}
@@ -411,7 +411,7 @@ export default function HomePage() {
                 <span className="accent-sun">원인부터</span> 정확히 찾습니다
               </h2>
               <p className="mx-auto mt-6 max-w-[720px] text-[1.05rem] leading-[1.85] text-white md:text-[1.15rem]">
-                <ScrubText text="턱관절 질환은 턱관절 디스크의 위치, 턱 근육의 긴장, 이갈이·이악물기, 치아 맞물림이 함께 얽혀 생깁니다. 턱관절 CT와 입 벌리는 폭·맞물림·근육 검사로 {원인을 나눈 뒤}, 약과 물리치료부터 장치 치료, 관절 세척까지 필요한 단계만 진행합니다." />
+                <ScrubText text="턱관절 질환은 턱관절 디스크의 위치, 턱 근육의 긴장, 이갈이·이악물기, 치아 맞물림이 함께 얽혀 생깁니다. 턱관절 CT와 입 벌리는 폭·맞물림·근육 검사로 원인을 나눈 뒤, 약과 물리치료부터 장치 치료, 관절 세척까지 {필요한 단계만} 진행합니다." />
               </p>
               <ul className="reveal-stack mx-auto mt-10 grid max-w-[860px] gap-4 sm:grid-cols-3">
                 {[
@@ -447,7 +447,7 @@ export default function HomePage() {
                 발치를 말하기 전에 <span className="accent">살릴 수 있는지</span>부터 봅니다
               </h2>
               <p className="lead mt-4">
-                <Sentences text="신경치료와 잇몸치료로 {내 치아를 살릴 수 있는지} 먼저 확인합니다. 살리기 어려운 경우에만 발치와 보철을 이야기합니다." />
+                <Sentences text="신경치료와 잇몸치료로 내 치아를 살릴 수 있는지 먼저 확인합니다. {살리기 어려운 경우에만} 발치와 보철을 이야기합니다." />
               </p>
             </div>
             {/* 폰도 두 칸 — 진료과목 카드와 같은 격자(한 칸씩 쌓으면 사진 네 장에 2,000px) */}
@@ -614,7 +614,7 @@ export default function HomePage() {
                     <span className="font-bold text-ink">주차</span> {CLINIC.parking.place} {CLINIC.parking.fee}
                   </p>
                   <Link href="/visit#notice" className="mt-3 inline-block font-bold text-brand-700 hover:underline">
-                    {MONTHLY_NOTICE.title} 보기 →
+                    이달의 진료일정 보기 →
                   </Link>
                 </div>
               </div>
