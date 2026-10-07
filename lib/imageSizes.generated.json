@@ -1023,10 +1023,6 @@
   "w": 1200,
   "h": 800
  },
- "illust/custom-abutment-compare": {
-  "w": 1200,
-  "h": 800
- },
  "illust/custom-abutment-half": {
   "w": 1200,
   "h": 800
@@ -1126,5 +1122,13 @@
  "illust/why-digital": {
   "w": 1200,
   "h": 900
+ },
+ "illust/abutment-stock": {
+  "w": 633,
+  "h": 996
+ },
+ "illust/abutment-custom": {
+  "w": 633,
+  "h": 996
  }
 }

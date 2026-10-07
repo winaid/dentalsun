@@ -398,20 +398,37 @@ export function CustomImplantPage({ doc, part }: { doc: Doc; part: 'navigation' 
               </div>
             </section>
 
-            {/* ── 3. 비교(로이스 S5) — 넓은 도해 + 표 ── */}
+            {/* ── 3. 비교(로이스 S5) — 카드 두 장(원장 PPT 60쪽) + 표 ── */}
             <section id="compare" className="scroll-mt-[96px] pt-24 md:pt-32" aria-labelledby="ci-compare">
               <Head id="ci-compare" label="비교" title={<>맞춤 지대주와 기성 지대주, <span className="accent-sun">무엇이 다른가</span></>} lead={CI_COMPARE.lead} />
-              <figure className="reveal mt-10">
-                <Illust fig={CI_COMPARE.fig} />
-                <figcaption className="mt-4 grid gap-3 md:grid-cols-2">
-                  {CI_COMPARE.legend.map((l, i) => (
-                    <span key={l.side} className={`flex gap-3 rounded-2xl p-4 ${i === 0 ? 'bg-canvas' : 'bg-sun-50/70'}`}>
-                      <span className={`h-fit shrink-0 rounded-md px-2 py-0.5 text-[12px] font-extrabold ${i === 0 ? 'bg-white text-ink-muted' : 'bg-sun-500 text-white'}`}>{l.side}</span>
-                      <span className="text-[14px] leading-[1.7] text-ink-soft">{l.text}</span>
-                    </span>
-                  ))}
-                </figcaption>
-              </figure>
+              {/* 2026-10-07 원장 PPT 60쪽 — 카드 두 장(이름 띠 · 그림 · 세 줄). 기성은 회색 점, 맞춤은 주황 체크. 넓은 화면은 나란히, 폰은 위아래 */}
+              <ul className="reveal-stack mt-10 grid gap-5 sm:grid-cols-2">
+                {CI_COMPARE.cards.map((c, i) => {
+                  const custom = i === 1;
+                  return (
+                    <li key={c.side} className={`flex flex-col overflow-hidden rounded-[24px] border bg-white ${custom ? 'border-sun-300' : 'border-hairline'}`}>
+                      <p className={`px-5 py-3.5 text-center text-[16px] font-extrabold ${custom ? 'bg-sun-500 text-white' : 'bg-canvas-2 text-ink-soft'}`}>{c.side}</p>
+                      <span className="img-in relative block aspect-[4/5] bg-white">
+                        <Image src={figSrc(c.fig.key)} alt={c.fig.alt} fill sizes="(max-width: 640px) 100vw, 400px" className="object-contain p-4" />
+                      </span>
+                      <ul className="grid gap-2.5 border-t border-hairline px-5 py-5 sm:px-6">
+                        {c.points.map((p) => (
+                          <li key={p} className={`flex gap-2.5 text-[15px] leading-[1.6] ${custom ? 'font-bold text-sun-700' : 'text-ink-soft'}`}>
+                            {custom ? (
+                              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden className="mt-[3px] shrink-0 text-sun-500">
+                                <path d="M5 12.5l4.5 4.5L19 7.5" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
+                              </svg>
+                            ) : (
+                              <span aria-hidden className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-ink-muted" />
+                            )}
+                            <span>{p}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </li>
+                  );
+                })}
+              </ul>
               <Compare columns={CI_COMPARE.columns} rows={CI_COMPARE.rows} />
               <p className="reveal mt-4 text-[14px] leading-[1.7] text-ink-muted"><Sentences text={`※ ${CI_COMPARE.note}`} /></p>
             </section>
