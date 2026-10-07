@@ -49,8 +49,8 @@ type BlockBody =
    * categories 에 해당하는 사례만 나온다. 사례가 하나도 없으면 구역째 안 나온다.
    */
   | { type: 'caseGallery'; id?: string; title?: string; lead?: string; categories: Array<'implant' | 'fullarch' | 'endo' | 'reendo' | 'wisdom' | 'anterior' | 'fracture' | 'resin' | 'whitening' | 'tmj'>; /** 사례 위 상자(굵은 한 줄 + 설명) */ box?: { title: string; text: string } }
-  /** 강조 한 줄 */
-  | { type: 'quote'; text: string; by?: string }
+  /** 강조 한 줄 — figure 가 있으면 어두운 띠 오른쪽에 그림, 아래에 짧은 설명 몇 줄(lines) */
+  | { type: 'quote'; text: string; by?: string; figure?: Fig; lines?: string[] }
   /** 다른 문서로 가는 카드 */
   | { type: 'links'; id?: string; title?: string; lead?: string; items: Array<{ label: string; href: string; desc?: string }> }
   /** 주의·안내 상자 */
@@ -113,7 +113,7 @@ export function docCharCount(d: Doc) {
     if (b.type === 'steps') parts.push(...b.steps.flatMap((s) => [s.title, s.desc ?? '']));
     if (b.type === 'compare') parts.push(...b.rows.flatMap((r) => [r.label, r.a, r.b]), b.note ?? '');
     if (b.type === 'table') parts.push(...b.head, ...b.rows.flat(), b.note ?? '');
-    if (b.type === 'quote') parts.push(b.text);
+    if (b.type === 'quote') parts.push(b.text, ...(b.lines ?? []));
     if (b.type === 'cases') parts.push(b.note);
   }
   for (const f of d.faq ?? []) parts.push(f.q, f.a);

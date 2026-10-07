@@ -541,6 +541,45 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
         </section>
       );
     case 'quote':
+      /* 그림이 있는 강조 띠 — 원장 PPT 51쪽 보라색 판(큰 따옴표 문구 + 짧은 설명 + 오른쪽 보철 그림) 짜임.
+         바탕은 그림 가장자리 색(#1c1814)이라, 그림 왼쪽을 투명하게 녹이면 이음새 없이 이어진다. 폰은 그림 위·글 아래. */
+      if (b.figure)
+        return (
+          <section className="on-dark relative isolate overflow-hidden bg-[#1c1814] text-white">
+            <div className="relative aspect-[3/2] w-full lg:absolute lg:inset-y-0 lg:right-0 lg:aspect-auto lg:w-[60%]">
+              <Image
+                src={figSrc(b.figure.key)}
+                alt={b.figure.alt}
+                fill
+                sizes="(max-width: 1023px) 100vw, 60vw"
+                className="object-cover object-[80%_50%] [mask-image:linear-gradient(to_bottom,black_72%,transparent)] lg:[mask-image:linear-gradient(to_right,transparent,black_42%)]"
+              />
+            </div>
+            <div className="wrap relative pb-16 lg:flex lg:min-h-[560px] lg:items-center lg:py-24">
+              <div className="reveal -mt-8 lg:mt-0 lg:max-w-[500px] xl:max-w-[600px]">
+                <span aria-hidden className="block h-10 font-serif text-[4.5rem] leading-none text-sun-500/80 md:h-12 md:text-[5.5rem]">“</span>
+                {/* 큰 문구는 절 쉼표마다 한 줄(낱말 사이에서 꺾이지 않게) — 줄마다 스크롤 따라 밝아진다 */}
+                <p className="text-[1.35rem] leading-[1.5] font-bold md:text-[2rem]">
+                  {b.text.split(/(?<=,)\s+/).map((part, i) => (
+                    <span key={i} className="block">
+                      <ScrubText text={part} />
+                    </span>
+                  ))}
+                </p>
+                {b.lines && (
+                  <div className="mt-7 space-y-2.5 border-l border-white/25 pl-5 text-[1rem] leading-[1.8] text-white/80 md:text-[1.06rem]">
+                    {b.lines.map((l, i) => (
+                      <p key={i}>
+                        <Sentences text={l} />
+                      </p>
+                    ))}
+                  </div>
+                )}
+                {b.by && <p className="mt-6 text-white/60">— {b.by}</p>}
+              </div>
+            </div>
+          </section>
+        );
       return (
         <section className="relative isolate overflow-hidden bg-brand-900 py-20 text-white">
           <div className="absolute inset-0 -z-10">
