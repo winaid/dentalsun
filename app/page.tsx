@@ -197,8 +197,9 @@ export default function HomePage() {
           <div className="wrap">
             <div className="reveal max-w-[820px]">
               <p className="eyebrow">WHY SUN DENTAL</p>
+              {/* 2026-10-07 오너 지시(카톡 '정확한 진단 원칙을 지키는 진료'): 제목 글자 그대로. 강조는 소개 페이지처럼 뒷부분, 좁은 화면은 '진단' 뒤에서만 끊긴다 */}
               <h2 className="display-sm mt-4">
-                같은 치료라도 <span className="accent">누가 하느냐</span>가 다릅니다
+                정확한 진단 <span className="accent whitespace-nowrap">원칙을 지키는 진료</span>
               </h2>
               <p className="lead mt-4">
                 {/* 2026-10-06 원장 PPT 53쪽 '보철 >> 치료' — 둘째 문장(오너 지시: '검사 영상을 치료 순으로 설명하고') */}
