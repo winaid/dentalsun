@@ -349,7 +349,7 @@ export default function HomePage() {
         {/* ── 풀아치 — 원장 PPT 46쪽 '홈화면에 풀아치 추가' · 50쪽 글 그대로. 그림 두 겹 모션(components/FullArchBand) ── */}
         <FullArchBand />
 
-        {/* ── 보증 기간 띠 — 원장 PPT 62쪽. 메달·계단 막대 모션(components/WarrantyBand) ── */}
+        {/* ── 보증 기간 띠 — 원장 PPT 62쪽. 기간 숫자만, 굴러 멈추는 숫자 모션(components/WarrantyBand) ── */}
         <WarrantyBand />
 
         {/* ── 내비게이션 임플란트 과정 — 고정 무대(스크롤하면 사진이 바뀐다) ── */}

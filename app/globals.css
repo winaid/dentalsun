@@ -1180,58 +1180,92 @@ body:has([data-admin]) {
 }
 
 /*
- * ── 홈 보증 띠(components/WarrantyBand) — 2026-10-07 오너 "여기도 좀 모션 그래픽 넣고 디자인 다시 보완하고".
- * 메달 테두리 그리기·빛 한 점 돌기는 배지 규칙(.ring-arc · .ring-comet)을 그대로 쓰고, 여기서는
- * 바깥 점선 고리 회전 · 계단 막대가 차례로 솟기 · 막대 위 글자 · 메달 뒤 빛 숨쉬기만 더한다.
+ * ── 홈 보증 띠(components/WarrantyBand) — 2026-10-08 오너 "수치만 나타내자 · 동그라미 모션 너무 자주 사용해서 다른 걸로".
+ * 동그라미(테두리 그리기 · 빛 돌기) 대신 ① 숫자가 슬롯처럼 굴러 멈춘다(wr-odo) ② 멈춘 10 위로 빛이 스친다(wr-sheen)
+ * ③ '장착일부터' 양옆 선이 가운데서 바깥으로 그어진다(wr-line) ④ 5년 두 칸 사이 세로선이 내려온다(wr-vline) ⑤ 뒤 빛이 숨 쉰다(wr-glow).
+ * 칸 높이 1.05em — 숫자 띠 한 칸과 같아야 멈춘 자리가 맞는다.
  */
-.wr-spin {
-  transform-origin: 50px 50px;
-  animation: wr-spin 80s linear infinite;
+/* 칸 위아래는 칼같이 자르지 않고 옅게 사라지게(mask). 숫자마다 폭이 달라 옆으로 여유(padding)를 두고 같은 만큼 margin 으로 되돌린다 */
+.wr-odo-col {
+  position: relative;
+  display: inline-block;
+  line-height: 1.05;
+  padding: 0 0.12em;
+  margin: 0 -0.12em;
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 10%, #000 90%, transparent);
+  mask-image: linear-gradient(180deg, transparent, #000 10%, #000 90%, transparent);
 }
-@keyframes wr-spin {
-  to { transform: rotate(360deg); }
+.wr-odo {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translate(-50%, calc(var(--to, 0) * -1.05em));
+  transition: transform 1.8s cubic-bezier(0.16, 0.84, 0.18, 1) var(--d, 0s);
 }
-.wr-bar {
-  transform-origin: bottom;
+.reveal:not(.is-shown) .wr-odo {
+  transform: translate(-50%, 0);
+  transition: none;
 }
-@keyframes wr-rise {
-  from { transform: scaleY(0); }
-  to { transform: scaleY(1); }
+.wr-digit {
+  display: block;
+  height: 1.05em;
+  white-space: pre;
+  background: linear-gradient(180deg, #ffe2cc 8%, var(--color-sun-300) 55%, var(--color-sun-500) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
-.reveal:not(.is-shown) .wr-bar {
+.wr-sheen {
+  position: absolute;
+  inset: 0;
+  line-height: 1.05;
+  color: #fff;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(105deg, transparent 38%, #000 50%, transparent 62%);
+  mask-image: linear-gradient(105deg, transparent 38%, #000 50%, transparent 62%);
+  -webkit-mask-size: 300% 100%;
+  mask-size: 300% 100%;
+  -webkit-mask-position: 100% 0;
+  mask-position: 100% 0;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: 0.85;
+}
+@keyframes wr-sheen {
+  0% { -webkit-mask-position: 100% 0; mask-position: 100% 0; }
+  22%, 100% { -webkit-mask-position: 0% 0; mask-position: 0% 0; }
+}
+.is-shown .wr-sheen {
+  animation: wr-sheen 7s ease-in-out var(--d, 0s) infinite;
+}
+.wr-line {
+  transition: transform 1.1s cubic-bezier(0.2, 0.8, 0.2, 1) 1.5s;
+}
+.wr-line-l { transform-origin: right; }
+.wr-line-r { transform-origin: left; }
+.reveal:not(.is-shown) .wr-line {
+  transform: scaleX(0);
+}
+.wr-vline {
+  transform-origin: top;
+  transition: transform 1s cubic-bezier(0.2, 0.8, 0.2, 1) 1s;
+}
+.reveal:not(.is-shown) .wr-vline {
   transform: scaleY(0);
-}
-.is-shown .wr-bar {
-  animation: wr-rise 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
-  animation-delay: calc(1.1s + var(--c, 0) * 0.35s + var(--i, 0) * 0.13s);
-}
-.reveal:not(.is-shown) .wr-lab {
-  opacity: 0;
-}
-.is-shown .wr-lab {
-  animation: comet-in 0.5s ease both;
-  animation-delay: calc(1.5s + var(--c, 0) * 0.35s + var(--i, 0) * 0.13s);
-  opacity: 0;
 }
 .wr-glow {
   opacity: 0.35;
   animation: badge-breathe 6s ease-in-out infinite;
 }
-.wr-card {
-  transition: translate 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), background-color 0.35s ease, border-color 0.35s ease;
-}
-.wr-card:hover {
-  translate: 0 -4px;
-  background-color: rgba(255, 255, 255, 0.09);
-  border-color: rgba(255, 182, 138, 0.35);
-}
 @media (prefers-reduced-motion: reduce) {
-  .wr-spin,
-  .wr-glow { animation: none; }
-  .is-shown .wr-bar,
-  .reveal:not(.is-shown) .wr-bar { animation: none; transform: none; }
-  .is-shown .wr-lab,
-  .reveal:not(.is-shown) .wr-lab { animation: none; opacity: 1; }
+  .wr-glow,
+  .is-shown .wr-sheen { animation: none; }
+  .wr-odo,
+  .wr-line,
+  .wr-vline { transition: none; }
 }
 
 /*
