@@ -1146,5 +1146,17 @@
  "place/award-banner": {
   "w": 1340,
   "h": 410
+ },
+ "ai/stage-plan": {
+  "w": 1536,
+  "h": 1024
+ },
+ "ai/stage-print": {
+  "w": 1536,
+  "h": 1024
+ },
+ "ai/stage-guide": {
+  "w": 1536,
+  "h": 1024
  }
 }
