@@ -165,7 +165,8 @@ function canBreakBetween(w: string, next: string, prev = ''): boolean {
   /* "6번 | 출구", "도보 | 2분" — 길 안내 숫자 묶음은 한 덩어리 (2026-09-29 꼬리말) */
   if (/\d+번$/.test(bare) && /^출구/.test(nx)) return false;
   if (/^(도보|차로|걸어서)$/.test(bare) && /^\d/.test(nx)) return false;
-  if (/(고|거나)$/.test(bare) && COORD_MODIFIER.test(nx)) return false;
+  /* 단 '-지 않고 · 못하고 · 말고' 뒤는 꾸밈말 짝이 아니라 절이 갈리는 자리("절개하지 않고 | 작은 구멍으로", 10-08 — 막았더니 '절개하지 | 않고' 에서 꺾였다) */
+  if (/(고|거나)$/.test(bare) && !/^(않고|못하고|말고)$/.test(bare) && COORD_MODIFIER.test(nx)) return false;
   /* 목적어와 그것을 받는 동사("힘을 싣는", "구조를 가지고", "치료를 시작합니다")는 한 덩어리 */
   if (OBJECT_MARK.test(bare) && VERB_LIKE.test(nx)) return false;
   /* 목적어 + 받침 ㄴ·ㄹ 로 끝나는 꾸밈 동사("면허를 가진", "치아를 살릴")도 한 덩어리 (2026-09-29) */
