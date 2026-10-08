@@ -657,8 +657,8 @@ export function TmjPage({ doc }: { doc: Doc }) {
                 <SubHead s={SECTIONS.asym} />
                 <div className="reveal-stack mt-8 grid gap-4 md:grid-cols-2">
                   <div className="card p-6 md:p-7">
-                    <p className="text-[13px] font-bold text-brand-700">생기는 경로</p>
-                    <h4 className="mt-1.5 text-[1.1rem] font-extrabold text-ink">이런 경로로 얼굴이 틀어집니다</h4>
+                    <p className="text-[13px] font-bold text-brand-700">생기는 원인</p>
+                    <h4 className="mt-1.5 text-[1.1rem] font-extrabold text-ink">이런 경우 얼굴의 좌우 균형이 달라질 수 있습니다</h4>
                     <ul className="mt-3 space-y-2.5">
                       {TMJ_ASYMMETRY_CAUSES.map((c) => (
                         <li key={c} className="flex gap-2.5 text-[14.5px] leading-[1.7] text-ink-soft">
@@ -670,7 +670,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                   </div>
                   <div className="card p-6 md:p-7">
                     <p className="text-[13px] font-bold text-sun-600">확인할 신호</p>
-                    <h4 className="mt-1.5 text-[1.1rem] font-extrabold text-ink">거울에서 보이는 비대칭 신호</h4>
+                    <h4 className="mt-1.5 text-[1.1rem] font-extrabold text-ink">거울 앞에서 살펴볼 비대칭 신호</h4>
                     <ul className="mt-3 space-y-2.5">
                       {TMJ_ASYMMETRY_SIGNS.map((s) => (
                         <li key={s} className="flex gap-2.5 text-[14.5px] leading-[1.7] text-ink-soft">
@@ -991,7 +991,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                         </dl>
                       </div>
                       <div className="border-t border-hairline pt-7 md:border-l md:border-t-0 md:pl-10 md:pt-0">
-                        <h4 className="text-[1.15rem] font-extrabold text-ink">이렇게 씁니다</h4>
+                        <h4 className="text-[1.15rem] font-extrabold text-ink">착용 안내</h4>
                         <ul className="mt-4 space-y-3">
                           {TMJ_SPLINT_TIPS.map((t) => (
                             <li key={t.title} className="flex gap-3">

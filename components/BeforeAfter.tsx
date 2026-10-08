@@ -214,7 +214,7 @@ export function BeforeAfter({ groups, note, showTabs = true }: { groups: CaseGro
       {showTabs && groups.length > 1 && (
         <div className="mb-8 flex justify-center">
           {/* 폰에서는 2×2 격자(한 줄에 안 들어가 한 알약이 혼자 떨어지던 것) — 넓은 화면은 한 줄 알약 */}
-          <div className="grid w-full grid-cols-2 gap-1 rounded-3xl border border-hairline bg-white p-1.5 shadow-[var(--shadow-soft)] sm:inline-flex sm:w-auto sm:flex-wrap sm:justify-center sm:rounded-full" role="tablist" aria-label="진료 갈래">
+          <div className="grid w-full grid-cols-2 gap-1 rounded-3xl border border-hairline bg-white p-1.5 shadow-[var(--shadow-soft)] sm:inline-flex sm:w-auto sm:flex-wrap sm:justify-center sm:rounded-full" role="tablist" aria-label="진료 분류">
             {groups.map((g, k) => (
               <button
                 key={g.id}

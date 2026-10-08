@@ -1294,6 +1294,11 @@ mark.hl {
   color: #fff;
   background-image: linear-gradient(rgba(242, 111, 30, 0.55), rgba(242, 111, 30, 0.55));
 }
+/* 첫 화면 유리 카드 — 병원이 PPT 에서 굵게 쓴 곳(턱관절 첫 화면 카드, 2026-10-08). 띠 없이 흰 굵은 글씨만 */
+.hero-card mark.hl {
+  color: #fff;
+  background-image: none;
+}
 
 /*
  * ── 홈 풀아치 구역(components/FullArchBand) — 2026-10-07 오너 "메인에 너무 그대로 … 세련되고 모션그래픽이고 배경에 사진".

@@ -45,7 +45,7 @@ export default function VisitPage() {
           long
           cardsLead="내원 전에 확인해 주세요."
           lines={['광화문역 6번 출구', <><span className="accent-sun">도보 2분</span></>]}
-          lead={`${CLINIC.address.street} ${CLINIC.address.landmark.replace(' · ', ', ')}입니다. 화·목요일은 오후 9시까지 진료하며, 주차는 ${CLINIC.parking.place}을 무료로 이용하실 수 있습니다.`}
+          lead={`${CLINIC.address.street} ${CLINIC.address.floor}, ${CLINIC.address.landmark}입니다. 화·목요일은 오후 9시까지 진료하며, 주차는 ${CLINIC.parking.place}을 무료로 이용하실 수 있습니다.`}
           bg="ai/wide-visit"
           cards={[
             { fig: { key: 'place/place03', alt: '광화문 선치과 진료실과 간판' }, shape: 'portrait' },

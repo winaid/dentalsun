@@ -32,7 +32,7 @@ export default function TreatmentIndex() {
   return (
     <>
       <SiteHeader dark />
-      <JsonLd data={[breadcrumbSchema(trail), medicalWebPageSchema({ title: TITLE, description: DESC, path: '/treatment' }), itemListSchema('/treatment', hubs.map((h) => ({ name: h.nav.label, path: h.nav.href })), '광화문 선치과 진료 갈래')]} />
+      <JsonLd data={[breadcrumbSchema(trail), medicalWebPageSchema({ title: TITLE, description: DESC, path: '/treatment' }), itemListSchema('/treatment', hubs.map((h) => ({ name: h.nav.label, path: h.nav.href })), '광화문 선치과 진료 안내')]} />
       <main id="main">
         <HeroCollage
           trail={trail}
@@ -40,7 +40,7 @@ export default function TreatmentIndex() {
           long
           cardsLead="진료는 이렇게 나뉩니다."
           lines={['광화문 선치과', <><span className="accent-sun">진료 안내</span></>]}
-          lead="진료는 임플란트, 턱관절, 일반진료 세 갈래로 나뉩니다. 갈래마다 어떤 경우에 필요한지, 어떻게 진단하고 어떤 순서로 치료하는지 정리했습니다. 내원 전에 읽어 보시면 상담에서 필요한 부분을 더 깊이 이야기할 수 있습니다."
+          lead="진료는 임플란트, 턱관절, 일반진료로 나뉩니다. 진료마다 어떤 경우에 필요한지, 어떻게 진단하고 어떤 순서로 치료하는지 정리했습니다. 내원 전에 읽어 보시면 상담에서 필요한 부분을 더 깊이 이야기할 수 있습니다."
           bg="ai/wide-implant"
           cards={[
             { fig: { key: 'orig/mta-hero', alt: '확대경을 쓰고 MTA 신경치료를 하는 원장' }, shape: 'portrait' },

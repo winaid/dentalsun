@@ -133,7 +133,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   '/treatment/tmj/bruxism': {
     lines: ['자면서 이를 갈거나 낮에 꽉 문다면,', '치아와 {턱관절}을 함께 살핍니다'],
     lead: '이갈이와 이악물기는 치아가 닳고 금이 가거나, 턱 근육 통증과 턱관절 증상으로 이어질 수 있습니다. 닳은 모양과 근육·턱관절 상태를 확인한 뒤, {맞춤 장치와 근육 치료}를 계획합니다.',
-    cardsLead: '이갈이·이악물기는 이런 흔적을 남깁니다.',
+    cardsLead: '이갈이·이악물기는 이런 문제로 이어집니다.',
     cards: [
       { fig: { key: 'illust/bruxism-wear', alt: '이갈이로 교합면이 닳고 금이 간 어금니 도해' }, shape: 'portrait' },
       { fig: { key: 'illust/bruxism-muscle', alt: '과긴장한 교근과 측두근 도해' }, shape: 'wide' },
@@ -161,8 +161,8 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     ],
   },
   '/treatment/tmj/symptoms': {
-    lines: ['턱 소리와 통증, 입 벌리기 힘듦까지', '{턱관절 장애}의 증상과 자가진단'],
-    lead: '딸깍하는 소리와 씹을 때의 통증, 입이 충분히 벌어지지 않는 것은 턱관절 장애의 대표 증상입니다. 근육과 디스크, 관절 뼈 가운데 어디에 문제가 있는지 알면 치료 방향이 정해집니다.',
+    lines: ['턱 소리와 통증, 개구장애까지', '{턱관절 장애}의 증상과 자가진단'],
+    lead: '딸깍하는 턱 소리와 씹을 때의 통증, 입이 충분히 벌어지지 않는 개구장애는 턱관절 장애의 대표 증상입니다. 근육과 디스크, 관절 뼈 가운데 어디에 문제가 있는지 알면 치료 방향이 정해집니다.',
     cardsLead: '턱관절 장애는 이런 증상으로 나타납니다.',
     cards: [
       { fig: { key: 'scene/tmj-sym-1', alt: '턱관절에서 소리가 나는 증상' }, shape: 'portrait' },
@@ -172,7 +172,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   },
   '/treatment/tmj/anatomy': {
     lines: ['귀 바로 앞, 가장 복잡한 관절', '{턱관절}의 구조와 기능'],
-    lead: '머리뼈와 아래턱뼈 끝 사이에서 디스크가 함께 움직이며 돌고 미끄러지는 관절입니다. 구조를 알면 {왜 소리가 나고 귀·머리까지 아픈지} 이해됩니다.',
+    lead: '머리뼈와 아래턱뼈 사이에서 디스크가 함께 움직이며 돌고 미끄러지는 관절입니다. 구조를 알면 {왜 소리가 나고 귀·머리까지 아픈지} 이해됩니다.',
     cardsLead: '턱관절은 이렇게 생겼습니다.',
     cards: [
       { fig: { key: 'sun/tmj-explain-skull-2', alt: '두개골 모형으로 턱관절을 설명하는 양대일 원장' }, shape: 'portrait' },
@@ -203,7 +203,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   '/treatment/tmj/whole-body': {
     lines: ['턱에만 머물지 않습니다', '{턱관절}과 전신증상'],
     lead: '턱관절이 틀어지면 얼굴의 좌우 균형과 목뼈의 위치가 바뀌고, 도미노처럼 척추와 골반까지 이어지기도 합니다.',
-    cardsLead: '턱에서 몸으로 이어지는 네 갈래.',
+    cardsLead: '턱에서 몸으로 이어지는 변화.',
     cards: [
       { fig: { key: 'scene/tmj-sym-2', alt: '턱관절 통증과 두통 증상' }, shape: 'portrait' },
       { fig: { key: 'sun/tmj-explain-skull', alt: '두개골 모형을 들고 턱관절 구조를 설명하는 양대일 원장' }, shape: 'wide' },
@@ -429,7 +429,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   },
   '/insight/symptom/mouth-wont-open': {
     lines: ['입이 잘', '{안 벌어져요}'],
-    lead: '손가락 세 개를 세로로 포개어 넣기 어렵다면 입 벌림이 제한된 것입니다. 디스크가 걸린 것인지, 근육이 굳은 것인지, 염증인지에 따라 대처가 다릅니다.',
+    lead: '손가락 세 개를 세로로 포개어 넣기 어렵다면 개구장애를 의심할 수 있습니다. 디스크가 걸린 것인지, 근육이 굳은 것인지, 염증인지에 따라 대처가 다릅니다.',
     cards: [
       { fig: { key: 'scene/tmj-sym-3', alt: '입이 잘 벌어지지 않는 증상' }, shape: 'portrait' },
       { fig: { key: 'ai/insight-jaw', alt: '턱관절 모형(연출 사진)' }, shape: 'wide' },

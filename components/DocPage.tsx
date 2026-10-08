@@ -200,7 +200,7 @@ export function DocPage({ doc }: { doc: Doc }) {
               <p className="eyebrow reveal">RELATED</p>
               <h2 className="display-sm reveal mt-4">함께 보면 좋은 안내</h2>
               <div className="reveal-stack grid-cards mt-10 sm:grid-cols-2 lg:grid-cols-4">
-                {doc.path !== doc.hub && <CardLink href={doc.hub} label={`${isInsight ? '인사이트' : doc.hubLabel} 전체 안내`} desc="이 갈래의 모든 문서를 한눈에 봅니다." fig={{ key: bandBg, alt: doc.hubLabel }} />}
+                {doc.path !== doc.hub && <CardLink href={doc.hub} label={`${isInsight ? '인사이트' : doc.hubLabel} 전체 안내`} desc="관련된 안내를 한곳에서 모아 봅니다." fig={{ key: bandBg, alt: doc.hubLabel }} />}
                 {related.slice(0, 3).map((r) => (
                   <CardLink key={r.path} href={r.path} label={r.title} desc={shortSummary(r.summary)} fig={{ key: DOC_AI[r.path] ?? r.hero?.key ?? 'ai/faq', alt: r.title }} />
                 ))}
