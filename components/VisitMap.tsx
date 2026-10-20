@@ -40,7 +40,7 @@ export function VisitMap({ className = '' }: { className?: string }) {
     <div className={`card flex flex-col overflow-hidden ${className}`}>
       <a href={CLINIC.maps.naverPlace} target="_blank" rel="noopener" className="relative block" aria-label="네이버 지도에서 광화문선치과의원 위치 열기">
         <Image
-          src={figSrc('place/naver-map')}
+          src={figSrc('place/naver-map-v2')}
           alt="광화문역 6번 출구에서 동화면세점을 지나 남쪽으로 약 170m, 광화문선치과의원 위치를 표시한 지도"
           width={1600}
           height={1477}
