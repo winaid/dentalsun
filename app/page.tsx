@@ -584,7 +584,9 @@ export default function HomePage() {
                   <p className="mt-1.5">
                     <span className="font-bold text-ink">주차</span> {CLINIC.parking.place} {CLINIC.parking.fee}
                   </p>
-                  <Link href="/visit#notice" className="mt-3 inline-block font-bold text-brand-700 hover:underline">
+                  {/* 원장 PPT 105쪽 '깜빡깜빡 효과' — 앞에 주황 점이 2.6초마다 고리를 퍼뜨린다(globals.css .attn-dot) */}
+                  <Link href="/visit#notice" className="mt-3 inline-flex items-center gap-2 font-bold text-brand-700 hover:underline">
+                    <span aria-hidden className="attn-dot" />
                     이달의 진료일정 보기 →
                   </Link>
                 </div>

@@ -14,6 +14,7 @@ const ITEMS = [
   { label: '오시는 길', href: '/visit', external: false, kind: 'map' as const },
 ];
 
+/* 네이버 예약 아이콘의 attn-pulse = 원장 PPT 105쪽 '깜빡깜빡 효과'(globals.css 눈길 맥박) — 데스크톱 퀵메뉴·모바일 아래 띠 둘 다 */
 /** 색 있는 둥근 아이콘 — 네이버 초록(예약·후기), 남색(진료시간), 주황(오시는 길). 선 아이콘 대신 브랜드 마크(오너: 더 잘 보이게). */
 function Icon({ kind }: { kind: 'star' | 'naver' | 'clock' | 'map' }) {
   if (kind === 'star')
@@ -24,7 +25,7 @@ function Icon({ kind }: { kind: 'star' | 'naver' | 'clock' | 'map' }) {
     );
   if (kind === 'naver')
     return (
-      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[8px] bg-[#03C75A] text-white">
+      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[8px] bg-[#03C75A] text-white attn-pulse">
         <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden><path d="M4 3h5.2l5.6 8.4V3H20v18h-5.2L9.2 12.6V21H4z" fill="currentColor" /></svg>
       </span>
     );
@@ -90,7 +91,7 @@ export function QuickMenu() {
           전화
         </a>
         <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="flex min-h-[72px] flex-col items-center justify-center gap-1.5 text-[13px] font-bold text-ink active:bg-canvas">
-          <span className="flex h-8 w-8 items-center justify-center rounded-[8px] bg-[#03C75A] text-white">
+          <span className="attn-pulse flex h-8 w-8 items-center justify-center rounded-[8px] bg-[#03C75A] text-white">
             <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden><path d="M4 3h5.2l5.6 8.4V3H20v18h-5.2L9.2 12.6V21H4z" fill="currentColor" /></svg>
           </span>
           예약

@@ -1398,3 +1398,43 @@ mark.hl {
   color: #fff;
   background-image: linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.35));
 }
+
+/* ── 눈길 맥박 — 2026-10-20 원장 PPT 105쪽 '이달의 진료일정 보기, 네이버 예약 깜빡깜빡 등의 효과'.
+   켜졌다 꺼지는 깜빡임은 광고처럼 보이고 광과민 기준(초당 3번)에도 걸려, 2.6초마다 둘레로 고리 하나가 퍼져 사라지게 했다.
+   .attn-pulse = 아이콘(네이버 예약 초록 N) 둘레 고리, .attn-dot = 글 링크 앞 주황 점. 색은 --attn. ── */
+.attn-pulse,
+.attn-dot {
+  position: relative;
+  isolation: isolate;
+}
+.attn-pulse::after,
+.attn-dot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 2px solid var(--attn, #03c75a);
+  opacity: 0;
+  pointer-events: none;
+  animation: attn-ring 2.6s cubic-bezier(0.2, 0.7, 0.2, 1) infinite;
+}
+.attn-dot {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: var(--attn, var(--color-sun-500));
+  vertical-align: 0.12em;
+}
+.attn-dot::after {
+  inset: -1px;
+  border-width: 1.5px;
+}
+@keyframes attn-ring {
+  0% { transform: scale(1); opacity: 0.85; }
+  55% { transform: scale(1.9); opacity: 0; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .attn-pulse::after, .attn-dot::after { animation: none !important; opacity: 0 !important; }
+}
