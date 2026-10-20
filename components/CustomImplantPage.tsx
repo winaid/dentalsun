@@ -306,18 +306,21 @@ export function CustomImplantPage({ doc, part }: { doc: Doc; part: 'navigation' 
 
               {/* 수술 가이드 원리 — 넓은 도해 + 세 가지 */}
               <SubHead eyebrow="수술 가이드" title={<>수술 가이드는 <span className="accent-sun">이렇게 계획을 옮깁니다</span></>} lead={NAVI_GUIDE.lead} />
-              <div className="reveal mt-8">
-                <Illust fig={NAVI_GUIDE.fig} />
+              {/* 2026-10-20 오너 "여기 사진 너무 큰데" — 도해가 본문 폭을 다 차지했다. PC 는 도해 왼쪽 · 세 가지 오른쪽 세로(원장 PPT 129쪽 배치), 폰은 위아래 */}
+              <div className="mt-8 grid gap-5 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:gap-8">
+                <div className="reveal">
+                  <Illust fig={NAVI_GUIDE.fig} sizes="(max-width: 1024px) 100vw, 600px" />
+                </div>
+                <ol className="reveal-stack grid gap-4 md:grid-cols-3 lg:grid-cols-1">
+                  {NAVI_GUIDE.points.map((p, i) => (
+                    <li key={p.title} className="rounded-2xl bg-canvas p-5">
+                      <span className="text-[12px] font-extrabold tracking-[0.12em] text-sun-600">{String(i + 1).padStart(2, '0')}</span>
+                      <span className="mt-1.5 block text-[1.02rem] font-extrabold text-ink">{p.title}</span>
+                      <span className="mt-1.5 block text-[14px] leading-[1.7] text-ink-soft"><Sentences text={p.desc} /></span>
+                    </li>
+                  ))}
+                </ol>
               </div>
-              <ol className="reveal-stack mt-5 grid gap-4 md:grid-cols-3">
-                {NAVI_GUIDE.points.map((p, i) => (
-                  <li key={p.title} className="rounded-2xl bg-canvas p-5">
-                    <span className="text-[12px] font-extrabold tracking-[0.12em] text-sun-600">{String(i + 1).padStart(2, '0')}</span>
-                    <span className="mt-1.5 block text-[1.02rem] font-extrabold text-ink">{p.title}</span>
-                    <span className="mt-1.5 block text-[14px] leading-[1.7] text-ink-soft"><Sentences text={p.desc} /></span>
-                  </li>
-                ))}
-              </ol>
 
               <div id="process" className="scroll-mt-28" />
               <SubHead eyebrow="진행 순서" title={<>내비게이션 임플란트 <span className="accent-sun">진행 순서</span></>} lead={NAVI_PROCESS.lead} />
