@@ -52,16 +52,21 @@ export default function AboutPage() {
           trail={trail}
           eyebrow="ABOUT SUN DENTAL CLINIC"
           long
-          cardsLead="광화문 선치과의 진료 원칙입니다."
-          lines={['진단부터 정기검진까지', <>대표원장이 <span className="accent-sun">직접 봅니다</span></>]}
-          lead="통합치의학과 전문의 양대일 대표원장이 첫 상담과 3D CT 진단, 수술과 보철, 정기검진까지 맡습니다. 검사 영상을 함께 보며 지금 상태를 설명하고, {살릴 수 있는 치아인지부터} 확인합니다."
+          /* 2026-10-20 원장 PPT 107쪽 — 제목 둘째 줄 '대표원장이 직접 책임집니다' · 설명 '수술을 포함한 치료와' · 카드 3장은 진료 원칙(WHY 구역과 중복) 대신 '광화문선치과의 중점 진료'. 글자 그대로, 굵게 = {…}, 번호 01~03 은 카드가 그린다 */
+          cardsLead="광화문선치과의 중점 진료"
+          lines={['진단부터 정기검진까지', <>대표원장이 <span className="accent-sun">직접 책임집니다</span></>]}
+          lead="통합치의학과 전문의 양대일 대표원장이 첫 상담과 3D CT 진단, 수술을 포함한 치료와 정기검진까지 맡습니다. 검사 영상을 함께 보며 지금 상태를 설명하고, {살릴 수 있는 치아인지부터} 확인합니다."
           bg="place/place01"
           cards={[
             { fig: { key: 'scene/loupe', alt: '확대경을 착용하고 진료하는 양대일 대표원장' }, shape: 'portrait' },
             { fig: { key: 'place2/reception', alt: '곡선형 나무 접수대와 광화문 선치과 간판' }, shape: 'wide' },
             { fig: { key: 'place/place08', alt: '3D CT 촬영실' }, shape: 'std' },
           ]}
-          items={STRENGTHS.slice(0, 3).map((s) => ({ title: s.title, desc: s.desc }))}
+          items={[
+            { title: '디지털 임플란트', desc: '3D CT와 컴퓨터 모의수술로 임플란트의 위치·각도·깊이를 설계하고, 맞춤형 수술 가이드를 활용해 계획한 위치에 정밀하게 식립합니다.' },
+            { title: '턱관절 치료', desc: '턱관절 CT와 개구량·맞물림·근육 검사를 통해 원인을 파악하고, 물리치료·보톡스·스플린트 등 {필요한 치료만 진행합니다}.' },
+            { title: '자연치아 보존치료', desc: '신경치료와 재신경치료, 치근단절제술 등을 통해 {발치하기 전에 자연치아를 살릴 수 있는지부터 확인합니다}.' },
+          ]}
         />
 
         <section className="section">
