@@ -641,6 +641,46 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
       );
     case 'warranty':
       return <WarrantyBand />;
+    case 'showcase':
+      /* 글 → (번호 카드) → 맺는 한 줄 → (그림 위 소제목) → 넓은 그림. 그림은 원래 비율 그대로(글자가 든 설명 그림이라 자르지 않는다) */
+      return (
+        <section id={id} className={wrapCls}>
+          <div className="wrap">
+            <Head title={b.title} accent={b.accent} />
+            {b.paragraphs && (
+              <div className="prose-ko reveal mt-6 max-w-[900px]">
+                {paras(b.paragraphs).map((p, i) => (
+                  <p key={i}>
+                    <Sentences text={p} />
+                  </p>
+                ))}
+              </div>
+            )}
+            {b.items && (
+              <ul className="reveal-stack mt-8 grid gap-4 md:grid-cols-2">
+                {b.items.map((it, i) => (
+                  <li key={it.title} className={plainCls}>
+                    <span className="num">{String(i + 1).padStart(2, '0')}</span>
+                    <p className={`${titleCls} mt-3`}>{it.title}</p>
+                    <p className={descCls}>
+                      <Sentences text={it.desc} clauses={false} />
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            )}
+            {b.note && (
+              <p className="reveal mt-6 max-w-[900px] text-[15.5px] leading-relaxed text-ink-soft">
+                <Sentences text={b.note} />
+              </p>
+            )}
+            {b.figureTitle && <h3 className="reveal mt-14 text-center text-[1.3rem] font-extrabold text-ink md:text-[1.55rem]">{b.figureTitle}</h3>}
+            <div className={`reveal mx-auto ${b.figureTitle ? 'mt-6' : 'mt-10'}`} style={{ maxWidth: `${b.figureMax ?? 1100}px` }}>
+              <Figure fig={b.figure} sizes={`(max-width: ${b.figureMax ?? 1100}px) 100vw, ${b.figureMax ?? 1100}px`} />
+            </div>
+          </div>
+        </section>
+      );
     case 'notice':
       /* 안내 구역 — 연한 상자 대신 구역 전체에 진한 주황을 깔고, 왼쪽 라벨+큰 제목 / 오른쪽 본문의 편집 배치 */
       return (
