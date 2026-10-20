@@ -231,8 +231,7 @@ export const IMPLANT_DOCS: Doc[] = [
     hub: '/treatment/implant',
     hubLabel: '임플란트',
     title: '내비게이션 임플란트',
-    // 2026-10-20 원장 PPT 2쪽(이고운 첫 화면 '지역 · 진료 | 전문의 이름' 눈썹 줄) — ' | ' 뒤는 HeroCollage 가 따로 그린다
-    eyebrow: '광화문 내비게이션 임플란트 | 통합치의학과 전문의 양대일 대표원장',
+    eyebrow: '임플란트 · 가이드 식립',
     /*
      * 화면은 components/CustomImplantPage part='navigation'. 본문·FAQ 는 lib/content/customImplantLanding 의 NAVI_*.
      * ★ NAVI_BLOCKS 의 steps 'process' 는 홈 첫 화면 무대(HomeScroll HomeStage)가 읽는다.

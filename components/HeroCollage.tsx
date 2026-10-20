@@ -85,18 +85,7 @@ export function HeroCollage({
           {/* 글 */}
           <div className="relative z-20 lg:flex-1">
             <Breadcrumb trail={trail} dark />
-            {/* 'A | B' 꼴이면 B(전문의 이름)를 세로 막대 뒤에 — 원장 PPT 2쪽. 좁은 화면에서는 B 가 다음 줄로 내려간다 */}
-            {eyebrow.includes(' | ') ? (
-              <p className="eyebrow on-dark mt-6 hero-in flex-wrap gap-y-2">
-                <span>{eyebrow.split(' | ')[0]}</span>
-                <span className="flex items-center gap-3 tracking-[0.08em] text-white/75 normal-case">
-                  <span aria-hidden className="hidden h-3 w-px bg-white/35 sm:block" />
-                  {eyebrow.split(' | ')[1]}
-                </span>
-              </p>
-            ) : (
-              <p className="eyebrow on-dark mt-6 hero-in">{eyebrow}</p>
-            )}
+            <p className="eyebrow on-dark mt-6 hero-in">{eyebrow}</p>
             {/* 제목은 한 줄이든 두 줄이든 같은 높이를 차지한다 — 쪽마다 글이 튀지 않게(오너: 행열 규격 통일). 둘째 줄 어긋남은 오너가 좋아해서 유지 */}
             <h1 className={`display-xl mt-4 on-photo lg:flex lg:min-h-[138px] lg:flex-col lg:justify-end 2xl:min-h-[158px] ${longer ? 'is-longer' : long ? 'is-long' : ''}`}>
               <span className="block hero-in hero-in-2">{typeof lines[0] === 'string' ? keepDots(lines[0]) : lines[0]}</span>
