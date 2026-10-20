@@ -54,7 +54,7 @@ export default function AboutPage() {
           long
           /* 2026-10-20 원장 PPT 107쪽 — 제목 둘째 줄 '대표원장이 직접 책임집니다' · 설명 '수술을 포함한 치료와' · 카드 3장은 진료 원칙(WHY 구역과 중복) 대신 '광화문선치과의 중점 진료'. 글자 그대로, 굵게 = {…}, 번호 01~03 은 카드가 그린다 */
           cardsLead="광화문선치과의 중점 진료"
-          lines={['진단부터 정기검진까지', <>대표원장이 <span className="accent-sun">직접 책임집니다</span></>]}
+          lines={['진단부터 정기검진까지', <>대표원장이 <span className="accent-sun whitespace-nowrap">직접 책임집니다</span></>]}
           lead="통합치의학과 전문의 양대일 대표원장이 첫 상담과 3D CT 진단, 수술을 포함한 치료와 정기검진까지 맡습니다. 검사 영상을 함께 보며 지금 상태를 설명하고, {살릴 수 있는 치아인지부터} 확인합니다."
           bg="place/place01"
           cards={[
