@@ -57,7 +57,7 @@ function Stage() {
 
 export function FullArchBand() {
   return (
-    <section className="relative isolate overflow-hidden bg-[#f6efe9]">
+    <section id="fullarch" className="relative isolate overflow-hidden bg-[#f6efe9]">
       {/* 그림 무대 — 좁은 화면은 위쪽 상자(오른쪽 붙임), lg 부터는 구역 전체 배경 */}
       <div className="reveal relative aspect-[8/7] overflow-hidden sm:aspect-[16/9] lg:absolute lg:inset-0 lg:aspect-auto">
         <Stage />
@@ -71,7 +71,8 @@ export function FullArchBand() {
           </h2>
           <p className="mt-5 text-[1.12rem] leading-[1.7] text-ink-soft md:text-[1.3rem]">
             <span className="block">전체 치아에 필요한 임플란트, <strong className="font-extrabold text-ink">단 4~6개</strong></span>
-            <span className="block"><strong className="font-extrabold text-ink">수술 당일 식사</strong>까지 가능한 <span className="font-extrabold text-sun-600">풀아치</span> 임플란트</span>
+            {/* 2026-10-20 원장 PPT 99쪽 '디지털 풀아치 임플란트' + 오너 "주황 강조로, 지금은 풀아치만 강조" → 세 낱말 전체 주황, 한 덩어리로 */}
+            <span className="block"><strong className="font-extrabold text-ink">수술 당일 식사</strong>까지 가능한 <span className="whitespace-nowrap font-extrabold text-sun-600">디지털 풀아치 임플란트</span></span>
           </p>
           <RoundBadges items={['수술당일\n식사가능', '내원은\n최소한', '치료기간\n최소한', '가격은\n합리적']} className="mt-8" />
           <div className="mt-9">
