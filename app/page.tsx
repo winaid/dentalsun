@@ -514,7 +514,7 @@ export default function HomePage() {
         </section>
 
         {/* ── FAQ ── */}
-        <section className="section bg-canvas">
+        <section id="faq" className="section bg-canvas">
           <div className="wrap grid gap-10 lg:grid-cols-[1fr_2fr]">
             <div className="reveal">
               <p className="eyebrow">FAQ</p>
