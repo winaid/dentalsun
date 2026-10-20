@@ -547,7 +547,7 @@ export default function HomePage() {
             <div className="reveal mt-12 grid gap-6 lg:grid-cols-[1.4fr_1fr]">
               {/* 2026-10-20 원장 PPT 105쪽 '6번 출구 표시' — 구글 지도 끼워 넣기 → 네이버 지도 사진 + 열기 단추 셋(components/VisitMap) */}
               <VisitMap className="lg:self-start" />
-              <div className="grid gap-4">
+              <div className="grid content-start gap-4">
                 <div className="card p-6">
                   <p className="text-[14px] font-bold tracking-wide text-ink-muted">진료시간</p>
                   <ul className="mt-3 divide-y divide-hairline">
