@@ -63,6 +63,9 @@ const SCENES = {
   'painless-hub': 'A patient reclined in a dental chair seen from the nose down, relaxed and calm with lips gently closed, a clinician\'s gloved hand resting reassuringly on the chair, soft light.',
   /* 2026-10-20 원장 PPT 115쪽 임플란트 허브 '수술 이후 관리도 든든하게'(정기검진으로 임플란트·잇몸뼈·보철물 확인) — 오너 "내용에 맞는 이미지를 배치하거나 만들어". 두 안 중 하나만 쓴다 */
   'implant-aftercare': 'Follow-up check-up in a bright modern dental treatment room: a middle-aged patient reclined in a white dental chair seen from behind and to the side, a dentist in deep-navy scrubs seated beside the chair with his back and shoulder toward the camera, pointing with a pen at a wall monitor that shows a grayscale panoramic dental X-ray with two titanium implants, large window daylight, calm and reassuring mood.',
+  /* 2026-10-20 원장 PPT 179쪽 '이미지 변경'(턱관절 더 알아보기 이갈이 카드) · 181쪽 '사진 변경'(증상 04 번지는 통증) */
+  'tmj-bruxism-guard': 'A clear custom night guard (hard acrylic occlusal splint) resting in its small open white case on a white bedside table at night, a soft warm bedside lamp glow, the edge of a white pillow blurred in the background, calm and clean mood, no person.',
+  'tmj-spread-pain': 'A young East Asian woman seen from the side and slightly behind with her face turned away, one hand pressing her temple and the other hand rubbing the back of her stiff neck and shoulder, sitting at a bright white desk by a window, the subject centered in the frame, soft daylight.',
   'implant-aftercare-b': 'Regular implant check-up: a patient reclined in a white dental chair seen from the nose down, mouth gently open, a dentist in deep-navy scrubs seen from the shoulder down holding a small dental mirror near the back teeth with gloved hands, an overhead dental light softly glowing, bright clean treatment room, calm and reassuring mood.',
 };
 

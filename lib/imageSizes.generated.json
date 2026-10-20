@@ -1258,5 +1258,13 @@
  "illust/socket-4b": {
   "w": 900,
   "h": 600
+ },
+ "ai/tmj-bruxism-guard": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/tmj-spread-pain": {
+  "w": 1200,
+  "h": 800
  }
 }

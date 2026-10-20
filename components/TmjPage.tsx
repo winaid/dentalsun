@@ -191,7 +191,7 @@ function Triad({ className = '' }: { className?: string }) {
     <div className={`reveal rounded-[28px] bg-night p-7 text-white md:p-10 ${className}`}>
       <Label center={false} light>{SECTIONS.triad.label}</Label>
       <h3 className="mt-3 text-[1.3rem] font-extrabold md:text-[1.5rem]">{SECTIONS.triad.title}</h3>
-      <ol className="mt-6 grid gap-5 sm:grid-cols-3">
+      <ol className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {TMJ_ANATOMY.triad.map((t) => (
           <li key={t.n} className="border-t border-white/15 pt-4">
             <span className="block text-[13px] font-extrabold tracking-[0.18em] text-sun-300">{t.n}</span>
@@ -308,9 +308,10 @@ const PAGES = [
 
 /** 허브 '더 알아보기' 카드 사진 — 쪽마다 다른 사진(같은 사진 반복 금지), 설명도 그 사진의 것 */
 const CHILD_FIG: Record<string, Fig> = {
-  '/treatment/tmj/symptoms': { key: 'scene/tmj-sym-3', alt: '입이 벌어지는 정도를 자로 재는 모습' },
-  '/treatment/tmj/bruxism': { key: 'illust/bruxism-muscle', alt: '머리뼈 옆모습에 측두근과 교근을 붉게 표시한 도해' },
-  '/treatment/tmj/treatment': { key: 'orig/tmj-tx-splint', alt: '석고 모형 위에 올린 투명 교합안정장치' },
+  /* 2026-10-20 원장 PPT 179쪽 '이미지 변경' — 구내 사진·도해·어두운 제품 사진이 섞여 있던 것을 밝은 사진 셋으로 */
+  '/treatment/tmj/symptoms': { key: 'ai/tmj-hub', alt: '턱 옆을 손으로 감싸 쥔 모습' },
+  '/treatment/tmj/bruxism': { key: 'ai/tmj-bruxism-guard', alt: '침대 옆 탁자 위 케이스에 담긴 투명 교합안정장치' },
+  '/treatment/tmj/treatment': { key: 'ai/tmj-treatments', alt: '레이저 물리치료 기구와 교합안정장치, 턱관절 모형' },
 };
 
 export function TmjPage({ doc }: { doc: Doc }) {
@@ -973,7 +974,6 @@ export function TmjPage({ doc }: { doc: Doc }) {
                           <span className="text-[12.5px] font-extrabold text-sun-300">{s.n}</span>
                           <span className="mt-2 block text-[15.5px] font-bold leading-snug">{s.label}</span>
                           <span className="mt-2 block text-[13.5px] leading-[1.7] text-white/70"><Sentences text={s.desc} /></span>
-                          {i < TMJ_PRINCIPLE.steps.length - 1 && <span aria-hidden className="absolute -right-3.5 top-1/2 hidden -translate-y-1/2 text-[1.3rem] text-ink-muted md:block">›</span>}
                         </li>
                       ))}
                     </ol>
@@ -1040,7 +1040,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
 
                     {/* ── 보조 치료 세 가지 ── */}
                     <SubHead s={SECTIONS.support} />
-                    <ul className="reveal-stack mt-8 grid gap-4 md:grid-cols-3">
+                    <ul className="reveal-stack mt-8 grid gap-4 md:grid-cols-2">
                       {TMJ_SUPPORT_CARE.map((s, i) => (
                         <li key={s.title} className="card p-6 md:p-7">
                           <div className="flex items-center justify-between gap-3">

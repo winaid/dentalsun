@@ -52,7 +52,7 @@ export const NAV: NavItem[] = [
     href: '/treatment/tmj',
     /* 2026-09-21 오너 — 7쪽은 너무 많아 3쪽으로. 구조·원인은 허브에, 자가진단·전신증상은 증상 쪽에 합쳤다 */
     children: [
-      { label: '턱관절 장애란?', href: '/treatment/tmj', desc: '정의 · 3대 증상 · 관절의 구조 · 원인 · 진료 노하우' },
+      { label: '턱관절 장애란?', href: '/treatment/tmj', desc: '정의 · 주요 증상 · 관절의 구조 · 원인 · 진료 노하우' },
       { label: '증상과 자가진단', href: '/treatment/tmj/symptoms', desc: '관절잡음 · 저작근 통증 · 개구장애 · 자가진단' },
       { label: '이갈이 · 이악물기', href: '/treatment/tmj/bruxism', desc: '수면 이갈이 · 주간 이악물기 · 치아 마모 · 교근 비대' },
       { label: '치료법', href: '/treatment/tmj/treatment', desc: '약물 · 물리치료 · 보톡스 · 교합안정장치 · 관절강 세척술' },
