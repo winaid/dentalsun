@@ -1170,5 +1170,13 @@
  "ai/navi-step1-scan": {
   "w": 1280,
   "h": 720
+ },
+ "ai/uv-bonding": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/uv-wetting": {
+  "w": 1200,
+  "h": 800
  }
 }

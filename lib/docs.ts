@@ -37,7 +37,7 @@ type BlockBody =
   /** 번호 매긴 순서 — 치료 과정 */
   | { type: 'steps'; id?: string; title?: string; lead?: string; steps: Array<{ title: string; desc?: string; figure?: Fig }> }
   /** 두 열 비교표 (A vs B). highlight 는 강조할 열. */
-  | { type: 'compare'; id?: string; title?: string; lead?: string; columns: [string, string]; rows: Array<{ label: string; a: string; b: string }>; note?: string; highlight?: 'a' | 'b' }
+  | { type: 'compare'; id?: string; title?: string; lead?: string; columns: [string, string]; rows: Array<{ label: string; a: string; b: string }>; note?: string; highlight?: 'a' | 'b'; /** 표 아래 그림(원장 PPT 136쪽 UV 전후 물방울) */ figure?: Fig }
   /** 일반 표 */
   | { type: 'table'; id?: string; title?: string; lead?: string; head: string[]; rows: string[][]; note?: string }
   /** 사진 여러 장 */

@@ -460,6 +460,11 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
               </table>
             </div>
             {b.note && <p className="mt-4 text-[14.5px] leading-relaxed text-ink-muted"><Sentences text={`※ ${b.note}`} /></p>}
+            {b.figure && (
+              <div className="reveal mx-auto mt-10 max-w-[760px]">
+                <Figure fig={b.figure} sizes="(max-width: 800px) 100vw, 760px" />
+              </div>
+            )}
           </div>
         </section>
       );

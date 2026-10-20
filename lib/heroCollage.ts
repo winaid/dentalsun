@@ -67,8 +67,9 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   },
   '/treatment/implant/uv': {
     lines: ['뼈와 잘 붙도록 돕는', '{UV} 임플란트'],
-    lead: '식립 직전 임플란트 표면에 자외선을 쬐어, 쌓인 유기물을 없앱니다. {잇몸뼈가 약하거나 연세가 많아} 걱정되는 경우에 검토합니다.',
-    cardsLead: 'UV 표면 처리에서 기대하는 점입니다.',
+    /* 2026-10-20 원장 PPT 133쪽 — 설명 세 문장·카드 위 한 줄 원장 문구('심기'만 95쪽 규칙대로 '식립하기', 굵게 = {…}) */
+    lead: '임플란트를 식립하기 직전, 표면 상태까지 개선합니다. 자외선을 이용해 임플란트 표면에 쌓인 유기물을 제거하고, 뼈와 잘 결합할 수 있는 상태로 개선하는 기술입니다. {광화문선치과는 모든 임플란트에 UV 표면 처리를 적용합니다}.',
+    cardsLead: 'UV 표면 처리의 4가지 장점',
     cards: [
       { fig: { key: 'implant/uv', alt: 'UV 임플란트 표면 처리 개념도' }, shape: 'portrait' },
       { fig: { key: 'ai/implant-uv', alt: 'UV 활성화 장비에 임플란트 픽스처를 넣는 장갑 낀 손' }, shape: 'wide' },
