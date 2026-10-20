@@ -397,6 +397,11 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
                 ))}
               </ul>
             </div>
+            {b.note && (
+              <p className={`reveal mt-8 max-w-[900px] text-[15.5px] leading-relaxed ${band ? '!text-white/80' : 'text-ink-soft'}`}>
+                <Sentences text={b.note} />
+              </p>
+            )}
           </div>
         </section>
       );

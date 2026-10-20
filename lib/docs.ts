@@ -33,7 +33,7 @@ type BlockBody =
   /** 소제목 + 줄글 단락(들). 그림은 오른쪽(기본) 또는 왼쪽. */
   | { type: 'text'; id?: string; title?: string; paragraphs: string[]; figure?: Fig; figureSide?: 'left' | 'right' }
   /** 항목 카드 격자 — "이런 경우", "특징", "효과" 같은 나열 */
-  | { type: 'points'; id?: string; title?: string; lead?: string; items: Array<{ title: string; desc?: string; /** 카드 위 사진 — 모든 항목에 있을 때만 사진 카드로(참고 35~38쪽 장점 카드) */ fig?: Fig }>; figure?: Fig; columns?: 2 | 3 | 4; numbered?: boolean; /** 어두운 사진 띠로 — 허브에서도(허브는 자동 띠가 없다) */ band?: boolean }
+  | { type: 'points'; id?: string; title?: string; lead?: string; items: Array<{ title: string; desc?: string; /** 카드 위 사진 — 모든 항목에 있을 때만 사진 카드로(참고 35~38쪽 장점 카드) */ fig?: Fig }>; figure?: Fig; columns?: 2 | 3 | 4; numbered?: boolean; /** 어두운 사진 띠로 — 허브에서도(허브는 자동 띠가 없다) */ band?: boolean; /** 카드 아래 맺는 한 줄(원장 PPT 163쪽) */ note?: string }
   /** 번호 매긴 순서 — 치료 과정 */
   | { type: 'steps'; id?: string; title?: string; lead?: string; steps: Array<{ title: string; desc?: string; figure?: Fig }> }
   /** 두 열 비교표 (A vs B). highlight 는 강조할 열. */
@@ -115,7 +115,7 @@ export function docCharCount(d: Doc) {
     if ('title' in b && b.title) parts.push(b.title);
     if ('lead' in b && b.lead) parts.push(b.lead);
     if (b.type === 'text' || b.type === 'notice') parts.push(...b.paragraphs);
-    if (b.type === 'points') parts.push(...b.items.flatMap((i) => [i.title, i.desc ?? '']));
+    if (b.type === 'points') parts.push(...b.items.flatMap((i) => [i.title, i.desc ?? '']), b.note ?? '');
     if (b.type === 'steps') parts.push(...b.steps.flatMap((s) => [s.title, s.desc ?? '']));
     if (b.type === 'compare') parts.push(...b.rows.flatMap((r) => [r.label, r.a, r.b]), b.note ?? '');
     if (b.type === 'table') parts.push(...b.head, ...b.rows.flat(), b.note ?? '');
