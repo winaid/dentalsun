@@ -1158,5 +1158,9 @@
  "ai/stage-guide": {
   "w": 1536,
   "h": 1024
+ },
+ "ai/implant-aftercare": {
+  "w": 1200,
+  "h": 800
  }
 }

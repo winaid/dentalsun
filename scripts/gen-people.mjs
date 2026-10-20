@@ -61,6 +61,9 @@ const SCENES = {
   'tmj-check-open': 'Close-up from the nose down of a young East Asian man with mouth open wide, inserting three fingers stacked vertically between the front teeth to measure how far the mouth opens, plain light background, soft daylight.',
   'tmj-check-joint': 'Side view from the nose down of a young East Asian woman with both index and middle fingers resting on the jaw joints just in front of each ear, mouth slightly open, plain light background, soft daylight.',
   'painless-hub': 'A patient reclined in a dental chair seen from the nose down, relaxed and calm with lips gently closed, a clinician\'s gloved hand resting reassuringly on the chair, soft light.',
+  /* 2026-10-20 원장 PPT 115쪽 임플란트 허브 '수술 이후 관리도 든든하게'(정기검진으로 임플란트·잇몸뼈·보철물 확인) — 오너 "내용에 맞는 이미지를 배치하거나 만들어". 두 안 중 하나만 쓴다 */
+  'implant-aftercare': 'Follow-up check-up in a bright modern dental treatment room: a middle-aged patient reclined in a white dental chair seen from behind and to the side, a dentist in deep-navy scrubs seated beside the chair with his back and shoulder toward the camera, pointing with a pen at a wall monitor that shows a grayscale panoramic dental X-ray with two titanium implants, large window daylight, calm and reassuring mood.',
+  'implant-aftercare-b': 'Regular implant check-up: a patient reclined in a white dental chair seen from the nose down, mouth gently open, a dentist in deep-navy scrubs seen from the shoulder down holding a small dental mirror near the back teeth with gloved hands, an overhead dental light softly glowing, bright clean treatment room, calm and reassuring mood.',
 };
 
 mkdirSync(OUT, { recursive: true });
