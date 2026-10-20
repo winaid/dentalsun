@@ -144,6 +144,14 @@ td {
   background-size: 100% 0.14em;
   background-position: 0 92%;
 }
+/* 주황 띠(알아두세요) 제목 속 강조 — 남색 글씨 + 남색 옅은 밑줄. 2026-10-20 원장 PPT 122쪽 '글씨 안보임!' */
+.accent-on-sun {
+  color: var(--color-brand-900);
+  background-image: linear-gradient(rgba(18, 32, 74, 0.3), rgba(18, 32, 74, 0.3));
+  background-repeat: no-repeat;
+  background-size: 100% 0.14em;
+  background-position: 0 92%;
+}
 .lead {
   @apply text-[1.1rem] leading-[1.8] text-ink-soft md:text-[1.22rem];
 }

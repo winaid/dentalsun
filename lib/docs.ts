@@ -56,7 +56,9 @@ type BlockBody =
   /** 주의·안내 상자 */
   | { type: 'notice'; title?: string; paragraphs: string[] }
   /** 사진 두 장 좌우 — 칸마다 사진 → 제목 → 글(원장 PPT 115쪽 '365래온치과 예시처럼'). 폰에서는 위아래 */
-  | { type: 'duo'; id?: string; panels: Array<{ id?: string; title: string; paragraphs: string[]; figure: Fig }> };
+  | { type: 'duo'; id?: string; panels: Array<{ id?: string; title: string; paragraphs: string[]; figure: Fig }> }
+  /** 보증 기간 띠(components/WarrantyBand — 홈과 같은 것). 글은 컴포넌트 안에 있다 */
+  | { type: 'warranty' };
 
 export interface Doc {
   /** 사이트 안 절대 경로. 예: '/treatment/implant/uv' */

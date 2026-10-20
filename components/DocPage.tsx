@@ -13,6 +13,7 @@ import { HeroCollage, type CollageItem } from '@/components/HeroCollage';
 import { HERO_COLLAGE, splitAccent, type HeroCollageSpec } from '@/lib/heroCollage';
 import { articleSchema, breadcrumbSchema, faqSchema, imageObjectSchema, itemListSchema, medicalWebPageSchema } from '@/lib/seo';
 import { CLINIC } from '@/lib/clinic';
+import { WarrantyBand } from '@/components/WarrantyBand';
 
 /**
  * 진료·인사이트 문서 렌더러 — Doc 하나를 쪽 하나로.
@@ -225,14 +226,14 @@ function linkFig(href: string, label: string): Fig | undefined {
   return key ? { key, alt: label } : undefined;
 }
 
-/** 소제목 속 강조 낱말(block.accent)을 주황 밑줄로 — 글자가 제목에 그대로 있을 때만 */
-function titleNode(title: string, accent?: string): ReactNode {
+/** 소제목 속 강조 낱말(block.accent)을 주황 밑줄로 — 글자가 제목에 그대로 있을 때만. 주황 띠 위에서는 cls 로 다른 색을 준다 */
+function titleNode(title: string, accent?: string, cls = 'accent-sun'): ReactNode {
   const at = accent ? title.indexOf(accent) : -1;
   if (!accent || at < 0) return title;
   return (
     <>
       {title.slice(0, at)}
-      <span className="accent-sun">{accent}</span>
+      <span className={cls}>{accent}</span>
       {title.slice(at + accent.length)}
     </>
   );
@@ -633,6 +634,8 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
           </div>
         </section>
       );
+    case 'warranty':
+      return <WarrantyBand />;
     case 'notice':
       /* 안내 구역 — 연한 상자 대신 구역 전체에 진한 주황을 깔고, 왼쪽 라벨+큰 제목 / 오른쪽 본문의 편집 배치 */
       return (
@@ -645,7 +648,8 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
                 <span className="flex h-6 w-6 items-center justify-center rounded-full border border-white/50 text-[14px]">!</span>
                 NOTICE · 알아두세요
               </p>
-              {b.title && <h2 className="display-sm mt-5 !text-white">{titleNode(b.title, b.accent)}</h2>}
+              {/* 강조 낱말은 남색 — 주황 띠 위 주황 글씨가 안 보였다(원장 PPT 122쪽 '글씨 안보임!') */}
+              {b.title && <h2 className="display-sm mt-5 !text-white">{titleNode(b.title, b.accent, 'accent-on-sun')}</h2>}
             </div>
             <div className="reveal border-l border-white/30 pl-6 md:pl-8">
               {paras(b.paragraphs).map((p, i) => (
