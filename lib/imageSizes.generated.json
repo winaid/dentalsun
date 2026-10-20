@@ -1162,5 +1162,9 @@
  "ai/implant-aftercare": {
   "w": 1200,
   "h": 800
+ },
+ "ai/trios6-scan": {
+  "w": 1200,
+  "h": 900
  }
 }
