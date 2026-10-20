@@ -544,7 +544,7 @@ export default function HomePage() {
                 광화문역 <span className="accent">6번 출구 도보 2분</span>, 광화문선치과
               </h2>
             </div>
-            <div className="reveal mt-12 grid gap-6 lg:grid-cols-[1.4fr_1fr]">
+            <div className="reveal mt-12 grid gap-6 lg:grid-cols-[1.15fr_1fr]">
               {/* 2026-10-20 원장 PPT 105쪽 '6번 출구 표시' — 구글 지도 끼워 넣기 → 네이버 지도 사진 + 열기 단추 셋(components/VisitMap) */}
               <VisitMap className="lg:self-start" />
               <div className="grid content-start gap-4">
