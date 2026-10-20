@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { SiteHeader } from '@/components/SiteHeader';
 import { HeroCollage } from '@/components/HeroCollage';
 import { JsonLd } from '@/components/JsonLd';
+import { VisitMap } from '@/components/VisitMap';
 import { Breadcrumb, ContactBand, Figure, Sentences } from '@/components/ui';
 import { CLINIC, HOURS, MONTHLY_NOTICE } from '@/lib/clinic';
 import { desc80, alt, breadcrumbSchema, medicalWebPageSchema, og, withLocality } from '@/lib/seo';
@@ -33,7 +34,6 @@ export const metadata: Metadata = { title: TITLE, description: desc80(DESC), alt
 
 export default function VisitPage() {
   const trail = [{ name: TITLE, path: '/visit' }];
-  const q = encodeURIComponent(`${CLINIC.name} ${CLINIC.address.full}`);
   return (
     <>
       <SiteHeader dark />
@@ -75,19 +75,13 @@ export default function VisitPage() {
 
         <section className="section">
           <div className="wrap grid gap-6 lg:grid-cols-[1.3fr_1fr]">
-            <div className="reveal card overflow-hidden">
-              <iframe title="광화문선치과 지도" src={`https://www.google.com/maps?q=${q}&z=17&output=embed&hl=ko`} className="h-[420px] w-full border-0 lg:h-[560px]" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
-            </div>
+            {/* 2026-10-20 원장 PPT 105쪽 '6번 출구 표시' — 홈과 같은 네이버 지도 사진 + 열기 단추 셋(components/VisitMap). 주소 칸의 지도 단추는 여기로 옮김 */}
+            <VisitMap className="reveal lg:self-start" />
             <div className="reveal-stack grid content-start gap-4">
               <div className="card p-6">
                 <p className="text-[14px] font-bold tracking-wide text-ink-muted">주소</p>
                 <p className="mt-2 text-[1.1rem] font-bold text-ink">{CLINIC.address.full}</p>
                 <p className="mt-1 text-[15px] text-ink-soft">{CLINIC.address.landmark}</p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  <a href={CLINIC.maps.naverPlace} target="_blank" rel="noopener" className="pill hover:border-brand-300">네이버 지도</a>
-                  <a href={CLINIC.maps.kakaoPlace} target="_blank" rel="noopener" className="pill hover:border-brand-300">카카오맵</a>
-                  <a href={`https://www.google.com/maps/search/?api=1&query=${q}`} target="_blank" rel="noopener" className="pill hover:border-brand-300">구글 지도</a>
-                </div>
               </div>
               <div className="card p-6" id="hours">
                 <p className="text-[14px] font-bold tracking-wide text-ink-muted">진료시간</p>

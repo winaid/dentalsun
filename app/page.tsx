@@ -12,6 +12,7 @@ import { CardLink, CertMark, ContactBand, FaqList, Figure, MedicalNotice, ScrubT
 import { AwardCard } from '@/components/TmjPage';
 import { FullArchBand } from '@/components/FullArchBand';
 import { WarrantyBand } from '@/components/WarrantyBand';
+import { VisitMap } from '@/components/VisitMap';
 import { TMJ_AWARD } from '@/lib/content/tmjLanding';
 import { HomeStage, HomeStats } from '@/components/HomeScroll';
 import { CaseGallery } from '@/components/CaseGallery';
@@ -544,15 +545,8 @@ export default function HomePage() {
               </h2>
             </div>
             <div className="reveal mt-12 grid gap-6 lg:grid-cols-[1.4fr_1fr]">
-              <div className="card overflow-hidden">
-                <iframe
-                  title="광화문선치과 지도"
-                  src={`https://www.google.com/maps?q=${encodeURIComponent(`${CLINIC.name} ${CLINIC.address.full}`)}&z=17&output=embed&hl=ko`}
-                  className="h-[420px] w-full border-0 lg:h-full lg:min-h-[560px]"
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                />
-              </div>
+              {/* 2026-10-20 원장 PPT 105쪽 '6번 출구 표시' — 구글 지도 끼워 넣기 → 네이버 지도 사진 + 열기 단추 셋(components/VisitMap) */}
+              <VisitMap className="lg:self-start" />
               <div className="grid gap-4">
                 <div className="card p-6">
                   <p className="text-[14px] font-bold tracking-wide text-ink-muted">진료시간</p>
@@ -584,9 +578,8 @@ export default function HomePage() {
                   <p className="mt-1.5">
                     <span className="font-bold text-ink">주차</span> {CLINIC.parking.place} {CLINIC.parking.fee}
                   </p>
-                  {/* 원장 PPT 105쪽 '깜빡깜빡 효과' — 앞에 주황 점이 2.6초마다 고리를 퍼뜨린다(globals.css .attn-dot) */}
-                  <Link href="/visit#notice" className="mt-3 inline-flex items-center gap-2 font-bold text-brand-700 hover:underline">
-                    <span aria-hidden className="attn-dot" />
+                  {/* 원장 PPT 105쪽 '깜빡깜빡 효과' + 오너 "로고만 말고 테두리를 만들어 깜빡이게" — 단추 테두리가 깜빡인다(globals.css .attn-frame) */}
+                  <Link href="/visit#notice" className="attn-frame attn-sun mt-4 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 font-bold text-brand-700 hover:bg-sun-50">
                     이달의 진료일정 보기 →
                   </Link>
                 </div>

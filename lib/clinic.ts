@@ -50,7 +50,8 @@ export const CLINIC = {
    */
   maps: {
     naverPlace: 'https://map.naver.com/p/entry/place/37932471',
-    kakaoPlace: 'https://place.map.kakao.com/733212103',
+    /* 2026-10-20 카카오맵 검색 '광화문선치과' 결과 하나 = 624215116(세종대로 135-9 3층·02-734-8272·리뷰 557). 옛 홈페이지 ID 733212103 은 검색에 안 나온다 */
+    kakaoPlace: 'https://place.map.kakao.com/624215116',
   },
 
   address: {
