@@ -168,7 +168,8 @@ function canBreakBetween(w: string, next: string, prev = ''): boolean {
   /* 단 '-지 않고 · 못하고 · 말고' 뒤는 꾸밈말 짝이 아니라 절이 갈리는 자리("절개하지 않고 | 작은 구멍으로", 10-08 — 막았더니 '절개하지 | 않고' 에서 꺾였다) */
   if (/(고|거나)$/.test(bare) && !/^(않고|못하고|말고)$/.test(bare) && COORD_MODIFIER.test(nx)) return false;
   /* 목적어와 그것을 받는 동사("힘을 싣는", "구조를 가지고", "치료를 시작합니다")는 한 덩어리 */
-  if (OBJECT_MARK.test(bare) && VERB_LIKE.test(nx)) return false;
+  /* 단 '-에서' 는 장소 조사라 동사가 아니다 — '위치를 | 컴퓨터에서' 를 막아 '식립할 | 위치를' 에서 꺾였다(2026-10-20 임플란트 첫 화면 카드) */
+  if (OBJECT_MARK.test(bare) && VERB_LIKE.test(nx) && !/에서$/.test(nx)) return false;
   /* 목적어 + 받침 ㄴ·ㄹ 로 끝나는 꾸밈 동사("면허를 가진", "치아를 살릴")도 한 덩어리 (2026-09-29) */
   const lastCh = nx.charCodeAt(nx.length - 1) - 0xac00;
   if (OBJECT_MARK.test(bare) && nx.length >= 2 && lastCh >= 0 && lastCh < 11172 && [4, 8].includes(lastCh % 28)) return false;
