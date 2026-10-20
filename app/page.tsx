@@ -183,7 +183,7 @@ export default function HomePage() {
                         {d.career.map((c) => (
                           <li key={c} className="flex items-start gap-3 text-[15.5px] leading-[1.5] text-ink md:text-[16.5px]">
                             {isCertCareer(c) ? (
-                              <CertMark className="-ml-[5px] mt-[1px] h-[22px] w-[22px] text-brand-600 md:h-6 md:w-6" />
+                              <CertMark className="-ml-[3px] mt-[2px] h-5 w-5 md:mt-[3px] md:h-[21px] md:w-[21px]" />
                             ) : (
                               <span className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-brand-600 md:mt-[10px]" />
                             )}

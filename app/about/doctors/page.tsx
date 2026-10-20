@@ -73,7 +73,7 @@ export default function DoctorsPage() {
                     {d.career.map((c) => (
                       <li key={c} className="flex items-start gap-3 text-[16px] leading-[1.6] text-ink">
                         {isCertCareer(c) ? (
-                          <CertMark className="-ml-[5px] mt-[1px] h-6 w-6 text-brand-600" />
+                          <CertMark className="-ml-[3px] mt-[3px] h-[21px] w-[21px]" />
                         ) : (
                           <span className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-brand-600" />
                         )}
