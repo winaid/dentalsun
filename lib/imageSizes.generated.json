@@ -1187,10 +1187,6 @@
   "w": 1200,
   "h": 800
  },
- "illust/socket-preservation": {
-  "w": 854,
-  "h": 566
- },
  "illust/sinus-crestal-main": {
   "w": 1002,
   "h": 412
@@ -1230,5 +1226,37 @@
  "illust/sinus-lateral-4": {
   "w": 458,
   "h": 340
+ },
+ "illust/socket-1a": {
+  "w": 900,
+  "h": 600
+ },
+ "illust/socket-1b": {
+  "w": 900,
+  "h": 600
+ },
+ "illust/socket-2a": {
+  "w": 900,
+  "h": 600
+ },
+ "illust/socket-2b": {
+  "w": 900,
+  "h": 600
+ },
+ "illust/socket-3a": {
+  "w": 900,
+  "h": 600
+ },
+ "illust/socket-3b": {
+  "w": 900,
+  "h": 600
+ },
+ "illust/socket-4a": {
+  "w": 900,
+  "h": 600
+ },
+ "illust/socket-4b": {
+  "w": 900,
+  "h": 600
  }
 }

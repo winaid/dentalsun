@@ -700,6 +700,38 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
               </p>
             )}
             {b.figureTitle && <h3 className="reveal mt-14 text-center text-[1.3rem] font-extrabold text-ink md:text-[1.55rem]">{b.figureTitle}</h3>}
+            {b.grid && (
+              <div className="reveal mx-auto mt-6 max-w-[1000px]">
+                {/* 열 머리 — 넓은 화면만. 폰은 칸마다 작은 꼬리표 */}
+                <div className="hidden gap-3 md:grid md:grid-cols-[150px_1fr_1fr]">
+                  <span />
+                  {b.grid.columns.map((c, ci) => (
+                    <p key={c} className={`rounded-xl py-3 text-center text-[16px] font-extrabold text-white ${ci === 0 ? 'bg-brand-800' : 'bg-ink-muted'}`}>{c}</p>
+                  ))}
+                </div>
+                {b.grid.rows.map((r) => (
+                  <div key={r.label} className="mt-3 grid gap-2.5 md:grid-cols-[150px_1fr_1fr] md:gap-3">
+                    <div className="flex items-center justify-center gap-1.5 rounded-xl bg-brand-50 px-3 py-2.5 text-center md:flex-col md:gap-0.5">
+                      <span className="text-[15px] font-extrabold text-brand-800">{r.label}</span>
+                      {r.sub && <span className="text-[13px] text-ink-muted">({r.sub})</span>}
+                    </div>
+                    <div className="grid grid-cols-2 gap-2.5 md:contents">
+                      {[r.a, r.b].map((c, ci) => (
+                        <div key={ci} className="flex flex-col gap-2.5 rounded-xl border border-hairline bg-white p-2.5 lg:flex-row lg:items-center lg:gap-4">
+                          <span className={`self-start rounded-full px-2 py-0.5 text-[11.5px] font-bold text-white md:hidden ${ci === 0 ? 'bg-brand-800' : 'bg-ink-muted'}`}>{b.grid!.columns[ci]}</span>
+                          <span className="relative block aspect-[3/2] w-full shrink-0 overflow-hidden rounded-lg lg:w-[50%]">
+                            <Image src={figSrc(c.fig.key)} alt={c.fig.alt} fill sizes="(max-width: 767px) 45vw, 220px" className="object-cover" />
+                          </span>
+                          <p className="px-1 text-[13.5px] leading-[1.65] text-ink-soft md:text-[14.5px]">
+                            <Sentences text={c.text} clauses={false} />
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
             {b.figure && (
               <div className={`reveal mx-auto ${b.figureTitle ? 'mt-6' : 'mt-10'}`} style={{ maxWidth: `${b.figureMax ?? 1100}px` }}>
                 <Figure fig={b.figure} sizes={`(max-width: ${b.figureMax ?? 1100}px) 100vw, ${b.figureMax ?? 1100}px`} />

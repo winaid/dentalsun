@@ -60,7 +60,7 @@ type BlockBody =
   /** 보증 기간 띠(components/WarrantyBand — 홈과 같은 것). 글은 컴포넌트 안에 있다 */
   | { type: 'warranty' }
   /** 글 + (카드) + 넓은 그림 한 장 — 글자가 든 설명 그림을 잘리지 않게 원래 비율로 크게(원장 PPT 157·159쪽 AI 그림) */
-  | { type: 'showcase'; id?: string; title: string; paragraphs?: string[]; /** 방법 카드 — 머리(제목·설명) + 큰 그림(이름표는 HTML) + 단계 넷. 글자는 모두 HTML(그림 속 글자는 흐려서 안 씀) */ methods?: Array<{ title: string; desc: string; figure: Fig; labels?: Array<{ text: string; left: string; top: string }>; steps: Array<{ title: string; desc: string; fig: Fig }> }>; note?: string; figureTitle?: string; figure?: Fig; /** 그림 최대 폭(px) — 원본보다 크게 늘리지 않게 */ figureMax?: number };
+  | { type: 'showcase'; id?: string; title: string; paragraphs?: string[]; /** 방법 카드 — 머리(제목·설명) + 큰 그림(이름표는 HTML) + 단계 넷. 글자는 모두 HTML(그림 속 글자는 흐려서 안 씀) */ methods?: Array<{ title: string; desc: string; figure: Fig; labels?: Array<{ text: string; left: string; top: string }>; steps: Array<{ title: string; desc: string; fig: Fig }> }>; note?: string; figureTitle?: string; figure?: Fig; /** 그림 최대 폭(px) — 원본보다 크게 늘리지 않게 */ figureMax?: number; /** 두 열 비교 표 — 칸마다 그림(글자 없음) + HTML 글 */ grid?: { columns: [string, string]; rows: Array<{ label: string; sub?: string; a: { fig: Fig; text: string }; b: { fig: Fig; text: string } }> } };
 
 export interface Doc {
   /** 사이트 안 절대 경로. 예: '/treatment/implant/uv' */
@@ -122,7 +122,7 @@ export function docCharCount(d: Doc) {
     if (b.type === 'quote') parts.push(b.text, ...(b.lines ?? []));
     if (b.type === 'cases') parts.push(b.note);
     if (b.type === 'duo') parts.push(...b.panels.flatMap((p) => [p.title, ...p.paragraphs]));
-    if (b.type === 'showcase') parts.push(...(b.paragraphs ?? []), ...(b.methods ?? []).flatMap((m) => [m.title, m.desc, ...m.steps.flatMap((st) => [st.title, st.desc])]), b.note ?? '', b.figureTitle ?? '');
+    if (b.type === 'showcase') parts.push(...(b.paragraphs ?? []), ...(b.methods ?? []).flatMap((m) => [m.title, m.desc, ...m.steps.flatMap((st) => [st.title, st.desc])]), b.note ?? '', b.figureTitle ?? '', ...(b.grid?.rows ?? []).flatMap((r) => [r.label, r.a.text, r.b.text]));
   }
   for (const f of d.faq ?? []) parts.push(f.q, f.a);
   return parts.join('').replace(/\s+/g, '').length;
