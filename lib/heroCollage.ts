@@ -297,7 +297,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   },
   '/treatment/wisdom-tooth': {
     lines: ['신경과의 거리를 먼저 확인하고 빼는', '{매복사랑니} 발치'],
-    lead: '누운 사랑니, {뿌리가 신경에 가까운 사랑니도} 3D CT로 방향과 깊이, 신경까지의 거리를 먼저 확인합니다. 대표원장이 영상을 직접 보고, 절개부터 봉합까지 진행합니다.',
+    lead: '누운 사랑니, {뿌리가 신경에 가까운 사랑니도} 3D CT로 방향과 깊이, 신경까지의 거리를 먼저 확인합니다. {대학병원 수련 경험을 갖춘 전문의 대표원장}이 직접 진단하고, 절개부터 봉합까지 진행합니다.',
     cardsLead: '이런 문제가 있다면 발치를 검토합니다.',
     cards: [
       { fig: { key: 'orig/wisdom-doctor', alt: '확대경을 쓰고 사랑니를 발치하는 원장' }, shape: 'portrait' },
@@ -330,7 +330,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     lead: '신경관은 가늘고 휘어 있어 기구만으로는 닿지 않는 곳이 남습니다. 초음파로 세척액을 떨리게 해, {곁가지와 좁은 통로까지} 씻어 냅니다.',
     cardsLead: '엔도소닉 세척은 이런 점이 다릅니다.',
     cards: [
-      { fig: { key: 'scene/endosonic', alt: '엔도소닉 초음파 세척기로 근관을 세척하는 장면' }, shape: 'portrait' },
+      { fig: { key: 'ai/endosonic-blue2', alt: '거치대에 놓인 무선 초음파 근관세척기 엔도소닉 블루 2' }, shape: 'portrait' },
       { fig: { key: 'orig/endo-hero', alt: '엔도소닉 초음파 세척기로 근관을 세척하는 진료 장면' }, shape: 'wide' },
       { fig: { key: 'orig/endo-handpiece', alt: '엔도소닉 초음파 세척기 핸드피스' }, shape: 'std' },
     ],
@@ -474,7 +474,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     lead: '양치할 때 피가 나는 것은 잇몸병이 보내는 가장 흔한 신호입니다. 피가 난다고 양치를 피하면 오히려 나빠지고, 초기라면 스케일링과 칫솔질로 대부분 좋아집니다.',
     cards: [
       { fig: { key: 'scene/patient', alt: '진료실에서 진료받는 환자' }, shape: 'portrait' },
-      { fig: { key: 'equip/gbt', alt: 'GBT 가이드 바이오필름 치료 장비' }, shape: 'wide' },
+      { fig: { key: 'equip/gbt-v2', alt: 'GBT 가이드 바이오필름 치료 장비' }, shape: 'wide' },
       { fig: { key: 'equip/airflow', alt: 'EMS 에어플로우 장비' }, shape: 'std' },
     ],
   },
@@ -519,7 +519,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
     lead: '임플란트는 신경이 없어 뼈가 꽤 녹을 때까지 아프지 않은 경우가 많습니다. 그래서 피가 나거나 붓는 초기 신호를 놓치지 않아야 오래 쓸 수 있습니다.',
     cards: [
       { fig: { key: 'fit/airflow-device', alt: 'EMS 에어플로우 프로필락시스 마스터 장비' }, shape: 'portrait' },
-      { fig: { key: 'equip/gbt', alt: 'GBT 가이드 바이오필름 치료 장비' }, shape: 'wide' },
+      { fig: { key: 'equip/gbt-v2', alt: 'GBT 가이드 바이오필름 치료 장비' }, shape: 'wide' },
       { fig: { key: 'ai/implant-custom', alt: '석고 모형 위에서 맞춤 기둥을 핀셋으로 잡은 손' }, shape: 'std' },
     ],
   },

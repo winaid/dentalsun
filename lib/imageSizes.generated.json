@@ -1266,5 +1266,17 @@
  "ai/tmj-spread-pain": {
   "w": 1200,
   "h": 800
+ },
+ "ai/endosonic-blue2": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/aesthetic-veneer": {
+  "w": 1200,
+  "h": 800
+ },
+ "equip/gbt-v2": {
+  "w": 1000,
+  "h": 793
  }
 }

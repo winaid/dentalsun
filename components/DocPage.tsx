@@ -480,7 +480,8 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
           <div className="wrap">
             <Head title={b.title} lead={b.lead} accent={b.accent} />
             <div className="tbl-scroll reveal mt-10 overflow-x-auto">
-              <table className="tbl min-w-[640px]">
+              {/* 세 칸 이하 표는 폰에서 옆으로 밀지 않고 칸 여백을 줄여 한 화면에(원장 PPT 215쪽 '모바일로 보기 어려워요, 여백을 줄여 한눈에') */}
+              <table className={`tbl ${b.head.length <= 3 ? 'tbl-tight min-w-0 sm:min-w-[640px]' : 'min-w-[640px]'}`}>
                 <caption className="sr-only">{b.title ?? '표'}</caption>
                 <thead>
                   <tr>

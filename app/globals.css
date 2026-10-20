@@ -490,6 +490,18 @@ td {
 }
 
 /* 표 */
+/* 폰에서 세 칸 이하 표 — 칸 여백·글씨를 줄여 옆으로 밀지 않고 한 화면에(원장 PPT 215쪽) */
+@media (max-width: 639px) {
+  .tbl-tight th,
+  .tbl-tight td {
+    padding: 10px 9px !important;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+  .tbl-tight thead th {
+    font-size: 12.5px;
+  }
+}
 .tbl {
   @apply w-full border-collapse text-[14.5px];
 }

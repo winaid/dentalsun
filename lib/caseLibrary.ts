@@ -6,7 +6,7 @@
  * ★ 파일 이름·설명에 환자 이름·차트번호·날짜를 넣지 않는다(원본 폴더명에 환자 이름이 있다).
  * ★ 사진 손질 기록은 edits — 치료한 치아 표면은 고치지 않았다(치료 결과 보정 = 거짓 광고 소지).
  */
-export type CaseCategory = 'implant' | 'fullarch' | 'endo' | 'reendo' | 'wisdom' | 'anterior' | 'fracture' | 'resin' | 'whitening' | 'tmj';
+export type CaseCategory = 'implant' | 'fullarch' | 'endo' | 'reendo' | 'wisdom' | 'anterior' | 'fracture' | 'resin' | 'whitening' | 'tmj' | 'perio';
 
 export interface CaseImg {
   key: string;
@@ -38,6 +38,7 @@ export const CASE_CATEGORY_LABEL: Record<CaseCategory, string> = {
   resin: '레진 충치치료',
   whitening: '치아미백',
   tmj: '턱관절',
+  perio: '치주치료',
 };
 
 /** 보는 법(끄는 비교·위아래 경과)은 CaseGallery 가 보여 주는 방식에 맞춰 뒤에 붙인다 */
@@ -55,12 +56,13 @@ export const CASES: CaseItem[] = [
   { id: 'reendo-02-xray-pano', category: 'reendo', type: 'xray', xrayKind: 'panorama', caption: '하악 대구치 재근관치료', before: { key: 'cases2/reendo-02-xray-pano-before', w: 1600, h: 673 }, after: { key: 'cases2/reendo-02-xray-pano-after', w: 1600, h: 673 } },
   { id: 'reendo-03-xray-pa', category: 'reendo', type: 'xray', xrayKind: 'periapical', caption: '하악 전치 재근관치료 — 재충전 후 보철 수복', before: { key: 'cases2/reendo-03-xray-pa-before', w: 803, h: 1100 }, after: { key: 'cases2/reendo-03-xray-pa-after', w: 803, h: 1100 } },
   { id: 'reendo-03-xray-pano', category: 'reendo', type: 'xray', xrayKind: 'panorama', caption: '하악 전치 재근관치료', before: { key: 'cases2/reendo-03-xray-pano-before', w: 1600, h: 673 }, after: { key: 'cases2/reendo-03-xray-pano-after', w: 1600, h: 673 } },
-  { id: 'wisdom-01-xray', category: 'wisdom', type: 'xray', xrayKind: 'panorama', caption: '하악 좌측 매복 사랑니 발치', before: { key: 'cases2/wisdom-01-xray-before', w: 1600, h: 673 }, after: { key: 'cases2/wisdom-01-xray-after', w: 1600, h: 673 } },
-  { id: 'wisdom-02-xray', category: 'wisdom', type: 'xray', xrayKind: 'panorama', caption: '하악 양측 매복 사랑니 발치', before: { key: 'cases2/wisdom-02-xray-before', w: 1600, h: 673 }, after: { key: 'cases2/wisdom-02-xray-after', w: 1600, h: 673 } },
-  { id: 'wisdom-03-xray', category: 'wisdom', type: 'xray', xrayKind: 'panorama', caption: '하악 우측 수평 매복 사랑니 발치', before: { key: 'cases2/wisdom-03-xray-before', w: 1600, h: 673 }, after: { key: 'cases2/wisdom-03-xray-after', w: 1600, h: 673 } },
-  { id: 'wisdom-04-xray', category: 'wisdom', type: 'xray', xrayKind: 'panorama', caption: '하악 좌측 매복 사랑니 발치', before: { key: 'cases2/wisdom-04-xray-before', w: 1600, h: 673 }, after: { key: 'cases2/wisdom-04-xray-after', w: 1600, h: 673 } },
+  /* 2026-10-20 원장 PPT 222쪽 순서 5→6→2→3→1→4→7 */
   { id: 'wisdom-05-xray', category: 'wisdom', type: 'xray', xrayKind: 'panorama', caption: '하악 좌측 수평 매복 사랑니 발치', before: { key: 'cases2/wisdom-05-xray-before', w: 1600, h: 673 }, after: { key: 'cases2/wisdom-05-xray-after', w: 1600, h: 673 } },
   { id: 'wisdom-06-xray', category: 'wisdom', type: 'xray', xrayKind: 'panorama', caption: '상악 사랑니 발치', before: { key: 'cases2/wisdom-06-xray-before', w: 1600, h: 673 }, after: { key: 'cases2/wisdom-06-xray-after', w: 1600, h: 673 } },
+  { id: 'wisdom-02-xray', category: 'wisdom', type: 'xray', xrayKind: 'panorama', caption: '하악 양측 매복 사랑니 발치', before: { key: 'cases2/wisdom-02-xray-before', w: 1600, h: 673 }, after: { key: 'cases2/wisdom-02-xray-after', w: 1600, h: 673 } },
+  { id: 'wisdom-03-xray', category: 'wisdom', type: 'xray', xrayKind: 'panorama', caption: '하악 우측 수평 매복 사랑니 발치', before: { key: 'cases2/wisdom-03-xray-before', w: 1600, h: 673 }, after: { key: 'cases2/wisdom-03-xray-after', w: 1600, h: 673 } },
+  { id: 'wisdom-01-xray', category: 'wisdom', type: 'xray', xrayKind: 'panorama', caption: '하악 좌측 매복 사랑니 발치', before: { key: 'cases2/wisdom-01-xray-before', w: 1600, h: 673 }, after: { key: 'cases2/wisdom-01-xray-after', w: 1600, h: 673 } },
+  { id: 'wisdom-04-xray', category: 'wisdom', type: 'xray', xrayKind: 'panorama', caption: '하악 좌측 매복 사랑니 발치', before: { key: 'cases2/wisdom-04-xray-before', w: 1600, h: 673 }, after: { key: 'cases2/wisdom-04-xray-after', w: 1600, h: 673 } },
   { id: 'wisdom-07-xray', category: 'wisdom', type: 'xray', xrayKind: 'panorama', caption: '우측 상·하악 사랑니 발치', before: { key: 'cases2/wisdom-07-xray-before', w: 1600, h: 673 }, after: { key: 'cases2/wisdom-07-xray-after', w: 1600, h: 673 } },
   { id: 'implant-01-intraoral', category: 'implant', type: 'intraoral', caption: '전치부 임플란트 — 손상 치아 부위 보철 수복', before: { key: 'cases2/implant-01-intraoral-before', w: 1316, h: 822 }, after: { key: 'cases2/implant-01-intraoral-after', w: 1316, h: 822 } },
   { id: 'implant-02-xray', category: 'implant', type: 'xray', xrayKind: 'panorama', caption: '좌측 상·하악 구치부 임플란트', before: { key: 'cases2/implant-02-xray-before', w: 1600, h: 673 }, after: { key: 'cases2/implant-02-xray-after', w: 1600, h: 673 } },
@@ -73,6 +75,8 @@ export const CASES: CaseItem[] = [
   { id: 'implant-07-xray', category: 'implant', type: 'xray', xrayKind: 'panorama', caption: '상·하악 다수 부위 임플란트 보철', before: { key: 'cases2/implant-07-xray-before', w: 1600, h: 673 }, after: { key: 'cases2/implant-07-xray-after', w: 1600, h: 673 } },
   { id: 'implant-08-xray', category: 'implant', type: 'xray', xrayKind: 'panorama', caption: '상악 우측 중절치 임플란트', before: { key: 'cases2/implant-08-xray-before', w: 1600, h: 673 }, after: { key: 'cases2/implant-08-xray-after', w: 1600, h: 673 } },
   { id: 'implant-08-intraoral', category: 'implant', type: 'intraoral', caption: '상악 우측 중절치 임플란트 — 돌출·변색 치아 부위 보철 회복', before: { key: 'cases2/implant-08-intraoral-before', w: 1400, h: 933 }, after: { key: 'cases2/implant-08-intraoral-after', w: 1400, h: 933 } },
+  /* 2026-10-20 원장 PPT 236쪽 — 위 사례(같은 사진)를 치주치료 사례로도. 설명 원장 글 */
+  { id: 'perio-01-intraoral', category: 'perio', type: 'intraoral', caption: '전반적인 치주질환 치료 — 잇몸 염증 개선 및 치주조직 회복', before: { key: 'cases2/implant-08-intraoral-before', w: 1400, h: 933 }, after: { key: 'cases2/implant-08-intraoral-after', w: 1400, h: 933 } },
   { id: 'implant-09-xray', category: 'implant', type: 'xray', xrayKind: 'panorama', caption: '상악 좌측 측절치 임플란트', before: { key: 'cases2/implant-09-xray-before', w: 1600, h: 673 }, after: { key: 'cases2/implant-09-xray-after', w: 1600, h: 673 } },
   { id: 'implant-09-intraoral', category: 'implant', type: 'intraoral', caption: '상악 좌측 측절치 임플란트 — 결손 부위 보철 회복', before: { key: 'cases2/implant-09-intraoral-before', w: 1378, h: 861 }, after: { key: 'cases2/implant-09-intraoral-after', w: 1378, h: 861 } },
   /* 2026-10-20 원장 PPT 199쪽 순서 — 방사선 5·1·4·2·3(3 에 상악 틀니 제작 설명) · 구내 4·5·2·3·1 */

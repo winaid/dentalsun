@@ -274,7 +274,7 @@ export const PAINLESS_DOCS: Doc[] = [
           'GBT(Guided Biofilm Therapy)는 세균막에 색을 입혀 확인하고, 에어플로우로 먼저 없애는 예방·관리 순서입니다. 광화문 선치과는 GBT 인증 치과로, 스위스 EMS 사의 장비로 이 순서를 따릅니다.',
           '세균막, 곧 바이오필름은 치아·잇몸·임플란트 표면에 세균이 층을 이룬 얇은 막으로 충치와 잇몸병의 출발점입니다. 눈에 보이지 않아 색을 입혀 위치를 확인한 뒤 없앱니다.',
         ],
-        figure: { key: 'equip/gbt', alt: 'GBT 8단계 도해' },
+        figure: { key: 'equip/gbt-v2', alt: 'GBT 8단계 도해' },
       },
       {
         type: 'steps',
