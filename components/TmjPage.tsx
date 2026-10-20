@@ -915,7 +915,12 @@ export function TmjPage({ doc }: { doc: Doc }) {
                     <div className="absolute inset-0 bg-gradient-to-b from-night/75 via-night/25 to-night/70" />
                     <div className="absolute inset-x-0 top-0 px-5 py-6 text-center md:p-10">
                       <Label light>{TMJ_KNOWHOW.bandLabel}</Label>
-                      <p className="on-photo mt-3 text-[1.25rem] font-extrabold leading-[1.3] text-white sm:text-[1.6rem] md:text-[2.1rem] text-balance" style={{ wordBreak: 'keep-all' }}>{TMJ_KNOWHOW.bandTitle}</p>
+                      <p className="on-photo mt-3 text-[1.25rem] font-extrabold leading-[1.3] text-white sm:text-[1.6rem] md:text-[2.1rem]" style={{ wordBreak: 'keep-all' }}>
+                        {/* 쉼표 뒤 덩어리는 통째로 — 폰에서 '편안한 / 턱관절' 로 갈라졌다 */}
+                        {TMJ_KNOWHOW.bandTitle.split(', ').map((part, i, arr) => (
+                          <span key={i}>{i > 0 ? ' ' : ''}<span className="inline-block">{part}{i < arr.length - 1 ? ',' : ''}</span></span>
+                        ))}
+                      </p>
                     </div>
                   </div>
                 </div>
