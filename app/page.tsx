@@ -201,7 +201,7 @@ export default function HomePage() {
         </section>
 
         {/* ── 강점 4 ── 2026-09-29 원장 피드백: '네 가지 약속' 문구는 오글거린다 → 뺐다. 숫자 카드(HomeStats)는 맨 아래 오시는 길로 내렸다. */}
-        <section className="section">
+        <section className="section" id="why">
           <div className="wrap">
             <div className="reveal max-w-[820px]">
               <p className="eyebrow">WHY SUN DENTAL</p>
