@@ -1187,12 +1187,16 @@
   "w": 1200,
   "h": 800
  },
- "illust/sinus-approaches": {
-  "w": 1394,
-  "h": 672
- },
  "illust/socket-preservation": {
   "w": 854,
   "h": 566
+ },
+ "illust/sinus-crestal": {
+  "w": 1024,
+  "h": 1024
+ },
+ "illust/sinus-lateral": {
+  "w": 1024,
+  "h": 1024
  }
 }

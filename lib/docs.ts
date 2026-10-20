@@ -60,7 +60,7 @@ type BlockBody =
   /** 보증 기간 띠(components/WarrantyBand — 홈과 같은 것). 글은 컴포넌트 안에 있다 */
   | { type: 'warranty' }
   /** 글 + (카드) + 넓은 그림 한 장 — 글자가 든 설명 그림을 잘리지 않게 원래 비율로 크게(원장 PPT 157·159쪽 AI 그림) */
-  | { type: 'showcase'; id?: string; title: string; paragraphs?: string[]; items?: Array<{ title: string; desc: string }>; note?: string; figureTitle?: string; figure: Fig; /** 그림 최대 폭(px) — 원본보다 크게 늘리지 않게 */ figureMax?: number };
+  | { type: 'showcase'; id?: string; title: string; paragraphs?: string[]; items?: Array<{ title: string; desc: string }>; note?: string; figureTitle?: string; figure?: Fig; /** 그림 여러 장 — PC 는 나란히, 폰은 위아래 */ figures?: Fig[]; /** 그림 최대 폭(px) — 원본보다 크게 늘리지 않게 */ figureMax?: number };
 
 export interface Doc {
   /** 사이트 안 절대 경로. 예: '/treatment/implant/uv' */

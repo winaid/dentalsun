@@ -675,9 +675,18 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
               </p>
             )}
             {b.figureTitle && <h3 className="reveal mt-14 text-center text-[1.3rem] font-extrabold text-ink md:text-[1.55rem]">{b.figureTitle}</h3>}
-            <div className={`reveal mx-auto ${b.figureTitle ? 'mt-6' : 'mt-10'}`} style={{ maxWidth: `${b.figureMax ?? 1100}px` }}>
-              <Figure fig={b.figure} sizes={`(max-width: ${b.figureMax ?? 1100}px) 100vw, ${b.figureMax ?? 1100}px`} />
-            </div>
+            {b.figure && (
+              <div className={`reveal mx-auto ${b.figureTitle ? 'mt-6' : 'mt-10'}`} style={{ maxWidth: `${b.figureMax ?? 1100}px` }}>
+                <Figure fig={b.figure} sizes={`(max-width: ${b.figureMax ?? 1100}px) 100vw, ${b.figureMax ?? 1100}px`} />
+              </div>
+            )}
+            {b.figures && (
+              <div className="reveal-stack mt-10 grid gap-5 md:grid-cols-2">
+                {b.figures.map((fg) => (
+                  <Figure key={fg.key} fig={fg} sizes="(max-width: 768px) 100vw, 640px" />
+                ))}
+              </div>
+            )}
           </div>
         </section>
       );
