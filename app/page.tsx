@@ -100,9 +100,9 @@ const HUB_IMG: Record<string, string> = {
 export default function HomePage() {
   const featured = [
     /* 2026-09-29 맞춤 임플란트가 다시 독립 → 여섯 장 유지를 위해 보증제도는 아래 버튼으로 */
-    { href: '/treatment/implant/navigation', label: '내비게이션 임플란트', desc: '3D CT로 미리 계획하고, 수술 가이드로 심습니다.', fig: 'orig/misc-nav-implant-set' },
+    { href: '/treatment/implant/navigation', label: '내비게이션 임플란트', desc: '3D CT로 미리 계획하고, 수술 가이드로 식립합니다.', fig: 'orig/misc-nav-implant-set' },
     { href: '/treatment/implant/custom', label: '맞춤 임플란트', desc: '잇몸 라인에 맞춘 맞춤 지대주로 완성합니다.', fig: 'ai/implant-custom' },
-    { href: '/treatment/implant/full-arch', label: '풀아치 임플란트', desc: '치아가 없는 턱에 4~6개를 심고, 고정된 치아를 연결합니다.', fig: 'orig/implant-fa-fixed' },
+    { href: '/treatment/implant/full-arch', label: '풀아치 임플란트', desc: '치아가 없는 턱에 4~6개를 식립하고, 고정된 치아를 연결합니다.', fig: 'orig/implant-fa-fixed' },
     { href: '/treatment/implant/uv', label: 'UV 임플란트', desc: '자외선으로 표면을 처리해, 뼈와 잘 붙도록 돕습니다.', fig: 'ai/implant-uv' },
     { href: '/treatment/implant/prf', label: '자가혈 임플란트', desc: '뼈이식 부위에 내 혈액에서 얻은 PRF를 함께 넣습니다.', fig: 'ai/implant-prf' },
     { href: '/treatment/insurance', label: '보험 틀니 · 임플란트', desc: '만 65세 이상 건강보험 적용 기준을 안내합니다.', fig: 'ai/insurance-hub' },

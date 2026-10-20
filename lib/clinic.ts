@@ -179,7 +179,7 @@ export const STRENGTHS = [
    */
   { title: '대표원장 1:1 책임진료', desc: '첫 상담부터 수술과 정기검진까지 대표원장이 직접 진료합니다. 진료 중간에 담당 의사가 바뀌지 않습니다.', fig: { key: 'sun/treat-loupe', alt: '확대경을 쓰고 환자를 직접 치료하는 양대일 대표원장', pos: 'object-[38%_50%]' } },
   { title: '정확한 진단, 정직한 진료', desc: '검사 영상과 사진으로 현재 상태를 먼저 보여 드립니다. 살릴 수 있는 치아인지부터 확인하고, 필요한 치료만 단계별로 권해 드립니다.', fig: { key: 'sun/consult-monitor', alt: '모니터의 검사 화면을 가리키며 환자에게 설명하는 양대일 대표원장', pos: 'object-[55%_50%]' } },
-  { title: '3D 디지털 진단·수술', desc: '3D CT와 구강스캐너로 뼈와 신경의 위치를 먼저 확인하고, 모의 수술부터 보철 제작까지 디지털로 이어서 진행합니다.', fig: { key: 'illust/why-digital', alt: '반투명한 턱뼈 속에 계획한 위치대로 나란히 심은 임플란트 세 개를 보여 주는 3D 도해', pos: 'object-center' } },
+  { title: '3D 디지털 진단·수술', desc: '3D CT와 구강스캐너로 뼈와 신경의 위치를 먼저 확인하고, 모의 수술부터 보철 제작까지 디지털로 이어서 진행합니다.', fig: { key: 'illust/why-digital', alt: '반투명한 턱뼈 속에 계획한 위치대로 나란히 식립한 임플란트 세 개를 보여 주는 3D 도해', pos: 'object-center' } },
   { title: '멸균·감염 관리', desc: '모든 진료 기구를 멸균해 1인 1기구로 사용하고, 치과위생사 면허를 가진 진료 스태프가 진료를 보조합니다.', fig: { key: 'orig/intro-p06-inos-flat', alt: '진료 기구를 소독하는 INOS 실시간 소독기', pos: 'object-contain px-8 pb-6 pt-10' } },
   { title: '정기검진 및 사후관리', desc: '치료가 끝난 뒤에도 안내한 주기에 맞춰 정기검진을 하며, 보철과 잇몸 상태를 대표원장이 직접 확인합니다.', fig: { key: 'sun/circle-experience', alt: '진료 의자에 앉은 환자의 상태를 확인하는 양대일 대표원장', pos: 'object-[50%_30%]' } },
 ] as const;

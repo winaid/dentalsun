@@ -27,7 +27,7 @@ export interface HeroCollageSpec {
 export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   '/treatment/implant': {
     lines: ['진단부터 보철까지 대표원장이 직접 하는', '{디지털 임플란트}'],
-    lead: '통합치의학과 전문의인 대표원장이 3D CT 진단부터 수술, 보철, 정기검진까지 직접 맡습니다. 심을 자리를 컴퓨터로 먼저 정하고, {뼈이식은 꼭 필요할 때만} 계획합니다.',
+    lead: '통합치의학과 전문의인 대표원장이 3D CT 진단부터 수술, 보철, 정기검진까지 직접 맡습니다. 식립할 자리를 컴퓨터로 먼저 정하고, {뼈이식은 꼭 필요할 때만} 계획합니다.',
     cardsLead: '광화문 선치과 임플란트는 이렇게 진료합니다.',
     cards: [
       { fig: { key: 'scene/surgery', alt: '수술 가운과 확대경을 착용하고 임플란트 수술 중인 광화문선치과 원장' }, shape: 'portrait' },
@@ -40,7 +40,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
      예전: '식립 위치를 수술 전에 정하는' / 'CBCT와 구강스캔 데이터로 모의 식립… 신경관과 상악동까지의 거리를 계측… 무절개' */
   '/treatment/implant/navigation': {
     lines: ['수술 전에 위치를 정하는', '{내비게이션} 임플란트'],
-    lead: '3D CT로 컴퓨터에서 미리 수술해 보고, 그 계획대로 만든 수술 가이드로 0.1mm 오차 없이 진행합니다. {잇몸뼈가 충분하면 잇몸을 절개하지 않고} 심습니다.',
+    lead: '3D CT로 컴퓨터에서 미리 수술해 보고, 그 계획대로 만든 수술 가이드로 0.1mm 오차 없이 진행합니다. {잇몸뼈가 충분하면 잇몸을 절개하지 않고} 식립합니다.',
     cardsLead: '가이드 식립은 이렇게 진행합니다.',
     cards: [
       { fig: { key: 'scene/surgery', alt: '확대경을 끼고 임플란트를 식립하는 양대일 대표원장' }, shape: 'portrait' },
@@ -67,7 +67,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   },
   '/treatment/implant/uv': {
     lines: ['뼈와 잘 붙도록 돕는', '{UV} 임플란트'],
-    lead: '심기 직전 임플란트 표면에 자외선을 쬐어, 쌓인 유기물을 없앱니다. {잇몸뼈가 약하거나 연세가 많아} 걱정되는 경우에 검토합니다.',
+    lead: '식립 직전 임플란트 표면에 자외선을 쬐어, 쌓인 유기물을 없앱니다. {잇몸뼈가 약하거나 연세가 많아} 걱정되는 경우에 검토합니다.',
     cardsLead: 'UV 표면 처리에서 기대하는 점입니다.',
     cards: [
       { fig: { key: 'implant/uv', alt: 'UV 임플란트 표면 처리 개념도' }, shape: 'portrait' },
@@ -272,7 +272,7 @@ export const HERO_COLLAGE: Record<string, HeroCollageSpec> = {
   },
   '/treatment/insurance/implant': {
     lines: ['1인당 평생 2개까지 적용되는', '{보험임플란트}'],
-    lead: '만 65세 이상이고 치아가 일부라도 남아 있다면, 평생 2개까지 보험이 적용됩니다. 보험 임플란트도 일반 임플란트와 같은 원칙으로 3D {CT 검사와 계획을 거쳐} 심습니다.',
+    lead: '만 65세 이상이고 치아가 일부라도 남아 있다면, 평생 2개까지 보험이 적용됩니다. 보험 임플란트도 일반 임플란트와 같은 원칙으로 3D {CT 검사와 계획을 거쳐} 식립합니다.',
     cardsLead: '보험임플란트 전에 알아 두실 점입니다.',
     cards: [
       { fig: { key: 'orig/denture-hero', alt: '확대경을 쓴 원장이 초록 드레이프를 덮은 환자를 진료하는 모습' }, shape: 'portrait' },

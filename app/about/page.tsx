@@ -36,7 +36,7 @@ const POINTS = [
   { n: '01', title: '3D 구강스캐너', desc: '본을 뜨는 재료를 입에 물지 않고, 치아와 잇몸을 스캔해 3차원 데이터로 기록합니다. 이 데이터가 모의 식립과 보철 설계의 기준이 됩니다.' },
   { n: '02', title: '3D CT (CBCT)', desc: '잇몸뼈의 폭과 높이, 신경과 상악동의 위치를 입체로 확인합니다. 파노라마와 CT를 한 장비로 찍으며, 촬영 시간이 짧고 방사선이 적습니다.' },
   { n: '03', title: '모의 수술 소프트웨어', desc: 'CT와 스캔 자료를 겹쳐, 임플란트의 위치와 각도, 깊이를 수술 전에 컴퓨터에서 정합니다.' },
-  { n: '04', title: '수술 가이드', desc: '모의 수술 결과대로 만든 가이드를 끼우고 심습니다. 절개 범위를 줄여, 출혈과 붓기가 덜할 수 있습니다.' },
+  { n: '04', title: '수술 가이드', desc: '모의 수술 결과대로 만든 가이드를 끼우고 식립합니다. 절개 범위를 줄여, 출혈과 붓기가 덜할 수 있습니다.' },
   { n: '05', title: '캐드캠 원내 보철 제작', desc: '구강스캔 자료로 보철을 설계하고, 원내 3D 프린터로 만듭니다.' },
   { n: '06', title: 'INOS 실시간 소독', desc: '사용한 진료 기구를 INOS 소독기로 바로 소독해 교차감염을 막습니다. KTR 소독력 테스트를 마친 장비입니다.' },
 ];
@@ -127,9 +127,9 @@ export default function AboutPage() {
             <div className="reveal mx-auto max-w-[760px] text-center">
               <p className="eyebrow justify-center">3D DIGITAL</p>
               <h2 className="display-sm mt-4">
-                3D CT로 먼저 보고, <span className="accent whitespace-nowrap">계획대로 심습니다</span>
+                3D CT로 먼저 보고, <span className="accent whitespace-nowrap">계획대로 식립합니다</span>
               </h2>
-              <p className="lead mt-4"><Sentences text="잇몸뼈의 폭과 높이, 신경까지의 거리를 3D CT로 잰 뒤, 심을 자리를 컴퓨터에서 먼저 정합니다. 수술은 그 계획으로 만든 가이드를 따라 진행합니다." /></p>
+              <p className="lead mt-4"><Sentences text="잇몸뼈의 폭과 높이, 신경까지의 거리를 3D CT로 잰 뒤, 식립할 자리를 컴퓨터에서 먼저 정합니다. 수술은 그 계획으로 만든 가이드를 따라 진행합니다." /></p>
             </div>
             <ol className="reveal-stack grid-cards mt-10 sm:grid-cols-2 lg:grid-cols-3">
               {POINTS.map((p) => (
