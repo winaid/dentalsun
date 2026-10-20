@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Sentences } from '@/components/ui';
 import { figSrc, type Block } from '@/lib/docs';
 import { docByPath } from '@/lib/content';
+import { NAVI_PROCESS } from '@/lib/content/customImplantLanding';
 import { CLINIC } from '@/lib/clinic';
 
 
@@ -54,7 +55,7 @@ const STAGE_IMG: Array<{ key: string; alt: string; fit: 'cover' | 'contain' }> =
   /* 2026-10-08 오너 "스텝 2,3,4도 기존 이미지 내용 유지하면서 스텝 1처럼" — 흰 바탕 제품 사진(orig/misc-nav-implant-set · orig/intro-p05-group · equip/guide)
      내용은 그대로 두고 1단계와 같은 밝은 방에서 다시 찍은 AI 사진. 장비 상표 글자는 뺐다. 원본·스크립트 C:/tmp/sun-ppt-fix/gen-stage-steps.mjs */
   { key: 'ai/stage-plan', alt: '내비게이션 임플란트 모의수술 화면이 뜬 모니터·태블릿과 임플란트 모형', fit: 'cover' },
-  { key: 'ai/stage-print', alt: '당일 보철 제작 장비 — 3D 프린터·CAD 모니터·후처리기', fit: 'cover' },
+  { key: 'ai/stage-print', alt: '수술 가이드를 출력하는 3D 프린터와 설계 모니터', fit: 'cover' },
   { key: 'ai/stage-guide', alt: '아래턱 모형에 씌운 투명 수술 가이드와 드릴, 크라운 모형', fit: 'cover' },
 ];
 
@@ -64,7 +65,7 @@ export function HomeStage() {
   if (!block) return null;
   const steps = block.steps.slice(0, STAGE_IMG.length);
   return (
-    <section className="section bg-canvas" data-stage>
+    <section className="section bg-canvas" id="process" data-stage>
       <div className="wrap">
         <div className="grid gap-10 lg:grid-cols-[1.15fr_1fr] lg:gap-16">
           {/* 왼쪽 — 제목·설명 + 고정 무대. lg 이상에서는 열 전체가 화면 세로 가운데에 고정돼 스크롤 내내 제목이 사진 위에 남는다(오너 요청). */}
@@ -140,7 +141,12 @@ export function HomeStage() {
           </ol>
         </div>
 
-        <div className="reveal mt-6 flex flex-wrap gap-3 lg:mt-2">
+        {/* 원장 PPT 100쪽 — 이고운 4단계 아래 덧붙임(식립 이후 과정). 글은 내비게이션 쪽과 같은 NAVI_PROCESS.note */}
+        <p className="reveal mt-6 max-w-[900px] text-[15px] leading-[1.85] text-ink-soft lg:mt-0">
+          <Sentences text={NAVI_PROCESS.note} />
+        </p>
+
+        <div className="reveal mt-6 flex flex-wrap gap-3">
           <Link href="/treatment/implant/navigation" className="btn-brand">디지털 맞춤 임플란트 자세히</Link>
           <Link href="/treatment/implant" className="btn-ghost">임플란트 전체 안내</Link>
         </div>

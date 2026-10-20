@@ -319,8 +319,13 @@ export function CustomImplantPage({ doc, part }: { doc: Doc; part: 'navigation' 
                 ))}
               </ol>
 
+              <div id="process" className="scroll-mt-28" />
               <SubHead eyebrow="진행 순서" title={<>내비게이션 임플란트 <span className="accent-sun">진행 순서</span></>} lead={NAVI_PROCESS.lead} />
               <StepCards steps={NAVI_PROCESS.steps.map((s) => ({ title: s.title, desc: s.desc, fig: s.figure }))} />
+              {/* 원장 PPT 127쪽 — 이고운 4단계 아래 덧붙임(식립 이후 과정) */}
+              <p className="reveal mt-6 max-w-[900px] text-[15px] leading-[1.85] text-ink-soft">
+                <Sentences text={NAVI_PROCESS.note} />
+              </p>
 
               <SubHead eyebrow="방식 비교" title={<>절개식 식립과 <span className="accent-sun">가이드 식립의 차이</span></>} />
               <Compare columns={NAVI_COMPARE.columns} rows={NAVI_COMPARE.rows} />
