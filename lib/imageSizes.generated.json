@@ -1178,5 +1178,13 @@
  "ai/uv-wetting": {
   "w": 1200,
   "h": 800
+ },
+ "illust/abutment-custom-v2": {
+  "w": 900,
+  "h": 900
+ },
+ "illust/custom-abutment-define-v2": {
+  "w": 1200,
+  "h": 800
  }
 }

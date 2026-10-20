@@ -201,6 +201,8 @@ export function CustomImplantPage({ doc, part }: { doc: Doc; part: 'navigation' 
   const heroSize = figSize(HERO_BG);
   const collage = HERO_COLLAGE[doc.path];
   const heroLines = collage.lines.map((l) => (l ? renderAccent(l) : undefined)) as [ReactNode, ReactNode?];
+  /* 원장 PPT 141쪽 — 맞춤 쪽 제목 옆에 작게 '(커스텀 어버트먼트)' */
+  if (part === 'custom' && heroLines[1]) heroLines[1] = <>{heroLines[1]} <span className="inline-block whitespace-nowrap align-middle text-[0.34em] font-bold tracking-normal text-white/75">(커스텀 어버트먼트)</span></>;
 
   const schema: unknown[] = [
     breadcrumbSchema(trail),
@@ -227,7 +229,7 @@ export function CustomImplantPage({ doc, part }: { doc: Doc; part: 'navigation' 
   const sideSteps = part === 'custom' ? { title: '맞춤 지대주 제작 순서', steps: CI_PROCESS.steps } : { title: '가이드 식립 순서', steps: NAVI_PROCESS.steps };
   const band =
     part === 'custom'
-      ? { title: '내 잇몸에 맞는 지대주가 궁금하시다면', text: '검사 후 기성 지대주와 맞춤 지대주 가운데 어느 쪽이 알맞은지 설명해 드립니다. 네이버 예약이나 전화로 문의해 주세요.' }
+      ? /* 원장 PPT 144쪽 — 설명 원장 글 */ { title: '내 잇몸에 맞는 지대주가 궁금하시다면', text: '개인의 잇몸 형태와 구강 상태를 고려한 맞춤 지대주에 대해 자세히 설명해 드립니다. 네이버 예약 또는 전화로 문의해 주세요.' }
       : { title: '가이드 수술이 가능한지, 3D CT로 먼저 확인합니다', text: '골량과 신경관까지의 거리를 계측한 뒤, 무절개가 가능한지와 골이식이 필요한지를 화면으로 보여 드리며 설명합니다.' };
 
   return (
@@ -388,7 +390,8 @@ export function CustomImplantPage({ doc, part }: { doc: Doc; part: 'navigation' 
                   return (
                     <li key={c.side} className={`flex flex-col overflow-hidden rounded-[24px] border bg-white ${custom ? 'border-sun-300' : 'border-hairline'}`}>
                       <p className={`px-5 py-3.5 text-center text-[16px] font-extrabold ${custom ? 'bg-sun-500 text-white' : 'bg-canvas-2 text-ink-soft'}`}>{c.side}</p>
-                      <span className="img-in relative block aspect-[4/3] bg-white">
+                      {/* 원장 PPT 145쪽 '사진 너무 길어요' — 4:3 → 16:10 로 낮춤(그림은 통째로 보이게 contain) */}
+                      <span className="img-in relative block aspect-[16/10] bg-white">
                         <Image src={figSrc(c.fig.key)} alt={c.fig.alt} fill sizes="(max-width: 640px) 90vw, 360px" className="object-contain px-4 pt-4" />
                       </span>
                       <ul className="grid gap-2.5 border-t border-hairline px-5 py-5 sm:px-6">
@@ -533,7 +536,7 @@ export function CustomImplantPage({ doc, part }: { doc: Doc; part: 'navigation' 
 
             {/* ── 6. 권하는 경우 4 → 주위염 → 알아두실 점 ── */}
             <section id="when" className="scroll-mt-[96px] pt-24 md:pt-32" aria-labelledby="ci-when">
-              <Head id="ci-when" label="권하는 경우" title={<>맞춤 지대주를 <span className="accent-sun">권하는 경우</span></>} lead={CI_WHEN.lead} />
+              <Head id="ci-when" label={CI_WHEN.label} title={<>임플란트, 내 잇몸에 <span className="accent-sun">제대로 맞고 있을까요</span>?</>} lead={CI_WHEN.lead} />
               <ul className="reveal-stack mt-12 grid gap-4 md:grid-cols-2">
                 {CI_WHEN.items.map((w, i) => (
                   <li key={w.title} className="card flex gap-4 p-6">
@@ -602,7 +605,7 @@ export function CustomImplantPage({ doc, part }: { doc: Doc; part: 'navigation' 
                 </div>
               </div>
 
-              <SubHead eyebrow="임플란트의 세 부분" title={<>임플란트의 세 부분 가운데, <span className="accent-sun">맞춤으로 만드는 것은 지대주</span>입니다</>} lead={CI_PARTS.lead} />
+              <SubHead eyebrow="임플란트의 세 부분" title={<>임플란트의 세 부분 중, <span className="accent-sun">내 잇몸에 맞춰 만드는 지대주</span></>} lead={CI_PARTS.lead} />
               {/* 세 부분 — 어두운 상자 한 개에 세 칸. 가운데 '지대주' 칸을 주황으로 짚는다 */}
               <div className="reveal mt-8 rounded-[28px] bg-night p-7 text-white md:p-10">
                 <p className="text-[12.5px] font-bold tracking-[0.12em] text-sun-300">픽스처 · 지대주 · 크라운</p>
