@@ -375,7 +375,14 @@ export default function HomePage() {
               {/* 넓은 화면은 문장 하나 = 한 줄(오너 규칙) — 첫 문장이 약 970px 이라 lg 에서 칸을 넓힌다 */}
               <p className="mx-auto mt-6 max-w-[720px] text-[1.05rem] leading-[1.85] text-white md:text-[1.15rem] lg:max-w-[1000px]">
                 {/* 2026-10-20 원장 PPT 102쪽 문구 그대로(네 줄). 하이라이트 자리만 예전 '{필요한 단계만}' 과 같은 뜻의 낱말로 */}
-                <ScrubText text="턱관절 질환은 턱관절 디스크의 위치, 턱 근육의 긴장, 이갈이⁠·⁠이악물기, 치아 맞물림이 함께 얽혀 생깁니다. 3D CT와 개구량·교합·근육 검사로 원인을 파악하고, 약물·물리치료부터 교합안정장치, 보톡스, 관절강 세척술까지 {환자 상태에 맞춰 필요한 치료}를 진행합니다. 단순한 통증 완화를 넘어, 장기적인 기능 회복을 목표로 합니다." />
+                {/* 넓은 화면은 원장 PPT 102쪽처럼 네 줄(둘째 문장은 '파악하고,' 뒤에서 꺾음) — 폰은 이어서 흐른다 */}
+                <span className="lg:block"><ScrubText text="턱관절 질환은 턱관절 디스크의 위치, 턱 근육의 긴장, 이갈이⁠·⁠이악물기, 치아 맞물림이 함께 얽혀 생깁니다." /></span>
+                {' '}
+                <span className="lg:block"><ScrubText text="3D CT와 개구량·교합·근육 검사로 원인을 파악하고," /></span>
+                {' '}
+                <span className="lg:block"><ScrubText text="약물·물리치료부터 교합안정장치, 보톡스, 관절강 세척술까지 {환자 상태에 맞춰 필요한 치료}를 진행합니다." /></span>
+                {' '}
+                <span className="lg:block"><ScrubText text="단순한 통증 완화를 넘어, 장기적인 기능 회복을 목표로 합니다." /></span>
               </p>
               <ul className="reveal-stack mx-auto mt-10 grid max-w-[860px] gap-4 sm:grid-cols-3">
                 {[
