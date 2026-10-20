@@ -543,7 +543,8 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
             <Head title={b.title ?? '실제 치료 전후 사례'} lead={b.lead} accent={b.accent} />
             {b.box && (
               <div className="reveal mt-8 rounded-[24px] bg-canvas px-6 py-6 text-center md:px-10">
-                <p className="text-[16px] font-extrabold text-ink md:text-[17px]">{b.box.title}</p>
+                {/* 원장 PPT 202쪽 '제목에 하이라이트 표시' */}
+                <p className="text-[16px] font-extrabold text-ink md:text-[17px]"><mark className="hl">{b.box.title}</mark></p>
                 <p className="mt-2 text-[14.5px] leading-[1.75] text-ink-soft md:text-[15px]"><Sentences text={b.box.text} clauses={false} /></p>
               </div>
             )}
@@ -570,7 +571,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
             </div>
             <div className="wrap relative pb-16 lg:flex lg:min-h-[560px] lg:items-center lg:py-24">
               <div className="reveal -mt-8 lg:mt-0 lg:max-w-[500px] xl:max-w-[600px]">
-                <span aria-hidden className="block h-10 font-serif text-[4.5rem] leading-none text-sun-500/80 md:h-12 md:text-[5.5rem]">“</span>
+                {/* 2026-10-20 원장 PPT 200쪽 '따옴표 없음' — 큰 “ 를 뺐다 */}
                 {/* 큰 문구는 절 쉼표마다 한 줄(낱말 사이에서 꺾이지 않게) — 줄마다 스크롤 따라 밝아진다 */}
                 <p className="text-[1.35rem] leading-[1.5] font-bold md:text-[2rem]">
                   {b.text.split(/(?<=,)\s+/).map((part, i) => (
