@@ -608,6 +608,31 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
           </div>
         </section>
       );
+    case 'duo':
+      /* 사진 두 장 좌우(원장 PPT 115쪽 '365래온치과 예시처럼') — 칸마다 사진(3:2) → 제목 → 글. 폰에서는 위아래로 */
+      return (
+        <section id={id} className={wrapCls}>
+          <div className="wrap reveal-stack grid gap-14 lg:grid-cols-2 lg:gap-10 xl:gap-14">
+            {b.panels.map((p) => (
+              <article key={p.title} id={p.id} className="flex scroll-mt-28 flex-col">
+                <div className="relative aspect-[3/2] overflow-hidden rounded-2xl bg-canvas">
+                  <Image src={figSrc(p.figure.key)} alt={p.figure.alt} fill sizes="(max-width: 1023px) 92vw, 640px" className="object-cover" />
+                </div>
+                <h2 className="mt-7 text-[1.45rem] font-extrabold leading-snug tracking-[-0.02em] text-ink sm:text-[1.6rem] lg:text-[1.7rem]">
+                  <Sentences text={p.title} soft />
+                </h2>
+                <div className="prose-ko mt-4">
+                  {paras(p.paragraphs).map((t, i) => (
+                    <p key={i}>
+                      <Sentences text={t} />
+                    </p>
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      );
     case 'notice':
       /* 안내 구역 — 연한 상자 대신 구역 전체에 진한 주황을 깔고, 왼쪽 라벨+큰 제목 / 오른쪽 본문의 편집 배치 */
       return (

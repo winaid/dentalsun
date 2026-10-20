@@ -54,7 +54,9 @@ type BlockBody =
   /** 다른 문서로 가는 카드 */
   | { type: 'links'; id?: string; title?: string; lead?: string; items: Array<{ label: string; href: string; desc?: string }> }
   /** 주의·안내 상자 */
-  | { type: 'notice'; title?: string; paragraphs: string[] };
+  | { type: 'notice'; title?: string; paragraphs: string[] }
+  /** 사진 두 장 좌우 — 칸마다 사진 → 제목 → 글(원장 PPT 115쪽 '365래온치과 예시처럼'). 폰에서는 위아래 */
+  | { type: 'duo'; id?: string; panels: Array<{ id?: string; title: string; paragraphs: string[]; figure: Fig }> };
 
 export interface Doc {
   /** 사이트 안 절대 경로. 예: '/treatment/implant/uv' */
@@ -115,6 +117,7 @@ export function docCharCount(d: Doc) {
     if (b.type === 'table') parts.push(...b.head, ...b.rows.flat(), b.note ?? '');
     if (b.type === 'quote') parts.push(b.text, ...(b.lines ?? []));
     if (b.type === 'cases') parts.push(b.note);
+    if (b.type === 'duo') parts.push(...b.panels.flatMap((p) => [p.title, ...p.paragraphs]));
   }
   for (const f of d.faq ?? []) parts.push(f.q, f.a);
   return parts.join('').replace(/\s+/g, '').length;
@@ -125,6 +128,7 @@ export function docToc(d: Doc) {
   const items: Array<{ id: string; label: string }> = [];
   d.blocks.forEach((b, i) => {
     if ('title' in b && b.title) items.push({ id: ('id' in b && b.id) || `sec-${i + 1}`, label: b.title });
+    if (b.type === 'duo') b.panels.forEach((p, j) => items.push({ id: p.id ?? (j === 0 ? b.id ?? `sec-${i + 1}` : `sec-${i + 1}-${j + 1}`), label: p.title }));
   });
   if (d.faq?.length) items.push({ id: 'faq', label: '자주 묻는 질문' });
   return items;
