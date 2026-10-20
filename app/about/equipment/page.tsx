@@ -57,7 +57,7 @@ export default function EquipmentPage() {
           cardsLead="진단에서 수술 가이드 제작까지 이어지는 장비입니다."
           /* 2026-10-20 원장 PPT 110쪽 — 둘째 줄 '원내에서 제작합니다 → 수술 가이드까지 직접 제작합니다', 설명 세 문장 그대로(굵게 = {…}).
              카드 위 한 줄의 '보철 제작'은 사실과 달라져 '수술 가이드 제작'으로(우리 판단) */
-          lines={['먼저 측정하고 계획한 뒤', <><span className="accent-sun whitespace-nowrap">수술 가이드까지 직접 제작합니다</span></>]}
+          lines={['먼저 측정하고 계획한 뒤', <><span className="accent-sun"><span className="whitespace-nowrap">수술 가이드까지</span> <span className="whitespace-nowrap">직접 제작합니다</span></span></>]}
           long
           lead="3D CT와 구강스캐너로 잇몸뼈와 치아의 상태를 확인하고, 모의 수술 소프트웨어로 임플란트의 식립 위치를 미리 계획합니다. 계획에 맞춘 수술 가이드는 원내 3D 프린터로 직접 제작합니다. {진단부터 수술 가이드 제작까지 이어지는 디지털 시스템입니다}."
           bg="place/place08"
