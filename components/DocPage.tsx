@@ -656,21 +656,46 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
                 ))}
               </div>
             )}
-            {b.items && (
-              <ul className="reveal-stack mt-8 grid gap-4 md:grid-cols-2">
-                {b.items.map((it, i) => (
-                  <li key={it.title} className={plainCls}>
-                    <span className="num">{String(i + 1).padStart(2, '0')}</span>
-                    <p className={`${titleCls} mt-3`}>{it.title}</p>
-                    <p className={descCls}>
-                      <Sentences text={it.desc} clauses={false} />
-                    </p>
-                  </li>
+            {b.methods && (
+              <div className="reveal-stack mx-auto mt-10 grid max-w-[1120px] gap-6 lg:grid-cols-2">
+                {b.methods.map((m, mi) => (
+                  <article key={m.title} className="overflow-hidden rounded-2xl border border-hairline bg-white">
+                    <div className="bg-brand-50 px-5 py-5 md:px-6">
+                      <p className="flex items-baseline gap-2.5">
+                        <span className="text-[13px] font-extrabold tracking-[0.12em] text-sun-600">{String(mi + 1).padStart(2, '0')}</span>
+                        <span className="text-[1.2rem] font-extrabold text-brand-800 md:text-[1.3rem]">{m.title}</span>
+                      </p>
+                      <p className="mt-1.5 text-[14.5px] leading-[1.7] text-ink-soft">
+                        <Sentences text={m.desc} clauses={false} />
+                      </p>
+                    </div>
+                    {/* 큰 그림 — 글자 없는 판 위에 이름표만 HTML 로 */}
+                    <div className="relative" style={{ aspectRatio: `${figSize(m.figure.key).w} / ${figSize(m.figure.key).h}` }}>
+                      <Image src={figSrc(m.figure.key)} alt={m.figure.alt} fill sizes="(max-width: 1023px) 100vw, 560px" className="object-cover" />
+                      {m.labels?.map((l) => (
+                        <span key={l.text} aria-hidden className="absolute -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full bg-black/30 px-2.5 py-0.5 text-[12px] font-bold text-white backdrop-blur-[2px] md:text-[13.5px]" style={{ left: l.left, top: l.top }}>
+                          {l.text}
+                        </span>
+                      ))}
+                    </div>
+                    <ol className="grid grid-cols-2 gap-x-3 gap-y-5 px-4 py-5 sm:grid-cols-4 md:px-5">
+                      {m.steps.map((st, si) => (
+                        <li key={st.title} className="text-center">
+                          <span className="relative block aspect-[4/3] overflow-hidden rounded-lg">
+                            <Image src={figSrc(st.fig.key)} alt={st.fig.alt} fill sizes="(max-width: 640px) 45vw, 140px" className="object-cover" />
+                          </span>
+                          <span className="mt-2.5 block text-[12px] font-extrabold tracking-[0.1em] text-sun-600">{String(si + 1).padStart(2, '0')}</span>
+                          <span className="mt-0.5 block text-[14.5px] font-extrabold text-brand-800">{st.title}</span>
+                          <span className="mt-1 block text-[13px] leading-[1.6] text-ink-soft">{st.desc}</span>
+                        </li>
+                      ))}
+                    </ol>
+                  </article>
                 ))}
-              </ul>
+              </div>
             )}
             {b.note && (
-              <p className="reveal mt-6 max-w-[900px] text-[15.5px] leading-relaxed text-ink-soft">
+              <p className={`reveal mt-6 text-[15.5px] leading-relaxed text-ink-soft ${b.methods ? 'mx-auto max-w-[1120px]' : 'max-w-[900px]'}`}>
                 <Sentences text={b.note} />
               </p>
             )}
@@ -678,13 +703,6 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
             {b.figure && (
               <div className={`reveal mx-auto ${b.figureTitle ? 'mt-6' : 'mt-10'}`} style={{ maxWidth: `${b.figureMax ?? 1100}px` }}>
                 <Figure fig={b.figure} sizes={`(max-width: ${b.figureMax ?? 1100}px) 100vw, ${b.figureMax ?? 1100}px`} />
-              </div>
-            )}
-            {b.figures && (
-              <div className="reveal-stack mt-10 grid gap-5 md:grid-cols-2">
-                {b.figures.map((fg) => (
-                  <Figure key={fg.key} fig={fg} sizes="(max-width: 768px) 100vw, 640px" />
-                ))}
               </div>
             )}
           </div>
