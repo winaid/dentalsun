@@ -349,14 +349,15 @@ export default function HomePage() {
         {/* ── 풀아치 — 원장 PPT 46쪽 '홈화면에 풀아치 추가' · 50쪽 글 그대로. 그림 두 겹 모션(components/FullArchBand) ── */}
         <FullArchBand />
 
-        {/* ── 보증 기간 띠 — 원장 PPT 62쪽. 기간 숫자만, 굴러 멈추는 숫자 모션(components/WarrantyBand) ── */}
-        <WarrantyBand />
-
         {/* ── 내비게이션 임플란트 과정 — 고정 무대(스크롤하면 사진이 바뀐다) ── */}
         <HomeStage />
 
+        {/* ── 보증 기간 띠 — 원장 PPT 62쪽. 기간 숫자만, 굴러 멈추는 숫자 모션(components/WarrantyBand).
+             2026-10-20 원장 PPT 101쪽 '위치변경 / 네비게이션 임플란트, 이렇게 진행됩니다 밑으로' — 풀아치 띠 아래에서 과정 무대 아래로 옮김 ── */}
+        <WarrantyBand />
+
         {/* ── 턱관절 — 어두운 사진 띠 ── */}
-        <section className="relative isolate overflow-hidden bg-night py-24 text-white md:py-32">
+        <section id="tmj" className="relative isolate overflow-hidden bg-night py-24 text-white md:py-32">
           <div className="absolute inset-0 -z-10">
             <Image src={figSrc('ai/wide-tmj')} alt="" fill sizes="(max-width: 1023px) 250vw, 100vw" className="object-cover opacity-50" data-parallax="0.2" />
             <div className="absolute inset-0 bg-gradient-to-b from-night/85 via-night/65 to-night/90" />
@@ -373,12 +374,13 @@ export default function HomePage() {
               </h2>
               {/* 넓은 화면은 문장 하나 = 한 줄(오너 규칙) — 첫 문장이 약 970px 이라 lg 에서 칸을 넓힌다 */}
               <p className="mx-auto mt-6 max-w-[720px] text-[1.05rem] leading-[1.85] text-white md:text-[1.15rem] lg:max-w-[1000px]">
-                <ScrubText text="턱관절 질환은 턱관절 디스크의 위치, 턱 근육의 긴장, 이갈이·이악물기, 치아 맞물림이 함께 얽혀 생깁니다. 턱관절 CT와 개구량·맞물림·근육 검사로 원인을 가려낸 뒤, 약과 물리치료부터 장치 치료, 관절 세척까지 {필요한 단계만} 진행합니다." />
+                {/* 2026-10-20 원장 PPT 102쪽 문구 그대로(네 줄). 하이라이트 자리만 예전 '{필요한 단계만}' 과 같은 뜻의 낱말로 */}
+                <ScrubText text="턱관절 질환은 턱관절 디스크의 위치, 턱 근육의 긴장, 이갈이⁠·⁠이악물기, 치아 맞물림이 함께 얽혀 생깁니다. 3D CT와 개구량·교합·근육 검사로 원인을 파악하고, 약물·물리치료부터 교합안정장치, 보톡스, 관절강 세척술까지 {환자 상태에 맞춰 필요한 치료}를 진행합니다. 단순한 통증 완화를 넘어, 장기적인 기능 회복을 목표로 합니다." />
               </p>
               <ul className="reveal-stack mx-auto mt-10 grid max-w-[860px] gap-4 sm:grid-cols-3">
                 {[
-                  ['01', '턱관절 CT · 맞물림 · 근육 검사'],
-                  ['02', '맞춤 장치 치료 · 관절 세척'],
+                  ['01', '턱관절 CT · 교합 및 구내검사'], // 2026-10-20 원장 PPT 102쪽
+                  ['02', '물리치료 · 보톡스 · 맞춤 장치 치료'], // 2026-10-20 원장 PPT 102쪽
                   ['03', '턱관절 진료 5,000건 이상'],
                 ].map(([n, t]) => (
                   /* 폰에서는 번호·글이 한 줄로 나란히(세 장을 세로로 쌓아도 얇게) — 넓은 화면은 가운데 정렬 상자 */
@@ -401,7 +403,7 @@ export default function HomePage() {
         </section>
 
         {/* ── 무통·자연치아·심미·사랑니 ── */}
-        <section className="section bg-canvas">
+        <section id="general" className="section bg-canvas">
           <div className="wrap">
             <div className="reveal max-w-[820px]">
               <p className="eyebrow">GENERAL CARE</p>
@@ -409,7 +411,7 @@ export default function HomePage() {
                 발치를 말하기 전에 <span className="accent">살릴 수 있는지</span>부터 봅니다
               </h2>
               <p className="lead mt-4">
-                <Sentences text="신경치료와 잇몸치료로 내 치아를 살릴 수 있는지 먼저 확인합니다. {살리기 어려운 경우에만} 발치와 보철을 이야기합니다." />
+                <Sentences text="신경치료와 잇몸치료로 내 치아를 살릴 수 있는지 먼저 확인합니다. {살리기 어려운 경우에만} 발치와 이후 치료를 고려합니다." />
               </p>
             </div>
             {/* 폰도 두 칸 — 진료과목 카드와 같은 격자(한 칸씩 쌓으면 사진 네 장에 2,000px) */}

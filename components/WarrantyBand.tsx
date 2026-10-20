@@ -61,7 +61,7 @@ function Odometer({ value, delay, className }: { value: number; delay: number; c
 export function WarrantyBand() {
   const [main, ...rest] = ITEMS;
   return (
-    <section className="relative isolate overflow-hidden bg-night py-24 text-white md:py-28">
+    <section id="warranty" className="relative isolate overflow-hidden bg-night py-24 text-white md:py-28">
       <div className="absolute inset-0 -z-10">
         <Image src={figSrc('place2/treatment-bays')} alt="" fill sizes="(max-width: 1023px) 250vw, 100vw" className="object-cover opacity-30" data-parallax="0.2" />
         <div className="absolute inset-0 bg-gradient-to-b from-night/85 via-night/75 to-night/95" />
