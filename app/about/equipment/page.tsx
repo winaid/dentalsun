@@ -27,7 +27,7 @@ const DIGITAL: EquipItem[] = [
   { short: '3D CT', n: 'Point 02', title: '3D CT (CBCT)', desc: '잇몸뼈의 폭과 높이, 신경과 상악동의 위치를 입체로 확인합니다. 임플란트·사랑니·턱관절 진단의 기준이 되는 영상입니다.', more: ['여러 영상을 제공하는 올인원 장비', '파노라마와 CT를 함께 촬영', '짧은 촬영 시간, 적은 방사선 노출량'], fig: { key: 'place/place08', alt: '광화문 선치과 3D CT(CBCT) 촬영실' }, shot: 'photo' },
   { short: '모의 수술', n: 'Point 03', title: '모의 수술 소프트웨어', desc: 'CT와 스캔 자료를 겹쳐, 임플란트의 위치와 각도, 깊이를 수술 전에 컴퓨터에서 정합니다. 신경까지의 거리도 이 단계에서 확인합니다.', fig: { key: 'orig/implant-nav-plan', alt: 'CT 위에 임플란트 식립 경로를 잡는 계획 소프트웨어 화면' }, shot: 'product-light' },
   { short: '가이드', n: 'Point 04', title: '수술 가이드', desc: '모의 수술 결과대로 만든 가이드를 끼우고, 정해 둔 위치와 각도로 심습니다. 절개 범위를 줄여, 출혈과 붓기가 덜할 수 있습니다.', fig: { key: 'equip/guide', alt: '개인 맞춤형 수술 가이드 모형' }, shot: 'product-light' },
-  { short: 'CAD/CAM', n: 'Point 05', title: '캐드캠 원내 보철 제작', desc: '구강스캔 자료로 보철을 설계(CAD)하고, 원내 3D 프린터로 만듭니다. 임시치아도 원내에서 제작합니다.', fig: { key: 'equip/printer', alt: '3D 프린터와 보철 디자인 CAD 화면' }, shot: 'product-light' },
+  { short: 'CAD/CAM', n: 'Point 05', title: '캐드캠 원내 보철 제작', desc: '구강스캔 자료로 보철을 설계(CAD)하고, 원내 3D 프린터로 만듭니다.', fig: { key: 'equip/printer', alt: '3D 프린터와 보철 디자인 CAD 화면' }, shot: 'product-light' },
   { short: '소독', n: 'Point 06', title: 'INOS 실시간 소독기', desc: '진료 기구를 통한 교차감염을 막기 위해, 사용한 기구를 INOS 소독기로 바로 소독합니다.', more: ['최대 99.999% 소독력 — KTR 테스트 완료'], fig: { key: 'orig/intro-p06-inos-group', alt: 'INOS 실시간 소독기 세 종류' }, shot: 'product-light' },
 ];
 
