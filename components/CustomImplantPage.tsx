@@ -497,8 +497,9 @@ export function CustomImplantPage({ doc, part }: { doc: Doc; part: 'navigation' 
 
               {/* 기성이라면 → 맞춤이라면 — 반반 단면 도해를 크게 먼저 */}
               <SubHead eyebrow="치료받을 경우" title={<>맞춤 지대주로 <span className="accent-sun">치료받을 경우</span></>} />
-              <figure className="reveal mt-8">
-                <Illust fig={CI_IF_CUSTOM.fig} />
+              {/* 2026-10-20 오너 '여기도 사진 너무 커' — 본문 폭 전체(약 920px) → 가운데 640px 까지 */}
+              <figure className="reveal mx-auto mt-8 max-w-[640px]">
+                <Illust fig={CI_IF_CUSTOM.fig} sizes="(max-width: 700px) 100vw, 640px" />
                 <figcaption className="mx-auto mt-3 max-w-[680px] text-center text-[13.5px] leading-[1.7] text-ink-muted">
                   <Sentences text={CI_IF_CUSTOM.caption} clauses={false} />
                 </figcaption>
