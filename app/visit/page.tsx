@@ -74,7 +74,7 @@ export default function VisitPage() {
         </HeroCollage>
 
         <section className="section">
-          <div className="wrap grid gap-6 lg:grid-cols-[1.3fr_1fr]">
+          <div className="wrap grid gap-6 lg:grid-cols-[1.15fr_1fr]">
             {/* 2026-10-20 원장 PPT 105쪽 '6번 출구 표시' — 홈과 같은 네이버 지도 사진 + 열기 단추 셋(components/VisitMap). 주소 칸의 지도 단추는 여기로 옮김 */}
             <VisitMap className="reveal lg:self-start" />
             <div className="reveal-stack grid content-start gap-4">
