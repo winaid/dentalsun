@@ -6,7 +6,8 @@
  * ★ 파일 이름·설명에 환자 이름·차트번호·날짜를 넣지 않는다(원본 폴더명에 환자 이름이 있다).
  * ★ 사진 손질 기록은 edits — 치료한 치아 표면은 고치지 않았다(치료 결과 보정 = 거짓 광고 소지).
  * ★ 2026-10-21 원장 PPT 217쪽 '사진들 전부 포샵(특히 case 13 치료 후)' — 구내 사진은 public/img/cases3 의 손본 판을 쓴다(C:/tmp/sun-ppt-1019/tools/retouch-cases.mjs).
- *   사진 전체에 같은 방식으로 밝기·화이트밸런스·대비·선명도만(사진마다 자동 레벨 65%). 치아 모양·색을 따로 고치지 않았다.
+ *   10-21 오너 "잇몸까지 하얘지지 말고 이빨만" → 전체 밝기 보정은 걷고, 치아 영역만(밝고 누런~흰 색, 잇몸·입술의 붉은 색 제외) 조금 밝게·누런 기를 덜었다
+ *   (C:/tmp/sun-ppt-1019/tools/teeth-whiten.mjs, 세기 0.8). ★치료 전·후 사진에 똑같이 적용 — 치료 후만 하얗게 하면 치료 결과를 바꾸는 것이라 하지 않는다.
  *   치아미백(whitening)은 색 자체가 결과라 손대지 않고 cases2 원본 그대로. 원본은 모두 cases2 에 그대로 있다.
  */
 export type CaseCategory = 'implant' | 'fullarch' | 'endo' | 'reendo' | 'wisdom' | 'anterior' | 'fracture' | 'resin' | 'whitening' | 'tmj' | 'perio';
