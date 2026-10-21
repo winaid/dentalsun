@@ -20,7 +20,8 @@ export function CaseGallery({ categories, filter = false }: { categories?: CaseC
   const all = useMemo(() => casesOf(categories), [categories]);
   const cats = useMemo(() => [...new Set(all.map((c) => c.category))], [all]);
   const [cat, setCat] = useState<CaseCategory | 'all'>('all');
-  const shown = cat === 'all' ? all : all.filter((c) => c.category === cat);
+  /* 홈 '전체'에서는 치주치료 사례(임플란트 사례와 같은 사진, 원장 PPT 236쪽)를 빼 같은 사진이 두 번 나오지 않게 */
+  const shown = cat === 'all' ? all.filter((c) => !(categories === undefined && c.category === 'perio')) : all.filter((c) => c.category === cat);
   const intra = shown.filter((c) => c.type === 'intraoral');
   const xray = shown.filter((c) => c.type === 'xray');
   if (!all.length) return null;
