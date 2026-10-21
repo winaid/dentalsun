@@ -82,8 +82,8 @@ export const CASES: CaseItem[] = [
   { id: 'implant-05-xray', category: 'implant', type: 'xray', xrayKind: 'panorama', caption: '상악 양측·하악 우측 구치부 임플란트', before: { key: 'cases2/implant-05-xray-before', w: 1600, h: 673 }, after: { key: 'cases2/implant-05-xray-after', w: 1600, h: 673 } },
   { id: 'implant-06-xray', category: 'implant', type: 'xray', xrayKind: 'panorama', caption: '상악 우측 중절치 임플란트', before: { key: 'cases2/implant-06-xray-before', w: 1600, h: 673 }, after: { key: 'cases2/implant-06-xray-after', w: 1600, h: 673 } },
   { id: 'implant-06-intraoral', category: 'implant', type: 'intraoral', caption: '상악 우측 중절치 임플란트 — 파절 치아 부위 보철 회복', before: { key: 'cases4/implant-06-intraoral-before', w: 796, h: 531 }, after: { key: 'cases4/implant-06-intraoral-after', w: 796, h: 531 }, edits: '후 사진: 치은 변연의 출혈 흔적 제거(병원 요청)' },
-  /* 원장 PPT 241쪽 'Case 22 파킨슨 환자 설명' — 원본 폴더 '이용옥 파킨슨' */
-  { id: 'implant-07-xray', category: 'implant', type: 'xray', xrayKind: 'panorama', caption: '파킨슨병 환자 — 상·하악 다수 부위 임플란트 보철', before: { key: 'cases2/implant-07-xray-before', w: 1600, h: 673 }, after: { key: 'cases2/implant-07-xray-after', w: 1600, h: 673 } },
+  /* 원장 PPT 241쪽 'Case 22 파킨슨 환자 설명' — 원본 폴더 '이용옥 파킨슨'. '상악동' 제목 아래 적혀 있어 상악동 사례에도(오너 10-21) */
+  { id: 'implant-07-xray', category: 'implant', also: ['sinus'], type: 'xray', xrayKind: 'panorama', caption: '파킨슨병 환자 — 상·하악 다수 부위 임플란트 보철 · 상악동거상술', before: { key: 'cases2/implant-07-xray-before', w: 1600, h: 673 }, after: { key: 'cases2/implant-07-xray-after', w: 1600, h: 673 } },
   { id: 'implant-08-xray', category: 'implant', type: 'xray', xrayKind: 'panorama', caption: '상악 우측 중절치 임플란트', before: { key: 'cases2/implant-08-xray-before', w: 1600, h: 673 }, after: { key: 'cases2/implant-08-xray-after', w: 1600, h: 673 } },
   { id: 'implant-08-intraoral', category: 'implant', type: 'intraoral', caption: '상악 우측 중절치 임플란트 — 돌출·변색 치아 부위 보철 회복', before: { key: 'cases4/implant-08-intraoral-before', w: 1400, h: 933 }, after: { key: 'cases4/implant-08-intraoral-after', w: 1400, h: 933 } },
   /* 2026-10-20 원장 PPT 236쪽 — 위 사례(같은 사진)를 치주치료 사례로도. 설명 원장 글 */
