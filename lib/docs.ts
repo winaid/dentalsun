@@ -132,7 +132,7 @@ export function docCharCount(d: Doc) {
 export function docToc(d: Doc) {
   const items: Array<{ id: string; label: string }> = [];
   d.blocks.forEach((b, i) => {
-    if ('title' in b && b.title) items.push({ id: ('id' in b && b.id) || `sec-${i + 1}`, label: b.title });
+    if ('title' in b && b.title) items.push({ id: ('id' in b && b.id) || `sec-${i + 1}`, label: b.title.replace(/\s*\n\s*/g, ' ') });
     if (b.type === 'duo') b.panels.forEach((p, j) => items.push({ id: p.id ?? (j === 0 ? b.id ?? `sec-${i + 1}` : `sec-${i + 1}-${j + 1}`), label: p.title }));
   });
   if (d.faq?.length) items.push({ id: 'faq', label: '자주 묻는 질문' });

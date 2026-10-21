@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import type { CSSProperties, ReactNode } from 'react';
+import { Fragment, type CSSProperties, type ReactNode } from 'react';
 import { SiteHeader } from '@/components/SiteHeader';
 import { JsonLd } from '@/components/JsonLd';
 import { Breadcrumb, CardLink, ContactBand, FaqList, Figure, MedicalNotice, ScrubText, Sentences, keepDots, splitSentences } from '@/components/ui';
@@ -228,6 +228,8 @@ function linkFig(href: string, label: string): Fig | undefined {
 
 /** 소제목 속 강조 낱말(block.accent)을 주황 밑줄로 — 글자가 제목에 그대로 있을 때만. 주황 띠 위에서는 cls 로 다른 색을 준다 */
 function titleNode(title: string, accent?: string, cls = 'accent-sun'): ReactNode {
+  /* 제목 속 줄바꿈(\n) — 줄을 나눠 그린다(2026-10-21 오너 '무조건적인 보존보다 중요한 것은 / 정확한 진단입니다') */
+  if (title.includes('\n')) return title.split('\n').map((l, i) => <Fragment key={i}>{i > 0 && <br />}{titleNode(l, accent, cls)}</Fragment>);
   const at = accent ? title.indexOf(accent) : -1;
   if (!accent || at < 0) return title;
   return (
