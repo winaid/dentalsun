@@ -107,8 +107,8 @@ const PAIN_BLOCK = text('pain', TMJ_ANATOMY.pain.title, [L('pain') ?? '', ...TMJ
 const ANATOMY_BLOCKS: Block[] = [
   text('anatomy', T('anatomy'), [L('anatomy') ?? ''], TMJ_ANATOMY.fig),
   points('parts', '턱관절을 이루는 네 부분', TMJ_ANATOMY.parts, undefined, 2),
-  points('disc', T('disc'), TMJ_DISC.types, L('disc'), 2),
   points('motion', T('motion'), TMJ_ANATOMY.motions, undefined, 2),
+  points('disc', T('disc'), TMJ_DISC.types, L('disc'), 2),
   PAIN_BLOCK,
 ];
 const CAUSES_BLOCKS: Block[] = [

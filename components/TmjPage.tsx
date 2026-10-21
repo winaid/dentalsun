@@ -413,7 +413,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
               </section>
             )}
 
-            {/* ── 허브: 구조(도해) → 관절원판 전방 변위(도해) → 운동 → 연관통 ── */}
+            {/* ── 허브: 구조(도해) → 운동 → 관절원판 전방 변위(도해) → 연관통 ── */}
             {show('anatomy') && (
               <section id="anatomy" className={`scroll-mt-[96px] ${top('anatomy')}`} aria-labelledby="tmj-anatomy">
                 <Head id="tmj-anatomy" s={SECTIONS.anatomy} />
@@ -434,6 +434,17 @@ export function TmjPage({ doc }: { doc: Doc }) {
                     ))}
                   </ol>
                 </div>
+                <SubHead s={SECTIONS.motion} />
+                <ul className="reveal-stack mt-8 grid gap-4 md:grid-cols-2">
+                  {TMJ_ANATOMY.motions.map((m) => (
+                    <li key={m.title} className="card p-6 md:p-7">
+                      <h4 className="text-[1.1rem] font-extrabold text-ink">{m.title}</h4>
+                      <p className="mt-2 text-[14.5px] leading-[1.8] text-ink-soft">
+                        <Sentences text={m.desc} clauses={false} />
+                      </p>
+                    </li>
+                  ))}
+                </ul>
                 <SubHead s={SECTIONS.disc} />
                 <Illust fig={TMJ_DISC.fig} sizes="(max-width: 1024px) 100vw, 860px" className="reveal mx-auto mt-8 max-w-[860px]" />
                 <ul className="reveal-stack mt-6 grid gap-4 md:grid-cols-2">
@@ -443,18 +454,6 @@ export function TmjPage({ doc }: { doc: Doc }) {
                       <h4 className="mt-3 text-[1.1rem] font-extrabold text-ink">{t.title}</h4>
                       <p className="mt-2 text-[14.5px] leading-[1.8] text-ink-soft">
                         <Sentences text={t.desc} clauses={false} />
-                      </p>
-                    </li>
-                  ))}
-                </ul>
-                {/* 2026-10-20 원장 PPT 171쪽 '위치 이동' — 관절의 운동을 디스크 구역 다음으로(오너 10-21 결정) */}
-                <SubHead s={SECTIONS.motion} />
-                <ul className="reveal-stack mt-8 grid gap-4 md:grid-cols-2">
-                  {TMJ_ANATOMY.motions.map((m) => (
-                    <li key={m.title} className="card p-6 md:p-7">
-                      <h4 className="text-[1.1rem] font-extrabold text-ink">{m.title}</h4>
-                      <p className="mt-2 text-[14.5px] leading-[1.8] text-ink-soft">
-                        <Sentences text={m.desc} clauses={false} />
                       </p>
                     </li>
                   ))}
