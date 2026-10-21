@@ -48,7 +48,7 @@ type BlockBody =
    * 실제 치료 전후 사례(구내 / 방사선 두 영역, 위=전·아래=후) — 목록은 lib/caseLibrary.ts.
    * categories 에 해당하는 사례만 나온다. 사례가 하나도 없으면 구역째 안 나온다.
    */
-  | { type: 'caseGallery'; id?: string; title?: string; lead?: string; categories: Array<'implant' | 'fullarch' | 'endo' | 'reendo' | 'wisdom' | 'anterior' | 'fracture' | 'resin' | 'whitening' | 'tmj' | 'perio'>; /** 사례 위 상자(굵은 한 줄 + 설명) */ box?: { title: string; text: string } }
+  | { type: 'caseGallery'; id?: string; title?: string; lead?: string; categories: Array<'implant' | 'fullarch' | 'endo' | 'reendo' | 'wisdom' | 'anterior' | 'fracture' | 'resin' | 'whitening' | 'tmj' | 'perio' | 'sinus'>; /** 사례 위 상자(굵은 한 줄 + 설명) */ box?: { title: string; text: string } }
   /** 강조 한 줄 — figure 가 있으면 어두운 띠 오른쪽에 그림, 아래에 짧은 설명 몇 줄(lines) */
   | { type: 'quote'; text: string; by?: string; figure?: Fig; lines?: string[] }
   /** 다른 문서로 가는 카드 */

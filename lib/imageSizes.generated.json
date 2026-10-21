@@ -1302,5 +1302,21 @@
  "aesthetic/veneer-real": {
   "w": 1200,
   "h": 800
+ },
+ "cases2/endo-01-xray-pano-before": {
+  "w": 1600,
+  "h": 673
+ },
+ "cases2/endo-01-xray-pano-before-c": {
+  "w": 1600,
+  "h": 673
+ },
+ "cases2/endo-01-xray-pano-after": {
+  "w": 1600,
+  "h": 673
+ },
+ "cases2/endo-01-xray-pano-after-c": {
+  "w": 1600,
+  "h": 673
  }
 }

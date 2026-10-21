@@ -10,7 +10,7 @@
  *   (C:/tmp/sun-ppt-1019/tools/teeth-whiten.mjs, 세기 0.8). ★치료 전·후 사진에 똑같이 적용 — 치료 후만 하얗게 하면 치료 결과를 바꾸는 것이라 하지 않는다.
  *   치아미백(whitening)은 색 자체가 결과라 손대지 않고 cases2 원본 그대로. 원본은 모두 cases2 에 그대로 있다.
  */
-export type CaseCategory = 'implant' | 'fullarch' | 'endo' | 'reendo' | 'wisdom' | 'anterior' | 'fracture' | 'resin' | 'whitening' | 'tmj' | 'perio';
+export type CaseCategory = 'implant' | 'fullarch' | 'endo' | 'reendo' | 'wisdom' | 'anterior' | 'fracture' | 'resin' | 'whitening' | 'tmj' | 'perio' | 'sinus';
 
 export interface CaseImg {
   key: string;
@@ -29,6 +29,8 @@ export interface CaseItem {
   /** 경과가 셋 이상인 사례(턱관절 CT) — before·after 사이 사진 */
   middle?: CaseImg[];
   edits?: string;
+  /** 다른 진료 쪽에도 함께 보일 묶음(원장 PPT 241쪽 '두 군데 모두 사용') */
+  also?: CaseCategory[];
 }
 
 export const CASE_CATEGORY_LABEL: Record<CaseCategory, string> = {
@@ -43,6 +45,7 @@ export const CASE_CATEGORY_LABEL: Record<CaseCategory, string> = {
   whitening: '치아미백',
   tmj: '턱관절',
   perio: '치주치료',
+  sinus: '상악동거상술',
 };
 
 /** 보는 법(끄는 비교·위아래 경과)은 CaseGallery 가 보여 주는 방식에 맞춰 뒤에 붙인다 */
@@ -51,7 +54,8 @@ export const CASE_NOTE =
 
 /** 사례 목록 — scripts 가 만든 manifest 에서 옮긴다(C:/tmp/sun-fb-0929/cases-work/manifest.json) */
 export const CASES: CaseItem[] = [
-  { id: 'endo-01-xray', category: 'endo', type: 'xray', xrayKind: 'periapical', caption: '하악 대구치 근관치료 — 근관 충전', before: { key: 'cases2/endo-01-xray-before', w: 1100, h: 803 }, after: { key: 'cases2/endo-01-xray-after', w: 1100, h: 803 } },
+  /* 2026-10-21 원장 PPT 244쪽 '곽아람 전체 파노라마로 교체 · 도형 표시' — 치근단 사진 → 전체 파노라마(원본 zip 근관치료/곽아람, 2021-08-27 → 2025-04-16) + 치료한 치아에 빨간 원 */
+  { id: 'endo-01-xray', category: 'endo', type: 'xray', xrayKind: 'panorama', caption: '하악 우측 대구치 근관치료 — 근관 충전 후 보철', before: { key: 'cases2/endo-01-xray-pano-before-c', w: 1600, h: 673 }, after: { key: 'cases2/endo-01-xray-pano-after-c', w: 1600, h: 673 } },
   { id: 'endo-02-xray', category: 'endo', type: 'xray', xrayKind: 'periapical', caption: '하악 대구치 근관치료 — 기존 보철 치아의 근관 충전', before: { key: 'cases2/endo-02-xray-before', w: 1100, h: 803 }, after: { key: 'cases2/endo-02-xray-after', w: 1100, h: 803 } },
   { id: 'endo-03-xray', category: 'endo', type: 'xray', xrayKind: 'periapical', caption: '상악 구치부 근관치료 — 우식 치아의 근관 충전', before: { key: 'cases2/endo-03-xray-before', w: 1100, h: 803 }, after: { key: 'cases2/endo-03-xray-after', w: 1100, h: 803 } },
   { id: 'endo-04-xray', category: 'endo', type: 'xray', xrayKind: 'periapical', caption: '상악 구치부 근관치료 — 근관 충전 후 보철 수복', before: { key: 'cases2/endo-04-xray-before', w: 1100, h: 803 }, after: { key: 'cases2/endo-04-xray-after', w: 1100, h: 803 } },
@@ -69,14 +73,16 @@ export const CASES: CaseItem[] = [
   { id: 'wisdom-04-xray', category: 'wisdom', type: 'xray', xrayKind: 'panorama', caption: '하악 좌측 매복 사랑니 발치', before: { key: 'cases2/wisdom-04-xray-before-c', w: 1600, h: 673 }, after: { key: 'cases2/wisdom-04-xray-after-c', w: 1600, h: 673 } },
   { id: 'wisdom-07-xray', category: 'wisdom', type: 'xray', xrayKind: 'panorama', caption: '우측 상·하악 사랑니 발치', before: { key: 'cases2/wisdom-07-xray-before-c', w: 1600, h: 673 }, after: { key: 'cases2/wisdom-07-xray-after-c', w: 1600, h: 673 } },
   { id: 'implant-01-intraoral', category: 'implant', type: 'intraoral', caption: '전치부 임플란트 — 손상 치아 부위 보철 수복', before: { key: 'cases4/implant-01-intraoral-before', w: 1316, h: 822 }, after: { key: 'cases4/implant-01-intraoral-after', w: 1316, h: 822 } },
-  { id: 'implant-02-xray', category: 'implant', type: 'xray', xrayKind: 'panorama', caption: '좌측 상·하악 구치부 임플란트', before: { key: 'cases2/implant-02-xray-before', w: 1600, h: 673 }, after: { key: 'cases2/implant-02-xray-after', w: 1600, h: 673 } },
+  /* 원장 PPT 241쪽 'Case 17·19 상악동, 임플란트 두 군데 모두 사용' — 원본 폴더 '김용경 상악동거상술'·'박옥주 상악동거상술' */
+  { id: 'implant-02-xray', category: 'implant', also: ['sinus'], type: 'xray', xrayKind: 'panorama', caption: '좌측 상·하악 구치부 임플란트 · 상악동거상술', before: { key: 'cases2/implant-02-xray-before', w: 1600, h: 673 }, after: { key: 'cases2/implant-02-xray-after', w: 1600, h: 673 } },
   { id: 'implant-03-xray', category: 'implant', type: 'xray', xrayKind: 'panorama', caption: '상악 다수 부위 임플란트', before: { key: 'cases2/implant-03-xray-before', w: 1600, h: 673 }, after: { key: 'cases2/implant-03-xray-after', w: 1600, h: 673 } },
   { id: 'implant-03-intraoral', category: 'implant', type: 'intraoral', caption: '상악 좌측 측절치 부위 임플란트 — 결손 부위 보철 회복', before: { key: 'cases4/implant-03-intraoral-before', w: 1308, h: 818 }, after: { key: 'cases4/implant-03-intraoral-after', w: 1308, h: 818 }, edits: '후 사진: 임플란트 옆 자연치의 작은 우식 반점 제거(병원 요청)' },
-  { id: 'implant-04-xray', category: 'implant', type: 'xray', xrayKind: 'panorama', caption: '좌측 상·하악 구치부 임플란트', before: { key: 'cases2/implant-04-xray-before', w: 1600, h: 673 }, after: { key: 'cases2/implant-04-xray-after', w: 1600, h: 673 } },
+  { id: 'implant-04-xray', category: 'implant', also: ['sinus'], type: 'xray', xrayKind: 'panorama', caption: '좌측 상·하악 구치부 임플란트 · 상악동거상술', before: { key: 'cases2/implant-04-xray-before', w: 1600, h: 673 }, after: { key: 'cases2/implant-04-xray-after', w: 1600, h: 673 } },
   { id: 'implant-05-xray', category: 'implant', type: 'xray', xrayKind: 'panorama', caption: '상악 양측·하악 우측 구치부 임플란트', before: { key: 'cases2/implant-05-xray-before', w: 1600, h: 673 }, after: { key: 'cases2/implant-05-xray-after', w: 1600, h: 673 } },
   { id: 'implant-06-xray', category: 'implant', type: 'xray', xrayKind: 'panorama', caption: '상악 우측 중절치 임플란트', before: { key: 'cases2/implant-06-xray-before', w: 1600, h: 673 }, after: { key: 'cases2/implant-06-xray-after', w: 1600, h: 673 } },
   { id: 'implant-06-intraoral', category: 'implant', type: 'intraoral', caption: '상악 우측 중절치 임플란트 — 파절 치아 부위 보철 회복', before: { key: 'cases4/implant-06-intraoral-before', w: 796, h: 531 }, after: { key: 'cases4/implant-06-intraoral-after', w: 796, h: 531 }, edits: '후 사진: 치은 변연의 출혈 흔적 제거(병원 요청)' },
-  { id: 'implant-07-xray', category: 'implant', type: 'xray', xrayKind: 'panorama', caption: '상·하악 다수 부위 임플란트 보철', before: { key: 'cases2/implant-07-xray-before', w: 1600, h: 673 }, after: { key: 'cases2/implant-07-xray-after', w: 1600, h: 673 } },
+  /* 원장 PPT 241쪽 'Case 22 파킨슨 환자 설명' — 원본 폴더 '이용옥 파킨슨' */
+  { id: 'implant-07-xray', category: 'implant', type: 'xray', xrayKind: 'panorama', caption: '파킨슨병 환자 — 상·하악 다수 부위 임플란트 보철', before: { key: 'cases2/implant-07-xray-before', w: 1600, h: 673 }, after: { key: 'cases2/implant-07-xray-after', w: 1600, h: 673 } },
   { id: 'implant-08-xray', category: 'implant', type: 'xray', xrayKind: 'panorama', caption: '상악 우측 중절치 임플란트', before: { key: 'cases2/implant-08-xray-before', w: 1600, h: 673 }, after: { key: 'cases2/implant-08-xray-after', w: 1600, h: 673 } },
   { id: 'implant-08-intraoral', category: 'implant', type: 'intraoral', caption: '상악 우측 중절치 임플란트 — 돌출·변색 치아 부위 보철 회복', before: { key: 'cases4/implant-08-intraoral-before', w: 1400, h: 933 }, after: { key: 'cases4/implant-08-intraoral-after', w: 1400, h: 933 } },
   /* 2026-10-20 원장 PPT 236쪽 — 위 사례(같은 사진)를 치주치료 사례로도. 설명 원장 글 */
@@ -117,4 +123,4 @@ export const CASES: CaseItem[] = [
   { id: 'tmj-01-xray', category: 'tmj', type: 'xray', xrayKind: 'ct', caption: '턱관절 CT 측면 단면 — 세 시점 경과', before: { key: 'cases2/tmj-01-xray-1-c', w: 578, h: 304 }, middle: [{ key: 'cases2/tmj-01-xray-2-c', w: 578, h: 304 }], after: { key: 'cases2/tmj-01-xray-3-c', w: 578, h: 304 } },
 ];
 
-export const casesOf = (cats?: CaseCategory[]) => (cats?.length ? CASES.filter((c) => cats.includes(c.category)) : CASES);
+export const casesOf = (cats?: CaseCategory[]) => (cats?.length ? CASES.filter((c) => cats.includes(c.category) || (c.also ?? []).some((a) => cats.includes(a))) : CASES);
