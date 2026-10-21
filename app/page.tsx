@@ -244,7 +244,7 @@ export default function HomePage() {
         {/* ── 국가자격 치과위생사 — 2026-10-07 원장 PPT 61쪽 '추가 희망 · 내용 변경 가능'(예시 띠). 예시 문구를 우리 말로 다듬었다(스탭→스태프, 치위생사→치과위생사).
              바로 위 강점 카드 04·05 가 스태프 이야기라 그 뒤에 둔다. 배경은 AI 사진(병원 사진은 전부 원장이라 스태프 사진이 없다, 얼굴 없음).
              ⚠️ '스태프 전원이 국가자격 치과위생사' 는 병원 확인 대기 — 사실이 아니면 거짓 광고(의료법 제56조). 오너에게 알림(2026-10-07). ── */}
-        <section className="relative isolate overflow-hidden bg-night py-24 text-white md:py-28">
+        <section id="hygienist" className="relative isolate overflow-hidden bg-night py-24 text-white md:py-28">
           <div className="absolute inset-0 -z-10">
             <Image src={figSrc('ai/wide-hygienist')} alt="" fill sizes="(max-width: 1023px) 250vw, 100vw" className="object-cover opacity-45" data-parallax="0.2" />
             <div className="absolute inset-0 bg-gradient-to-b from-night/80 via-night/60 to-night/85" />
