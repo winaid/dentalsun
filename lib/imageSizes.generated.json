@@ -1278,5 +1278,17 @@
  "equip/gbt-v2": {
   "w": 1000,
   "h": 793
+ },
+ "ai/tmj-sym-click": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/tmj-sym-pain": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/tmj-sym-open": {
+  "w": 1200,
+  "h": 800
  }
 }

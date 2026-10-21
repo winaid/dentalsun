@@ -66,6 +66,10 @@ const SCENES = {
   /* 2026-10-20 원장 PPT 179쪽 '이미지 변경'(턱관절 더 알아보기 이갈이 카드) · 181쪽 '사진 변경'(증상 04 번지는 통증) */
   'tmj-bruxism-guard': 'A clear custom night guard (hard acrylic occlusal splint) resting in its small open white case on a white bedside table at night, a soft warm bedside lamp glow, the edge of a white pillow blurred in the background, calm and clean mood, no person.',
   'tmj-spread-pain': 'A young East Asian woman seen from the side and slightly behind with her face turned away, one hand pressing her temple and the other hand rubbing the back of her stiff neck and shoulder, sitting at a bright white desk by a window, the subject centered in the frame, soft daylight.',
+  /* 2026-10-21 원장 PPT 181쪽 '사진 변경' — 증상 01~03(04 는 tmj-spread-pain). 정사각으로 잘려 보이므로 인물은 가운데. 자가진단 사진(tmj-check-*)·원인 사진과 겹치지 않게 */
+  'tmj-sym-click': 'Close side-profile view of a young East Asian woman from the nose down biting into a crisp red apple at a bright breakfast table, her other hand lightly touching the jaw joint just in front of her ear as if she noticed a click, the subject centered in the frame, soft morning daylight.',
+  'tmj-sym-pain': 'A middle-aged East Asian man seen from the side and slightly behind with his face turned away from the camera, both hands massaging his lower jaw and cheek muscles with his fingertips, sitting at an office desk with a laptop blurred in front, the subject centered in the frame, soft late-afternoon window light.',
+  'tmj-sym-open': 'Close-up from the nose down of a young East Asian man trying to take a bite of a tall burger but his mouth opens only partway and cannot fit it, slight discomfort, the subject and burger centered in the frame, bright casual cafe background softly blurred.',
   'implant-aftercare-b': 'Regular implant check-up: a patient reclined in a white dental chair seen from the nose down, mouth gently open, a dentist in deep-navy scrubs seen from the shoulder down holding a small dental mirror near the back teeth with gloved hands, an overhead dental light softly glowing, bright clean treatment room, calm and reassuring mood.',
 };
 

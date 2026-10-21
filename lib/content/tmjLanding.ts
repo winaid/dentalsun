@@ -270,10 +270,11 @@ export const TMJ_HERO_ITEMS: Record<string, Array<{ title: string; desc: string 
 
 /* ───────────────────────── 증상 ───────────────────────── */
 /** 턱관절 장애를 의심해 볼 수 있는 주요 증상 네 가지 + 사진 */
+/* 2026-10-21 원장 PPT 181쪽 '사진 변경' — 네 장 모두 새 사진(01 사과·02 턱 근육·03 햄버거·04 관자놀이와 뒷목). 자가진단·원인 사진과 겹치지 않게 */
 export const TMJ_SYMPTOMS: TmjSymptom[] = [
-  { num: '01', label: '턱 소리', desc: '입을 벌리거나 씹을 때 딸깍 소리나, 모래가 갈리는 듯한 소리가 납니다.', fig: { key: 'scene/tmj-sym-1', alt: '턱관절 안 관절원판의 위치를 나타낸 도해' }, tone: 'night' },
-  { num: '02', label: '통증', desc: '귀 앞 관절이나 턱 근육이 아프고, 이유를 모르는 두통이 함께 옵니다.', fig: { key: 'scene/tmj-sym-2', alt: '통증으로 턱을 감싸 쥔 손' }, tone: 'sun' },
-  { num: '03', label: '개구장애', desc: '입이 충분히 벌어지지 않거나, 벌리는 도중 걸려 멈춥니다.', fig: { key: 'scene/tmj-sym-3', alt: '입이 벌어지는 정도를 자로 재는 모습' }, tone: 'night' },
+  { num: '01', label: '턱 소리', desc: '입을 벌리거나 씹을 때 딸깍 소리나, 모래가 갈리는 듯한 소리가 납니다.', fig: { key: 'ai/tmj-sym-click', alt: '사과를 베어 물며 귀 앞 턱관절에 손가락을 대 보는 모습' }, tone: 'night' },
+  { num: '02', label: '통증', desc: '귀 앞 관절이나 턱 근육이 아프고, 이유를 모르는 두통이 함께 옵니다.', fig: { key: 'ai/tmj-sym-pain', alt: '책상 앞에서 아픈 턱 근육을 손가락으로 주무르는 모습' }, tone: 'sun' },
+  { num: '03', label: '개구장애', desc: '입이 충분히 벌어지지 않거나, 벌리는 도중 걸려 멈춥니다.', fig: { key: 'ai/tmj-sym-open', alt: '입이 충분히 벌어지지 않아 큰 햄버거를 베어 물기 어려운 모습' }, tone: 'night' },
   { num: '04', label: '번지는 통증', desc: '관자놀이 두통, 귀 먹먹함, 목과 어깨 결림이 턱 증상과 함께 되풀이됩니다.', fig: { key: 'ai/tmj-spread-pain', alt: '한 손으로 관자놀이를, 다른 손으로 뒷목을 누르는 모습(원장 PPT 181쪽 사진 변경)' }, tone: 'sun' },
 ];
 
