@@ -108,7 +108,8 @@ export const CASES: CaseItem[] = [
   /* 치아미백 — 2026-09-30 병원이 보낸 사진(더 넓게 찍힌 쪽을 다른 쪽 화각에 맞춰 잘랐다). 옛 홈페이지 미백 3쌍(cases/whitening-*)은 해상도가 낮아 오너가 뺐다(09-30) */
   { id: 'whitening-01-intraoral', category: 'whitening', type: 'intraoral', caption: '전문가 치아미백 — 전체적으로 누렇게 변색된 치아', before: { key: 'cases2/whitening-01-intraoral-before', w: 871, h: 417 }, after: { key: 'cases2/whitening-01-intraoral-after', w: 871, h: 417 } },
   { id: 'whitening-02-intraoral', category: 'whitening', type: 'intraoral', caption: '전문가 치아미백 — 색상 견본을 대어 본 전후 치아 색', before: { key: 'cases2/whitening-02-intraoral-before', w: 966, h: 482 }, after: { key: 'cases2/whitening-02-intraoral-after', w: 966, h: 482 } },
-  { id: 'tmj-01-xray', category: 'tmj', type: 'xray', xrayKind: 'ct', caption: '턱관절 CT 측면 단면 — 세 시점 경과', before: { key: 'cases2/tmj-01-xray-1', w: 578, h: 304 }, middle: [{ key: 'cases2/tmj-01-xray-2', w: 578, h: 304 }], after: { key: 'cases2/tmj-01-xray-3', w: 578, h: 304 } },
+  /* 2026-10-21 원장 PPT 196쪽 — 하악과두 자리에 빨간 동그라미(세 시점 모두, 원본은 *-1·2·3.webp 그대로) */
+  { id: 'tmj-01-xray', category: 'tmj', type: 'xray', xrayKind: 'ct', caption: '턱관절 CT 측면 단면 — 세 시점 경과', before: { key: 'cases2/tmj-01-xray-1-c', w: 578, h: 304 }, middle: [{ key: 'cases2/tmj-01-xray-2-c', w: 578, h: 304 }], after: { key: 'cases2/tmj-01-xray-3-c', w: 578, h: 304 } },
 ];
 
 export const casesOf = (cats?: CaseCategory[]) => (cats?.length ? CASES.filter((c) => cats.includes(c.category)) : CASES);
