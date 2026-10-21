@@ -13,7 +13,7 @@
  *   cases4(치아 밝기) 위에 잇몸·입술의 침 거품·물방울 점만 주변 색으로 채움(C:/tmp/sun-ppt-1019/tools/tidy.mjs) + 치료와 무관한 핏자국 2곳 손으로(inpaint.mjs).
  *   치료 전·후 똑같이. 치아·보철·잇몸 상태(염증·결손)는 손대지 않음. 미백 사례도 거품만(치아 색 그대로). 풀아치 흑백 전 사진은 정리한 판에서 다시.
  * ★ 같은 톡 '임플란트·사랑니 사례는 치료 부위 동그라미' → 임플란트 구내 5·방사선 7사례 -c 판(implant-circles.mjs).
- *   다수 부위(implant-07)·풀아치는 입 전체라 표시 안 함. 치주(perio-01)는 임플란트 사진을 같이 쓰지만 잇몸 전체 사례라 동그라미 없는 판.
+ *   다수 부위(implant-07)·풀아치·전치부 implant-01(오너 10-21 "전체적으로 한 것")은 입 전체라 표시 안 함. 치주(perio-01)는 임플란트 사진을 같이 쓰지만 잇몸 전체 사례라 동그라미 없는 판.
  */
 export type CaseCategory = 'implant' | 'fullarch' | 'endo' | 'reendo' | 'wisdom' | 'anterior' | 'fracture' | 'resin' | 'whitening' | 'tmj' | 'perio' | 'sinus';
 
@@ -78,7 +78,7 @@ export const CASES: CaseItem[] = [
   { id: 'wisdom-01-xray', category: 'wisdom', type: 'xray', xrayKind: 'panorama', caption: '하악 좌측 매복 사랑니 발치', before: { key: 'cases2/wisdom-01-xray-before-c', w: 1600, h: 673 }, after: { key: 'cases2/wisdom-01-xray-after-c', w: 1600, h: 673 } },
   { id: 'wisdom-04-xray', category: 'wisdom', type: 'xray', xrayKind: 'panorama', caption: '하악 좌측 매복 사랑니 발치', before: { key: 'cases2/wisdom-04-xray-before-c', w: 1600, h: 673 }, after: { key: 'cases2/wisdom-04-xray-after-c', w: 1600, h: 673 } },
   { id: 'wisdom-07-xray', category: 'wisdom', type: 'xray', xrayKind: 'panorama', caption: '우측 상·하악 사랑니 발치', before: { key: 'cases2/wisdom-07-xray-before-c', w: 1600, h: 673 }, after: { key: 'cases2/wisdom-07-xray-after-c', w: 1600, h: 673 } },
-  { id: 'implant-01-intraoral', category: 'implant', type: 'intraoral', caption: '전치부 임플란트 — 손상 치아 부위 보철 수복', before: { key: 'cases5/implant-01-intraoral-before-c', w: 1316, h: 822 }, after: { key: 'cases5/implant-01-intraoral-after-c', w: 1316, h: 822 } },
+  { id: 'implant-01-intraoral', category: 'implant', type: 'intraoral', caption: '전치부 임플란트 — 손상 치아 부위 보철 수복', before: { key: 'cases5/implant-01-intraoral-before', w: 1316, h: 822 }, after: { key: 'cases5/implant-01-intraoral-after', w: 1316, h: 822 } },
   /* 원장 PPT 241쪽 'Case 17·19 상악동, 임플란트 두 군데 모두 사용' — 원본 폴더 '김용경 상악동거상술'·'박옥주 상악동거상술' */
   { id: 'implant-02-xray', category: 'implant', also: ['sinus'], type: 'xray', xrayKind: 'panorama', caption: '좌측 상·하악 구치부 임플란트 · 상악동거상술', before: { key: 'cases2/implant-02-xray-before-c', w: 1600, h: 673 }, after: { key: 'cases2/implant-02-xray-after-c', w: 1600, h: 673 } },
   { id: 'implant-03-xray', category: 'implant', type: 'xray', xrayKind: 'panorama', caption: '상악 다수 부위 임플란트', before: { key: 'cases2/implant-03-xray-before-c', w: 1600, h: 673 }, after: { key: 'cases2/implant-03-xray-after-c', w: 1600, h: 673 } },
