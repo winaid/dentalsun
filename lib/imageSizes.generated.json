@@ -1271,10 +1271,6 @@
   "w": 1200,
   "h": 800
  },
- "ai/aesthetic-veneer": {
-  "w": 1200,
-  "h": 800
- },
  "equip/gbt-v2": {
   "w": 1000,
   "h": 793
@@ -1302,5 +1298,9 @@
  "cases2/tmj-01-xray-3-c": {
   "w": 578,
   "h": 304
+ },
+ "aesthetic/veneer-real": {
+  "w": 1200,
+  "h": 800
  }
 }
