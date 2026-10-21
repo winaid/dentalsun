@@ -544,8 +544,8 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
             <Head title={b.title ?? '실제 치료 전후 사례'} lead={b.lead} accent={b.accent} />
             {b.box && (
               <div className="reveal mt-8 rounded-[24px] bg-canvas px-6 py-6 text-center md:px-10">
-                {/* 원장 PPT 202쪽 '제목에 하이라이트 표시' */}
-                <p className="text-[16px] font-extrabold text-ink md:text-[17px]"><mark className="hl">{b.box.title}</mark></p>
+                {/* 원장 PPT 202쪽 '제목에 하이라이트 표시' — 원장이 보낸 캡처처럼 글자 뒤 전체를 옅은 주황으로 칠한다(10-21 오너 '저렇게 보내준 것처럼') */}
+                <p className="text-[16px] font-extrabold text-ink md:text-[17px]"><mark className="box-hl">{b.box.title}</mark></p>
                 <p className="mt-2 text-[14.5px] leading-[1.75] text-ink-soft md:text-[15px]"><Sentences text={b.box.text} clauses={false} /></p>
               </div>
             )}

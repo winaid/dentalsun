@@ -1288,6 +1288,16 @@ body:has([data-admin]) {
   .wr-vline { transition: none; }
 }
 
+/* 사례 상자 제목 하이라이트 — 글자 뒤 전체를 옅은 주황으로(원장 PPT 202쪽 캡처, 옛 홈페이지 방식). 줄이 바뀌어도 줄마다 칠한다 */
+mark.box-hl {
+  background: #fcd3b6;
+  color: var(--color-ink);
+  padding: 0.12em 0.3em;
+  border-radius: 2px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
 /*
  * ── 하이라이트(설명 글 속 끌리는 말) — 글에서 {…} 로 감싼 곳. ui Sentences / rich() 가 <mark class="hl"> 로 바꾼다.
  * 2026-10-07 오너 "서브 문구에도 환자가 후킹 될 만한 문구들은 좀 하이라이트 처리 해줘. 자연스럽게."
