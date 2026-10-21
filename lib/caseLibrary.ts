@@ -54,8 +54,8 @@ export const CASE_NOTE =
 
 /** 사례 목록 — scripts 가 만든 manifest 에서 옮긴다(C:/tmp/sun-fb-0929/cases-work/manifest.json) */
 export const CASES: CaseItem[] = [
-  /* 2026-10-21 원장 PPT 244쪽 '곽아람 전체 파노라마로 교체 · 도형 표시' — 치근단 사진 → 전체 파노라마(원본 zip 근관치료/곽아람, 2021-08-27 → 2025-04-16) + 치료한 치아에 빨간 원 */
-  { id: 'endo-01-xray', category: 'endo', type: 'xray', xrayKind: 'panorama', caption: '하악 우측 대구치 근관치료 — 근관 충전 후 보철', before: { key: 'cases2/endo-01-xray-pano-before-c', w: 1600, h: 673 }, after: { key: 'cases2/endo-01-xray-pano-after-c', w: 1600, h: 673 } },
+  /* 2026-10-21 원장 PPT 244쪽 '곽아람 전체 파노라마로 교체 · 도형 표시' — 치근단 사진 → 전체 파노라마(원본 zip 근관치료/곽아람, 2021-08-27 → 2025-04-16) + 치료한 치아에 빨간 원. 슬라이드 제목이 '재신경치료' → 재근관치료 사례로(오너 10-21, 자리는 그대로라 홈 CASE 번호 안 바뀜) */
+  { id: 'endo-01-xray', category: 'reendo', type: 'xray', xrayKind: 'panorama', caption: '하악 우측 대구치 재근관치료 — 근관 충전 후 보철', before: { key: 'cases2/endo-01-xray-pano-before-c', w: 1600, h: 673 }, after: { key: 'cases2/endo-01-xray-pano-after-c', w: 1600, h: 673 } },
   { id: 'endo-02-xray', category: 'endo', type: 'xray', xrayKind: 'periapical', caption: '하악 대구치 근관치료 — 기존 보철 치아의 근관 충전', before: { key: 'cases2/endo-02-xray-before', w: 1100, h: 803 }, after: { key: 'cases2/endo-02-xray-after', w: 1100, h: 803 } },
   { id: 'endo-03-xray', category: 'endo', type: 'xray', xrayKind: 'periapical', caption: '상악 구치부 근관치료 — 우식 치아의 근관 충전', before: { key: 'cases2/endo-03-xray-before', w: 1100, h: 803 }, after: { key: 'cases2/endo-03-xray-after', w: 1100, h: 803 } },
   { id: 'endo-04-xray', category: 'endo', type: 'xray', xrayKind: 'periapical', caption: '상악 구치부 근관치료 — 근관 충전 후 보철 수복', before: { key: 'cases2/endo-04-xray-before', w: 1100, h: 803 }, after: { key: 'cases2/endo-04-xray-after', w: 1100, h: 803 } },
