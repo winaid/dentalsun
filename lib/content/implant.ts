@@ -945,10 +945,11 @@ export const IMPLANT_DOCS: Doc[] = [
       {
         type: 'caseGallery',
         id: 'cases',
-        title: '상악동거상술 치료 사례',
+        /* 2026-10-22 원장 PPT 241쪽 '골이식' 두 사례 추가 → 제목에 뼈이식, 묶음 sinus + bone */
+        title: '뼈이식 · 상악동거상술 치료 사례',
         accent: '치료 사례',
         lead: '대표원장이 진단부터 보철까지 진행한 실제 사례입니다. 결과는 구강 상태에 따라 개인차가 있습니다.',
-        categories: ['sinus'],
+        categories: ['sinus', 'bone'],
       },
       {
         type: 'notice',
