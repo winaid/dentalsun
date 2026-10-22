@@ -35,7 +35,7 @@ type BlockBody =
   /** 항목 카드 격자 — "이런 경우", "특징", "효과" 같은 나열 */
   | { type: 'points'; id?: string; title?: string; lead?: string; items: Array<{ title: string; desc?: string; /** 카드 위 사진 — 모든 항목에 있을 때만 사진 카드로(참고 35~38쪽 장점 카드) */ fig?: Fig }>; figure?: Fig; columns?: 2 | 3 | 4; numbered?: boolean; /** 어두운 사진 띠로 — 허브에서도(허브는 자동 띠가 없다) */ band?: boolean; /** 카드 아래 맺는 한 줄(원장 PPT 163쪽) */ note?: string }
   /** 번호 매긴 순서 — 치료 과정 */
-  | { type: 'steps'; id?: string; title?: string; lead?: string; steps: Array<{ title: string; desc?: string; figure?: Fig }> }
+  | { type: 'steps'; id?: string; title?: string; lead?: string; /** true = 어두운 띠로 고정, false = 자동 띠 안 씀(블록을 끼워 순번이 밀려도 띠 자리 유지) */ band?: boolean; steps: Array<{ title: string; desc?: string; figure?: Fig }> }
   /** 두 열 비교표 (A vs B). highlight 는 강조할 열. */
   | { type: 'compare'; id?: string; title?: string; lead?: string; columns: [string, string]; rows: Array<{ label: string; a: string; b: string }>; note?: string; highlight?: 'a' | 'b'; /** 표 아래 그림(원장 PPT 136쪽 UV 전후 물방울) */ figure?: Fig }
   /** 일반 표 */
@@ -48,7 +48,7 @@ type BlockBody =
    * 실제 치료 전후 사례(구내 / 방사선 두 영역, 위=전·아래=후) — 목록은 lib/caseLibrary.ts.
    * categories 에 해당하는 사례만 나온다. 사례가 하나도 없으면 구역째 안 나온다.
    */
-  | { type: 'caseGallery'; id?: string; title?: string; lead?: string; categories: Array<'implant' | 'fullarch' | 'endo' | 'reendo' | 'wisdom' | 'anterior' | 'fracture' | 'resin' | 'whitening' | 'tmj' | 'perio' | 'sinus' | 'bone'>; /** 사례 위 상자(굵은 한 줄 + 설명) */ box?: { title: string; text: string } }
+  | { type: 'caseGallery'; id?: string; title?: string; lead?: string; categories: Array<'implant' | 'fullarch' | 'endo' | 'reendo' | 'wisdom' | 'anterior' | 'fracture' | 'resin' | 'whitening' | 'tmj' | 'perio' | 'sinus' | 'bone' | 'navigation'>; /** 사례 위 상자(굵은 한 줄 + 설명) */ box?: { title: string; text: string } }
   /** 강조 한 줄 — figure 가 있으면 어두운 띠 오른쪽에 그림, 아래에 짧은 설명 몇 줄(lines) */
   | { type: 'quote'; text: string; by?: string; figure?: Fig; lines?: string[] }
   /** 다른 문서로 가는 카드 */

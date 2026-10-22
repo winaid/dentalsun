@@ -304,6 +304,29 @@ export const CI_BLOCKS: Block[] = [
  *   무대 사진은 순서로 붙는다(1 CT 촬영실 · 2 계획 화면 · 3 CAD·3D 프린터 · 4 가이드) → 단계 순서도 그대로 둔다.
  *   홈 무대는 글을 그대로 그리므로 NAVI_PROCESS 에는 하이라이트 표시({…})를 넣지 않는다.
  * ═══════════════════════════════════════════════════════════════════════════ */
+/**
+ * 임플란트 진료 철학 띠 — 2026-10-22 원장 '이고운치과처럼'. 이고운은 '어떤 치료를 받을지' 고르는 쪽(진료 방법 7쪽)에만 같은 띠를 두고
+ * 제품·재료 쪽(보철·시스템)에는 두지 않는다 → 우리도 허브·내비게이션·풀아치·뼈이식 넷에만. 맞춤·UV·자가혈·보증에는 넣지 않는다.
+ * 큰 문구 = 원장 블로그(서윤록 증례 글) 진료 철학 원문 그대로. 아래 설명 줄은 쪽마다 그 쪽에 맞는 원장 블로그 문장.
+ */
+export const IMPLANT_PHILOSOPHY = { text: '오래도록 안심할 수 있는 치료 결과를 위해, 한 번 할 때 제대로 하자', by: '광화문 선치과 진료 철학' };
+
+/**
+ * 이런 경우 가이드 식립이 특히 도움이 됩니다 — 2026-10-22 이고운 내비 쪽 '이런 분께' 자리. 글은 우리가 썼다(사실은 이 쪽·원장 블로그에 있는 것만):
+ * 01 신경·상악동 = 노규범 증례(신경에서 2mm) · 02 여러 개 = 윤미경 증례(세 임플란트 방향) · 03 절개 부담 = NAVI_BENEFITS 04 원장 문구의 사실 · 04 = 원장 블로그(이종태 증례) '최종 보철물의 형태와 교합을 고려해'
+ */
+export const NAVI_WHO = {
+  title: '이런 경우 가이드 식립이 특히 도움이 됩니다',
+  items: [
+    { title: '신경이나 상악동과 가까운 자리', desc: '아래턱 신경이나 위턱 상악동과 식립할 자리가 가까우면, 3D CT로 거리를 미리 재고 그 거리를 지키며 식립합니다.' },
+    { title: '여러 개를 나란히 식립할 때', desc: '이어서 연결할 임플란트들은 방향이 서로 맞아야 보철이 안정적으로 올라갑니다. 계획한 방향 그대로 가이드로 옮깁니다.' },
+    { title: '잇몸 절개가 부담스러울 때', desc: '잇몸뼈가 충분하면 작은 구멍으로 식립해, 절개와 봉합에 따른 부담을 줄입니다.' },
+    { title: '완성될 치아 모양부터 정하고 싶을 때', desc: '위아래 맞물림과 보철 모양을 먼저 정하고, 그 모양을 받칠 수 있는 자리에 식립합니다.' },
+  ],
+};
+/** 내비 쪽 철학 띠 설명 줄 — 원장 블로그(윤미경 증례 글) 원문 */
+export const NAVI_PHILO_LINES = ['오래 사용할 수 있도록 처음부터 정확하게 계획하는 것, 광화문선치과가 임플란트 치료에서 중요하게 생각하는 부분입니다.'];
+
 export const NAVI_WHAT = {
   title: '3D CT로 미리 수술해 보고 식립하는 임플란트',
   paragraphs: [
@@ -420,6 +443,8 @@ export const NAVI_FAQ: QA[] = [
 ];
 
 export const NAVI_BLOCKS: Block[] = [
+  { type: 'points', id: 'navi-who', title: NAVI_WHO.title, items: NAVI_WHO.items, columns: 2 },
+  { type: 'quote', text: IMPLANT_PHILOSOPHY.text, by: IMPLANT_PHILOSOPHY.by, lines: NAVI_PHILO_LINES },
   { type: 'text', id: 'navi-what', title: NAVI_WHAT.title, paragraphs: NAVI_WHAT.paragraphs, figure: NAVI_WHAT.fig },
   { type: 'points', id: 'navi-structure', title: NAVI_STRUCTURE.title, lead: NAVI_STRUCTURE.lead, items: NAVI_STRUCTURE.parts, figure: NAVI_STRUCTURE.fig, columns: 3 },
   { type: 'points', id: 'navi-benefits', title: NAVI_BENEFITS.title, items: NAVI_BENEFITS.items, columns: 4 },

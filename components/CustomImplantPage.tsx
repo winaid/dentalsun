@@ -6,6 +6,7 @@ import { HeroCollage } from '@/components/HeroCollage';
 import { JsonLd } from '@/components/JsonLd';
 import { ContactBand, FaqList, MedicalNotice, Sentences } from '@/components/ui';
 import { ContactCard, DoctorCard } from '@/components/SideRail';
+import { CaseGallery } from '@/components/CaseGallery';
 import { docCharCount, figSize, figSrc, fitsBox, type Doc, type Fig } from '@/lib/docs';
 import { docByPath, docsOfHub } from '@/lib/content';
 import { HERO_COLLAGE, splitAccent } from '@/lib/heroCollage';
@@ -23,15 +24,18 @@ import {
   CI_PROCESS,
   CI_WHEN,
   CI_WHY,
+  IMPLANT_PHILOSOPHY,
   NAVI_BENEFITS,
   NAVI_GUIDE,
   NAVI_HERO_ITEMS,
   NAVI_COMPARE,
   NAVI_NOTICE,
+  NAVI_PHILO_LINES,
   NAVI_PROCESS,
   NAVI_STRUCTURE,
   NAVI_SYSTEM,
   NAVI_WHAT,
+  NAVI_WHO,
 } from '@/lib/content/customImplantLanding';
 import { articleSchema, breadcrumbSchema, faqSchema, imageObjectSchema, medicalWebPageSchema } from '@/lib/seo';
 import { CLINIC } from '@/lib/clinic';
@@ -258,6 +262,40 @@ export function CustomImplantPage({ doc, part }: { doc: Doc; part: 'navigation' 
           {/* ───────── 본문 ───────── */}
           <div className="min-w-0">
             {/* ══ 내비게이션 임플란트 쪽 ══ */}
+            {/* 2026-10-22 이고운 진료 방법 쪽 짜임(첫 화면 → 이런 분께 → 진료 철학 띠 → 본문) — 이런 분께 네 장 + 본문 칸 안 둥근 철학 판(옆 칸이 있어 전폭 띠 대신) */}
+            {part === 'navigation' && (
+            <section id="who" className="scroll-mt-[96px] pb-24 md:pb-32" aria-labelledby="ci-who">
+              <Head id="ci-who" label="이런 분께" title={<>이런 경우 <span className="accent-sun">가이드 식립이 특히 도움이 됩니다</span></>} />
+              <ul className="reveal-stack mt-10 grid gap-4 md:grid-cols-2">
+                {NAVI_WHO.items.map((w, i) => (
+                  <li key={w.title} className="card flex gap-4 p-6">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-sun-50 text-[14px] font-extrabold text-sun-600">{String(i + 1).padStart(2, '0')}</span>
+                    <span className="min-w-0">
+                      <span className="block text-[1.05rem] font-extrabold text-ink">{w.title}</span>
+                      <span className="mt-1.5 block text-[14.5px] leading-[1.7] text-ink-soft"><Sentences text={w.desc} /></span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              <div className="reveal relative isolate mt-14 overflow-hidden rounded-[28px] bg-brand-900 px-5 py-12 text-center text-white md:px-12 md:py-16">
+                <div className="absolute inset-0 -z-10">
+                  <Image src={figSrc('ai/wide-philosophy')} alt="" fill sizes="(max-width: 1024px) 100vw, 820px" className="object-cover opacity-20" />
+                </div>
+                {/* 쉼표마다 한 줄 + 줄 안은 사이트 줄바꿈 규칙(Sentences) — 폰에서 '치료 / 결과를'처럼 묶음 중간에서 꺾이지 않게 */}
+                <p className="text-[1.15rem] leading-[1.55] font-bold md:text-[1.6rem]">
+                  {IMPLANT_PHILOSOPHY.text.split(/(?<=,)\s+/).map((part, i) => (
+                    <span key={i} className="block"><Sentences text={part} /></span>
+                  ))}
+                </p>
+                <p className="mt-4 text-[14px] text-white/60">— {IMPLANT_PHILOSOPHY.by}</p>
+                <div className="mx-auto mt-7 max-w-[620px] space-y-2 text-[15px] leading-[1.8] text-white/80 md:text-[16px]">
+                  {NAVI_PHILO_LINES.map((l) => (
+                    <p key={l}><Sentences text={l} /></p>
+                  ))}
+                </div>
+              </div>
+            </section>
+            )}
             {part === 'navigation' && (
             <section id="navigation" className="scroll-mt-[96px]" aria-labelledby="ci-navi">
               <Head id="ci-navi" label="수술 계획" title={<>임플란트 위치는 수술 전에, <span className="accent-sun">3D CT로 정합니다</span></>} lead="3D CT와 구강스캔 자료를 겹쳐 컴퓨터에서 미리 수술해 보고, 그 계획대로 만든 수술 가이드로 식립합니다. {계획부터 수술까지 대표원장이 직접} 맡습니다." />
@@ -347,6 +385,15 @@ export function CustomImplantPage({ doc, part }: { doc: Doc; part: 'navigation' 
                 ))}
               </ul>
               <NoticeBox title={NAVI_NOTICE.title} paragraphs={NAVI_NOTICE.paragraphs} className="mt-6" />
+            </section>
+            )}
+            {/* 2026-10-22 가이드 식립이 핵심인 실제 사례(노규범·윤미경·이종태 — caseLibrary also: navigation). 사진 고지는 CaseGallery 가 붙인다 */}
+            {part === 'navigation' && (
+            <section id="cases" className="scroll-mt-[96px] pt-24 md:pt-32" aria-labelledby="ci-cases">
+              <Head id="ci-cases" label="치료 사례" title={<>가이드 식립 <span className="accent-sun">치료 사례</span></>} lead="대표원장이 3D CT 계획과 수술 가이드로 진행한 실제 사례입니다. 결과는 구강 상태에 따라 개인차가 있습니다." />
+              <div className="reveal mt-10">
+                <CaseGallery categories={['navigation']} />
+              </div>
             </section>
             )}
 

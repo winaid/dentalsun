@@ -15,7 +15,7 @@
  * ★ 같은 톡 '임플란트·사랑니 사례는 치료 부위 동그라미' → 임플란트 구내 5·방사선 7사례 -c 판(implant-circles.mjs).
  *   다수 부위(implant-07)·풀아치·전치부 implant-01(오너 10-21 "전체적으로 한 것")은 입 전체라 표시 안 함. 치주(perio-01)는 임플란트 사진을 같이 쓰지만 잇몸 전체 사례라 동그라미 없는 판.
  */
-export type CaseCategory = 'implant' | 'fullarch' | 'endo' | 'reendo' | 'wisdom' | 'anterior' | 'fracture' | 'resin' | 'whitening' | 'tmj' | 'perio' | 'sinus' | 'bone';
+export type CaseCategory = 'implant' | 'fullarch' | 'endo' | 'reendo' | 'wisdom' | 'anterior' | 'fracture' | 'resin' | 'whitening' | 'tmj' | 'perio' | 'sinus' | 'bone' | 'navigation';
 
 export interface CaseImg {
   key: string;
@@ -52,6 +52,7 @@ export const CASE_CATEGORY_LABEL: Record<CaseCategory, string> = {
   perio: '치주치료',
   sinus: '상악동거상술',
   bone: '뼈이식',
+  navigation: '내비게이션 임플란트',
 };
 
 /** 보는 법(끄는 비교·위아래 경과)은 CaseGallery 가 보여 주는 방식에 맞춰 뒤에 붙인다 */
@@ -98,15 +99,16 @@ export const CASES: CaseItem[] = [
   { id: 'implant-09-intraoral', category: 'implant', type: 'intraoral', caption: '상악 좌측 측절치 임플란트 — 결손 부위 보철 회복', before: { key: 'cases5/implant-09-intraoral-before-c', w: 1378, h: 861 }, after: { key: 'cases5/implant-09-intraoral-after-c', w: 1378, h: 861 } },
   /* 2026-10-22 원장 PPT 241쪽 '추가할 것' — 병원이 보낸 7명(Downloads/임상증례_전후사진_261022.zip). 슬라이드 순서 이규환·김기남·서윤록·노규범·윤미경·봉예원·이종태.
      '상악동' 서윤록·봉예원 → also sinus, '골이식' 김기남·윤미경 → also bone(뼈이식 쪽 사례), 7명 모두 임플란트.
+     10-22 저녁 내비게이션 쪽 사례 칸(오너 승인 계획) — 가이드 수술이 핵심인 노규범(신경 2mm)·윤미경(3개 방향)·이종태(방향·교합) → also navigation.
      파노라마의 노란 점선 원·신경관 빨간 선·파란 화살표·빨간 점선은 병원이 그려 보낸 표시 그대로(오너 10-22). 표시 없던 이종태만 #37 에 빨간 타원(-c).
      봉예원 구내: 전·후 배율이 달라 같은 범위로 잘라 맞춘 뒤 다른 구내 사진과 같은 처리(치아 밝기 → 거품 정리, 고름주머니 자리는 제외). 도구 C:/tmp/sun-zip-1022/tools/build.mjs */
   { id: 'implant-10-xray', category: 'implant', type: 'xray', xrayKind: 'panorama', caption: '임플란트 몸체·나사 파절 — 하악 우측 구치부 임플란트 2개 제거 후 뼈이식과 함께 재식립', before: { key: 'cases2/implant-10-xray-before', w: 1052, h: 443 }, after: { key: 'cases2/implant-10-xray-after', w: 1052, h: 443 } },
   { id: 'implant-11-xray', category: 'implant', also: ['bone'], type: 'xray', xrayKind: 'panorama', caption: '하악 좌측 대구치 — 사랑니와 함께 발치하고 뼈이식 후 지연 식립', before: { key: 'cases2/implant-11-xray-before', w: 1379, h: 581 }, after: { key: 'cases2/implant-11-xray-after', w: 1379, h: 581 } },
   { id: 'implant-12-xray', category: 'implant', also: ['sinus'], type: 'xray', xrayKind: 'panorama', caption: '남은 잇몸뼈 1~2mm — 상악 우측 대구치 측방 접근 상악동거상술 · 임플란트', before: { key: 'cases2/implant-12-xray-before', w: 1379, h: 581 }, after: { key: 'cases2/implant-12-xray-after', w: 1379, h: 581 } },
-  { id: 'implant-13-xray', category: 'implant', type: 'xray', xrayKind: 'panorama', caption: '하치조신경과 가까운 하악 양측 대구치 — 흔들리던 임플란트 제거 후 가이드 수술로 식립', before: { key: 'cases2/implant-13-xray-before', w: 1379, h: 581 }, after: { key: 'cases2/implant-13-xray-after', w: 1379, h: 581 } },
-  { id: 'implant-14-xray', category: 'implant', also: ['bone'], type: 'xray', xrayKind: 'panorama', caption: '당뇨 환자 — 흔들리던 브릿지 제거 후 하악 우측 구치부 뼈이식 · 임플란트 3개', before: { key: 'cases2/implant-14-xray-before', w: 1379, h: 581 }, after: { key: 'cases2/implant-14-xray-after', w: 1379, h: 581 } },
+  { id: 'implant-13-xray', category: 'implant', also: ['navigation'], type: 'xray', xrayKind: 'panorama', caption: '하치조신경과 가까운 하악 양측 대구치 — 흔들리던 임플란트 제거 후 가이드 수술로 식립', before: { key: 'cases2/implant-13-xray-before', w: 1379, h: 581 }, after: { key: 'cases2/implant-13-xray-after', w: 1379, h: 581 } },
+  { id: 'implant-14-xray', category: 'implant', also: ['bone', 'navigation'], type: 'xray', xrayKind: 'panorama', caption: '당뇨 환자 — 흔들리던 브릿지 제거 후 하악 우측 구치부 뼈이식 · 임플란트 3개', before: { key: 'cases2/implant-14-xray-before', w: 1379, h: 581 }, after: { key: 'cases2/implant-14-xray-after', w: 1379, h: 581 } },
   { id: 'implant-15-intraoral', category: 'implant', also: ['sinus'], type: 'intraoral', caption: '뿌리 끝 염증으로 잇몸뼈가 녹은 상악 우측 어금니 — 발치와보존술 · 상악동거상술 · 임플란트', before: { key: 'cases5/implant-15-intraoral-before', w: 989, h: 629 }, after: { key: 'cases5/implant-15-intraoral-after', w: 989, h: 629 } },
-  { id: 'implant-16-xray', category: 'implant', type: 'xray', xrayKind: 'panorama', caption: '임플란트를 빼지 않고 살린 사례 — 하악 좌측 대구치 지대주 파절편 제거 후 보철 재연결', before: { key: 'cases2/implant-16-xray-before-c', w: 1379, h: 580 }, after: { key: 'cases2/implant-16-xray-after-c', w: 1379, h: 580 } },
+  { id: 'implant-16-xray', category: 'implant', also: ['navigation'], type: 'xray', xrayKind: 'panorama', caption: '임플란트를 빼지 않고 살린 사례 — 하악 좌측 대구치 지대주 파절편 제거 후 보철 재연결', before: { key: 'cases2/implant-16-xray-before-c', w: 1379, h: 580 }, after: { key: 'cases2/implant-16-xray-after-c', w: 1379, h: 580 } },
   /* 2026-10-20 원장 PPT 199쪽 순서 — 방사선 5·1·4·2·3(3 에 상악 틀니 제작 설명) · 구내 4·5·2·3·1 */
   /* 2026-10-21 199쪽 'BEFORE 흑백으로 해도 괜찮을까요?' — 원장 원함(오너 "걍 해"): 구내 치료 전 사진만 흑백(*-before-bw, 원본 컬러 파일은 그대로 둠). ⚠️ 전후 조건이 달라지는 연출이라 의료광고 소지 — 오너에게 알림 */
   { id: 'fullarch-05-xray', category: 'fullarch', type: 'xray', xrayKind: 'panorama', caption: '상·하악 풀아치 임플란트 — 잔존 치아 2개 상태에서 보철 회복', before: { key: 'cases2/fullarch-05-xray-before', w: 1600, h: 673 }, after: { key: 'cases2/fullarch-05-xray-after', w: 1600, h: 673 } },

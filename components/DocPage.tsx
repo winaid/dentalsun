@@ -169,8 +169,10 @@ export function DocPage({ doc }: { doc: Doc }) {
           /* 첫 화면 카드가 이미 보여 준 목록(그림 없는 ≤4개 points)은 본문에서 한 번 더 늘어놓지 않는다 — 같은 카드 네 장이 연달아 두 번 나오던 것 */
           if (b === firstPoints && !collage.items && !b.figure && b.items.length <= 4) return null;
           /* 블록이 띠를 지정하면(band: true) 허브에서도 띠로 — 자동 띠 개수에는 넣지 않는다 */
-          const forced = b.type === 'points' && !!b.band;
-          const band = forced || (!doc.isHub && (b.type === 'points' || b.type === 'steps') && i > 0 && i % 3 === 2 && bandCount < 2);
+          /* band: false 면 자동 띠도 끈다 — 2026-10-22 임플란트 하위 쪽에 블록을 끼워 순번이 밀리자 띠가 다른 구역으로 옮겨 가던 것(steps 도 band 를 받는다) */
+          const pinned = b.type === 'points' || b.type === 'steps' ? b.band : undefined;
+          const forced = pinned === true;
+          const band = forced || (pinned !== false && !doc.isHub && (b.type === 'points' || b.type === 'steps') && i > 0 && i % 3 === 2 && bandCount < 2);
           if (band && !forced) bandCount++;
           return <BlockView key={i} block={b} index={i} band={band ? bandBg : undefined} photoBand={i === photoBandIndex ? photoBandKey : undefined} concise={!isInsight} />;
         })}
