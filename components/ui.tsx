@@ -542,7 +542,14 @@ export function ContactBand({ title = '진료 예약 및 상담 안내', text, b
         <div className="reveal mx-auto grid max-w-[1320px] items-center gap-10 md:grid-cols-[1fr_auto] lg:gap-16">
           <div>
             <p className="eyebrow on-dark">CONTACT</p>
-            <h2 className="display-sm mt-4 !text-white">{title}</h2>
+            {/* 제목 속 줄바꿈 문자(\n)는 그 자리에서 줄을 바꾼다 — 2026-10-22 임플란트 허브 질문형 제목이 낱말 중간에서 꺾이던 것. \n 없는 제목은 예전 그대로 */}
+            <h2 className="display-sm mt-4 !text-white">
+              {title.split('\n').map((line, i) => (
+                <span key={i} className={title.includes('\n') ? 'block' : undefined}>
+                  {line}
+                </span>
+              ))}
+            </h2>
             <p className="mt-3 text-white/70">{text ? <Sentences text={text} /> : `화·목 야간진료 21:00 · ${CLINIC.parking.place} ${CLINIC.parking.fee}`}</p>
             {/* 빈 자리에 지하철 안내 — 기존 홈페이지 오시는 길 표기 그대로, 호선 색 동그라미 */}
             <ul className="mt-6 flex flex-wrap gap-2.5">

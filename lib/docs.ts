@@ -89,6 +89,8 @@ export interface Doc {
   faq?: QA[];
   /** 관련 문서 경로 — 마무리 카드 */
   related?: string[];
+  /** 맨 아래 문의 띠 제목·설명 — 없으면 기본('진료 예약 및 상담 안내') */
+  contact?: { title: string; text?: string };
 }
 
 /**

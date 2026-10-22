@@ -212,7 +212,7 @@ export function DocPage({ doc }: { doc: Doc }) {
           </section>
         )}
 
-        <ContactBand bg={bandBg} />
+        <ContactBand bg={bandBg} title={doc.contact?.title} text={doc.contact?.text} />
         <MedicalNotice />
       </main>
     </>
@@ -598,15 +598,27 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
           </section>
         );
       return (
-        <section className="relative isolate overflow-hidden bg-brand-900 py-20 text-white">
+        <section className="relative isolate overflow-hidden bg-brand-900 py-20 text-white md:py-24">
+          {/* 2026-10-22 parallax 뺌 — 스크롤로 사진이 아래로 밀려 띠 위쪽이 민무늬로 비던 것(이 판은 지금 임플란트 허브 진료 철학 띠 한 곳에서만 쓴다) */}
           <div className="absolute inset-0 -z-10">
-            <Image src={figSrc('ai/wide-philosophy')} alt="" fill sizes="(max-width: 1023px) 200vw, 100vw" className="object-cover opacity-20" data-parallax="0.15" />
+            <Image src={figSrc('ai/wide-philosophy')} alt="" fill sizes="(max-width: 1023px) 200vw, 100vw" className="object-cover opacity-20" />
           </div>
           <div className="wrap reveal text-center">
+            {/* 2026-10-22 따옴표 뺌 — ScrubText 가 덩어리로 그려져 “ ” 가 위아래 줄로 떨어졌다(원장 PPT 200쪽 '따옴표 없음'과 같은 처리) */}
             <p className="mx-auto max-w-[900px] text-[1.3rem] leading-[1.6] font-bold md:text-[1.8rem]">
-              “<ScrubText text={b.text} />”
+              <ScrubText text={b.text} />
             </p>
             {b.by && <p className="mt-4 text-white/60">— {b.by}</p>}
+            {/* 2026-10-22 임플란트 허브 진료 철학 띠 — 큰 문구 아래 짧은 설명 줄(그림 없는 판에도) */}
+            {b.lines && (
+              <div className="mx-auto mt-8 max-w-[760px] space-y-2 text-[1rem] leading-[1.8] text-white/80 md:text-[1.06rem]">
+                {b.lines.map((l, i) => (
+                  <p key={i}>
+                    <Sentences text={l} />
+                  </p>
+                ))}
+              </div>
+            )}
           </div>
         </section>
       );
