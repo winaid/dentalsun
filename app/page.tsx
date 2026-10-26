@@ -209,7 +209,8 @@ export default function HomePage() {
               {/* 2026-10-20 원장 PPT 98쪽 '현재 ver X → 이전 ver O, 소제목+내용 전체 바꾸기 / 보철 → 치료 단어만 변경'.
                    10-07 카톡판('정확한 진단 원칙을 지키는 진료' · '검사 영상을 치료 순으로 설명하고')을 9월 판으로 되돌리고 '보철과'만 '치료와'로. 글자 그대로 */}
               <h2 className="display-sm mt-4">
-                같은 치료라도 <span className="accent whitespace-nowrap">누가 하느냐</span>가 다릅니다
+                {/* 2026-10-26 원장 PPT(홈페이지 261026) 1쪽 '누가 하느냐에 따라 달라집니다.' — 제목 꼬리만, 끝 마침표는 다른 제목처럼 뺌 */}
+                같은 치료라도 <span className="accent whitespace-nowrap">누가 하느냐</span>에 따라 달라집니다
               </h2>
               <p className="lead mt-4">
                 <Sentences text="진단과 수술, 치료와 정기검진을 대표원장이 직접 맡습니다. 검사 영상을 함께 보며 원인과 치료 순서를 설명하고, 지금 필요한 치료부터 권해 드립니다." />

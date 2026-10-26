@@ -4,7 +4,7 @@ import type { ReactNode } from 'react';
 import { SiteHeader } from '@/components/SiteHeader';
 import { HeroCollage } from '@/components/HeroCollage';
 import { JsonLd } from '@/components/JsonLd';
-import { ContactBand, FaqList, MedicalNotice, Sentences } from '@/components/ui';
+import { ContactBand, FaqList, MedicalNotice, Sentences, rich } from '@/components/ui';
 import { ContactCard, DoctorCard } from '@/components/SideRail';
 import { CaseGallery } from '@/components/CaseGallery';
 import { docCharCount, figSize, figSrc, fitsBox, type Doc, type Fig } from '@/lib/docs';
@@ -171,6 +171,18 @@ function Paras({ text, className = '' }: { text: string[]; className?: string })
   );
 }
 
+/** 단락 여러 개 — 줄바꿈 엔진 없이 문단으로 흐르게, {…} 만 하이라이트.
+ *  2026-10-26 김희동 본부장 '3D CT 카드 줄바꿈이 너무 많아 세로로 길어진다 → 없이, 중요한 곳 하이라이트' */
+function FlowParas({ text, className = '' }: { text: string[]; className?: string }) {
+  return (
+    <>
+      {text.map((t, i) => (
+        <p key={i} className={`${i > 0 ? 'mt-3 ' : ''}${className}`}>{rich(t)}</p>
+      ))}
+    </>
+  );
+}
+
 /** 순서 카드 네 장 — 사진 + STEP + 제목 + 글.
  *  카드 사이 '›' 는 카드 밖(-right)에 놓이므로 카드(li)를 overflow-hidden 으로 자르면 안 보인다(2026-10-07 PPT 재대조에서 발견) —
  *  둥근 모서리 자르기는 사진 칸(rounded-t-[inherit])에서만 한다. */
@@ -306,7 +318,7 @@ export function CustomImplantPage({ doc, part }: { doc: Doc; part: 'navigation' 
                 <div className="card p-7 md:p-8">
                   <h3 className="text-[1.15rem] font-extrabold text-ink">{NAVI_WHAT.title}</h3>
                   <div className="mt-3">
-                    <Paras text={NAVI_WHAT.paragraphs} className="text-[15px] leading-[1.85] text-ink-soft" />
+                    <FlowParas text={NAVI_WHAT.paragraphs} className="text-[15px] leading-[1.85] text-ink-soft" />
                   </div>
                 </div>
               </div>
