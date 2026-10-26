@@ -10,8 +10,6 @@ import type { Doc } from '../docs';
 
 const HUB = '/treatment/aesthetic';
 const HUB_LABEL = '심미치료';
-const CASE_NOTE =
-  '본 사진은 광화문 선치과에서 진료받은 환자의 사례이며, 개인의 구강 상태와 시술 종류에 따라 결과는 다를 수 있습니다.';
 
 export const AESTHETIC_DOCS: Doc[] = [
   // ───────────────────────── 허브 ─────────────────────────
@@ -200,14 +198,14 @@ export const AESTHETIC_DOCS: Doc[] = [
         ],
         note: '재료 선택은 남은 치아와 맞물림, 원하는 색과 투명도에 따라 달라집니다.',
       },
+      /* 2026-10-26 원장 PPT(261026) 2쪽 '메인에 사용된 포토샵 보정 사진이 상세페이지에 반영되지 않음' — 옛 홈페이지 저해상도 3쌍(lib/cases prosthetics) 대신
+         홈 사례 칸과 같은 보정판 앞니 심미 사례(caseLibrary anterior, cases5). 사진 고지는 CaseGallery 가 붙인다 */
       {
-        type: 'cases',
+        type: 'caseGallery',
         id: 'cases',
         title: '심미보철 전후',
         lead: '광화문 선치과에서 진료한 심미보철 사례입니다.',
-        figure: { key: 'aesthetic/prosth-cases', alt: '심미보철 전과 후를 비교한 사례 사진 3쌍' },
-        caseGroup: 'prosthetics',
-        note: CASE_NOTE,
+        categories: ['anterior'],
       },
       {
         type: 'notice',

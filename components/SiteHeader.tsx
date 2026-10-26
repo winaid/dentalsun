@@ -148,7 +148,8 @@ export function SiteHeader({ dark = false }: { dark?: boolean }) {
                   <span className="text-ink-muted">+</span>
                 </summary>
                 <ul className="pb-3">
-                  {!item.href.startsWith('http') && !item.href.includes('#') && (
+                  {/* 2026-10-26 원장 PPT(261026) 2쪽 '모바일: 턱관절 전체보기, 턱관절 장애랑 같은 화면' — 하위에 같은 주소가 있으면 '전체 보기'를 빼 PC 메뉴와 같게 */}
+                  {!item.href.startsWith('http') && !item.href.includes('#') && !item.children?.some((c) => c.href === item.href) && (
                     <li>
                       <Link href={item.href} className="block px-2 py-2 text-[16px] font-semibold text-brand-700">{item.label} 전체 보기</Link>
                     </li>

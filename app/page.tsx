@@ -13,7 +13,7 @@ import { AwardCard } from '@/components/TmjPage';
 import { FullArchBand } from '@/components/FullArchBand';
 import { WarrantyBand } from '@/components/WarrantyBand';
 import { VisitMap } from '@/components/VisitMap';
-import { TMJ_AWARD } from '@/lib/content/tmjLanding';
+import { TMJ_AWARD, TMJ_HOME_ROOT } from '@/lib/content/tmjLanding';
 import { HomeStats } from '@/components/HomeScroll';
 import { CaseGallery } from '@/components/CaseGallery';
 import { CLINIC, HOURS, HYGIENE, STRENGTHS } from '@/lib/clinic';
@@ -306,12 +306,82 @@ export default function HomePage() {
                           <span className="hidden sm:inline">{h.label}</span>
                         </span>
                       </span>
-                      <span className="mt-2.5 text-[13px] leading-[1.55] text-ink-muted sm:mt-3 sm:text-[14.5px] sm:leading-relaxed">{h.children?.slice(0, 3).map((c) => c.label).join(' · ')}</span>
+                      <span className="mt-2.5 text-[14px] leading-[1.55] text-ink-muted sm:mt-3 sm:text-[15.5px] sm:leading-relaxed">{h.children?.slice(0, 3).map((c) => c.label).join(' · ')}</span>
                     </span>
                   </Link>
                 </li>
               ))}
             </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* 2026-10-26 원장 PPT(홈페이지 261026) 14쪽 '턱관절 섹션 위치를 진료과목 바로 아래로' — 풀아치·보증 띠 아래에서 옮김 */}
+        {/* ── 턱관절 — 어두운 사진 띠 ── */}
+        <section id="tmj" className="relative isolate overflow-hidden bg-night py-24 text-white md:py-32">
+          <div className="absolute inset-0 -z-10">
+            <Image src={figSrc('ai/wide-tmj')} alt="" fill sizes="(max-width: 1023px) 250vw, 100vw" className="object-cover opacity-50" data-parallax="0.2" />
+            <div className="absolute inset-0 bg-gradient-to-b from-night/85 via-night/65 to-night/90" />
+          </div>
+          {/* 사진 카드 없이 글만 가운데(오너: 억지로 맞춘 사진 카드 제거). 배경 사진이 분위기를 맡는다. */}
+          <div className="wrap">
+            <div className="reveal mx-auto max-w-[880px] lg:max-w-[1040px] text-center">
+              <p className="eyebrow on-dark justify-center">TMJ · 턱관절</p>
+              <h2 className="display-sm mt-4 !text-white on-photo">
+                {/* 2026-10-07 46쪽 '어렵다' — 예전: '관절잡음 · 개구장애 · 저작근 통증, 원인 감별이 치료의 시작입니다' */}
+                턱에서 소리가 나거나 아프다면,
+                <br />
+                <span className="accent-sun">원인부터</span> 정확히 찾습니다
+              </h2>
+              {/* 넓은 화면은 문장 하나 = 한 줄(오너 규칙) — 첫 문장이 약 970px 이라 lg 에서 칸을 넓힌다 */}
+              <p className="mx-auto mt-6 max-w-[720px] text-[1.05rem] leading-[1.85] text-white md:text-[1.15rem] lg:max-w-[1000px]">
+                {/* 2026-10-20 원장 PPT 102쪽 문구 그대로(네 줄). 하이라이트 자리만 예전 '{필요한 단계만}' 과 같은 뜻의 낱말로 */}
+                {/* 넓은 화면은 원장 PPT 102쪽처럼 네 줄(둘째 문장은 '파악하고,' 뒤에서 꺾음) — 폰은 이어서 흐른다 */}
+                <span className="lg:block"><ScrubText text="턱관절 질환은 턱관절 디스크의 위치, 턱 근육의 긴장, 이갈이⁠·⁠이악물기, 치아 맞물림이 함께 얽혀 생깁니다." /></span>
+                {' '}
+                <span className="lg:block"><ScrubText text="3D CT와 개구량·교합·근육 검사로 원인을 파악하고," /></span>
+                {' '}
+                <span className="lg:block"><ScrubText text="약물·물리치료부터 교합안정장치, 보톡스, 관절강 세척술까지 {환자 상태에 맞춰 필요한 치료}를 진행합니다." /></span>
+                {' '}
+                <span className="lg:block"><ScrubText text="단순한 통증 완화를 넘어, 장기적인 기능 회복을 목표로 합니다." /></span>
+              </p>
+              {/* 2026-10-26 원장 PPT(홈페이지 261026) 14·15쪽 + 오너 "기존 홈페이지 내용과 느낌을 가져와서 보완" — 옛 홈페이지 턱관절 첫 화면의 짜임:
+                   중괄호 제목 · 청록 육각형 셋 · '| 01 제목' 세 칸(lib/content/tmjLanding TMJ_HOME_ROOT). 예전 작은 카드 셋(102쪽)의 사실은 세 칸 글에 합쳤다 */}
+              <div className="reveal mt-14">
+                <p className="brace-title on-photo">
+                  <span aria-hidden className="brace">{'{'}</span>
+                  <span>
+                    {TMJ_HOME_ROOT.brace.map((l) => (
+                      <span key={l} className="block">{l}</span>
+                    ))}
+                  </span>
+                  <span aria-hidden className="brace">{'}'}</span>
+                </p>
+                <ul className="reveal-stack mt-8 flex justify-center gap-2.5 sm:gap-5" aria-label="광화문선치과 턱관절 진료의 세 가지">
+                  {TMJ_HOME_ROOT.hex.map((h) => (
+                    <li key={h} className="hex">{h}</li>
+                  ))}
+                </ul>
+              </div>
+              <ol className="reveal-stack mx-auto mt-12 grid max-w-[1040px] gap-7 text-left md:grid-cols-3 md:gap-10">
+                {TMJ_HOME_ROOT.items.map((it, i) => (
+                  <li key={it.title} className="border-l-2 border-sun-400/80 pl-5">
+                    <p className="flex items-baseline gap-2.5">
+                      <span className="text-[1.05rem] font-extrabold tabular-nums text-sun-300">{String(i + 1).padStart(2, '0')}</span>
+                      <span className="text-[1.1rem] font-bold leading-snug text-white md:text-[1.15rem]">{it.title}</span>
+                    </p>
+                    <p className="mt-3 text-[15.5px] leading-[1.8] text-white/80">{it.desc}</p>
+                  </li>
+                ))}
+              </ol>
+              {/* 2026-10-07 원장 PPT 46쪽 '홈화면에 턱관절 상장 이미지 추가' — 턱관절 쪽과 같은 상장 카드(사진이 오기 전엔 글자 액자).
+                   ⚠️ 상장 광고는 의료법 제56조 제2항 제14호 소지 — 2026-09-29 오너에게 알렸고 병원 결정으로 싣는다 */}
+              {TMJ_AWARD.show && <AwardCard className="mt-10" />}
+              <div className="mt-10 flex flex-wrap justify-center gap-3">
+                <Link href="/treatment/tmj" className="btn-sun">턱관절 치료 안내</Link>
+                <Link href="/treatment/tmj/symptoms" className="btn-ghost-dark">증상 자가진단</Link>
+                <Link href="/treatment/tmj/bruxism" className="btn-ghost-dark">이갈이 · 이악물기</Link>
+              </div>
             </div>
           </div>
         </section>
@@ -358,55 +428,22 @@ export default function HomePage() {
              2026-10-20 원장 PPT 101쪽 '위치변경 / 네비게이션 임플란트, 이렇게 진행됩니다 밑으로' — 풀아치 띠 아래에서 과정 무대 아래로 옮김 ── */}
         <WarrantyBand />
 
-        {/* ── 턱관절 — 어두운 사진 띠 ── */}
-        <section id="tmj" className="relative isolate overflow-hidden bg-night py-24 text-white md:py-32">
-          <div className="absolute inset-0 -z-10">
-            <Image src={figSrc('ai/wide-tmj')} alt="" fill sizes="(max-width: 1023px) 250vw, 100vw" className="object-cover opacity-50" data-parallax="0.2" />
-            <div className="absolute inset-0 bg-gradient-to-b from-night/85 via-night/65 to-night/90" />
-          </div>
-          {/* 사진 카드 없이 글만 가운데(오너: 억지로 맞춘 사진 카드 제거). 배경 사진이 분위기를 맡는다. */}
+        {/* 2026-10-26 원장 PPT(261026) 2쪽 '강점과 차별점이 드러나는 부분을 상단에' — 실제 치료 전후를 일반진료 앞으로 */}
+        {/* ── 치료 전후 사례 — 2026-09-29 원장 요청: 병원이 보낸 실제 사진을 '구내 / 방사선' 두 영역. 영역마다 좌우로 끄는 비교(왼쪽=전·오른쪽=후, 보는 법은 CaseGallery 아래 안내가 맡는다).
+             목록은 lib/caseLibrary.ts (빼고 싶은 사례는 거기서 한 줄 지우면 된다) ── */}
+        <section className="section" id="cases">
           <div className="wrap">
-            <div className="reveal mx-auto max-w-[880px] lg:max-w-[1040px] text-center">
-              <p className="eyebrow on-dark justify-center">TMJ · 턱관절</p>
-              <h2 className="display-sm mt-4 !text-white on-photo">
-                {/* 2026-10-07 46쪽 '어렵다' — 예전: '관절잡음 · 개구장애 · 저작근 통증, 원인 감별이 치료의 시작입니다' */}
-                턱에서 소리가 나거나 아프다면,
-                <br />
-                <span className="accent-sun">원인부터</span> 정확히 찾습니다
+            <div className="reveal mx-auto max-w-[820px] text-center lg:max-w-[960px]">
+              <p className="eyebrow justify-center">BEFORE &amp; AFTER</p>
+              <h2 className="display-sm mt-4">
+                광화문 선치과 <span className="accent">실제 치료 전후</span>
               </h2>
-              {/* 넓은 화면은 문장 하나 = 한 줄(오너 규칙) — 첫 문장이 약 970px 이라 lg 에서 칸을 넓힌다 */}
-              <p className="mx-auto mt-6 max-w-[720px] text-[1.05rem] leading-[1.85] text-white md:text-[1.15rem] lg:max-w-[1000px]">
-                {/* 2026-10-20 원장 PPT 102쪽 문구 그대로(네 줄). 하이라이트 자리만 예전 '{필요한 단계만}' 과 같은 뜻의 낱말로 */}
-                {/* 넓은 화면은 원장 PPT 102쪽처럼 네 줄(둘째 문장은 '파악하고,' 뒤에서 꺾음) — 폰은 이어서 흐른다 */}
-                <span className="lg:block"><ScrubText text="턱관절 질환은 턱관절 디스크의 위치, 턱 근육의 긴장, 이갈이⁠·⁠이악물기, 치아 맞물림이 함께 얽혀 생깁니다." /></span>
-                {' '}
-                <span className="lg:block"><ScrubText text="3D CT와 개구량·교합·근육 검사로 원인을 파악하고," /></span>
-                {' '}
-                <span className="lg:block"><ScrubText text="약물·물리치료부터 교합안정장치, 보톡스, 관절강 세척술까지 {환자 상태에 맞춰 필요한 치료}를 진행합니다." /></span>
-                {' '}
-                <span className="lg:block"><ScrubText text="단순한 통증 완화를 넘어, 장기적인 기능 회복을 목표로 합니다." /></span>
+              <p className="lead mt-4">
+                <Sentences text="대표원장이 직접 진료한 사례입니다." />
               </p>
-              <ul className="reveal-stack mx-auto mt-10 grid max-w-[860px] gap-4 sm:grid-cols-3">
-                {[
-                  ['01', '턱관절 CT · 교합 및 구내검사'], // 2026-10-20 원장 PPT 102쪽
-                  ['02', '물리치료 · 보톡스 · 맞춤 장치 치료'], // 2026-10-20 원장 PPT 102쪽
-                  ['03', '턱관절 진료 5,000건 이상'],
-                ].map(([n, t]) => (
-                  /* 폰에서는 번호·글이 한 줄로 나란히(세 장을 세로로 쌓아도 얇게) — 넓은 화면은 가운데 정렬 상자 */
-                  <li key={n} className="flex items-center gap-4 rounded-2xl border border-white/15 bg-white/8 px-5 py-3.5 text-left backdrop-blur-md sm:min-h-[110px] sm:flex-col sm:justify-center sm:gap-0 sm:py-5 sm:text-center">
-                    <span className="text-[12px] font-extrabold tracking-[0.2em] text-sun-300">{n}</span>
-                    <span className="text-[16px] font-bold leading-snug sm:mt-2">{t}</span>
-                  </li>
-                ))}
-              </ul>
-              {/* 2026-10-07 원장 PPT 46쪽 '홈화면에 턱관절 상장 이미지 추가' — 턱관절 쪽과 같은 상장 카드(사진이 오기 전엔 글자 액자).
-                   ⚠️ 상장 광고는 의료법 제56조 제2항 제14호 소지 — 2026-09-29 오너에게 알렸고 병원 결정으로 싣는다 */}
-              {TMJ_AWARD.show && <AwardCard className="mt-10" />}
-              <div className="mt-10 flex flex-wrap justify-center gap-3">
-                <Link href="/treatment/tmj" className="btn-sun">턱관절 치료 안내</Link>
-                <Link href="/treatment/tmj/symptoms" className="btn-ghost-dark">증상 자가진단</Link>
-                <Link href="/treatment/tmj/bruxism" className="btn-ghost-dark">이갈이 · 이악물기</Link>
-              </div>
+            </div>
+            <div className="reveal mt-10">
+              <CaseGallery filter />
             </div>
           </div>
         </section>
@@ -438,25 +475,6 @@ export default function HomePage() {
                 </li>
               ))}
             </ul>
-          </div>
-        </section>
-
-        {/* ── 치료 전후 사례 — 2026-09-29 원장 요청: 병원이 보낸 실제 사진을 '구내 / 방사선' 두 영역. 영역마다 좌우로 끄는 비교(왼쪽=전·오른쪽=후, 보는 법은 CaseGallery 아래 안내가 맡는다).
-             목록은 lib/caseLibrary.ts (빼고 싶은 사례는 거기서 한 줄 지우면 된다) ── */}
-        <section className="section" id="cases">
-          <div className="wrap">
-            <div className="reveal mx-auto max-w-[820px] text-center lg:max-w-[960px]">
-              <p className="eyebrow justify-center">BEFORE &amp; AFTER</p>
-              <h2 className="display-sm mt-4">
-                광화문 선치과 <span className="accent">실제 치료 전후</span>
-              </h2>
-              <p className="lead mt-4">
-                <Sentences text="대표원장이 직접 진료한 사례입니다." />
-              </p>
-            </div>
-            <div className="reveal mt-10">
-              <CaseGallery filter />
-            </div>
           </div>
         </section>
 

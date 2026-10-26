@@ -654,7 +654,7 @@ export function MedicalNotice() {
   return (
     <div className="bg-night pb-14">
       <div className="wrap">
-        <p className="border-t border-white/10 pt-7 text-[13.5px] leading-relaxed text-white/45"><Sentences text={MEDICAL_DISCLAIMER} /></p>
+        <p className="border-t border-white/10 pt-7 text-[14.5px] leading-relaxed text-white/45"><Sentences text={MEDICAL_DISCLAIMER} /></p>
       </div>
     </div>
   );
@@ -674,7 +674,7 @@ export function CardLink({ href, label, desc, external = false, fig, num }: { hr
         {num && <span className="num mb-3">{num}</span>}
         <span className="block text-[15px] font-bold leading-snug text-ink group-hover:text-brand-700 sm:text-[1.08rem]">{label}</span>
         {desc && (
-          <span className="mt-2 block text-[13.5px] leading-[1.6] text-ink-soft sm:text-[15px] sm:leading-relaxed">
+          <span className="mt-2 block text-[14.5px] leading-[1.6] text-ink-soft sm:text-[16px] sm:leading-relaxed">
             <Sentences text={desc} clauses={false} />
           </span>
         )}

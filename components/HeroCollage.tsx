@@ -101,7 +101,7 @@ export function HeroCollage({
             )}
             {/* 설명은 두 줄 높이를 잡아 두어 한 문장이든 두 문장이든 버튼 자리가 같다 */}
             {lead && (
-              <p className="mt-8 max-w-[560px] text-[1.08rem] leading-[1.8] text-white/80 hero-in hero-in-4 md:text-[1.16rem] lg:mt-10 lg:min-h-[3.6em] lg:max-w-[720px]">
+              <p className="keep-lines mt-8 max-w-[560px] text-[1.08rem] leading-[1.8] text-white/80 hero-in hero-in-4 md:text-[1.16rem] lg:mt-10 lg:min-h-[3.6em] lg:max-w-[720px]">
                 <Sentences text={lead} clauses={false} />
               </p>
             )}
@@ -142,7 +142,7 @@ export function HeroCollage({
               >
                 <span className="num-xl">{String(i + 1).padStart(2, '0')}</span>
                 <p className="mt-3 text-[16.5px] font-bold leading-snug text-white">{it.title}</p>
-                <p className="mt-2 text-[14px] leading-[1.7] text-white/70"><Sentences text={it.desc} /></p>
+                <p className="mt-2 text-[15px] leading-[1.7] text-white/70"><Sentences text={it.desc} /></p>
               </li>
             ))}
           </ol>

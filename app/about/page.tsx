@@ -89,7 +89,7 @@ export default function AboutPage() {
                 >
                   <span className="num">{String(i + 1).padStart(2, '0')}</span>
                   <p className="mt-4 text-[1.05rem] font-bold text-ink">{s.title}</p>
-                  <p className="mt-2 text-[15px] leading-relaxed text-ink-soft"><Sentences text={s.desc} /></p>
+                  <p className="mt-2 text-[16px] leading-relaxed text-ink-soft"><Sentences text={s.desc} /></p>
                 </li>
               ))}
             </ul>
@@ -143,7 +143,7 @@ export default function AboutPage() {
                 <li key={p.n} className="card flex h-full flex-col p-6">
                   <span className="pill-sun">Point {p.n}</span>
                   <p className="mt-3 text-[1.05rem] font-bold text-ink">{p.title}</p>
-                  <p className="mt-2 text-[15px] leading-relaxed text-ink-soft"><Sentences text={p.desc} /></p>
+                  <p className="mt-2 text-[16px] leading-relaxed text-ink-soft"><Sentences text={p.desc} /></p>
                 </li>
               ))}
             </ol>

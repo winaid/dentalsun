@@ -97,6 +97,32 @@ export function WrapGuard() {
       }
     };
 
+    /*
+     * 본문 이어 흐르기 — 2026-10-26 원장 PPT(홈페이지 261026) 2쪽 '줄바꿈이 많다'로 본문 문장은 이어 흐르게 바뀌었다(globals.css 줄바꿈).
+     * 그런데 붙임 공백 덩어리(최대 15.5em)가 줄 끝에 안 들어가면 통째로 내려가 문장마다 끊긴 것처럼 보였다 → 강조 자리 밖 문장은 붙임 공백을 푼다.
+     * 숫자 옆(‘3 개’·‘5,000 건’ 같은 자리)은 그대로 둔다. 강조 자리 = 첫 화면 설명·구역 머리 설명·가운데 정렬 글·제목.
+     */
+    const KEEP = '.keep-lines, .lead, .text-center, h1, h2, h3, h4, .sent-soft';
+    const flow = () => {
+      for (const el of document.querySelectorAll('.sent, .sent-one')) {
+        if (el.closest(KEEP)) continue;
+        const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+        let t = walker.nextNode() as Text | null;
+        while (t) {
+          const s = t.data;
+          if (s.includes(NB)) {
+            const out = s.replace(/\u00a0/g, (m: string, i: number) => (/[0-9]/.test(s[i - 1] ?? '') || /[0-9]/.test(s[i + 1] ?? '') ? m : ' '));
+            if (out !== s) {
+              const prev = edited.get(t);
+              edited.set(t, { orig: prev ? prev.orig : s, mod: out });
+              t.data = out;
+            }
+          }
+          t = walker.nextNode() as Text | null;
+        }
+      }
+    };
+
     const restore = () => {
       edited.forEach((v, t) => { if (t.isConnected && t.data === v.mod) t.data = v.orig; });
       edited.clear();
@@ -105,9 +131,10 @@ export function WrapGuard() {
     let timer = 0;
     const schedule = (full: boolean) => {
       window.clearTimeout(timer);
-      timer = window.setTimeout(() => { if (full) restore(); release(); seps(); }, full ? 160 : 120);
+      timer = window.setTimeout(() => { if (full) restore(); flow(); release(); seps(); }, full ? 160 : 120);
     };
 
+    flow();
     release();
     seps();
     document.fonts?.ready.then(() => schedule(true));

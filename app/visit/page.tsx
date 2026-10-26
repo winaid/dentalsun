@@ -130,7 +130,7 @@ export default function VisitPage() {
                   <div className="flex flex-1 flex-col p-6">
                     <span className="num">{String(i + 1).padStart(2, '0')}</span>
                     <p className="mt-3 text-[1.05rem] font-bold text-ink">{s.title}</p>
-                    <p className="mt-2 text-[15px] leading-relaxed text-ink-soft"><Sentences text={s.desc} /></p>
+                    <p className="mt-2 text-[16px] leading-relaxed text-ink-soft"><Sentences text={s.desc} /></p>
                   </div>
                 </li>
               ))}

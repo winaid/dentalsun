@@ -26,7 +26,6 @@ const pair = (prefix: string, n: number, what: string): CasePair => ({
 });
 
 export const CASE_GROUPS: CaseGroup[] = [
-  { id: 'prosthetics', label: '심미보철', href: '/treatment/aesthetic/prosthetics', pairs: [1, 2, 3].map((n) => pair('prosth', n, '심미보철')) },
   { id: 'whitening', label: '치아미백', href: '/treatment/aesthetic/whitening', pairs: [1, 2, 3].map((n) => pair('whitening', n, '치아미백')) },
   {
     id: 'mta',

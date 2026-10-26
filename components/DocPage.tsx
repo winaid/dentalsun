@@ -63,6 +63,12 @@ const DOC_AI: Record<string, string> = {
   '/insight': 'ai/insight-hub',
 };
 
+/** 허브 '세부 안내' 카드에만 쓰는 사진 — 쪽 자체의 대표 사진(검색용 이미지 정보)은 그대로 두고 카드 그림만 바꿀 때.
+ *  2026-10-26 원장 PPT(261026) 7쪽 '06 뼈이식 상악동거상술 사진 교체' — CT 장비 사진 → 골이식재·상악동·임플란트가 한 그림에 나오는 도해 */
+const CARD_FIG: Record<string, string> = {
+  '/treatment/implant/bone-graft': 'illust/sinus-lift',
+};
+
 export function DocPage({ doc }: { doc: Doc }) {
   const isInsight = doc.path.startsWith('/insight');
   const trail = isInsight ? [{ name: '인사이트', path: '/insight' }] : [{ name: '진료 안내', path: '/treatment' }, { name: doc.hubLabel, path: doc.hub }];
@@ -157,7 +163,7 @@ export function DocPage({ doc }: { doc: Doc }) {
               <ol className="reveal-stack cards-flex mx-auto mt-10 max-w-[1320px]" style={gridVars(children.length)}>
                 {children.map((c, i) => (
                   <li key={c.path}>
-                    <CardLink href={c.path} label={c.title} desc={shortSummary(c.summary)} num={String(i + 1).padStart(2, '0')} fig={{ key: DOC_AI[c.path] ?? c.hero?.key ?? bandBg, alt: c.title }} />
+                    <CardLink href={c.path} label={c.title} desc={shortSummary(c.summary)} num={String(i + 1).padStart(2, '0')} fig={{ key: CARD_FIG[c.path] ?? DOC_AI[c.path] ?? c.hero?.key ?? bandBg, alt: c.title }} />
                   </li>
                 ))}
               </ol>
@@ -447,7 +453,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
           <div className="wrap">
             <Head title={b.title} lead={b.lead} accent={b.accent} />
             <div className="tbl-scroll reveal mt-10 overflow-x-auto">
-              <table className="tbl min-w-[640px]">
+              <table className="tbl tbl-m min-w-[640px]">
                 <caption className="sr-only">{b.title ?? '비교표'}</caption>
                 <thead>
                   <tr>
@@ -461,14 +467,14 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
                   {b.rows.map((r, i) => (
                     <tr key={i}>
                       <th scope="row">{r.label}</th>
-                      <td className={hl === 'a' ? 'tbl-hl font-semibold text-brand-800' : 'text-ink-soft'}>{r.a}</td>
-                      <td className={hl === 'b' ? 'tbl-hl font-semibold text-brand-800' : 'text-ink-soft'}>{r.b}</td>
+                      <td data-label={b.columns[0]} className={hl === 'a' ? 'tbl-hl font-semibold text-brand-800' : 'text-ink-soft'}>{r.a}</td>
+                      <td data-label={b.columns[1]} className={hl === 'b' ? 'tbl-hl font-semibold text-brand-800' : 'text-ink-soft'}>{r.b}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
-            {b.note && <p className="mt-4 text-[14.5px] leading-relaxed text-ink-muted"><Sentences text={`※ ${b.note}`} /></p>}
+            {b.note && <p className="mt-4 text-[15.5px] leading-relaxed text-ink-muted"><Sentences text={`※ ${b.note}`} /></p>}
             {b.figure && (
               <div className="reveal mx-auto mt-10 max-w-[760px]">
                 <Figure fig={b.figure} sizes="(max-width: 800px) 100vw, 760px" />
@@ -485,7 +491,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
             <Head title={b.title} lead={b.lead} accent={b.accent} />
             <div className="tbl-scroll reveal mt-10 overflow-x-auto">
               {/* 세 칸 이하 표는 폰에서 옆으로 밀지 않고 칸 여백을 줄여 한 화면에(원장 PPT 215쪽 '모바일로 보기 어려워요, 여백을 줄여 한눈에') */}
-              <table className={`tbl ${b.head.length <= 3 ? 'tbl-tight min-w-0 sm:min-w-[640px]' : 'min-w-[640px]'}`}>
+              <table className={`tbl tbl-m ${b.head.length <= 3 ? 'tbl-tight min-w-0 sm:min-w-[640px]' : 'min-w-[640px]'}`}>
                 <caption className="sr-only">{b.title ?? '표'}</caption>
                 <thead>
                   <tr>
@@ -497,13 +503,13 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
                 <tbody>
                   {b.rows.map((r, i) => (
                     <tr key={i}>
-                      {r.map((c, j) => (j === 0 ? <th key={j} scope="row">{typeof c === 'string' ? keepDots(c) : c}</th> : <td key={j} className="text-ink-soft">{typeof c === 'string' && splitSentences(c).length > 1 ? <Sentences text={c} clauses={false} /> : typeof c === 'string' ? keepDots(c) : c}</td>))}
+                      {r.map((c, j) => (j === 0 ? <th key={j} scope="row">{typeof c === 'string' ? keepDots(c) : c}</th> : <td key={j} data-label={b.head[j]} className="text-ink-soft">{typeof c === 'string' && splitSentences(c).length > 1 ? <Sentences text={c} clauses={false} /> : typeof c === 'string' ? keepDots(c) : c}</td>))}
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
-            {b.note && <p className="mt-4 text-[14.5px] leading-relaxed text-ink-muted"><Sentences text={`※ ${b.note}`} /></p>}
+            {b.note && <p className="mt-4 text-[15.5px] leading-relaxed text-ink-muted"><Sentences text={`※ ${b.note}`} /></p>}
           </div>
         </section>
       );
@@ -550,7 +556,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
               <div className="reveal mt-8 rounded-[24px] bg-canvas px-6 py-6 text-center md:px-10">
                 {/* 원장 PPT 202쪽 '제목에 하이라이트 표시' — 원장이 보낸 캡처처럼 글자 뒤 전체를 옅은 주황으로 칠한다(10-21 오너 '저렇게 보내준 것처럼') */}
                 <p className="text-[16px] font-extrabold text-ink md:text-[17px]"><mark className="box-hl">{b.box.title}</mark></p>
-                <p className="mt-2 text-[14.5px] leading-[1.75] text-ink-soft md:text-[15px]"><Sentences text={b.box.text} clauses={false} /></p>
+                <p className="mt-2 text-[15.5px] leading-[1.75] text-ink-soft md:text-[16px]"><Sentences text={b.box.text} clauses={false} /></p>
               </div>
             )}
             <div className="reveal mt-8">
@@ -688,7 +694,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
                         <span className="text-[13px] font-extrabold tracking-[0.12em] text-sun-600">{String(mi + 1).padStart(2, '0')}</span>
                         <span className="text-[1.2rem] font-extrabold text-brand-800 md:text-[1.3rem]">{m.title}</span>
                       </p>
-                      <p className="mt-1.5 text-[14.5px] leading-[1.7] text-ink-soft">
+                      <p className="mt-1.5 text-[15.5px] leading-[1.7] text-ink-soft">
                         <Sentences text={m.desc} clauses={false} />
                       </p>
                     </div>
@@ -709,7 +715,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
                           </span>
                           <span className="mt-2.5 block text-[12px] font-extrabold tracking-[0.1em] text-sun-600">{String(si + 1).padStart(2, '0')}</span>
                           <span className="mt-0.5 block text-[14.5px] font-extrabold text-brand-800">{st.title}</span>
-                          <span className="mt-1 block text-[13px] leading-[1.6] text-ink-soft">{st.desc}</span>
+                          <span className="mt-1 block text-[14px] leading-[1.6] text-ink-soft">{st.desc}</span>
                         </li>
                       ))}
                     </ol>
@@ -745,7 +751,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
                           <span className="relative block aspect-[3/2] w-full shrink-0 overflow-hidden rounded-lg lg:w-[50%]">
                             <Image src={figSrc(c.fig.key)} alt={c.fig.alt} fill sizes="(max-width: 767px) 45vw, 220px" className="object-cover" />
                           </span>
-                          <p className="px-1 text-[13.5px] leading-[1.65] text-ink-soft md:text-[14.5px]">
+                          <p className="px-1 text-[14.5px] leading-[1.65] text-ink-soft md:text-[15.5px]">
                             <Sentences text={c.text} clauses={false} />
                           </p>
                         </div>

@@ -260,7 +260,7 @@ export function BeforeAfter({ groups, note, showTabs = true }: { groups: CaseGro
         </ul>
       )}
 
-      <p className="mx-auto mt-6 max-w-[760px] text-center text-[13.5px] leading-relaxed text-ink-muted"><Sentences text={`※ ${note}`} /></p>
+      <p className="mx-auto mt-6 max-w-[760px] text-center text-[14.5px] leading-relaxed text-ink-muted"><Sentences text={`※ ${note}`} /></p>
       {showTabs && (
         <p className="mt-4 text-center">
           <Link href={group.href} className="btn-ghost">{group.label} 자세히 보기</Link>
