@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<title>광화문선치과의원 위치 — 카카오 지도</title>
+<base target="_blank">
+<!--
+  오시는 길 지도(components/KakaoRoughMap 이 iframe 으로 연다) — 카카오맵 '지도 퍼가기' 코드를 글자 그대로.
+  2026-10-26 원장 PPT(홈페이지 261026) 5쪽 "지도가 안 움직이는 거로 바뀜, 시청역도 표시가 안 되어 있음".
+  ★ 이 파일을 따로 둔 이유: 카카오 설치 스크립트는 document.write 로 본 스크립트를 끼우고 주소의 http/https 를 지금 문서 주소에서 고른다.
+    화면에 바로 넣으면(비동기) document.write 가 막히고, iframe srcdoc 은 주소가 about:srcdoc 이라 http 로 불러 https 쪽에서 막혔다(혼합 콘텐츠).
+  값은 map.kakao.com 장소 624215116 → 지도공유 → HTML 태그 복사 → 소스 생성하기. 지도 크기는 ?w=&h= 로 받는다.
+-->
+<style>
+html, body { margin: 0; padding: 0; overflow: hidden; background: #f7f8fa; }
+.root_daum_roughmap .cont { display: none !important; }
+</style>
+</head>
+<body>
+<div id="daumRoughmapContainer1793003401336" class="root_daum_roughmap root_daum_roughmap_landing"></div>
+<script charset="UTF-8" class="daum_roughmap_loader_script" src="https://t1.kakaocdn.net/kakaomapweb/roughmap/loader/prod/roughmapLoader.js"></script>
+<script charset="UTF-8">
+  var q = new URLSearchParams(location.search);
+  var w = String(q.get('w') || document.documentElement.clientWidth || 640);
+  var h = String(q.get('h') || 420);
+  new daum.roughmap.Lander({ "timestamp": "1793003401336", "key": "3xzh2488kmy", "mapWidth": w, "mapHeight": h }).render();
+</script>
+</body>
+</html>
