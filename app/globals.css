@@ -1004,6 +1004,11 @@ details.faq .a {
 /* 표는 좁은 화면에서 넘친다 — insightFeed 가 table 을 이 상자로 감싼다. */
 .blog-body .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 .blog-body .table-wrap table { min-width: 520px; }
+/* 2026-10-26 원장 PPT(261026) 2쪽 '표가 모바일에서도 가독성 좋게' — 폰에서 3칸 이하 표(목차 등)는 화면 폭에 맞춰 줄바꿈, 4칸 이상만 옆으로 넘긴다(예전엔 다 520px 로 묶여 오른쪽 글이 잘려 보였다) */
+@media (max-width: 639px) {
+  .blog-body .table-wrap table { min-width: 0; }
+  .blog-body .table-wrap table:has(tr > :nth-child(4)) { min-width: 520px; }
+}
 
 
 /*
