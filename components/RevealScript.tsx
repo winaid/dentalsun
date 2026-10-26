@@ -14,7 +14,6 @@ import { usePathname } from 'next/navigation';
  *  · 낱말 밝아짐([data-scrub] 안의 .w): 문단이 화면을 지나는 만큼 낱말이 차례로 밝아진다.
  *  · 가로 흐름([data-hpan]): 사진 띠가 구역이 지나가는 만큼 옆으로 흐른다.
  *  · 숫자 세기([data-count="21"]): 보이는 순간 0 부터 세어 올라간다.
- *  · 고정 무대([data-stage] 안의 [data-stage-step] / [data-stage-img]): 오른쪽 글이 가운데를 지나면 왼쪽 고정 사진이 바뀐다.
  *  동작 축소(prefers-reduced-motion)면 등장만 즉시 보이고 나머지는 하지 않는다.
  */
 export function RevealScript() {
@@ -130,31 +129,6 @@ export function RevealScript() {
       cio.observe(el);
     });
 
-    /* 고정 무대 — 글이 화면 가운데 띠를 지나면 그 단계가 켜진다 */
-    const stageIOs = [...document.querySelectorAll<HTMLElement>('[data-stage]')].map((stage) => {
-      const steps = [...stage.querySelectorAll<HTMLElement>('[data-stage-step]')];
-      const imgs = [...stage.querySelectorAll<HTMLElement>('[data-stage-img]')];
-      const dots = [...stage.querySelectorAll<HTMLElement>('[data-stage-dot]')];
-      const set = (i: number) => {
-        steps.forEach((s, j) => s.classList.toggle('on', j === i));
-        imgs.forEach((m, j) => m.classList.toggle('on', j === i));
-        /* 진행 막대 — 지나온 단계(on)와 지금 단계(now) */
-        dots.forEach((d, j) => {
-          d.classList.toggle('on', j <= i);
-          d.classList.toggle('now', j === i);
-        });
-      };
-      set(0);
-      const sio = new IntersectionObserver(
-        (entries) => {
-          for (const e of entries) if (e.isIntersecting) set(steps.indexOf(e.target as HTMLElement));
-        },
-        { rootMargin: '-42% 0px -42% 0px', threshold: 0 },
-      );
-      steps.forEach((s) => sio.observe(s));
-      return sio;
-    });
-
     /* 마우스 기울임 */
     const tilt = document.querySelector<HTMLElement>('[data-tilt]');
     const items = tilt ? [...tilt.querySelectorAll<HTMLElement>('[data-tilt-item]')] : [];
@@ -177,7 +151,6 @@ export function RevealScript() {
     return () => {
       io.disconnect();
       cio.disconnect();
-      stageIOs.forEach((s) => s.disconnect());
       window.clearTimeout(rescue);
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onScroll);

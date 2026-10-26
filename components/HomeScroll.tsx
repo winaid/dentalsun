@@ -1,13 +1,8 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import { Sentences } from '@/components/ui';
-import { figSrc, type Block } from '@/lib/docs';
-import { docByPath } from '@/lib/content';
-import { NAVI_PROCESS } from '@/lib/content/customImplantLanding';
 import { CLINIC } from '@/lib/clinic';
 
 
 /**
+ * (2026-10-26 고정 무대 HomeStage 는 원장 PPT 3쪽·오너 "삭제해"로 뺐다 — 지금은 HomeStats 만)
  * 홈의 스크롤 연동 구역 세 가지 — 레퍼런스(one-dental)의 숫자 세기(dwc-counter) · 고정 무대(sd-stage) · 가로 흐름을
  * 광화문선치과의 **사실**만으로 옮겼다. 숫자는 lib/clinic·doctors·nav 에서 세고, 무대의 단계 글은 내비게이션 임플란트 문서의
  * 'process' 블록을 그대로 쓴다(글 중복 0). 동작은 RevealScript 가 붙인다.
@@ -41,117 +36,6 @@ export function HomeStats() {
         </li>
       ))}
     </ul>
-  );
-}
-
-/**
- * 고정 무대 사진 — 단계별.
- *  · 1단계는 실제 CT 촬영실 사진(옛 배너에서 잘라 낸 691px 짜리 천장 구석 사진을 2026-09-10 교체).
- *  · 2~4단계도 2026-10-08 부터 1단계와 같은 방의 사진이라 꽉 채운다(fit='cover'). 흰 바탕 제품 사진을 다시 넣으면 'contain'.
- */
-const STAGE_IMG: Array<{ key: string; alt: string; fit: 'cover' | 'contain' }> = [
-  /* 2026-10-06 카톡 '메인페이지 CT사진은 깔끔한걸로' — 병원 CT 촬영실 실사(place/place08)를 바탕으로 방만 정돈한 AI 사진(장비는 원본 그대로). 원본 C:/tmp/sun-ppt-1006/gen */
-  { key: 'ai/ct-room', alt: '광화문선치과 3D CT 촬영 장비', fit: 'cover' },
-  /* 2026-10-08 오너 "스텝 2,3,4도 기존 이미지 내용 유지하면서 스텝 1처럼" — 흰 바탕 제품 사진(orig/misc-nav-implant-set · orig/intro-p05-group · equip/guide)
-     내용은 그대로 두고 1단계와 같은 밝은 방에서 다시 찍은 AI 사진. 장비 상표 글자는 뺐다. 원본·스크립트 C:/tmp/sun-ppt-fix/gen-stage-steps.mjs */
-  { key: 'ai/stage-plan', alt: '내비게이션 임플란트 모의수술 화면이 뜬 모니터·태블릿과 임플란트 모형', fit: 'cover' },
-  { key: 'ai/stage-print', alt: '수술 가이드를 출력하는 3D 프린터와 설계 모니터', fit: 'cover' },
-  { key: 'ai/stage-guide', alt: '아래턱 모형에 씌운 투명 수술 가이드와 드릴, 크라운 모형', fit: 'cover' },
-];
-
-export function HomeStage() {
-  const doc = docByPath('/treatment/implant/navigation');
-  const block = doc?.blocks.find((b): b is Extract<Block, { type: 'steps' }> => b.type === 'steps' && b.id === 'process');
-  if (!block) return null;
-  const steps = block.steps.slice(0, STAGE_IMG.length);
-  return (
-    <section className="section bg-canvas" id="process" data-stage>
-      <div className="wrap">
-        <div className="grid gap-10 lg:grid-cols-[1.15fr_1fr] lg:gap-16">
-          {/* 왼쪽 — 제목·설명 + 고정 무대. lg 이상에서는 열 전체가 화면 세로 가운데에 고정돼 스크롤 내내 제목이 사진 위에 남는다(오너 요청). */}
-          <div>
-            <div className="lg:sticky lg:top-0 lg:flex lg:h-[100svh] lg:flex-col lg:justify-start lg:pt-[112px]">
-              <div className="reveal">
-                <p className="eyebrow">DIGITAL PROCESS</p>
-                <h2 className="display-sm mt-4">
-                  내비게이션 임플란트, <span className="accent">이렇게 진행됩니다</span>
-                </h2>
-                {block.lead && (
-                  <p className="lead mt-4">
-                    <Sentences text={block.lead} />
-                  </p>
-                )}
-              </div>
-              {/*
-                무대 — 장비 사진은 잘라 채우지 않고 통째로 놓는다(오너: 옆·아래가 잘려 나갔다).
-                밋밋하지 않도록 옅은 빛 바탕 + 안쪽 테두리로 촬영 부스처럼 만들고,
-                위에는 단계 진행 막대, 아래에는 지금 보고 있는 단계 이름을 띄운다.
-              */}
-              {/* 진행 막대는 사진 밖(설명 아래)에 둔다 — 사진 위에 얹으면 어두운 사진에서 안 보인다 */}
-              <div aria-hidden className="mt-7 hidden gap-1.5 lg:flex">
-                {STAGE_IMG.map((f) => (
-                  <span key={f.key} data-stage-dot className="stage-dot h-[3px] flex-1 rounded-full" />
-                ))}
-              </div>
-              <div className="stage-panel relative mt-4 hidden w-full aspect-[3/2] max-h-[52svh] overflow-hidden rounded-[28px] shadow-[var(--shadow-lift)] lg:block">
-                <div aria-hidden className="absolute inset-0 bg-[radial-gradient(115%_80%_at_50%_12%,#ffffff_0%,#f6f8fc_72%,#eceff6_100%)]" />
-                {STAGE_IMG.map((f, i) => (
-                  <div key={f.key} className="stage-img" data-stage-img>
-                    <Image src={figSrc(f.key)} alt={f.alt} fill sizes="50vw" className={f.fit === 'cover' ? 'object-cover' : 'object-contain p-8 pb-20'} />
-                    <div className="absolute inset-x-0 bottom-0 flex items-center gap-3 border-t border-hairline bg-white/88 px-6 py-4 backdrop-blur-md">
-                      <span className="shrink-0 text-[12px] font-extrabold tracking-[0.16em] text-sun-600">STEP {String(i + 1).padStart(2, '0')}</span>
-                      <span className="truncate text-[15.5px] font-bold text-ink">{steps[i]?.title}</span>
-                    </div>
-                  </div>
-                ))}
-                <div aria-hidden className="pointer-events-none absolute inset-0 z-20 rounded-[28px] ring-1 ring-inset ring-ink/[0.08]" />
-              </div>
-            </div>
-          </div>
-
-          {/*
-            오른쪽 — 단계 글 (모바일은 사진을 각 단계 아래에).
-            단계가 바뀌는 속도 = 칸 하나가 차지하는 스크롤 높이(칸 높이 + 칸 사이 간격). 전에는 30vh(화면의 0.3배) 뿐이라
-            구역이 화면 위에 붙는 순간 이미 2번 칸이 판정 띠(화면 가운데 42~58%)에 걸쳐 "도착하자마자 2번"이 됐다(오너).
-            칸 36vh + 간격 16vh = 52vh(화면 반 바퀴)로 넓히고, 위 여백 34vh 는 구역이 붙는 그 순간 1번 칸이 띠에 걸리도록 맞춘 값이다.
-            (아래 여백 36vh 는 마지막 칸도 앞 칸들만큼 머물다 고정이 풀리게 하는 값 — 숫자를 바꿀 땐 네 값을 함께 다시 맞춰야 한다)
-          */}
-          <ol className="lg:pt-[34vh] lg:pb-[36vh]">
-            {steps.map((s, i) => (
-              <li
-                key={s.title}
-                className="stage-step flex flex-col items-start gap-3.5 rounded-3xl px-5 py-6 md:gap-6 md:px-6 md:py-7 lg:my-[16vh] lg:min-h-[36vh] lg:flex-row lg:items-center lg:px-8 lg:py-8"
-                data-stage-step
-              >
-                <span className="stage-badge shrink-0">STEP {String(i + 1).padStart(2, '0')}</span>
-                <div className="min-w-0 flex-1">
-                  <h3 className="text-[1.3rem] font-bold leading-snug text-ink md:text-[1.55rem]">{s.title}</h3>
-                  {s.desc && (
-                    <p className="mt-3 max-w-[560px] text-[16.5px] leading-[1.85] text-ink-soft">
-                      <Sentences text={s.desc} />
-                    </p>
-                  )}
-                  {/* 폰 — 무대와 같은 규칙(사진은 꽉, 흰 바탕 제품은 통째로) */}
-                  <div className="relative mt-5 aspect-[3/2] overflow-hidden rounded-2xl border border-hairline bg-[radial-gradient(115%_80%_at_50%_12%,#ffffff_0%,#f2f5fa_100%)] lg:hidden">
-                    <Image src={figSrc(STAGE_IMG[i]?.key ?? STAGE_IMG[0].key)} alt={STAGE_IMG[i]?.alt ?? ''} fill sizes="100vw" className={(STAGE_IMG[i]?.fit ?? 'contain') === 'cover' ? 'object-cover' : 'object-contain p-3'} />
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </div>
-
-        {/* 원장 PPT 100쪽 — 이고운 4단계 아래 덧붙임(식립 이후 과정). 글은 내비게이션 쪽과 같은 NAVI_PROCESS.note */}
-        <p className="reveal mt-6 max-w-[900px] text-[15px] leading-[1.85] text-ink-soft lg:mt-0">
-          <Sentences text={NAVI_PROCESS.note} />
-        </p>
-
-        <div className="reveal mt-6 flex flex-wrap gap-3">
-          <Link href="/treatment/implant/navigation" className="btn-brand">디지털 맞춤 임플란트 자세히</Link>
-          <Link href="/treatment/implant" className="btn-ghost">임플란트 전체 안내</Link>
-        </div>
-      </div>
-    </section>
   );
 }
 
