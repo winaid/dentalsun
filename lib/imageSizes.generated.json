@@ -1326,5 +1326,13 @@
  "ai/tmj-treatment-card": {
   "w": 1200,
   "h": 800
+ },
+ "ai/tmj-focus-exam": {
+  "w": 900,
+  "h": 1200
+ },
+ "ai/tmj-focus-physio": {
+  "w": 900,
+  "h": 1200
  }
 }

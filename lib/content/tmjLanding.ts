@@ -411,19 +411,21 @@ export const TMJ_HUB_HERO_ITEMS: Array<{ title: string; desc: string }> = [
  * 턱관절 쪽 새 구역(#tmj-focus) — 바로 아래 장비 구역(#tmj-equip, TMJ_EQUIP)과 01 CT·02 레이저가 겹치지만, 원장 메모가 '추가'이고
  * 장비 구역의 CT 설명은 원장 글(10-20 PPT 176쪽)이라 둘 다 둔다(오너 "2번으로 가"). 순서 = 환경 한눈에(여기) → 장비 자세히(아래).
  * 꼬리표(tags)는 사이트에 이미 있던 병원 사실(TMJ_EQUIP points)과 03 원장 글 속 치료 이름만. 사진은 3:4 상자에 맞는 것(pos = 자를 때 보일 자리).
+ * 사진 01·02 는 처음에 아래 장비 구역과 같은 사진(fit/tmj-ct3d·fit/tmj-laser)이라 오너 "사진 겹치는 거 새로 만들어줘" → gpt-image-2 로 새로
+ * (C:/tmp/sun-1028/gen2.mjs, 세로 900x1200). 장비 구역은 실제 장비 사진 그대로.
  */
 export const TMJ_FOCUS: Array<{ title: string; desc: string; tags: string[]; fig: Fig; pos?: string }> = [
   {
     title: '관절의 구조와 기능을 살피는 정밀 검사',
     desc: '3D CT로 턱관절 상태를 입체적으로 확인하고, 정밀 검사를 통해 턱의 움직임과 관절음, 주변 근육의 긴장도를 종합적으로 평가합니다.',
     tags: ['파노라마·CT 겸용 올인원 시스템', '턱관절뼈의 형태·골관절염 변화 확인'],
-    fig: { key: 'fit/tmj-ct3d', alt: '3D 디지털 CT로 촬영한 두개골·턱관절 3차원 영상' },
+    fig: { key: 'ai/tmj-focus-exam', alt: '진료 의자에 기댄 환자의 귀 앞 턱관절을 장갑 낀 손끝으로 짚어 보는 모습, 뒤 모니터에 3D CT 두개골 영상' },
   },
   {
     title: '다양한 장비를 갖춘 물리치료 환경',
     desc: 'PHL-15 저출력 레이저와 TENS 저주파 자극 장비 등을 원내에 갖추고, 턱관절 통증 완화와 주변 근육의 이완을 위한 치료를 시행합니다.',
     tags: ['원적외선보다 5배 높은 피부 침투력', '건강보험 적용'],
-    fig: { key: 'fit/tmj-laser', alt: 'PHL-15 레이저 물리치료 장비' },
+    fig: { key: 'ai/tmj-focus-physio', alt: '진료 의자 옆에 저출력 레이저 치료기와 전극 패드가 달린 저주파 자극 치료기가 놓인 물리치료 자리' },
   },
   {
     title: '보톡스와 장치치료까지 가능한 맞춤 진료',
