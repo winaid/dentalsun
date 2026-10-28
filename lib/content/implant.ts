@@ -379,7 +379,7 @@ export const IMPLANT_DOCS: Doc[] = [
     eyebrow: '임플란트 · 가이드 식립',
     /*
      * 화면은 components/CustomImplantPage part='navigation'. 본문·FAQ 는 lib/content/customImplantLanding 의 NAVI_*.
-     * (2026-10-26 홈 고정 무대 HomeStage 삭제 — 'process' 를 홈이 읽던 제약은 없어짐)
+     * ★ NAVI_BLOCKS 의 steps 'process' 는 홈 첫 화면 무대(HomeScroll HomeStage)가 읽는다.
      */
     summary:
       '내비게이션 임플란트는 3D CT 위에서 미리 수술해 보고, 그 계획대로 만든 수술 가이드로 식립하는 방법입니다. 완성될 치아의 위치를 기준으로 임플란트의 위치·각도·깊이를 정하고, 신경과 상악동까지의 거리를 미리 확인합니다. 잇몸뼈가 충분하면 잇몸을 절개하지 않고 식립합니다.',

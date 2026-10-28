@@ -14,7 +14,7 @@ import { FullArchBand } from '@/components/FullArchBand';
 import { WarrantyBand } from '@/components/WarrantyBand';
 import { VisitMap } from '@/components/VisitMap';
 import { TMJ_AWARD, TMJ_HOME_ROOT } from '@/lib/content/tmjLanding';
-import { HomeStats } from '@/components/HomeScroll';
+import { HomeStage, HomeStats } from '@/components/HomeScroll';
 import { CaseGallery } from '@/components/CaseGallery';
 import { CLINIC, HOURS, HYGIENE, STRENGTHS } from '@/lib/clinic';
 import { DOCTORS, isCertCareer } from '@/lib/doctors';
@@ -424,8 +424,10 @@ export default function HomePage() {
         {/* ── 풀아치 — 원장 PPT 46쪽 '홈화면에 풀아치 추가' · 50쪽 글 그대로. 그림 두 겹 모션(components/FullArchBand) ── */}
         <FullArchBand />
 
-        {/* ── 내비게이션 임플란트 과정 고정 무대는 2026-10-26 원장 PPT(홈페이지 261026) 3쪽 '삭제 또는 순서 변경? 턱관절까지 너무 많이 내려야 함' → 오너 "삭제해"로 뺐다.
-             같은 4단계는 /treatment/implant/navigation#process 에 그대로. 되살리려면 git 이력(fb3476f 의 components/HomeScroll HomeStage) ── */}
+        {/* ── 내비게이션 임플란트 과정 — 고정 무대(스크롤하면 사진이 바뀐다).
+             2026-10-26 원장 PPT(261026) 3쪽 '삭제 또는 순서 변경?' 으로 뺐다가(7518392) 10-28 원장 '삭제하지 말아 달라'로 되살림.
+             '턱관절까지 너무 많이 내려야 함' 은 턱관절 구역을 진료과목 바로 아래로 올린 것(7cab63b)으로 이미 풀려 있어 자리는 예전 그대로 ── */}
+        <HomeStage />
 
         {/* ── 보증 기간 띠 — 원장 PPT 62쪽. 기간 숫자만, 굴러 멈추는 숫자 모션(components/WarrantyBand).
              2026-10-20 원장 PPT 101쪽 '위치변경 / 네비게이션 임플란트, 이렇게 진행됩니다 밑으로' — 풀아치 띠 아래에서 과정 무대 아래로 옮김 ── */}

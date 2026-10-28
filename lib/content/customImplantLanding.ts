@@ -300,7 +300,6 @@ export const CI_BLOCKS: Block[] = [
 
 /* ═══════════════════════════════════════════════════════════════════════════
  * 내비게이션(가이드 식립) 쪽 — 화면은 CustomImplantPage part='navigation'.
- * (2026-10-26 홈 고정 무대 HomeStage 삭제 — 아래 '홈 무대' 제약은 이제 없다. 기록으로 남김)
  * ★ NAVI_BLOCKS 의 steps 블록 id 'process' 는 홈 첫 화면 무대(HomeScroll HomeStage)가 그대로 읽는다 — id 와 4단계 구조를 바꾸지 말 것.
  *   무대 사진은 순서로 붙는다(1 CT 촬영실 · 2 계획 화면 · 3 CAD·3D 프린터 · 4 가이드) → 단계 순서도 그대로 둔다.
  *   홈 무대는 글을 그대로 그리므로 NAVI_PROCESS 에는 하이라이트 표시({…})를 넣지 않는다.
