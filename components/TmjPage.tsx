@@ -1307,7 +1307,8 @@ export function TmjPage({ doc }: { doc: Doc }) {
         </div>
 
         <div className="mt-24 md:mt-32">
-          <ContactBand bg="sun/tmj-explain-skull" title={contact.title} text={contact.text} />
+          {/* 2026-10-28 오너 "사진 겹치는 거 바꿔" — 첫 화면 배경과 같은 원장 사진이 맨 아래에 또 나왔다(턱관절 네 쪽 모두) → 다른 쪽과 같은 기본 배경 */}
+          <ContactBand title={contact.title} text={contact.text} />
         </div>
         <MedicalNotice />
       </main>

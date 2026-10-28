@@ -370,7 +370,8 @@ export const TMJ_CAUSE_DETAIL: TmjCauseDetail[] = [
    166쪽의 '서울대 교수 출신… 송환희 대표원장' 글은 다른 치과 원장 소개라 쓰지 않는다. */
 export const TMJ_KNOWHOW = {
   title: '턱관절과 주변 근육, 치아의 맞물림을 함께 고려해 안정적인 기능 회복을 목표로 치료합니다.',
-  band: { key: 'sun/tmj-explain-skull', alt: '두개골 모형을 들고 턱관절 구조를 설명하는 양대일 원장' } as Fig,
+  /* 2026-10-28 오너 '사진 겹치는 거 바꿔' — 첫 화면 배경(bg)과 같은 사진이라 다른 실사로(모니터 검사 화면을 짚으며 설명하는 대표원장) */
+  band: { key: 'sun/consult-monitor', alt: '모니터의 검사 화면을 가리키며 환자에게 설명하는 양대일 대표원장' } as Fig,
   bandLabel: '광화문 선치과 턱관절 진료',
   bandTitle: '통증을 줄이는 것을 넘어, 편안한 턱관절 기능까지',
   items: [
