@@ -168,6 +168,18 @@ const Check = () => (
 );
 const Dot = ({ tone = 'bg-sun-500' }: { tone?: string }) => <span className={`mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full ${tone}`} aria-hidden />;
 
+/**
+ * 생활 관리 다섯 줄의 선 그림(TMJ_HABITS 순서) — 단순한 선만(이모지 금지, 오너). pathLength=1 이라 CSS 가 획을 0→1 로 그린다(.habit-ico).
+ * 1 칼과 포크(작게 잘라 먹기) · 2 위아래 치아 사이 틈(떼어 두기) · 3 곧게 선 사람(바른 자세) · 4 어깨와 물결(긴장 풀기) · 5 소리 막대에 빗금(소리 시험 안 하기)
+ */
+const HABIT_ICONS: ReactNode[] = [
+  <Fragment key="1"><path pathLength={1} d="M6 3v6a2 2 0 0 0 4 0V3" /><path pathLength={1} d="M8 3v18" /><path pathLength={1} d="M17 21V3c-2 1.6-3 4.2-3 7.5h3" /></Fragment>,
+  <Fragment key="2"><path pathLength={1} d="M5 6.5h14v2.8a1.7 1.7 0 0 1-1.7 1.7H6.7A1.7 1.7 0 0 1 5 9.3z" /><path pathLength={1} d="M5 17.5h14v-2.8a1.7 1.7 0 0 0-1.7-1.7H6.7A1.7 1.7 0 0 0 5 14.7z" /><path pathLength={1} d="M9.7 6.5V11M14.3 6.5V11M9.7 13v4.5M14.3 13v4.5" /></Fragment>,
+  <Fragment key="3"><circle pathLength={1} cx="12" cy="4.8" r="2.2" /><path pathLength={1} d="M12 8v7.5M12 15.5 9.2 21M12 15.5l2.8 5.5M8 10.6h8" /></Fragment>,
+  <Fragment key="4"><circle pathLength={1} cx="12" cy="7.5" r="3" /><path pathLength={1} d="M4.5 20c1.4-3.8 4.2-5.8 7.5-5.8s6.1 2 7.5 5.8" /><path pathLength={1} d="M2 12.5c1-1.1 2-1.1 3 0M19 12.5c1-1.1 2-1.1 3 0" /></Fragment>,
+  <Fragment key="5"><path pathLength={1} d="M7.5 9.5v5M11 7v10M14.5 9.5v5M18 11v2" /><path pathLength={1} d="M4 4l16 16" /></Fragment>,
+];
+
 /** 전신 증상 체크리스트 갈래 아이콘 — 단순한 선 그림만(이모지 금지, 오너). 이름이 안 맞으면 점 세 개 */
 function BodyIcon({ name }: { name: string }) {
   const p = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.8, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const };
@@ -311,8 +323,10 @@ const CHILD_FIG: Record<string, Fig> = {
   /* 2026-10-20 원장 PPT 179쪽 '이미지 변경' — 구내 사진·도해·어두운 제품 사진이 섞여 있던 것을 밝은 사진 셋으로 */
   '/treatment/tmj/symptoms': { key: 'ai/tmj-hub', alt: '턱 옆을 손으로 감싸 쥔 모습' },
   '/treatment/tmj/bruxism': { key: 'ai/tmj-bruxism-guard', alt: '침대 옆 탁자 위 케이스에 담긴 투명 교합안정장치' },
-  /* 2026-10-26 원장 PPT(261026) 21쪽 '턱관절 장애의 치료법 사진 교체' — AI 기구 사진 → 모니터의 턱관절 도해를 짚어 설명하는 대표원장 실제 사진 */
-  '/treatment/tmj/treatment': { key: 'sun/tmj-explain-monitor', alt: '모니터의 턱관절 도해를 짚어 가며 환자에게 설명하는 양대일 대표원장' },
+  /* 2026-10-26 원장 PPT(261026) 21쪽 '턱관절 장애의 치료법 사진 교체' — AI 기구 사진 → 모니터의 턱관절 도해를 짚어 설명하는 대표원장 실제 사진
+     2026-10-28 오너 "옆 이미지들이랑 분위기 맞게, 내용에 맞게 새로" — 옆 두 장(크림색 니트·침대 옆 장치)과 같은 밝은 크림 톤으로 새로 만듦(gpt-image-2):
+     진료 의자에 기댄 환자의 턱관절에 저출력 레이저 물리치료기를 대는 장면, 눈은 안 보이게. 만든 도구 C:/tmp/sun-1028/gen.mjs */
+  '/treatment/tmj/treatment': { key: 'ai/tmj-treatment-card', alt: '진료 의자에 기댄 환자의 귀 앞 턱관절에 장갑 낀 손으로 저출력 레이저 물리치료기를 대는 모습' },
 };
 
 /** 제목 두 줄 — 쉼표 뒤, 쉼표가 없으면 첫 '은 '·'는 ' 뒤에서 나눈다 */
@@ -1127,16 +1141,23 @@ export function TmjPage({ doc }: { doc: Doc }) {
             {show('habits') && (
               <section className={top('habits', 'pt-24 md:pt-32')} aria-labelledby="tmj-habits">
                 <Head id="tmj-habits" s={SECTIONS.habits} />
-                {/* 2026-10-26 원장 PPT(261026) 20쪽 '한 칸이 비어 보여, 가운데 정렬' — 균형 격자(.cards-flex)로 마지막 줄을 가운데로. 06 칸 채우기는 문구가 없어 안 함 */}
-                <ul className="reveal-stack cards-flex mt-12">
+                {/* 2026-10-28 원장 PPT(261026) 20쪽 '한 칸이 비어 보여' + 오너 "카드로 하지 말고 카드 하나당 한 줄씩, 모션그래픽이랑 같이 나오게" —
+                    칸 격자를 버리고 다섯 줄 목록으로. 줄마다 선 그림이 그려지고(획 그리기) 밑줄이 왼쪽부터 차오르며 한 줄씩 차례로 나온다(globals.css .habit-rows).
+                    빈 칸 문제는 칸이 없어져 사라진다 — 06 은 문구가 없어 더하지 않았다. */}
+                <ol className="reveal-stack habit-rows mx-auto mt-12 max-w-[980px]">
                   {TMJ_HABITS.map((h, i) => (
-                    <li key={h.title} className="card p-6">
-                      <span className="num">{String(i + 1).padStart(2, '0')}</span>
-                      <p className="mt-3 text-[1.05rem] font-bold text-ink">{h.title}</p>
-                      <p className="mt-1.5 text-[16.5px] leading-[1.7] text-ink-soft"><Sentences text={h.desc} clauses={false} /></p>
+                    <li key={h.title} className="habit-row">
+                      <span className="habit-ico" aria-hidden>
+                        <svg viewBox="0 0 24 24">{HABIT_ICONS[i]}</svg>
+                      </span>
+                      <span className="habit-num">{String(i + 1).padStart(2, '0')}</span>
+                      <div className="min-w-0 flex-1 md:flex md:items-baseline md:gap-6">
+                        <p className="text-[1.12rem] font-bold text-ink md:w-[230px] md:shrink-0">{h.title}</p>
+                        <p className="mt-1 text-[16.5px] leading-[1.7] text-ink-soft md:mt-0"><Sentences text={h.desc} clauses={false} /></p>
+                      </div>
                     </li>
                   ))}
-                </ul>
+                </ol>
               </section>
             )}
 

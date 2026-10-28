@@ -1318,5 +1318,13 @@
  "cases2/endo-01-xray-pano-after-c": {
   "w": 1600,
   "h": 673
+ },
+ "ai/implant-bonegraft-card": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/tmj-treatment-card": {
+  "w": 1200,
+  "h": 800
  }
 }

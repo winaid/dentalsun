@@ -64,9 +64,11 @@ const DOC_AI: Record<string, string> = {
 };
 
 /** 허브 '세부 안내' 카드에만 쓰는 사진 — 쪽 자체의 대표 사진(검색용 이미지 정보)은 그대로 두고 카드 그림만 바꿀 때.
- *  2026-10-26 원장 PPT(261026) 7쪽 '06 뼈이식 상악동거상술 사진 교체' — CT 장비 사진 → 골이식재·상악동·임플란트가 한 그림에 나오는 도해 */
+ *  2026-10-26 원장 PPT(261026) 7쪽 '06 뼈이식 상악동거상술 사진 교체' — CT 장비 사진 → 골이식재·상악동·임플란트가 한 그림에 나오는 도해
+ *  2026-10-28 오너 "그냥 이빨 설명 그림이다, 내용에 맞게 새로" — 도해 → 옆 카드(PRF·보증)처럼 밝은 사진 결로 새로 만듦(gpt-image-2):
+ *  골이식재 담은 접시를 든 손 + 뒤 모니터에 어금니 위 상악동이 보이는 CT. 만든 도구 C:/tmp/sun-1028/gen.mjs */
 const CARD_FIG: Record<string, string> = {
-  '/treatment/implant/bone-graft': 'illust/sinus-lift',
+  '/treatment/implant/bone-graft': 'ai/implant-bonegraft-card',
 };
 
 export function DocPage({ doc }: { doc: Doc }) {
