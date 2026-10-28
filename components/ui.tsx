@@ -328,8 +328,9 @@ export function Sentences({
    */
   soft?: boolean;
   /**
-   * 줄 수를 자르는 카드(line-clamp) — 문장 사이를 <br> 로만 가른다.
+   * 줄 수를 자르는 카드(line-clamp) — 상자 없이 글만 낸다.
    * .sent·.clause 상자(block·inline-block)를 쓰면 line-clamp 가 상자 안 줄을 세지 못해 말줄임이 깨진다.
+   * (2026-10-28 문장 사이 <br> 도 뺐다 — 오너 "줄바꿈은 문단 느낌으로 최대한", 본문과 같이 이어 흐른다)
    */
   br?: boolean;
 }) {
@@ -341,7 +342,7 @@ export function Sentences({
     return (
       <>
         {sentences.map((s, i) => (
-          <Fragment key={i}>{i > 0 && <br />}{marked(s, st, `b${i}-`)}</Fragment>
+          <Fragment key={i}>{i > 0 && ' '}{marked(s, st, `b${i}-`)}</Fragment>
         ))}
       </>
     );
@@ -503,7 +504,7 @@ export function Figure({
           <Image src={figSrc(fig.key)} alt={fig.alt} width={s.w} height={s.h} sizes={sizes} priority={priority} className="h-auto w-full object-cover" />
         </div>
       )}
-      {caption && fig.caption && <figcaption className="mt-2.5 text-[14px] text-ink-muted">{fig.caption}</figcaption>}
+      {caption && fig.caption && <figcaption className="mt-2.5 text-[15px] text-ink-muted">{fig.caption}</figcaption>}
     </figure>
   );
 }
@@ -654,7 +655,7 @@ export function MedicalNotice() {
   return (
     <div className="bg-night pb-14">
       <div className="wrap">
-        <p className="border-t border-white/10 pt-7 text-[14.5px] leading-relaxed text-white/45"><Sentences text={MEDICAL_DISCLAIMER} /></p>
+        <p className="border-t border-white/10 pt-7 text-[15.5px] leading-relaxed text-white/45"><Sentences text={MEDICAL_DISCLAIMER} /></p>
       </div>
     </div>
   );
@@ -674,7 +675,7 @@ export function CardLink({ href, label, desc, external = false, fig, num }: { hr
         {num && <span className="num mb-3">{num}</span>}
         <span className="block text-[15px] font-bold leading-snug text-ink group-hover:text-brand-700 sm:text-[1.08rem]">{label}</span>
         {desc && (
-          <span className="mt-2 block text-[14.5px] leading-[1.6] text-ink-soft sm:text-[16px] sm:leading-relaxed">
+          <span className="mt-2 block text-[15.5px] leading-[1.6] text-ink-soft sm:text-[17px] sm:leading-relaxed">
             <Sentences text={desc} clauses={false} />
           </span>
         )}

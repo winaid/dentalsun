@@ -89,7 +89,7 @@ export default function AboutPage() {
                 >
                   <span className="num">{String(i + 1).padStart(2, '0')}</span>
                   <p className="mt-4 text-[1.05rem] font-bold text-ink">{s.title}</p>
-                  <p className="mt-2 text-[16px] leading-relaxed text-ink-soft"><Sentences text={s.desc} /></p>
+                  <p className="mt-2 text-[17px] leading-relaxed text-ink-soft"><Sentences text={s.desc} /></p>
                 </li>
               ))}
             </ul>
@@ -114,7 +114,7 @@ export default function AboutPage() {
                       <p className="font-bold text-ink">
                         {d.name} {d.role}
                       </p>
-                      <p className="text-[14.5px] text-ink-soft">{d.specialty} · {d.career.find((c) => c.includes('외래교수')) ?? d.career[1]}</p>
+                      <p className="text-[15.5px] text-ink-soft">{d.specialty} · {d.career.find((c) => c.includes('외래교수')) ?? d.career[1]}</p>
                     </div>
                   </li>
                 ))}
@@ -143,7 +143,7 @@ export default function AboutPage() {
                 <li key={p.n} className="card flex h-full flex-col p-6">
                   <span className="pill-sun">Point {p.n}</span>
                   <p className="mt-3 text-[1.05rem] font-bold text-ink">{p.title}</p>
-                  <p className="mt-2 text-[16px] leading-relaxed text-ink-soft"><Sentences text={p.desc} /></p>
+                  <p className="mt-2 text-[17px] leading-relaxed text-ink-soft"><Sentences text={p.desc} /></p>
                 </li>
               ))}
             </ol>
@@ -175,7 +175,7 @@ export default function AboutPage() {
                   </li>
                 ))}
               </ul>
-              <p className="mt-6 rounded-2xl bg-white p-5 text-[15.5px] leading-relaxed text-ink-soft">
+              <p className="mt-6 rounded-2xl bg-white p-5 text-[16.5px] leading-relaxed text-ink-soft">
                 <span className="sent"><span className="font-bold text-ink">전원 치과위생사</span> — 진료 스태프는 모두 치과위생사 면허를 가지고 있습니다.</span>
                 <span className="sent">진료 보조는 면허를 가진 인력이 맡습니다.</span>
               </p>
@@ -191,7 +191,7 @@ export default function AboutPage() {
                 입구에서 수술실까지, <span className="accent">진료 공간</span>
               </h2>
               <p className="lead mt-4"><Sentences text="진료실은 유리 파티션으로 나뉘어 있고, 수술실과 CT 촬영실, 턱관절 물리치료실을 따로 두었습니다." /></p>
-              <p className="mt-3 text-[15px] text-ink-muted">{CLINIC.address.full} · {CLINIC.address.landmark}</p>
+              <p className="mt-3 text-[16px] text-ink-muted">{CLINIC.address.full} · {CLINIC.address.landmark}</p>
             </div>
             <div className="reveal-stack mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
               {TOUR.map((f) => (

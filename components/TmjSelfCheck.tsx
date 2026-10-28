@@ -61,7 +61,7 @@ export function TmjSelfCheck({
           <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="btn-sun !px-4 !py-2 text-[14px]">검사 예약하기</a>
         )}
       </div>
-      <p className="mt-3 text-[12.5px] text-ink-muted"><Sentences text="※ 참고용 점검이며 진단이 아닙니다. 정확한 상태는 검사로 확인합니다." /></p>
+      <p className="mt-3 text-[13.5px] text-ink-muted"><Sentences text="※ 참고용 점검이며 진단이 아닙니다. 정확한 상태는 검사로 확인합니다." /></p>
     </div>
   );
 }

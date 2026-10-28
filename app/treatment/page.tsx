@@ -65,7 +65,7 @@ export default function TreatmentIndex() {
                   <span className="num">{String(i + 1).padStart(2, '0')}</span>
                   <Link href={h.nav.href} className="mt-3 block text-[1.35rem] font-extrabold text-ink hover:text-brand-700">{h.nav.label}</Link>
                   {/* 요약의 첫 문장만 — ⚠️ 옛 정규식은 역슬래시가 빠진 채(/(?<=다.)s/) 저장돼 한 번도 자르지 못하고 요약 전체를 내보내고 있었다(2026-09-29 바로잡음) */}
-                  {h.doc && <p className="mt-2 text-[15.5px] leading-relaxed text-ink-soft"><Sentences text={h.doc.summary.split(/(?<=다\.)\s/)[0]} /></p>}
+                  {h.doc && <p className="mt-2 text-[16.5px] leading-relaxed text-ink-soft"><Sentences text={h.doc.summary.split(/(?<=다\.)\s/)[0]} /></p>}
                   <ul className="mt-5 flex flex-wrap gap-2">
                     {h.children.map((c) => (
                       <li key={c.path}>
@@ -92,7 +92,7 @@ export default function TreatmentIndex() {
                   {/* 번호는 갈래 수 다음 — 메뉴가 9 → 5 로 줄며(갈래 3) 옛 '08' 이 그대로 남아 01·02·03 다음에 08 이 나왔다 */}
                   <span className="num">{String(hubs.length + 1).padStart(2, '0')}</span>
                   <Link href="/insight" className="mt-3 block text-[1.35rem] font-extrabold text-ink hover:text-brand-700">인사이트</Link>
-                  <p className="mt-2 text-[15.5px] leading-relaxed text-ink-soft">증상에서 출발하는 안내 12편과, 치료를 앞두고 읽는 가이드 6편입니다.</p>
+                  <p className="mt-2 text-[16.5px] leading-relaxed text-ink-soft">증상에서 출발하는 안내 12편과, 치료를 앞두고 읽는 가이드 6편입니다.</p>
                   <ul className="mt-5 flex flex-wrap gap-2">
                     <li><Link href="/insight#symptoms" className="pill hover:border-brand-300 hover:text-brand-700">증상별 안내</Link></li>
                     <li><Link href="/insight#guides" className="pill hover:border-brand-300 hover:text-brand-700">치료 가이드</Link></li>

@@ -68,7 +68,7 @@ export function PostArticle({
 
             <div className="blog-body mt-12 max-w-[42em]" dangerouslySetInnerHTML={{ __html: optimizeBodyImages(sentenceHtml(post.html), { eagerFirst: !showCover }) }} />
 
-            {note && <p className="mt-10 max-w-[42em] rounded-xl bg-canvas-2 px-5 py-4 text-[14.5px] leading-[1.7] text-ink-muted"><Sentences text={`※ ${note}`} /></p>}
+            {note && <p className="mt-10 max-w-[42em] rounded-xl bg-canvas-2 px-5 py-4 text-[15.5px] leading-[1.7] text-ink-muted"><Sentences text={`※ ${note}`} /></p>}
 
             <div className="mt-14 flex flex-wrap items-center justify-between gap-4 border-t border-hairline pt-8">
               <Link href={back.href} className="group inline-flex items-center gap-2 text-[16px] font-bold text-sun-700">

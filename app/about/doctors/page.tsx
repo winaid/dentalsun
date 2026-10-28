@@ -71,7 +71,7 @@ export default function DoctorsPage() {
                   <h3 className="text-[1.15rem] font-bold text-ink">주요 약력</h3>
                   <ul className="mt-5 space-y-2.5">
                     {d.career.map((c) => (
-                      <li key={c} className="flex items-start gap-3 text-[16px] leading-[1.6] text-ink">
+                      <li key={c} className="flex items-start gap-3 text-[17px] leading-[1.6] text-ink">
                         {isCertCareer(c) ? (
                           <CertMark className="-ml-[3px] mt-[3px] h-[21px] w-[21px]" />
                         ) : (

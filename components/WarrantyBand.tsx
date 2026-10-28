@@ -108,7 +108,7 @@ export function WarrantyBand() {
             </ul>
           </div>
 
-          <p className="mx-auto mt-12 max-w-[640px] text-balance text-[16px] font-bold leading-[1.7] text-white md:text-[16px]">
+          <p className="mx-auto mt-12 max-w-[640px] text-balance text-[17px] font-bold leading-[1.7] text-white md:text-[17px]">
             <Sentences text="(단, 본원의 치료계획을 준수하고 정기검진을 지속적으로 받는 경우에 한합니다)" />
           </p>
           <div className="mt-8 flex justify-center">

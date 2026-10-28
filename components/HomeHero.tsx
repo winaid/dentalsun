@@ -127,7 +127,7 @@ export function HomeHero() {
           {/* 장면이 바뀌면 글도 같이 바뀐다 — key 를 바꿔 다시 그리면서 짧게 올라온다 */}
           <div key={i} className="hero-swap">
             <h1 className="display mt-6 text-balance !text-white on-photo">{SLIDES[i].title}</h1>
-            <p className="keep-lines mt-7 text-[1.05rem] leading-[1.85] text-white/75 md:text-[1.1rem]"><Sentences text={SLIDES[i].lead} /></p>
+            <p className="keep-lines mt-7 text-[1.1rem] leading-[1.85] text-white/75 md:text-[1.1rem]"><Sentences text={SLIDES[i].lead} /></p>
           </div>
           {/* 예약 두 갈래 — 왼쪽은 네이버 예약(플레이스와 연결), 오른쪽은 오시는 길·진료시간(톡톡 상담은 2026-09-21 뺐다).
               폰에서는 아래 빠른메뉴(전화·예약·상담·오시는 길)가 같은 일을 하므로 감춘다(오너) */}

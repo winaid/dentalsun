@@ -81,7 +81,7 @@ export default function VisitPage() {
               <div className="card p-6">
                 <p className="text-[14px] font-bold tracking-wide text-ink-muted">주소</p>
                 <p className="mt-2 text-[1.1rem] font-bold text-ink">{CLINIC.address.full}</p>
-                <p className="mt-1 text-[15px] text-ink-soft">{CLINIC.address.landmark}</p>
+                <p className="mt-1 text-[16px] text-ink-soft">{CLINIC.address.landmark}</p>
               </div>
               <div className="card p-6" id="hours">
                 <p className="text-[14px] font-bold tracking-wide text-ink-muted">진료시간</p>
@@ -96,7 +96,7 @@ export default function VisitPage() {
                     </li>
                   ))}
                 </ul>
-                <p className="mt-3 text-[14px] text-ink-muted"><Sentences text={`${HOURS.closed} · 토요일은 2·4째주 진료입니다. 휴진일이 바뀌는 달도 있으니 아래 이달의 진료일정을 확인해 주세요.`} /></p>
+                <p className="mt-3 text-[15px] text-ink-muted"><Sentences text={`${HOURS.closed} · 토요일은 2·4째주 진료입니다. 휴진일이 바뀌는 달도 있으니 아래 이달의 진료일정을 확인해 주세요.`} /></p>
               </div>
               <div className="card p-6">
                 <p className="text-[14px] font-bold tracking-wide text-ink-muted">주차</p>
@@ -105,9 +105,9 @@ export default function VisitPage() {
                 </p>
               </div>
               <a href={CLINIC.phoneHref} className="rounded-2xl bg-brand-700 p-6 text-white transition-colors hover:bg-brand-800">
-                <p className="text-[14px] text-white/70">전화 문의 · 예약</p>
+                <p className="text-[15px] text-white/70">전화 문의 · 예약</p>
                 <p className="mt-1 text-[1.8rem] font-extrabold tracking-tight">{CLINIC.phone}</p>
-                <p className="mt-1 text-[14px] text-white/70">팩스 {CLINIC.fax}</p>
+                <p className="mt-1 text-[15px] text-white/70">팩스 {CLINIC.fax}</p>
               </a>
             </div>
           </div>
@@ -130,7 +130,7 @@ export default function VisitPage() {
                   <div className="flex flex-1 flex-col p-6">
                     <span className="num">{String(i + 1).padStart(2, '0')}</span>
                     <p className="mt-3 text-[1.05rem] font-bold text-ink">{s.title}</p>
-                    <p className="mt-2 text-[16px] leading-relaxed text-ink-soft"><Sentences text={s.desc} /></p>
+                    <p className="mt-2 text-[17px] leading-relaxed text-ink-soft"><Sentences text={s.desc} /></p>
                   </div>
                 </li>
               ))}
@@ -169,15 +169,15 @@ export default function VisitPage() {
             <div className="reveal-stack mt-8 grid gap-5 sm:grid-cols-3">
               <a href={CLINIC.phoneHref} className="card card-hover p-6">
                 <p className="text-[1.05rem] font-bold text-ink">전화 상담</p>
-                <p className="mt-1.5 text-[15px] text-ink-soft">{CLINIC.phone} — 진료시간 중에 증상 상담과 예약 변경을 받습니다.</p>
+                <p className="mt-1.5 text-[16px] text-ink-soft">{CLINIC.phone} — 진료시간 중에 증상 상담과 예약 변경을 받습니다.</p>
               </a>
               <a href={CLINIC.booking.naver} target="_blank" rel="noopener" className="card card-hover p-6">
                 <p className="text-[1.05rem] font-bold text-ink">온라인 예약 ↗</p>
-                <p className="mt-1.5 text-[15px] text-ink-soft"><Sentences text="네이버 예약에서 날짜와 시간을 직접 고를 수 있습니다. 처음이시면 불편한 부위를 짧게 남겨 주세요." /></p>
+                <p className="mt-1.5 text-[16px] text-ink-soft"><Sentences text="네이버 예약에서 날짜와 시간을 직접 고를 수 있습니다. 처음이시면 불편한 부위를 짧게 남겨 주세요." /></p>
               </a>
               <a href={CLINIC.booking.naverReview} target="_blank" rel="noopener" className="card card-hover p-6">
                 <p className="text-[1.05rem] font-bold text-ink">치료후기 ↗</p>
-                <p className="mt-1.5 text-[15px] text-ink-soft">다녀가신 환자분들의 후기는 네이버 플레이스에서 보실 수 있습니다.</p>
+                <p className="mt-1.5 text-[16px] text-ink-soft">다녀가신 환자분들의 후기는 네이버 플레이스에서 보실 수 있습니다.</p>
               </a>
             </div>
           </div>

@@ -102,8 +102,11 @@ export function WrapGuard() {
      * 그런데 붙임 공백 덩어리(최대 15.5em)가 줄 끝에 안 들어가면 통째로 내려가 문장마다 끊긴 것처럼 보였다 → 강조 자리 밖 문장은 붙임 공백을 푼다.
      * 숫자 옆(‘3 개’·‘5,000 건’ 같은 자리)은 그대로 둔다. 강조 자리 = 첫 화면 설명·구역 머리 설명·가운데 정렬 글·제목.
      */
-    const KEEP = '.keep-lines, .lead, .text-center, h1, h2, h3, h4, .sent-soft';
+    /* 2026-10-28 오너 "작은 화면에서 줄바꿈이 엄청 많다" — 1280px 미만에서는 강조 자리도 풀고 제목·질문만 남긴다(globals.css 같은 폭 기준) */
+    const KEEP_WIDE = '.keep-lines, .lead, .text-center, h1, h2, h3, h4, .sent-soft';
+    const KEEP_NARROW = 'h1, h2, h3, h4, .sent-soft';
     const flow = () => {
+      const KEEP = window.innerWidth < 1280 ? KEEP_NARROW : KEEP_WIDE;
       for (const el of document.querySelectorAll('.sent, .sent-one')) {
         if (el.closest(KEEP)) continue;
         const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);

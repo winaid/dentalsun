@@ -40,7 +40,7 @@ export function ContactCard() {
           </div>
         ))}
       </dl>
-      <p className="mt-3 text-[12.5px] leading-[1.6] text-ink-muted">{HOURS.closed}</p>
+      <p className="mt-3 text-[13.5px] leading-[1.6] text-ink-muted">{HOURS.closed}</p>
       {/* 이달 진료일정 — 날짜 | 내용 을 줄마다 표처럼(오너 2026-09-11: "줄바꿈 잘 해줘 표처럼"). 한 줄에 · 로 이어 붙였더니 어디서 끊기는지 안 보였다 */}
       <div className="mt-4 rounded-xl bg-sun-50 px-4 py-3 text-[12.5px] leading-[1.6] text-sun-700">
         <p className="font-bold">{MONTHLY_NOTICE.title}</p>

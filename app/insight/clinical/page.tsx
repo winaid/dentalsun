@@ -53,7 +53,7 @@ function PostList({ posts, onCanvas = false }: { posts: BlogPost[]; onCanvas?: b
                   <span aria-hidden className="ml-2 inline-block translate-x-0 text-sun-500 opacity-0 transition-all group-hover:translate-x-1 group-hover:opacity-100">→</span>
                 </h3>
               </span>
-              <span className="mt-1 hidden text-[15px] leading-[1.7] text-ink-soft md:line-clamp-1">{p.summary}</span>
+              <span className="mt-1 hidden text-[16px] leading-[1.7] text-ink-soft md:line-clamp-1">{p.summary}</span>
             </span>
             <time dateTime={p.date} className="shrink-0 text-[12.5px] font-semibold tabular-nums text-ink-muted md:text-[13.5px]">
               {p.date.replace(/-/g, '. ')}

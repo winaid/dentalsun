@@ -156,7 +156,7 @@ export default async function BlogIndexPage() {
                       {p.title}
                     </h2>
                     {/* ⚠️ 쉼표 마디(.clause)는 쓰지 않는다 — 카드 폭에서 쉼표마다 줄이 갈려 계단이 된다(증상 허브와 같은 이유). 문장 사이만 <br> 로 가른다(line-clamp 가 깨지지 않게). */}
-                    <p className="mt-3 line-clamp-3 min-h-[5.4em] text-[15.5px] leading-[1.8] text-ink-soft"><Sentences text={p.summary} br /></p>
+                    <p className="mt-3 line-clamp-3 min-h-[5.4em] text-[16.5px] leading-[1.8] text-ink-soft"><Sentences text={p.summary} br /></p>
                     <span className="mt-auto inline-flex items-center gap-2 pt-5 text-[14.5px] font-black text-sun-700">
                       읽기 <span aria-hidden className="transition-transform group-hover:translate-x-1">→</span>
                     </span>

@@ -32,7 +32,7 @@ export function HomeStats() {
             </span>
             <span className="text-[1.05rem] font-bold text-sun-600">{s.unit}</span>
           </p>
-          <p className="mt-2 text-[14.5px] text-ink-soft">{s.label}</p>
+          <p className="mt-2 text-[15.5px] text-ink-soft">{s.label}</p>
         </li>
       ))}
     </ul>

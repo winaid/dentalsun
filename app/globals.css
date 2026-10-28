@@ -153,10 +153,10 @@ td {
   background-position: 0 92%;
 }
 .lead {
-  @apply text-[1.1rem] leading-[1.8] text-ink-soft md:text-[1.22rem];
+  @apply text-[1.15rem] leading-[1.8] text-ink-soft md:text-[1.26rem];
 }
 .prose-ko p {
-  @apply text-[1.08rem] leading-[1.9] text-ink-soft md:text-[1.18rem];
+  @apply text-[1.12rem] leading-[1.9] text-ink-soft md:text-[1.22rem];
 }
 .prose-ko p + p {
   @apply mt-5;
@@ -218,6 +218,20 @@ td {
   .lead .sent-one,
   .text-center .sent,
   .text-center .sent-one {
+    text-wrap: pretty;
+  }
+}
+/*
+ * 2026-10-28 원장 PPT(261026) 2쪽 다시 — 오너 "줄바꿈은 그냥 문단 느낌으로 최대한. 큰 모니터 기준으론 다 괜찮은데 작은 화면에서 줄바꿈이 엄청 많이 될 때가 있다".
+ * 1280px 미만(노트북·태블릿·폰)에서는 강조 자리(첫 화면 설명·구역 머리 설명·가운데 글)도 문단처럼 이어 흐른다 — 문장마다 새 줄로 시작하던 것과
+ * 쉼표 마디가 통째로 내려가던 것이 좁은 칸에서 줄을 반도 못 채우고 꺾었다(라이브 실측: 폰 홈 일찍 꺾인 줄 27, 태블릿 41).
+ * 제목(h1~h4)은 그대로 문장마다. 붙임 공백 덩어리는 WrapGuard flow() 가 같은 폭(1280) 기준으로 푼다. 1280 이상은 예전 그대로.
+ */
+@media (max-width: 1279px) {
+  :is(.keep-lines, .lead, .text-center) :is(.sent, .clause):not(:is(h1, h2, h3, h4) *) {
+    display: inline;
+  }
+  :is(.keep-lines, .lead, .text-center) :is(.sent, .sent-one, .clause):not(:is(h1, h2, h3, h4) *) {
     text-wrap: pretty;
   }
 }
@@ -504,7 +518,7 @@ td {
   }
 }
 .tbl {
-  @apply w-full border-collapse text-[15.5px];
+  @apply w-full border-collapse text-[16.5px];
 }
 /* 표 — 칸마다 선을 두르고 머리칸은 남색으로 채워 행·열이 한눈에 갈리게(오너). 강조 열의 머리칸은 주황(DocPage) */
 .tbl th,
@@ -611,7 +625,7 @@ details.faq[open] summary .chev {
   transform: rotate(180deg);
 }
 details.faq .a {
-  @apply pb-6 pl-11 text-[15.5px] leading-[1.85] text-ink-soft;
+  @apply pb-6 pl-11 text-[16.5px] leading-[1.85] text-ink-soft;
   animation: hero-in 0.4s ease both;
 }
 
@@ -923,7 +937,7 @@ details.faq .a {
   margin-top: 1.35em;
 }
 .blog-body p {
-  font-size: 17px;
+  font-size: 18px;
   line-height: 1.95;
   color: var(--color-ink-soft);
 }
@@ -946,7 +960,7 @@ details.faq .a {
 .blog-body ul,
 .blog-body ol {
   padding-left: 1.15em;
-  font-size: 17px;
+  font-size: 18px;
   line-height: 1.95;
   color: var(--color-ink-soft);
 }
@@ -971,7 +985,7 @@ details.faq .a {
 }
 .blog-body figcaption {
   margin-top: 0.7em;
-  font-size: 14.5px;
+  font-size: 15.5px;
   line-height: 1.7;
   color: var(--color-ink-soft);
 }
@@ -998,7 +1012,7 @@ details.faq .a {
   background: color-mix(in srgb, var(--color-canvas-2) 55%, white);
 }
 .blog-body .tldr-box ul { margin: 0; font-size: 16px; }
-.blog-body .img-cap { margin-top: 0.6em; font-size: 14.5px; line-height: 1.7; color: var(--color-ink-soft); }
+.blog-body .img-cap { margin-top: 0.6em; font-size: 15.5px; line-height: 1.7; color: var(--color-ink-soft); }
 .blog-body .faq-q { margin-top: 1.6em; font-size: 18px; }
 .blog-body .faq-q + p { margin-top: 0.6em; }
 /* 표는 좁은 화면에서 넘친다 — insightFeed 가 table 을 이 상자로 감싼다. */

@@ -140,7 +140,7 @@ function SubHead({ s }: { s: TmjSection }) {
         <Title text={s.title} />
       </h3>
       {s.lead && (
-        <p className="mx-auto mt-3 max-w-[640px] text-[16px] leading-[1.75] text-ink-soft lg:max-w-[880px]">
+        <p className="mx-auto mt-3 max-w-[640px] text-[17px] leading-[1.75] text-ink-soft lg:max-w-[880px]">
           <Sentences text={s.lead} clauses={false} />
         </p>
       )}
@@ -155,7 +155,7 @@ function Illust({ fig, sizes, className = '' }: { fig: Fig; sizes: string; class
       <span className="img-in relative block aspect-[3/2] overflow-hidden rounded-[24px] border border-hairline bg-white">
         <Image src={figSrc(fig.key)} alt={fig.alt} fill sizes={sizes} className="object-contain" />
       </span>
-      {fig.caption && <figcaption className="mt-2.5 text-center text-[13px] leading-snug text-ink-muted">{fig.caption}</figcaption>}
+      {fig.caption && <figcaption className="mt-2.5 text-center text-[14px] leading-snug text-ink-muted">{fig.caption}</figcaption>}
     </figure>
   );
 }
@@ -196,7 +196,7 @@ function Triad({ className = '' }: { className?: string }) {
           <li key={t.n} className="border-t border-white/15 pt-4">
             <span className="block text-[13px] font-extrabold tracking-[0.18em] text-sun-300">{t.n}</span>
             <span className="mt-1.5 block text-[1.1rem] font-bold">{t.title}</span>
-            <span className="mt-1.5 block text-[15.5px] leading-[1.7] text-white/70"><Sentences text={t.desc} /></span>
+            <span className="mt-1.5 block text-[16.5px] leading-[1.7] text-white/70"><Sentences text={t.desc} /></span>
           </li>
         ))}
       </ol>
@@ -272,7 +272,7 @@ function TmjLetter() {
           <Sentences text={l.title} />
         </h2>
         <span aria-hidden className="mx-auto mt-8 block h-px w-12 bg-sun-500 md:mt-10" />
-        <div className="mx-auto mt-8 max-w-[720px] space-y-5 text-[15.5px] leading-[2] text-white/85 md:mt-10 md:text-[17px]">
+        <div className="mx-auto mt-8 max-w-[720px] space-y-5 text-[16.5px] leading-[2] text-white/85 md:mt-10 md:text-[17px]">
           {l.body.map((p) => (
             <p key={p.slice(0, 12)}>
               <Sentences text={p} />
@@ -395,7 +395,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
           </div>
         </HeroCollage>
 
-        <div className="wrap grid gap-14 pt-16 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-16 lg:pt-24 xl:grid-cols-[minmax(0,1fr)_360px]">
+        <div className="wrap grid gap-14 pt-16 lg:pt-24 xl:grid-cols-[minmax(0,1fr)_360px] xl:gap-16">
           {/* ───────── 본문 ───────── */}
           <div className="min-w-0">
             {/* ── 허브: 진료 특징 — 옛 'TMJ' 큰 글자 자리 ── */}
@@ -435,7 +435,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                         <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-[13.5px] font-extrabold text-brand-700">{String(i + 1).padStart(2, '0')}</span>
                         <span className="min-w-0">
                           <span className="block text-[1.05rem] font-extrabold text-ink">{p.title}</span>
-                          <span className="mt-1 block text-[15.5px] leading-[1.7] text-ink-soft">
+                          <span className="mt-1 block text-[16.5px] leading-[1.7] text-ink-soft">
                             <Sentences text={p.desc} clauses={false} />
                           </span>
                         </span>
@@ -448,7 +448,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                   {TMJ_ANATOMY.motions.map((m) => (
                     <li key={m.title} className="card p-6 md:p-7">
                       <h4 className="text-[1.1rem] font-extrabold text-ink">{m.title}</h4>
-                      <p className="mt-2 text-[15.5px] leading-[1.8] text-ink-soft">
+                      <p className="mt-2 text-[16.5px] leading-[1.8] text-ink-soft">
                         <Sentences text={m.desc} clauses={false} />
                       </p>
                     </li>
@@ -461,7 +461,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                     <li key={t.title} className="card p-6 md:p-7">
                       <span className={`inline-block rounded-full px-3 py-1 text-[12px] font-bold ${i === 0 ? 'bg-brand-50 text-brand-700' : 'bg-sun-50 text-sun-700'}`}>{t.tag}</span>
                       <h4 className="mt-3 text-[1.1rem] font-extrabold text-ink">{t.title}</h4>
-                      <p className="mt-2 text-[15.5px] leading-[1.8] text-ink-soft">
+                      <p className="mt-2 text-[16.5px] leading-[1.8] text-ink-soft">
                         <Sentences text={t.desc} clauses={false} />
                       </p>
                     </li>
@@ -474,7 +474,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                   {TMJ_ANATOMY.pain.routes.map((r) => (
                     <li key={r.label} className="rounded-2xl bg-canvas p-5">
                       <span className="block text-[15px] font-extrabold text-ink">{r.label}</span>
-                      <span className="mt-1.5 block text-[15px] leading-[1.7] text-ink-soft">{r.desc}.</span>
+                      <span className="mt-1.5 block text-[16px] leading-[1.7] text-ink-soft">{r.desc}.</span>
                     </li>
                   ))}
                 </ul>
@@ -496,7 +496,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                       <span className="img-in mx-auto mt-6 block aspect-square w-full max-w-[220px] overflow-hidden rounded-2xl bg-canvas-2">
                         <Image src={figSrc(s.fig.key)} alt={s.fig.alt} width={figSize(s.fig.key).w} height={figSize(s.fig.key).h} sizes="220px" className="h-full w-full object-cover" />
                       </span>
-                      <p className="mx-auto mt-4 max-w-[230px] text-[16px] leading-[1.75] text-ink-soft">
+                      <p className="mx-auto mt-4 max-w-[230px] text-[17px] leading-[1.75] text-ink-soft">
                         <Sentences text={s.desc} clauses={false} />
                       </p>
                     </li>
@@ -521,7 +521,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                       <li key={t.title} className="card p-5 md:p-6">
                         <span className="inline-block rounded-full bg-brand-50 px-2.5 py-0.5 text-[12px] font-bold text-brand-700">{t.tag}</span>
                         <h3 className="mt-2 text-[1.08rem] font-extrabold text-ink">{t.title}</h3>
-                        <p className="mt-1.5 text-[15.5px] leading-[1.75] text-ink-soft">
+                        <p className="mt-1.5 text-[16.5px] leading-[1.75] text-ink-soft">
                           <Sentences text={t.desc} clauses={false} />
                         </p>
                       </li>
@@ -537,7 +537,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                 <Head id="tmj-self-tests" s={SECTIONS['self-tests']} lead={TMJ_SELF_INTRO} />
                 <div className="reveal mt-8 grid gap-4 rounded-2xl bg-night p-6 text-white md:grid-cols-[auto_1fr] md:items-center md:gap-6 md:p-7">
                   <span className="inline-flex w-max items-center rounded-full bg-sun-500 px-3 py-1 text-[12.5px] font-extrabold">자가진단 핵심</span>
-                  <p className="text-[15.5px] font-semibold leading-[1.75] text-white/90 md:text-[16.5px]">
+                  <p className="text-[16.5px] font-semibold leading-[1.75] text-white/90 md:text-[17.5px]">
                     <Sentences text={TMJ_SELF_KEY} clauses={false} />
                   </p>
                 </div>
@@ -551,7 +551,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                     </li>
                   ))}
                 </ul>
-                <p className="mt-3 text-[12.5px] text-ink-muted"><Sentences text={TMJ_SELF_PHOTO_NOTE} /></p>
+                <p className="mt-3 text-[13.5px] text-ink-muted"><Sentences text={TMJ_SELF_PHOTO_NOTE} /></p>
                 <p className="reveal mt-10 text-center text-[1.2rem] font-extrabold text-ink md:text-[1.35rem]">이렇게 확인해 보세요</p>
                 <ol className="reveal-stack mt-6 grid gap-4">
                   {TMJ_SELF_TESTS.map((t) => (
@@ -567,11 +567,11 @@ export function TmjPage({ doc }: { doc: Doc }) {
                         <dl className="mt-3 grid gap-2.5">
                           <div className="grid grid-cols-[48px_1fr] items-start gap-3">
                             <dt className="mt-[3px] inline-flex justify-center rounded-md bg-night px-1.5 py-0.5 text-[11.5px] font-extrabold text-white">방법</dt>
-                            <dd className="text-[15.5px] leading-[1.75] text-ink-soft"><Sentences text={t.how} clauses={false} /></dd>
+                            <dd className="text-[16.5px] leading-[1.75] text-ink-soft"><Sentences text={t.how} clauses={false} /></dd>
                           </div>
                           <div className="grid grid-cols-[48px_1fr] items-start gap-3">
                             <dt className="mt-[3px] inline-flex justify-center rounded-md bg-sun-500 px-1.5 py-0.5 text-[11.5px] font-extrabold text-white">의미</dt>
-                            <dd className="text-[15.5px] leading-[1.75] text-ink-soft"><Sentences text={t.means} clauses={false} /></dd>
+                            <dd className="text-[16.5px] leading-[1.75] text-ink-soft"><Sentences text={t.means} clauses={false} /></dd>
                           </div>
                         </dl>
                       </div>
@@ -581,7 +581,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                 <div className="reveal mt-6 grid gap-4 rounded-2xl border border-hairline bg-canvas p-6 md:grid-cols-[1fr_auto] md:items-center md:p-7">
                   <div>
                     <p className="text-[1.15rem] font-extrabold text-ink">{TMJ_SELF_CTA.title}</p>
-                    <p className="mt-1.5 text-[15.5px] leading-[1.7] text-ink-soft"><Sentences text={TMJ_SELF_CTA.desc} clauses={false} /></p>
+                    <p className="mt-1.5 text-[16.5px] leading-[1.7] text-ink-soft"><Sentences text={TMJ_SELF_CTA.desc} clauses={false} /></p>
                   </div>
                   <div className="flex flex-wrap gap-2.5">
                     <a href={CLINIC.phoneHref} className="btn-ghost !px-4 !py-2.5 text-[14px]">{CLINIC.phone}</a>
@@ -607,7 +607,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                       </span>
                       <span className="block p-6">
                         <h3 className="text-[1.15rem] font-extrabold text-ink">{c.title}</h3>
-                        <p className="mx-auto mt-2 max-w-[280px] text-[15.5px] leading-[1.75] text-ink-soft">
+                        <p className="mx-auto mt-2 max-w-[280px] text-[16.5px] leading-[1.75] text-ink-soft">
                           <Sentences text={c.desc} clauses={false} />
                         </p>
                       </span>
@@ -622,18 +622,18 @@ export function TmjPage({ doc }: { doc: Doc }) {
                         <span aria-hidden className="absolute -right-2 -top-4 text-[6rem] font-extrabold leading-none text-white/[0.06] md:text-[7rem]">{c.n}</span>
                         <span className="relative inline-block rounded-full bg-sun-500 px-3 py-1 text-[12px] font-bold text-white">{c.tag}</span>
                         <h3 className="relative mt-3 text-[1.35rem] font-extrabold leading-tight md:text-[1.5rem]">{c.title}</h3>
-                        <p className="relative mt-3 text-[14.5px] leading-[1.65] text-white/70" style={{ wordBreak: 'keep-all' }}>{c.key}</p>
+                        <p className="relative mt-3 text-[15.5px] leading-[1.65] text-white/70" style={{ wordBreak: 'keep-all' }}>{c.key}</p>
                       </div>
                       <div className="p-6 md:p-7">
                         {c.paragraphs.map((p) => (
-                          <p key={p} className="mt-0 text-[15.5px] leading-[1.8] text-ink-soft [&:not(:first-child)]:mt-2.5">
+                          <p key={p} className="mt-0 text-[16.5px] leading-[1.8] text-ink-soft [&:not(:first-child)]:mt-2.5">
                             <Sentences text={p} clauses={false} />
                           </p>
                         ))}
                         {c.items && (
                           <ul className="mt-4 grid gap-x-6 gap-y-2 border-t border-hairline pt-4 sm:grid-cols-2">
                             {c.items.map((it) => (
-                              <li key={it} className="flex gap-2.5 text-[15px] leading-[1.6] text-ink">
+                              <li key={it} className="flex gap-2.5 text-[16px] leading-[1.6] text-ink">
                                 <Check />
                                 <span>{it}</span>
                               </li>
@@ -658,7 +658,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                         <span className="text-[13px] font-extrabold tracking-[0.18em] text-sun-500">{b.n}</span>
                         <h3 className="text-[1.15rem] font-extrabold text-ink md:text-[1.25rem]">{b.title}</h3>
                       </div>
-                      <p className="mt-3 text-[15.5px] leading-[1.8] text-ink-soft">
+                      <p className="mt-3 text-[16.5px] leading-[1.8] text-ink-soft">
                         <Sentences text={b.desc} clauses={false} />
                       </p>
                     </li>
@@ -671,7 +671,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                     <h4 className="mt-1.5 text-[1.1rem] font-extrabold text-ink">이런 경우 얼굴의 좌우 균형이 달라질 수 있습니다</h4>
                     <ul className="mt-3 space-y-2.5">
                       {TMJ_ASYMMETRY_CAUSES.map((c) => (
-                        <li key={c} className="flex gap-2.5 text-[15.5px] leading-[1.7] text-ink-soft">
+                        <li key={c} className="flex gap-2.5 text-[16.5px] leading-[1.7] text-ink-soft">
                           <Dot tone="bg-brand-400" />
                           <span>{c}</span>
                         </li>
@@ -683,7 +683,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                     <h4 className="mt-1.5 text-[1.1rem] font-extrabold text-ink">거울 앞에서 살펴볼 비대칭 신호</h4>
                     <ul className="mt-3 space-y-2.5">
                       {TMJ_ASYMMETRY_SIGNS.map((s) => (
-                        <li key={s} className="flex gap-2.5 text-[15.5px] leading-[1.7] text-ink-soft">
+                        <li key={s} className="flex gap-2.5 text-[16.5px] leading-[1.7] text-ink-soft">
                           <Dot />
                           <span>{s}</span>
                         </li>
@@ -694,7 +694,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                 {/* 함께 보고되는 증상 네 갈래(입안·귀·머리·목어깨) — 인과를 단정하지 않는 안내문을 반드시 함께 둔다 */}
                 <SubHead s={SECTIONS['body-check']} />
                 <div className="reveal mt-8 rounded-[28px] border border-hairline bg-canvas p-6 md:p-9">
-                  <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                  <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-2 2xl:grid-cols-4">
                     {TMJ_BODY_CHECK.map((g) => (
                       <div key={g.group} className="rounded-2xl border border-hairline bg-white p-5">
                         <div className="flex items-center gap-2.5">
@@ -706,7 +706,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                         </div>
                         <ul className="mt-4 space-y-2">
                           {g.items.map((it) => (
-                            <li key={it} className="flex gap-2 text-[14.5px] leading-[1.6] text-ink-soft">
+                            <li key={it} className="flex gap-2 text-[15.5px] leading-[1.6] text-ink-soft">
                               <span aria-hidden className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-sun-400" />
                               <span>{it}</span>
                             </li>
@@ -717,7 +717,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                   </div>
                   <div className="mt-5 flex gap-3 rounded-2xl bg-white p-4 md:p-5">
                     <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand-700 text-[13px] font-extrabold text-white" aria-hidden>i</span>
-                    <p className="text-[14.5px] leading-[1.8] text-ink-soft">
+                    <p className="text-[15.5px] leading-[1.8] text-ink-soft">
                       <Sentences text={TMJ_BODY_NOTE} clauses={false} />
                     </p>
                   </div>
@@ -738,7 +738,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                       </div>
                       <ul className="mt-4 space-y-2.5">
                         {t.points.map((p) => (
-                          <li key={p} className="flex gap-2.5 text-[15.5px] leading-[1.75] text-ink-soft">
+                          <li key={p} className="flex gap-2.5 text-[16.5px] leading-[1.75] text-ink-soft">
                             <Dot />
                             <span>{p}</span>
                           </li>
@@ -749,7 +749,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                 </div>
                 <div className="reveal mt-5 flex gap-3 rounded-2xl bg-canvas p-5 md:p-6">
                   <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand-700 text-[13px] font-extrabold text-white" aria-hidden>i</span>
-                  <p className="text-[15.5px] leading-[1.8] text-ink-soft">
+                  <p className="text-[16.5px] leading-[1.8] text-ink-soft">
                     <Sentences text={BRUX_WHAT.note} clauses={false} />
                   </p>
                 </div>
@@ -764,7 +764,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                     <li key={c.title} className="card p-6">
                       <span className="num">{String(i + 1).padStart(2, '0')}</span>
                       <h3 className="mt-3 text-[1.08rem] font-extrabold text-ink">{c.title}</h3>
-                      <p className="mt-1.5 text-[15.5px] leading-[1.75] text-ink-soft">
+                      <p className="mt-1.5 text-[16.5px] leading-[1.75] text-ink-soft">
                         <Sentences text={c.desc} clauses={false} />
                       </p>
                     </li>
@@ -786,12 +786,12 @@ export function TmjPage({ doc }: { doc: Doc }) {
                       <div className="p-6 md:p-7">
                         <span className="text-[13px] font-extrabold tracking-[0.18em] text-sun-500">{String(i + 1).padStart(2, '0')}</span>
                         <h3 className="mt-1.5 text-[1.2rem] font-extrabold text-ink md:text-[1.3rem]">{d.title}</h3>
-                        <p className="mt-2 text-[15.5px] leading-[1.75] text-ink-soft">
+                        <p className="mt-2 text-[16.5px] leading-[1.75] text-ink-soft">
                           <Sentences text={d.desc} clauses={false} />
                         </p>
                         <ul className="mt-4 grid gap-x-6 gap-y-2 border-t border-hairline pt-4 sm:grid-cols-2">
                           {d.items.map((it) => (
-                            <li key={it} className="flex gap-2.5 text-[15px] leading-[1.6] text-ink">
+                            <li key={it} className="flex gap-2.5 text-[16px] leading-[1.6] text-ink">
                               <Check />
                               <span>{it}</span>
                             </li>
@@ -827,7 +827,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                         <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-night text-[13.5px] font-extrabold text-white">{String(i + 1).padStart(2, '0')}</span>
                         <span className="min-w-0">
                           <span className="block text-[1.05rem] font-extrabold text-ink">{d.title}</span>
-                          <span className="mt-1 block text-[15.5px] leading-[1.7] text-ink-soft">
+                          <span className="mt-1 block text-[16.5px] leading-[1.7] text-ink-soft">
                             <Sentences text={d.desc} clauses={false} />
                           </span>
                         </span>
@@ -860,7 +860,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                           <span className="rounded-full bg-brand-50 px-2.5 py-0.5 text-[12px] font-bold text-brand-700">{t.tag}</span>
                         </div>
                         {t.paragraphs.map((p) => (
-                          <p key={p} className="mt-2.5 text-[15.5px] leading-[1.8] text-ink-soft">
+                          <p key={p} className="mt-2.5 text-[16.5px] leading-[1.8] text-ink-soft">
                             <Sentences text={p} clauses={false} />
                           </p>
                         ))}
@@ -868,7 +868,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                     </li>
                   ))}
                 </ol>
-                <p className="reveal mt-4 text-[14px] leading-[1.75] text-ink-muted"><Sentences text={BRUX_TREATMENT_NOTE} /></p>
+                <p className="reveal mt-4 text-[15px] leading-[1.75] text-ink-muted"><Sentences text={BRUX_TREATMENT_NOTE} /></p>
 
                 {/* 기성 마우스피스와의 차이 — 우열이 아니라 차이만(의료광고) */}
                 <SubHead s={SECTIONS['brux-compare']} />
@@ -886,14 +886,14 @@ export function TmjPage({ doc }: { doc: Doc }) {
                       {BRUX_COMPARE.rows.map((r) => (
                         <tr key={r.label} className="border-t border-hairline align-top">
                           <th scope="row" className="px-4 py-3.5 text-[14px] font-bold text-ink md:px-5">{r.label}</th>
-                          <td data-label={BRUX_COMPARE.columns[0]} className="px-4 py-3.5 text-[15px] leading-[1.65] text-ink-soft md:px-5">{r.a}</td>
-                          <td data-label={BRUX_COMPARE.columns[1]} className="px-4 py-3.5 text-[15px] leading-[1.65] text-ink md:px-5">{r.b}</td>
+                          <td data-label={BRUX_COMPARE.columns[0]} className="px-4 py-3.5 text-[16px] leading-[1.65] text-ink-soft md:px-5">{r.a}</td>
+                          <td data-label={BRUX_COMPARE.columns[1]} className="px-4 py-3.5 text-[16px] leading-[1.65] text-ink md:px-5">{r.b}</td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
                 </div>
-                <p className="reveal mt-4 text-[15px] leading-[1.75] text-ink-soft">
+                <p className="reveal mt-4 text-[16px] leading-[1.75] text-ink-soft">
                   <Sentences text={BRUX_COMPARE.note} clauses={false} />
                 </p>
               </section>
@@ -907,7 +907,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                     <li key={h.title} className="card p-6">
                       <span className="num">{String(i + 1).padStart(2, '0')}</span>
                       <p className="mt-3 text-[1.05rem] font-bold text-ink">{h.title}</p>
-                      <p className="mt-1.5 text-[15.5px] leading-[1.7] text-ink-soft"><Sentences text={h.desc} clauses={false} /></p>
+                      <p className="mt-1.5 text-[16.5px] leading-[1.7] text-ink-soft"><Sentences text={h.desc} clauses={false} /></p>
                     </li>
                   ))}
                 </ul>
@@ -943,7 +943,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                       <p className="mt-5 text-[13px] font-extrabold tracking-[0.18em] text-sun-500">0{i + 1}</p>
                       {/* 2026-10-26 원장 PPT(261026) 18쪽 '모바일에서 줄바꿈이 다르게 나옴' — PC 처럼 쉼표 뒤(없으면 '은' 뒤)에서 늘 두 줄 */}
                       <h3 className="mt-1.5 text-[1.15rem] font-extrabold leading-snug text-ink md:text-[1.25rem]">{twoLines(k.title).map((p) => <span key={p} className="block">{p}</span>)}</h3>
-                      <p className="mx-auto mt-3 max-w-[300px] text-[15.5px] leading-[1.75] text-ink-soft">
+                      <p className="mx-auto mt-3 max-w-[300px] text-[16.5px] leading-[1.75] text-ink-soft">
                         <Sentences text={k.desc} clauses={false} />
                       </p>
                     </li>
@@ -967,7 +967,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                       </span>
                       <div>
                         <h3 className="text-[1.2rem] font-extrabold text-ink md:text-[1.3rem]">{s.title}</h3>
-                        <p className="mt-2 text-[16px] leading-[1.75] text-ink-soft">
+                        <p className="mt-2 text-[17px] leading-[1.75] text-ink-soft">
                           <Sentences text={s.desc} clauses={false} />
                         </p>
                       </div>
@@ -978,12 +978,12 @@ export function TmjPage({ doc }: { doc: Doc }) {
                   <>
                     {/* ── 치료 원칙 — 가로 4단 ── */}
                     <SubHead s={{ ...SECTIONS.principle, lead: TMJ_PRINCIPLE.lead }} />
-                    <ol className="reveal-stack mt-8 grid gap-4 md:grid-cols-4">
+                    <ol className="reveal-stack mt-8 grid gap-4 md:grid-cols-4 xl:grid-cols-2 2xl:grid-cols-4">
                       {TMJ_PRINCIPLE.steps.map((s, i) => (
                         <li key={s.n} className="relative rounded-2xl bg-night p-6 text-white">
                           <span className="text-[12.5px] font-extrabold text-sun-300">{s.n}</span>
                           <span className="mt-2 block text-[15.5px] font-bold leading-snug">{s.label}</span>
-                          <span className="mt-2 block text-[14.5px] leading-[1.7] text-white/70"><Sentences text={s.desc} /></span>
+                          <span className="mt-2 block text-[15.5px] leading-[1.7] text-white/70"><Sentences text={s.desc} /></span>
                         </li>
                       ))}
                     </ol>
@@ -993,14 +993,14 @@ export function TmjPage({ doc }: { doc: Doc }) {
                     <div className="reveal card mt-8 grid gap-8 p-7 md:grid-cols-2 md:gap-10 md:p-9">
                       <div>
                         <h4 className="text-[1.15rem] font-extrabold text-ink">{TMJ_SPLINT_ROLE.title}</h4>
-                        <p className="mt-3 text-[15.5px] leading-[1.8] text-ink-soft">
+                        <p className="mt-3 text-[16.5px] leading-[1.8] text-ink-soft">
                           <Sentences text={TMJ_SPLINT_ROLE.lead} clauses={false} />
                         </p>
                         <dl className="mt-5 space-y-3">
                           {TMJ_SPLINT_ROLE.points.map((p) => (
                             <div key={p.label} className="grid grid-cols-[64px_1fr] gap-3">
                               <dt className="pt-0.5 text-[13px] font-extrabold text-brand-700">{p.label}</dt>
-                              <dd className="text-[15px] leading-[1.7] text-ink-soft"><Sentences text={p.desc} /></dd>
+                              <dd className="text-[16px] leading-[1.7] text-ink-soft"><Sentences text={p.desc} /></dd>
                             </div>
                           ))}
                         </dl>
@@ -1013,7 +1013,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                               <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-sun-500" aria-hidden />
                               <span>
                                 <span className="block text-[15px] font-bold text-ink">{t.title}</span>
-                                <span className="block text-[14.5px] leading-[1.6] text-ink-soft"><Sentences text={t.desc} /></span>
+                                <span className="block text-[15.5px] leading-[1.6] text-ink-soft"><Sentences text={t.desc} /></span>
                               </span>
                             </li>
                           ))}
@@ -1025,7 +1025,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                     <SubHead s={SECTIONS.arthro} />
                     <div className="reveal card mt-8 grid gap-8 p-7 md:grid-cols-2 md:gap-10 md:p-9">
                       <div>
-                        <p className="text-[15.5px] leading-[1.8] text-ink-soft">
+                        <p className="text-[16.5px] leading-[1.8] text-ink-soft">
                           <Sentences text={TMJ_ARTHRO.lead} clauses={false} />
                         </p>
                         <p className="mt-5 text-[13px] font-extrabold text-brand-700">기대 효과</p>
@@ -1039,7 +1039,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                         <p className="text-[13px] font-extrabold text-brand-700">특징</p>
                         <ul className="mt-2 space-y-2">
                           {TMJ_ARTHRO.merits.map((m) => (
-                            <li key={m} className="flex gap-2 text-[15px] leading-[1.6] text-ink-soft">
+                            <li key={m} className="flex gap-2 text-[16px] leading-[1.6] text-ink-soft">
                               <span className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-sun-500" aria-hidden />
                               <span>{m}</span>
                             </li>
@@ -1058,7 +1058,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                             <span className="rounded-full bg-sun-50 px-3 py-1 text-[12px] font-bold text-sun-700">{s.tag}</span>
                           </div>
                           <h3 className="mt-3 text-[1.1rem] font-extrabold text-ink">{s.title}</h3>
-                          <p className="mt-2 text-[15.5px] leading-[1.75] text-ink-soft">
+                          <p className="mt-2 text-[16.5px] leading-[1.75] text-ink-soft">
                             <Sentences text={s.desc} clauses={false} />
                           </p>
                         </li>
@@ -1084,7 +1084,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                           </span>
                           <span className="flex flex-1 flex-col p-6">
                             <h3 className="text-[1.15rem] font-extrabold text-sun-600">{p.title}</h3>
-                            <span className="mt-2 text-[15.5px] leading-[1.75] text-ink-soft">
+                            <span className="mt-2 text-[16.5px] leading-[1.75] text-ink-soft">
                               <Sentences text={p.desc} clauses={false} />
                             </span>
                           </span>
@@ -1110,7 +1110,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                       <div className="min-w-0">
                         <p className="text-[13px] font-bold text-sun-600">{e.eyebrow}</p>
                         <h3 className="mt-1.5 text-[1.15rem] font-extrabold leading-snug text-ink">{e.title}</h3>
-                        <p className="mt-2 text-[15.5px] leading-[1.7] text-ink-soft"><Sentences text={e.lead} /></p>
+                        <p className="mt-2 text-[16.5px] leading-[1.7] text-ink-soft"><Sentences text={e.lead} /></p>
                         <ul className="mt-3 flex flex-wrap gap-1.5">
                           {e.points.map((p) => (
                             <li key={p} className="rounded-full bg-brand-50 px-2.5 py-1 text-[12.5px] font-semibold text-brand-700">{p}</li>
@@ -1133,7 +1133,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                     <li key={h.title} className="card p-6">
                       <span className="num">{String(i + 1).padStart(2, '0')}</span>
                       <p className="mt-3 text-[1.05rem] font-bold text-ink">{h.title}</p>
-                      <p className="mt-1.5 text-[15.5px] leading-[1.7] text-ink-soft"><Sentences text={h.desc} clauses={false} /></p>
+                      <p className="mt-1.5 text-[16.5px] leading-[1.7] text-ink-soft"><Sentences text={h.desc} clauses={false} /></p>
                     </li>
                   ))}
                 </ul>
@@ -1178,7 +1178,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                           </span>
                           <span className="flex flex-1 flex-col p-6">
                             <span className="text-[1.15rem] font-extrabold text-ink">{c.title}</span>
-                            <span className="mt-2 text-[15px] leading-[1.7] text-ink-soft">{first(c.summary)}</span>
+                            <span className="mt-2 text-[16px] leading-[1.7] text-ink-soft">{first(c.summary)}</span>
                             <span className="mt-auto pt-4 text-[13.5px] font-bold text-brand-700">자세히 보기 ›</span>
                           </span>
                         </Link>
@@ -1191,7 +1191,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
           </div>
 
           {/* ───────── 사이드바 (넓은 화면은 오른쪽, 좁은 화면은 본문 아래) ───────── */}
-          <aside className="space-y-6 lg:self-start" aria-label="턱관절 진료 안내">
+          <aside className="space-y-6 xl:self-start" aria-label="턱관절 진료 안내">
             <DoctorCard />
 
             <div className="card p-5">
@@ -1223,7 +1223,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                     <span className="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-full border-[3px] border-sun-500 text-[14px] font-extrabold">{p.label}</span>
                     <span className="min-w-0 pt-1">
                       <span className="block text-[14.5px] font-bold">{p.title}</span>
-                      <span className="mt-0.5 block text-[12.5px] leading-[1.6] text-white/65">{p.desc}</span>
+                      <span className="mt-0.5 block text-[13.5px] leading-[1.6] text-white/65">{p.desc}</span>
                     </span>
                   </li>
                 ))}

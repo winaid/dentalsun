@@ -175,7 +175,7 @@ export default function HomePage() {
                       {d.name} <span className="text-[1.3rem] font-bold text-ink-soft md:text-[1.5rem]">{d.role}</span>
                     </h3>
                     {/* 소개 글 한 단락(원장 피드백 6번) — 이름과 약력 카드 사이, 본문 글씨로만 */}
-                    <p className="mt-3 max-w-[640px] text-[16px] leading-[1.8] text-ink-soft md:text-[16.5px]">
+                    <p className="mt-3 max-w-[640px] text-[17px] leading-[1.8] text-ink-soft md:text-[17.5px]">
                       <Sentences text={d.intro} />
                     </p>
                     <div className="mt-5 rounded-2xl border border-hairline bg-white/95 p-6 shadow-[var(--shadow-soft)] backdrop-blur md:mt-6 md:p-8">
@@ -227,7 +227,7 @@ export default function HomePage() {
                   <div className="p-5 sm:p-7">
                     <span className="num">{String(i + 1).padStart(2, '0')}</span>
                     <p className="mt-3 text-[1.12rem] font-bold leading-snug text-ink sm:mt-5">{s.title}</p>
-                    <p className="mt-2 text-[15.5px] leading-relaxed text-ink-soft sm:mt-3">
+                    <p className="mt-2 text-[16.5px] leading-relaxed text-ink-soft sm:mt-3">
                       <Sentences text={s.desc} />
                     </p>
                   </div>
@@ -258,7 +258,7 @@ export default function HomePage() {
                 <br />
                 스태프 전원이 <span className="accent-sun whitespace-nowrap">국가자격 치과위생사</span>로 구성됩니다
               </h2>
-              <p className="mx-auto mt-6 max-w-[640px] text-[1.05rem] leading-[1.8] text-white/80 md:text-[1.12rem]">편안하고 친절하게, 안심하실 수 있도록 함께 돌봅니다.</p>
+              <p className="mx-auto mt-6 max-w-[640px] text-[1.1rem] leading-[1.8] text-white/80 md:text-[1.12rem]">편안하고 친절하게, 안심하실 수 있도록 함께 돌봅니다.</p>
             </div>
           </div>
         </section>
@@ -306,7 +306,7 @@ export default function HomePage() {
                           <span className="hidden sm:inline">{h.label}</span>
                         </span>
                       </span>
-                      <span className="mt-2.5 text-[14px] leading-[1.55] text-ink-muted sm:mt-3 sm:text-[15.5px] sm:leading-relaxed">{h.children?.slice(0, 3).map((c) => c.label).join(' · ')}</span>
+                      <span className="mt-2.5 text-[15px] leading-[1.55] text-ink-muted sm:mt-3 sm:text-[16.5px] sm:leading-relaxed">{h.children?.slice(0, 3).map((c) => c.label).join(' · ')}</span>
                     </span>
                   </Link>
                 </li>
@@ -334,7 +334,7 @@ export default function HomePage() {
                 <span className="accent-sun">원인부터</span> 정확히 찾습니다
               </h2>
               {/* 넓은 화면은 문장 하나 = 한 줄(오너 규칙) — 첫 문장이 약 970px 이라 lg 에서 칸을 넓힌다 */}
-              <p className="mx-auto mt-6 max-w-[720px] text-[1.05rem] leading-[1.85] text-white md:text-[1.15rem] lg:max-w-[1000px]">
+              <p className="mx-auto mt-6 max-w-[720px] text-[1.1rem] leading-[1.85] text-white md:text-[1.15rem] lg:max-w-[1000px]">
                 {/* 2026-10-20 원장 PPT 102쪽 문구 그대로(네 줄). 하이라이트 자리만 예전 '{필요한 단계만}' 과 같은 뜻의 낱말로 */}
                 {/* 넓은 화면은 원장 PPT 102쪽처럼 네 줄(둘째 문장은 '파악하고,' 뒤에서 꺾음) — 폰은 이어서 흐른다 */}
                 <span className="lg:block"><ScrubText text="턱관절 질환은 턱관절 디스크의 위치, 턱 근육의 긴장, 이갈이⁠·⁠이악물기, 치아 맞물림이 함께 얽혀 생깁니다." /></span>
@@ -370,7 +370,7 @@ export default function HomePage() {
                       <span className="text-[1.05rem] font-extrabold tabular-nums text-sun-300">{String(i + 1).padStart(2, '0')}</span>
                       <span className="text-[1.1rem] font-bold leading-snug text-white md:text-[1.15rem]">{it.title}</span>
                     </p>
-                    <p className="mt-3 text-[15.5px] leading-[1.8] text-white/80">{it.desc}</p>
+                    <p className="mt-3 text-[16.5px] leading-[1.8] text-white/80">{it.desc}</p>
                   </li>
                 ))}
               </ol>
@@ -495,7 +495,7 @@ export default function HomePage() {
               <h2 className="display-sm mt-4 !text-white">
                 환자마다 <span className="accent-sun">멸균한 기구</span>로 진료합니다
               </h2>
-              <p className="mt-4 text-[1.05rem] leading-[1.8] text-white/75">진료 기구는 멸균 후 개별 포장해 1인 1기구로 사용하고, 유니트체어 용수와 진료실 공기까지 관리합니다.</p>
+              <p className="mt-4 text-[1.1rem] leading-[1.8] text-white/75">진료 기구는 멸균 후 개별 포장해 1인 1기구로 사용하고, 유니트체어 용수와 진료실 공기까지 관리합니다.</p>
               <ul className="mt-6 space-y-2.5">
                 {HYGIENE.map((h) => (
                   <li key={h} className="flex items-center gap-3 text-[16px] text-white/90">
@@ -581,10 +581,10 @@ export default function HomePage() {
                       </li>
                     ))}
                   </ul>
-                  <p className="mt-3 text-[14px] text-ink-muted">{HOURS.closed}</p>
+                  <p className="mt-3 text-[15px] text-ink-muted">{HOURS.closed}</p>
                 </div>
                 <a href={CLINIC.phoneHref} className="rounded-2xl bg-brand-700 p-6 text-white transition-colors hover:bg-brand-800">
-                  <p className="text-[14px] text-white/70">전화 문의 · 예약</p>
+                  <p className="text-[15px] text-white/70">전화 문의 · 예약</p>
                   <p className="mt-1 text-[1.8rem] font-extrabold tracking-tight">{CLINIC.phone}</p>
                 </a>
                 <div className="card p-5 text-[15px] text-ink-soft">

@@ -409,7 +409,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
               </ul>
             </div>
             {b.note && (
-              <p className={`reveal mt-8 max-w-[900px] text-[15.5px] leading-relaxed ${band ? '!text-white/80' : 'text-ink-soft'}`}>
+              <p className={`reveal mt-8 max-w-[900px] text-[16.5px] leading-relaxed ${band ? '!text-white/80' : 'text-ink-soft'}`}>
                 <Sentences text={b.note} />
               </p>
             )}
@@ -475,7 +475,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
                 </tbody>
               </table>
             </div>
-            {b.note && <p className="mt-4 text-[15.5px] leading-relaxed text-ink-muted"><Sentences text={`※ ${b.note}`} /></p>}
+            {b.note && <p className="mt-4 text-[16.5px] leading-relaxed text-ink-muted"><Sentences text={`※ ${b.note}`} /></p>}
             {b.figure && (
               <div className="reveal mx-auto mt-10 max-w-[760px]">
                 <Figure fig={b.figure} sizes="(max-width: 800px) 100vw, 760px" />
@@ -510,7 +510,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
                 </tbody>
               </table>
             </div>
-            {b.note && <p className="mt-4 text-[15.5px] leading-relaxed text-ink-muted"><Sentences text={`※ ${b.note}`} /></p>}
+            {b.note && <p className="mt-4 text-[16.5px] leading-relaxed text-ink-muted"><Sentences text={`※ ${b.note}`} /></p>}
           </div>
         </section>
       );
@@ -557,7 +557,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
               <div className="reveal mt-8 rounded-[24px] bg-canvas px-6 py-6 text-center md:px-10">
                 {/* 원장 PPT 202쪽 '제목에 하이라이트 표시' — 원장이 보낸 캡처처럼 글자 뒤 전체를 옅은 주황으로 칠한다(10-21 오너 '저렇게 보내준 것처럼') */}
                 <p className="text-[16px] font-extrabold text-ink md:text-[17px]"><mark className="box-hl">{b.box.title}</mark></p>
-                <p className="mt-2 text-[15.5px] leading-[1.75] text-ink-soft md:text-[16px]"><Sentences text={b.box.text} clauses={false} /></p>
+                <p className="mt-2 text-[16.5px] leading-[1.75] text-ink-soft md:text-[17px]"><Sentences text={b.box.text} clauses={false} /></p>
               </div>
             )}
             <div className="reveal mt-8">
@@ -593,7 +593,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
                   ))}
                 </p>
                 {b.lines && (
-                  <div className="mt-7 space-y-2.5 border-l border-white/25 pl-5 text-[1rem] leading-[1.8] text-white/80 md:text-[1.06rem]">
+                  <div className="mt-7 space-y-2.5 border-l border-white/25 pl-5 text-[1.06rem] leading-[1.8] text-white/80 md:text-[1.1rem]">
                     {b.lines.map((l, i) => (
                       <p key={i}>
                         <Sentences text={l} />
@@ -620,7 +620,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
             {b.by && <p className="mt-4 text-white/60">— {b.by}</p>}
             {/* 2026-10-22 임플란트 허브 진료 철학 띠 — 큰 문구 아래 짧은 설명 줄(그림 없는 판에도) */}
             {b.lines && (
-              <div className="mx-auto mt-8 max-w-[760px] space-y-2 text-[1rem] leading-[1.8] text-white/80 md:text-[1.06rem]">
+              <div className="mx-auto mt-8 max-w-[760px] space-y-2 text-[1.06rem] leading-[1.8] text-white/80 md:text-[1.1rem]">
                 {b.lines.map((l, i) => (
                   <p key={i}>
                     <Sentences text={l} />
@@ -695,7 +695,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
                         <span className="text-[13px] font-extrabold tracking-[0.12em] text-sun-600">{String(mi + 1).padStart(2, '0')}</span>
                         <span className="text-[1.2rem] font-extrabold text-brand-800 md:text-[1.3rem]">{m.title}</span>
                       </p>
-                      <p className="mt-1.5 text-[15.5px] leading-[1.7] text-ink-soft">
+                      <p className="mt-1.5 text-[16.5px] leading-[1.7] text-ink-soft">
                         <Sentences text={m.desc} clauses={false} />
                       </p>
                     </div>
@@ -716,7 +716,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
                           </span>
                           <span className="mt-2.5 block text-[12px] font-extrabold tracking-[0.1em] text-sun-600">{String(si + 1).padStart(2, '0')}</span>
                           <span className="mt-0.5 block text-[14.5px] font-extrabold text-brand-800">{st.title}</span>
-                          <span className="mt-1 block text-[14px] leading-[1.6] text-ink-soft">{st.desc}</span>
+                          <span className="mt-1 block text-[15px] leading-[1.6] text-ink-soft">{st.desc}</span>
                         </li>
                       ))}
                     </ol>
@@ -725,7 +725,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
               </div>
             )}
             {b.note && (
-              <p className={`reveal mt-6 text-[15.5px] leading-relaxed text-ink-soft ${b.methods ? 'mx-auto max-w-[1120px]' : 'max-w-[900px]'}`}>
+              <p className={`reveal mt-6 text-[16.5px] leading-relaxed text-ink-soft ${b.methods ? 'mx-auto max-w-[1120px]' : 'max-w-[900px]'}`}>
                 <Sentences text={b.note} />
               </p>
             )}
@@ -752,7 +752,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
                           <span className="relative block aspect-[3/2] w-full shrink-0 overflow-hidden rounded-lg lg:w-[50%]">
                             <Image src={figSrc(c.fig.key)} alt={c.fig.alt} fill sizes="(max-width: 767px) 45vw, 220px" className="object-cover" />
                           </span>
-                          <p className="px-1 text-[14.5px] leading-[1.65] text-ink-soft md:text-[15.5px]">
+                          <p className="px-1 text-[15.5px] leading-[1.65] text-ink-soft md:text-[16.5px]">
                             <Sentences text={c.text} clauses={false} />
                           </p>
                         </div>
@@ -787,7 +787,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
             </div>
             <div className="reveal border-l border-white/30 pl-6 md:pl-8">
               {paras(b.paragraphs).map((p, i) => (
-                <p key={i} className={`text-[1.02rem] leading-[1.9] text-white/92 md:text-[1.08rem] ${i > 0 ? 'mt-5' : ''}`}>
+                <p key={i} className={`text-[1.08rem] leading-[1.9] text-white/92 md:text-[1.12rem] ${i > 0 ? 'mt-5' : ''}`}>
                   <Sentences text={p} clauses={false} />
                 </p>
               ))}
