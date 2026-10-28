@@ -35,6 +35,7 @@ import {
   TMJ_CAUSES,
   TMJ_CONTACT,
   TMJ_DISC,
+  TMJ_EQUIP,
   TMJ_FOCUS,
   TMJ_FAQ_HEAD,
   TMJ_PHYSIO,
@@ -304,7 +305,7 @@ function TmjLetter() {
  * 목록 첫 구역은 위 여백을 두지 않는다(본문 격자의 위 여백만).
  */
 const VIEWS: Record<string, string[]> = {
-  '/treatment/tmj': ['intro', 'what', 'anatomy', 'causes', 'knowhow', 'equip', 'children'],
+  '/treatment/tmj': ['intro', 'what', 'anatomy', 'causes', 'knowhow', 'focus', 'equip', 'children'],
   '/treatment/tmj/symptoms': ['symptoms', 'types', 'self-tests', 'whole-body'],
   '/treatment/tmj/bruxism': ['brux-what', 'brux-causes', 'brux-damage', 'brux-check', 'brux-diagnosis', 'brux-treatment', 'brux-care'],
   '/treatment/tmj/treatment': ['steps', 'steps-detail', 'habits', 'cases'],
@@ -1110,11 +1111,11 @@ export function TmjPage({ doc }: { doc: Doc }) {
               </section>
             )}
 
-            {/* ── 허브: 턱관절 집중 진료 환경 세 칸 — 2026-10-28 원장 PPT(261026) 16쪽 '내용 추가'(오너 "16쪽 해줘").
-                 예전 장비 두 칸(3D CT·PHL-15) 자리에 원장 글 01~03. 세 칸을 한 줄씩 세로로 — 두 칸 격자면 셋째가 혼자 남아 빈 칸이 보였다(20쪽 지적과 같은 꼴) ── */}
-            {show('equip') && (
-              <section className={top('equip')} aria-labelledby="tmj-equip">
-                <Head id="tmj-equip" s={SECTIONS.equip} />
+            {/* ── 허브: 턱관절 집중 진료 환경 세 칸 — 2026-10-28 원장 PPT(261026) 16쪽 '내용 추가'(오너 "16쪽 해줘" → "2번으로 가": 장비 구역은 아래에 그대로 두고 새로 더함).
+                 세 칸을 한 줄씩 세로로 — 두 칸 격자면 셋째가 혼자 남아 빈 칸이 보였다(20쪽 지적과 같은 꼴) ── */}
+            {show('focus') && (
+              <section className={top('focus')} aria-labelledby="tmj-focus">
+                <Head id="tmj-focus" s={SECTIONS.focus} />
                 <ol className="reveal-stack mx-auto mt-12 grid max-w-[1040px] gap-5">
                   {TMJ_FOCUS.map((e, i) => (
                     /* 폰: 사진 옆에는 번호·제목만, 설명·꼬리표는 아래 전체 폭(사진 옆 좁은 칸에 끼면 5줄·두 줄 꼬리표가 됐다). sm 부터 사진 | 글 두 칸 */
@@ -1138,6 +1139,33 @@ export function TmjPage({ doc }: { doc: Doc }) {
                     </li>
                   ))}
                 </ol>
+              </section>
+            )}
+
+            {/* ── 허브: 장비 두 가지(3D CT·PHL-15) — 10-28 16쪽 구역으로 잠깐 바뀌었다가 오너 "2번으로 가"로 원래 글 그대로 되살림 ── */}
+            {show('equip') && (
+              <section className={top('equip')} aria-labelledby="tmj-equip">
+                <Head id="tmj-equip" s={SECTIONS.equip} />
+                <ul className="reveal-stack mt-12 grid gap-5 md:grid-cols-2">
+                  {TMJ_EQUIP.map((e) => (
+                    <li key={e.title} className="card flex gap-5 p-5 md:p-6">
+                      {/* 사진은 3:4 상자를 꽉 채운다 */}
+                      <span className="relative block aspect-[3/4] w-[104px] shrink-0 self-start overflow-hidden rounded-xl bg-canvas-2 md:w-[118px] lg:w-[132px]">
+                        <Image src={figSrc(e.fig.key)} alt={e.fig.alt} fill sizes="150px" className="object-cover" />
+                      </span>
+                      <div className="min-w-0">
+                        <p className="text-[13px] font-bold text-sun-600">{e.eyebrow}</p>
+                        <h3 className="mt-1.5 text-[1.15rem] font-extrabold leading-snug text-ink">{e.title}</h3>
+                        <p className="mt-2 text-[16.5px] leading-[1.7] text-ink-soft"><Sentences text={e.lead} /></p>
+                        <ul className="mt-3 flex flex-wrap gap-1.5">
+                          {e.points.map((p) => (
+                            <li key={p} className="rounded-full bg-brand-50 px-2.5 py-1 text-[12.5px] font-semibold text-brand-700">{p}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
               </section>
             )}
 

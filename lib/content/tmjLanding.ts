@@ -77,11 +77,16 @@ export const SECTIONS: Record<string, TmjSection> = {
     lead: '턱관절 장애는 대개 한 가지 원인이 아니라, 관절에 걸리는 부담과 생활 습관, 심리적 긴장이 겹쳐 생깁니다. 진단에서 주된 원인을 찾고, 치료 순서를 정합니다.',
   },
   knowhow: { label: '진료 방식', title: '광화문 선치과\n턱관절 진료는 {이렇게 합니다}' },
-  /* 2026-10-28 원장 PPT(261026) 16쪽 — 머리말(정밀 검사와 단계별 맞춤 치료)·제목(광화문선치과의 턱관절 집중 진료 환경) 원장 글 그대로. 설명 줄은 원장 글에 없어 두지 않는다.
-     예전: '진료 장비 · 턱관절 진단과 치료에 쓰는 3D CT와 PHL-15 레이저'(건강보험 적용은 02 카드 꼬리표로 남김) */
-  equip: {
+  /* 2026-10-28 원장 PPT(261026) 16쪽 '내용 추가' — 머리말(정밀 검사와 단계별 맞춤 치료)·제목(광화문선치과의 턱관절 집중 진료 환경) 원장 글 그대로.
+     설명 줄은 원장 글에 없어 두지 않는다. 처음엔 아래 장비 구역 자리를 바꿨다가, 오너 "2번으로 가" — 새 구역으로 더하고 장비 구역은 되살림 */
+  focus: {
     label: '정밀 검사와 단계별 맞춤 치료',
     title: '광화문선치과의\n턱관절 {집중 진료 환경}',
+  },
+  equip: {
+    label: '진료 장비',
+    title: '턱관절 진단과 치료에 쓰는\n{3D CT}와 {PHL-15 레이저}',
+    lead: '저선량 3D CT로 턱관절 뼈의 모양과 변화를 입체적으로 확인합니다. 긴장된 턱 근육은 PHL-15 저출력 레이저로 물리치료하며, 이 치료에는 {건강보험이 적용}됩니다.',
   },
   children: {
     label: '더 알아보기',
@@ -403,7 +408,8 @@ export const TMJ_HUB_HERO_ITEMS: Array<{ title: string; desc: string }> = [
 
 /**
  * 턱관절 집중 진료 환경 세 칸 — 2026-10-28 원장 PPT(261026) 16쪽 원장 글 그대로(제목·설명). 오너 "16쪽 해줘".
- * 턱관절 쪽 장비 구역(#tmj-equip) 자리에 들어간다 — 예전 장비 두 칸(아래 TMJ_EQUIP)의 01 CT·02 레이저와 같은 내용에 03 이 더해진 판.
+ * 턱관절 쪽 새 구역(#tmj-focus) — 바로 아래 장비 구역(#tmj-equip, TMJ_EQUIP)과 01 CT·02 레이저가 겹치지만, 원장 메모가 '추가'이고
+ * 장비 구역의 CT 설명은 원장 글(10-20 PPT 176쪽)이라 둘 다 둔다(오너 "2번으로 가"). 순서 = 환경 한눈에(여기) → 장비 자세히(아래).
  * 꼬리표(tags)는 사이트에 이미 있던 병원 사실(TMJ_EQUIP points)과 03 원장 글 속 치료 이름만. 사진은 3:4 상자에 맞는 것(pos = 자를 때 보일 자리).
  */
 export const TMJ_FOCUS: Array<{ title: string; desc: string; tags: string[]; fig: Fig; pos?: string }> = [
@@ -428,8 +434,7 @@ export const TMJ_FOCUS: Array<{ title: string; desc: string; tags: string[]; fig
   },
 ];
 
-/** 장비 두 가지 — 원본 배너(jaw-join-treatment06·07)의 사실(원적외선 5배·치료 모드·건강보험·올인원·짧은 촬영) 그대로.
- *  2026-10-28 부터 화면 구역(#tmj-equip)은 위 TMJ_FOCUS 가 쓰고, 이것은 허브 문서 본문(lib/content/tmj.ts 레이저·CT 덩어리)에만 남는다 */
+/** 장비 두 가지 — 원본 배너(jaw-join-treatment06·07)의 사실(원적외선 5배·치료 모드·건강보험·올인원·짧은 촬영) 그대로 */
 export const TMJ_EQUIP: Array<{ eyebrow: string; title: string; lead: string; points: string[]; fig: Fig }> = [
   {
     eyebrow: '레이저 물리치료',
