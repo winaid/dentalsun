@@ -101,7 +101,7 @@ function Area({ title, sub, items, kind, paired = false }: { title: string; sub:
             backdrop={!xr}
             bg={xr ? 'bg-black' : 'bg-night'}
           />
-          <p className="mt-3 text-center text-[14.5px] font-semibold text-ink">
+          <p className="mt-3 text-center text-[15.5px] font-semibold text-ink">
             <span className="mr-1.5 text-[12.5px] font-bold text-sun-600">{CASE_CATEGORY_LABEL[cur.category]}</span>
             {cur.caption}
           </p>

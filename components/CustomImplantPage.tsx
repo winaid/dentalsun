@@ -647,7 +647,7 @@ export function CustomImplantPage({ doc, part }: { doc: Doc; part: 'navigation' 
                   <p className="mt-5 text-[12.5px] font-extrabold tracking-[0.06em] text-brand-700">오래 쓰는 관리</p>
                   <ul className="mt-2 flex flex-wrap gap-2">
                     {CI_PERI.care.map((c) => (
-                      <li key={c} className="rounded-xl bg-brand-50 px-3 py-2 text-[13px] font-semibold leading-snug text-brand-700">{c}</li>
+                      <li key={c} className="rounded-xl bg-brand-50 px-3 py-2 text-[14.5px] font-semibold leading-snug text-brand-700">{c}</li>
                     ))}
                   </ul>
                 </div>
@@ -754,8 +754,8 @@ export function CustomImplantPage({ doc, part }: { doc: Doc; part: 'navigation' 
                   <li key={p.title} className="flex items-start gap-4">
                     <span className="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-full border-[3px] border-sun-500 text-[14px] font-extrabold">{String(i + 1).padStart(2, '0')}</span>
                     <span className="min-w-0 pt-1">
-                      <span className="block text-[14.5px] font-bold">{p.title}</span>
-                      <span className="mt-0.5 block text-[13.5px] leading-[1.6] text-white/65">{p.desc}</span>
+                      <span className="block text-[16px] font-bold">{p.title}</span>
+                      <span className="mt-0.5 block text-[15px] leading-[1.6] text-white/75">{p.desc}</span>
                     </span>
                   </li>
                 ))}

@@ -71,6 +71,13 @@ const CARD_FIG: Record<string, string> = {
   '/treatment/implant/bone-graft': 'ai/implant-bonegraft-card',
 };
 
+/** 관련 카드 칸 수 — 셋이면 한 줄 셋, 넷이면 2×2 → 한 줄 넷 */
+function relCols(n: number) {
+  if (n === 3) return 'md:grid-cols-3';
+  if (n >= 4) return 'sm:grid-cols-2 lg:grid-cols-4';
+  return 'sm:grid-cols-2';
+}
+
 export function DocPage({ doc }: { doc: Doc }) {
   const isInsight = doc.path.startsWith('/insight');
   const trail = isInsight ? [{ name: '인사이트', path: '/insight' }] : [{ name: '진료 안내', path: '/treatment' }, { name: doc.hubLabel, path: doc.hub }];
@@ -213,7 +220,8 @@ export function DocPage({ doc }: { doc: Doc }) {
             <div className="wrap">
               <p className="eyebrow reveal">RELATED</p>
               <h2 className="display-sm reveal mt-4">함께 보면 좋은 안내</h2>
-              <div className="reveal-stack grid-cards mt-10 sm:grid-cols-2 lg:grid-cols-4">
+              {/* 칸 수는 카드 수에 맞춘다 — 셋일 때 2칸 격자면 셋째가 혼자 남고, 4칸 격자면 오른쪽 한 칸이 비었다(2026-10-28 전체 점검, 원장 20쪽 '빈 칸' 꼴) */}
+              <div className={`reveal-stack grid-cards mt-10 ${relCols((doc.path !== doc.hub ? 1 : 0) + Math.min(3, related.length))}`}>
                 {doc.path !== doc.hub && <CardLink href={doc.hub} label={`${isInsight ? '인사이트' : doc.hubLabel} 전체 안내`} desc="관련된 안내를 한곳에서 모아 봅니다." fig={{ key: bandBg, alt: doc.hubLabel }} />}
                 {related.slice(0, 3).map((r) => (
                   <CardLink key={r.path} href={r.path} label={r.title} desc={shortSummary(r.summary)} fig={{ key: DOC_AI[r.path] ?? r.hero?.key ?? 'ai/faq', alt: r.title }} />

@@ -1338,5 +1338,9 @@
  "equip/tmj-physio-laser": {
   "w": 1200,
   "h": 900
+ },
+ "fit/why-inos": {
+  "w": 1200,
+  "h": 900
  }
 }

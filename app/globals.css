@@ -57,6 +57,9 @@ body {
   letter-spacing: -0.01em;
   word-break: keep-all;
   overflow-wrap: anywhere;
+  /* 2026-10-28 전체 점검 — 끝줄 한 낱말 막기(pretty)를 모든 글에 물려준다. 아래 p·li 규칙만으론 카드 제목(링크 속 span)에
+     '…자연치아를 보존한 / 사례' 처럼 한 낱말이 혼자 남았다. 제목·표 머리의 balance 등 더 구체적인 규칙이 그대로 이긴다 */
+  text-wrap: pretty;
 }
 /* 2026-09-29 원장 피드백 'AI 줄바꿈 보완' — Sentences 를 타지 않는 좁은 카드 글도 마지막 줄에 한 낱말만 남지 않게(예: '바뀌지 / 않습니다').
    .sent 의 balance 규칙(아래)이 더 구체적이라 그쪽이 이긴다. */

@@ -87,6 +87,7 @@ const HUB_SHORT: Record<string, string> = {
   '/treatment/painless': '무통치료',
   '/treatment/general': '일반진료',
 };
+/* 진료과목 아코디언 사진 — 아래 일반진료 카드·임플란트 뒤집기 카드는 같은 사진을 다시 쓰지 않는다(하위 쪽 사진으로, 2026-10-28 전체 점검: 홈 한 쪽에 같은 사진 다섯 장이 두 번씩 나왔다) */
 const HUB_IMG: Record<string, string> = {
   '/treatment/implant': 'ai/implant-hub',
   '/treatment/tmj': 'sun/tmj-explain-skull-2',
@@ -106,7 +107,7 @@ export default function HomePage() {
     { href: '/treatment/implant/full-arch', label: '풀아치 임플란트', desc: '치아가 없는 턱에 4~6개를 식립하고, 고정된 치아를 연결합니다.', fig: 'orig/implant-fa-fixed' },
     { href: '/treatment/implant/uv', label: 'UV 임플란트', desc: '자외선으로 표면을 처리해, 뼈와 잘 붙도록 돕습니다.', fig: 'ai/implant-uv' },
     { href: '/treatment/implant/prf', label: '자가혈 임플란트', desc: '뼈이식 부위에 내 혈액에서 얻은 PRF를 함께 넣습니다.', fig: 'ai/implant-prf' },
-    { href: '/treatment/insurance', label: '보험 틀니 · 임플란트', desc: '만 65세 이상 건강보험 적용 기준을 안내합니다.', fig: 'ai/insurance-hub' },
+    { href: '/treatment/insurance', label: '보험 틀니 · 임플란트', desc: '만 65세 이상 건강보험 적용 기준을 안내합니다.', fig: 'ai/insurance-denture' },
   ];
 
   return (
@@ -180,7 +181,9 @@ export default function HomePage() {
                     </p>
                     <div className="mt-5 rounded-2xl border border-hairline bg-white/95 p-6 shadow-[var(--shadow-soft)] backdrop-blur md:mt-6 md:p-8">
                       <p className="text-[14.5px] font-bold tracking-wide text-ink-muted md:text-[15px]">주요 약력</p>
-                      <ul className="mt-4 grid gap-x-8 gap-y-3 sm:grid-cols-2 md:mt-5 md:gap-x-10 md:gap-y-3.5">
+                      {/* 두 줄 칸은 사진 옆 칸이 넉넉한 폭에서만 — 768~1279 에선 오른쪽 칸이 300~440px 라 두 줄이면 한 칸 95~165px,
+                          '강남성심병 / 원'·'보건복지 / 부 인증' 처럼 낱말 가운데서 꺾였다(2026-10-28 전체 점검) */}
+                      <ul className="mt-4 grid gap-x-8 gap-y-3 sm:grid-cols-2 md:mt-5 md:grid-cols-1 md:gap-x-10 md:gap-y-3.5 xl:grid-cols-2">
                         {d.career.map((c) => (
                           <li key={c} className="flex items-start gap-3 text-[15.5px] leading-[1.5] text-ink md:text-[16.5px]">
                             {isCertCareer(c) ? (
@@ -463,12 +466,12 @@ export default function HomePage() {
             {/* 폰도 두 칸 — 진료과목 카드와 같은 격자(한 칸씩 쌓으면 사진 네 장에 2,000px) */}
             <ul className="reveal-stack grid-cards mt-12 !gap-3 grid-cols-2 sm:!gap-5 lg:grid-cols-3">
               {[
-                { href: '/treatment/natural-tooth', label: '자연치아 살리기', desc: '치아 뿌리 속을 초음파로 깨끗이 씻고, MTA로 단단히 막습니다.', fig: 'ai/natural-hub' },
+                { href: '/treatment/natural-tooth', label: '자연치아 살리기', desc: '치아 뿌리 속을 초음파로 깨끗이 씻고, MTA로 단단히 막습니다.', fig: 'ai/natural-endosonic' },
                 { href: '/treatment/re-root-canal', label: '재근관치료', desc: '신경치료 후 다시 생긴 뿌리 끝 염증을 치료합니다.', fig: 'ai/natural-mta' },
                 { href: '/treatment/periodontal', label: '치주치료', desc: '치석을 없애고, 잇몸 속 뿌리 표면까지 깨끗하게 치료합니다.', fig: 'ai/insight-gum' },
-                { href: '/treatment/wisdom-tooth', label: '매복사랑니', desc: '3D CT로 신경과의 거리를 확인한 뒤 뽑습니다.', fig: 'ai/wisdom' },
-                { href: '/treatment/aesthetic', label: '심미치료', desc: '라미네이트 · 올세라믹 · 지르코니아 · 치아미백.', fig: 'ai/aesthetic-hub' },
-                { href: '/treatment/painless', label: '무통 & 저자극 치료', desc: '무통마취기와 바르는 마취로 주사 자극을 줄입니다.', fig: 'ai/painless-hub' },
+                { href: '/treatment/wisdom-tooth', label: '매복사랑니', desc: '3D CT로 신경과의 거리를 확인한 뒤 뽑습니다.', fig: 'ai/insight-wisdom' },
+                { href: '/treatment/aesthetic', label: '심미치료', desc: '라미네이트 · 올세라믹 · 지르코니아 · 치아미백.', fig: 'ai/aesthetic-prosthetics' },
+                { href: '/treatment/painless', label: '무통 & 저자극 치료', desc: '무통마취기와 바르는 마취로 주사 자극을 줄입니다.', fig: 'ai/painless-anesthesia' },
               ].map((c) => (
                 <li key={c.href}>
                   <CardLink href={c.href} label={c.label} desc={c.desc} fig={{ key: c.fig, alt: c.label }} />

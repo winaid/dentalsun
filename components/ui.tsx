@@ -281,8 +281,10 @@ export function pauseGlue(clause: string, maxEm = RUN_MAX_EM): string {
   for (let i = 0; i <= n; i++) {
     if (i === n || open[i]) { openIn(start, i); start = i + 1; }
   }
-  /* 가운뎃점·빗금 앞뒤는 단어 잇기표(U+2060)로 묶는다 — keep-all 이어도 '뼈 | ·신경', 'CAD/ | CAM' 처럼 꺾였다(09-29 실측) */
-  const join = (w: string) => w.replace(/([^\s])([·ㆍ/])(?=[^\s])/g, '$1⁠$2⁠');
+  /* 가운뎃점·빗금은 단어 잇기표(U+2060)로 묶는다 — keep-all 이어도 '뼈 | ·신경', 'CAD/ | CAM' 처럼 꺾였다(09-29 실측).
+     2026-10-28 전체 점검: 가운뎃점 뒤까지 묶으면 '신경치료·재근관치료·잇몸치료로' 가 한 덩어리가 돼 좁은 칸에서 낱말 가운데('재근관치 / 료')로 꺾였다
+     → 표 칸 글(keepDots)처럼 가운뎃점은 앞 글자에만 묶고 점 뒤에서는 줄이 바뀔 수 있게. 빗금은 그대로 앞뒤 모두 */
+  const join = keepDots;
   return words.map((w, i) => (i === 0 ? join(w) : (open[i - 1] ? ' ' : ' ') + join(w))).join('');
 }
 
@@ -309,6 +311,21 @@ export function splitSentences(text: string): string[] {
   }
   out.push(text.slice(last).trim());
   return out.filter(Boolean);
+}
+
+/**
+ * 마지막 줄이 덜 찬 카드 격자를 가운데로 — 원장 PPT(261026) 20쪽 '한 칸이 비어 보여 … 가운데 정렬' 꼴(2026-10-28 전체 점검).
+ * 쓰는 법: 격자 = sm:grid-cols-4 lg:grid-cols-6(반 칸 단위), 항목 = sm:col-span-2 + lastRowStart(i, n).
+ * 두 줄(sm~)은 홀수면 마지막 하나를, 세 줄(lg~)은 남는 하나·둘을 가운데로 옮긴다. Tailwind 가 읽도록 클래스는 글자 그대로.
+ */
+export function lastRowStart(i: number, n: number) {
+  const c: string[] = [];
+  if (n % 2 === 1 && i === n - 1) c.push('sm:col-start-2');
+  const r = n % 3;
+  if (r === 1 && i === n - 1) c.push('lg:col-start-3');
+  else if (r === 2 && i === n - 2) c.push('lg:col-start-2');
+  else if (c.length) c.push('lg:col-start-auto');
+  return c.join(' ');
 }
 
 export function Sentences({
@@ -540,7 +557,9 @@ export function ContactBand({ title = '진료 예약 및 상담 안내', text, b
         <div className="absolute inset-0 bg-gradient-to-r from-night via-night/85 to-night/50" />
       </div>
       <div className="wrap py-20 md:py-28">
-        <div className="reveal mx-auto grid max-w-[1320px] items-center gap-10 md:grid-cols-[1fr_auto] lg:gap-16">
+        {/* 두 칸은 1280 부터 — 768~1279 에서 오른쪽 카드 넷이 자리를 먼저 차지해 제목 칸이 150~350px 로 좁아져
+             '들으셨다면 / , / 부족한지부 / 터' 처럼 낱말 가운데서 꺾였다(2026-10-28 전체 점검). 그 아래 폭은 제목 → 카드 위아래로 */}
+        <div className="reveal mx-auto grid max-w-[1320px] items-center gap-10 xl:grid-cols-[1fr_auto] xl:gap-16">
           <div>
             <p className="eyebrow on-dark">CONTACT</p>
             {/* 제목 속 줄바꿈 문자(\n)는 그 자리에서 줄을 바꾼다 — 2026-10-22 임플란트 허브 질문형 제목이 낱말 중간에서 꺾이던 것. \n 없는 제목은 예전 그대로 */}
@@ -782,13 +801,14 @@ const BADGE_ICONS: Array<[RegExp, ReactNode]> = [
 ];
 export function RoundBadges({ items, className = '', tone = 'light' }: { items: string[]; className?: string; tone?: 'light' | 'dark' }) {
   const dark = tone === 'dark';
+  // lg(1024~1279) 홈 풀아치 글 칸이 460px 라 112px 넷(496px)이 3+1 로 꺾였다 → 그 폭만 104px·간격 12px(452px) (2026-10-28 전체 점검)
   return (
-    <ul className={`grid max-w-[372px] grid-cols-4 gap-2.5 sm:flex sm:max-w-none sm:flex-wrap sm:gap-4 ${className}`}>
+    <ul className={`grid max-w-[372px] grid-cols-4 gap-2.5 sm:flex sm:max-w-none sm:flex-wrap sm:gap-4 lg:gap-3 xl:gap-4 ${className}`}>
       {items.map((b, i) => {
         const [top, bottom] = b.split('\n');
         const icon = BADGE_ICONS.find(([re]) => re.test(b))?.[1];
         return (
-          <li key={b} className="ring-badge relative flex aspect-square w-full flex-col items-center justify-center text-center sm:h-[112px] sm:w-[112px]" style={{ ['--i' as string]: i }}>
+          <li key={b} className="ring-badge relative flex aspect-square w-full flex-col items-center justify-center text-center sm:h-[112px] sm:w-[112px] lg:h-[104px] lg:w-[104px] xl:h-[112px] xl:w-[112px]" style={{ ['--i' as string]: i }}>
             {/* 둘레 빛 — 원 둘레에만 퍼지는 고리(가운데는 비워 원 색이 탁해지지 않게), 숨 쉬듯 커졌다 작아진다 */}
             <span aria-hidden className={`badge-glow absolute -inset-3 rounded-full blur-md ${dark ? 'bg-[radial-gradient(circle_closest-side,transparent_62%,rgba(242,111,30,0.6)_80%,transparent_100%)]' : 'bg-[radial-gradient(circle_closest-side,transparent_62%,rgba(251,135,67,0.55)_80%,transparent_100%)]'}`} />
             {/* 유리 원 */}

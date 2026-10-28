@@ -23,7 +23,7 @@ export function FlipCard({ href, num, label, desc, back, fig }: { href: string; 
             </span>
           </div>
           <p className="mt-auto pt-4 text-[1rem] font-bold leading-snug text-ink sm:pt-8 sm:text-[1.15rem]">{label}</p>
-          <p className="mt-1.5 text-[14px] text-ink-muted sm:mt-2 sm:text-[15.5px]">{desc}</p>
+          <p className="mt-1.5 text-[15px] text-ink-muted sm:mt-2 sm:text-[15.5px]">{desc}</p>
         </div>
         {/* 뒷면 — 사진 배경 */}
         <div className="flip-face flip-back overflow-hidden rounded-3xl bg-night text-white shadow-[var(--shadow-lift)]">

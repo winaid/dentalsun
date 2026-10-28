@@ -6,7 +6,7 @@ import { HeroCollage, type CollageCard } from '@/components/HeroCollage';
 import { JsonLd } from '@/components/JsonLd';
 import { TmjSelfCheck } from '@/components/TmjSelfCheck';
 import { CaseGallery } from '@/components/CaseGallery';
-import { ContactBand, FaqList, MedicalNotice, Sentences } from '@/components/ui';
+import { ContactBand, FaqList, MedicalNotice, Sentences, lastRowStart } from '@/components/ui';
 import { ContactCard, DoctorCard } from '@/components/SideRail';
 import { docCharCount, figSize, figSrc, fitsBox, type Doc, type Fig } from '@/lib/docs';
 import { docByPath, docsOfHub } from '@/lib/content';
@@ -156,7 +156,7 @@ function Illust({ fig, sizes, className = '' }: { fig: Fig; sizes: string; class
       <span className="img-in relative block aspect-[3/2] overflow-hidden rounded-[24px] border border-hairline bg-white">
         <Image src={figSrc(fig.key)} alt={fig.alt} fill sizes={sizes} className="object-contain" />
       </span>
-      {fig.caption && <figcaption className="mt-2.5 text-center text-[14px] leading-snug text-ink-muted">{fig.caption}</figcaption>}
+      {fig.caption && <figcaption className="mt-2.5 text-center text-[15px] leading-snug text-ink-muted">{fig.caption}</figcaption>}
     </figure>
   );
 }
@@ -204,9 +204,11 @@ function Triad({ className = '' }: { className?: string }) {
     <div className={`reveal rounded-[28px] bg-night p-7 text-white md:p-10 ${className}`}>
       <Label center={false} light>{SECTIONS.triad.label}</Label>
       <h3 className="mt-3 text-[1.3rem] font-extrabold md:text-[1.5rem]">{SECTIONS.triad.title}</h3>
-      <ol className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {TMJ_ANATOMY.triad.map((t) => (
-          <li key={t.n} className="border-t border-white/15 pt-4">
+      {/* 다섯 칸 — 마지막 줄이 덜 차면 가운데로(원장 PPT 261026 20쪽 '한 칸이 비어 보여 … 가운데 정렬' 과 같은 꼴, 2026-10-28 전체 점검).
+          격자를 반 칸 단위(두 줄=4, 세 줄=6)로 두고 각 칸은 두 칸씩 차지 — 남는 칸만 시작 자리를 옮긴다 */}
+      <ol className="mt-6 grid gap-5 sm:grid-cols-4 lg:grid-cols-6">
+        {TMJ_ANATOMY.triad.map((t, i, all) => (
+          <li key={t.n} className={`border-t border-white/15 pt-4 sm:col-span-2 ${lastRowStart(i, all.length)}`}>
             <span className="block text-[13px] font-extrabold tracking-[0.18em] text-sun-300">{t.n}</span>
             <span className="mt-1.5 block text-[1.1rem] font-bold">{t.title}</span>
             <span className="mt-1.5 block text-[16.5px] leading-[1.7] text-white/70"><Sentences text={t.desc} /></span>
@@ -562,7 +564,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                       <span className="relative block aspect-[4/3] overflow-hidden bg-canvas-2">
                         <Image src={figSrc(f.key)} alt={f.alt} fill sizes="(max-width: 640px) 100vw, 33vw" className="object-cover" />
                       </span>
-                      <p className="px-4 py-3 text-center text-[14px] font-semibold leading-snug text-ink-soft">{f.caption}</p>
+                      <p className="px-4 py-3 text-center text-[15px] font-semibold leading-snug text-ink-soft">{f.caption}</p>
                     </li>
                   ))}
                 </ul>
@@ -1046,7 +1048,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                         <p className="mt-5 text-[13px] font-extrabold text-brand-700">기대 효과</p>
                         <ul className="mt-2 flex flex-wrap gap-2">
                           {TMJ_ARTHRO.effects.map((e) => (
-                            <li key={e} className="rounded-xl bg-brand-50 px-3 py-2 text-[13px] font-semibold leading-snug text-brand-700">{e}</li>
+                            <li key={e} className="rounded-xl bg-brand-50 px-3 py-2 text-[14.5px] font-semibold leading-snug text-brand-700">{e}</li>
                           ))}
                         </ul>
                       </div>
@@ -1275,8 +1277,8 @@ export function TmjPage({ doc }: { doc: Doc }) {
                   <li key={p.label} className="flex items-start gap-4">
                     <span className="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-full border-[3px] border-sun-500 text-[14px] font-extrabold">{p.label}</span>
                     <span className="min-w-0 pt-1">
-                      <span className="block text-[14.5px] font-bold">{p.title}</span>
-                      <span className="mt-0.5 block text-[13.5px] leading-[1.6] text-white/65">{p.desc}</span>
+                      <span className="block text-[16px] font-bold">{p.title}</span>
+                      <span className="mt-0.5 block text-[15px] leading-[1.6] text-white/75">{p.desc}</span>
                     </span>
                   </li>
                 ))}

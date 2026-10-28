@@ -537,6 +537,7 @@ export const TMJ_SELF_CHECK = [
 
 /* ───────────────────────── 치료 ───────────────────────── */
 /** 치료 다섯 가지 — 원본 배너(jaw-join-treatment05)의 다섯 항목. 사진도 원본 */
+/* 02 물리치료 사진 = 물리치료실 실사(place2/physio-room) — 예전 세로 레이저 사진(orig/tmj-tx-laser)은 16:10 칸에서 혼자 작게 들어갔다(2026-10-28 전체 점검) */
 export const TMJ_STEPS: TmjStep[] = [
   {
     title: '약물치료',
@@ -546,7 +547,7 @@ export const TMJ_STEPS: TmjStep[] = [
   {
     title: '물리치료',
     desc: 'PHL-15 저출력 레이저와 초음파 장비로 뭉친 턱 근육을 풀어 통증을 줄입니다. 레이저 물리치료는 {건강보험이 적용}됩니다.',
-    fig: { key: 'orig/tmj-tx-laser', alt: '관절 팔이 달린 레이저 물리치료 장비' },
+    fig: { key: 'place2/physio-room', alt: '턱관절 물리치료 장비가 놓인 광화문 선치과 물리치료실' },
   },
   {
     title: '보툴리눔 톡신 주사',

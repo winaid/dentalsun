@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { CLINIC } from '@/lib/clinic';
 import { publishedIso } from '@/lib/blog';
 import { allPostsMerged } from '@/lib/insightFeed';
-import { ContactBand, Sentences } from '@/components/ui';
+import { ContactBand, Sentences, lastRowStart } from '@/components/ui';
 import { HeroCollage } from '@/components/HeroCollage';
 import { JsonLd } from '@/components/JsonLd';
 import { SiteHeader } from '@/components/SiteHeader';
@@ -119,10 +119,11 @@ export default async function BlogIndexPage() {
             ⚠️ 첫 카드를 다시 키우지 말 것 — 글 수가 3n+1 이면 반드시 행이 깨진다.
             ⚠️ 삼항식의 가지 안이라 중괄호 주석이 아니라 맨 주석이다 — 표현식 자리에 중괄호를 두면 빌드가 깨진다(실제로 깨졌다).
                그리고 주석 글 안에 '별표 슬래시' 를 적지 말 것 — 주석이 거기서 닫혀 또 깨진다(이것도 실제로 깨졌다).
+            ★ 마지막 줄이 덜 차면 같은 크기 그대로 가운데로(lastRowStart, 반 칸 격자) — 2026-10-28 전체 점검, 768 에서 셋째 글이 혼자 왼쪽에 남던 것.
           */
-          <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="grid gap-5 sm:grid-cols-4 lg:grid-cols-6">
             {posts.map((p, i) => (
-              <li key={p.slug}>
+              <li key={p.slug} className={`sm:col-span-2 ${lastRowStart(i, posts.length)}`}>
                 <Link
                   href={`/insight/blog/${p.slug}`}
                   className="group flex h-full flex-col overflow-hidden rounded-2xl border border-hairline bg-white transition-colors hover:border-brand-300"

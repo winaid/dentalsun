@@ -55,7 +55,8 @@ export default function FaqPage() {
             </div>
           </section>
         ))}
-        <ContactBand title="여기에 없는 질문은 전화로 문의해 주세요" />
+        {/* 문의 띠 배경 기본값(ai/wide-visit)은 이 쪽 첫 화면 배경과 같아 바꿈(2026-10-28 전체 점검) */}
+        <ContactBand title="여기에 없는 질문은 전화로 문의해 주세요" bg="ai/wide-clinic" />
         <MedicalNotice />
       </main>
     </>
