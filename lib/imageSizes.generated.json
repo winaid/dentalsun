@@ -1103,14 +1103,6 @@
   "w": 1536,
   "h": 1024
  },
- "ai/tmj-physio-tens": {
-  "w": 1200,
-  "h": 800
- },
- "ai/tmj-physio-spray": {
-  "w": 1200,
-  "h": 800
- },
  "ai/ct-room": {
   "w": 1536,
   "h": 1024
@@ -1334,5 +1326,13 @@
  "ai/tmj-focus-physio": {
   "w": 900,
   "h": 1200
+ },
+ "equip/tmj-physio-tens": {
+  "w": 1041,
+  "h": 694
+ },
+ "equip/tmj-physio-spray": {
+  "w": 395,
+  "h": 731
  }
 }

@@ -623,7 +623,8 @@ export const TMJ_SUPPORT_CARE = [
 /**
  * 물리치료 세 가지 — 사진 카드(2026-09-29 원장: "물리치료에 분사신장치료 및 저주파 자극 치료, 사진처럼 추가").
  * ★ 원장이 보낸 참고 캡처(다른 병원 턱관절 쪽)의 짜임 — 번호 붙은 제품 사진 + 주황 제목 + 한 문장. 문장은 우리 말로 새로 씀.
- * ★ 저주파 자극기·냉각 스프레이 사진은 상표·글자 없는 AI 제품 사진(ai/tmj-physio-*). 병원 실물 사진이 오면 키만 바꾼다.
+ * ★ 02·03 사진 = 실물 제품 사진(equip/tmj-physio-*) — 2026-10-28 원장 PPT(261026) 19쪽 '2.3 사진 변경(사전에 전달드림)'.
+ *   원장이 09-29 보낸 참고 병원 화면의 제품 사진이라 오너 폰 캡처에서 잘라 냈다(그 병원 '02' 번호 동그라미는 지움). 전엔 AI 제품 사진.
  */
 export const TMJ_PHYSIO: Array<{ title: string; desc: string; fig: Fig }> = [
   {
@@ -634,12 +635,12 @@ export const TMJ_PHYSIO: Array<{ title: string; desc: string; fig: Fig }> = [
   {
     title: '저주파 자극 치료',
     desc: '턱 주변과 씹는 근육에 약한 전기 자극을 주어 뭉친 근육을 풀고, 턱 움직임이 편해지도록 돕습니다.',
-    fig: { key: 'ai/tmj-physio-tens', alt: '다이얼이 달린 저주파 자극 치료기와 피부에 붙이는 전극 패드' },
+    fig: { key: 'equip/tmj-physio-tens', alt: '출력 다이얼이 여섯 개 달린 저주파 자극 치료기 조작판' },
   },
   {
     title: '분사신장치료',
     desc: '차가운 스프레이를 근육 위에 뿌린 뒤 부드럽게 늘려 주어, 긴장된 근육을 풀고 근육에서 오는 통증을 줄입니다.',
-    fig: { key: 'ai/tmj-physio-spray', alt: '근육 이완에 쓰는 냉각 스프레이' },
+    fig: { key: 'equip/tmj-physio-spray', alt: '분사신장치료에 쓰는 파란 뚜껑의 냉각 스프레이' },
   },
 ];
 

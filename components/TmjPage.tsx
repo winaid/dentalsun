@@ -133,9 +133,9 @@ function Head({ id, s, lead }: { id: string; s: TmjSection; lead?: string }) {
  * 구역 안 소제목 — 큰 구역(Head) 아래 덩어리가 여럿일 때 덩어리마다 붙인다(오너 "너무 몰려 있다", 2026-09-21).
  * 위 여백을 크게(mt-16/24) 두어 앞 덩어리와 갈라 보이게 하는 것이 역할의 절반이다.
  */
-function SubHead({ s }: { s: TmjSection }) {
+function SubHead({ s, id }: { s: TmjSection; id?: string }) {
   return (
-    <div className="reveal mt-16 text-center md:mt-24">
+    <div id={id} className={`reveal mt-16 text-center md:mt-24${id ? ' scroll-mt-[96px]' : ''}`}>
       <Label>{s.label}</Label>
       <h3 className="mt-3 text-[1.4rem] font-extrabold leading-tight text-ink md:text-[1.7rem]">
         <Title text={s.title} />
@@ -1081,7 +1081,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                     </ul>
 
                     {/* ── 물리치료 세 가지 — 번호 붙은 사진 카드(원장 참고 캡처 짜임, 2026-09-29) ── */}
-                    <SubHead s={SECTIONS.physio} />
+                    <SubHead s={SECTIONS.physio} id="physio" />
                     <ul className="reveal-stack mt-8 grid gap-5 md:grid-cols-3">
                       {TMJ_PHYSIO.map((p, i) => (
                         <li key={p.title} className="card flex h-full flex-col overflow-hidden">
