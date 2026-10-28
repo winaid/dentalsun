@@ -156,7 +156,8 @@ export function DocPage({ doc }: { doc: Doc }) {
             ★ 첫 화면 아래 '흐르는 낱말 띠' 는 오너 지시로 뺐다 — 홈 2026-09-10(94a9157), 허브 2026-09-16.
               되살리지 말 것. */}
         {doc.isHub && children.length > 0 && (
-          <section className="section bg-canvas">
+          // id=hub-menu: 2026-10-28 보고 주소(#앵커)로 바로 열리게(오너 규칙 "고친 자리 라이브 주소")
+          <section id="hub-menu" className="section bg-canvas scroll-mt-[96px]">
             <div className="wrap">
               <p className="eyebrow reveal">MENU</p>
               <h2 className="display-sm reveal mt-4">{doc.title} 세부 안내</h2>
