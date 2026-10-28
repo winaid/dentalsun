@@ -1328,11 +1328,15 @@
   "h": 1200
  },
  "equip/tmj-physio-tens": {
-  "w": 1212,
-  "h": 909
+  "w": 1200,
+  "h": 900
  },
  "equip/tmj-physio-spray": {
-  "w": 395,
-  "h": 731
+  "w": 1200,
+  "h": 900
+ },
+ "equip/tmj-physio-laser": {
+  "w": 1200,
+  "h": 900
  }
 }
