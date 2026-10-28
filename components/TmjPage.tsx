@@ -35,7 +35,7 @@ import {
   TMJ_CAUSES,
   TMJ_CONTACT,
   TMJ_DISC,
-  TMJ_EQUIP,
+  TMJ_FOCUS,
   TMJ_FAQ_HEAD,
   TMJ_PHYSIO,
   TMJ_LETTER,
@@ -1110,30 +1110,34 @@ export function TmjPage({ doc }: { doc: Doc }) {
               </section>
             )}
 
-            {/* ── 허브: 장비 두 가지 ── */}
+            {/* ── 허브: 턱관절 집중 진료 환경 세 칸 — 2026-10-28 원장 PPT(261026) 16쪽 '내용 추가'(오너 "16쪽 해줘").
+                 예전 장비 두 칸(3D CT·PHL-15) 자리에 원장 글 01~03. 세 칸을 한 줄씩 세로로 — 두 칸 격자면 셋째가 혼자 남아 빈 칸이 보였다(20쪽 지적과 같은 꼴) ── */}
             {show('equip') && (
               <section className={top('equip')} aria-labelledby="tmj-equip">
                 <Head id="tmj-equip" s={SECTIONS.equip} />
-                <ul className="reveal-stack mt-12 grid gap-5 md:grid-cols-2">
-                  {TMJ_EQUIP.map((e) => (
-                    <li key={e.title} className="card flex gap-5 p-5 md:p-6">
+                <ol className="reveal-stack mx-auto mt-12 grid max-w-[1040px] gap-5">
+                  {TMJ_FOCUS.map((e, i) => (
+                    /* 폰: 사진 옆에는 번호·제목만, 설명·꼬리표는 아래 전체 폭(사진 옆 좁은 칸에 끼면 5줄·두 줄 꼬리표가 됐다). sm 부터 사진 | 글 두 칸 */
+                    <li key={e.title} className="card grid grid-cols-[76px_minmax(0,1fr)] items-center gap-x-4 gap-y-3 p-5 sm:grid-cols-[118px_minmax(0,1fr)] sm:items-start sm:gap-x-7 md:p-7 lg:grid-cols-[140px_minmax(0,1fr)]">
                       {/* 사진은 3:4 상자를 꽉 채운다 */}
-                      <span className="relative block aspect-[3/4] w-[104px] shrink-0 self-start overflow-hidden rounded-xl bg-canvas-2 md:w-[118px] lg:w-[132px]">
-                        <Image src={figSrc(e.fig.key)} alt={e.fig.alt} fill sizes="150px" className="object-cover" />
+                      <span className="relative block aspect-[3/4] w-full overflow-hidden rounded-xl bg-canvas-2 sm:row-span-2">
+                        <Image src={figSrc(e.fig.key)} alt={e.fig.alt} fill sizes="150px" className="object-cover" style={e.pos ? { objectPosition: e.pos } : undefined} />
                       </span>
                       <div className="min-w-0">
-                        <p className="text-[13px] font-bold text-sun-600">{e.eyebrow}</p>
-                        <h3 className="mt-1.5 text-[1.15rem] font-extrabold leading-snug text-ink">{e.title}</h3>
-                        <p className="mt-2 text-[16.5px] leading-[1.7] text-ink-soft"><Sentences text={e.lead} /></p>
+                        <span className="num">{String(i + 1).padStart(2, '0')}</span>
+                        <h3 className="mt-2 text-[1.2rem] font-extrabold leading-snug text-ink">{e.title}</h3>
+                      </div>
+                      <div className="col-span-2 min-w-0 sm:col-span-1 sm:col-start-2">
+                        <p className="text-[16.5px] leading-[1.75] text-ink-soft"><Sentences text={e.desc} /></p>
                         <ul className="mt-3 flex flex-wrap gap-1.5">
-                          {e.points.map((p) => (
-                            <li key={p} className="rounded-full bg-brand-50 px-2.5 py-1 text-[12.5px] font-semibold text-brand-700">{p}</li>
+                          {e.tags.map((p) => (
+                            <li key={p} className="rounded-full bg-brand-50 px-2.5 py-1 text-[13.5px] font-semibold text-brand-700">{p}</li>
                           ))}
                         </ul>
                       </div>
                     </li>
                   ))}
-                </ul>
+                </ol>
               </section>
             )}
 
