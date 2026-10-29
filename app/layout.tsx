@@ -44,7 +44,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <noscript>
           <style
             dangerouslySetInnerHTML={{
-              __html: '.reveal,.reveal-stack>*,.img-in,.line-rise>span{opacity:1!important;transform:none!important}',
+              __html: '.reveal,.reveal-stack>*,.img-in,.line-rise>span,.award-frame,.award-line,.award-rule{opacity:1!important;transform:none!important}',
             }}
           />
         </noscript>

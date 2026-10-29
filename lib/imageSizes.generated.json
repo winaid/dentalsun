@@ -1342,5 +1342,13 @@
  "fit/why-inos": {
   "w": 1200,
   "h": 900
+ },
+ "place/award-certificate": {
+  "w": 900,
+  "h": 1288
+ },
+ "press/dental-arirang-full-arch": {
+  "w": 1024,
+  "h": 1536
  }
 }

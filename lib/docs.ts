@@ -59,6 +59,8 @@ type BlockBody =
   | { type: 'duo'; id?: string; panels: Array<{ id?: string; title: string; paragraphs: string[]; figure: Fig }> }
   /** 보증 기간 띠(components/WarrantyBand — 홈과 같은 것). 글은 컴포넌트 안에 있다 */
   | { type: 'warranty' }
+  /** 언론 소개 — 기사 그림 한 장을 크게(글자를 읽을 수 있게) + '크게 보기'. 2026-10-29 덴탈아리랑 디오나비 풀아치 기사 */
+  | { type: 'press'; id?: string; title?: string; lead?: string; figure: Fig; source?: string; /** 원문 기사 주소 — 출처 줄과 '원문 기사 보기' 가 여기로 간다 */ sourceUrl?: string }
   /** 글 + (카드) + 넓은 그림 한 장 — 글자가 든 설명 그림을 잘리지 않게 원래 비율로 크게(원장 PPT 157·159쪽 AI 그림) */
   | { type: 'showcase'; id?: string; title: string; paragraphs?: string[]; /** 방법 카드 — 머리(제목·설명) + 큰 그림(이름표는 HTML) + 단계 넷. 글자는 모두 HTML(그림 속 글자는 흐려서 안 씀) */ methods?: Array<{ title: string; desc: string; figure: Fig; labels?: Array<{ text: string; left: string; top: string }>; steps: Array<{ title: string; desc: string; fig: Fig }> }>; note?: string; figureTitle?: string; figure?: Fig; /** 그림 최대 폭(px) — 원본보다 크게 늘리지 않게 */ figureMax?: number; /** 두 열 비교 표 — 칸마다 그림(글자 없음) + HTML 글 */ grid?: { columns: [string, string]; rows: Array<{ label: string; sub?: string; a: { fig: Fig; text: string }; b: { fig: Fig; text: string } }> } };
 

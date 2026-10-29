@@ -224,7 +224,7 @@ function Triad({ className = '' }: { className?: string }) {
  * ★ 액자 틀은 사진 비율(세로 3:4)과 같은 크기라 사진이 와도 짜임이 흔들리지 않는다.
  * 2026-10-07 원장 PPT 46쪽 '홈화면에 턱관절 상장 이미지 추가' — 홈 턱관절 띠도 이걸 쓴다(사진이 오면 두 곳이 함께 바뀐다).
  */
-export function AwardCard({ className = 'mt-10' }: { className?: string }) {
+export function AwardCard({ className = 'mt-10', tone = 'light' }: { className?: string; /** dark = 짙은 남색 판(흰 바탕 구역에서 상장을 돋보이게). 홈 턱관절 띠는 이미 어두운 사진 띠라 흰 판(light) 그대로 */ tone?: 'light' | 'dark' }) {
   const a = TMJ_AWARD;
   /* 가로로 긴 사진(대기실 수상 현수막 등)은 카드 위에 크게, 수상 내용은 그 아래 — 세로 상장 칸(3:4)에 넣으면 글자가 잘린다 */
   const size = a.photo ? figSize(a.photo.key) : null;
@@ -244,12 +244,47 @@ export function AwardCard({ className = 'mt-10' }: { className?: string }) {
         </figcaption>
       </figure>
     );
+  /*
+   * ★ 상장 사진 카드 — 두 가지 판 (2026-10-29 오너 '상장 좀 돋보이게 · 둘 다 모션그래픽도').
+   *   dark  = 짙은 남색 판(턱관절 첫 화면, 흰 바탕 구역). 흰 종이 상장은 남색 위에서 가장 또렷하다 — 주황 바탕은 상장 테두리 금색과 부딪힌다.
+   *   light = 흰 판 + 왼쪽 옅은 회색 받침(홈 턱관절 띠, 이미 어두운 사진 띠). 흰 상장이 흰 카드에 묻히던 것을 회색 받침이 가른다.
+   *   주황은 연도·짧은 선 강조에만. 상장은 원래 비율(자르지 않음) + 흰 테두리 + 그림자로 액자처럼. 누르는 동작 없음(오너: 새 탭 확대는 끄는 법이 없다).
+   * ★ 모션(globals.css '.award-card') — 스크롤로 카드가 보이면(.is-shown) 상장이 기울어진 채 올라와 제자리에 앉고,
+   *   그림자가 깊어지며, 글이 차례로 올라오고 주황 선이 그어진다. 움직임 줄이기 설정이면 전부 끈다.
+   *   ⚠️ 그라데이션 바탕·번지는 빛·반짝이 금지(오너 'AI 티 난다' 반려 요소).
+   */
+  if (a.photo && size) {
+    const dark = tone === 'dark';
+    return (
+      <div
+        className={`reveal award-card mx-auto flex max-w-[640px] items-stretch overflow-hidden rounded-2xl text-left md:max-w-[920px] ${
+          dark ? 'bg-brand-900' : 'bg-white shadow-[0_24px_60px_-20px_rgba(0,0,0,0.55)]'
+        } ${className}`}
+      >
+        <div className={`flex shrink-0 items-center justify-center p-4 sm:p-6 md:p-9 ${dark ? 'md:pr-3' : 'bg-canvas-2'}`}>
+          {/* 2026-10-29 오너 "확대되면 끄는 방법이 없네, 클릭해도 커지지 말자 · 보이는 크기를 키우자" — 링크 없이 그림만, 폭 140/220/300px */}
+          <div className="award-frame relative w-[140px] rounded-md bg-white p-1.5 sm:w-[220px] md:w-[300px] md:p-2.5">
+            <span className="relative block" style={{ aspectRatio: `${size.w} / ${size.h}` }}>
+              <Image src={figSrc(a.photo.key)} alt={a.photo.alt} fill sizes="(max-width: 639px) 140px, 300px" className="object-contain" />
+            </span>
+          </div>
+        </div>
+        <div className="flex min-w-0 flex-col justify-center py-5 pr-5 pl-1 sm:pl-0 md:py-9 md:pr-10 md:pl-6">
+          <p className={`award-line text-[13px] font-bold tracking-[0.02em] md:text-[15px] ${dark ? 'text-sun-400' : 'text-sun-600'}`}>
+            {a.year} {a.by}
+          </p>
+          <p className={`award-line mt-1.5 text-[1.15rem] font-extrabold leading-snug [word-break:keep-all] md:mt-2 md:text-[1.7rem] ${dark ? 'text-white' : 'text-ink'}`}>{a.title}</p>
+          <span aria-hidden className="award-rule mt-3.5 block h-[2px] w-10 bg-sun-500 md:mt-5" />
+          <p className={`award-line mt-3 text-[14.5px] font-semibold md:mt-4 md:text-[17px] ${dark ? 'text-white/80' : 'text-brand-700'}`}>{a.category} 수상</p>
+        </div>
+      </div>
+    );
+  }
   return (
-    <div className={`reveal mx-auto flex max-w-[640px] items-center gap-5 rounded-2xl border border-hairline bg-white p-4 text-left shadow-[var(--shadow-soft)] md:gap-7 md:p-5 ${className}`}>
+    <div className={`reveal mx-auto flex max-w-[640px] items-center gap-5 rounded-2xl border border-hairline bg-white p-4 text-left shadow-[var(--shadow-soft)] md:max-w-[820px] md:gap-10 md:p-7 ${className}`}>
+      {/* 사진이 아직 없을 때의 글자 액자(사진이 오면 위 상장 사진 카드가 대신한다) */}
       <span className="relative block aspect-[3/4] w-[108px] shrink-0 overflow-hidden rounded-lg md:w-[132px]">
-        {a.photo ? (
-          <Image src={figSrc(a.photo.key)} alt={a.photo.alt} fill sizes="140px" className="object-cover" />
-        ) : (
+        {a.photo ? null : (
           <span aria-hidden className="absolute inset-0 flex flex-col items-center justify-center gap-1 rounded-lg bg-gradient-to-br from-[#eef0f4] via-[#d9dde5] to-[#eef0f4] p-2">
             <span className="flex h-full w-full flex-col items-center justify-center rounded-[5px] border border-[#c6ccd6] bg-white px-2 text-center">
               <span className="text-[9px] font-bold tracking-[0.12em] text-ink-muted">{a.year}</span>
@@ -262,11 +297,11 @@ export function AwardCard({ className = 'mt-10' }: { className?: string }) {
         )}
       </span>
       <div className="min-w-0">
-        <p className="text-[13px] font-bold text-sun-600">
+        <p className="text-[13px] font-bold text-sun-600 md:text-[15px]">
           {a.year} {a.by}
         </p>
-        <p className="mt-1 text-[1.2rem] font-extrabold leading-snug text-ink md:text-[1.35rem]">{a.title}</p>
-        <p className="mt-1.5 text-[15px] font-semibold text-brand-700">{a.category} 수상</p>
+        <p className="mt-1 text-[1.2rem] font-extrabold leading-snug text-ink md:text-[1.75rem]">{a.title}</p>
+        <p className="mt-1.5 text-[15px] font-semibold text-brand-700 md:mt-2.5 md:text-[17px]">{a.category} 수상</p>
       </div>
     </div>
   );
@@ -427,7 +462,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                     </li>
                   ))}
                 </ul>
-                {TMJ_AWARD.show && <AwardCard />}
+                {TMJ_AWARD.show && <AwardCard tone="dark" />}
               </section>
             )}
 

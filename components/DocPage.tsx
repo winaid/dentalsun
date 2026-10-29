@@ -679,6 +679,36 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
           </div>
         </section>
       );
+    case 'press': {
+      /* 언론 소개 — 기사 그림은 글자가 많아 원래 비율 그대로 크게(최대 720px). 원본은 '원문 기사 보기'(덴탈아리랑)로. */
+      const ps = figSize(b.figure.key);
+      return (
+        <section id={id} className={wrapCls}>
+          <div className="wrap">
+            <Head title={b.title} lead={b.lead} accent={b.accent} />
+            <figure className="reveal mx-auto mt-10 max-w-[720px]">
+              {/* 누르면 새 탭으로 커지던 것 뺐다(2026-10-29 오너 "확대되면 끄는 방법이 없네") — 원문은 아래 '원문 기사 보기' */}
+              <div className="overflow-hidden rounded-2xl border border-hairline bg-white shadow-[var(--shadow-soft)]">
+                <Image src={figSrc(b.figure.key)} alt={b.figure.alt} width={ps.w} height={ps.h} sizes="(max-width: 767px) 100vw, 720px" className="block h-auto w-full" />
+              </div>
+              <figcaption className="mt-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 text-[14px] text-ink-soft">
+                {b.sourceUrl ? (
+                  <a href={b.sourceUrl} target="_blank" rel="noopener" className="underline decoration-hairline underline-offset-4 hover:text-ink">{b.source}</a>
+                ) : (
+                  <span>{b.source}</span>
+                )}
+                {/* 2026-10-29 오너 "출처 링크로 원본을 볼 수 있게" — 그림은 깨끗하게 다시 앉힌 판이라 원문 기사로 보내는 길을 늘 둔다 */}
+                {b.sourceUrl && (
+                  <a href={b.sourceUrl} target="_blank" rel="noopener" className="inline-flex items-center gap-1 rounded-full border border-brand-200 px-4 py-2 font-bold text-brand-700 transition-colors hover:bg-brand-50">
+                    원문 기사 보기 <span aria-hidden>↗</span>
+                  </a>
+                )}
+              </figcaption>
+            </figure>
+          </div>
+        </section>
+      );
+    }
     case 'warranty':
       return <WarrantyBand />;
     case 'showcase':
