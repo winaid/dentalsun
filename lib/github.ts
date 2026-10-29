@@ -87,12 +87,18 @@ export async function deleteFile(token: string, path: string, sha: string, messa
  * ⚠️ base_tree 를 주므로 여기 없는 파일은 그대로 남는다(덮어쓰기·추가만 한다. 삭제는 deleteFile).
  * ⚠️ ref 갱신은 fast-forward 만(force 아님). 그 사이 다른 커밋이 들어오면 422 가 나고, 호출한 쪽이 다시 시도하면 된다.
  */
-export async function commitFiles(token: string, files: Array<{ path: string; content: Buffer | string }>, message: string): Promise<string> {
+export async function commitFiles(
+  token: string,
+  files: Array<{ path: string; content: Buffer | string }>,
+  message: string,
+  /** 같은 커밋에서 지울 파일 경로 (팝업 그림 정리용, 2026-10-29). */
+  remove: string[] = [],
+): Promise<string> {
   const { repo, branch } = repoInfo();
   const ref = (await gh(token, `/repos/${repo}/git/ref/heads/${branch}`)) as { object: { sha: string } };
   const head = ref.object.sha;
   const commit = (await gh(token, `/repos/${repo}/git/commits/${head}`)) as { tree: { sha: string } };
-  const tree: Array<{ path: string; mode: '100644'; type: 'blob'; sha: string }> = [];
+  const tree: Array<{ path: string; mode: '100644'; type: 'blob'; sha: string | null }> = remove.map((path) => ({ path, mode: '100644' as const, type: 'blob' as const, sha: null }));
   for (const f of files) {
     const blob = (await gh(token, `/repos/${repo}/git/blobs`, {
       method: 'POST',

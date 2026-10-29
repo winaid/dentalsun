@@ -5,7 +5,7 @@ import type { Metadata } from 'next';
  *    한쪽만 있으면 링크를 타고 온 크롤러가 색인한다.
  */
 export const metadata: Metadata = {
-  title: '블로그 관리',
+  title: '관리',
   robots: { index: false, follow: false, nocache: true },
 };
 

@@ -1,3 +1,6 @@
+import { NoticePopup } from '@/components/NoticePopup';
+import popupData from '@/content/popups.json';
+import type { Popup } from '@/lib/popups';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -113,6 +116,8 @@ export default function HomePage() {
   return (
     <>
       <SiteHeader dark />
+      {/* 공지 팝업(2026-10-29, /admin/popup) — 방문자 브라우저에서만 그린다. 기간은 거기서 다시 거른다. */}
+      <NoticePopup popups={popupData.popups as Popup[]} />
       <JsonLd
         data={[
           medicalWebPageSchema({ title: `${CLINIC.shortName} | 광화문역 치과`, description: CLINIC.description, path: '/' }),
