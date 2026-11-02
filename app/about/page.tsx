@@ -75,7 +75,12 @@ export default function AboutPage() {
           <div className="wrap">
             <div className="reveal max-w-[760px]">
               <p className="eyebrow">WHY SUN DENTAL</p>
-              <h2 className="display-sm mt-4">
+              {/* 2026-11-02 원장 PPT(261030) 10쪽 '소개 구역에 15년 이상 문구' — 원장 예시 두 줄 그대로(윗줄 = 이 줄, 아랫줄 = 기존 제목).
+                   큰 숫자 판은 09-29 오너 반려라 글 한 줄로만 */}
+              <p className="mt-4 text-[1.1rem] font-bold text-ink md:text-[1.3rem]">
+                <span className="text-brand-700">15년 이상</span>, 광화문 한 자리를 지켜온 신뢰
+              </p>
+              <h2 className="display-sm mt-2">
                 한 명의 전문의가 <span className="accent whitespace-nowrap">끝까지 책임지는 진료</span>
               </h2>
               <p className="lead mt-4"><Sentences text="진단한 의사가 수술과 보철, 정기검진까지 이어서 봅니다. 치료를 계획한 대표원장이 치료 뒤 경과까지 직접 확인합니다." /></p>

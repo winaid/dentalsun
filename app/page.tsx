@@ -19,10 +19,11 @@ import { VisitMap } from '@/components/VisitMap';
 import { TMJ_AWARD, TMJ_HOME_ROOT } from '@/lib/content/tmjLanding';
 import { HomeStage, HomeStats } from '@/components/HomeScroll';
 import { CaseGallery } from '@/components/CaseGallery';
+import { CASE_ORDER } from '@/lib/caseLibrary';
 import { CLINIC, HOURS, HYGIENE, STRENGTHS } from '@/lib/clinic';
 import { DOCTORS, isCertCareer } from '@/lib/doctors';
 import type { NavItem } from '@/lib/nav';
-import { SITE_FAQ } from '@/lib/faq';
+import { SCALING_QA, SITE_FAQ } from '@/lib/faq';
 import { figSrc } from '@/lib/docs';
 import { faqSchema, medicalWebPageSchema, og, physicianSchema } from '@/lib/seo';
 
@@ -32,8 +33,8 @@ export const metadata: Metadata = {
   openGraph: { ...og({ title: `${CLINIC.shortName} | 광화문역 치과 · 디지털 임플란트 · 턱관절 치료`, description: CLINIC.description, path: '/' }), type: 'website' },
 };
 
-/** 홈 FAQ — 사이트 FAQ 에서 묶음마다 첫 질문 하나씩. 화면과 스키마가 같은 배열. */
-const HOME_FAQ = SITE_FAQ.map((g) => g.items[0]);
+/** 홈 FAQ — 사이트 FAQ 에서 묶음마다 첫 질문 하나씩 + 원장이 홈에 추가해 달라고 한 스케일링 문답(마취·통증 묶음 바로 뒤). 화면과 스키마가 같은 배열. */
+const HOME_FAQ = SITE_FAQ.flatMap((g) => (g.id === 'painless' ? [g.items[0], SCALING_QA] : [g.items[0]]));
 
 /**
  * 홈 '진료과목' 7 갈래 — 2026-09-21 메뉴가 5개로 줄었지만 홈의 이 구역은 예전 일곱 갈래 그대로(오너 "너무 적으니 이전처럼").
@@ -438,26 +439,7 @@ export default function HomePage() {
              2026-10-20 원장 PPT 101쪽 '위치변경 / 네비게이션 임플란트, 이렇게 진행됩니다 밑으로' — 풀아치 띠 아래에서 과정 무대 아래로 옮김 ── */}
         <WarrantyBand />
 
-        {/* 2026-10-26 원장 PPT(261026) 2쪽 '강점과 차별점이 드러나는 부분을 상단에' — 실제 치료 전후를 일반진료 앞으로 */}
-        {/* ── 치료 전후 사례 — 2026-09-29 원장 요청: 병원이 보낸 실제 사진을 '구내 / 방사선' 두 영역. 영역마다 좌우로 끄는 비교(왼쪽=전·오른쪽=후, 보는 법은 CaseGallery 아래 안내가 맡는다).
-             목록은 lib/caseLibrary.ts (빼고 싶은 사례는 거기서 한 줄 지우면 된다) ── */}
-        <section className="section" id="cases">
-          <div className="wrap">
-            <div className="reveal mx-auto max-w-[820px] text-center lg:max-w-[960px]">
-              <p className="eyebrow justify-center">BEFORE &amp; AFTER</p>
-              <h2 className="display-sm mt-4">
-                광화문 선치과 <span className="accent">실제 치료 전후</span>
-              </h2>
-              <p className="lead mt-4">
-                <Sentences text="대표원장이 직접 진료한 사례입니다." />
-              </p>
-            </div>
-            <div className="reveal mt-10">
-              <CaseGallery filter />
-            </div>
-          </div>
-        </section>
-
+        {/* 2026-11-02 원장 PPT(홈페이지 261030) 1쪽 '바로 위 전후사진과 위치 변경' — 일반진료(GENERAL CARE)를 실제 치료 전후 위로 다시 올림 */}
         {/* ── 무통·자연치아·심미·사랑니 ── */}
         <section id="general" className="section bg-canvas">
           <div className="wrap">
@@ -476,15 +458,35 @@ export default function HomePage() {
                 { href: '/treatment/natural-tooth', label: '자연치아 살리기', desc: '치아 뿌리 속을 초음파로 깨끗이 씻고, MTA로 단단히 막습니다.', fig: 'ai/natural-endosonic' },
                 { href: '/treatment/re-root-canal', label: '재근관치료', desc: '신경치료 후 다시 생긴 뿌리 끝 염증을 치료합니다.', fig: 'ai/natural-mta' },
                 { href: '/treatment/periodontal', label: '치주치료', desc: '치석을 없애고, 잇몸 속 뿌리 표면까지 깨끗하게 치료합니다.', fig: 'ai/insight-gum' },
-                { href: '/treatment/wisdom-tooth', label: '매복사랑니', desc: '3D CT로 신경과의 거리를 확인한 뒤 뽑습니다.', fig: 'ai/insight-wisdom' },
+                { href: '/treatment/wisdom-tooth', label: '매복사랑니', desc: '3D CT로 신경과의 거리를 확인한 뒤 안전하게 발치합니다.', fig: 'ai/insight-wisdom' },
                 { href: '/treatment/aesthetic', label: '심미치료', desc: '라미네이트 · 올세라믹 · 지르코니아 · 치아미백.', fig: 'ai/aesthetic-prosthetics' },
-                { href: '/treatment/painless', label: '무통 & 저자극 치료', desc: '무통마취기와 바르는 마취로 주사 자극을 줄입니다.', fig: 'ai/painless-anesthesia' },
+                { href: '/treatment/painless', label: '무통 & 저자극 치료', desc: '바르는 마취제, 가글 마취제, 무통마취기를 사용해 통증을 최소화합니다.', fig: 'ai/painless-anesthesia' },
               ].map((c) => (
                 <li key={c.href}>
                   <CardLink href={c.href} label={c.label} desc={c.desc} fig={{ key: c.fig, alt: c.label }} />
                 </li>
               ))}
             </ul>
+          </div>
+        </section>
+
+        {/* ── 치료 전후사례 — 2026-09-29 원장 요청: 병원이 보낸 실제 사진을 '구내 / 방사선' 두 영역. 영역마다 좌우로 끄는 비교(왼쪽=전·오른쪽=후, 보는 법은 CaseGallery 아래 안내가 맡는다).
+             목록은 lib/caseLibrary.ts. '전체'에 나오는 사례와 순서 = CASE_ORDER.home(2026-11-02 원장 PPT 261030 6쪽 [메인]).
+             제목 = 11-02 오너 '치료 전후사례로 통일하고 강조' ── */}
+        <section className="section" id="cases">
+          <div className="wrap">
+            <div className="reveal mx-auto max-w-[820px] text-center lg:max-w-[960px]">
+              <p className="eyebrow justify-center">BEFORE &amp; AFTER</p>
+              <h2 className="display-sm mt-4">
+                광화문 선치과 실제 <span className="accent">치료 전후사례</span>
+              </h2>
+              <p className="lead mt-4">
+                <Sentences text="대표원장이 직접 진료한 사례입니다." />
+              </p>
+            </div>
+            <div className="reveal mt-10">
+              <CaseGallery filter order={CASE_ORDER.home} />
+            </div>
           </div>
         </section>
 

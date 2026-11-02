@@ -9,6 +9,7 @@
  * 재근관치료는 일반진료 아래 별도 쪽(lib/content/endoPerio.ts)으로 나갔다.
  */
 import type { Doc } from '../docs';
+import { CASE_ORDER } from '../caseLibrary';
 
 export const NATURAL_DOCS: Doc[] = [
   /* ───────────────────────── 허브 ───────────────────────── */
@@ -120,9 +121,10 @@ export const NATURAL_DOCS: Doc[] = [
       {
         type: 'caseGallery',
         id: 'cases',
-        title: '신경치료 · 앞니 깨짐 치료 전후',
+        title: '신경치료 · 앞니 깨짐 치료 전후사례',
         lead: '광화문 선치과에서 치료한 실제 사례입니다.',
         categories: ['endo', 'fracture'],
+        order: CASE_ORDER.naturalHub,
       },
       {
         type: 'notice',
@@ -264,7 +266,8 @@ export const NATURAL_DOCS: Doc[] = [
       {
         type: 'cases',
         id: 'cases',
-        title: 'MTA 치료 전후',
+        title: 'MTA 치료 전후사례',
+        accent: '치료 전후사례',
         lead: '위 상황에 해당하는 광화문 선치과의 실제 사례입니다. 가운데 손잡이를 좌우로 끌어 치료 전후를 비교해 보세요.',
         figure: { key: 'orig/case-mta1-after', alt: 'MTA 치료 전과 후를 비교한 사례' },
         caseGroup: 'mta',
@@ -273,7 +276,7 @@ export const NATURAL_DOCS: Doc[] = [
       {
         type: 'caseGallery',
         id: 'case-gallery',
-        title: '신경치료 전후 사례',
+        title: '신경치료 전후사례',
         lead: '입안 사진과 엑스레이로 본 신경치료 전후입니다.',
         categories: ['endo'],
       },

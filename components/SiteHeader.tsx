@@ -71,7 +71,8 @@ export function SiteHeader({ dark = false }: { dark?: boolean }) {
 
         <span className={`hidden shrink-0 items-center gap-2 whitespace-nowrap rounded-full border px-3 py-1 text-[12px] font-semibold min-[1700px]:inline-flex ${solid ? 'border-hairline text-ink-soft' : 'border-white/25 text-white/85'}`}>
           <span className="h-1.5 w-1.5 rounded-full bg-sun-500" />
-          광화문역 6번 출구 도보 2분
+          {/* 2026-11-02 원장 PPT(261030) 10쪽 '광화문역 옆에 시청역 1,2호선 도보 5분도 추가' */}
+          광화문역 6번 출구 도보 2분 · 시청역 1,2호선 도보 5분
         </span>
 
         <nav className="mx-auto hidden lg:block" aria-label="주요 메뉴">

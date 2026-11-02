@@ -562,7 +562,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
       return (
         <section id={id} className={wrapCls}>
           <div className="wrap">
-            <Head title={b.title ?? '실제 치료 전후 사례'} lead={b.lead} accent={b.accent} />
+            <Head title={b.title ?? '실제 치료 전후사례'} lead={b.lead} accent={b.accent ?? '치료 전후사례'} />
             {b.box && (
               <div className="reveal mt-8 rounded-[24px] bg-canvas px-6 py-6 text-center md:px-10">
                 {/* 원장 PPT 202쪽 '제목에 하이라이트 표시' — 원장이 보낸 캡처처럼 글자 뒤 전체를 옅은 주황으로 칠한다(10-21 오너 '저렇게 보내준 것처럼') */}
@@ -571,7 +571,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
               </div>
             )}
             <div className="reveal mt-8">
-              <CaseGallery categories={b.categories} />
+              <CaseGallery categories={b.categories} order={b.order} />
             </div>
           </div>
         </section>
@@ -624,8 +624,17 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
           </div>
           <div className="wrap reveal text-center">
             {/* 2026-10-22 따옴표 뺌 — ScrubText 가 덩어리로 그려져 “ ” 가 위아래 줄로 떨어졌다(원장 PPT 200쪽 '따옴표 없음'과 같은 처리) */}
+            {/* 2026-11-02 원장 PPT(261030) 14쪽 '모바일에서 한 번 할 때 제대로 하자 부분이 줄바꿈 된 곳도, 안 된 곳도 있다 — 통일' →
+                 폰에서는 그림 있는 판·맞춤 임플란트 띠처럼 쉼표마다 한 줄. 넓은 화면은 그대로 한 줄로 잇는다 */}
             <p className="mx-auto max-w-[900px] text-[1.3rem] leading-[1.6] font-bold md:text-[1.8rem]">
-              <ScrubText text={b.text} />
+              {b.text.split(/(?<=,)\s+/).map((part, i) => (
+                <Fragment key={i}>
+                  {i > 0 && ' '}
+                  <span className="block md:inline">
+                    <ScrubText text={part} />
+                  </span>
+                </Fragment>
+              ))}
             </p>
             {b.by && <p className="mt-4 text-white/60">— {b.by}</p>}
             {/* 2026-10-22 임플란트 허브 진료 철학 띠 — 큰 문구 아래 짧은 설명 줄(그림 없는 판에도) */}

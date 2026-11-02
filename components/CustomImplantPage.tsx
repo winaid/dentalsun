@@ -118,7 +118,7 @@ function Illust({ fig, className = '', sizes = '(max-width: 1024px) 100vw, 820px
 }
 
 /** 두 열 비교표 — 항목 | A(옅게) | B(주황 강조). 절개식 vs 가이드, 기성 vs 맞춤 두 곳이 같은 표를 쓴다 */
-function Compare({ columns, rows }: { columns: [string, string]; rows: Array<{ label: string; a: string; b: string }> }) {
+export function Compare({ columns, rows }: { columns: [string, string]; rows: Array<{ label: string; a: string; b: string }> }) {
   return (
     <div className="reveal mt-8 overflow-hidden rounded-[24px] border border-hairline">
       <div className="hidden grid-cols-[150px_1fr_1fr] bg-night text-white md:grid">
@@ -403,7 +403,7 @@ export function CustomImplantPage({ doc, part }: { doc: Doc; part: 'navigation' 
             {/* 2026-10-22 가이드 식립이 핵심인 실제 사례(노규범·윤미경·이종태 — caseLibrary also: navigation). 사진 고지는 CaseGallery 가 붙인다 */}
             {part === 'navigation' && (
             <section id="cases" className="scroll-mt-[96px] pt-24 md:pt-32" aria-labelledby="ci-cases">
-              <Head id="ci-cases" label="치료 사례" title={<>가이드 식립 <span className="accent-sun">치료 사례</span></>} lead="대표원장이 3D CT 계획과 수술 가이드로 진행한 실제 사례입니다. 결과는 구강 상태에 따라 개인차가 있습니다." />
+              <Head id="ci-cases" label="치료 전후사례" title={<>가이드 식립 <span className="accent-sun">치료 전후사례</span></>} lead="대표원장이 3D CT 계획과 수술 가이드로 진행한 실제 사례입니다. 결과는 구강 상태에 따라 개인차가 있습니다." />
               <div className="reveal mt-10">
                 <CaseGallery categories={['navigation']} />
               </div>

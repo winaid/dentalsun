@@ -15,7 +15,7 @@
  * ★ 같은 톡 '임플란트·사랑니 사례는 치료 부위 동그라미' → 임플란트 구내 5·방사선 7사례 -c 판(implant-circles.mjs).
  *   다수 부위(implant-07)·풀아치·전치부 implant-01(오너 10-21 "전체적으로 한 것")은 입 전체라 표시 안 함. 치주(perio-01)는 임플란트 사진을 같이 쓰지만 잇몸 전체 사례라 동그라미 없는 판.
  */
-export type CaseCategory = 'implant' | 'fullarch' | 'endo' | 'reendo' | 'wisdom' | 'anterior' | 'fracture' | 'resin' | 'whitening' | 'tmj' | 'perio' | 'sinus' | 'bone' | 'navigation';
+export type CaseCategory = 'implant' | 'fullarch' | 'endo' | 'reendo' | 'wisdom' | 'anterior' | 'fracture' | 'resin' | 'whitening' | 'tmj' | 'perio' | 'sinus' | 'bone' | 'navigation' | 'bruxism';
 
 export interface CaseImg {
   key: string;
@@ -33,6 +33,8 @@ export interface CaseItem {
   after: CaseImg;
   /** 경과가 셋 이상인 사례(턱관절 CT) — before·after 사이 사진 */
   middle?: CaseImg[];
+  /** 위아래 차례 사진의 이름표(before·middle…·after 순). 없으면 '치료 전 · 경과 n · 최근' */
+  labels?: string[];
   edits?: string;
   /** 다른 진료 쪽에도 함께 보일 묶음(원장 PPT 241쪽 '두 군데 모두 사용') */
   also?: CaseCategory[];
@@ -53,6 +55,7 @@ export const CASE_CATEGORY_LABEL: Record<CaseCategory, string> = {
   sinus: '상악동거상술',
   bone: '뼈이식',
   navigation: '내비게이션 임플란트',
+  bruxism: '이갈이·이악물기',
 };
 
 /** 보는 법(끄는 비교·위아래 경과)은 CaseGallery 가 보여 주는 방식에 맞춰 뒤에 붙인다 */
@@ -80,7 +83,7 @@ export const CASES: CaseItem[] = [
   { id: 'wisdom-01-xray', category: 'wisdom', type: 'xray', xrayKind: 'panorama', caption: '하악 좌측 매복 사랑니 발치', before: { key: 'cases2/wisdom-01-xray-before-c', w: 1600, h: 673 }, after: { key: 'cases2/wisdom-01-xray-after-c', w: 1600, h: 673 } },
   { id: 'wisdom-04-xray', category: 'wisdom', type: 'xray', xrayKind: 'panorama', caption: '하악 좌측 매복 사랑니 발치', before: { key: 'cases2/wisdom-04-xray-before-c', w: 1600, h: 673 }, after: { key: 'cases2/wisdom-04-xray-after-c', w: 1600, h: 673 } },
   { id: 'wisdom-07-xray', category: 'wisdom', type: 'xray', xrayKind: 'panorama', caption: '우측 상·하악 사랑니 발치', before: { key: 'cases2/wisdom-07-xray-before-c', w: 1600, h: 673 }, after: { key: 'cases2/wisdom-07-xray-after-c', w: 1600, h: 673 } },
-  { id: 'implant-01-intraoral', category: 'implant', type: 'intraoral', caption: '전치부 임플란트 — 손상 치아 부위 보철 수복', before: { key: 'cases5/implant-01-intraoral-before', w: 1316, h: 822 }, after: { key: 'cases5/implant-01-intraoral-after', w: 1316, h: 822 } },
+  { id: 'implant-01-intraoral', category: 'implant', type: 'intraoral', caption: '전치부 임플란트 — 손상 치아 부위 보철 수복', before: { key: 'cases5/implant-01-intraoral-before-c', w: 1316, h: 822 }, after: { key: 'cases5/implant-01-intraoral-after-c', w: 1316, h: 822 } },
   /* 원장 PPT 241쪽 'Case 17·19 상악동, 임플란트 두 군데 모두 사용' — 원본 폴더 '김용경 상악동거상술'·'박옥주 상악동거상술' */
   { id: 'implant-02-xray', category: 'implant', also: ['sinus'], type: 'xray', xrayKind: 'panorama', caption: '좌측 상·하악 구치부 임플란트 · 상악동거상술', before: { key: 'cases2/implant-02-xray-before-c', w: 1600, h: 673 }, after: { key: 'cases2/implant-02-xray-after-c', w: 1600, h: 673 } },
   { id: 'implant-03-xray', category: 'implant', type: 'xray', xrayKind: 'panorama', caption: '상악 다수 부위 임플란트', before: { key: 'cases2/implant-03-xray-before-c', w: 1600, h: 673 }, after: { key: 'cases2/implant-03-xray-after-c', w: 1600, h: 673 } },
@@ -104,7 +107,7 @@ export const CASES: CaseItem[] = [
      봉예원 구내: 전·후 배율이 달라 같은 범위로 잘라 맞춘 뒤 다른 구내 사진과 같은 처리(치아 밝기 → 거품 정리, 고름주머니 자리는 제외). 도구 C:/tmp/sun-zip-1022/tools/build.mjs */
   { id: 'implant-10-xray', category: 'implant', type: 'xray', xrayKind: 'panorama', caption: '임플란트 몸체·나사 파절 — 하악 우측 구치부 임플란트 2개 제거 후 뼈이식과 함께 재식립', before: { key: 'cases2/implant-10-xray-before', w: 1052, h: 443 }, after: { key: 'cases2/implant-10-xray-after', w: 1052, h: 443 } },
   { id: 'implant-11-xray', category: 'implant', also: ['bone'], type: 'xray', xrayKind: 'panorama', caption: '하악 좌측 대구치 — 사랑니와 함께 발치하고 뼈이식 후 지연 식립', before: { key: 'cases2/implant-11-xray-before', w: 1379, h: 581 }, after: { key: 'cases2/implant-11-xray-after', w: 1379, h: 581 } },
-  { id: 'implant-12-xray', category: 'implant', also: ['sinus'], type: 'xray', xrayKind: 'panorama', caption: '남은 잇몸뼈 1~2mm — 상악 우측 대구치 측방 접근 상악동거상술 · 임플란트', before: { key: 'cases2/implant-12-xray-before', w: 1379, h: 581 }, after: { key: 'cases2/implant-12-xray-after', w: 1379, h: 581 } },
+  { id: 'implant-12-xray', category: 'implant', also: ['sinus'], type: 'xray', xrayKind: 'panorama', caption: '남은 잇몸뼈 1~2mm — 상악 우측 대구치 측방 접근 상악동거상술 · 임플란트', before: { key: 'cases2/implant-12-xray-before-c', w: 1379, h: 581 }, after: { key: 'cases2/implant-12-xray-after-c', w: 1379, h: 581 } },
   /* 2026-10-26 김희동 본부장 '네비게이션 임플란트 왼쪽 빨간색 네모친부분 동그라미' — BEFORE 하악 우측 대구치 자리에 병원이 반대쪽에 그린 것과 같은 노란 점선 원(-c 판, C:/tmp/sun-1026/i13-circle.mjs) */
   { id: 'implant-13-xray', category: 'implant', also: ['navigation'], type: 'xray', xrayKind: 'panorama', caption: '하치조신경과 가까운 하악 양측 대구치 — 흔들리던 임플란트 제거 후 가이드 수술로 식립', before: { key: 'cases2/implant-13-xray-before-c', w: 1379, h: 581 }, after: { key: 'cases2/implant-13-xray-after', w: 1379, h: 581 } },
   { id: 'implant-14-xray', category: 'implant', also: ['bone', 'navigation'], type: 'xray', xrayKind: 'panorama', caption: '당뇨 환자 — 흔들리던 브릿지 제거 후 하악 우측 구치부 뼈이식 · 임플란트 3개', before: { key: 'cases2/implant-14-xray-before', w: 1379, h: 581 }, after: { key: 'cases2/implant-14-xray-after', w: 1379, h: 581 } },
@@ -119,13 +122,16 @@ export const CASES: CaseItem[] = [
   { id: 'fullarch-03-xray', category: 'fullarch', type: 'xray', xrayKind: 'panorama', caption: '하악 풀아치 임플란트 — 무치악 부위 보철 회복 · 상악 틀니 제작', before: { key: 'cases2/fullarch-03-xray-before', w: 1600, h: 673 }, after: { key: 'cases2/fullarch-03-xray-after', w: 1600, h: 673 } },
   { id: 'fullarch-04-intraoral', category: 'fullarch', type: 'intraoral', caption: '상·하악 풀아치 임플란트 — 기존 보철 치아에서 보철 회복', before: { key: 'cases5/fullarch-04-intraoral-before-bw', w: 1156, h: 650 }, after: { key: 'cases5/fullarch-04-intraoral-after', w: 1156, h: 650 } },
   { id: 'fullarch-05-intraoral', category: 'fullarch', type: 'intraoral', caption: '상·하악 풀아치 임플란트 — 전: 하악 잔존 치아, 후: 정면', before: { key: 'cases5/fullarch-05-intraoral-before-bw', w: 1400, h: 933 }, after: { key: 'cases5/fullarch-05-intraoral-after', w: 1400, h: 933 } },
-  { id: 'fullarch-02-intraoral', category: 'fullarch', type: 'intraoral', caption: '상악 풀아치 임플란트 — 상악 전치부 결손 상태에서 보철 회복', before: { key: 'cases5/fullarch-02-intraoral-before-bw', w: 1239, h: 697 }, after: { key: 'cases5/fullarch-02-intraoral-after', w: 1239, h: 697 } },
+  { id: 'fullarch-02-intraoral', category: 'fullarch', type: 'intraoral', caption: '상악 풀아치 임플란트 — 상악 전치부 결손 상태에서 보철 회복', before: { key: 'cases5/fullarch-02-intraoral-before-t-bw', w: 1239, h: 697 }, after: { key: 'cases5/fullarch-02-intraoral-after-t', w: 1239, h: 697 } },
   { id: 'fullarch-03-intraoral', category: 'fullarch', type: 'intraoral', caption: '무치악 상태에서 보철 회복 — 전: 상악 구개면, 후: 정면', before: { key: 'cases5/fullarch-03-intraoral-before-bw', w: 1178, h: 785 }, after: { key: 'cases5/fullarch-03-intraoral-after', w: 1178, h: 785 } },
   { id: 'fullarch-01-intraoral', category: 'fullarch', type: 'intraoral', caption: '상·하악 풀아치 임플란트 — 전: 상악 교합면, 후: 정면', before: { key: 'cases5/fullarch-01-intraoral-before-bw', w: 1134, h: 850 }, after: { key: 'cases5/fullarch-01-intraoral-after', w: 1134, h: 850 } },
-  { id: 'anterior-redo-01-intraoral', category: 'anterior', type: 'intraoral', caption: '상악 중절치 보철 교체 — 색조가 다른 기존 보철 재제작', before: { key: 'cases5/anterior-redo-01-intraoral-before', w: 1148, h: 574 }, after: { key: 'cases5/anterior-redo-01-intraoral-after', w: 1148, h: 574 } },
+  { id: 'anterior-redo-01-intraoral', category: 'anterior', type: 'intraoral', caption: '상악 중절치 보철 교체 — 색조가 다른 기존 보철 재제작', before: { key: 'cases5/anterior-redo-01-intraoral-before', w: 1148, h: 574 }, after: { key: 'cases5/anterior-redo-01-intraoral-after-r', w: 1148, h: 574 } },
   { id: 'anterior-redo-02-intraoral', category: 'anterior', type: 'intraoral', caption: '상악 전치부 보철 교체', before: { key: 'cases5/anterior-redo-02-intraoral-before', w: 1400, h: 700 }, after: { key: 'cases5/anterior-redo-02-intraoral-after', w: 1400, h: 700 } },
-  { id: 'anterior-esthetic-01-intraoral', category: 'anterior', type: 'intraoral', caption: '상악 전치부 심미보철 — 변색·손상 치아 부위', before: { key: 'cases5/anterior-esthetic-01-intraoral-before', w: 791, h: 396 }, after: { key: 'cases5/anterior-esthetic-01-intraoral-after', w: 791, h: 396 } },
-  { id: 'anterior-esthetic-02-intraoral', category: 'anterior', type: 'intraoral', caption: '상악 전치부 심미보철', before: { key: 'cases5/anterior-esthetic-02-intraoral-before', w: 1183, h: 710 }, after: { key: 'cases5/anterior-esthetic-02-intraoral-after', w: 1183, h: 710 } },
+  { id: 'anterior-esthetic-01-intraoral', category: 'anterior', type: 'intraoral', caption: '상악 전치부 심미보철 — 변색·손상 치아 부위', before: { key: 'cases5/anterior-esthetic-01-intraoral-before', w: 791, h: 396 }, after: { key: 'cases5/anterior-esthetic-01-intraoral-after-r', w: 791, h: 396 } },
+  /* 2026-11-02 원장 PPT(홈페이지 261030) 41쪽 '심미 case 04 삭제, 이갈이 이악물기 섹션에 추가 · 상악X, 하악보철 · 턱관절처럼 세 가지 사진' —
+     옛 '상악 전치부 심미보철'(anterior-esthetic-02) 두 장 앞에 원장이 보낸 벌린 입 사진(마모된 하악)을 붙여 세 장 차례로. 설명 = 원장 글 그대로.
+     벌린 입 사진은 다른 두 장과 같은 비율(1183x710)로만 맞춤 — 치아·잇몸은 손대지 않음(C:/tmp/sun-ppt-1030/tools/cases.mjs) */
+  { id: 'brux-01-intraoral', category: 'bruxism', type: 'intraoral', caption: '이갈이·이악물기로 마모된 치아를 수직고경과 교합을 고려해 보철로 회복하고, 보톡스 치료를 병행', before: { key: 'cases5/brux-01-intraoral-open', w: 1183, h: 710 }, middle: [{ key: 'cases5/anterior-esthetic-02-intraoral-before', w: 1183, h: 710 }], after: { key: 'cases5/anterior-esthetic-02-intraoral-after', w: 1183, h: 710 }, labels: ['치료 전 · 하악 마모', '치료 전', '치료 후 · 하악 보철'] },
   { id: 'fracture-01-intraoral', category: 'fracture', type: 'intraoral', caption: '상악 중절치 파절 — 신경치료 후 보철 수복', before: { key: 'cases5/fracture-01-intraoral-before', w: 1394, h: 784 }, after: { key: 'cases5/fracture-01-intraoral-after', w: 1394, h: 784 } },
   { id: 'resin-01-intraoral', category: 'resin', type: 'intraoral', caption: '상악 구치부 레진 충전 — 교합면 우식', before: { key: 'cases5/resin-01-intraoral-before', w: 873, h: 546 }, after: { key: 'cases5/resin-01-intraoral-after', w: 873, h: 546 }, edits: '후 사진: 치아를 가로지른 타액 줄 제거(병원 요청)' },
   { id: 'resin-02-intraoral', category: 'resin', type: 'intraoral', caption: '하악 구치부 레진 충전 — 교합면 우식', before: { key: 'cases5/resin-02-intraoral-before', w: 818, h: 409 }, after: { key: 'cases5/resin-02-intraoral-after', w: 818, h: 409 } },
@@ -143,5 +149,58 @@ export const CASES: CaseItem[] = [
   /* 2026-10-21 원장 PPT 196쪽 — 하악과두 자리에 빨간 동그라미(세 시점 모두, 원본은 *-1·2·3.webp 그대로) */
   { id: 'tmj-01-xray', category: 'tmj', type: 'xray', xrayKind: 'ct', caption: '턱관절 CT 측면 단면 — 세 시점 경과', before: { key: 'cases2/tmj-01-xray-1-c', w: 578, h: 304 }, middle: [{ key: 'cases2/tmj-01-xray-2-c', w: 578, h: 304 }], after: { key: 'cases2/tmj-01-xray-3-c', w: 578, h: 304 } },
 ];
+
+/* 2026-11-02 원장 PPT(261030) 사진 손질 — 원본은 모두 그대로 두고 새 이름으로(도구 C:/tmp/sun-ppt-1030/tools):
+ *   implant-12 방사선 -c = 하악 임플란트에 병원 원과 같은 노란 점선(6쪽 case 27) · implant-01 구내 -c = 11번 치아 치은까지 빨간 타원(6·15쪽)
+ *   fullarch-02 구내 -t = 하악 치석만 주변 치아 결로 채움(6쪽 case 9 · [풀아치] case 3, 치료 전·후 둘 다 같은 방식, 치료한 위턱은 손대지 않음)
+ *   anterior-redo-01 · anterior-esthetic-01 치료 후 -r = 앞니 끝선 수평(36쪽, 1.0°·1.3°, 약 4% 확대) */
+/**
+ * 갤러리마다 보여 줄 사례와 순서 — 2026-11-02 원장 PPT(홈페이지 261030) 6·15·38쪽. 원장이 적은 'case n' = 그때 그 갤러리의 CASE 번호
+ * (구내·방사선 따로 센 번호, 번호 → id 대조 C:/tmp/sun-ppt-1030/cases/before.txt). 여기 적힌 것만 이 순서로 나오고, 빠진 사례는 그 갤러리에서 안 보인다.
+ * 홈은 '전체' 칩에만 적용(진료별 칩은 그 진료 사례 전부).
+ */
+export const CASE_ORDER = {
+  /* 6쪽 [메인] 방사선 31·32·35 / 22·27(하악 임플란트 동그라미)·28·29·20 / 01·07 / 10·12·14 · 구내 08·07·9(하악 치석 제거)·11·01(11번 치아 동그라미)·02·04 */
+  home: [
+    'fullarch-05-xray', 'fullarch-01-xray', 'fullarch-03-xray',
+    'implant-07-xray', 'implant-12-xray', 'implant-13-xray', 'implant-14-xray', 'implant-05-xray',
+    'endo-01-xray', 'reendo-02-xray-pano',
+    'wisdom-05-xray', 'wisdom-02-xray', 'wisdom-01-xray',
+    'fullarch-05-intraoral', 'fullarch-04-intraoral', 'fullarch-02-intraoral', 'fullarch-01-intraoral', 'implant-01-intraoral', 'implant-03-intraoral', 'implant-08-intraoral',
+  ],
+  /* 15쪽 임플란트 — 방사선 06·04 를 맨 앞으로(나머지 그대로) · 구내 06(상악동 어금니) 삭제 */
+  implantHub: [
+    'implant-07-xray', 'implant-05-xray', 'implant-02-xray', 'implant-03-xray', 'implant-04-xray', 'implant-06-xray', 'implant-08-xray', 'implant-09-xray',
+    'implant-10-xray', 'implant-11-xray', 'implant-12-xray', 'implant-13-xray', 'implant-14-xray', 'implant-16-xray',
+    'fullarch-05-xray', 'fullarch-01-xray', 'fullarch-04-xray', 'fullarch-02-xray', 'fullarch-03-xray',
+    'implant-01-intraoral', 'implant-03-intraoral', 'implant-06-intraoral', 'implant-08-intraoral', 'implant-09-intraoral',
+    'fullarch-04-intraoral', 'fullarch-05-intraoral', 'fullarch-02-intraoral', 'fullarch-03-intraoral', 'fullarch-01-intraoral',
+  ],
+  /* 6쪽 [풀아치] 구내 2·1·5·4·3(하악 치석 제거) — 방사선은 그대로 */
+  fullarch: [
+    'fullarch-05-xray', 'fullarch-01-xray', 'fullarch-04-xray', 'fullarch-02-xray', 'fullarch-03-xray',
+    'fullarch-05-intraoral', 'fullarch-04-intraoral', 'fullarch-01-intraoral', 'fullarch-03-intraoral', 'fullarch-02-intraoral',
+  ],
+  /* 6쪽 [상악동거상술] 5·3·1·2 + [뼈이식] 6·4 · 구내사진 삭제 */
+  sinusBone: ['implant-12-xray', 'implant-07-xray', 'implant-02-xray', 'implant-04-xray', 'implant-14-xray', 'implant-11-xray'],
+  /* 6쪽 [심미] 03·01·02 / 12·10·09 / 05·06·08·14 (04 는 이갈이로, 07·11·13 은 뺌) */
+  aestheticHub: [
+    'anterior-esthetic-01-intraoral', 'anterior-redo-01-intraoral', 'anterior-redo-02-intraoral',
+    'resin-07-intraoral-close', 'resin-06-intraoral-close', 'resin-05-intraoral',
+    'resin-01-intraoral', 'resin-02-intraoral', 'resin-04-intraoral', 'resin-08-intraoral',
+  ],
+  /* 38쪽 심미보철 — 04 삭제, 순서 3·1·2 */
+  aestheticProsth: ['anterior-esthetic-01-intraoral', 'anterior-redo-01-intraoral', 'anterior-redo-02-intraoral'],
+  /* 6쪽 [재근관치료] Case 01 은 자연치아 살리기 case 1 로 이동 · 순서 4·6·2·3·5 */
+  reendo: ['reendo-02-xray-pano', 'reendo-03-xray-pano', 'reendo-01-xray', 'reendo-02-xray-pa', 'reendo-03-xray-pa'],
+  /* 같은 쪽 — 자연치아 살리기 첫 사례로(나머지는 그대로) */
+  naturalHub: ['endo-01-xray', 'endo-02-xray', 'endo-03-xray', 'endo-04-xray', 'fracture-01-intraoral'],
+  /* 41쪽 이갈이·이악물기 */
+  bruxism: ['brux-01-intraoral'],
+} satisfies Record<string, string[]>;
+
+const CASE_BY_ID = new Map(CASES.map((c) => [c.id, c]));
+/** 순서 목록(id) → 사례. 없는 id 는 건너뛴다(사례를 지웠는데 목록에 남은 경우) */
+export const casesByIds = (ids: readonly string[]) => ids.map((id) => CASE_BY_ID.get(id)).filter((c): c is CaseItem => Boolean(c));
 
 export const casesOf = (cats?: CaseCategory[]) => (cats?.length ? CASES.filter((c) => cats.includes(c.category) || (c.also ?? []).some((a) => cats.includes(a))) : CASES);

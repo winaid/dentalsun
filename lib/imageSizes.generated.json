@@ -239,10 +239,6 @@
   "w": 1400,
   "h": 301
  },
- "wisdom/case": {
-  "w": 1400,
-  "h": 393
- },
  "place/place01": {
   "w": 1600,
   "h": 1067
@@ -622,14 +618,6 @@
  "orig/case-mta3-before": {
   "w": 792,
   "h": 322
- },
- "orig/case-wisdom-after": {
-  "w": 804,
-  "h": 334
- },
- "orig/case-wisdom-before": {
-  "w": 823,
-  "h": 342
  },
  "orig/consent-tmj-tx-arthro": {
   "w": 512,
@@ -1331,10 +1319,6 @@
   "w": 1200,
   "h": 900
  },
- "equip/tmj-physio-spray": {
-  "w": 1200,
-  "h": 900
- },
  "equip/tmj-physio-laser": {
   "w": 1200,
   "h": 900
@@ -1350,5 +1334,29 @@
  "press/dental-arirang-full-arch": {
   "w": 1024,
   "h": 1536
+ },
+ "equip/tmj-physio-ultrasound": {
+  "w": 1200,
+  "h": 900
+ },
+ "equip/tmj-physio-spray2": {
+  "w": 1200,
+  "h": 900
+ },
+ "wisdom/case-full": {
+  "w": 1655,
+  "h": 442
+ },
+ "cases5/brux-01-intraoral-open": {
+  "w": 1183,
+  "h": 710
+ },
+ "illust/tmj-anatomy2": {
+  "w": 1200,
+  "h": 800
+ },
+ "aesthetic/laminate-tryin": {
+  "w": 1200,
+  "h": 800
  }
 }

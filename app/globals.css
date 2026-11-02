@@ -956,6 +956,16 @@ details.faq .a {
 .flip-back {
   transform: rotateY(180deg);
 }
+/* 2026-11-02 원장 PPT(261030) 9쪽 '화면 전환 시 남색 배경의 글씨가 잘린다' — 뒷면 글이 앞면보다 길면 아래가 잘렸다.
+   마우스로 뒤집는 넓은 화면에서는 뒷면도 같은 grid 칸에 흐름으로 두어, 카드 높이 = 두 면 중 큰 쪽(같은 줄 카드는 함께 늘어난다).
+   폰·태블릿(누르면 바로 이동)은 예전처럼 앞면 높이 — 뒷면 때문에 두 칸 격자가 길어지지 않게 */
+@media (min-width: 1024px) {
+  .flip-back {
+    position: relative;
+    inset: auto;
+    grid-area: 1 / 1;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   .flip-inner { transition: none; }
 }

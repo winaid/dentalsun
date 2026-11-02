@@ -70,7 +70,7 @@ export function FullArchBand() {
             틀니, <span className="accent whitespace-nowrap">불편하지 않으신가요?</span>
           </h2>
           <p className="mt-5 text-[1.12rem] leading-[1.7] text-ink-soft md:text-[1.3rem]">
-            <span className="block">전체 치아에 필요한 임플란트, <strong className="font-extrabold text-ink">단 4~6개</strong></span>
+            <span className="block">전체 치아에 필요한 임플란트, <strong className="font-extrabold text-ink">단 4~6개!</strong></span>
             {/* 2026-10-20 원장 PPT 99쪽 '디지털 풀아치 임플란트' + 오너 "주황 강조로, 지금은 풀아치만 강조" → 세 낱말 전체 주황, 한 덩어리로 */}
             <span className="block"><strong className="font-extrabold text-ink">수술 당일 식사</strong>까지 가능한 <span className="whitespace-nowrap font-extrabold text-sun-600">디지털 풀아치 임플란트</span></span>
           </p>

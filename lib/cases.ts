@@ -37,12 +37,7 @@ export const CASE_GROUPS: CaseGroup[] = [
       { before: { key: 'orig/case-mta3-before', alt: '신경치료 후 뿌리 끝 염증이 재발한 치료 전 엑스레이' }, after: { key: 'orig/case-mta3-after', alt: 'MTA 재신경치료 후 엑스레이' } },
     ],
   },
-  {
-    id: 'wisdom',
-    label: '매복 사랑니',
-    href: '/treatment/wisdom-tooth',
-    pairs: [{ before: { key: 'orig/case-wisdom-before', alt: '옆 치아에 닿아 있던 매복 사랑니의 발치 전 파노라마' }, after: { key: 'orig/case-wisdom-after', alt: '발치 후 임플란트를 식립한 파노라마' } }],
-  },
+  /* 'wisdom' 묶음은 2026-11-02 뺐다 — 사랑니 쪽은 원본 두 장 판 그림(wisdom/case-full) 한 장으로(원장 PPT 261030 40쪽 '하단 잘림') */
 ];
 
 export const caseGroup = (id: string) => CASE_GROUPS.find((g) => g.id === id);

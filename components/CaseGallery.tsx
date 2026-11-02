@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import Image from 'next/image';
-import { CASE_CATEGORY_LABEL, CASE_NOTE, casesOf, type CaseCategory, type CaseItem } from '@/lib/caseLibrary';
+import { CASE_CATEGORY_LABEL, CASE_NOTE, casesByIds, casesOf, type CaseCategory, type CaseItem } from '@/lib/caseLibrary';
 import { figSrc } from '@/lib/docs';
 import { Sentences } from '@/components/ui';
 import { CompareStage } from '@/components/BeforeAfter';
@@ -16,15 +16,16 @@ import { CompareStage } from '@/components/BeforeAfter';
  *  · 경과가 셋 이상인 사례(턱관절 CT)는 두 장 비교가 안 되니 옛 방식(위에서 아래로 차례)으로 둔다.
  *  · 홈에서는 진료별 칩으로 거른다(filter). 진료 쪽에서는 그 진료 사례만 보여 준다(categories).
  */
-export function CaseGallery({ categories, filter = false }: { categories?: CaseCategory[]; filter?: boolean }) {
+export function CaseGallery({ categories, filter = false, order }: { categories?: CaseCategory[]; filter?: boolean; /** 보여 줄 사례 id 와 순서(lib/caseLibrary CASE_ORDER) — 주면 '전체'는 이 목록 그대로 */ order?: readonly string[] }) {
   const all = useMemo(() => casesOf(categories), [categories]);
+  const picked = useMemo(() => (order ? casesByIds(order) : null), [order]);
   const cats = useMemo(() => [...new Set(all.map((c) => c.category))], [all]);
   const [cat, setCat] = useState<CaseCategory | 'all'>('all');
   /* 홈 '전체'에서는 치주치료 사례(임플란트 사례와 같은 사진, 원장 PPT 236쪽)를 빼 같은 사진이 두 번 나오지 않게 */
-  const shown = cat === 'all' ? all.filter((c) => !(categories === undefined && c.category === 'perio')) : all.filter((c) => c.category === cat);
+  const shown = cat === 'all' ? (picked ?? all.filter((c) => !(categories === undefined && c.category === 'perio'))) : all.filter((c) => c.category === cat);
   const intra = shown.filter((c) => c.type === 'intraoral');
   const xray = shown.filter((c) => c.type === 'xray');
-  if (!all.length) return null;
+  if (!all.length && !picked?.length) return null;
   /* 영역마다 끌어 보기인지(사례가 섞여 있으면) 위아래 차례인지(경과 사례뿐이면) — 아래 Area 와 같은 판정 */
   const areas = [intra, xray].filter((a) => a.length);
   /** 두 영역이 다 있을 때만 넓은 화면에서 나란히 둔다(한 영역뿐이면 가운데 한 칸) */
@@ -134,9 +135,18 @@ function Area({ title, sub, items, kind, paired = false }: { title: string; sub:
           {stacks.map((c) => (
             <li key={c.id} className="shrink-0" style={{ width: `calc(var(--case-h) * ${((c.before.w / c.before.h) * (2 / (2 + (c.middle?.length ?? 0)))).toFixed(3)})`, minWidth: 150 }}>
               <figure className="overflow-hidden rounded-2xl border border-hairline bg-white">
-                <Shot img={c.before} label="치료 전" alt={`${c.caption} — 치료 전`} dark={xr} />
-                {c.middle?.map((m, i) => <Shot key={m.key} img={m} label={`경과 ${i + 1}`} alt={`${c.caption} — 경과 ${i + 1}`} dark={xr} />)}
-                <Shot img={c.after} label="최근" alt={`${c.caption} — 최근`} after dark={xr} />
+                {/* 이름표 — 사례가 따로 주면(labels) 그것, 없으면 치료 전 · 경과 n · 최근 */}
+                {(() => {
+                  const n = c.middle?.length ?? 0;
+                  const lb = (i: number, d: string) => c.labels?.[i] ?? d;
+                  return (
+                    <>
+                      <Shot img={c.before} label={lb(0, '치료 전')} alt={`${c.caption} — ${lb(0, '치료 전')}`} dark={xr} />
+                      {c.middle?.map((m, i) => <Shot key={m.key} img={m} label={lb(i + 1, `경과 ${i + 1}`)} alt={`${c.caption} — ${lb(i + 1, `경과 ${i + 1}`)}`} dark={xr} />)}
+                      <Shot img={c.after} label={lb(n + 1, '최근')} alt={`${c.caption} — ${lb(n + 1, '최근')}`} after dark={xr} />
+                    </>
+                  );
+                })()}
                 <figcaption className="px-4 py-3 text-[14px] font-semibold leading-snug text-ink">
                   <span className="mr-1.5 text-[12px] font-bold text-sun-600">{CASE_CATEGORY_LABEL[c.category]}</span>
                   {c.caption}

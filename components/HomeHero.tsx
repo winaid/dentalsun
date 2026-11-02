@@ -42,7 +42,7 @@ const SLIDES = [
   {
     key: 'sun/hero-scan',
     label: '고난도 임플란트',
-    desc: 'CBCT 계측과 수술 가이드로 계획합니다.',
+    desc: 'CBCT 계측과 수술 가이드로 계획하고 비절개로 통증없이 수술합니다.',
     alt: '구강스캐너로 치아를 스캔하고 모니터에 3D 모형이 뜨는 광화문선치과 진료 장면',
     fit: 'object-[30%_50%] md:object-[62%_50%]',
     title: (
@@ -52,7 +52,7 @@ const SLIDES = [
         시작부터 오차 없는 <span className="accent-sun">디지털</span>로
       </>
     ),
-    lead: '감이나 경험에만 의존하지 않습니다. 3D CBCT 정밀 분석과 모의 식립 가이드로 뼈 흡수, 신경 손상 걱정 없이 한 번에 정확하게 식립합니다.',
+    lead: '감이나 경험에만 의존하지 않습니다. 3D CBCT 정밀 분석과 모의 식립 가이드로 뼈 흡수, 신경 손상 걱정 없이 한 번에 정확하게 식립합니다. 잇몸뼈가 충분한 경우 비절개 가이드 수술로 통증과 붓기를 최소화합니다.',
   },
   {
     key: 'sun/hero-tmj',
@@ -165,8 +165,10 @@ export function HomeHero() {
       {/* 좁은 화면에서는 아래 빠른메뉴(72px) 위에 얹는다 */}
       <div className="hero-bar absolute inset-x-0 bottom-[72px] z-10 border-t border-white/12 bg-night/35 backdrop-blur-md md:bottom-0">
         <div className="wrap grid gap-x-10 lg:grid-cols-[1fr_auto]">
-          {/* 좁은 화면 — 점과 지금 장면 이름만 */}
-          <div className="flex items-center gap-3.5 py-4 md:hidden">
+          {/* 좁은 화면 — 점과 지금 장면 이름, 그 아래 설명 한두 줄
+               (2026-11-02 원장 PPT 261030 3쪽 '상세 설명글이 모바일에 표시되지 않습니다') */}
+          <div className="pt-2 pb-3.5 md:hidden">
+          <div className="flex items-center gap-3.5">
             <span className="flex items-center gap-1.5">
               {SLIDES.map((s, n) => (
                 <button
@@ -183,6 +185,8 @@ export function HomeHero() {
               ))}
             </span>
             <span key={i} className="hero-swap text-[15px] font-bold text-white">{SLIDES[i].label}</span>
+          </div>
+          <p key={`d${i}`} className="hero-swap text-[13.5px] leading-[1.5] text-white/75 [word-break:keep-all]">{SLIDES[i].desc}</p>
           </div>
 
           <ul className="hidden grid-cols-3 md:grid">

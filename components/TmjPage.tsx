@@ -6,11 +6,12 @@ import { HeroCollage, type CollageCard } from '@/components/HeroCollage';
 import { JsonLd } from '@/components/JsonLd';
 import { TmjSelfCheck } from '@/components/TmjSelfCheck';
 import { CaseGallery } from '@/components/CaseGallery';
+import { Compare } from '@/components/CustomImplantPage';
 import { ContactBand, FaqList, MedicalNotice, Sentences, lastRowStart } from '@/components/ui';
 import { ContactCard, DoctorCard } from '@/components/SideRail';
 import { docCharCount, figSize, figSrc, fitsBox, type Doc, type Fig } from '@/lib/docs';
 import { docByPath, docsOfHub } from '@/lib/content';
-import { casesOf } from '@/lib/caseLibrary';
+import { CASE_ORDER, casesOf } from '@/lib/caseLibrary';
 import { HERO_COLLAGE, splitAccent } from '@/lib/heroCollage';
 import {
   BRUX_CARE,
@@ -226,6 +227,21 @@ function Triad({ className = '' }: { className?: string }) {
  */
 export function AwardCard({ className = 'mt-10', tone = 'light' }: { className?: string; /** dark = 짙은 남색 판(흰 바탕 구역에서 상장을 돋보이게). 홈 턱관절 띠는 이미 어두운 사진 띠라 흰 판(light) 그대로 */ tone?: 'light' | 'dark' }) {
   const a = TMJ_AWARD;
+  /* 2026-11-02 원장 PPT(261030) 21쪽 '대상, 턱관절치료 부분 강조' — 두 낱말만 주황 굵게(남색 판은 밝은 주황) */
+  const hot = tone === 'dark' ? 'font-extrabold text-sun-400' : 'font-extrabold text-sun-600';
+  const mark = (text: string, word: string) => {
+    const at = text.indexOf(word);
+    if (at < 0) return text;
+    return (
+      <>
+        {text.slice(0, at)}
+        <span className={hot}>{word}</span>
+        {text.slice(at + word.length)}
+      </>
+    );
+  };
+  const titleNode = mark(a.title, '대상');
+  const categoryNode = mark(a.category, '턱관절치료 부문');
   /* 가로로 긴 사진(대기실 수상 현수막 등)은 카드 위에 크게, 수상 내용은 그 아래 — 세로 상장 칸(3:4)에 넣으면 글자가 잘린다 */
   const size = a.photo ? figSize(a.photo.key) : null;
   if (a.photo && size && size.w / size.h > 1.4)
@@ -239,7 +255,7 @@ export function AwardCard({ className = 'mt-10', tone = 'light' }: { className?:
             {a.year} {a.by}
           </p>
           <p className="mt-1 text-[1.15rem] font-extrabold leading-snug text-ink md:text-[1.3rem]">
-            {a.title} <span className="whitespace-nowrap text-[15px] font-semibold text-brand-700 md:text-[16px]">{a.category} 수상</span>
+            {titleNode} <span className="whitespace-nowrap text-[15px] font-semibold text-brand-700 md:text-[16px]">{categoryNode} 수상</span>
           </p>
         </figcaption>
       </figure>
@@ -273,9 +289,9 @@ export function AwardCard({ className = 'mt-10', tone = 'light' }: { className?:
           <p className={`award-line text-[13px] font-bold tracking-[0.02em] md:text-[15px] ${dark ? 'text-sun-400' : 'text-sun-600'}`}>
             {a.year} {a.by}
           </p>
-          <p className={`award-line mt-1.5 text-[1.15rem] font-extrabold leading-snug [word-break:keep-all] md:mt-2 md:text-[1.7rem] ${dark ? 'text-white' : 'text-ink'}`}>{a.title}</p>
+          <p className={`award-line mt-1.5 text-[1.15rem] font-extrabold leading-snug [word-break:keep-all] md:mt-2 md:text-[1.7rem] ${dark ? 'text-white' : 'text-ink'}`}>{titleNode}</p>
           <span aria-hidden className="award-rule mt-3.5 block h-[2px] w-10 bg-sun-500 md:mt-5" />
-          <p className={`award-line mt-3 text-[14.5px] font-semibold md:mt-4 md:text-[17px] ${dark ? 'text-white/80' : 'text-brand-700'}`}>{a.category} 수상</p>
+          <p className={`award-line mt-3 text-[14.5px] font-semibold md:mt-4 md:text-[17px] ${dark ? 'text-white/80' : 'text-brand-700'}`}>{categoryNode} 수상</p>
         </div>
       </div>
     );
@@ -300,8 +316,8 @@ export function AwardCard({ className = 'mt-10', tone = 'light' }: { className?:
         <p className="text-[13px] font-bold text-sun-600 md:text-[15px]">
           {a.year} {a.by}
         </p>
-        <p className="mt-1 text-[1.2rem] font-extrabold leading-snug text-ink md:text-[1.75rem]">{a.title}</p>
-        <p className="mt-1.5 text-[15px] font-semibold text-brand-700 md:mt-2.5 md:text-[17px]">{a.category} 수상</p>
+        <p className="mt-1 text-[1.2rem] font-extrabold leading-snug text-ink md:text-[1.75rem]">{titleNode}</p>
+        <p className="mt-1.5 text-[15px] font-semibold text-brand-700 md:mt-2.5 md:text-[17px]">{categoryNode} 수상</p>
       </div>
     </div>
   );
@@ -344,7 +360,7 @@ function TmjLetter() {
 const VIEWS: Record<string, string[]> = {
   '/treatment/tmj': ['intro', 'what', 'anatomy', 'causes', 'knowhow', 'focus', 'equip', 'children'],
   '/treatment/tmj/symptoms': ['symptoms', 'types', 'self-tests', 'whole-body'],
-  '/treatment/tmj/bruxism': ['brux-what', 'brux-causes', 'brux-damage', 'brux-check', 'brux-diagnosis', 'brux-treatment', 'brux-care'],
+  '/treatment/tmj/bruxism': ['brux-what', 'brux-causes', 'brux-damage', 'brux-check', 'brux-diagnosis', 'brux-treatment', 'brux-cases', 'brux-care'],
   '/treatment/tmj/treatment': ['steps', 'steps-detail', 'habits', 'cases'],
 };
 
@@ -924,30 +940,22 @@ export function TmjPage({ doc }: { doc: Doc }) {
 
                 {/* 기성 마우스피스와의 차이 — 우열이 아니라 차이만(의료광고) */}
                 <SubHead s={SECTIONS['brux-compare']} />
-                <div className="reveal mt-8 sm:overflow-hidden sm:rounded-2xl sm:border sm:border-hairline">
-                  <table className="tbl-m w-full table-fixed border-collapse text-left">
-                    <caption className="sr-only">기성 마우스피스와 맞춤 교합안정장치의 차이</caption>
-                    <thead className="bg-canvas">
-                      <tr>
-                        <th scope="col" className="w-[22%] px-4 py-3.5 text-[13px] font-bold text-ink-muted md:w-[18%] md:px-5">구분</th>
-                        <th scope="col" className="px-4 py-3.5 text-[14.5px] font-extrabold text-ink md:px-5">{BRUX_COMPARE.columns[0]}</th>
-                        <th scope="col" className="px-4 py-3.5 text-[14.5px] font-extrabold text-brand-700 md:px-5">{BRUX_COMPARE.columns[1]}</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {BRUX_COMPARE.rows.map((r) => (
-                        <tr key={r.label} className="border-t border-hairline align-top">
-                          <th scope="row" className="px-4 py-3.5 text-[14px] font-bold text-ink md:px-5">{r.label}</th>
-                          <td data-label={BRUX_COMPARE.columns[0]} className="px-4 py-3.5 text-[16px] leading-[1.65] text-ink-soft md:px-5">{r.a}</td>
-                          <td data-label={BRUX_COMPARE.columns[1]} className="px-4 py-3.5 text-[16px] leading-[1.65] text-ink md:px-5">{r.b}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                {/* 2026-11-02 원장 PPT(261030) 33쪽 '맞춤 교합안정장치 강조 효과' + 모바일은 '맞춤 임플란트처럼' —
+                     맞춤 지대주 쪽과 같은 비교 부품(Compare): 넓은 화면은 맞춤 칸 머리 주황·칸 옅은 주황, 폰은 항목마다 기성/맞춤 꼬리표 두 줄 */}
+                <Compare columns={BRUX_COMPARE.columns} rows={BRUX_COMPARE.rows} />
                 <p className="reveal mt-4 text-[16px] leading-[1.75] text-ink-soft">
                   <Sentences text={BRUX_COMPARE.note} clauses={false} />
                 </p>
+              </section>
+            )}
+
+            {/* ── 이갈이 치료 전후사례 — 2026-11-02 원장 PPT(261030) 41쪽 '이갈이 이악물기 섹션에 추가 · 턱관절처럼 세 가지 사진' ── */}
+            {show('brux-cases') && (
+              <section className={top('brux-cases', 'pt-24 md:pt-32')} aria-labelledby="brux-cases">
+                <Head id="brux-cases" s={SECTIONS['brux-cases']} />
+                <div className="reveal mt-10">
+                  <CaseGallery categories={['bruxism']} order={CASE_ORDER.bruxism} />
+                </div>
               </section>
             )}
 
@@ -1117,9 +1125,9 @@ export function TmjPage({ doc }: { doc: Doc }) {
                       ))}
                     </ul>
 
-                    {/* ── 물리치료 세 가지 — 번호 붙은 사진 카드(원장 참고 캡처 짜임, 2026-09-29) ── */}
+                    {/* ── 물리치료 네 가지 — 번호 붙은 사진 카드(원장 참고 캡처 짜임, 2026-09-29) · 2026-11-02 04 초음파 치료 추가로 2칸 두 줄 ── */}
                     <SubHead s={SECTIONS.physio} id="physio" />
-                    <ul className="reveal-stack mt-8 grid gap-5 md:grid-cols-3">
+                    <ul className="reveal-stack mt-8 grid gap-5 sm:grid-cols-2">
                       {TMJ_PHYSIO.map((p, i) => (
                         <li key={p.title} className="card flex h-full flex-col overflow-hidden">
                           <span className="relative block aspect-[4/3] overflow-hidden border-b border-hairline bg-white">
@@ -1127,7 +1135,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                               src={figSrc(p.fig.key)}
                               alt={p.fig.alt}
                               fill
-                              sizes="(max-width: 768px) 100vw, 30vw"
+                              sizes="(max-width: 639px) 100vw, 45vw"
                               className={fitsBox(p.fig.key, 4, 3) ? 'object-cover' : '!object-contain p-3'}
                             />
                             <span aria-hidden className="absolute left-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-sun-500 text-[14px] font-extrabold text-white shadow-[var(--shadow-soft)]">

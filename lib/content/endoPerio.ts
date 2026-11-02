@@ -10,6 +10,7 @@
  *   치조골→잇몸뼈, 동요→흔들림, 누공→고름 길. 치료 이름(재근관치료·치근활택술·치근단절제술)은 두고 하는 일을 쉬운 말로. {…}=하이라이트.
  */
 import type { Doc } from '../docs';
+import { CASE_ORDER } from '../caseLibrary';
 
 const HUB = '/treatment/general';
 const HUB_LABEL = '일반진료';
@@ -151,9 +152,10 @@ export const ENDO_PERIO_DOCS: Doc[] = [
       {
         type: 'caseGallery',
         id: 'cases',
-        title: '재근관치료 전후 사례',
+        title: '재근관치료 전후사례',
         lead: '광화문 선치과에서 재근관치료를 받은 실제 사례입니다.',
         categories: ['reendo'],
+        order: CASE_ORDER.reendo,
       },
       {
         type: 'points',
@@ -352,7 +354,7 @@ export const ENDO_PERIO_DOCS: Doc[] = [
       {
         type: 'caseGallery',
         id: 'cases',
-        title: '치주치료 전후',
+        title: '치주치료 전후사례',
         lead: '광화문 선치과에서 치료한 실제 사례입니다.',
         categories: ['perio'],
       },

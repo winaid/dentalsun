@@ -7,6 +7,7 @@
  * 병원이 하지 않는 진료(피드백 #14 · STYLE §3)의 언급은 FAQ 에서도 뺐다. 대표원장 AACD 정회원은 lib/doctors.ts 약력 그대로.
  */
 import type { Doc } from '../docs';
+import { CASE_ORDER } from '../caseLibrary';
 
 const HUB = '/treatment/aesthetic';
 const HUB_LABEL = '심미치료';
@@ -61,8 +62,8 @@ export const AESTHETIC_DOCS: Doc[] = [
         head: ['고민', '고려하는 방법', '함께 확인할 점'],
         rows: [
           ['치아 색이 전체적으로 누렇다', '전문가 치아미백', '보철과 레진은 미백으로 색이 변하지 않음'],
-          ['앞니가 작거나 사이가 조금 벌어졌다', '라미네이트', '치아 삭제량, 이갈이 여부'],
-          ['앞니가 깨졌거나 배열이 고르지 않다', '올세라믹, 라미네이트', '남은 치아, 맞물림'],
+          ['앞니가 작거나 사이가 조금 벌어졌다', '라미네이트, 레진', '치아 삭제량, 이갈이 여부'],
+          ['앞니가 깨졌거나 배열이 고르지 않다', '올세라믹, 라미네이트, 레진', '남은 치아, 맞물림'],
           ['신경치료한 앞니가 어둡게 변했다', '올세라믹 · 지르코니아 크라운', '뿌리 끝 상태, 잇몸선'],
           ['오래된 보철물 경계가 검게 비친다', '올세라믹 · 지르코니아로 교체', '보철 아래 충치와 잇몸 상태'],
         ],
@@ -71,9 +72,10 @@ export const AESTHETIC_DOCS: Doc[] = [
       {
         type: 'caseGallery',
         id: 'cases',
-        title: '앞니 보철 · 레진 치료 전후',
+        title: '앞니 보철 · 레진 치료 전후사례',
         lead: '광화문 선치과에서 치료한 실제 사례입니다.',
         categories: ['anterior', 'resin'],
+        order: CASE_ORDER.aestheticHub,
       },
       {
         type: 'text',
@@ -147,7 +149,10 @@ export const AESTHETIC_DOCS: Doc[] = [
           '치아 앞면을 얇게 다듬고 손톱처럼 얇은 세라믹을 붙이는 방법입니다. 깎는 양을 줄여 내 치아를 지키면서, 앞니의 색과 모양, 작은 틈을 함께 개선합니다.',
           '이갈이가 심하거나 앞니끼리 강하게 부딪히는 맞물림이라면, 떨어지거나 깨질 위험이 있어 신중히 정합니다.',
         ],
-        figure: { key: 'orig/misc-veneer-teeth', alt: '앞니 표면에 얇은 라미네이트를 붙이는 일러스트' },
+        /* 2026-11-02 원장 PPT(261030) 37쪽 '실제 라미네이트 치료 같은 사진으로' — 오너 "GPT로, 너무 AI 티 나지 않게 실사로" →
+           gpt-image-2 시안 2장 중 B(입술 견인기·장갑·기구로 얇은 세라믹을 앞니에 대 보는 임상 사진풍). 연출 사진(실제 환자 사례 아님).
+           도구 C:/tmp/sun-ppt-1030/tools/gen-laminate.mjs · 시안 C:/tmp/sun-ppt-1030/gen */
+        figure: { key: 'aesthetic/laminate-tryin', alt: '얇은 세라믹 라미네이트를 기구로 앞니 표면에 대 보는 장면(연출 사진)' },
       },
       {
         type: 'text',
@@ -203,9 +208,10 @@ export const AESTHETIC_DOCS: Doc[] = [
       {
         type: 'caseGallery',
         id: 'cases',
-        title: '심미보철 전후',
+        title: '심미보철 치료 전후사례',
         lead: '광화문 선치과에서 진료한 심미보철 사례입니다.',
         categories: ['anterior'],
+        order: CASE_ORDER.aestheticProsth,
       },
       {
         type: 'notice',
@@ -297,7 +303,7 @@ export const AESTHETIC_DOCS: Doc[] = [
         /* 2026-09-30 병원이 새 미백 사진을 보내 옴 → 다른 진료 쪽처럼 사례 모음(lib/caseLibrary.ts)으로. 옛 3쌍은 오너 지시로 뺐다 */
         type: 'caseGallery',
         id: 'cases',
-        title: '치아미백 전후',
+        title: '치아미백 치료 전후사례',
         lead: '광화문 선치과에서 진료한 치아미백 사례입니다.',
         categories: ['whitening'],
       },
