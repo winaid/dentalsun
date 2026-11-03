@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { NAV } from '@/lib/nav';
-import { CLINIC } from '@/lib/clinic';
+import { CLINIC, STATIONS } from '@/lib/clinic';
 
 /**
  * 머리말 — 화면 양끝까지 쓰는 한 줄(오너: "양끝까지 간격 넓혀도 돼").
@@ -69,10 +69,22 @@ export function SiteHeader({ dark = false }: { dark?: boolean }) {
           </span>
         </Link>
 
-        <span className={`hidden shrink-0 items-center gap-2 whitespace-nowrap rounded-full border px-3 py-1 text-[12px] font-semibold min-[1700px]:inline-flex ${solid ? 'border-hairline text-ink-soft' : 'border-white/25 text-white/85'}`}>
-          <span className="h-1.5 w-1.5 rounded-full bg-sun-500" />
-          {/* 2026-11-02 원장 PPT(261030) 10쪽 '광화문역 옆에 시청역 1,2호선 도보 5분도 추가' */}
-          광화문역 6번 출구 도보 2분 · 시청역 1,2호선 도보 5분
+        {/* 2026-11-02 원장 PPT(261030) 10쪽 '광화문역 옆에 시청역 1,2호선 도보 5분도 추가'
+            → 11-03 병원(김희동 본부장 카톡) '양옆으로, 동그라미 광화문역 1개·시청역 1개 해서 2개로' + 오너 '역 색깔에 맞춰서' — 역마다 알약 하나, 노선 번호는 공식 노선색 동그라미 */}
+        <span className="hidden shrink-0 items-center gap-2 min-[1700px]:inline-flex">
+          {STATIONS.map((s) => (
+            <span key={s.station} className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border py-[3px] pl-[4px] pr-3 text-[12px] font-semibold ${solid ? 'border-hairline bg-white text-ink-soft' : 'border-white/25 text-white/85'}`}>
+              <span className="flex gap-[3px]">
+                {s.lines.map((l) => (
+                  <span key={l.n} className="flex h-[18px] w-[18px] items-center justify-center rounded-full text-[10.5px] font-extrabold text-white" style={{ background: l.color }}>
+                    {l.n}
+                  </span>
+                ))}
+              </span>
+              <span className={`font-bold ${solid ? 'text-ink' : 'text-white'}`}>{s.station}</span>
+              {s.exit} 도보 {s.walk.replace('도보 ', '')}
+            </span>
+          ))}
         </span>
 
         <nav className="mx-auto hidden lg:block" aria-label="주요 메뉴">

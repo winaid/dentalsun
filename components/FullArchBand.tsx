@@ -61,7 +61,8 @@ export function FullArchBand() {
       {/* 그림 무대 — 좁은 화면은 위쪽 상자(오른쪽 붙임), lg 부터는 구역 전체 배경 */}
       <div className="reveal relative aspect-[8/7] overflow-hidden sm:aspect-[16/9] lg:absolute lg:inset-0 lg:aspect-auto">
         <Stage />
-        <div className="absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-b from-transparent to-[#f6efe9] lg:hidden" />
+        {/* 사진 전체 크기 띠 — 1/4 높이 띠의 윗끝이 아이폰에서 가는 선으로 보일 수 있다(2026-11-03 같은 꼴 전수 정리) */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(246,239,233,0)_75%,#f6efe9_100%)] lg:hidden" />
       </div>
       <div className="wrap relative pb-16 pt-2 sm:pt-6 lg:flex lg:min-h-[600px] lg:items-center lg:py-20 xl:min-h-[700px] xl:py-24">
         <div className="reveal-stack max-w-[540px] lg:max-w-[460px] xl:max-w-[540px]">

@@ -71,7 +71,8 @@ export function HeroCollage({
           */}
           <div className={`absolute inset-x-0 top-0 h-[100svh] lg:inset-0 lg:h-auto ${bgSoft ? 'hero-soft' : ''}`}>
             <Image src={figSrc(bg)} alt="" fill priority sizes="(max-width: 1023px) 330vw, 100vw" className="kenburns object-cover object-[60%_50%]" />
-            <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-night to-transparent lg:hidden" />
+            {/* 사진 전체 크기 띠(2/5 높이 띠의 윗끝 선 방지, 2026-11-03) */}
+            <div className="absolute inset-0 bg-[linear-gradient(to_top,var(--color-night)_0%,transparent_40%)] lg:hidden" />
           </div>
           <div className="absolute inset-0 bg-gradient-to-t from-night via-night/80 to-night/40 lg:hidden" />
           <div className="absolute inset-0 hidden bg-gradient-to-r from-night via-night/85 to-night/35 lg:block" />

@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { CLINIC, HOURS } from '@/lib/clinic';
+import { CLINIC, HOURS, STATIONS } from '@/lib/clinic';
 import { figSrc } from '@/lib/docs';
 import { Sentences } from '@/components/ui';
 
@@ -74,14 +74,6 @@ const SLIDES = [
 /** 한 장면이 머무는 시간 (오너 요청으로 두 번 줄여 4.5초). 진행 막대는 아래에서 이 값을 그대로 받는다 */
 const DURATION = 4500;
 
-/** 오시는 길 — 같은 역·같은 출구는 한 줄로 묶는다 (시청역 1·2호선). 값은 lib/clinic.ts 하나뿐. */
-const STATIONS = CLINIC.transit.reduce<Array<{ station: string; exit: string; walk: string; lines: Array<{ n: string; color: string }> }>>((acc, t) => {
-  const n = t.line.replace('호선', '');
-  const hit = acc.find((s) => s.station === t.station && s.exit === t.exit);
-  if (hit) hit.lines.push({ n, color: t.color });
-  else acc.push({ station: t.station, exit: t.exit, walk: t.walk, lines: [{ n, color: t.color }] });
-  return acc;
-}, []);
 
 export function HomeHero() {
   const [i, setI] = useState(0);

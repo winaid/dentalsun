@@ -82,10 +82,11 @@ export const CLINIC = {
    * VERIFIED — 기존 홈페이지 머리말의 역 안내 배지(그림) 그대로.
    *   5호선 광화문역 6번 출구 도보 2분 / 1호선 시청역 3번 출구 도보 5분 / 2호선 시청역 3번 출구 도보 5분
    */
+  /* 노선 색 = 서울 지하철 공식 노선색(1호선 #0052A4 · 2호선 #00A84D · 5호선 #996CAC) — 2026-11-03 오너 "역 색깔에 맞춰서, 딱 알 수 있게" */
   transit: [
-    { line: '5호선', station: '광화문역', exit: '6번 출구', walk: '도보 2분', color: '#8b3fd9' },
-    { line: '1호선', station: '시청역', exit: '3번 출구', walk: '도보 5분', color: '#1f3a93' },
-    { line: '2호선', station: '시청역', exit: '3번 출구', walk: '도보 5분', color: '#2ea84d' },
+    { line: '5호선', station: '광화문역', exit: '6번 출구', walk: '도보 2분', color: '#996CAC' },
+    { line: '1호선', station: '시청역', exit: '3번 출구', walk: '도보 5분', color: '#0052A4' },
+    { line: '2호선', station: '시청역', exit: '3번 출구', walk: '도보 5분', color: '#00A84D' },
   ],
   nearestStation: '5호선 광화문역 6번 출구 도보 2분',
 
@@ -106,6 +107,15 @@ export const CLINIC = {
   /** 배포 주소 — Vercel 기본 도메인. 커스텀 도메인을 붙이면 여기만 바꾼다. */
   url: process.env.SITE_URL?.replace(/\/$/, '') || 'https://dentalsun-cyan.vercel.app',
 } as const;
+
+/** 역별로 묶은 오시는 길 — 같은 역·같은 출구는 한 줄(시청역 1·2호선). 머리말 알약·오시는 길·홈 첫 화면이 같이 쓴다 */
+export const STATIONS = CLINIC.transit.reduce<Array<{ station: string; exit: string; walk: string; lines: Array<{ n: string; color: string }> }>>((acc, t) => {
+  const n = t.line.replace('호선', '');
+  const hit = acc.find((s) => s.station === t.station && s.exit === t.exit);
+  if (hit) hit.lines.push({ n, color: t.color });
+  else acc.push({ station: t.station, exit: t.exit, walk: t.walk, lines: [{ n, color: t.color }] });
+  return acc;
+}, []);
 
 /**
  * 진료시간 — VERIFIED (홈 하단 안내 + 치과소개 진료시간 표).

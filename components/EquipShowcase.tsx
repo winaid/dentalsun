@@ -59,7 +59,7 @@ export function EquipShowcase({ items, variant = 'accordion' }: { items: EquipIt
               {it.shot === 'product-light' && <div aria-hidden className="acc-veil absolute inset-0 bg-night" />}
               <div className="acc-shade absolute inset-0" />
               {/* 흰 배경 제품 사진은 아래쪽이 밝아 흰 글씨가 묻힌다 — 글 자리에만 짙은 바탕을 한 겹 더 깐다 */}
-              {it.shot === 'product-light' && <div aria-hidden className="absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-night via-night/88 to-transparent" />}
+              {it.shot === 'product-light' && <div aria-hidden className="absolute inset-0 bg-[linear-gradient(to_top,var(--color-night)_0%,color-mix(in_oklab,var(--color-night)_88%,transparent)_30%,transparent_60%)]" />}
 
               {/* 접힌 상태 — 번호와 짧은 이름 */}
               <div className="acc-closed absolute inset-x-0 bottom-0 flex flex-col items-center gap-2.5 px-2 pb-7">

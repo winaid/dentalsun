@@ -20,7 +20,7 @@ import { TMJ_AWARD, TMJ_HOME_ROOT } from '@/lib/content/tmjLanding';
 import { HomeStage, HomeStats } from '@/components/HomeScroll';
 import { CaseGallery } from '@/components/CaseGallery';
 import { CASE_ORDER } from '@/lib/caseLibrary';
-import { CLINIC, HOURS, HYGIENE, STRENGTHS } from '@/lib/clinic';
+import { CLINIC, HOURS, HYGIENE, STATIONS, STRENGTHS } from '@/lib/clinic';
 import { DOCTORS, isCertCareer } from '@/lib/doctors';
 import type { NavItem } from '@/lib/nav';
 import { SCALING_QA, SITE_FAQ } from '@/lib/faq';
@@ -243,7 +243,8 @@ export default function HomePage() {
                   {/* 54쪽 예시처럼 사진 위쪽이 흰 카드에 녹아들게 — 얼굴이 흐려지지 않도록 위 1/5 만 */}
                   <span className="relative mt-auto block aspect-[4/3] w-full overflow-hidden bg-white">
                     <Image src={figSrc(s.fig.key)} alt={s.fig.alt} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className={s.fig.pos.startsWith('object-contain') ? s.fig.pos : `object-cover ${s.fig.pos}`} />
-                    <span aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-1/5 bg-gradient-to-b from-white to-transparent" />
+                    {/* 흐림 띠는 사진 전체 크기로 깔고 20% 에서 끝낸다 — 높이 1/5 짜리 띠는 아래 끝이 소수 픽셀에 걸려 아이폰에서 사진을 가로지르는 가는 선으로 보였다(2026-11-03 병원 지적) */}
+                    <span aria-hidden className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,#fff_0%,rgba(255,255,255,0)_20%)]" />
                   </span>
                 </li>
               ))}
@@ -572,8 +573,24 @@ export default function HomePage() {
             <div className="reveal mx-auto max-w-[820px] text-center lg:max-w-[960px]">
               <p className="eyebrow justify-center">VISIT US</p>
               <h2 className="display-sm mt-4">
-                광화문역 <span className="accent">6번 출구 도보 2분</span>, 광화문선치과
+                {/* 2026-11-03 병원(김희동 본부장 카톡) '광화문역 말고도 시청역 3번 출구에서도 가까우니 시청역도 같이' — 이 제목 자리 지정 */}
+                <span className="whitespace-nowrap">광화문역 <span className="accent">6번 출구 도보 2분</span></span>
+                <br />
+                <span className="whitespace-nowrap">시청역 <span className="accent">3번 출구 도보 5분</span>,</span> <span className="whitespace-nowrap">광화문선치과</span>
               </h2>
+              {/* 역마다 공식 노선색 동그라미(오너 '역 색깔에 맞춰서, 딱 알 수 있게') — 머리말·오시는 길과 같은 짜임 */}
+              <ul className="mt-6 flex flex-wrap justify-center gap-2.5">
+                {STATIONS.map((s) => (
+                  <li key={s.station} className="inline-flex items-center gap-2 rounded-full border-2 bg-white py-1.5 pl-1.5 pr-4 text-[15px] font-bold text-ink" style={{ borderColor: s.lines[0].color }}>
+                    <span className="flex gap-1">
+                      {s.lines.map((l) => (
+                        <span key={l.n} className="flex h-6 w-6 items-center justify-center rounded-full text-[12px] text-white" style={{ background: l.color }}>{l.n}</span>
+                      ))}
+                    </span>
+                    {s.station} {s.exit} {s.walk}
+                  </li>
+                ))}
+              </ul>
             </div>
             <div className="reveal mt-12 grid gap-6 lg:grid-cols-[1.15fr_1fr]">
               {/* 2026-10-20 원장 PPT 105쪽 '6번 출구 표시' — 구글 지도 끼워 넣기 → 네이버 지도 사진 + 열기 단추 셋(components/VisitMap) */}

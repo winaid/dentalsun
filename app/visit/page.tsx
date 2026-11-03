@@ -5,7 +5,7 @@ import { HeroCollage } from '@/components/HeroCollage';
 import { JsonLd } from '@/components/JsonLd';
 import { VisitMap } from '@/components/VisitMap';
 import { Breadcrumb, ContactBand, Figure, Sentences } from '@/components/ui';
-import { CLINIC, HOURS, MONTHLY_NOTICE } from '@/lib/clinic';
+import { CLINIC, HOURS, MONTHLY_NOTICE, STATIONS } from '@/lib/clinic';
 import { desc80, alt, breadcrumbSchema, medicalWebPageSchema, og, withLocality } from '@/lib/seo';
 
 /** 처음 오시는 날의 순서 — 사진은 네이버 플레이스 실사(place2/). 대기실 사진은 거울의 다른 원장 이름을 지운 판 */
@@ -44,7 +44,8 @@ export default function VisitPage() {
           eyebrow="VISIT US"
           long
           cardsLead="내원 전에 확인해 주세요."
-          lines={['광화문역 6번 출구', <><span className="accent-sun">도보 2분</span></>]}
+          /* 2026-11-03 병원 '오시는 길에 광화문역 말고도 시청역 3번 출구도 같이' — 제목에 두 역 */
+          lines={[<><span className="whitespace-nowrap">광화문역 6번 출구</span> <br className="sm:hidden" /><span className="accent-sun whitespace-nowrap">도보 2분</span></>, <><span className="whitespace-nowrap">시청역 3번 출구</span> <br className="sm:hidden" /><span className="accent-sun whitespace-nowrap">도보 5분</span></>]}
           lead={`${CLINIC.address.street} ${CLINIC.address.floor}, ${CLINIC.address.landmark}입니다. 화·목요일은 오후 9시까지 진료하며, 주차는 ${CLINIC.parking.place}을 무료로 이용하실 수 있습니다.`}
           bg="ai/wide-visit"
           cards={[
@@ -59,10 +60,15 @@ export default function VisitPage() {
           ]}
         >
           <ul className="flex flex-wrap gap-2.5">
-            {CLINIC.transit.map((t) => (
-              <li key={t.line} className="inline-flex items-center gap-2 rounded-full border-2 bg-white/95 px-4 py-1.5 text-[15px] font-bold text-ink" style={{ borderColor: t.color }}>
-                <span className="flex h-6 w-6 items-center justify-center rounded-full text-[12px] text-white" style={{ background: t.color }}>{t.line.replace('호선', '')}</span>
-                {t.station} {t.exit} {t.walk}
+            {/* 역마다 알약 하나(시청역은 1·2호선 동그라미 둘) — 머리말과 같은 짜임, 공식 노선색 */}
+            {STATIONS.map((s) => (
+              <li key={s.station} className="inline-flex items-center gap-2 rounded-full border-2 bg-white/95 py-1.5 pl-1.5 pr-4 text-[15px] font-bold text-ink" style={{ borderColor: s.lines[0].color }}>
+                <span className="flex gap-1">
+                  {s.lines.map((l) => (
+                    <span key={l.n} className="flex h-6 w-6 items-center justify-center rounded-full text-[12px] text-white" style={{ background: l.color }}>{l.n}</span>
+                  ))}
+                </span>
+                {s.station} {s.exit} {s.walk}
               </li>
             ))}
           </ul>
