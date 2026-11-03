@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { BodyEditor, charCount } from '@/components/admin/BodyEditor';
 
 /**
@@ -33,8 +33,11 @@ type Post = {
   category?: string;
   image?: string;
   imageAlt?: string;
+  /** 본문 사진(대표 말고) — 담당자 프롬프트의 '사진 장수'로 더 만든 것. 소제목 아래에 들어간다(lib/blog.ts withBodyImages). */
+  images?: BodyImg[];
   html: string;
 };
+type BodyImg = { src: string; alt: string; w?: number; h?: number };
 type View = 'list' | 'topic' | 'edit';
 
 /* '무통·수면치료' → '무통치료'(2026-09-29): 수면치료는 하지 않는 진료라 분류·예시에서 뺐다 */
@@ -81,6 +84,116 @@ async function shrink(file: File): Promise<string> {
   return c.toDataURL('image/jpeg', 0.86);
 }
 
+/**
+ * 규칙 한 줄 — 동그라미치과 관리 화면과 같은 부품(2026-11-03 오너 '동그라미처럼 프롬프트 적는 거 있어야지').
+ * ★ 칸은 내용에 맞춰 세로로 늘어난다. 줄바꿈은 칸 구분이라 Enter 로는 못 넣는다(+ 로 칸을 늘린다).
+ */
+function RuleRow({
+  index,
+  value,
+  onChange,
+  onRemove,
+  placeholder,
+  max,
+  disabled,
+}: {
+  index: number;
+  value: string;
+  onChange: (v: string) => void;
+  onRemove: () => void;
+  placeholder: string;
+  max: number;
+  disabled?: boolean;
+}) {
+  const ref = useRef<HTMLTextAreaElement>(null);
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    el.style.height = 'auto';
+    el.style.height = `${el.scrollHeight}px`;
+  }, [value]);
+  return (
+    <div className="flex items-start gap-1">
+      <textarea
+        ref={ref}
+        rows={1}
+        value={value}
+        onChange={(ev) => onChange(ev.target.value)}
+        onKeyDown={(ev) => { if (ev.key === 'Enter') ev.preventDefault(); }}
+        disabled={disabled}
+        maxLength={max}
+        placeholder={placeholder}
+        className={`${inputCls} min-w-0 resize-none overflow-hidden px-3 py-2 text-[13.5px] leading-[1.6]`}
+      />
+      <button
+        type="button"
+        onClick={onRemove}
+        disabled={disabled}
+        aria-label={`${index + 1}번째 규칙 지우기`}
+        title="이 줄 지우기"
+        className="mt-1.5 shrink-0 rounded-full px-1.5 py-1 text-[17px] leading-none text-ink-muted hover:bg-ink/5 hover:text-red-700 disabled:opacity-40"
+      >
+        ×
+      </button>
+    </div>
+  );
+}
+
+/**
+ * 규칙 목록 — 한 줄 = 칸 하나. 저장 형식은 줄바꿈으로 이은 한 덩이(lib/clinicPrompt.ts).
+ * ⚠️ AdminPage 안에 두지 말 것 — 렌더마다 새 함수가 되어 글자 하나 칠 때마다 칸에서 커서가 빠진다.
+ */
+function RuleList({
+  label,
+  value,
+  onChange,
+  placeholder,
+  max,
+  disabled,
+  onReset,
+  hint,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  placeholder: string;
+  max: number;
+  disabled?: boolean;
+  onReset: () => void;
+  hint?: React.ReactNode;
+}) {
+  const rules = value.split('\n');
+  const set = (i: number, v: string) => onChange(rules.map((r, k) => (k === i ? v.replace(/[\r\n]+/g, ' ') : r)).join('\n'));
+  const remove = (i: number) => {
+    const next = rules.filter((_, k) => k !== i);
+    onChange((next.length ? next : ['']).join('\n'));
+  };
+  return (
+    <div className="mt-5">
+      <div className="flex items-baseline justify-between gap-2">
+        <span className={labelCls}>{label}</span>
+        <button type="button" onClick={onReset} disabled={disabled} className="text-[12px] font-bold text-ink-muted underline underline-offset-2 disabled:opacity-40">
+          기본값
+        </button>
+      </div>
+      <div className="mt-2 space-y-2">
+        {rules.map((r, i) => (
+          <RuleRow key={i} index={i} value={r} onChange={(v) => set(i, v)} onRemove={() => remove(i)} placeholder={i === 0 ? placeholder : '규칙 한 줄'} max={max} disabled={disabled} />
+        ))}
+      </div>
+      <button
+        type="button"
+        onClick={() => onChange([...rules, ''].join('\n'))}
+        disabled={disabled}
+        className="mt-2 inline-flex items-center gap-1.5 rounded-full border-[1.5px] border-ink/25 px-3.5 py-1.5 text-[13px] font-bold text-ink hover:bg-ink hover:text-white disabled:opacity-40"
+      >
+        <span className="text-[15px] leading-none">+</span> 규칙 추가
+      </button>
+      {hint && <p className="mt-2 text-[12px] leading-[1.7] text-ink-muted">{hint}</p>}
+    </div>
+  );
+}
+
 export default function AdminPage() {
   const [authed, setAuthed] = useState<boolean | null>(null);
   const [pw, setPw] = useState('');
@@ -112,6 +225,21 @@ export default function AdminPage() {
   /* 중앙(winaid)에서 오는 글 — 여기서는 숨기기만 된다(lib/centralHidden.ts). */
   const [central, setCentral] = useState<{ items: Array<{ slug: string; title: string; post_type: string; published_at: string; hasCover: boolean; hidden: boolean }> } | null>(null);
   const [cronReady, setCronReady] = useState(true);
+  /*
+   * 담당자 프롬프트 — 이 병원의 글·사진 규칙 + 사진 장수 (저장소 content/clinic-prompt.json · lib/clinicPrompt.ts).
+   * ★ 기본값도 서버에서 받는다. ⚠️ clinicDirtyRef — 목록을 다시 불러올 때 고치던 칸을 덮어쓰지 않기 위한 자물쇠.
+   */
+  type Clinic = { writing: string; image: string; imageCount?: number; updatedAt?: string; saved?: boolean };
+  const [clinicSaved, setClinicSaved] = useState<Clinic | null>(null);
+  const [clinicDefaults, setClinicDefaults] = useState<{ writing: string; image: string } | null>(null);
+  const [clinicForm, setClinicForm] = useState({ writing: '', image: '', imageCount: 1 });
+  const [clinicMax, setClinicMax] = useState(2000);
+  const [imageCountMax, setImageCountMax] = useState(4);
+  const [clinicSaving, setClinicSaving] = useState(false);
+  const clinicDirtyRef = useRef(false);
+  /* 본문 사진 — editing.images 와 같은 자리. 새로 만들거나 올린 것은 data URL(발행 때 imagesData), 저장소에 있는 것은 null. scenes 는 '다시 만들기' 용 장면. */
+  const [bodyPreviews, setBodyPreviews] = useState<Array<string | null>>([]);
+  const [bodyScenes, setBodyScenes] = useState<string[]>([]);
 
   useEffect(() => {
     setGhToken(localStorage.getItem('cd_gh_token') || '');
@@ -132,6 +260,18 @@ export default function AdminPage() {
     const r = await fetch('/api/admin/posts', { headers: headers(), cache: 'no-store' });
     setBusy(false);
     if (r.status === 401) { setAuthed(false); return; }
+    /* ★ 글 목록보다 먼저 — GitHub 토큰이 없어 목록이 실패해도 규칙 칸은 기본값으로 보여야 한다. */
+    fetch('/api/admin/prompt', { headers: headers(), cache: 'no-store' })
+      .then((rp) => rp.json())
+      .then((p) => {
+        if (!p.ok) return;
+        setClinicSaved(p.prompt);
+        setClinicDefaults(p.defaults);
+        setClinicMax(p.max || 2000);
+        setImageCountMax(p.imageCountMax || 4);
+        if (!clinicDirtyRef.current) setClinicForm({ writing: p.prompt.writing, image: p.prompt.image, imageCount: p.prompt.imageCount || 1 });
+      })
+      .catch(() => {});
     const j = await r.json();
     if (!r.ok) {
       setAuthed(true);
@@ -165,6 +305,32 @@ export default function AdminPage() {
     setMsg({ kind: 'ok', text: hidden ? '숨겼습니다. 1~2분 뒤 사이트에서 빠집니다(중앙 데이터는 그대로).' : '다시 보이게 했습니다. 1~2분 뒤 사이트에 실립니다.' });
   };
 
+  /* 담당자 프롬프트 저장 = 저장소에 커밋 하나. 글쓰기·사진 라우트가 요청마다 읽으므로 다음 글부터 바로 먹는다. */
+  const saveClinic = async () => {
+    setClinicSaving(true);
+    const r = await fetch('/api/admin/prompt', { method: 'POST', headers: headers(), body: JSON.stringify(clinicForm) });
+    const j = await r.json().catch(() => ({}));
+    setClinicSaving(false);
+    if (!r.ok) { setMsg({ kind: 'err', text: j.error || '프롬프트를 저장하지 못했습니다.' }); return; }
+    clinicDirtyRef.current = false;
+    setClinicSaved(j.prompt);
+    setClinicForm({ writing: j.prompt.writing, image: j.prompt.image, imageCount: j.prompt.imageCount || 1 });
+    setMsg({ kind: 'ok', text: '프롬프트를 저장했습니다. 지금부터 새로 쓰는 글과 사진에 매번 반영됩니다 (이미 올라간 글은 그대로).' });
+  };
+  const setClinicField = (k: 'writing' | 'image', v: string) => {
+    clinicDirtyRef.current = true;
+    setClinicForm((f) => ({ ...f, [k]: v }));
+  };
+  const setImageCount = (n: number) => {
+    clinicDirtyRef.current = true;
+    setClinicForm((f) => ({ ...f, imageCount: n }));
+  };
+  /* 기본값 불러오기 — 칸만 채운다. 저장은 사람이 읽어 보고 누른다. */
+  const fillDefault = (k: 'writing' | 'image') => {
+    if (!clinicDefaults) return;
+    setClinicField(k, clinicDefaults[k]);
+  };
+
   const login = async (e: React.FormEvent) => {
     e.preventDefault();
     setBusy(true);
@@ -187,8 +353,9 @@ export default function AdminPage() {
     load();
   };
 
-  const openNew = () => { setEditing({ ...EMPTY, date: todayKST() }); setPreview(null); setWarnings([]); setCautions([]); setTopic(''); setScene(''); setMsg(null); setExample(EXAMPLES[Math.floor(Math.random() * EXAMPLES.length)]); setView('topic'); };
-  const openEdit = (p: Post) => { setEditing({ ...p, time: p.time || '00:00' }); setPreview(null); setWarnings([]); setCautions([]); setScene(''); setMsg(null); setView('edit'); };
+  const resetBody = (p?: Post) => { setBodyPreviews((p?.images || []).map(() => null)); setBodyScenes((p?.images || []).map(() => '')); };
+  const openNew = () => { resetBody(); setEditing({ ...EMPTY, date: todayKST() }); setPreview(null); setWarnings([]); setCautions([]); setTopic(''); setScene(''); setMsg(null); setExample(EXAMPLES[Math.floor(Math.random() * EXAMPLES.length)]); setView('topic'); };
+  const openEdit = (p: Post) => { resetBody(p); setEditing({ ...p, time: p.time || '00:00' }); setPreview(null); setWarnings([]); setCautions([]); setScene(''); setMsg(null); setView('edit'); };
   const backToList = () => { setEditing(null); setView('list'); setMsg(null); };
 
   /* ── 사진: 만들기 / 올리기 ─────────────────────────────────── */
@@ -200,6 +367,37 @@ export default function AdminPage() {
     if (!r.ok) throw new Error(j.error || '사진을 못 만들었습니다.');
     setPreview(j.preview || null);
     return { ...p, image: j.image };
+  };
+
+  /* 본문 사진 한 장 — 이름은 {주소}-{번호}(대표는 {주소}). 이미 있던 사진을 다시 만들면 새 이름을 붙여 캐시가 옛 그림을 내지 않게. */
+  const bodyName = (p: Post, k: number, fresh: boolean) => `${p.slug || 'post'}-${k + 2}${fresh ? `-${Date.now().toString(36).slice(-4)}` : ''}`;
+  const makeBodyImage = async (p: Post, k: number, sceneText: string, fresh = false): Promise<{ src: string; preview: string }> => {
+    const r = await fetch('/api/admin/image', { method: 'POST', headers: headers(), body: JSON.stringify({ prompt: sceneText, name: bodyName(p, k, fresh) }) });
+    const j = await r.json();
+    if (!r.ok) throw new Error(j.error || '사진을 못 만들었습니다.');
+    return { src: j.image, preview: j.preview };
+  };
+
+  const regenBody = async (k: number) => {
+    if (!editing) return;
+    const sc = (bodyScenes[k] || '').trim() || editing.images?.[k]?.alt || editing.title;
+    setBusy(true); setMsg({ kind: 'info', text: `본문 사진 ${k + 2}을(를) 만드는 중입니다 (30~40초)…` });
+    try {
+      const made = await makeBodyImage(editing, k, sc, true);
+      const images = [...(editing.images || [])];
+      images[k] = { ...images[k], src: made.src, w: 1536, h: 1024 };
+      setEditing({ ...editing, images });
+      setBodyPreviews((b) => b.map((x, i) => (i === k ? made.preview : x)));
+      setMsg({ kind: 'ok', text: '본문 사진을 바꿨습니다. 올릴 때 함께 저장됩니다.' });
+    } catch (e) { setMsg({ kind: 'err', text: String((e as Error).message) }); }
+    setBusy(false);
+  };
+
+  const removeBody = (k: number) => {
+    if (!editing) return;
+    setEditing({ ...editing, images: (editing.images || []).filter((_, i) => i !== k) });
+    setBodyPreviews((b) => b.filter((_, i) => i !== k));
+    setBodyScenes((b) => b.filter((_, i) => i !== k));
   };
 
   const regenImage = async () => {
@@ -249,13 +447,27 @@ export default function AdminPage() {
     setWarnings(j.warnings || []);
     setCautions(j.cautions || []);
     setScene(d.imagePrompt || '');
-    setProgress('2/2 · 글에 맞는 사진을 만드는 중입니다 (30~40초).');
+    const body: Array<{ scene: string; alt: string }> = Array.isArray(d.bodyScenes) ? d.bodyScenes : [];
+    const total = 1 + body.length;
+    setProgress(`2/2 · 글에 맞는 사진 ${total}장을 만드는 중입니다 (${total > 1 ? '한꺼번에, ' : ''}30~50초).`);
     let photoNote = '';
-    try {
-      p = await makeImage(p, d.imagePrompt || d.title);
-    } catch (e) {
-      photoNote = ` 사진은 못 만들었습니다 (${String((e as Error).message).slice(0, 80)}) — 검토 화면에서 다시 만들거나 올려 주세요.`;
-    }
+    /* 대표 + 본문 사진을 한꺼번에 — 차례로 만들면 장수만큼 기다린다. */
+    const [main, ...rest] = await Promise.allSettled([makeImage(p, d.imagePrompt || d.title), ...body.map((b, k) => makeBodyImage({ ...p, slug: d.slug }, k, b.scene))]);
+    if (main.status === 'fulfilled') p = { ...p, image: main.value.image };
+    else photoNote = ` 대표 사진은 못 만들었습니다 (${String(main.reason?.message || main.reason).slice(0, 80)}) — 검토 화면에서 다시 만들거나 올려 주세요.`;
+    const images: BodyImg[] = [];
+    const previews: Array<string | null> = [];
+    const scenes: string[] = [];
+    rest.forEach((m, k) => {
+      if (m.status !== 'fulfilled') return;
+      images.push({ src: m.value.src, alt: body[k].alt || d.title, w: 1536, h: 1024 });
+      previews.push(m.value.preview);
+      scenes.push(body[k].scene);
+    });
+    if (rest.length && images.length < rest.length) photoNote += ` 본문 사진 ${rest.length - images.length}장은 못 만들었습니다.`;
+    p = { ...p, images };
+    setBodyPreviews(previews);
+    setBodyScenes(scenes);
     setEditing(p);
     setBusy(false); setProgress(null);
     setView('edit');
@@ -272,9 +484,14 @@ export default function AdminPage() {
     }
     if (!p.title.trim() || !p.summary.trim() || !p.html.trim()) { setMsg({ kind: 'err', text: '제목·요약·본문은 비울 수 없습니다.' }); return; }
     if (p.image && !p.imageAlt?.trim()) { setMsg({ kind: 'err', text: '사진 설명(무엇이 찍혔는지)을 채워 주세요. 검색과 화면 낭독기가 읽는 글입니다.' }); return; }
-    if (p.file && preview) p = { ...p, updated: todayKST() };
+    if ((p.images || []).some((im) => !im.alt?.trim())) { setMsg({ kind: 'err', text: '본문 사진 설명을 모두 채워 주세요.' }); return; }
+    if (p.file && (preview || bodyPreviews.some(Boolean))) p = { ...p, updated: todayKST() };
     setBusy(true); setMsg(null);
-    const r = await fetch('/api/admin/publish', { method: 'POST', headers: headers(), body: JSON.stringify({ posts: [{ ...p, ...(preview ? { imageData: preview } : {}) }] }) });
+    const r = await fetch('/api/admin/publish', {
+      method: 'POST',
+      headers: headers(),
+      body: JSON.stringify({ posts: [{ ...p, ...(preview ? { imageData: preview } : {}), ...(bodyPreviews.some(Boolean) ? { imagesData: bodyPreviews } : {}) }] }),
+    });
     const j = await r.json();
     setBusy(false);
     if (!r.ok) { setMsg({ kind: 'err', text: j.error || '올리지 못했습니다.' }); return; }
@@ -341,22 +558,48 @@ export default function AdminPage() {
       usedSlugs.add(slug);
       let p: Post = { slug, title: d.title, date, time: AUTO_TIME, summary: d.summary, category: d.category || t.category, imageAlt: d.imageAlt, html: d.html };
       let imageData: string | undefined;
-      setAuto((a) => (a ? { ...a, step: `${i + 1}/${topics.length} · 사진을 만드는 중 — ${d.title}` } : a));
-      try {
-        const ri = await fetch('/api/admin/image', { method: 'POST', headers: headers(), body: JSON.stringify({ prompt: d.imagePrompt || d.title, name: slug }) });
+      const body: Array<{ scene: string; alt: string }> = Array.isArray(d.bodyScenes) ? d.bodyScenes : [];
+      setAuto((a) => (a ? { ...a, step: `${i + 1}/${topics.length} · 사진 ${1 + body.length}장을 만드는 중 — ${d.title}` } : a));
+      /* 대표 + 본문 사진 한꺼번에. 사진 없이도 글은 예약한다 — 목록 카드가 제목 카드로 대신한다. */
+      const shot = async (prompt: string, name: string) => {
+        const ri = await fetch('/api/admin/image', { method: 'POST', headers: headers(), body: JSON.stringify({ prompt, name }) });
         const ji = await ri.json();
-        if (ri.ok) { p = { ...p, image: ji.image }; imageData = ji.preview; }
-      } catch { /* 사진 없이도 글은 예약한다 — 목록 카드가 제목 카드로 대신한다. */ }
-      made.push({ ...p, ...(imageData ? ({ imageData } as object) : {}) } as Post);
+        if (!ri.ok) throw new Error(ji.error || '사진 실패');
+        return ji as { image: string; preview: string };
+      };
+      const shots = await Promise.allSettled([shot(d.imagePrompt || d.title, slug), ...body.map((b, k) => shot(b.scene, `${slug}-${k + 2}`))]);
+      const images: BodyImg[] = [];
+      const imagesData: string[] = [];
+      shots.forEach((s, k) => {
+        if (s.status !== 'fulfilled') return;
+        if (k === 0) { p = { ...p, image: s.value.image }; imageData = s.value.preview; return; }
+        images.push({ src: s.value.image, alt: body[k - 1].alt || d.title, w: 1536, h: 1024 });
+        imagesData.push(s.value.preview);
+      });
+      if (images.length) p = { ...p, images };
+      made.push({ ...p, ...(imageData ? ({ imageData } as object) : {}), ...(imagesData.length ? ({ imagesData } as object) : {}) } as Post);
       titlesSoFar.push(d.title);
       date = addDays(date, AUTO_GAP_DAYS);
       setAuto((a) => (a ? { ...a, done: [...a.done, { title: d.title + softNote, date: p.date }], skipped: [...skipped] } : a));
     }
     if (!made.length) return fail(`예약할 글이 없습니다. ${skipped.length ? '건너뛴 사유: ' + skipped.join(' / ') : ''}`);
     setAuto((a) => (a ? { ...a, step: `${made.length}편을 저장소에 올리는 중…` } : a));
-    const rp = await fetch('/api/admin/publish', { method: 'POST', headers: headers(), body: JSON.stringify({ posts: made }) });
-    const jp = await rp.json();
-    if (!rp.ok) return fail(jp.error || '올리지 못했습니다.');
+    /* ★ 서버 한 번에 받는 크기는 4.5MB 다 — 사진 장수가 늘면 10편을 한 번에 못 보낸다. 3.5MB 씩 나눠 보낸다(나눈 만큼 커밋·빌드가 늘어난다). */
+    const batches: Post[][] = [];
+    let cur: Post[] = [];
+    let size = 0;
+    for (const m of made) {
+      const n = JSON.stringify(m).length;
+      if (cur.length && size + n > 3_500_000) { batches.push(cur); cur = []; size = 0; }
+      cur.push(m); size += n;
+    }
+    if (cur.length) batches.push(cur);
+    for (let b = 0; b < batches.length; b++) {
+      if (batches.length > 1) setAuto((a) => (a ? { ...a, step: `저장소에 올리는 중 (${b + 1}/${batches.length})…` } : a));
+      const rp = await fetch('/api/admin/publish', { method: 'POST', headers: headers(), body: JSON.stringify({ posts: batches[b] }) });
+      const jp = await rp.json().catch(() => ({}));
+      if (!rp.ok) return fail(`${b ? `${batches.slice(0, b).flat().length}편은 올렸고 나머지는 ` : ''}${jp.error || '올리지 못했습니다.'}`);
+    }
     setAuto((a) => (a ? { ...a, running: false, step: '', skipped } : a));
     setMsg({ kind: 'ok', text: `${made.length}편을 예약했습니다 — ${koDate(made[0].date)} 부터 ${koDate(made[made.length - 1].date)} 까지 ${AUTO_GAP_DAYS}일 간격, ${AUTO_TIME}. 목록에서 '고치기' 로 미리 읽어 보실 수 있습니다.${skipped.length ? ` 건너뛴 글 ${skipped.length}편은 아래에 사유가 있습니다.` : ''}` });
     load();
@@ -406,6 +649,9 @@ export default function AdminPage() {
   };
 
   const now = nowKST();
+  const clinicDirty =
+    !!clinicSaved &&
+    (clinicForm.writing !== clinicSaved.writing || clinicForm.image !== clinicSaved.image || clinicForm.imageCount !== (clinicSaved.imageCount || 1));
   const stats = useMemo(() => {
     const live = posts.filter((p) => keyOf(p) <= now).length;
     return { live, queued: posts.length - live };
@@ -539,6 +785,35 @@ export default function AdminPage() {
               <span className={labelCls}>사진 설명 · 무엇이 찍혔는지</span>
               <input value={e.imageAlt || ''} onChange={(ev) => set('imageAlt', ev.target.value)} className={`${inputCls} mt-2`} placeholder="예: 흰 상판 위의 임플란트 모형과 크라운" />
             </label>
+
+            {/* 본문 사진 — 담당자 프롬프트의 '사진 장수'만큼 대표 말고 더 만든 것. 소제목 아래에 고르게 들어간다(lib/blog.ts withBodyImages). */}
+            {(e.images || []).length > 0 && (
+              <div className="space-y-4 border-t border-hairline pt-4">
+                <p className={labelCls}>본문 사진 {(e.images || []).length}장 · 소제목 아래에 들어갑니다</p>
+                {(e.images || []).map((im, k) => (
+                  <div key={k} className="rounded-2xl border border-hairline bg-white p-3">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={bodyPreviews[k] || im.src} alt="" className="aspect-[3/2] w-full rounded-xl object-cover" />
+                    <input
+                      value={im.alt}
+                      onChange={(ev) => setEditing({ ...e, images: (e.images || []).map((x, i) => (i === k ? { ...x, alt: ev.target.value } : x)) })}
+                      className={`${inputCls} mt-2 py-2 text-[14px]`}
+                      placeholder="사진 설명 · 무엇이 찍혔는지"
+                    />
+                    <input
+                      value={bodyScenes[k] || ''}
+                      onChange={(ev) => setBodyScenes((b) => { const n = [...b]; n[k] = ev.target.value; return n; })}
+                      className={`${inputCls} mt-2 py-2 text-[14px]`}
+                      placeholder="다시 만들 장면 (비우면 사진 설명으로)"
+                    />
+                    <div className="mt-2 flex flex-wrap gap-3">
+                      <button onClick={() => regenBody(k)} disabled={busy || (!server.hasOpenAI && !oaKey)} className="text-[13.5px] font-bold text-ink underline underline-offset-2 disabled:opacity-40">AI 로 다시 만들기</button>
+                      <button onClick={() => removeBody(k)} disabled={busy} className="text-[13.5px] font-bold text-red-700 disabled:opacity-40">이 사진 빼기</button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </aside>
 
           {/* 오른쪽: 글 */}
@@ -616,7 +891,7 @@ export default function AdminPage() {
 
   /* ── 목록 ─────────────────────────────────────────────────── */
   return (
-    <main className="mx-auto max-w-[1000px] px-6 py-14">
+    <main className="mx-auto max-w-[1280px] px-6 py-14">
       <a href="/admin" className="text-[14.5px] font-bold text-sun-700">← 관리 첫 화면</a>
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
@@ -723,7 +998,74 @@ export default function AdminPage() {
         </div>
       )}
 
-      <ul className="mt-8 divide-y divide-brand-200/70 border-t border-hairline">
+      <div className="mt-8 grid gap-10 lg:grid-cols-[400px_1fr]">
+        {/*
+          ★★ 담당자 프롬프트 (2026-11-03 오너 '동그라미처럼 프롬프트 적는 거 있어야지' + '사진은 몇 장 만들지 드롭다운') ★★
+            칸은 둘 — 글·제목 하나, 사진 하나(동그라미치과와 같은 짜임, lib/clinicPrompt.ts). 사진 장수도 여기서 정하고 같이 저장한다 —
+            사람이 쓰든 '자동으로 쓰고 예약'·무인 발행이 쓰든 같은 장수를 따른다.
+        */}
+        <aside className="lg:sticky lg:top-8 lg:self-start">
+          <div className="rounded-2xl border border-hairline bg-canvas-2 p-5">
+            <p className="text-[16px] font-black text-ink">담당자 프롬프트</p>
+            <p className="mt-1.5 text-[13px] leading-[1.7] text-ink-soft">
+              말하듯이 적으면 됩니다. 저장하면 <strong>새로 쓰는 글과 사진마다</strong> 그대로 반영됩니다.
+            </p>
+            {clinicSaved === null ? (
+              <p className="mt-5 text-[14px] text-ink-muted">불러오는 중…</p>
+            ) : (
+              <>
+                <RuleList
+                  label="글 · 제목 규칙"
+                  value={clinicForm.writing}
+                  onChange={(v) => setClinicField('writing', v)}
+                  onReset={() => fillDefault('writing')}
+                  max={clinicMax}
+                  disabled={clinicSaving}
+                  placeholder="예: 원장님이 말하듯 친절하게 써 주세요"
+                  hint="제목 규칙도 여기에 함께 적으시면 됩니다."
+                />
+                <RuleList
+                  label="사진 규칙"
+                  value={clinicForm.image}
+                  onChange={(v) => setClinicField('image', v)}
+                  onReset={() => fillDefault('image')}
+                  max={clinicMax}
+                  disabled={clinicSaving}
+                  placeholder="예: 기구를 가까이에서 찍은 느낌으로"
+                  hint={<>&ldquo;모형 위주로&rdquo; 처럼 적으시면 됩니다. 원장님은 남자 한 분이라 <strong>&lsquo;사람은 나오지 않게&rsquo; 줄은 남겨 두세요</strong> — 다른 의료진이 원장으로 보일 수 있습니다.</>}
+                />
+                <label className="mt-5 flex items-center justify-between gap-3">
+                  <span className={`${labelCls} whitespace-nowrap`}>글 한 편에 사진</span>
+                  <select value={clinicForm.imageCount} onChange={(ev) => setImageCount(Number(ev.target.value))} disabled={clinicSaving} className={`${inputCls} w-[200px] shrink-0 px-3 py-2 text-[14px]`}>
+                    {Array.from({ length: imageCountMax }, (_, k) => k + 1).map((n) => (
+                      <option key={n} value={n}>{n === 1 ? '1장 (대표 사진만)' : `${n}장 (대표 + 본문 ${n - 1})`}</option>
+                    ))}
+                  </select>
+                </label>
+                <p className="mt-1.5 text-[12px] leading-[1.7] text-ink-muted">본문 사진은 소제목 아래에 고르게 들어갑니다. 한 장에 30~50초, 장수만큼 사진 비용이 듭니다(한꺼번에 만들어 기다리는 시간은 거의 같습니다).</p>
+
+                <button onClick={saveClinic} disabled={!clinicDirty || clinicSaving || busy} className={`${btnDark} mt-4 w-full`}>
+                  {clinicSaving ? '저장하는 중…' : clinicDirty ? '저장' : '저장됨'}
+                </button>
+                {clinicDirty && (
+                  <button
+                    type="button"
+                    onClick={() => { clinicDirtyRef.current = false; setClinicForm({ writing: clinicSaved.writing, image: clinicSaved.image, imageCount: clinicSaved.imageCount || 1 }); }}
+                    className="mt-2 w-full text-[13px] font-bold text-ink-muted underline underline-offset-2"
+                  >
+                    고친 것 취소
+                  </button>
+                )}
+                <p className="mt-3 text-[12px] leading-[1.7] text-ink-muted">
+                  {clinicSaved.saved ? `마지막 저장 ${clinicSaved.updatedAt || '기록 없음'}.` : '아직 저장한 적 없음 (기본값).'} 다음 글부터 바로 적용되고, 이미 올라간 글은 그대로입니다. 의료법에 걸리는 표현과 얼굴·치료 전후 사진은 여기서 뭘 적으셔도 늘 막힙니다.
+                </p>
+              </>
+            )}
+          </div>
+        </aside>
+
+        <div className="min-w-0">
+      <ul className="divide-y divide-brand-200/70 border-t border-hairline">
         {posts.map((p) => {
           const live = keyOf(p) <= now;
           return (
@@ -790,6 +1132,8 @@ export default function AdminPage() {
         <p className="mt-3 font-black">하지 말 것</p>
         <p>치료 후기·전후 사진·'최고/유일/완벽' 같은 표현은 의료법 위반입니다. 사이트에 이미 있는 주제(증상·시술·비용 페이지)를 통째로 다시 쓰지 마세요. 올린 글의 주소(영문)는 바꾸지 마세요.</p>
       </details>
+        </div>
+      </div>
     </main>
   );
 }

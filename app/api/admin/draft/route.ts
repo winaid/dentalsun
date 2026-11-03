@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { isAuthed } from '@/lib/adminAuth';
 import { MODEL } from '@/lib/adminGemini';
 import { generateDraft, reviewDraft, medlaw } from '@/lib/adminDraft';
+import { tokenFrom } from '@/lib/github';
+import { readClinicPrompt } from '@/lib/clinicPrompt';
 
 export const runtime = 'nodejs';
 export const maxDuration = 180;
@@ -26,13 +28,16 @@ export async function POST(req: Request) {
   const avoid = Array.isArray(body.avoid) ? body.avoid.slice(0, 20).map(String) : [];
 
   try {
-    const r = await generateDraft(key, topic, existing, avoid);
+    /* ★ 병원 규칙은 **서버가 저장소에서 읽는다** — 브라우저가 보내지 않는다. 탭을 오래 열어 둔 마케터가
+     *   옛 규칙으로 쓰는 일이 없고, 사람 흐름과 무인 크론이 같은 것을 본다. 읽기 한 번(~300ms)은 40초짜리 생성에 묻힌다. */
+    const clinic = await readClinicPrompt(tokenFrom(req));
+    const r = await generateDraft(key, topic, existing, avoid, clinic);
     let fixes: string[] = [];
     let draft = r.draft;
     let warnings = r.warnings;
     let cautions = r.cautions;
     if (body.review && !warnings.length) {
-      const rv = await reviewDraft(key, draft);
+      const rv = await reviewDraft(key, draft, clinic);
       draft = rv.draft;
       fixes = rv.fixes;
       const m = medlaw(draft);

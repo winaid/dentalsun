@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
 import { isAuthed } from '@/lib/adminAuth';
 import { autoDraft } from '@/lib/adminDraft';
-import { generateImage } from '@/lib/adminImage';
+import { generateImage, composeImagePrompt } from '@/lib/adminImage';
+import { readClinicPrompt } from '@/lib/clinicPrompt';
 import { readAutoConfig, writeAutoConfig, listPostsMeta, nextAutoDate, todayKST } from '@/lib/autoBlog';
 
 export const runtime = 'nodejs';
@@ -47,7 +48,9 @@ export async function GET(req: Request) {
   };
 
   try {
-    const r = await autoDraft(gemini, posts.map((p) => ({ title: p.title, summary: p.summary })));
+    /* ★ 사람이 쓰든 크론이 쓰든 같은 병원 규칙을 본다 — 담당자 프롬프트를 저장소에 둔 이유가 이것이다. */
+    const clinic = await readClinicPrompt(token);
+    const r = await autoDraft(gemini, posts.map((p) => ({ title: p.title, summary: p.summary })), undefined, clinic);
     if (!r.ok) {
       await record(`건너뜀 — ${r.reason}${r.topic ? ` (${r.topic})` : ''}`);
       return NextResponse.json({ ok: true, skipped: r.reason, topic: r.topic });
@@ -58,16 +61,32 @@ export async function GET(req: Request) {
     while (used.has(slug)) slug = `${slug}-2`;
 
     let image: string | undefined;
+    const images: Array<{ src: string; alt: string; w: number; h: number }> = [];
     const files: Array<{ path: string; content: Buffer | string }> = [];
     if (openai) {
-      try {
-        const webp = await generateImage(openai, d.imagePrompt || d.title);
-        image = `/img/blog/${slug}.webp`;
-        files.push({ path: `public${image}`, content: webp });
-      } catch (e) {
-        /* 사진이 안 되면 사진 없이 올린다 — 목록 카드가 제목 카드로 대신한다. 사유는 기록. */
-        r.fixes.push(`사진 실패: ${String(e).slice(0, 80)}`);
-      }
+      /* 대표 사진 + 본문 사진(담당자 프롬프트의 사진 장수 - 1)을 **한꺼번에** 만든다 — 차례로 만들면 크론 300초를 넘는다(글까지 실측 211초). */
+      const one = async (scene: string) => {
+        const composed = await composeImagePrompt(gemini, scene, clinic.image);
+        if (!composed.applied) r.fixes.push('사진 규칙을 못 반영해 기본 장면으로 만들었습니다');
+        return generateImage(openai, composed.prompt);
+      };
+      const body = d.bodyScenes || [];
+      const made = await Promise.allSettled([one(d.imagePrompt || d.title), ...body.map((b) => one(b.scene))]);
+      made.forEach((m, i) => {
+        if (m.status === 'rejected') {
+          /* 사진이 안 되면 사진 없이 올린다 — 목록 카드가 제목 카드로 대신한다. 사유는 기록. */
+          r.fixes.push(`사진${i ? ` ${i + 1}` : ''} 실패: ${String(m.reason).slice(0, 80)}`);
+          return;
+        }
+        if (i === 0) {
+          image = `/img/blog/${slug}.webp`;
+          files.push({ path: `public${image}`, content: m.value });
+        } else {
+          const src = `/img/blog/${slug}-${i + 1}.webp`;
+          images.push({ src, alt: body[i - 1].alt || d.title, w: 1536, h: 1024 });
+          files.push({ path: `public${src}`, content: m.value });
+        }
+      });
     }
     const json = {
       title: d.title,
@@ -76,6 +95,7 @@ export async function GET(req: Request) {
       summary: d.summary,
       ...(d.category ? { category: d.category } : {}),
       ...(image ? { image, imageAlt: d.imageAlt || '' } : {}),
+      ...(images.length ? { images } : {}),
       slug,
       html: d.html,
     };

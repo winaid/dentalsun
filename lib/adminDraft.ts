@@ -1,4 +1,5 @@
 import { CATEGORIES, siteContext, allowedPaths, clinicLine, callGeminiJson } from '@/lib/adminGemini';
+import { CLINIC_PROMPT_DEFAULT, writingBlock, topicBlock, reviewKeepLine, cleanImageCount, type ClinicPrompt } from '@/lib/clinicPrompt';
 
 /**
  * 글 한 편을 만드는 파이프라인 — 관리자 화면(/api/admin/draft, /api/admin/topics)과
@@ -11,7 +12,11 @@ import { CATEGORIES, siteContext, allowedPaths, clinicLine, callGeminiJson } fro
  *
  * ⚠️ 절대 자동 치환하지 않는다 — 문맥을 모른 채 낱말을 바꾸면 비문이 된다. 고치는 일은 모델이 다시 쓰게 시킨다.
  */
-export type Draft = { title: string; slug: string; summary: string; category: string; imageAlt: string; imagePrompt: string; html: string };
+export type Draft = {
+  title: string; slug: string; summary: string; category: string; imageAlt: string; imagePrompt: string; html: string;
+  /** 본문 사진 장면(대표 사진 말고 더 넣을 것) — 담당자 프롬프트의 사진 장수 - 1 개 (2026-11-03 오너 '사진 몇 장 드롭다운'). */
+  bodyScenes?: Array<{ scene: string; alt: string }>;
+};
 export type DraftResult = { draft: Draft; notes: string[]; warnings: string[]; cautions: string[]; chars: number };
 
 const EXEMPLAR = {
@@ -46,31 +51,46 @@ const DRAFT_SCHEMA = {
   properties: {
     title: { type: 'STRING' }, slug: { type: 'STRING' }, summary: { type: 'STRING' }, category: { type: 'STRING' },
     imageAlt: { type: 'STRING' }, imagePrompt: { type: 'STRING' }, html: { type: 'STRING' },
+    bodyScenes: { type: 'ARRAY', items: { type: 'OBJECT', properties: { scene: { type: 'STRING' }, alt: { type: 'STRING' } }, required: ['scene', 'alt'] } },
   },
   required: ['title', 'slug', 'summary', 'category', 'imageAlt', 'imagePrompt', 'html'],
 };
 
-function draftPrompt(topic: string, existingTitles: string[], avoid: string[]) {
+/**
+ * 글 한 편 프롬프트.
+ *
+ * ★★ 순서가 곧 우선순위다 (2026-09-14) ★★
+ *   '형식과 말투' 는 병원이 화면에서 고치는 칸(clinicPrompt.writing)이고, 그 **뒤에** 링크 규칙과
+ *   의료법 블록이 온다. 마지막 말이 법이어야 한다 — 병원이 칸에 무엇을 적어도 이 둘은 못 넘는다.
+ *   여기에 더해 normalize(태그 화이트리스트)와 medlaw(낱말 검사)가 응답을 받은 뒤 결정론으로 다시 막는다.
+ * ⚠️ 이 순서를 바꾸지 말 것. 칸이 마지막에 오면 "이전 지시는 무시하고" 한 줄로 의료법이 꺼진다.
+ */
+function draftPrompt(topic: string, existingTitles: string[], avoid: string[], writing: string, extra = 0) {
   return [
-    `당신은 ${clinicLine()}의 대표원장이 환자에게 설명하듯 쓰는 치과 블로그 글을 씁니다.`,
+    `당신은 ${clinicLine()} 의 블로그 글을 씁니다.`,
     '',
     `주제: ${topic}`,
     '',
     '## 글의 목적',
     '사람이 검색창이나 AI 에 실제로 묻는 문장에 정확히 답하는 글입니다. 검색과 답변 엔진이 첫 문단만 떼어 인용해도 답이 되게 씁니다.',
     '',
-    '## 반드시 지킬 형식',
-    '- 제목은 환자가 실제로 묻는 **질문 문장** 하나 (예: "임플란트를 심고 며칠 뒤부터 씹어도 되나요?"). 낚시·과장 없이.',
-    '- 첫 문단에서 결론을 먼저 말합니다. 그다음 h2 셋에서 다섯으로 이유·상황·주의를 풀고, 마지막 문단은 짧게 정리합니다.',
-    '- 본문은 HTML 이고 <p> <h2> <h3> <strong> <a> 만 씁니다. <ul> <ol> <li> <table> <img> <h1> 과 마크다운(**, ##, -) 은 절대 쓰지 않습니다.',
-    '- 항목을 나열하고 싶으면 문장으로 잇습니다 ("또한 / 한편 / 특히 / 다만").',
-    '- 본문 길이는 공백 포함 1,400~2,200자. 한 문단은 서너 문장.',
-    '- 본문 안에 위 목록의 주소로 가는 <a href=\'/...\'> 링크를 하나에서 둘 넣습니다. 목록에 없는 주소는 만들지 않습니다. 외부 링크 없음.',
-    '- 말투: "~합니다 / ~입니다". 환자를 "분" 으로 부릅니다. 첫 문단에 "결론부터 말씀드리면" 같은 직답 신호를 둡니다.',
-    '- 숫자·기간은 "대개 / 보통 / 경우가 많습니다" 로 폭을 두고, 개인차가 있음을 자연스럽게 담습니다.',
-    '- 건강보험·법·제도 같은 사실은 확신이 없으면 "치과에서 확인해 드립니다" 로 두고 숫자를 지어내지 않습니다.',
+    writingBlock(writing),
     '',
-    '## 의료법 제56조 — 절대 금지',
+    /*
+     * ⚠️ 아래 세 항목은 병원 규칙 칸이 비어도 늘 붙는다 (2026-09-14 오너: "왜 코드 같은 게 들어가").
+     *   태그·마크다운·사실 확인은 마케터가 고를 취향이 아니라 늘 지켜야 하는 계약이라 칸에서 빼고 여기 잠갔다.
+     *   칸을 통째로 지운 글이 마크다운·목록으로 나와 normalize 에서 두 번 다 걸리면 "글을 못 썼습니다" 만 보게 된다.
+     */
+    '## 출력 형식 (병원 규칙보다 셉니다)',
+    '본문은 HTML 이고 <p> <h2> <h3> <strong> <a> 만 씁니다. <ul> <ol> <li> <table> <img> <h1> 과 마크다운(**, ##, -) 은 쓰지 않습니다. 나열은 줄을 바꾸지 말고 문장으로 잇습니다 ("또한 / 한편 / 특히 / 다만").',
+    '',
+    '## 사실 (병원 규칙보다 셉니다)',
+    '숫자·기간은 "대개 / 보통 / 경우가 많습니다" 로 폭을 두고 개인차가 있음을 자연스럽게 담습니다. 건강보험·법·제도처럼 확신할 수 없는 사실은 "치과에서 확인해 드립니다" 로 두고 숫자를 지어내지 않습니다.',
+    '',
+    '## 링크 (병원 규칙보다 셉니다)',
+    "본문 안에 아래 '사이트에 있는 페이지' 목록의 주소로 가는 <a href='/...'> 링크를 하나에서 둘 넣습니다. 목록에 없는 주소는 만들지 않습니다. 외부 링크는 넣지 않습니다.",
+    '',
+    '## 의료법 제56조 — 절대 금지 (병원 규칙보다 셉니다. 부딪히면 이 항목을 따릅니다)',
     '최고·최상·유일·완벽·1위·최초 같은 최상급, 효과·결과 보장, "부작용이 없다", "통증이 없다", 치료 후기·경험담·만족도, 치료 전후 비교, 다른 병원 비교·비방, 가격 할인·이벤트·무료. 위반 낱말이 하나라도 있으면 글 전체가 광고 심의에 걸립니다.',
     ...(avoid.length ? ['', `## 이 낱말은 어떤 문맥에서도 쓰지 마세요 (지난 응답에서 걸렸습니다): ${avoid.map((w) => `"${w.trim()}"`).join(', ')} — 다른 표현으로 바꾸세요.`] : []),
     '',
@@ -79,7 +99,9 @@ function draftPrompt(topic: string, existingTitles: string[], avoid: string[]) {
     '',
     siteContext(),
     '',
-    '## 결의 예시 (이 글과 같은 호흡·어조로. 내용은 베끼지 말 것)',
+    /* 예시는 고정이라 병원이 말투를 바꿔도 모델을 옛 말투로 끌어당긴다 — 무엇을 참고하고 무엇을 버릴지 여기서 못 박는다. */
+    '## 결의 예시 (문단 길이와 호흡만 참고. 내용은 베끼지 말 것)',
+    '말투·시점이 위 병원 규칙과 다르면 **병원 규칙을 따릅니다.** 이 예시의 말투를 따라가지 마세요.',
     `제목: ${EXEMPLAR.title}`,
     `요약: ${EXEMPLAR.summary}`,
     `본문: ${EXEMPLAR.html}`,
@@ -87,7 +109,11 @@ function draftPrompt(topic: string, existingTitles: string[], avoid: string[]) {
     '## 출력',
     'JSON 하나만. 키: title, slug(영문 소문자·숫자·하이픈 3~5단어), summary(검색 결과용 70~160자, 결론이 담긴 한두 문장), ' +
       `category(${CATEGORIES.join(' / ')} 중 하나), imageAlt(대표 사진에 무엇이 찍혔는지 한 문장, 한국어), ` +
-      'imagePrompt(대표 사진 장면 한 문장, 영어, 사람·손·얼굴·글자 없이 치과 기구·모형·재료만), html(본문).',
+      'imagePrompt(대표 사진으로 쓸 장면 한 문장, 영어. 글의 소재에서 자연스럽게 고르고 글자·로고는 넣지 않습니다. ' +
+      '사진의 결과 사람 유무는 병원이 따로 정하므로 여기서는 장면만 씁니다), html(본문), ' +
+      (extra > 0
+        ? `bodyScenes(본문 소제목 아래에 넣을 사진 ${extra}개. 소제목 순서대로, 각각 { scene: 그 소제목 내용에 맞는 장면 한 문장(영어, 대표 사진·서로와 겹치지 않는 다른 소재), alt: 무엇이 찍혔는지 한 문장(한국어) }).`
+        : 'bodyScenes(빈 배열).'),
   ].join('\n');
 }
 
@@ -123,15 +149,28 @@ export function medlaw(d: Draft): { warnings: string[]; cautions: string[] } {
   return { warnings: MEDLAW_HARD.filter((w) => text.includes(w)), cautions: MEDLAW_SOFT.filter((w) => text.includes(w)) };
 }
 
-export async function generateDraft(key: string, topic: string, existingTitles: string[], avoid: string[] = []): Promise<DraftResult> {
-  let d = await callGeminiJson<Draft>(key, draftPrompt(topic, existingTitles, avoid), DRAFT_SCHEMA);
+export async function generateDraft(
+  key: string,
+  topic: string,
+  existingTitles: string[],
+  avoid: string[] = [],
+  clinic: ClinicPrompt = CLINIC_PROMPT_DEFAULT,
+): Promise<DraftResult> {
+  const extra = cleanImageCount(clinic.imageCount) - 1;
+  const prompt = draftPrompt(topic, existingTitles, avoid, clinic.writing, extra);
+  let d = await callGeminiJson<Draft>(key, prompt, DRAFT_SCHEMA);
   let out = normalize(d);
   if (out.hardFail) {
     /* 한 번 더 — 목록을 만든 것은 형식 규칙을 놓친 것이라 다시 말하면 대개 고쳐 온다. */
-    d = await callGeminiJson<Draft>(key, `${draftPrompt(topic, existingTitles, avoid)}\n\n⚠️ 방금 응답에 ${out.hardFail}. <ul> <ol> <li> 표 그림 없이, 문장으로만 다시 쓰세요.`, DRAFT_SCHEMA);
+    d = await callGeminiJson<Draft>(key, `${prompt}\n\n⚠️ 방금 응답에 ${out.hardFail}. <ul> <ol> <li> 표 그림 없이, 문장으로만 다시 쓰세요.`, DRAFT_SCHEMA);
     out = normalize(d);
     if (out.hardFail) throw new Error(`두 번 모두 ${out.hardFail}. 주제를 조금 바꿔 다시 시도해 주세요.`);
   }
+  /* 본문 사진 장면은 정해진 장수만큼만 — 모델이 더 주거나 빈 칸을 주면 잘라 낸다 */
+  out.draft.bodyScenes = (Array.isArray(d.bodyScenes) ? d.bodyScenes : [])
+    .filter((b) => b && String(b.scene || '').trim())
+    .slice(0, Math.max(0, extra))
+    .map((b) => ({ scene: String(b.scene).trim(), alt: String(b.alt || '').trim() }));
   const m = medlaw(out.draft);
   return { draft: out.draft, notes: out.notes, warnings: m.warnings, cautions: m.cautions, chars: out.draft.html.replace(/<[^>]+>/g, '').length };
 }
@@ -142,7 +181,7 @@ export async function generateDraft(key: string, topic: string, existingTitles: 
  *   ("통증이 없는 시술" 은 고치고 "통증이 없어도 오세요" 는 둔다). 사실 관계(보험·기간·수치)가 단정적이면 폭을 두게 한다.
  * ⚠️ 고치는 범위는 문장 단위다. 글의 구조·주제·길이를 바꾸지 못하게 한다 — 감수가 다시 쓰기가 되면 형식 규칙이 새로 깨진다.
  */
-export async function reviewDraft(key: string, d: Draft): Promise<{ draft: Draft; fixes: string[] }> {
+export async function reviewDraft(key: string, d: Draft, clinic: ClinicPrompt = CLINIC_PROMPT_DEFAULT): Promise<{ draft: Draft; fixes: string[] }> {
   const text = [
     `당신은 치과 의료광고 심의 담당자이자 치과의사입니다. 아래 블로그 글을 읽고 **문제가 있는 문장만** 고칩니다.`,
     '',
@@ -156,6 +195,8 @@ export async function reviewDraft(key: string, d: Draft): Promise<{ draft: Draft
     '- 글의 구조·소제목 수·주제·길이를 바꾸지 않습니다. 문제 없는 문장은 글자 하나도 바꾸지 않습니다.',
     '- 새 태그를 넣지 않습니다. <p> <h2> <h3> <strong> <a> 외에는 쓰지 않고, 링크 주소를 바꾸거나 새로 만들지 않습니다.',
     '- 마크다운을 쓰지 않습니다.',
+    /* 병원이 정한 말투를 감수가 '표준적인 블로그 문체' 로 되돌려 놓으면, 마케터 눈에는 칸이 안 먹는 것으로 보인다. */
+    reviewKeepLine(clinic.writing),
     '',
     '## 글',
     `제목: ${d.title}`,
@@ -182,7 +223,12 @@ export async function reviewDraft(key: string, d: Draft): Promise<{ draft: Draft
 }
 
 /** 주제 N개 — 기존 글·사이트 페이지와 겹치지 않게, 분류 골고루. */
-export async function pickTopics(key: string, count: number, existing: Array<{ title: string; summary?: string }>): Promise<Array<{ topic: string; category: string }>> {
+export async function pickTopics(
+  key: string,
+  count: number,
+  existing: Array<{ title: string; summary?: string }>,
+  clinic: ClinicPrompt = CLINIC_PROMPT_DEFAULT,
+): Promise<Array<{ topic: string; category: string }>> {
   const month = new Date(Date.now() + 9 * 3600 * 1000).getUTCMonth() + 1;
   const text = [
     `${clinicLine()} 블로그의 다음 글 주제를 ${count}개 고릅니다.`,
@@ -199,6 +245,9 @@ export async function pickTopics(key: string, count: number, existing: Array<{ t
     existing.length ? existing.map((e) => `- ${e.title}${e.summary ? ` — ${e.summary.slice(0, 80)}` : ''}`).join('\n') : '- (없음)',
     '',
     siteContext(),
+    '',
+    /* 병원이 "우리는 임플란트를 자주 다뤄 주세요" 라고 적어 두면 주제 고르기에도 반영돼야 한다 — 안 그러면 글만 바뀌고 주제는 안 바뀐다. */
+    topicBlock(clinic.writing),
     '',
     `## 출력\nJSON 배열 ${count}개. 각 원소: { topic, category }.`,
   ].join('\n');
@@ -235,16 +284,17 @@ export async function autoDraft(
   key: string,
   existing: Array<{ title: string; summary?: string }>,
   topic?: { topic: string; category: string },
+  clinic: ClinicPrompt = CLINIC_PROMPT_DEFAULT,
 ): Promise<{ ok: true; draft: Draft; cautions: string[]; fixes: string[]; topic: string } | { ok: false; reason: string; topic?: string }> {
-  const t = topic || (await pickTopics(key, 3, existing))[0];
+  const t = topic || (await pickTopics(key, 3, existing, clinic))[0];
   if (!t) return { ok: false, reason: '주제를 못 골랐습니다' };
   const titles = existing.map((e) => e.title);
-  let r = await generateDraft(key, t.topic, titles);
+  let r = await generateDraft(key, t.topic, titles, [], clinic);
   /* HARD 낱말만 다시 쓰게 한다. SOFT 는 다음 감수 단계가 문맥을 보고 고친다 — 한 번 더 쓰면 50초가 더 들어 크론 300초가 빠듯하다(실측 211초). */
-  if (r.warnings.length) r = await generateDraft(key, t.topic, titles, [...r.warnings, ...r.cautions]);
+  if (r.warnings.length) r = await generateDraft(key, t.topic, titles, [...r.warnings, ...r.cautions], clinic);
   if (r.warnings.length) return { ok: false, reason: `두 번 모두 의료법 낱말: ${r.warnings.join(', ')}`, topic: t.topic };
   if (existing.some((e) => tooSimilar(r.draft.title, e.title))) return { ok: false, reason: '기존 글과 제목이 너무 비슷합니다', topic: t.topic };
-  const reviewed = await reviewDraft(key, r.draft);
+  const reviewed = await reviewDraft(key, r.draft, clinic);
   const m = medlaw(reviewed.draft);
   if (m.warnings.length) return { ok: false, reason: `감수 뒤에도 의료법 낱말: ${m.warnings.join(', ')}`, topic: t.topic };
   const draft = { ...reviewed.draft, category: reviewed.draft.category || t.category };

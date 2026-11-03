@@ -27,6 +27,9 @@ type PostIn = {
   imageAlt?: string;
   html: string;
   imageData?: string;
+  /** 본문 사진(대표 말고, 2026-11-03 사진 장수) — 경로·설명. 새로 만든 것은 imagesData 의 같은 자리에 data URL. */
+  images?: Array<{ src: string; alt: string; w?: number; h?: number }>;
+  imagesData?: Array<string | null>;
 };
 
 const DIR = 'content/blog';
@@ -43,6 +46,12 @@ function validate(post: PostIn, i: number): { error?: string; slug: string } {
   if (post.image && !/^\/img\/blog\/[a-z0-9-]+\.webp$/.test(post.image)) return { error: `${at}: 사진 경로 형식이 이상합니다.`, slug };
   if (post.file && !/^[\w.-]+\.json$/.test(post.file)) return { error: `${at}: 파일 이름이 이상합니다.`, slug };
   if (post.imageData && post.imageData.length > 3_000_000) return { error: `${at}: 사진이 너무 큽니다.`, slug };
+  if ((post.images || []).length > 3) return { error: `${at}: 본문 사진은 3장까지입니다.`, slug };
+  for (const im of post.images || []) {
+    if (!/^\/img\/blog\/[a-z0-9-]+\.webp$/.test(im.src)) return { error: `${at}: 본문 사진 경로 형식이 이상합니다.`, slug };
+    if (!String(im.alt || '').trim()) return { error: `${at}: 본문 사진 설명이 비어 있습니다.`, slug };
+  }
+  if ((post.imagesData || []).some((d) => d && d.length > 3_000_000)) return { error: `${at}: 본문 사진이 너무 큽니다.`, slug };
   return { slug };
 }
 
@@ -73,6 +82,7 @@ export async function POST(req: Request) {
       summary: p.summary.trim(),
       ...(p.category ? { category: p.category.trim() } : {}),
       ...(p.image ? { image: p.image, imageAlt: p.imageAlt || '' } : {}),
+      ...(p.images?.length ? { images: p.images.map((im) => ({ src: im.src, alt: im.alt.trim(), w: im.w || 1536, h: im.h || 1024 })) } : {}),
       slug: v.slug,
       html: p.html,
     };
@@ -80,6 +90,10 @@ export async function POST(req: Request) {
     if (p.image && p.imageData) {
       files.push({ path: `public${p.image}`, content: Buffer.from(p.imageData.replace(/^data:image\/webp;base64,/, ''), 'base64') });
     }
+    (p.images || []).forEach((im, k) => {
+      const data = p.imagesData?.[k];
+      if (data) files.push({ path: `public${im.src}`, content: Buffer.from(data.replace(/^data:image\/webp;base64,/, ''), 'base64') });
+    });
     out.push({ file, slug: v.slug });
   }
 

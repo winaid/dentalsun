@@ -26,6 +26,8 @@ type PostIn = {
   category?: string;
   image?: string;
   imageAlt?: string;
+  /** 본문 사진(대표 말고) — lib/blog.ts BodyImage */
+  images?: Array<{ src: string; alt: string; w?: number; h?: number }>;
   html: string;
 };
 
@@ -65,6 +67,7 @@ export async function GET(req: Request) {
           category: j.category,
           image: j.image,
           imageAlt: j.imageAlt,
+          ...(Array.isArray(j.images) && j.images.length ? { images: j.images } : {}),
           html: j.html || '',
         };
       }),

@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { isAuthed } from '@/lib/adminAuth';
 import { pickTopics } from '@/lib/adminDraft';
+import { tokenFrom } from '@/lib/github';
+import { readClinicPrompt } from '@/lib/clinicPrompt';
 
 export const runtime = 'nodejs';
 export const maxDuration = 60;
@@ -18,7 +20,9 @@ export async function POST(req: Request) {
   const count = Math.min(30, Math.max(1, Math.round(Number(body.count) || 10)));
   const existing = Array.isArray(body.existing) ? body.existing.slice(0, 300) : [];
   try {
-    const topics = await pickTopics(key, count, existing);
+    /* 병원 규칙에 "우리는 임플란트를 자주 다뤄 주세요" 가 있으면 주제 고르기부터 반영돼야 한다. */
+    const clinic = await readClinicPrompt(tokenFrom(req));
+    const topics = await pickTopics(key, count, existing, clinic);
     if (!topics.length) return NextResponse.json({ error: '주제를 못 골랐습니다. 다시 눌러 보세요.' }, { status: 502 });
     return NextResponse.json({ ok: true, topics });
   } catch (e) {

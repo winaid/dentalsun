@@ -103,6 +103,37 @@ const DIR = join(process.cwd(), 'content', 'blog');
  * 위험한 조각을 걷어 낸다 — **마지막 방어선**이다.
  * ⚠️ 이것이 있으니 아무 HTML 이나 넣어도 된다고 생각하지 말 것. 위 주석 참고.
  */
+/** 본문 사진 한 장 — 관리자 화면의 '사진 장수'(담당자 프롬프트)로 대표 사진 말고 더 만든 것. */
+export type BodyImage = { src: string; alt: string; w?: number; h?: number };
+
+/**
+ * 본문 사진을 소제목(h2) 아래 첫 문단 뒤에 끼운다 (2026-11-03 오너 '사진 몇 장 만들지 드롭다운').
+ * ★ 글 HTML 에 직접 넣지 않고 따로 들고 있다가 그릴 때 끼우는 이유 — 편집기에서 글을 고쳐도 사진 자리가 깨지지 않고,
+ *   사진만 빼거나 바꾸기도 쉽다. 사진이 n 장이면 소제목을 고르게 나눠 그 아래에 하나씩.
+ * ⚠️ 경로는 /img/blog/ 안의 webp 만(바깥 주소를 그리지 않는다). 소제목이 없는 글은 문단을 고르게 나눠 그 뒤에.
+ */
+export function withBodyImages(html: string, images: BodyImage[] | undefined): string {
+  const list = (images || []).filter((im) => /^\/img\/blog\/[a-z0-9-]+\.webp$/.test(im.src));
+  if (!list.length) return html;
+  const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+  const fig = (im: BodyImage) =>
+    `<figure><img src="${im.src}" alt="${esc(im.alt || '')}" width="${im.w || 1536}" height="${im.h || 1024}" /></figure>`;
+  const heads = [...html.matchAll(/<h2\b/gi)].map((m) => m.index ?? 0);
+  const anchors = heads.length ? heads : [...html.matchAll(/<\/p>/gi)].map((m) => (m.index ?? 0) - 1);
+  if (!anchors.length) return html + list.map(fig).join('');
+  const n = list.length;
+  /* 꽂을 자리: 기준점 k 번째(고르게) 뒤의 첫 </p> 끝 */
+  const spots = list.map((_, i) => {
+    const a = anchors[Math.min(anchors.length - 1, Math.floor(((i + 1) * anchors.length) / (n + 1)))];
+    const end = html.indexOf('</p>', a + 1);
+    return end < 0 ? html.length : end + 4;
+  });
+  let out = html;
+  /* 뒤에서부터 끼워야 앞 자리 번호가 안 밀린다. 같은 자리면 순서대로 붙인다. */
+  for (let i = n - 1; i >= 0; i--) out = out.slice(0, spots[i]) + fig(list[i]) + out.slice(spots[i]);
+  return out;
+}
+
 export function sanitizeBody(html: string): string {
   return html
     .replace(/<script[\s\S]*?<\/script>/gi, '')
@@ -175,7 +206,7 @@ function readPosts(dir: string, opts: { includeFuture?: boolean } = {}): BlogPos
       /* ⚠️ 사진 경로는 우리 폴더 안에서만 — 바깥 주소를 그대로 그리면 남의 서버가 우리 쪽 그림을 바꿀 수 있다. */
       image: p.image && p.image.startsWith('/img/') ? p.image : undefined,
       imageAlt: p.imageAlt,
-      html: sanitizeBody(p.html),
+      html: withBodyImages(sanitizeBody(p.html), (p as { images?: BodyImage[] }).images),
       source: 'local',
       kind: p.kind === 'clinical' || p.kind === 'notice' ? p.kind : undefined,
       sourceUrl: p.sourceUrl && /^https:\/\/blog\.naver\.com\//.test(p.sourceUrl) ? p.sourceUrl : undefined,
