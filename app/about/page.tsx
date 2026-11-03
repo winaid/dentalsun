@@ -7,12 +7,12 @@ import { JsonLd } from '@/components/JsonLd';
 import { Breadcrumb, ContactBand, Figure , Sentences } from '@/components/ui';
 import { CLINIC, HYGIENE, STRENGTHS } from '@/lib/clinic';
 import { DOCTORS } from '@/lib/doctors';
-import { desc80, alt, breadcrumbSchema, medicalWebPageSchema, og, physicianSchema } from '@/lib/seo';
+import { metaDesc, alt, breadcrumbSchema, medicalWebPageSchema, og, physicianSchema } from '@/lib/seo';
 
 const TITLE = '치과소개';
 const DESC = '광화문 선치과 소개 — 통합치의학과 전문의 양대일 대표원장의 1:1 책임진료. 3D CT·구강스캐너 진단, 모의 수술과 원내 3D 프린터 수술 가이드, 1인 1기구 멸균. 광화문역 6번 출구 도보 2분, 시청역 3번 출구 도보 5분.';
 
-export const metadata: Metadata = { title: TITLE, description: desc80(DESC), alternates: alt('/about'), openGraph: og({ title: TITLE, description: DESC, path: '/about', images: [{ url: '/img/scene/intro-1.webp', width: 769, height: 495, alt: '광화문선치과 진료 장면' }] }) };
+export const metadata: Metadata = { title: TITLE, description: metaDesc('/about', DESC), alternates: alt('/about'), openGraph: og({ title: TITLE, description: DESC, path: '/about', images: [{ url: '/img/scene/intro-1.webp', width: 769, height: 495, alt: '광화문선치과 진료 장면' }] }) };
 
 /**
  * 진료 공간 — 여덟 장 = 4열 두 줄이 딱 맞는다(마지막 줄에 한 장만 남지 않게).

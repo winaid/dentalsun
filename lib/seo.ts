@@ -175,6 +175,76 @@ export function desc80(s: string, max = DESC_MAX): string {
 }
 
 /**
+ * 메타 설명 — 쪽마다 '광화문 {검색어} 광화문 선치과. 광화문역·시청역·종로·을지로 인근, {그 쪽 설명}' 꼴 (2026-11-03 오너·병원).
+ *  · 병원 요청 "메타 디스크립션에서라도 최대한 많은 키워드". 네이버 '광화문치과' 상위 아크치과·더스퀘어치과 설명 짜임을 따랐다
+ *    — 맨 앞에 지역+진료 검색어와 병원 이름, 이어서 주변 역·동네, 그다음 진료 낱말.
+ *  · 네이버 폰 화면에 보이는 앞 80자 남짓에 검색어가 다 들어가도록 앞에 몰고, 뒤는 구글이 보여 주는 150자까지 채운다.
+ *  · 기존 설명 앞머리 '광화문 선치과 ○○ — ' 는 앞에 붙는 것과 겹치므로 떼어 낸다.
+ */
+const REGION = '광화문역·시청역·종로·을지로 인근';
+const DESC_KEYWORD: Array<[RegExp, string]> = [
+  [/^\/$/, '치과'],
+  [/^\/treatment\/implant\/navigation/, '내비게이션 임플란트'],
+  [/^\/treatment\/implant\/custom/, '맞춤 임플란트'],
+  [/^\/treatment\/implant\/full-arch/, '풀아치 임플란트'],
+  [/^\/treatment\/implant\/uv/, 'UV 임플란트'],
+  [/^\/treatment\/implant\/prf/, '자가혈 임플란트'],
+  [/^\/treatment\/implant\/bone-graft/, '뼈이식 임플란트'],
+  [/^\/treatment\/implant\/warranty/, '임플란트 보증'],
+  [/^\/treatment\/implant/, '임플란트'],
+  [/^\/treatment\/insurance\/denture/, '보험틀니'],
+  [/^\/treatment\/insurance\/implant/, '보험임플란트'],
+  [/^\/treatment\/insurance/, '보험 임플란트·틀니'],
+  [/^\/treatment\/tmj\/symptoms/, '턱관절 장애'],
+  [/^\/treatment\/tmj\/bruxism/, '이갈이 치료'],
+  [/^\/treatment\/tmj/, '턱관절 치료'],
+  [/^\/treatment\/aesthetic\/prosthetics/, '라미네이트'],
+  [/^\/treatment\/aesthetic\/whitening/, '치아미백'],
+  [/^\/treatment\/aesthetic/, '심미치료'],
+  [/^\/treatment\/wisdom-tooth/, '사랑니 발치'],
+  [/^\/treatment\/natural-tooth\/mta/, 'MTA 신경치료'],
+  [/^\/treatment\/natural-tooth/, '신경치료'],
+  [/^\/treatment\/re-root-canal/, '재신경치료'],
+  [/^\/treatment\/periodontal/, '잇몸치료'],
+  [/^\/treatment\/painless\/airflow/, '에어플로우 스케일링'],
+  [/^\/treatment\/painless/, '무통치료'],
+  [/^\/insight\/symptom\/(jaw-clicking|mouth-wont-open)/, '턱관절'],
+  [/^\/insight\/symptom\/morning-jaw-headache/, '이갈이'],
+  [/^\/insight\/symptom\/sensitive-teeth/, '시린이 치료'],
+  [/^\/insight\/symptom\/bleeding-gums/, '잇몸치료'],
+  [/^\/insight\/symptom\/(pain-when-chewing|pain-after-root-canal)/, '신경치료'],
+  [/^\/insight\/symptom\/wisdom-tooth-pain/, '사랑니'],
+  [/^\/insight\/symptom\/(loose-or-missing-tooth|swelling-around-implant)/, '임플란트'],
+  [/^\/insight\/symptom\/loose-denture/, '틀니'],
+  [/^\/insight\/symptom\/yellow-teeth/, '치아미백'],
+  [/^\/insight\/guide\/(implant-journey|implant-cost-factors)/, '임플란트'],
+  [/^\/insight\/guide\/tmj-treatment-flow/, '턱관절 치료'],
+  [/^\/insight\/guide\/dental-anxiety/, '무통치료'],
+];
+const TOPIC_WORDS: Array<[RegExp, string]> = [
+  [/임플란트|상악동|식립/, '임플란트'],
+  [/미백/, '치아미백'],
+  [/턱관절|턱에서|턱 소리/, '턱관절'],
+  [/틀니/, '틀니'],
+  [/신경치료|근관|치근단/, '신경치료'],
+  [/마취|무서운/, '무통치료'],
+  [/사랑니/, '사랑니'],
+];
+export const META_DESC_MAX = 150;
+export function metaDesc(path: string, raw: string, title = ''): string {
+  // 글(블로그·임상 사례)은 주소로 못 가르므로 글 속 진료 낱말로 고른다.
+  const kw = DESC_KEYWORD.find(([re]) => re.test(path))?.[1] ?? TOPIC_WORDS.find(([re]) => re.test(title + ' ' + raw))?.[1] ?? '치과';
+  const lead = `광화문 ${kw} ${CLINIC.shortName}.`;
+  const body = raw
+    .replace(/<[^>]+>/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .replace(/^광화문 ?선치과(의원)?[^—]{0,24}— ?/, '');
+  if (body.startsWith(lead)) return desc80(body, META_DESC_MAX); // og() 가 한 번 더 부를 때
+  return desc80(`${lead} ${REGION}, ${body}`, META_DESC_MAX);
+}
+
+/**
  * 근거 출처 — 페이지 주제에 맞는 학회·공공기관 (구조화 데이터 citation, 화면에는 안 나옴).
  * 2026-09-11 전부 실제로 열어 200 확인. 없는 주소를 넣으면 신호가 깨지므로 확인 안 된 곳은 넣지 않는다.
  * AI 답변 엔진은 출처가 있는 글을 우선 인용한다(2026 인용 연구). 본문에 보이는 출처가 더 강하지만, 그건 화면이 바뀌므로 오너 결정 뒤.
@@ -210,7 +280,7 @@ export function og(opts: { title: string; description: string; path: string; ima
     locale: 'ko_KR',
     siteName: CLINIC.name,
     title: opts.title,
-    description: desc80(opts.description),
+    description: metaDesc(opts.path, opts.description),
     url: abs(opts.path),
     images: opts.images ?? [{ url: `/api/og?t=${encodeURIComponent(opts.title)}`, width: 1200, height: 630, alt: `${opts.title} — ${CLINIC.name}` }],
   };

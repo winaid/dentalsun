@@ -6,7 +6,7 @@ import { JsonLd } from '@/components/JsonLd';
 import { VisitMap } from '@/components/VisitMap';
 import { Breadcrumb, ContactBand, Figure, Sentences } from '@/components/ui';
 import { CLINIC, HOURS, MONTHLY_NOTICE, STATIONS } from '@/lib/clinic';
-import { desc80, alt, breadcrumbSchema, medicalWebPageSchema, og, withLocality } from '@/lib/seo';
+import { metaDesc, alt, breadcrumbSchema, medicalWebPageSchema, og } from '@/lib/seo';
 
 /** 처음 오시는 날의 순서 — 사진은 네이버 플레이스 실사(place2/). 대기실 사진은 거울의 다른 원장 이름을 지운 판 */
 const FIRST_VISIT = [
@@ -28,9 +28,9 @@ const FIRST_VISIT = [
 ];
 
 const TITLE = '오시는 길 · 진료시간';
-const DESC = withLocality('광화문선치과 오시는 길과 진료시간 — 5호선 광화문역 6번 출구 도보 2분, 1·2호선 시청역 3번 출구 도보 5분. 화·목 야간진료 21시, 코리아나 호텔 야외주차장 무료주차.');
+const DESC = '광화문선치과 오시는 길과 진료시간 — 5호선 광화문역 6번 출구 도보 2분, 1·2호선 시청역 3번 출구 도보 5분. 화·목 야간진료 21시, 코리아나 호텔 야외주차장 무료주차.';
 
-export const metadata: Metadata = { title: TITLE, description: desc80(DESC), alternates: alt('/visit'), openGraph: og({ title: TITLE, description: DESC, path: '/visit' }) };
+export const metadata: Metadata = { title: TITLE, description: metaDesc('/visit', DESC), alternates: alt('/visit'), openGraph: og({ title: TITLE, description: DESC, path: '/visit' }) };
 
 export default function VisitPage() {
   const trail = [{ name: TITLE, path: '/visit' }];

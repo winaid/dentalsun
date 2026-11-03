@@ -4,7 +4,7 @@ import { DocPage } from '@/components/DocPage';
 import { TmjPage } from '@/components/TmjPage';
 import { CustomImplantPage } from '@/components/CustomImplantPage';
 import { ALL_DOCS, docByPath } from '@/lib/content';
-import { desc80, alt, og, withLocality } from '@/lib/seo';
+import { metaDesc, alt, og } from '@/lib/seo';
 import { figSize, figSrc } from '@/lib/docs';
 
 /**
@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const path = `/treatment/${slug.join('/')}`;
   const doc = docByPath(path);
   if (!doc) return {};
-  const description = desc80(withLocality(doc.description));
+  const description = metaDesc(path, doc.description);
   const hero = doc.hero ? figSize(doc.hero.key) : null;
   return {
     title: doc.title,

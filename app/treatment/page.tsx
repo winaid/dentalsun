@@ -19,12 +19,12 @@ const HUB_IMG: Record<string, string> = {
 };
 import { ALL_DOCS, docsOfHub } from '@/lib/content';
 import { TREATMENT_HUBS } from '@/lib/nav';
-import { desc80, alt, breadcrumbSchema, itemListSchema, medicalWebPageSchema, og } from '@/lib/seo';
+import { metaDesc, alt, breadcrumbSchema, itemListSchema, medicalWebPageSchema, og } from '@/lib/seo';
 
 const TITLE = '진료 안내';
 const DESC = '광화문 선치과 진료 안내 — CBCT 계측과 모의 식립으로 진행하는 디지털 임플란트, 턱 소리·개구장애를 진단하는 턱관절 치료, MTA 신경치료로 자연치아 보존, 매복 사랑니, 보험 틀니·임플란트, 무통·저자극 진료.';
 
-export const metadata: Metadata = { title: TITLE, description: desc80(DESC), alternates: alt('/treatment'), openGraph: og({ title: TITLE, description: DESC, path: '/treatment' }) };
+export const metadata: Metadata = { title: TITLE, description: metaDesc('/treatment', DESC), alternates: alt('/treatment'), openGraph: og({ title: TITLE, description: DESC, path: '/treatment' }) };
 
 export default function TreatmentIndex() {
   const trail = [{ name: TITLE, path: '/treatment' }];

@@ -5,7 +5,10 @@ import { QuickMenu } from '@/components/QuickMenu';
 import { RevealScript } from '@/components/RevealScript';
 import { WrapGuard } from '@/components/WrapGuard';
 import { CLINIC } from '@/lib/clinic';
-import { desc80 } from '@/lib/seo';
+import { metaDesc } from '@/lib/seo';
+
+/* 홈 메타 설명 본문 — 앞에 '광화문 치과 광화문 선치과. 광화문역·시청역·종로·을지로 인근,' 이 붙는다(metaDesc, 2026-11-03 병원 요청). */
+const HOME_DESC = '통합치의학과 전문의 대표원장이 내비게이션 임플란트, 풀아치 임플란트, 턱관절 치료, 사랑니 발치, MTA 신경치료, 라미네이트, 치아미백을 직접 진료합니다. 화·목 야간진료, 코리아나 호텔 주차.';
 
 /**
  * 루트 레이아웃.
@@ -16,18 +19,18 @@ import { desc80 } from '@/lib/seo';
 export const metadata: Metadata = {
   metadataBase: new URL(CLINIC.url),
   title: {
-    default: `${CLINIC.shortName} | 광화문역 치과`,
+    default: CLINIC.shortName,
     template: `%s | ${CLINIC.shortName}`,
   },
-  description: desc80(CLINIC.description),
+  description: metaDesc('/', HOME_DESC),
   applicationName: CLINIC.name,
   alternates: { canonical: '/', languages: { 'ko-KR': CLINIC.url, 'x-default': CLINIC.url }, types: { 'application/rss+xml': `${CLINIC.url}/rss.xml` } },
   openGraph: {
     type: 'website',
     locale: 'ko_KR',
     siteName: CLINIC.name,
-    title: `${CLINIC.shortName} | 광화문역 치과`,
-    description: desc80(CLINIC.description),
+    title: CLINIC.shortName,
+    description: metaDesc('/', HOME_DESC),
     url: CLINIC.url,
   },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 } },

@@ -5,14 +5,14 @@ import { HeroCollage } from '@/components/HeroCollage';
 import { JsonLd } from '@/components/JsonLd';
 import { Breadcrumb, CertMark, ContactBand, Figure , Sentences } from '@/components/ui';
 import { DOCTORS, isCertCareer } from '@/lib/doctors';
-import { desc80, alt, breadcrumbSchema, medicalWebPageSchema, og, physicianSchema } from '@/lib/seo';
+import { metaDesc, alt, breadcrumbSchema, medicalWebPageSchema, og, physicianSchema } from '@/lib/seo';
 
 const TITLE = '의료진 소개';
 const DESC = '광화문 선치과 의료진 — 양대일 대표원장(보건복지부 인증 통합치의학과 전문의, 강남성심병원 치과 외래교수). 약력과 진료 철학을 소개합니다.';
 
 export const metadata: Metadata = {
   title: TITLE,
-  description: desc80(DESC),
+  description: metaDesc('/about/doctors', DESC),
   alternates: alt('/about/doctors'),
   openGraph: og({ title: TITLE, description: DESC, path: '/about/doctors', images: [{ url: DOCTORS[0].photo, width: 1200, height: 1500, alt: `${DOCTORS[0].name} ${DOCTORS[0].role}` }] }),
 };

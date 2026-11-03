@@ -30,7 +30,7 @@ import { faqSchema, medicalWebPageSchema, og, physicianSchema } from '@/lib/seo'
 export const metadata: Metadata = {
   alternates: { canonical: '/', languages: { 'ko-KR': CLINIC.url, 'x-default': CLINIC.url }, types: { 'application/rss+xml': `${CLINIC.url}/rss.xml` } },
   /* 홈 공유 카드 (2026-09-11): 다른 쪽은 og() 가 /api/og 카드를 내는데 홈만 빠져 있었다. 화면 무관. */
-  openGraph: { ...og({ title: `${CLINIC.shortName} | 광화문역 치과`, description: CLINIC.description, path: '/' }), type: 'website' },
+  openGraph: { ...og({ title: CLINIC.shortName, description: CLINIC.description, path: '/' }), type: 'website' },
 };
 
 /** 홈 FAQ — 사이트 FAQ 에서 묶음마다 첫 질문 하나씩 + 원장이 홈에 추가해 달라고 한 스케일링 문답(마취·통증 묶음 바로 뒤). 화면과 스키마가 같은 배열. */
@@ -121,7 +121,7 @@ export default function HomePage() {
       <NoticePopup popups={popupData.popups as Popup[]} />
       <JsonLd
         data={[
-          medicalWebPageSchema({ title: `${CLINIC.shortName} | 광화문역 치과`, description: CLINIC.description, path: '/' }),
+          medicalWebPageSchema({ title: CLINIC.shortName, description: CLINIC.description, path: '/' }),
           ...DOCTORS.map(physicianSchema),
           faqSchema(HOME_FAQ, '/'),
         ]}
