@@ -1,5 +1,5 @@
 {
-  "enabled": false,
+  "enabled": true,
   "everyDays": 3,
   "time": "09:00",
   "last": {
