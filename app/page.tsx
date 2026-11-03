@@ -576,7 +576,8 @@ export default function HomePage() {
                 {/* 2026-11-03 병원(김희동 본부장 카톡) '광화문역 말고도 시청역 3번 출구에서도 가까우니 시청역도 같이' — 이 제목 자리 지정 */}
                 <span className="whitespace-nowrap">광화문역 <span className="accent">6번 출구 도보 2분</span></span>
                 <br />
-                <span className="whitespace-nowrap">시청역 <span className="accent">3번 출구 도보 5분</span>,</span> <span className="whitespace-nowrap">광화문선치과</span>
+                {/* 끝의 ', 광화문선치과'는 뺐다 — 두 줄 길이가 맞고 병원 이름은 위에 이미 있다(오너 2026-11-03) */}
+                <span className="whitespace-nowrap">시청역 <span className="accent">3번 출구 도보 5분</span></span>
               </h2>
               {/* 역마다 공식 노선색 동그라미(오너 '역 색깔에 맞춰서, 딱 알 수 있게') — 머리말·오시는 길과 같은 짜임 */}
               <ul className="mt-6 flex flex-wrap justify-center gap-2.5">
