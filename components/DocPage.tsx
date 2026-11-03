@@ -69,13 +69,6 @@ const DOC_AI: Record<string, string> = {
  *  골이식재 담은 접시를 든 손 + 뒤 모니터에 어금니 위 상악동이 보이는 CT. 만든 도구 C:/tmp/sun-1028/gen.mjs */
 const CARD_FIG: Record<string, string> = {
   '/treatment/implant/bone-graft': 'ai/implant-bonegraft-card',
-  /* 2026-11-03 병원(김희동 본부장 카톡) '일반진료 탭 빨간 네모 사진을 AI로' — 원장 사진이 카드마다 겹쳐 보였다(굳이 원장 사진 아니어도 됨).
-     네 장을 서로 다른 장면으로: 재료 접사 · 엑스레이 화면 · 잇몸 모형·탐침(사람 없음) · 사랑니 수술 기구. ★사람(의료진)은 넣지 않는다 — 원장은 남자 한 분이라 다른 의료인이 원장으로 읽힌다(오너 11-03). 만든 도구 C:/tmp/sun-1103gen/gen.mjs */
-  '/treatment/natural-tooth': 'ai/general-natural-card',
-  '/treatment/re-root-canal': 'ai/general-reroot-card',
-  '/treatment/periodontal': 'ai/general-perio-card',
-  /* 매복사랑니는 병원 '수술 기구 사진 → 메인에 있는 사진 그대로'(11-03 오후) — 홈 일반진료 카드와 같은 그림 */
-  '/treatment/wisdom-tooth': 'ai/insight-wisdom',
 };
 
 /** 관련 카드 칸 수 — 셋이면 한 줄 셋, 넷이면 2×2 → 한 줄 넷 */
@@ -664,7 +657,7 @@ function BlockView({ block: b, index, band, photoBand, concise = false }: { bloc
             <Head title={b.title} lead={b.lead} accent={b.accent} />
             <div className="reveal-stack cards-flex mt-10" style={gridVars(b.items.length)}>
               {b.items.map((it) => (
-                <CardLink key={it.href} href={it.href} label={it.label} desc={it.desc} external={it.href.startsWith('http')} fig={linkFig(it.href, it.label)} />
+                <CardLink key={it.href} href={it.href} label={it.label} desc={it.desc} external={it.href.startsWith('http')} fig={it.fig ? { key: it.fig, alt: it.label } : linkFig(it.href, it.label)} />
               ))}
             </div>
           </div>

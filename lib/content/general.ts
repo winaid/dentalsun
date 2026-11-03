@@ -66,13 +66,14 @@ export const GENERAL_DOCS: Doc[] = [
         id: 'branches',
         title: '일반진료 세부 안내',
         lead: '증상에 맞는 진료를 아래에서 고르실 수 있습니다.',
+        /* 카드 사진 = 홈 일반진료 카드와 같은 그림(2026-11-03 병원 '메인 사진 그대로 옮겨 적용') — 바꿀 땐 app/page.tsx #general 과 같이 */
         items: [
-          { label: '자연치아 살리기', href: '/treatment/natural-tooth', desc: 'MTA 신경치료와 엔도소닉 초음파 세척으로 신경까지 번진 충치를 치료합니다.' },
-          { label: '재근관치료', href: '/treatment/re-root-canal', desc: '신경치료 후 다시 생긴 뿌리 끝 염증을, 기존 재료를 없애고 다시 치료합니다.' },
-          { label: '치주치료', href: '/treatment/periodontal', desc: '잇몸병을 스케일링과 뿌리 표면 치료로 다스리고 꾸준히 관리합니다.' },
-          { label: '매복사랑니 발치', href: '/treatment/wisdom-tooth', desc: '3D CT로 아래턱 신경이나 상악동까지의 거리를 확인한 뒤 안전하게 발치합니다.' },
-          { label: '심미치료', href: '/treatment/aesthetic', desc: '라미네이트·올세라믹·지르코니아 보철과 전문가 치아미백입니다.' },
-          { label: '무통 & 저자극 시스템', href: '/treatment/painless', desc: '무통마취기 NO-PAIN III, 바르는·가글 마취, 에어플로우 스케일링입니다.' },
+          { label: '자연치아 살리기', href: '/treatment/natural-tooth', desc: 'MTA 신경치료와 엔도소닉 초음파 세척으로 신경까지 번진 충치를 치료합니다.', fig: 'ai/natural-endosonic' },
+          { label: '재근관치료', href: '/treatment/re-root-canal', desc: '신경치료 후 다시 생긴 뿌리 끝 염증을, 기존 재료를 없애고 다시 치료합니다.', fig: 'ai/natural-mta' },
+          { label: '치주치료', href: '/treatment/periodontal', desc: '잇몸병을 스케일링과 뿌리 표면 치료로 다스리고 꾸준히 관리합니다.', fig: 'ai/insight-gum' },
+          { label: '매복사랑니 발치', href: '/treatment/wisdom-tooth', desc: '3D CT로 아래턱 신경이나 상악동까지의 거리를 확인한 뒤 안전하게 발치합니다.', fig: 'ai/insight-wisdom' },
+          { label: '심미치료', href: '/treatment/aesthetic', desc: '라미네이트·올세라믹·지르코니아 보철과 전문가 치아미백입니다.', fig: 'ai/aesthetic-prosthetics' },
+          { label: '무통 & 저자극 시스템', href: '/treatment/painless', desc: '무통마취기 NO-PAIN III, 바르는·가글 마취, 에어플로우 스케일링입니다.', fig: 'ai/painless-anesthesia' },
         ],
       },
       {

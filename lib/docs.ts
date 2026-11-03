@@ -52,7 +52,7 @@ type BlockBody =
   /** 강조 한 줄 — figure 가 있으면 어두운 띠 오른쪽에 그림, 아래에 짧은 설명 몇 줄(lines) */
   | { type: 'quote'; text: string; by?: string; figure?: Fig; lines?: string[] }
   /** 다른 문서로 가는 카드 */
-  | { type: 'links'; id?: string; title?: string; lead?: string; items: Array<{ label: string; href: string; desc?: string }> }
+  | { type: 'links'; id?: string; title?: string; lead?: string; items: Array<{ label: string; href: string; desc?: string; /** 카드 사진을 이 자리만 따로(없으면 가리키는 문서의 사진) */ fig?: string }> }
   /** 주의·안내 상자 */
   | { type: 'notice'; title?: string; paragraphs: string[] }
   /** 사진 두 장 좌우 — 칸마다 사진 → 제목 → 글(원장 PPT 115쪽 '365래온치과 예시처럼'). 폰에서는 위아래 */
