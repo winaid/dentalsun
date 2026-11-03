@@ -74,7 +74,8 @@ const CARD_FIG: Record<string, string> = {
   '/treatment/natural-tooth': 'ai/general-natural-card',
   '/treatment/re-root-canal': 'ai/general-reroot-card',
   '/treatment/periodontal': 'ai/general-perio-card',
-  '/treatment/wisdom-tooth': 'ai/general-wisdom-card',
+  /* 매복사랑니는 병원 '수술 기구 사진 → 메인에 있는 사진 그대로'(11-03 오후) — 홈 일반진료 카드와 같은 그림 */
+  '/treatment/wisdom-tooth': 'ai/insight-wisdom',
 };
 
 /** 관련 카드 칸 수 — 셋이면 한 줄 셋, 넷이면 2×2 → 한 줄 넷 */
