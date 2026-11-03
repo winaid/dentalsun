@@ -12,7 +12,8 @@ import { CLINIC, HOURS, MONTHLY_NOTICE } from '@/lib/clinic';
 export function DoctorCard() {
   return (
     <Link href="/about/doctors" className="group relative block aspect-[16/10] overflow-hidden rounded-2xl bg-night shadow-[var(--shadow-soft)]">
-      <Image src={figSrc('sun/doctor-arms')} alt="진료실에서 팔짱을 낀 양대일 원장" fill sizes="360px" className="object-cover object-[50%_20%] transition-transform duration-700 group-hover:scale-[1.04]" />
+      {/* 2026-11-03 새 프로필(2차수정.zip) 팔짱 사진으로 바꿈. 옛 사진 = sun/doctor-arms */}
+      <Image src={figSrc('doctors/yang-arms')} alt="진료복을 입고 팔짱을 낀 양대일 원장" fill sizes="360px" className="object-cover object-[50%_20%] transition-transform duration-700 group-hover:scale-[1.04]" />
       <span className="absolute inset-0 bg-gradient-to-t from-night/85 via-night/20 to-transparent" />
       <span className="absolute inset-x-0 bottom-0 p-5 text-white">
         <span className="block text-[12px] font-bold tracking-[0.18em] text-sun-300">보건복지부 인증 전문의</span>

@@ -83,7 +83,8 @@ import { CLINIC } from '@/lib/clinic';
  */
 const HERO_CARDS: [CollageCard, CollageCard, CollageCard] = [
   { fig: { key: 'sun/circle-treatment', alt: '확대경을 쓰고 치료하는 양대일 원장' }, shape: 'portrait' },
-  { fig: { key: 'sun/doctor-arms', alt: '진료실에서 팔짱을 낀 양대일 원장' }, shape: 'wide' },
+  /* 2026-11-03 새 프로필(2차수정.zip) 팔짱 사진으로 바꿈. 옛 사진 = sun/doctor-arms */
+  { fig: { key: 'doctors/yang-arms', alt: '진료복을 입고 팔짱을 낀 양대일 원장' }, shape: 'wide' },
   { fig: { key: 'sun/tmj-explain-skull-2', alt: '두개골 모형으로 턱관절을 설명하는 양대일 원장' }, shape: 'std' },
 ];
 

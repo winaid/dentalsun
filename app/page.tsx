@@ -169,8 +169,8 @@ export default function HomePage() {
                     <Image
                       src={d.cutout ?? d.photo}
                       alt={`${d.name} ${d.role}`}
-                      width={995}
-                      height={1346}
+                      width={1085}
+                      height={1381}
                       sizes="(max-width: 768px) 76vw, 480px"
                       className="mx-auto h-auto w-full max-w-[300px] drop-shadow-[0_26px_36px_rgba(9,14,35,0.16)] md:max-w-[340px] lg:max-w-none"
                     />

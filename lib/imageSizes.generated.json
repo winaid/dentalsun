@@ -3,6 +3,18 @@
   "w": 1200,
   "h": 1500
  },
+ "doctors/yang-gown": {
+  "w": 1200,
+  "h": 1500
+ },
+ "doctors/yang-gown2": {
+  "w": 1600,
+  "h": 2000
+ },
+ "doctors/yang-arms": {
+  "w": 1600,
+  "h": 1067
+ },
  "doctors/hong": {
   "w": 1156,
   "h": 1445
@@ -1156,6 +1168,10 @@
   "h": 800
  },
  "ai/uv-wetting": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/uv-wetting2": {
   "w": 1200,
   "h": 800
  },

@@ -32,8 +32,10 @@ export const DOCTORS: Doctor[] = [
     name: '양대일',
     role: '대표원장',
     specialty: '통합치의학과 전문의',
-    photo: '/img/doctors/yang.webp',
-    cutout: '/img/doctors/yang-cut.webp',
+    /* 2026-11-03 병원이 새로 찍은 프로필(2차수정.zip) — '가운 입고 서 계신 사진을 메인으로'. 원본 vitastudio 106042-2 를 자르기만 했다.
+       옛 사진 yang.webp·yang-cut.webp 는 되돌릴 때를 위해 남김 */
+    photo: '/img/doctors/yang-gown.webp',
+    cutout: '/img/doctors/yang-gown-cut.webp',
     /* 2026-10-06 원장 PPT 49쪽 — 앞 여섯 줄 순서를 병원이 정했다(NYU 과정은 병원이 새로 준 약력). AAID 부터는 기존 순서 그대로 */
     career: [
       '보건복지부 인증 통합치의학과 전문의',

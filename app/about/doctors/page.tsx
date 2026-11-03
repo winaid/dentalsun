@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   title: TITLE,
   description: desc80(DESC),
   alternates: alt('/about/doctors'),
-  openGraph: og({ title: TITLE, description: DESC, path: '/about/doctors', images: [{ url: DOCTORS[0].photo, width: 1200, height: 1259, alt: `${DOCTORS[0].name} ${DOCTORS[0].role}` }] }),
+  openGraph: og({ title: TITLE, description: DESC, path: '/about/doctors', images: [{ url: DOCTORS[0].photo, width: 1200, height: 1500, alt: `${DOCTORS[0].name} ${DOCTORS[0].role}` }] }),
 };
 
 export default function DoctorsPage() {
@@ -38,7 +38,8 @@ export default function DoctorsPage() {
           bg="ai/wide-clinic"
           cards={[
             /* ★ 2026-09-29 원장 피드백 10번: orig/intro-monitor-pair 는 퇴사한 페이닥터가 함께 나와 뺐다 — 다시 쓰지 말 것 */
-            { fig: { key: 'orig/doctor-yang', alt: '양대일 대표원장' }, shape: 'portrait' },
+            /* 2026-11-03 새 프로필(2차수정.zip) 둘째 가운 사진(뒷짐) — 아래 큰 사진(한 손 주머니)과 겹치지 않게. 옛 사진 = orig/doctor-yang */
+            { fig: { key: 'doctors/yang-gown2', alt: '흰 가운을 입고 선 양대일 대표원장' }, shape: 'portrait' },
             { fig: { key: 'place2/doctor-scan', alt: '구강스캐너로 스캔하며 모니터의 3D 치열 모형을 확인하는 양대일 대표원장' }, shape: 'wide' },
             { fig: { key: 'scene/loupe', alt: '확대경을 착용하고 진료하는 양대일 대표원장' }, shape: 'std' },
           ]}
