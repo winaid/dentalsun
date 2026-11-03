@@ -1,5 +1,9 @@
 @import 'tailwindcss';
 
+/* 공지 팝업 한 줄 장수 — 폭만 보면 가로로 눕힌 폰(844×390)에도 두 장이 서서 작아진다 → 높이도 함께 본다 (2026-11-03). */
+@custom-variant wide2 (@media (min-width: 768px) and (min-height: 560px));
+@custom-variant wide3 (@media (min-width: 1280px) and (min-height: 560px));
+
 /*
  * 디자인 토큰 — 레퍼런스(one-dental.co.kr)의 짜임새(어두운 첫 화면 · 작은 윗줄 라벨 · 제목 속 강조 낱말 ·
  * 알약 탭 · 흰 카드 · 옅은 바탕 구역 교차 · 화면 폭을 거의 다 쓰는 넓은 판)를 따르되,

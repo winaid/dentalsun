@@ -1,3 +1,37 @@
 {
-  "popups": []
+  "popups": [
+    {
+      "id": "2026-11-01-cal11",
+      "image": "/img/popup/2026-11-01-cal11.webp",
+      "width": 960,
+      "height": 1448,
+      "alt": "광화문 선치과 11월 진료일정 — 화·목 야간진료, 11월 7일·21일 토요일 휴진, 일요일 정기휴진",
+      "start": "2026-11-01",
+      "end": "2026-11-30",
+      "link": "/visit",
+      "enabled": true
+    },
+    {
+      "id": "2026-11-03-implant",
+      "image": "/img/popup/2026-11-03-implant.webp",
+      "width": 960,
+      "height": 1358,
+      "alt": "광화문 선치과 가을 임플란트 할인 이벤트 — 2026.09.01~2026.11.30, 맞춤 임플란트 89만원, UV 내비게이션 109만원, 모든 임플란트 최대 10년 보증",
+      "start": "2026-11-03",
+      "end": "2026-11-30",
+      "link": "/treatment/implant",
+      "enabled": true
+    },
+    {
+      "id": "2026-11-03-whitening",
+      "image": "/img/popup/2026-11-03-whitening.webp",
+      "width": 960,
+      "height": 1358,
+      "alt": "광화문 선치과 원데이 치아미백 이벤트 — 26.09.01~26.12.31, 오스템 뷰티스 15 치아미백 3회 20만원(부가세 별도, 스케일링 포함), 문의 02-734-8272",
+      "start": "2026-11-03",
+      "end": "2026-12-31",
+      "link": "/treatment/aesthetic/whitening",
+      "enabled": true
+    }
+  ]
 }
