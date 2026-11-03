@@ -1,14 +1,3 @@
 {
-  "popups": [
-    {
-      "id": "2026-11-03-byqim",
-      "image": "/img/popup/2026-11-03-byqim.webp",
-      "width": 573,
-      "height": 217,
-      "alt": "광화문 선치과 공지",
-      "start": "2026-11-03",
-      "end": "2026-11-30",
-      "enabled": true
-    }
-  ]
+  "popups": []
 }
