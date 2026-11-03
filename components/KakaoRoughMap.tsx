@@ -30,6 +30,8 @@ export function KakaoRoughMap() {
           src={`/kakao-map.html?w=${size.w}&h=${size.h}`}
           width={size.w}
           height={size.h + BAR}
+          /* 화면 가까이 와서야 불러온다 — 홈 아래쪽 지도가 첫 화면 때 카카오 스크립트(roughmapLander·mapjslite)를 돌려 폰 첫 화면을 늦췄다(2026-11-03 속도 점검) */
+          loading="lazy"
           className="block w-full border-0"
         />
       )}

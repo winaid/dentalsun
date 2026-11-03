@@ -19,6 +19,6 @@ export default function robots(): MetadataRoute.Robots {
       ...['AhrefsBot', 'SemrushBot', 'MJ12bot', 'DotBot', 'DataForSeoBot', 'BLEXBot'].map((userAgent) => ({ userAgent, disallow: '/' })),
     ],
     sitemap: `${CLINIC.url}/sitemap.xml`,
-    host: CLINIC.url,
+    /* host 줄은 뺐다 — 구글이 지원하지 않는 필드(robots.txt 공식 문서: user-agent·allow·disallow·sitemap 만, 2026-11-03) */
   };
 }

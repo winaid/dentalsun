@@ -71,13 +71,38 @@ function sourcesFor(url) {
   if (!files.length) return [];
   const first = files[0].replace(/\\/g, '/');
   // 그 쪽이 쓰는 데이터 파일도 본문이다 — 글이 거기 들어 있다.
-  return [first, ...localImports(path.join(ROOT, first))];
+  // ★ 2026-11-03: 공용 lib(clinic·seo·docs 등)까지 세면 그날 하나만 고쳐도 73쪽 날짜가 같이 올라 두 날짜로 뭉개졌다 →
+  //   그 쪽만의 파일(정적 쪽의 page.tsx · 본문 파일 · 전용 화면)만 센다. 여러 쪽이 함께 쓰는 동적 page.tsx([...slug] 등)는 뺀다.
+  return [...(first.includes('[') ? [] : [first]), ...contentSources(url)];
+}
+
+// ★ 2026-11-03 SEO 점검: 생성 파일이 {} 로 비어 73쪽 전부 2026-09-08 로 나갔다(아래 주석 속 sed 식의 별표+빗금이
+//   주석을 일찍 닫아 이 스크립트가 처음부터 문법 오류였다). 게다가 진료·인사이트 쪽 본문은 app/ 가 아니라
+//   lib/content/*.ts 에 있고 '@/lib/content' 는 폴더라 localImports 가 못 찾았다. 그 쪽의 **본문 파일**과
+//   **그 쪽 전용 화면**을 함께 본다. 공용 화면(DocPage·heroCollage 등)은 여전히 뺀다 — 하나 고치면 전 쪽 날짜가 오른다.
+const CONTENT_DIR = path.join(ROOT, 'lib/content');
+function contentSources(url) {
+  const out = [];
+  for (const f of fs.readdirSync(CONTENT_DIR)) {
+    if (!f.endsWith('.ts') || f === 'index.ts') continue;
+    const src = fs.readFileSync(path.join(CONTENT_DIR, f), 'utf8');
+    // path: '/주소' 또는 const HUB = '/주소' … path: HUB 꼴 둘 다
+    const consts = [...src.matchAll(/const (\w+) = '([^']+)'/g)].filter((m) => m[2] === url).map((m) => m[1]);
+    if (src.includes(`path: '${url}'`) || consts.some((c) => src.includes(`path: ${c},`))) out.push(`lib/content/${f}`);
+  }
+  if (url.startsWith('/treatment/tmj')) out.push('components/TmjPage.tsx', 'lib/content/tmjLanding.ts', 'lib/content/tmj.ts');
+  if (url === '/treatment/implant/navigation' || url === '/treatment/implant/custom') out.push('components/CustomImplantPage.tsx', 'lib/content/customImplantLanding.ts');
+  if (url === '/') out.push('components/HomeHero.tsx');
+  if (url === '/about/doctors') out.push('lib/doctors.ts');
+  if (url === '/faq') out.push('lib/faq.ts');
+  if (url.startsWith('/insight/clinical/') || url.startsWith('/insight/blog/')) out.push(...fs.readdirSync(path.join(ROOT, url.startsWith('/insight/clinical/') ? 'content/clinical' : 'content/blog')).filter((n) => n.endsWith(url.split('/').pop() + '.json')).map((n) => (url.startsWith('/insight/clinical/') ? 'content/clinical/' : 'content/blog/') + n));
+  return out.filter((f) => fs.existsSync(path.join(ROOT, f)));
 }
 
 /*
  * 대상 주소 목록.
  *   ① _urls.txt 가 있으면 그것을 쓴다 (사이트맵에서 뽑는다):
- *      curl -s localhost:3200/sitemap.xml | grep -o '<loc>[^<]*' | sed 's|.*//[^/]*||' > _urls.txt
+ *      사이트맵의 loc 값에서 도메인을 뗀 경로를 한 줄에 하나씩 (홈은 '/')
  *   ② 없으면 지난번 결과의 주소를 그대로 다시 잰다 — 쪽이 늘지 않았다면 이것으로 충분하다.
  * ⚠️ 쪽을 새로 만들었으면 ① 로 목록을 갱신할 것. 안 그러면 새 쪽만 날짜가 안 붙는다.
  */

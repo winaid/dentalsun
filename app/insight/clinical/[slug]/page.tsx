@@ -70,7 +70,7 @@ export default async function ClinicalPostPage({ params }: { params: Promise<{ s
       <JsonLd
         data={[
           breadcrumbSchema([{ name: '홈', path: '/' }, ...trail]),
-          medicalWebPageSchema({ title: post.title, description: post.summary, path }),
+          medicalWebPageSchema({ title: post.title, description: post.summary, path, dates: { published: post.date, modified: post.updated ?? post.date } }),
           {
             '@context': 'https://schema.org',
             '@type': 'BlogPosting',

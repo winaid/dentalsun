@@ -172,11 +172,12 @@ export const MONTHLY_NOTICE = {
 } as const;
 
 /**
- * 확인 안 된 값. 화면에도 스키마에도 나가지 않는다.
- * geo: 기존 홈페이지에 좌표가 없다. 주소 문자열로 지도 검색 링크만 건다.
+ * 확인 안 된 값. 화면에도 스키마에도 나가지 않는다(verified: false 인 동안).
+ * geo: 2026-11-03 확인 — 네이버 지역 검색 공식 API(openapi.naver.com/v1/search/local) '광화문선치과의원' 결과의 좌표
+ *   (mapx 1269763175 · mapy 375688261, 주소 '세종대로 135-9 충방빌딩 3층' 일치). 구글 권장 = 소수점 5자리 이상.
  */
 export const UNVERIFIED = {
-  geo: { verified: false, lat: 0, lng: 0 },
+  geo: { verified: true, lat: 37.5688261, lng: 126.9763175 },
   email: { verified: false, value: '' },
 } as const;
 

@@ -16,7 +16,7 @@ import { desc80 } from '@/lib/seo';
 export const metadata: Metadata = {
   metadataBase: new URL(CLINIC.url),
   title: {
-    default: `${CLINIC.shortName} | 광화문역 치과 · 디지털 임플란트 · 턱관절 치료`,
+    default: `${CLINIC.shortName} | 광화문역 치과`,
     template: `%s | ${CLINIC.shortName}`,
   },
   description: desc80(CLINIC.description),
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'ko_KR',
     siteName: CLINIC.name,
-    title: `${CLINIC.shortName} | 광화문역 치과 · 디지털 임플란트 · 턱관절 치료`,
+    title: `${CLINIC.shortName} | 광화문역 치과`,
     description: desc80(CLINIC.description),
     url: CLINIC.url,
   },

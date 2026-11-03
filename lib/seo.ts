@@ -4,7 +4,7 @@
  * ★ 검색엔진과 AI 는 본문을 읽기 전에 구조화 데이터를 먼저 본다. 진료시간·주소·전화번호가
  *   기계가 읽을 수 있는 형태로 있어야 지도·지식패널·AI 답변에 인용된다.
  * ★★ 확인되지 않은 값은 절대 넣지 않는다 ★★ — 틀린 구조화 데이터는 없는 것보다 나쁘다.
- *   좌표(UNVERIFIED.geo)는 확인 전이라 빠지고, 2·4째주 토요일은 openingHoursSpecification 에서 뺀다.
+ *   좌표는 네이버 공식 API 로 확인해 넣었고(2026-11-03), 2·4째주 토요일은 날짜별 specialOpeningHoursSpecification 으로 낸다.
  * ★ 모든 노드는 @id 로 이어진다 — 발행자·검토자·저자가 한 병원, 한 사람으로 모인다.
  */
 import { CLINIC, HOURS, UNVERIFIED } from './clinic';
@@ -31,6 +31,31 @@ export const ID = {
 /** 진료 갈래 이름 — 기존 홈페이지 9개 대메뉴 */
 const SERVICES = NAV.filter((n) => n.href.startsWith('/treatment')).map((n) => ({ name: n.label, path: n.href }));
 
+/** 02-734-8272 → +82-2-734-8272 (구조화 데이터 전용) */
+export const intlPhone = (p: string) => p.replace(/^0(\d+)-/, '+82-$1-');
+
+/**
+ * 2·4째주 토요일 — 앞으로 약 3달 치를 날짜별 '특별 진료시간'으로 낸다 (2026-11-03 SEO 점검).
+ * ★ schema.org 에는 '격주 토요일' 을 적을 칸이 없다. 요일로 넣으면 휴진 토요일에 '진료 중' 이 되고, 빼면 AI·지도가
+ *   '토요일 휴무' 로 읽는다. 그래서 그날그날을 validFrom = validThrough 로 하나씩 적는다(구글 지역 업체 문서의 그 방식).
+ * ⚠️ 빌드할 때 계산한다 — 사이트가 3달 넘게 다시 빌드되지 않으면 목록이 끝나 예전처럼 토요일 정보가 빠진다(틀린 값이 나가지는 않음).
+ */
+function biweeklySaturdays(): Record<string, unknown>[] {
+  const sat = HOURS.rows.find((r) => 'biweekly' in r && r.biweekly);
+  if (!sat) return [];
+  const out: Record<string, unknown>[] = [];
+  const now = new Date(Date.now() + 9 * 3600 * 1000);
+  for (let i = 0; i < 100 && out.length < 6; i++) {
+    const d = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + i));
+    if (d.getUTCDay() !== 6) continue;
+    const nth = Math.ceil(d.getUTCDate() / 7);
+    if (nth !== 2 && nth !== 4) continue;
+    const iso = d.toISOString().slice(0, 10);
+    out.push({ '@type': 'OpeningHoursSpecification', dayOfWeek: 'https://schema.org/Saturday', opens: sat.open, closes: sat.close, validFrom: iso, validThrough: iso });
+  }
+  return out;
+}
+
 /** 병원 본체 스키마. 전 페이지 1회. */
 export function clinicSchema() {
   const schema: Record<string, unknown> = {
@@ -43,7 +68,8 @@ export function clinicSchema() {
     alternateName: [CLINIC.shortName, CLINIC.nameEn],
     description: CLINIC.description,
     url: BASE,
-    telephone: CLINIC.phone,
+    /* 구글 지역 업체 문서: '국가번호와 지역번호를 함께' — 화면 표기(02-734-8272)와 별개로 기계용은 국제 형식 (2026-11-03) */
+    telephone: intlPhone(CLINIC.phone),
     faxNumber: CLINIC.fax,
     taxID: CLINIC.bizNo,
     founder: { '@id': ID.director },
@@ -59,7 +85,7 @@ export function clinicSchema() {
     },
     image: { '@id': `${BASE}/#logo` },
     contactPoint: [
-      { '@type': 'ContactPoint', telephone: CLINIC.phone, contactType: '예약 및 진료 문의', areaServed: 'KR', availableLanguage: ['ko'] },
+      { '@type': 'ContactPoint', telephone: intlPhone(CLINIC.phone), contactType: '예약 및 진료 문의', areaServed: 'KR', availableLanguage: ['ko'] },
     ],
     address: {
       '@type': 'PostalAddress',
@@ -112,6 +138,8 @@ export function clinicSchema() {
       }
       return [{ ...base, opens: r.open, closes: r.close }];
     });
+  const sats = biweeklySaturdays();
+  if (sats.length) schema.specialOpeningHoursSpecification = sats;
 
   if (UNVERIFIED.geo.verified && UNVERIFIED.geo.lat && UNVERIFIED.geo.lng) {
     schema.geo = { '@type': 'GeoCoordinates', latitude: UNVERIFIED.geo.lat, longitude: UNVERIFIED.geo.lng };
@@ -139,7 +167,8 @@ export function desc80(s: string, max = DESC_MAX): string {
   if (t.length <= max) return t;
   const cut = t.slice(0, max);
   const end = Math.max(cut.lastIndexOf('. '), cut.lastIndexOf('다. '), cut.lastIndexOf('요. '), cut.endsWith('.') ? cut.length - 1 : -1);
-  if (end > max * 0.5) return cut.slice(0, end + 1).trim();
+  /* 첫 문장이 너무 짧으면(70% 미만) 문장에서 자르지 않고 쉼표·띄어쓰기에서 채운다 — 42자짜리 설명이 6쪽 나왔다(2026-11-03 SEO 점검, 네이버·구글 모두 '1~2문장' 권장) */
+  if (end >= max * 0.7) return cut.slice(0, end + 1).trim();
   const body = cut.slice(0, max - 1);
   const pause = Math.max(body.lastIndexOf(', '), body.lastIndexOf(' '));
   return `${(pause > max * 0.5 ? body.slice(0, pause) : body).trim()}…`;
@@ -261,8 +290,10 @@ export function medicalWebPageSchema(opts: {
   about?: { type: 'MedicalProcedure' | 'MedicalCondition'; name: string };
   image?: { src: string; caption: string; width: number; height: number };
   related?: string[];
+  /** 글(블로그·임상)은 글의 날짜를 쓴다 — 쪽 날짜와 BlogPosting 날짜가 어긋나지 않게 (2026-11-03) */
+  dates?: { published: string; modified: string };
 }) {
-  const { published, modified } = contentDates(opts.path);
+  const { published, modified } = opts.dates ?? contentDates(opts.path);
   const schema: Record<string, unknown> = {
     '@type': 'MedicalWebPage',
     '@id': ID.page(opts.path),

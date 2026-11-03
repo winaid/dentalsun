@@ -468,6 +468,15 @@ td {
 .hero-in-2 { animation-delay: 180ms; }
 .hero-in-3 { animation-delay: 360ms; }
 .hero-in-4 { animation-delay: 540ms; }
+/* 폰(1023px 이하)은 첫 화면 글이 투명에서 떠오르지 않고 처음부터 보이게 — 올라오는 움직임만 남긴다.
+   투명 시작 + 지연(최대 0.54초)이 느린 폰에서 첫 화면 큰 글(LCP)을 4.4초로 늦췄다(2026-11-03 속도 점검, 구글 기준 2.5초). 넓은 화면은 그대로. */
+@keyframes hero-in-move {
+  from { transform: translateY(18px); }
+  to { transform: none; }
+}
+@media (max-width: 1023px) {
+  .hero-in { animation-name: hero-in-move; }
+}
 
 /* 머리말 펼침 메뉴 — 위에서 아래로 짧게 내려온다(hero-in 은 아래에서 올라와 메뉴에는 어색했다, 오너 지적) */
 /* ⚠️ X 이동을 여기서 하지 않는다 — 가운데 맞춤은 유틸(-translate-x-1/2)이 CSS translate 속성으로 하고,

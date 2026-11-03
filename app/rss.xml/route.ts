@@ -11,6 +11,13 @@ export const revalidate = 3600;
  */
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
+/**
+ * 본문 전체 — 네이버 서치어드바이저 'RSS 및 사이트맵 제출': "피드에 포함되는 각 item의 본문은 일부가 아닌 모든 내용
+ * (본문 전체 공개)이 포함될 수 있도록" (2026-11-03 확인). 요약만 넣던 것을 본문 HTML 로 바꿨다(RSS 2.0 은 description 에 이스케이프한 HTML).
+ * 사진·링크 주소는 피드 밖에서도 열리게 절대 주소로.
+ */
+const fullBody = (html: string, base: string) => html.replace(/(src|href)=(["'])\/(?!\/)/g, `$1=$2${base}/`);
+
 export function GET() {
   const base = CLINIC.url;
   const items = [
@@ -22,7 +29,7 @@ export function GET() {
   const body = items
     .map(
       (p) =>
-        `    <item>\n      <title>${esc(p.title)}</title>\n      <link>${base}${p.href}</link>\n      <guid isPermaLink="true">${base}${p.href}</guid>\n      <pubDate>${new Date(publishedIso(p)).toUTCString()}</pubDate>\n${p.category ? `      <category>${esc(p.category)}</category>\n` : ''}      <description>${esc(p.summary)}</description>\n    </item>`,
+        `    <item>\n      <title>${esc(p.title)}</title>\n      <link>${base}${p.href}</link>\n      <guid isPermaLink="true">${base}${p.href}</guid>\n      <pubDate>${new Date(publishedIso(p)).toUTCString()}</pubDate>\n${p.category ? `      <category>${esc(p.category)}</category>\n` : ''}      <description>${esc(fullBody(p.html, base))}</description>\n    </item>`,
     )
     .join('\n');
   const last = items[0] ? new Date(publishedIso(items[0])).toUTCString() : new Date().toUTCString();

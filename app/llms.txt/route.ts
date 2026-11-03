@@ -36,7 +36,7 @@ export async function GET() {
   for (const d of ALL_DOCS) {
     L.push(`### ${d.title}`);
     L.push(d.summary.replace(/[{}]/g, ''));
-    L.push(`- URL: ${CLINIC.url}${d.path}`);
+    L.push(`- [${d.title}](${CLINIC.url}${d.path})`);
     if (d.faq?.length) L.push(`- 다루는 질문: ${d.faq.map((q) => q.q).join(' / ')}`);
     L.push('');
   }
@@ -47,7 +47,7 @@ export async function GET() {
     for (const p of posts) {
       L.push(`### ${p.title}`);
       L.push(p.summary);
-      L.push(`- URL: ${CLINIC.url}/insight/blog/${p.slug}`);
+      L.push(`- [${p.title}](${CLINIC.url}/insight/blog/${p.slug})`);
       L.push(`- 발행일: ${p.date}`);
       L.push('');
     }
@@ -59,13 +59,13 @@ export async function GET() {
     for (const p of clinical) {
       L.push(`### ${p.title}`);
       L.push(p.summary);
-      L.push(`- URL: ${CLINIC.url}/insight/clinical/${p.slug}`);
+      L.push(`- [${p.title}](${CLINIC.url}/insight/clinical/${p.slug})`);
       L.push(`- 발행일: ${p.date}`);
       L.push('');
     }
   }
   L.push('## 자주 묻는 질문');
-  L.push(`- URL: ${CLINIC.url}/faq`);
+  L.push(`- [자주 묻는 질문](${CLINIC.url}/faq)`);
   for (const g of SITE_FAQ) for (const it of g.items) L.push(`- ${it.q}`);
   L.push('');
   L.push('## 인용 시 유의사항');

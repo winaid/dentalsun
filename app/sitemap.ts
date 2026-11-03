@@ -25,7 +25,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...flatNavPaths().map((p) => entry(p, p === '/' ? 1 : 0.8, p === '/' ? 'weekly' : 'monthly')),
     entry('/treatment', 0.9),
     entry('/faq', 0.7),
-    entry('/privacy', 0.3, 'yearly'),
+    /* /privacy 는 noindex 라 사이트맵에서 뺐다 — 사이트맵에는 색인할 쪽만 (2026-11-03 SEO 점검) */
     ...ALL_DOCS.map((d) => entry(d.path, d.isHub ? 0.9 : 0.85)),
     /* 블로그 — content/blog 글 + 중앙(winaid) 글. 손으로 적지 말 것(lib/insightFeed). lastmod 는 글의 날짜. */
     { ...entry('/insight/blog', 0.7, 'weekly'), lastModified: new Date() },
