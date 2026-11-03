@@ -8,7 +8,7 @@ import { isLive, todayKst, type Popup } from '@/lib/popups';
  * 홈 첫 화면 공지 팝업 (2026-10-29 오너 "11월 진료일정 팝업 올려줘, 사이즈 전문적인 치과처럼").
  * 목록은 관리자 화면 /admin/popup 에서 넣는다 → content/popups.json (lib/popups.ts).
  *
- * - 크기: 폭 480px 을 넘지 않고, 화면 높이·한 줄 장수(폰 1·태블릿 2·넓은 화면 3)에 맞춰 줄인다(2026-11-03).
+ * - 크기: 폭 420px 을 넘지 않고(11-03 본부장 "약간 크다" 480→420), 화면 높이·한 줄 장수(폰 1·태블릿 2·넓은 화면 3)에 맞춰 줄인다(2026-11-03).
  *   (국내 치과 사이트 공지 팝업이 대개 400~500px 폭 — 첫 화면을 다 가리지 않는 크기)
  * - 여러 개면 넓은 화면은 나란히, 폰은 하나씩(닫으면 다음 것). 높이가 모자라면 바탕이 스크롤된다.
  * - '오늘 하루 보지 않기' = localStorage 에 오늘 날짜(한국 시간)를 팝업마다 적어 둔다.
@@ -65,14 +65,14 @@ export function NoticePopup({ popups }: { popups: Popup[] }) {
       {shown.map((p, i) => {
         /* 폭 = 480px · 화면 높이에 그림+버튼이 들어가는 폭 · 한 줄 장수로 나눈 폭 중 가장 작은 것.
            (2026-11-03 오너 "모든 기기에서 에러 없이" — 세 장이 1280 화면에서 넘치고, 낮은 가로 화면에서 그림이 잘리던 것) */
-        const width = `min(480px, max(240px, calc((100dvh - 108px) * ${(p.width / p.height).toFixed(4)})), calc((100% - (var(--n) - 1) * 20px) / var(--n)))`;
+        const width = `min(420px, max(240px, calc((100dvh - 160px) * ${(p.width / p.height).toFixed(4)})), calc((100% - (var(--n) - 1) * 20px) / var(--n)))`;
         const img = (
           <Image
             src={p.image}
             alt={p.alt}
             width={p.width}
             height={p.height}
-            sizes="(max-width: 767px) calc(100vw - 40px), 480px"
+            sizes="(max-width: 767px) calc(100vw - 40px), 420px"
             className="block h-auto w-full"
             priority={i === 0}
           />
