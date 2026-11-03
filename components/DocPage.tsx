@@ -70,7 +70,7 @@ const DOC_AI: Record<string, string> = {
 const CARD_FIG: Record<string, string> = {
   '/treatment/implant/bone-graft': 'ai/implant-bonegraft-card',
   /* 2026-11-03 병원(김희동 본부장 카톡) '일반진료 탭 빨간 네모 사진을 AI로' — 원장 사진이 카드마다 겹쳐 보였다(굳이 원장 사진 아니어도 됨).
-     네 장을 서로 다른 장면으로: 재료 접사 · 엑스레이 화면 · 치과위생사 스케일링(눈 안 보임) · 사랑니 수술 기구. 만든 도구 C:/tmp/sun-1103gen/gen.mjs */
+     네 장을 서로 다른 장면으로: 재료 접사 · 엑스레이 화면 · 잇몸 모형·탐침(사람 없음) · 사랑니 수술 기구. ★사람(의료진)은 넣지 않는다 — 원장은 남자 한 분이라 다른 의료인이 원장으로 읽힌다(오너 11-03). 만든 도구 C:/tmp/sun-1103gen/gen.mjs */
   '/treatment/natural-tooth': 'ai/general-natural-card',
   '/treatment/re-root-canal': 'ai/general-reroot-card',
   '/treatment/periodontal': 'ai/general-perio-card',
