@@ -36,7 +36,7 @@ export function GET(req: Request) {
         <div style={{ display: 'flex', marginTop: 26, fontSize: title.length > 24 ? 58 : 74, fontWeight: 800, letterSpacing: -2, lineHeight: 1.18 }}>{title || CLINIC.shortName}</div>
         <div style={{ marginTop: 44, paddingTop: 32, borderTop: '1px solid rgba(255,255,255,0.16)', display: 'flex', flexDirection: 'column' }}>
           <div style={{ display: 'flex', fontSize: 40, fontWeight: 800 }}>{CLINIC.shortName}</div>
-          <div style={{ display: 'flex', marginTop: 12, fontSize: 26, color: 'rgba(255,255,255,0.68)' }}>{`서울 중구 세종대로 · 광화문역 6번 출구 도보 2분   ·   ${CLINIC.phone}`}</div>
+          <div style={{ display: 'flex', marginTop: 12, fontSize: 26, color: 'rgba(255,255,255,0.68)' }}>{`서울 중구 세종대로 · 광화문역 6번 출구 도보 2분 · 시청역 3번 출구 도보 5분   ·   ${CLINIC.phone}`}</div>
         </div>
       </div>
     ),

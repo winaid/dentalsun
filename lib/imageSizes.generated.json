@@ -1,4 +1,20 @@
 {
+ "ai/general-natural-card": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/general-reroot-card": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/general-perio-card": {
+  "w": 1200,
+  "h": 800
+ },
+ "ai/general-wisdom-card": {
+  "w": 1200,
+  "h": 800
+ },
  "doctors/yang": {
   "w": 1200,
   "h": 1500

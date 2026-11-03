@@ -69,6 +69,12 @@ const DOC_AI: Record<string, string> = {
  *  골이식재 담은 접시를 든 손 + 뒤 모니터에 어금니 위 상악동이 보이는 CT. 만든 도구 C:/tmp/sun-1028/gen.mjs */
 const CARD_FIG: Record<string, string> = {
   '/treatment/implant/bone-graft': 'ai/implant-bonegraft-card',
+  /* 2026-11-03 병원(김희동 본부장 카톡) '일반진료 탭 빨간 네모 사진을 AI로' — 원장 사진이 카드마다 겹쳐 보였다(굳이 원장 사진 아니어도 됨).
+     네 장을 서로 다른 장면으로: 재료 접사 · 엑스레이 화면 · 치과위생사 스케일링(눈 안 보임) · 사랑니 수술 기구. 만든 도구 C:/tmp/sun-1103gen/gen.mjs */
+  '/treatment/natural-tooth': 'ai/general-natural-card',
+  '/treatment/re-root-canal': 'ai/general-reroot-card',
+  '/treatment/periodontal': 'ai/general-perio-card',
+  '/treatment/wisdom-tooth': 'ai/general-wisdom-card',
 };
 
 /** 관련 카드 칸 수 — 셋이면 한 줄 셋, 넷이면 2×2 → 한 줄 넷 */
@@ -241,7 +247,7 @@ export function DocPage({ doc }: { doc: Doc }) {
 /** 링크 카드의 사진 — 가리키는 문서의 AI 사진(없으면 그 문서가 지정한 사진) */
 function linkFig(href: string, label: string): Fig | undefined {
   const target = docByPath(href);
-  const key = DOC_AI[href] ?? target?.hero?.key;
+  const key = CARD_FIG[href] ?? DOC_AI[href] ?? target?.hero?.key;
   return key ? { key, alt: label } : undefined;
 }
 

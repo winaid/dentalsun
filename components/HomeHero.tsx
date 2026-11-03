@@ -114,7 +114,7 @@ export function HomeHero() {
       <div className="wrap relative flex flex-1 flex-col justify-center pt-[132px] pb-[150px] md:pt-[150px] md:pb-[230px] lg:pb-[220px]">
         <div className="max-w-[1000px]" data-scroll-fade>
           <p className="eyebrow on-dark hero-in">
-            SUN DENTAL CLINIC<span className="hidden sm:inline"> · 광화문역 6번 출구 도보 2분</span>
+            SUN DENTAL CLINIC<span className="hidden sm:inline"> · 광화문역 6번 출구 도보 2분 · 시청역 3번 출구 도보 5분</span>
           </p>
           {/* 장면이 바뀌면 글도 같이 바뀐다 — key 를 바꿔 다시 그리면서 짧게 올라온다 */}
           <div key={i} className="hero-swap">

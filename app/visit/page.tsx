@@ -44,8 +44,8 @@ export default function VisitPage() {
           eyebrow="VISIT US"
           long
           cardsLead="내원 전에 확인해 주세요."
-          /* 2026-11-03 병원 '오시는 길에 광화문역 말고도 시청역 3번 출구도 같이' — 제목에 두 역 */
-          lines={[<><span className="whitespace-nowrap">광화문역 6번 출구</span> <br className="sm:hidden" /><span className="accent-sun whitespace-nowrap">도보 2분</span></>, <><span className="whitespace-nowrap">시청역 3번 출구</span> <br className="sm:hidden" /><span className="accent-sun whitespace-nowrap">도보 5분</span></>]}
+          /* 2026-11-03 제목에 시청역도 넣었다가 병원 '아래 시청역 알약이 있으니 제목은 그대로 둔다'(김희동 본부장 카톡) → 원래대로 */
+          lines={['광화문역 6번 출구', <><span className="accent-sun">도보 2분</span></>]}
           lead={`${CLINIC.address.street} ${CLINIC.address.floor}, ${CLINIC.address.landmark}입니다. 화·목요일은 오후 9시까지 진료하며, 주차는 ${CLINIC.parking.place}을 무료로 이용하실 수 있습니다.`}
           bg="ai/wide-visit"
           cards={[
