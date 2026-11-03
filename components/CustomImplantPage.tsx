@@ -129,13 +129,14 @@ export function Compare({ columns, rows }: { columns: [string, string]; rows: Ar
       <dl>
         {rows.map((r, i) => (
           <div key={r.label} className={`grid md:grid-cols-[150px_1fr_1fr] ${i > 0 ? 'border-t border-hairline' : ''}`}>
-            <dt className="bg-canvas px-5 pb-1 pt-4 text-[14px] font-extrabold text-ink md:py-5">{r.label}</dt>
-            <dd className="px-5 pb-2 text-[16.5px] leading-[1.7] text-ink-muted md:py-5">
-              <span className="mr-2 inline-block rounded-md bg-canvas px-1.5 py-0.5 text-[11.5px] font-bold text-ink-muted md:hidden">{columns[0]}</span>
+            {/* 2026-11-03 오너 '폰 비교표 다듬기' — 항목 제목 띠는 남색(넓은 화면 표 머리와 같은 색), 꼬리표 아래 줄에 설명. 넓은 화면은 그대로 */}
+            <dt className="bg-[var(--color-night)] px-5 py-2.5 text-[14px] font-extrabold tracking-[0.02em] text-white md:bg-canvas md:py-5 md:text-ink">{r.label}</dt>
+            <dd className="px-5 pb-3.5 pt-3.5 text-[16.5px] leading-[1.7] text-ink-muted md:py-5">
+              <span className="mb-1.5 block w-fit rounded-md border border-hairline bg-canvas px-2 py-0.5 text-[12px] font-bold text-ink-muted md:hidden">{columns[0]}</span>
               {r.a}
             </dd>
-            <dd className="bg-sun-50/60 px-5 pb-4 pt-2 text-[16.5px] font-semibold leading-[1.7] text-ink md:py-5">
-              <span className="mr-2 inline-block rounded-md bg-sun-500 px-1.5 py-0.5 text-[11.5px] font-bold text-white md:hidden">{columns[1]}</span>
+            <dd className="border-t border-sun-100 bg-sun-50/60 px-5 pb-4 pt-3.5 text-[16.5px] font-semibold leading-[1.7] text-ink md:border-t-0 md:py-5">
+              <span className="mb-1.5 block w-fit rounded-md bg-sun-500 px-2 py-0.5 text-[12px] font-bold text-white md:hidden">{columns[1]}</span>
               {r.b}
             </dd>
           </div>
