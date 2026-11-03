@@ -476,6 +476,8 @@ td {
 }
 @media (max-width: 1023px) {
   .hero-in { animation-name: hero-in-move; }
+  /* 홈 첫 장면 제목 — 흐림·투명에서 시작하던 장면 전환 효과가 폰 첫 화면 큰 제목(LCP)을 4.3초로 늦췄다. 첫 장면만 움직임만 */
+  .hero-swap.is-first > * { animation-name: hero-in-move; }
 }
 
 /* 머리말 펼침 메뉴 — 위에서 아래로 짧게 내려온다(hero-in 은 아래에서 올라와 메뉴에는 어색했다, 오너 지적) */

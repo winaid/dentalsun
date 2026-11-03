@@ -77,10 +77,12 @@ const DURATION = 4500;
 
 export function HomeHero() {
   const [i, setI] = useState(0);
+  /* 첫 장면인지 — 폰에서는 첫 장면 글을 흐림·투명 없이 바로 보이게(globals.css .hero-swap.is-first). 장면이 한 번 바뀐 뒤부터는 원래대로 */
+  const [moved, setMoved] = useState(false);
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const t = setTimeout(() => setI((n) => (n + 1) % SLIDES.length), DURATION);
+    const t = setTimeout(() => { setMoved(true); setI((n) => (n + 1) % SLIDES.length); }, DURATION);
     return () => clearTimeout(t);
   }, [i]);
 
@@ -117,7 +119,7 @@ export function HomeHero() {
             SUN DENTAL CLINIC<span className="hidden sm:inline"> · 광화문역 6번 출구 도보 2분 · 시청역 3번 출구 도보 5분</span>
           </p>
           {/* 장면이 바뀌면 글도 같이 바뀐다 — key 를 바꿔 다시 그리면서 짧게 올라온다 */}
-          <div key={i} className="hero-swap">
+          <div key={i} className={`hero-swap${moved ? '' : ' is-first'}`}>
             <h1 className="display mt-6 text-balance !text-white on-photo">{SLIDES[i].title}</h1>
             <p className="keep-lines mt-7 text-[1.1rem] leading-[1.85] text-white/75 md:text-[1.1rem]"><Sentences text={SLIDES[i].lead} /></p>
           </div>
