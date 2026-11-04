@@ -338,14 +338,14 @@ export function breadcrumbSchema(trail: Array<{ name: string; path: string }>) {
 }
 
 /** 화면에 번호 매긴 목록이 실제로 보일 때만 쓴다(허브 페이지). */
-export function itemListSchema(path: string, items: Array<{ name: string; path: string }>, name?: string) {
+export function itemListSchema(path: string, items: Array<{ name: string; path: string; image?: string }>, name?: string) {
   return {
     '@type': 'ItemList',
     '@id': `${abs(path)}#itemlist`,
     ...(name ? { name } : {}),
     numberOfItems: items.length,
     itemListOrder: 'https://schema.org/ItemListOrderAscending',
-    itemListElement: items.map((it, i) => ({ '@type': 'ListItem', position: i + 1, name: it.name, url: abs(it.path) })),
+    itemListElement: items.map((it, i) => ({ '@type': 'ListItem', position: i + 1, name: it.name, url: abs(it.path), ...(it.image ? { image: abs(it.image) } : {}) })),
   };
 }
 

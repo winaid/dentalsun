@@ -25,7 +25,7 @@ import { DOCTORS, isCertCareer } from '@/lib/doctors';
 import type { NavItem } from '@/lib/nav';
 import { SCALING_QA, SITE_FAQ } from '@/lib/faq';
 import { figSrc } from '@/lib/docs';
-import { faqSchema, medicalWebPageSchema, og, physicianSchema } from '@/lib/seo';
+import { faqSchema, itemListSchema, medicalWebPageSchema, og, physicianSchema } from '@/lib/seo';
 
 export const metadata: Metadata = {
   alternates: { canonical: '/', languages: { 'ko-KR': CLINIC.url, 'x-default': CLINIC.url }, types: { 'application/rss+xml': `${CLINIC.url}/rss.xml` } },
@@ -40,6 +40,23 @@ const HOME_FAQ = SITE_FAQ.flatMap((g) => (g.id === 'painless' ? [g.items[0], SCA
  * 홈 '진료과목' 7 갈래 — 2026-09-21 메뉴가 5개로 줄었지만 홈의 이 구역은 예전 일곱 갈래 그대로(오너 "너무 적으니 이전처럼").
  * 메뉴(lib/nav)와 따로 두는 유일한 목록이다. 하위 이름은 아코디언 접힌 띠·폰 카드의 한 줄 요약에만 쓴다.
  */
+/**
+ * 네이버 검색 결과 사진 카드용 목록(ItemList) — 2026-11-04 본부장 "광화문선도 캐러셀 등록 시도" · 오너 "겉모습은 변하지 않게, 6개, gpt 로".
+ *  · 화면에는 안 그린다(구조화 데이터만). 이름은 **홈 화면에 실제로 보이는 글자**만 쓴다 — 안 보이는 항목을 넣으면 구조화 데이터 규칙 위반.
+ *    (첫 화면 '대표원장 1:1 책임진료', 진료과목·영상 구역 '디지털 임플란트'·'풀아치 임플란트'·'턱관절', 일반진료 '자연치아 살리기'·'무통 & 저자극 시스템')
+ *  · 그림 = 원장 새 프로필 사진(2차수정, 2026-11-03) + 시안(본부장이 준 옛 카드) 꼴, gpt-image-2 edit → public/img/cards/*.jpg 800².
+ *    만든 곳 C:/tmp/sun-cards (gen.mjs·prompts). 얼굴은 원본과 나란히 대조해 확인.
+ *  · 카드 단 곳 79% 가 홈 ItemList, 68% 가 카드 이름 = 목록 이름(2026-11-03 조사). 보장은 아니다 — 통합 칸에 들어가야 보이고, 네이버가 메뉴 글자 링크를 고를 수도 있다.
+ */
+const HOME_CARDS = [
+  { name: '대표원장 1:1 책임진료', path: '/about/doctors', image: '/img/cards/director.jpg' },
+  { name: '디지털 임플란트', path: '/treatment/implant', image: '/img/cards/digital.jpg' },
+  { name: '풀아치 임플란트', path: '/treatment/implant/full-arch', image: '/img/cards/fullarch.jpg' },
+  { name: '턱관절', path: '/treatment/tmj', image: '/img/cards/tmj.jpg' },
+  { name: '자연치아 살리기', path: '/treatment/natural-tooth', image: '/img/cards/natural.jpg' },
+  { name: '무통 & 저자극 시스템', path: '/treatment/painless', image: '/img/cards/painless.jpg' },
+];
+
 const HOME_HUBS: NavItem[] = [
   { label: '임플란트', href: '/treatment/implant', children: [
     { label: '내비게이션 임플란트', href: '/treatment/implant/navigation' }, { label: '맞춤 임플란트', href: '/treatment/implant/custom' },
@@ -124,6 +141,7 @@ export default function HomePage() {
           medicalWebPageSchema({ title: CLINIC.shortName, description: CLINIC.description, path: '/' }),
           ...DOCTORS.map(physicianSchema),
           faqSchema(HOME_FAQ, '/'),
+          itemListSchema('/', HOME_CARDS, '광화문 선치과 진료 안내'),
         ]}
       />
       <main id="main">
