@@ -35,6 +35,8 @@ export const metadata: Metadata = {
   },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 } },
   formatDetection: { telephone: true },
+  /* 검색 소유 확인 — 네이버 서치어드바이저 https://dentalsun.co.kr (2026-11-04). 지우면 소유 확인이 풀린다. */
+  verification: { other: { 'naver-site-verification': '5444666c67103709c56ce2c3b8ae7cfdde5c7e0b' } },
 };
 
 export const viewport: Viewport = { themeColor: '#ffffff' };
