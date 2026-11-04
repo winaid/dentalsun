@@ -158,14 +158,15 @@ export const HOURS: { lunch: { start: string; end: string }; rows: HourRow[]; di
  *    1·3·5째 토요일은 원래 쉬는 날이지만 병원 그림에 휴진으로 적혀 있어 그대로 옮긴다.
  */
 export const MONTHLY_NOTICE = {
-  month: '2026-10',
-  title: '2026년 10월 진료일정',
-  image: '/img/notice/2026-10.webp',
+  // 2026-11-04 병원 '11월 진료일정' 그림(팝업과 같은 것)에서 옮김 — 본부장 "아직 10월로 나와서 수정 부탁"
+  month: '2026-11',
+  title: '2026년 11월 진료일정',
+  image: '/img/notice/2026-11.webp',
+  width: 1021,
+  height: 1540,
   items: [
-    { dates: '10월 3일(토)', label: '휴진' },
-    { dates: '10월 5일(월)', label: '대체공휴일 정상진료' },
-    { dates: '10월 9일(금)', label: '휴진' },
-    { dates: '10월 17일 · 31일(토)', label: '휴진' },
+    { dates: '11월 7일 · 21일(토)', label: '휴진' },
+    { dates: '11월 14일 · 28일(토)', label: '정상진료 (10:00–14:00)' },
     { dates: '매주 일요일', label: '정기휴진' },
     { dates: '매주 화 · 목', label: '야간진료 (21:00까지)' },
   ],

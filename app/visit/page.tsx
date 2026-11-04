@@ -160,7 +160,7 @@ export default function VisitPage() {
               </ul>
             </div>
             <div className="reveal mx-auto w-full max-w-[520px]">
-              <Image src={MONTHLY_NOTICE.image} alt={MONTHLY_NOTICE.title} width={1024} height={1536} sizes="(max-width: 1024px) 100vw, 520px" className="h-auto w-full rounded-2xl border border-hairline" />
+              <Image src={MONTHLY_NOTICE.image} alt={MONTHLY_NOTICE.title} width={MONTHLY_NOTICE.width} height={MONTHLY_NOTICE.height} sizes="(max-width: 1024px) 100vw, 520px" className="h-auto w-full rounded-2xl border border-hairline" />
             </div>
           </div>
         </section>
