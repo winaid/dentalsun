@@ -48,15 +48,17 @@ const HOME_FAQ = SITE_FAQ.flatMap((g) => (g.id === 'painless' ? [g.items[0], SCA
  *    만든 곳 C:/tmp/sun-cards (gen.mjs·prompts). 얼굴은 원본과 나란히 대조해 확인.
  *  · v2(같은 날, 본부장 "원장만 나온다 · 피규어 같다, 전체 배경으로 확대"): 다섯 장은 기존 실제 진료 장면 사진, 대표원장만 새 사진을 꽉 차게.
  *    대표원장 카드는 AI 가 가운 이름 자수를 엉뚱한 이름으로 그려 그 자리만 흐림.
+ *  · v3(같은 날, 오너 "전부 원장님 사진이잖아, 2~3개는 기구·도구"): 디지털 임플란트=계획 화면·임플란트 모형, 풀아치=턱 모형, 무통 & 저자극=에어플로우 장비.
+ *    원장 사진은 대표원장·턱관절·자연치아 세 장만.
  *  · 카드 단 곳 79% 가 홈 ItemList, 68% 가 카드 이름 = 목록 이름(2026-11-03 조사). 보장은 아니다 — 통합 칸에 들어가야 보이고, 네이버가 메뉴 글자 링크를 고를 수도 있다.
  */
 const HOME_CARDS = [
   { name: '대표원장 1:1 책임진료', path: '/about/doctors', image: '/img/cards/v2-director.jpg' },
-  { name: '디지털 임플란트', path: '/treatment/implant', image: '/img/cards/v2-digital.jpg' },
-  { name: '풀아치 임플란트', path: '/treatment/implant/full-arch', image: '/img/cards/v2-fullarch.jpg' },
+  { name: '디지털 임플란트', path: '/treatment/implant', image: '/img/cards/v3-digital.jpg' },
+  { name: '풀아치 임플란트', path: '/treatment/implant/full-arch', image: '/img/cards/v3-fullarch.jpg' },
   { name: '턱관절', path: '/treatment/tmj', image: '/img/cards/v2-tmj.jpg' },
   { name: '자연치아 살리기', path: '/treatment/natural-tooth', image: '/img/cards/v2-natural.jpg' },
-  { name: '무통 & 저자극 시스템', path: '/treatment/painless', image: '/img/cards/v2-painless.jpg' },
+  { name: '무통 & 저자극 시스템', path: '/treatment/painless', image: '/img/cards/v3-painless.jpg' },
 ];
 
 const HOME_HUBS: NavItem[] = [
