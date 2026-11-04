@@ -46,15 +46,17 @@ const HOME_FAQ = SITE_FAQ.flatMap((g) => (g.id === 'painless' ? [g.items[0], SCA
  *    (첫 화면 '대표원장 1:1 책임진료', 진료과목·영상 구역 '디지털 임플란트'·'풀아치 임플란트'·'턱관절', 일반진료 '자연치아 살리기'·'무통 & 저자극 시스템')
  *  · 그림 = 원장 새 프로필 사진(2차수정, 2026-11-03) + 시안(본부장이 준 옛 카드) 꼴, gpt-image-2 edit → public/img/cards/*.jpg 800².
  *    만든 곳 C:/tmp/sun-cards (gen.mjs·prompts). 얼굴은 원본과 나란히 대조해 확인.
+ *  · v2(같은 날, 본부장 "원장만 나온다 · 피규어 같다, 전체 배경으로 확대"): 다섯 장은 기존 실제 진료 장면 사진, 대표원장만 새 사진을 꽉 차게.
+ *    대표원장 카드는 AI 가 가운 이름 자수를 엉뚱한 이름으로 그려 그 자리만 흐림.
  *  · 카드 단 곳 79% 가 홈 ItemList, 68% 가 카드 이름 = 목록 이름(2026-11-03 조사). 보장은 아니다 — 통합 칸에 들어가야 보이고, 네이버가 메뉴 글자 링크를 고를 수도 있다.
  */
 const HOME_CARDS = [
-  { name: '대표원장 1:1 책임진료', path: '/about/doctors', image: '/img/cards/director.jpg' },
-  { name: '디지털 임플란트', path: '/treatment/implant', image: '/img/cards/digital.jpg' },
-  { name: '풀아치 임플란트', path: '/treatment/implant/full-arch', image: '/img/cards/fullarch.jpg' },
-  { name: '턱관절', path: '/treatment/tmj', image: '/img/cards/tmj.jpg' },
-  { name: '자연치아 살리기', path: '/treatment/natural-tooth', image: '/img/cards/natural.jpg' },
-  { name: '무통 & 저자극 시스템', path: '/treatment/painless', image: '/img/cards/painless.jpg' },
+  { name: '대표원장 1:1 책임진료', path: '/about/doctors', image: '/img/cards/v2-director.jpg' },
+  { name: '디지털 임플란트', path: '/treatment/implant', image: '/img/cards/v2-digital.jpg' },
+  { name: '풀아치 임플란트', path: '/treatment/implant/full-arch', image: '/img/cards/v2-fullarch.jpg' },
+  { name: '턱관절', path: '/treatment/tmj', image: '/img/cards/v2-tmj.jpg' },
+  { name: '자연치아 살리기', path: '/treatment/natural-tooth', image: '/img/cards/v2-natural.jpg' },
+  { name: '무통 & 저자극 시스템', path: '/treatment/painless', image: '/img/cards/v2-painless.jpg' },
 ];
 
 const HOME_HUBS: NavItem[] = [
