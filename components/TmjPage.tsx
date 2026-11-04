@@ -229,7 +229,8 @@ function Triad({ className = '' }: { className?: string }) {
 export function AwardCard({ className = 'mt-10', tone = 'light' }: { className?: string; /** dark = 짙은 남색 판(흰 바탕 구역에서 상장을 돋보이게). 홈 턱관절 띠는 이미 어두운 사진 띠라 흰 판(light) 그대로 */ tone?: 'light' | 'dark' }) {
   const a = TMJ_AWARD;
   /* 2026-11-02 원장 PPT(261030) 21쪽 '대상, 턱관절치료 부분 강조' — 두 낱말만 주황 굵게(남색 판은 밝은 주황) */
-  const hot = tone === 'dark' ? 'font-extrabold text-sun-400' : 'font-extrabold text-sun-600';
+  /* 흰 판 주황은 sun-700 — sun-600(#e0570f)은 흰 바탕 대비 3.8 로 작은 글자 기준(4.5) 미달이었다(2026-11-04 치과소개 턱관절 구역 점검, 5.4 로) */
+  const hot = tone === 'dark' ? 'font-extrabold text-sun-400' : 'font-extrabold text-sun-700';
   const mark = (text: string, word: string) => {
     const at = text.indexOf(word);
     if (at < 0) return text;
@@ -252,7 +253,7 @@ export function AwardCard({ className = 'mt-10', tone = 'light' }: { className?:
           <Image src={figSrc(a.photo.key)} alt={a.photo.alt} fill sizes="(max-width: 767px) 100vw, 720px" className="object-cover" />
         </span>
         <figcaption className="px-5 py-4 md:px-7 md:py-5">
-          <p className="text-[13px] font-bold text-sun-600">
+          <p className="text-[13px] font-bold text-sun-700">
             {a.year} {a.by}
           </p>
           <p className="mt-1 text-[1.15rem] font-extrabold leading-snug text-ink md:text-[1.3rem]">
@@ -287,7 +288,7 @@ export function AwardCard({ className = 'mt-10', tone = 'light' }: { className?:
           </div>
         </div>
         <div className="flex min-w-0 flex-col justify-center py-5 pr-5 pl-1 sm:pl-0 md:py-9 md:pr-10 md:pl-6">
-          <p className={`award-line text-[13px] font-bold tracking-[0.02em] md:text-[15px] ${dark ? 'text-sun-400' : 'text-sun-600'}`}>
+          <p className={`award-line text-[13px] font-bold tracking-[0.02em] md:text-[15px] ${dark ? 'text-sun-400' : 'text-sun-700'}`}>
             {a.year} {a.by}
           </p>
           <p className={`award-line mt-1.5 text-[1.15rem] font-extrabold leading-snug [word-break:keep-all] md:mt-2 md:text-[1.7rem] ${dark ? 'text-white' : 'text-ink'}`}>{titleNode}</p>
@@ -314,7 +315,7 @@ export function AwardCard({ className = 'mt-10', tone = 'light' }: { className?:
         )}
       </span>
       <div className="min-w-0">
-        <p className="text-[13px] font-bold text-sun-600 md:text-[15px]">
+        <p className="text-[13px] font-bold text-sun-700 md:text-[15px]">
           {a.year} {a.by}
         </p>
         <p className="mt-1 text-[1.2rem] font-extrabold leading-snug text-ink md:text-[1.75rem]">{titleNode}</p>

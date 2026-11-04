@@ -4,9 +4,14 @@ import Image from 'next/image';
 import { SiteHeader } from '@/components/SiteHeader';
 import { HeroCollage } from '@/components/HeroCollage';
 import { JsonLd } from '@/components/JsonLd';
-import { Breadcrumb, ContactBand, Figure , Sentences } from '@/components/ui';
+import { Breadcrumb, ContactBand, Figure , RoundBadges, ScrubText, Sentences } from '@/components/ui';
 import { CLINIC, HYGIENE, STRENGTHS } from '@/lib/clinic';
 import { DOCTORS } from '@/lib/doctors';
+import { Fragment } from 'react';
+import { SECTIONS, TMJ_AWARD, TMJ_HUB_HERO_ITEMS } from '@/lib/content/tmjLanding';
+import { AwardCard } from '@/components/TmjPage';
+import { figSrc } from '@/lib/docs';
+import { splitAccent } from '@/lib/heroCollage';
 import { metaDesc, alt, breadcrumbSchema, medicalWebPageSchema, og, physicianSchema } from '@/lib/seo';
 
 const TITLE = '치과소개';
@@ -41,6 +46,17 @@ const POINTS = [
   { n: '04', title: '수술 가이드', desc: '모의 수술 결과에 따라 제작한 수술 가이드를 장착해 계획한 위치에 임플란트를 식립합니다. 잇몸 절개 범위를 줄여 출혈과 붓기가 덜할 수 있습니다.' },
   { n: '05', title: '원내 디지털 수술 가이드 제작', desc: 'CT와 구강스캔 자료를 바탕으로 수술 가이드를 설계하고, 원내 3D 프린터로 직접 제작합니다.' },
   { n: '06', title: 'INOS 진료 기구 소독', desc: '사용한 진료 기구를 INOS 소독기로 바로 소독해 교차감염을 막습니다. KTR 소독력 테스트를 마친 장비입니다.' },
+];
+
+/* 턱관절 구역 동그라미 배지 — 위 줄 작게 · 아래 줄 굵게. 근거: 상장(TMJ_AWARD) · STRENGTHS '대표원장 1:1 책임진료' ·
+   턱관절 장비 설명 '세 가지 물리치료 모두 건강보험이 적용' (2026-11-04 오너 "수상·1:1 어필").
+   폰(390)에서 네 개는 글자가 원 밖으로 넘쳐 세 개로 — 학회 정회원은 아래 02 칸 글에 있다 */
+const TMJ_BADGES = ['턱관절치료\n대상 수상', '대표원장\n1:1 책임진료', '물리치료\n건강보험 적용'];
+/* 세 칸 — 1:1 책임진료(STRENGTHS 원장 글) + 턱관절 첫 화면 카드 01·02(원장 PPT 167쪽·261026 17쪽) */
+const TMJ_STRONG = [
+  STRENGTHS.find((s) => s.title === '대표원장 1:1 책임진료')!,
+  TMJ_HUB_HERO_ITEMS[0],
+  TMJ_HUB_HERO_ITEMS[1],
 ];
 
 export default function AboutPage() {
@@ -131,6 +147,57 @@ export default function AboutPage() {
                 ⚠️ 더 납작하게(16/9 등) 가지 말 것 — 원장 머리 위 여백이 없어 잘린다.
                 2026-09-29 — 확대경 사진(scene/loupe)은 첫 화면 카드에 이미 있어, 플레이스 고해상 실사(원장이 구강 스캔하는 장면, 3:2 원본)로 바꿨다. */}
             <Figure fig={{ key: 'place2/doctor-scan', alt: '양대일 대표원장이 구강스캐너로 환자의 아래턱을 스캔하고, 벽 모니터에 3D 스캔 영상이 떠 있는 모습' }} ratio="aspect-[3/2]" />
+          </div>
+        </section>
+
+        {/* ── 턱관절 — 2026-11-04 본부장 "치과소개가 거의 임플란트 위주라 턱관절 내용이 빈약, 사진 밑에 턱관절 진료 얘기도" ·
+             오너 "위와 구역 분리 · 수상·1:1 어필(턱관절이 강점) · 모션그래픽도 쫙".
+             의료진(회색) 아래 따로 짙은 남색 사진 띠 — 위 의료진 구역(글+사진 두 칸)과 짜임을 다르게. 아래 3D DIGITAL(흰색)과도 갈린다.
+             새 문구 없음: 제목·설명 = 턱관절 쪽 첫머리(원장 PPT 168쪽, SECTIONS.intro) · 1:1 = STRENGTHS(원장 피드백 09-29) ·
+             경험·진단/근본 치료 = TMJ_HUB_HERO_ITEMS(PPT 167쪽·261026 17쪽) · 상장 = TMJ_AWARD(병원이 보낸 사진) · 학회·건강보험 = 의료진 약력·턱관절 장비 설명.
+             ⚠️ 상장 광고는 의료법 제56조 제2항 제14호 소지 — 2026-09-29 오너에게 알렸고 병원 결정으로 싣는다(홈·턱관절 쪽과 같음).
+             모션 = 사이트에 있는 것만: 배경 사진 흐름(data-parallax) · 설명 글 스크롤 채움(ScrubText) · 동그라미 배지 테두리(RoundBadges) ·
+             상장 카드 올라앉기(AwardCard) · 세 칸 차례로(reveal-stack). 새 반짝이·번지는 빛 없음. */}
+        <section id="tmj" className="relative isolate scroll-mt-16 overflow-hidden bg-night py-24 text-white md:py-32">
+          <div className="absolute inset-0 -z-10">
+            <Image src={figSrc('sun/tmj-explain-skull')} alt="" fill sizes="(max-width: 1023px) 250vw, 100vw" className="object-cover opacity-45" data-parallax="0.2" />
+            <div className="absolute inset-0 bg-gradient-to-b from-night/90 via-night/70 to-night/95" />
+          </div>
+          <div className="wrap">
+            <div className="reveal mx-auto max-w-[880px] text-center">
+              <p className="eyebrow on-dark justify-center">TMJ · 턱관절</p>
+              <h2 className="display-sm mt-4 !text-white on-photo">
+                {SECTIONS.intro.title.split('\n').map((line, i) => (
+                  <Fragment key={i}>
+                    {i > 0 && <br />}
+                    {splitAccent(line).map((p, k) => (p.accent ? <span key={k} className="accent-sun">{p.text}</span> : <Fragment key={k}>{p.text}</Fragment>))}
+                  </Fragment>
+                ))}
+              </h2>
+              {SECTIONS.intro.lead && (
+                <p className="mx-auto mt-6 max-w-[760px] text-[1.1rem] leading-[1.85] text-white md:text-[1.15rem]">
+                  {/* ⚠️ light 를 주면 밝은 바탕용(짙은 남색 글자)이 되어 이 남색 띠에서 안 보였다(2026-11-04 오너 "색도 안 보이는데") — 홈 턱관절 띠처럼 기본값 */}
+                  <ScrubText text={SECTIONS.intro.lead} />
+                </p>
+              )}
+            </div>
+            <RoundBadges tone="dark" className="mx-auto mt-12 max-sm:grid-cols-3 sm:justify-center" items={TMJ_BADGES} />
+            {TMJ_AWARD.show && <AwardCard className="mt-14" />}
+            <ol className="reveal-stack mx-auto mt-14 grid max-w-[1040px] gap-7 text-left md:grid-cols-3 md:gap-10">
+              {TMJ_STRONG.map((it, i) => (
+                <li key={it.title} className="border-l-2 border-sun-400/80 pl-5">
+                  <p className="flex items-baseline gap-2.5">
+                    <span className="text-[1.05rem] font-extrabold tabular-nums text-sun-300">{String(i + 1).padStart(2, '0')}</span>
+                    <span className="text-[1.1rem] font-bold leading-snug text-white md:text-[1.15rem]">{it.title}</span>
+                  </p>
+                  <p className="mt-3 text-[16.5px] leading-[1.8] text-white/80">{it.desc}</p>
+                </li>
+              ))}
+            </ol>
+            <div className="mt-12 flex flex-wrap justify-center gap-3">
+              <Link href="/treatment/tmj" className="btn-sun">턱관절 진료 자세히</Link>
+              <Link href="/treatment/tmj/symptoms" className="btn-ghost-dark">증상 자가진단</Link>
+            </div>
           </div>
         </section>
 
