@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from '@/components/SiteLink';
 import Image from 'next/image';
 import type { BlogPost } from '@/lib/blog';
 import { Breadcrumb, Sentences } from '@/components/ui';

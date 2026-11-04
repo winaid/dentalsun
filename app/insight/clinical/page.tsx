@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
+import Link from '@/components/SiteLink';
 import { CLINIC } from '@/lib/clinic';
 import { allClinicalPosts, publishedIso, type BlogPost } from '@/lib/blog';
 import { ContactBand, Sentences } from '@/components/ui';

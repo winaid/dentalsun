@@ -2,7 +2,7 @@ import { NoticePopup } from '@/components/NoticePopup';
 import popupData from '@/content/popups.json';
 import type { Popup } from '@/lib/popups';
 import type { Metadata } from 'next';
-import Link from 'next/link';
+import Link from '@/components/SiteLink';
 import Image from 'next/image';
 import { SiteHeader } from '@/components/SiteHeader';
 import { HomeHero } from '@/components/HomeHero';

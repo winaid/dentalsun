@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
+import Link from '@/components/SiteLink';
 import Image from 'next/image';
 import { CLINIC, HOURS, STATIONS } from '@/lib/clinic';
 import { figSrc } from '@/lib/docs';

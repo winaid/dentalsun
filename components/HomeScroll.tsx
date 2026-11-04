@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import Link from 'next/link';
+import Link from '@/components/SiteLink';
 import { Sentences } from '@/components/ui';
 import { figSrc, type Block } from '@/lib/docs';
 import { docByPath } from '@/lib/content';

@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from '@/components/SiteLink';
 import Image from 'next/image';
 import { NAV } from '@/lib/nav';
 import { CLINIC, HOURS } from '@/lib/clinic';

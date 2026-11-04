@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import Link from 'next/link';
+import Link from '@/components/SiteLink';
 import { FlipCard } from '@/components/FlipCard';
 import { figSrc, type Fig } from '@/lib/docs';
 import { Sentences } from '@/components/ui';

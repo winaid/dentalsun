@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import Link from 'next/link';
+import Link from '@/components/SiteLink';
 import type { ReactNode } from 'react';
 import { SiteHeader } from '@/components/SiteHeader';
 import { HeroCollage } from '@/components/HeroCollage';

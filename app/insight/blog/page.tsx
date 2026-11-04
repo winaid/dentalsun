@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
+import Link from '@/components/SiteLink';
 import Image from 'next/image';
 import { CLINIC } from '@/lib/clinic';
 import { publishedIso } from '@/lib/blog';

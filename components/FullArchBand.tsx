@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import Link from 'next/link';
+import Link from '@/components/SiteLink';
 import { RoundBadges } from '@/components/ui';
 import { figSrc } from '@/lib/docs';
 
