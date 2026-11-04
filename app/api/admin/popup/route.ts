@@ -3,7 +3,7 @@ import { readFile as readLocal } from 'node:fs/promises';
 import path from 'node:path';
 import { isAuthed } from '@/lib/adminAuth';
 import { tokenFrom, readFile, commitFiles } from '@/lib/github';
-import { POPUPS_PATH, POPUP_IMG_DIR, parsePopups, serializePopups, type Popup } from '@/lib/popups';
+import { POPUPS_PATH, POPUP_IMG_DIR, parsePopups, serializePopups, type Popup, clampSize } from '@/lib/popups';
 
 export const runtime = 'nodejs';
 export const maxDuration = 60;
@@ -12,8 +12,8 @@ export const maxDuration = 60;
  * 홈 공지 팝업 관리 (lib/popups.ts 머리말 참고).
  *
  * GET                               목록 — 저장소가 진실이라 방금 저장한 것도 바로 보인다.
- * POST   { data, alt, start, end, link }   새 팝업(그림 data URL → webp, 그림+목록 커밋 하나)
- * PATCH  { id, alt?, start?, end?, link?, enabled? }   기간·설명·켜고 끄기
+ * POST   { data, alt, start, end, link, size }   새 팝업(그림 data URL → webp, 그림+목록 커밋 하나)
+ * PATCH  { id, alt?, start?, end?, link?, enabled?, size? }   size = 넓은 화면 최대 폭(px), null 이면 기본   기간·설명·켜고 끄기
  * DELETE { id }                     팝업과 그림을 함께 지운다(커밋 하나)
  */
 const noAuth = () => NextResponse.json({ error: '로그인이 필요합니다.' }, { status: 401 });
@@ -87,6 +87,7 @@ export async function POST(req: Request) {
     start,
     end,
     ...(link ? { link } : {}),
+    ...(clampSize(b.size) ? { size: clampSize(b.size) } : {}),
     enabled: true,
   };
   try {
@@ -118,6 +119,11 @@ export async function PATCH(req: Request) {
   if (b.end !== undefined) p.end = String(b.end);
   if (b.alt !== undefined) p.alt = String(b.alt).trim().slice(0, 300) || '광화문 선치과 공지';
   if (b.enabled !== undefined) p.enabled = !!b.enabled;
+  if (b.size !== undefined) {
+    const s = clampSize(b.size);
+    if (s) p.size = s;
+    else delete p.size;
+  }
   if (b.link !== undefined) {
     const link = cleanLink(b.link);
     if (link === null) return bad('연결 주소는 / 로 시작하거나 https:// 로 시작해야 합니다.');
@@ -128,7 +134,7 @@ export async function PATCH(req: Request) {
   if (p.start > p.end) return bad('종료일이 시작일보다 빠릅니다.');
   list[i] = p;
   try {
-    await commitFiles(token, [{ path: POPUPS_PATH, content: serializePopups(list) }], `팝업 수정 (${p.start} ~ ${p.end}${p.enabled ? '' : ', 꺼짐'})`);
+    await commitFiles(token, [{ path: POPUPS_PATH, content: serializePopups(list) }], `팝업 수정 (${p.start} ~ ${p.end}${p.size ? `, 폭 ${p.size}px` : ''}${p.enabled ? '' : ', 꺼짐'})`);
     return NextResponse.json({ ok: true, popups: list });
   } catch (e) {
     return NextResponse.json({ error: String(e).slice(0, 300) }, { status: 502 });

@@ -27,7 +27,24 @@ export type Popup = {
   link?: string;
   /** 끄면 기간 안이어도 안 뜬다. */
   enabled: boolean;
+  /** 넓은 화면에서 팝업 한 장의 최대 폭(px). 비우면 DEFAULT_POPUP_SIZE. 폰·낮은 화면에선 이보다 저절로 줄어든다. */
+  size?: number;
 };
+
+/* 팝업 크기 (2026-11-04 오너 "admin 에서 팝업 크기 조절도 가능하게") — 관리 화면의 세 단계 + 직접 입력(px). */
+export const DEFAULT_POPUP_SIZE = 420;
+export const POPUP_SIZE_MIN = 280;
+export const POPUP_SIZE_MAX = 560;
+export const POPUP_SIZES = [
+  { label: '작게', px: 360 },
+  { label: '보통', px: 420 },
+  { label: '크게', px: 480 },
+] as const;
+export const clampSize = (v: unknown) => {
+  const n = Math.round(Number(v));
+  return Number.isFinite(n) && n > 0 ? Math.min(POPUP_SIZE_MAX, Math.max(POPUP_SIZE_MIN, n)) : undefined;
+};
+export const sizeOf = (p: Pick<Popup, 'size'>) => p.size ?? DEFAULT_POPUP_SIZE;
 
 export const todayKst = () => new Date(Date.now() + 9 * 3600_000).toISOString().slice(0, 10);
 

@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { AdminLogin } from '@/components/admin/AdminLogin';
-import { todayKst, type Popup } from '@/lib/popups';
+import { DEFAULT_POPUP_SIZE, POPUP_SIZES, POPUP_SIZE_MAX, POPUP_SIZE_MIN, clampSize, sizeOf, todayKst, type Popup } from '@/lib/popups';
 
 /**
  * 팝업 관리 (2026-10-29 오너 "이미지만 넣으면 팝업 생길 수 있게, 사라지는 기간도 정할 수 있게").
@@ -43,6 +43,56 @@ async function shrink(file: File): Promise<string> {
   return c.toDataURL('image/jpeg', 0.92);
 }
 
+/**
+ * 크기 고르기 (2026-11-04 오너 "팝업 크기 조절도 가능하게") — 넓은 화면에서 한 장의 최대 폭.
+ * 폰·낮은 화면에서는 이 값보다 저절로 작아진다(components/NoticePopup.tsx).
+ */
+function SizePicker({ value, onChange }: { value: number; onChange: (v: number) => void }) {
+  const [text, setText] = useState(String(value));
+  useEffect(() => setText(String(value)), [value]);
+  const commit = () => {
+    const v = clampSize(text);
+    if (v) onChange(v);
+    else setText(String(value));
+  };
+  return (
+    <div>
+      <div className="flex flex-wrap items-center gap-2">
+        {POPUP_SIZES.map((s) => (
+          <button
+            key={s.px}
+            type="button"
+            onClick={() => onChange(s.px)}
+            className={`${chip} ${value === s.px ? '!border-ink !bg-ink !text-white' : ''}`}
+          >
+            {s.label} {s.px}
+          </button>
+        ))}
+        <label className="flex items-center gap-1.5 text-[13px] font-bold text-ink-soft">
+          직접
+          <input
+            type="number"
+            min={POPUP_SIZE_MIN}
+            max={POPUP_SIZE_MAX}
+            step={10}
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            onBlur={commit}
+            onKeyDown={(e) => e.key === 'Enter' && commit()}
+            className="w-[84px] rounded-lg border border-hairline bg-white px-2.5 py-1 text-[14px] text-ink outline-none focus:border-sun-500"
+          />
+          px
+        </label>
+      </div>
+      {/* 실제 비율 미리 보기 — 1920 화면 폭을 이 상자 폭으로 보고 팝업 한 장이 차지하는 만큼 */}
+      <div className="mt-2.5 flex h-7 w-full max-w-[360px] items-center rounded-md bg-canvas px-1">
+        <div className="h-5 rounded bg-sun-500/70" style={{ width: `${(value / 1920) * 100}%` }} />
+        <span className="ml-2 text-[12px] text-ink-muted">PC 화면(1920) 대비 · 폰은 화면 폭에 맞춤</span>
+      </div>
+    </div>
+  );
+}
+
 function status(p: Popup, today: string) {
   if (!p.enabled) return { text: '꺼짐', cls: 'bg-canvas text-ink-muted' };
   if (today < p.start) return { text: '예정', cls: 'bg-amber-50 text-amber-800' };
@@ -63,10 +113,13 @@ export default function PopupAdmin() {
   const [end, setEnd] = useState(monthEnd(today));
   const [alt, setAlt] = useState('');
   const [link, setLink] = useState('');
+  const [size, setSize] = useState<number>(DEFAULT_POPUP_SIZE);
   const fileRef = useRef<HTMLInputElement>(null);
 
   /* 목록에서 기간 고치는 중인 값 */
   const [edits, setEdits] = useState<Record<string, { start: string; end: string }>>({});
+  /* 목록에서 크기 고치는 중인 값 */
+  const [sizeEdits, setSizeEdits] = useState<Record<string, number>>({});
 
   const headers = useCallback(() => {
     const h: Record<string, string> = { 'content-type': 'application/json' };
@@ -111,8 +164,8 @@ export default function PopupAdmin() {
   const add = async () => {
     if (!data) { setMsg({ kind: 'err', text: '그림을 먼저 넣어 주세요.' }); return; }
     if (start > end) { setMsg({ kind: 'err', text: '종료일이 시작일보다 빠릅니다.' }); return; }
-    const done = await send('POST', { data, start, end, alt, link }, `올렸습니다. 1~2분 뒤 홈에 뜨고, ${koDate(end)} 이 지나면 저절로 사라집니다.`);
-    if (done) { setData(null); setAlt(''); setLink(''); }
+    const done = await send('POST', { data, start, end, alt, link, size }, `올렸습니다. 1~2분 뒤 홈에 뜨고, ${koDate(end)} 이 지나면 저절로 사라집니다.`);
+    if (done) { setData(null); setAlt(''); setLink(''); setSize(DEFAULT_POPUP_SIZE); }
   };
 
   const saveDates = (p: Popup) => {
@@ -120,6 +173,14 @@ export default function PopupAdmin() {
     if (!e) return;
     send('PATCH', { id: p.id, ...e }, `기간을 ${koDate(e.start)} ~ ${koDate(e.end)} 로 바꿨습니다. 1~2분 뒤 반영됩니다.`).then((ok) => {
       if (ok) setEdits(({ [p.id]: _, ...rest }) => rest);
+    });
+  };
+
+  const saveSize = (p: Popup) => {
+    const v = sizeEdits[p.id];
+    if (!v) return;
+    send('PATCH', { id: p.id, size: v }, `크기를 ${v}px 로 바꿨습니다. 1~2분 뒤 반영됩니다.`).then((ok) => {
+      if (ok) setSizeEdits(({ [p.id]: _, ...rest }) => rest);
     });
   };
 
@@ -189,6 +250,10 @@ export default function PopupAdmin() {
             <button type="button" className={chip} onClick={() => setEnd(monthEnd(start))}>이번 달 말</button>
             <button type="button" className={chip} onClick={() => setEnd(monthEnd(start, 1))}>다음 달 말</button>
           </div>
+          <div>
+            <span className={labelCls}>크기 (넓은 화면에서 한 장의 폭)</span>
+            <div className="mt-2"><SizePicker value={size} onChange={setSize} /></div>
+          </div>
           <details className="rounded-xl bg-canvas px-4 py-3">
             <summary className="cursor-pointer text-[14px] font-bold text-ink-soft">더 정하기 (선택)</summary>
             <div className="mt-4 space-y-4">
@@ -223,6 +288,7 @@ export default function PopupAdmin() {
                 <div className="flex flex-wrap items-center gap-2">
                   <span className={`rounded-full px-2.5 py-0.5 text-[12.5px] font-black ${s.cls}`}>{s.text}</span>
                   <span className="text-[14.5px] text-ink">{koDate(p.start)} ~ {koDate(p.end)}</span>
+                  <span className="text-[13px] text-ink-muted">· 폭 {sizeOf(p)}px</span>
                 </div>
                 <p className="mt-1 line-clamp-1 text-[13px] text-ink-muted">{p.alt}{p.link ? ` · 누르면 ${p.link}` : ''}</p>
                 <div className="mt-4 flex flex-wrap items-end gap-3">
@@ -235,6 +301,15 @@ export default function PopupAdmin() {
                     <input type="date" value={e.end} min={e.start} onChange={(ev) => setE('end', ev.target.value)} className={`${inputCls} mt-1 py-2`} />
                   </label>
                   {dirty && <button type="button" onClick={() => saveDates(p)} disabled={busy} className={btnDark}>기간 저장</button>}
+                </div>
+                <div className="mt-4">
+                  <span className={labelCls}>크기</span>
+                  <div className="mt-1.5 flex flex-wrap items-start gap-3">
+                    <SizePicker value={sizeEdits[p.id] ?? sizeOf(p)} onChange={(v) => setSizeEdits((all) => ({ ...all, [p.id]: v }))} />
+                    {sizeEdits[p.id] !== undefined && sizeEdits[p.id] !== sizeOf(p) && (
+                      <button type="button" onClick={() => saveSize(p)} disabled={busy} className={btnDark}>크기 저장</button>
+                    )}
+                  </div>
                 </div>
                 <div className="mt-4 flex flex-wrap gap-2">
                   <button type="button" onClick={() => toggle(p)} disabled={busy} className={btnLine}>{p.enabled ? '끄기' : '켜기'}</button>
