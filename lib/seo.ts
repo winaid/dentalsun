@@ -175,73 +175,71 @@ export function desc80(s: string, max = DESC_MAX): string {
 }
 
 /**
- * 메타 설명 — 쪽마다 '광화문 {검색어} 광화문 선치과. 광화문역·시청역·종로·을지로 인근, {그 쪽 설명}' 꼴 (2026-11-03 오너·병원).
- *  · 병원 요청 "메타 디스크립션에서라도 최대한 많은 키워드". 네이버 '광화문치과' 상위 아크치과·더스퀘어치과 설명 짜임을 따랐다
- *    — 맨 앞에 지역+진료 검색어와 병원 이름, 이어서 주변 역·동네, 그다음 진료 낱말.
- *  · 네이버 폰 화면에 보이는 앞 80자 남짓에 검색어가 다 들어가도록 앞에 몰고, 뒤는 구글이 보여 주는 150자까지 채운다.
- *  · 기존 설명 앞머리 '광화문 선치과 ○○ — ' 는 앞에 붙는 것과 겹치므로 떼어 낸다.
+ * 메타 설명 — '광화문역·시청역·종로·을지로 인근에서 …' 로 시작하는 문장 (2026-11-04 본부장 예시 꼴).
+ *  · 11-03 판은 '광화문 {검색어} 광화문 선치과. 광화문역·시청역·종로·을지로 인근, {설명}' 이었는데,
+ *    병원에서 "예시로 넘겼던 아크치과랑 쉼표·순서까지 너무 똑같다" → 본부장이 준 턱관절 예시
+ *    "광화문역·시청역·종로·을지로 인근에서 턱관절 통증·소리·입 벌리기 어려움 등 증상의 원인을 정밀하게 진단하고,
+ *     약물·물리치료·보톡스·스플린트 등 개인별 상태에 맞는 치료를 진행합니다." 꼴로 바꿨다.
+ *  · 진료·소개 쪽은 아래 DESC_FIXED 에 한 쪽씩 쓴다 — 내용은 그 쪽 원래 설명(원장 문구)에 있는 사실만, 순서·이음만 바꿈.
+ *    턱관절(/treatment/tmj)은 본부장 예시 글자 그대로.
+ *  · 글(블로그·임상·증상·가이드)은 문장이 제각각이라 '…인근에서' 로 이으면 비문이 된다("…인근에서 오늘은 …")
+ *    → 앞에 '광화문역·시청역·종로·을지로 인근 광화문 선치과.' 만 붙인다.
+ *  · 기존 설명 앞머리 '광화문 선치과 ○○ — ' 는 떼어 낸다.
  */
 const REGION = '광화문역·시청역·종로·을지로 인근';
-const DESC_KEYWORD: Array<[RegExp, string]> = [
-  [/^\/$/, '치과'],
-  [/^\/treatment\/implant\/navigation/, '내비게이션 임플란트'],
-  [/^\/treatment\/implant\/custom/, '맞춤 임플란트'],
-  [/^\/treatment\/implant\/full-arch/, '풀아치 임플란트'],
-  [/^\/treatment\/implant\/uv/, 'UV 임플란트'],
-  [/^\/treatment\/implant\/prf/, '자가혈 임플란트'],
-  [/^\/treatment\/implant\/bone-graft/, '뼈이식 임플란트'],
-  [/^\/treatment\/implant\/warranty/, '임플란트 보증'],
-  [/^\/treatment\/implant/, '임플란트'],
-  [/^\/treatment\/insurance\/denture/, '보험틀니'],
-  [/^\/treatment\/insurance\/implant/, '보험임플란트'],
-  [/^\/treatment\/insurance/, '보험 임플란트·틀니'],
-  [/^\/treatment\/tmj\/symptoms/, '턱관절 장애'],
-  [/^\/treatment\/tmj\/bruxism/, '이갈이 치료'],
-  [/^\/treatment\/tmj/, '턱관절 치료'],
-  [/^\/treatment\/aesthetic\/prosthetics/, '라미네이트'],
-  [/^\/treatment\/aesthetic\/whitening/, '치아미백'],
-  [/^\/treatment\/aesthetic/, '심미치료'],
-  [/^\/treatment\/wisdom-tooth/, '사랑니 발치'],
-  [/^\/treatment\/natural-tooth\/mta/, 'MTA 신경치료'],
-  [/^\/treatment\/natural-tooth/, '신경치료'],
-  [/^\/treatment\/re-root-canal/, '재신경치료'],
-  [/^\/treatment\/periodontal/, '잇몸치료'],
-  [/^\/treatment\/painless\/airflow/, '에어플로우 스케일링'],
-  [/^\/treatment\/painless/, '무통치료'],
-  [/^\/insight\/symptom\/(jaw-clicking|mouth-wont-open)/, '턱관절'],
-  [/^\/insight\/symptom\/morning-jaw-headache/, '이갈이'],
-  [/^\/insight\/symptom\/sensitive-teeth/, '시린이 치료'],
-  [/^\/insight\/symptom\/bleeding-gums/, '잇몸치료'],
-  [/^\/insight\/symptom\/(pain-when-chewing|pain-after-root-canal)/, '신경치료'],
-  [/^\/insight\/symptom\/wisdom-tooth-pain/, '사랑니'],
-  [/^\/insight\/symptom\/(loose-or-missing-tooth|swelling-around-implant)/, '임플란트'],
-  [/^\/insight\/symptom\/loose-denture/, '틀니'],
-  [/^\/insight\/symptom\/yellow-teeth/, '치아미백'],
-  [/^\/insight\/guide\/(implant-journey|implant-cost-factors)/, '임플란트'],
-  [/^\/insight\/guide\/tmj-treatment-flow/, '턱관절 치료'],
-  [/^\/insight\/guide\/dental-anxiety/, '무통치료'],
-];
-const TOPIC_WORDS: Array<[RegExp, string]> = [
-  [/임플란트|상악동|식립/, '임플란트'],
-  [/미백/, '치아미백'],
-  [/턱관절|턱에서|턱 소리/, '턱관절'],
-  [/틀니/, '틀니'],
-  [/신경치료|근관|치근단/, '신경치료'],
-  [/마취|무서운/, '무통치료'],
-  [/사랑니/, '사랑니'],
-];
+const R = `${REGION}에서 `;
+const DESC_FIXED: Record<string, string> = {
+  '/': `${R}통합치의학과 전문의 대표원장이 내비게이션·풀아치 임플란트, 턱관절 치료, 사랑니 발치, MTA 신경치료, 라미네이트, 치아미백을 직접 진료합니다. 화·목 야간진료, 코리아나 호텔 주차.`,
+  '/about': `${R}통합치의학과 전문의 양대일 대표원장이 1:1로 책임진료합니다. 3D CT·구강스캐너로 진단하고 모의 수술과 원내 3D 프린터 수술 가이드로 치료하며, 진료 기구는 1인 1기구로 멸균합니다.`,
+  '/about/doctors': `${R}보건복지부 인증 통합치의학과 전문의이자 강남성심병원 치과 외래교수인 양대일 대표원장이 진료합니다. 대표원장의 약력과 진료 철학을 소개합니다.`,
+  '/about/equipment': `${R}3D 구강스캐너와 3D CT(CBCT), 모의 수술 소프트웨어, 원내 3D 프린터 수술 가이드로 진단하고 치료합니다. INOS 진료 기구 소독, 무통마취기, 에어플로우, PHL-15 레이저를 갖췄습니다.`,
+  '/visit': `${REGION} 광화문 선치과는 5호선 광화문역 6번 출구 도보 2분, 1·2호선 시청역 3번 출구 도보 5분 거리입니다. 화·목 야간진료 21시, 코리아나 호텔 야외주차장 무료주차를 안내합니다.`,
+  '/faq': `${REGION} 광화문 선치과에 자주 묻는 진료시간·야간진료·주차, 내비게이션·풀아치 임플란트, 턱관절 소리와 개구장애, 만 65세 보험 임플란트와 틀니, 무통마취를 문답으로 정리했습니다.`,
+  '/treatment': `${R}CBCT 계측과 모의 식립으로 진행하는 디지털 임플란트, 턱 소리·개구장애를 진단하는 턱관절 치료, MTA 신경치료로 자연치아 보존, 매복 사랑니 발치, 보험 틀니·임플란트를 진료합니다.`,
+  '/treatment/implant': `${R}통합치의학과 전문의 대표원장이 3D CT 진단과 모의 수술, 수술 가이드, 맞춤 보철, 정기검진까지 직접 진행합니다. 내비게이션·풀아치·UV·자가혈 임플란트와 10년 보증제도를 안내합니다.`,
+  '/treatment/implant/navigation': `${R}3D CT와 구강스캔으로 미리 수술해 보고 수술 가이드로 식립하는 내비게이션 임플란트를 진행합니다. 신경·상악동 거리 확인, 비절개 식립의 조건과 한계, 진행 순서를 안내합니다.`,
+  '/treatment/implant/custom': `${R}잇몸 모양과 맞물림에 맞춰 1:1로 설계하는 맞춤 지대주(커스텀 어버트먼트)로 임플란트를 완성합니다. 기성 지대주와의 차이, 제작 과정, 설계 기준, 임플란트 주위염 관리를 안내합니다.`,
+  '/treatment/implant/full-arch': `${R}치아가 없는 턱에 임플란트 4~6개를 식립해 한 턱 전체를 고정된 치아로 되살리는 풀아치 임플란트를 진행합니다. 틀니와의 차이, 3D CT 진단과 모의 수술, 당일 임시치아 조건을 안내합니다.`,
+  '/treatment/implant/uv': `${R}모든 임플란트에 식립 직전 UV 표면 처리를 적용합니다. 표면 유기물 제거와 친수성 향상으로 초기 골유착을 돕는 원리, UV 처리가 더욱 중요한 경우와 한계를 안내합니다.`,
+  '/treatment/implant/prf': `${R}내 혈액에서 얻은 PRF를 뼈이식재와 함께 넣어 잇몸뼈와 잇몸의 회복을 돕는 자가혈 임플란트를 진행합니다. 뼈이식·상악동거상술이 필요한 경우와 진행 과정을 안내합니다.`,
+  '/treatment/implant/bone-graft': `${R}잇몸뼈가 부족한 정도를 3D CT로 확인하고 뼈이식·상악동거상술로 필요한 만큼 뼈를 채운 뒤 임플란트를 진행합니다. 필요한 경우와 진행 순서, 회복을 안내합니다.`,
+  '/treatment/implant/warranty': `${R}보존·보철 치료와 임플란트 수술관련·보철관련을 나눈 기간별 보증표(무상·50%·30%·15% 지원)와 정기검진·치료계획 준수 등 보증 유지 조건을 안내합니다.`,
+  '/treatment/insurance': `${R}건강보험 가입 만 65세 이상이면 본인 부담금 30%로 틀니와 임플란트 진료를 받을 수 있습니다. 보험 틀니·임플란트의 대상과 적용 기준을 안내합니다.`,
+  '/treatment/insurance/denture': `${R}만 65세 이상 건강보험 가입자는 본인 부담금 30%로 전체틀니·부분틀니를 받을 수 있습니다. 보험틀니 적용 기준과 진행 과정, 틀니 관리법을 안내합니다.`,
+  '/treatment/insurance/implant': `${R}만 65세 이상, 치아가 일부라도 남아 있으면 1인당 평생 2개까지 건강보험이 적용되는 보험임플란트를 진행합니다. 본인 부담금 30%, 지르코니아 크라운 보철입니다.`,
+  '/treatment/tmj': `${R}턱관절 통증·소리·입 벌리기 어려움 등 증상의 원인을 정밀하게 진단하고, 약물·물리치료·보톡스·스플린트 등 개인별 상태에 맞는 치료를 진행합니다.`,
+  '/treatment/tmj/symptoms': `${R}관절잡음·통증·개구장애 같은 턱관절 장애의 증상과 분류, 거울 앞에서 해 보는 자가진단 다섯 가지와 점검표, 안면비대칭 등 전신 증상을 안내합니다.`,
+  '/treatment/tmj/bruxism': `${R}수면 이갈이와 주간 이악물기로 생긴 치아 마모·균열과 저작근 통증을 마모 양상·저작근 촉진으로 진단하고, 맞춤 교합안정장치와 보툴리눔 톡신·물리치료를 진행합니다.`,
+  '/treatment/tmj/treatment': `${R}약물·물리치료, 보툴리눔 톡신, 교합안정장치를 진단에 맞춰 필요한 만큼 진행합니다. 초음파치료, 저주파 전기 자극치료(TENS), PHL-15 레이저 물리치료는 건강보험이 적용됩니다.`,
+  '/treatment/general': `${R}MTA 근관치료로 자연치아 살리기, 재근관치료, 스케일링·치근활택술 치주치료, 3D CT 매복사랑니 발치, 심미보철·미백, 무통마취를 대표원장이 직접 진료합니다.`,
+  '/treatment/natural-tooth': `${R}3D CT로 신경과 뿌리 끝 상태를 확인하고, 엔도소닉 초음파 세척과 MTA로 신경치료를 해 자연치아를 살립니다. 신경 염증 단계별 치료와 치관 길이 확장술을 안내합니다.`,
+  '/treatment/natural-tooth/mta': `${R}바이오 세라믹 MTA로 신경관을 막아 재감염의 여지를 줄이는 MTA 근관치료를 진행합니다. 신경 보존·처음 신경치료·재신경치료에서의 쓰임과 일반 신경치료와의 차이를 안내합니다.`,
+  '/treatment/natural-tooth/endosonic': `${R}초음파로 세척액을 떨리게 해 곁가지와 어금니 신경관까지 씻어 내고 MTA로 막는 엔도소닉 근관세척을 진행합니다. 세척이 신경치료 결과에 중요한 이유를 안내합니다.`,
+  '/treatment/re-root-canal': `${R}신경치료 후 다시 생긴 뿌리 끝 염증을 3D CT로 진단하고, 기존 재료 제거·엔도소닉 세척·MTA 밀폐로 자연치아 보존을 시도합니다. 치근단절제술·발치와의 선택 기준도 안내합니다.`,
+  '/treatment/periodontal': `${R}잇몸 주머니 깊이와 엑스레이로 치은염·치주염 단계를 확인하고, 스케일링·치근활택술·에어플로우 관리로 잇몸뼈가 녹는 것을 늦춥니다.`,
+  '/treatment/wisdom-tooth': `${R}3D CT로 아래턱 신경과 뿌리의 거리를 확인하고 절개·나누기·발치·봉합 순으로 매복사랑니를 발치합니다. 묻힌 모양과 발치 난이도, 발치 후 관리를 안내합니다.`,
+  '/treatment/aesthetic': `${R}라미네이트·올세라믹·지르코니아 심미보철과 전문가 치아미백을 진행합니다. 치아 모양·색·배열과 잇몸선, 교합을 함께 보고 치아를 적게 깎는 방법부터 검토합니다.`,
+  '/treatment/aesthetic/prosthetics': `${R}라미네이트·올세라믹·지르코니아로 깨지거나 벌어진 앞니, 고르지 않은 배열을 개선합니다. 남은 치아 구조와 교합에 따른 재료 선택과 치료 전후 사례를 안내합니다.`,
+  '/treatment/aesthetic/whitening': `${R}전문가용 미백제와 광선 활성화로 누렇게 변색되거나 커피·흡연으로 착색된 치아를 밝힙니다. 치아미백이 필요한 경우와 진행 과정, 시술 후 주의사항을 안내합니다.`,
+  '/treatment/painless': `${R}무통마취기 NO-PAIN III, 리도카겔 도포마취·리도카글액 가글마취, EMS 에어플로우 저자극 스케일링으로 마취 주사의 통증과 스케일링의 시림을 줄입니다.`,
+  '/treatment/painless/anesthesia': `${R}무통마취기 NO-PAIN III로 마취액을 일정한 속도와 압력으로 주입해 주사 통증을 줄입니다. 리도카겔 도포마취와 리도카글액 2% 가글마취, 마취 후 주의사항을 안내합니다.`,
+  '/treatment/painless/airflow': `${R}미세 파우더 분사, 10단계 강도 조절, 물 온도 조절의 에어플로우 저자극 스케일링으로 시림과 자극을 줄입니다. 치은염·치주염·임플란트 주위염 관리와 GBT 8단계를 안내합니다.`,
+  '/insight': `${REGION} 광화문 선치과가 턱관절 소리, 시린 이, 잇몸 출혈 등 12가지 증상별 안내와 임플란트 과정·비용 요인·건강보험·턱관절 치료 순서 등 6가지 가이드를 일반 정보로 정리했습니다.`,
+  '/insight/blog': `${REGION} 광화문 선치과가 진료하면서 자주 받는 질문과 알아 두시면 좋은 내용을 정리해 올립니다. 충치와 잇몸, 임플란트와 사랑니처럼 진료실에서 설명이 길어지는 주제를 글로 풀어 두었습니다.`,
+  '/insight/clinical': `${REGION} 광화문 선치과에서 실제로 진행한 치료 과정을 사진과 함께 정리한 임상 사례와, 상악동거상술·임플란트 구조·틀니와 풀아치 임플란트처럼 치료를 이해하는 데 필요한 안내 글을 모았습니다.`,
+};
+const LEAD = `${REGION} ${CLINIC.shortName}.`;
 export const META_DESC_MAX = 150;
-export function metaDesc(path: string, raw: string, title = ''): string {
-  // 글(블로그·임상 사례)은 주소로 못 가르므로 글 속 진료 낱말로 고른다.
-  const kw = DESC_KEYWORD.find(([re]) => re.test(path))?.[1] ?? TOPIC_WORDS.find(([re]) => re.test(title + ' ' + raw))?.[1] ?? '치과';
-  const lead = `광화문 ${kw} ${CLINIC.shortName}.`;
+export function metaDesc(path: string, raw: string, _title = ''): string {
+  const fixed = DESC_FIXED[path];
+  if (fixed) return desc80(fixed, META_DESC_MAX);
   const body = raw
     .replace(/<[^>]+>/g, '')
     .replace(/\s+/g, ' ')
     .trim()
     .replace(/^광화문 ?선치과(의원)?[^—]{0,24}— ?/, '');
-  if (body.startsWith(lead)) return desc80(body, META_DESC_MAX); // og() 가 한 번 더 부를 때
-  return desc80(`${lead} ${REGION}, ${body}`, META_DESC_MAX);
+  if (body.startsWith(LEAD)) return desc80(body, META_DESC_MAX); // og() 가 한 번 더 부를 때
+  return desc80(`${LEAD} ${body}`, META_DESC_MAX);
 }
 
 /**
