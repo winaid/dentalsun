@@ -9,13 +9,34 @@ import { serializeJsonLd, clinicSchema, websiteSchema, directorPersonSchema } fr
 export function JsonLd({ data, site = true }: { data?: unknown | unknown[]; site?: boolean }) {
   const given = (Array.isArray(data) ? data : data ? [data] : []).filter(Boolean);
   const nodes = [...(site ? [clinicSchema(), websiteSchema(), directorPersonSchema()] : []), ...given].map(stripContext);
-  const graph = mergeById(nodes);
+  const merged = mergeById(nodes);
+  /*
+   * ★★ ItemList 만은 @graph 밖 독립 스크립트로 낸다 (2026-11-08 오너 "co.kr 둘 다 카드") ★★
+   *   ItemList 단 병원 홈 43곳 대조: 카드 받은 15곳은 전부 ItemList 가 최상위 독립 스크립트,
+   *   @graph 안에 넣은 곳은 하나도 카드를 못 받았다(C:/tmp/cardtop/ilpos.json). 동그라미 co.kr 과 같은 조치.
+   *   ⚠️ 다시 @graph 로 합치지 말 것.
+   */
+  const lists = merged.filter(isItemList);
+  const graph = merged.filter((n) => !isItemList(n));
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: serializeJsonLd({ '@context': 'https://schema.org', '@graph': graph }) }}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd({ '@context': 'https://schema.org', '@graph': graph }) }}
+      />
+      {lists.map((list, i) => (
+        <script
+          key={typeof list['@id'] === 'string' ? list['@id'] : i}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd({ '@context': 'https://schema.org', ...list }) }}
+        />
+      ))}
+    </>
   );
+}
+
+function isItemList(node: Record<string, unknown>) {
+  return ([] as unknown[]).concat(node?.['@type'] ?? []).includes('ItemList');
 }
 
 function stripContext(node: unknown) {

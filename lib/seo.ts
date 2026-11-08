@@ -12,6 +12,16 @@ import { DOCTORS } from './doctors';
 import { NAV } from './nav';
 import { contentDates } from './contentMeta';
 
+/**
+ * 검색 결과 이름 줄에 띄울 사이트 이름 — og:site_name · WebSite name · applicationName 이 모두 이 값.
+ * ★ 2026-11-08 오너 "광화문치과 다시 이름 도메인 말고 치과 이름 나오게":
+ *   옛 카페24 사이트(og:site_name 없이 제목 '광화문 선치과')는 이름 줄이 '광화문 선치과'였는데,
+ *   새 사이트는 제목 '광화문 선치과' ↔ og:site_name·WebSite '광화문선치과의원' 으로 갈려 11-07 부터 도메인으로 떴다.
+ *   제목·og·WebSite 세 값을 하나로 맞춘다(51검색어 대조: 둘이 같은 곳 78% 이름 뜸, 다른 곳 53%).
+ *   병원 노드(Dentist) 이름·푸터 상호는 CLINIC.name 그대로 — WebSite alternateName 에도 남긴다.
+ */
+export const SEARCH_SITE_NAME = CLINIC.shortName;
+
 const BASE = CLINIC.url;
 export const abs = (path: string) => (path === '/' ? BASE : `${BASE}${path}`);
 /** 병원 네이버 블로그 — /insight/clinical 글의 원문 출처(scripts/import-naver.mjs). sameAs 로 같은 병원임을 잇는다 (2026-09-11). */
@@ -273,7 +283,7 @@ export function og(opts: { title: string; description: string; path: string; ima
   return {
     type: 'article' as const,
     locale: 'ko_KR',
-    siteName: CLINIC.name,
+    siteName: SEARCH_SITE_NAME,
     title: opts.title,
     description: metaDesc(opts.path, opts.description),
     url: abs(opts.path),
@@ -345,7 +355,7 @@ export function itemListSchema(path: string, items: Array<{ name: string; path: 
 }
 
 export function websiteSchema() {
-  return { '@type': 'WebSite', '@id': ID.website, url: BASE, name: CLINIC.name, inLanguage: 'ko-KR', publisher: { '@id': ID.clinic } };
+  return { '@type': 'WebSite', '@id': ID.website, url: BASE, name: SEARCH_SITE_NAME, alternateName: CLINIC.name, inLanguage: 'ko-KR', publisher: { '@id': ID.clinic } };
 }
 
 export function medicalWebPageSchema(opts: {
