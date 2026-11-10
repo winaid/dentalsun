@@ -14,6 +14,7 @@ import { HERO_COLLAGE, splitAccent, type HeroCollageSpec } from '@/lib/heroColla
 import { articleSchema, breadcrumbSchema, faqSchema, imageObjectSchema, itemListSchema, medicalWebPageSchema } from '@/lib/seo';
 import { CLINIC } from '@/lib/clinic';
 import { WarrantyBand } from '@/components/WarrantyBand';
+import { BottomGuide } from '@/components/BottomGuide';
 
 /**
  * 진료·인사이트 문서 렌더러 — Doc 하나를 쪽 하나로.
@@ -229,6 +230,16 @@ export function DocPage({ doc }: { doc: Doc }) {
               </div>
             </div>
           </section>
+        )}
+
+        {/* 임플란트 전체보기(허브)만 맨 아래 바로가기 — 2026-11-10 병원 요청(components/BottomGuide). 목록은 내비게이션 임플란트 사이드바와 같은 여덟(허브 + 하위).
+            위 FAQ 가 회색 바탕이라 흰 바탕 */}
+        {doc.path === '/treatment/implant' && (
+          <BottomGuide
+            current={doc.path}
+            bg="bg-white"
+            own={{ title: '임플란트', accent: '안내', items: [{ label: '임플란트 안내', href: doc.path }, ...docsOfHub(doc.path).map((d) => ({ label: d.title, href: d.path }))] }}
+          />
         )}
 
         <ContactBand bg={bandBg} title={doc.contact?.title} text={doc.contact?.text} />

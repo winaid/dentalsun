@@ -10,6 +10,9 @@ import { DOCTORS } from '@/lib/doctors';
 import { Fragment } from 'react';
 import { SECTIONS, TMJ_AWARD, TMJ_HUB_HERO_ITEMS } from '@/lib/content/tmjLanding';
 import { AwardCard } from '@/components/TmjPage';
+import { HygienistBand } from '@/components/HygienistBand';
+import { BottomGuide } from '@/components/BottomGuide';
+import { NAV } from '@/lib/nav';
 import { figSrc } from '@/lib/docs';
 import { splitAccent } from '@/lib/heroCollage';
 import { metaDesc, alt, breadcrumbSchema, medicalWebPageSchema, og, physicianSchema } from '@/lib/seo';
@@ -36,25 +39,46 @@ const TOUR = [
   { key: 'place2/physio-room', alt: '턱관절 레이저 물리치료 장비가 있는 물리치료실', caption: '물리치료실' },
 ];
 
-/* 2026-09-29 — 05 '당일 디지털 보철 제작 시스템'은 원장 확인 전이라 '캐드캠 원내 보철 제작'으로 중립화(속도 약속 없음). 2026-10-07 쉬운 말로
-   ★ 2026-10-20 원장 PPT 109쪽 문구 그대로 — 01 모의 식립→모의 수술 · 02 둘째 문장 교체 · 03·04 새 문장 · 05 '원내 디지털 수술 가이드 제작'(보철 원내 제작 아님) · 06 이름.
-   장비소개(/about/equipment) DIGITAL 표와 같은 글(111쪽) — 한쪽을 고치면 다른 쪽도 */
-const POINTS = [
-  { n: '01', title: '3D 구강스캐너', desc: '본을 뜨는 재료를 입에 물지 않고, 치아와 잇몸을 스캔해 3차원 데이터로 기록합니다. 이 데이터가 모의 수술과 보철 설계의 기준이 됩니다.' },
-  { n: '02', title: '3D CT (CBCT)', desc: '잇몸뼈의 폭과 높이, 신경과 상악동의 위치를 입체로 확인합니다. 파노라마와 CT 촬영이 가능한 장비로, 임플란트 수술 전 필요한 해부학적 구조를 확인합니다.' },
-  { n: '03', title: '모의 수술 소프트웨어', desc: 'CT와 구강스캔 자료를 활용해 임플란트의 위치와 각도, 깊이를 수술 전에 컴퓨터에서 계획합니다.' },
-  { n: '04', title: '수술 가이드', desc: '모의 수술 결과에 따라 제작한 수술 가이드를 장착해 계획한 위치에 임플란트를 식립합니다. 잇몸 절개 범위를 줄여 출혈과 붓기가 덜할 수 있습니다.' },
-  { n: '05', title: '원내 디지털 수술 가이드 제작', desc: 'CT와 구강스캔 자료를 바탕으로 수술 가이드를 설계하고, 원내 3D 프린터로 직접 제작합니다.' },
-  { n: '06', title: 'INOS 진료 기구 소독', desc: '사용한 진료 기구를 INOS 소독기로 바로 소독해 교차감염을 막습니다. KTR 소독력 테스트를 마친 장비입니다.' },
+/*
+ * 진료 원칙 세 줄 — 2026-11-10 병원(본부장 전달) "3D CT로 먼저 보고~ 구역을 아래 내용으로 변경, 박스가 아닌 형태로 가시성 높게".
+ * 문구는 병원이 보낸 글자 그대로(띄어쓰기 '뼈이식,턱관절'까지 — 오너 문구 그대로 규칙). accent = 제목 중 주황 밑줄이 차오르는 끝 마디(글자는 그대로).
+ * 예전 이 자리(3D DIGITAL 장비 여섯 칸, 원장 PPT 109쪽)는 장비소개(/about/equipment) DIGITAL 표와 같은 글이라 내용은 그쪽에 남아 있다.
+ */
+const PRINCIPLES = [
+  {
+    n: '01',
+    tag: '편안한 진료',
+    title: '치료에 대한 두려움부터 살핍니다',
+    accent: '두려움부터 살핍니다',
+    desc: '치료를 앞두고 느끼시는 긴장과 걱정을 가볍게 여기지 않습니다. 치료 전에는 진행 과정을 충분히 설명하고, 치료 중에는 불편한 곳이 없는지 세심하게 확인합니다. 불편하시면 손을 들어 주세요. 잠시 멈추고 상태를 살핀 뒤 진행하겠습니다.',
+  },
+  {
+    n: '02',
+    tag: '정직한 진료',
+    title: '살릴 수 있는 치아인지 먼저 확인합니다',
+    accent: '먼저 확인합니다',
+    desc: '발치와 임플란트를 결정하기 전에 신경치료나 잇몸치료로 자연치아를 살릴 수 있는지 먼저 확인합니다. 엑스레이와 구강 사진을 함께 보며 현재 상태와 치료가 필요한 이유, 치료 순서를 설명드립니다. 지금 필요한 치료만 권하며, 경과를 지켜봐도 되는 부분은 정기적으로 확인합니다.',
+  },
+  {
+    n: '03',
+    tag: '전문적인 치료',
+    title: '정확한 진단부터 치료의 마무리까지',
+    accent: '치료의 마무리까지',
+    desc: '보건복지부 인증 통합치의학과 전문의 양대일 대표원장이 진단부터 치료의 마무리까지 직접 담당합니다. 임플란트와 뼈이식,턱관절 치료, 사랑니 발치, 자연치아 보존 치료까지 치아와 잇몸, 턱관절의 상태를 종합적으로 살펴 환자에게 필요한 치료를 계획합니다.',
+  },
 ];
 
 /* 턱관절 구역 동그라미 배지 — 위 줄 작게 · 아래 줄 굵게. 근거: 상장(TMJ_AWARD) · STRENGTHS '대표원장 1:1 책임진료' ·
    턱관절 장비 설명 '세 가지 물리치료 모두 건강보험이 적용' (2026-11-04 오너 "수상·1:1 어필").
    폰(390)에서 네 개는 글자가 원 밖으로 넘쳐 세 개로 — 학회 정회원은 아래 02 칸 글에 있다 */
 const TMJ_BADGES = ['턱관절치료\n대상 수상', '대표원장\n1:1 책임진료', '물리치료\n건강보험 적용'];
-/* 세 칸 — 1:1 책임진료(STRENGTHS 원장 글) + 턱관절 첫 화면 카드 01·02(원장 PPT 167쪽·261026 17쪽) */
+/* 세 칸 — 1:1 책임진료 + 턱관절 첫 화면 카드 01·02(원장 PPT 167쪽·261026 17쪽).
+   ⚠️ 01 은 턱관절 전용 문장 — 2026-11-10 병원(본부장 전달) "첫 상담부터 수술과 정기검진까지…는 턱관절 진료와 맞지 않아 수정".
+   예전엔 STRENGTHS(병원 전체·임플란트 흐름 글)를 그대로 가져와 '수술'이 옆 02 '보존적 치료부터'와 엇갈렸고, 위 WHY 카드 01 과 글자까지 같았다.
+   새 문장은 턱관절 쪽 원장 글을 이었다: '문진부터 치아·근육·관절 검사까지 직접'(이갈이) · '3D CT 영상을 직접 판독'(진단) · '치료부터 장기적인 관리까지'(첫머리).
+   공용 STRENGTHS(홈·WHY)는 병원 전체 이야기라 그대로 둔다. */
 const TMJ_STRONG = [
-  STRENGTHS.find((s) => s.title === '대표원장 1:1 책임진료')!,
+  { title: '대표원장 1:1 책임진료', desc: '문진과 턱관절·근육 검사, 3D CT 판독부터 치료와 장기적인 관리까지 대표원장이 직접 진료합니다. 진료 중간에 담당 의사가 바뀌지 않습니다.' },
   TMJ_HUB_HERO_ITEMS[0],
   TMJ_HUB_HERO_ITEMS[1],
 ];
@@ -152,7 +176,7 @@ export default function AboutPage() {
 
         {/* ── 턱관절 — 2026-11-04 본부장 "치과소개가 거의 임플란트 위주라 턱관절 내용이 빈약, 사진 밑에 턱관절 진료 얘기도" ·
              오너 "위와 구역 분리 · 수상·1:1 어필(턱관절이 강점) · 모션그래픽도 쫙".
-             의료진(회색) 아래 따로 짙은 남색 사진 띠 — 위 의료진 구역(글+사진 두 칸)과 짜임을 다르게. 아래 3D DIGITAL(흰색)과도 갈린다.
+             의료진(회색) 아래 따로 짙은 남색 사진 띠 — 위 의료진 구역(글+사진 두 칸)과 짜임을 다르게. 아래 진료 원칙(흰색)과도 갈린다.
              새 문구 없음: 제목·설명 = 턱관절 쪽 첫머리(원장 PPT 168쪽, SECTIONS.intro) · 1:1 = STRENGTHS(원장 피드백 09-29) ·
              경험·진단/근본 치료 = TMJ_HUB_HERO_ITEMS(PPT 167쪽·261026 17쪽) · 상장 = TMJ_AWARD(병원이 보낸 사진) · 학회·건강보험 = 의료진 약력·턱관절 장비 설명.
              ⚠️ 상장 광고는 의료법 제56조 제2항 제14호 소지 — 2026-09-29 오너에게 알렸고 병원 결정으로 싣는다(홈·턱관절 쪽과 같음).
@@ -201,27 +225,39 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section className="section" id="digital">
+        {/* ── 진료 원칙 — 2026-11-10 병원 요청으로 옛 3D DIGITAL 장비 여섯 칸 자리를 바꿨다.
+             오너 "카드형태 말고 포인트 한 개씩 그냥 한 줄로, 모션그래픽이랑 색감 넣어서 가시성 좋게" — 턱관절 생활 관리 줄(.habit-rows)과 같은 결.
+             줄 하나하나가 따로 나타난다(.reveal 이 줄마다라 스크롤로 닿을 때마다): 왼쪽 세로 선이 주황으로 차오르고, 선 위 동그라미가 커지고,
+             큰 번호가 올라오고, 제목 끝 마디 밑줄이 왼쪽부터 찬다(globals.css .prin-*). 새 반짝이·번지는 빛·그라데이션 없음. ── */}
+        <section className="section" id="principles">
           <div className="wrap">
             <div className="reveal mx-auto max-w-[760px] text-center">
-              <p className="eyebrow justify-center">3D DIGITAL</p>
+              <p className="eyebrow justify-center">OUR PRINCIPLES</p>
               <h2 className="display-sm mt-4">
-                3D CT로 먼저 보고, <span className="accent whitespace-nowrap">계획대로 식립합니다</span>
+                광화문 선치과가 <span className="accent-sun whitespace-nowrap">지키는 진료 원칙</span>
               </h2>
-              <p className="lead mt-4"><Sentences text="잇몸뼈의 폭과 높이, 신경까지의 거리를 3D CT로 잰 뒤, 식립할 자리를 컴퓨터에서 먼저 정합니다. 수술은 그 계획으로 만든 가이드를 따라 진행합니다." /></p>
             </div>
-            <ol className="reveal-stack grid-cards mt-10 sm:grid-cols-2 lg:grid-cols-3">
-              {POINTS.map((p) => (
-                <li key={p.n} className="card flex h-full flex-col p-6">
-                  <span className="pill-sun">Point {p.n}</span>
-                  <p className="mt-3 text-[1.05rem] font-bold text-ink">{p.title}</p>
-                  <p className="mt-2 text-[17px] leading-relaxed text-ink-soft"><Sentences text={p.desc} /></p>
-                </li>
-              ))}
+            <ol className="mx-auto mt-12 max-w-[1040px] md:mt-16">
+              {PRINCIPLES.map((p) => {
+                const cut = p.title.lastIndexOf(p.accent);
+                return (
+                  <li key={p.n} className="reveal prin-row">
+                    <span className="prin-dot" aria-hidden />
+                    <div className="prin-head">
+                      <span className="prin-num">{p.n}</span>
+                      <span className="prin-tag">{p.tag}</span>
+                    </div>
+                    <div className="min-w-0">
+                      <h3 className="text-[1.35rem] font-extrabold leading-[1.4] tracking-[-0.025em] text-ink md:text-[1.65rem]">
+                        {p.title.slice(0, cut)}
+                        <span className="prin-accent whitespace-nowrap">{p.accent}</span>
+                      </h3>
+                      <p className="mt-4 text-[17px] leading-[1.85] text-ink-soft"><Sentences text={p.desc} /></p>
+                    </div>
+                  </li>
+                );
+              })}
             </ol>
-            <div className="mt-8 text-center">
-              <Link href="/about/equipment" className="btn-ghost">장비별 쓰임 자세히 보기</Link>
-            </div>
           </div>
         </section>
 
@@ -247,13 +283,13 @@ export default function AboutPage() {
                   </li>
                 ))}
               </ul>
-              <p className="mt-6 rounded-2xl bg-white p-5 text-[16.5px] leading-relaxed text-ink-soft">
-                <span className="sent"><span className="font-bold text-ink">전원 치과위생사</span> — 진료 스태프는 모두 치과위생사 면허를 가지고 있습니다.</span>
-                <span className="sent">진료 보조는 면허를 가진 인력이 맡습니다.</span>
-              </p>
+              {/* 2026-11-10 병원 "멸균 내용 중 치과위생사는 삭제" — 옛 흰 상자('전원 치과위생사 — …')를 빼고 아래 띠로 옮겼다 */}
             </div>
           </div>
         </section>
+
+        {/* ── 국가자격 치과위생사 띠 — 홈과 같은 부품. 병원 "치과위생사는 두 번째 첨부 사진(홈 띠)처럼" ── */}
+        <HygienistBand />
 
         <section className="section" id="tour">
           <div className="wrap">
@@ -272,6 +308,9 @@ export default function AboutPage() {
             </div>
           </div>
         </section>
+
+        {/* 맨 아래 바로가기 — 원장 카드 + 치과소개 안내(메뉴와 같은 다섯) + 전체 메뉴. 위 둘러보기가 흰 바탕이라 회색 */}
+        <BottomGuide current="/about" own={{ title: '치과소개', accent: '안내', items: NAV.find((n) => n.href === '/about')!.children!.map(({ label, href }) => ({ label, href })) }} />
 
         <ContactBand />
       </main>

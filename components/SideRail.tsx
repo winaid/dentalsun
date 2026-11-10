@@ -62,8 +62,8 @@ export function ContactCard() {
   );
 }
 
-/** 링크 목록 카드 — 제목 한 줄 + 항목들(오른쪽 › 표시) */
-export function LinkListCard({ title, accent, items }: { title: string; accent?: string; items: Array<{ label: string; href: string; meta?: string }> }) {
+/** 링크 목록 카드 — 제목 한 줄 + 항목들(오른쪽 › 표시). current 를 주면 그 쪽은 진하게 + 주황 점(턱관절·임플란트 사이드바와 같은 꼴) */
+export function LinkListCard({ title, accent, items, current }: { title: string; accent?: string; items: Array<{ label: string; href: string; meta?: string }>; current?: string }) {
   if (!items.length) return null;
   return (
     <div className="card p-5">
@@ -74,10 +74,17 @@ export function LinkListCard({ title, accent, items }: { title: string; accent?:
       <ul className="mt-3 divide-y divide-hairline">
         {items.map((g) => (
           <li key={g.href}>
-            <Link href={g.href} className="flex items-center justify-between gap-3 py-2.5 text-[14.5px] font-semibold text-ink-soft hover:text-brand-700">
-              <span className="min-w-0">
-                <span className="line-clamp-1">{g.label}</span>
-                {g.meta && <span className="mt-0.5 block text-[12px] font-medium tabular-nums text-ink-muted">{g.meta}</span>}
+            <Link
+              href={g.href}
+              aria-current={g.href === current ? 'page' : undefined}
+              className={`flex items-center justify-between gap-3 py-2.5 text-[14.5px] font-semibold hover:text-brand-700 ${g.href === current ? 'text-brand-700' : 'text-ink-soft'}`}
+            >
+              <span className="flex min-w-0 items-center gap-2">
+                {g.href === current && <span aria-hidden className="h-1.5 w-1.5 shrink-0 rounded-full bg-sun-500" />}
+                <span className="min-w-0">
+                  <span className="line-clamp-1">{g.label}</span>
+                  {g.meta && <span className="mt-0.5 block text-[12px] font-medium tabular-nums text-ink-muted">{g.meta}</span>}
+                </span>
               </span>
               <span aria-hidden className="shrink-0 text-ink-muted">›</span>
             </Link>
