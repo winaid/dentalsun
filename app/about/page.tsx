@@ -104,9 +104,10 @@ export default function AboutPage() {
             { fig: { key: 'place2/reception', alt: '곡선형 나무 접수대와 광화문 선치과 간판' }, shape: 'wide' },
             { fig: { key: 'place/place08', alt: '3D CT 촬영실' }, shape: 'std' },
           ]}
+          /* 2026-11-10 병원 '치과소개 순서 진료철학 → 턱관절 → 임플란트' + 오너 안 B — 카드 순서만 턱관절을 앞으로(글자는 그대로) */
           items={[
-            { title: '디지털 임플란트', desc: '3D CT와 컴퓨터 모의수술로 임플란트의 위치·각도·깊이를 설계하고, 맞춤형 수술 가이드를 활용해 계획한 위치에 정밀하게 식립합니다.' },
             { title: '턱관절 치료', desc: '턱관절 CT와 개구량·맞물림·근육 검사를 통해 원인을 파악하고, 물리치료·보톡스·스플린트 등 {필요한 치료만 진행합니다}.' },
+            { title: '디지털 임플란트', desc: '3D CT와 컴퓨터 모의수술로 임플란트의 위치·각도·깊이를 설계하고, 맞춤형 수술 가이드를 활용해 계획한 위치에 정밀하게 식립합니다.' },
             { title: '자연치아 보존치료', desc: '신경치료와 재신경치료, 치근단절제술 등을 통해 {발치하기 전에 자연치아를 살릴 수 있는지부터 확인합니다}.' },
           ]}
         />
@@ -138,6 +139,44 @@ export default function AboutPage() {
                 </li>
               ))}
             </ul>
+          </div>
+        </section>
+
+        {/* ── 진료 원칙 — 2026-11-10 병원 요청으로 옛 3D DIGITAL 장비 여섯 칸을 바꾼 것.
+             병원 '치과소개 순서 진료철학 → 턱관절 → 임플란트' + 오너 안 B — WHY 바로 아래(턱관절보다 위)로 올렸다.
+             오너 "카드형태 말고 포인트 한 개씩 그냥 한 줄로, 모션그래픽이랑 색감 넣어서 가시성 좋게" — 턱관절 생활 관리 줄(.habit-rows)과 같은 결.
+             줄 하나하나가 따로 나타난다(.reveal 이 줄마다라 스크롤로 닿을 때마다): 왼쪽 세로 선이 주황으로 차오르고, 선 위 동그라미가 커지고,
+             큰 번호가 올라오고, 제목 끝 마디 밑줄이 왼쪽부터 찬다(globals.css .prin-*). 새 반짝이·번지는 빛·그라데이션 없음.
+             바탕 = 옅은 주황(sun-50) — 위 WHY(흰)·아래 의료진(회색)과 붙어도 갈리게. 이름표는 이 바탕에서 흰 알약(.prin-tag). ── */}
+        <section className="section bg-sun-50" id="principles">
+          <div className="wrap">
+            <div className="reveal mx-auto max-w-[760px] text-center">
+              <p className="eyebrow justify-center">OUR PRINCIPLES</p>
+              <h2 className="display-sm mt-4">
+                광화문 선치과가 <span className="accent-sun whitespace-nowrap">지키는 진료 원칙</span>
+              </h2>
+            </div>
+            <ol className="mx-auto mt-12 max-w-[1040px] md:mt-16">
+              {PRINCIPLES.map((p) => {
+                const cut = p.title.lastIndexOf(p.accent);
+                return (
+                  <li key={p.n} className="reveal prin-row">
+                    <span className="prin-dot" aria-hidden />
+                    <div className="prin-head">
+                      <span className="prin-num">{p.n}</span>
+                      <span className="prin-tag">{p.tag}</span>
+                    </div>
+                    <div className="min-w-0">
+                      <h3 className="text-[1.35rem] font-extrabold leading-[1.4] tracking-[-0.025em] text-ink md:text-[1.65rem]">
+                        {p.title.slice(0, cut)}
+                        <span className="prin-accent whitespace-nowrap">{p.accent}</span>
+                      </h3>
+                      <p className="mt-4 text-[17px] leading-[1.85] text-ink-soft"><Sentences text={p.desc} /></p>
+                    </div>
+                  </li>
+                );
+              })}
+            </ol>
           </div>
         </section>
 
@@ -176,7 +215,7 @@ export default function AboutPage() {
 
         {/* ── 턱관절 — 2026-11-04 본부장 "치과소개가 거의 임플란트 위주라 턱관절 내용이 빈약, 사진 밑에 턱관절 진료 얘기도" ·
              오너 "위와 구역 분리 · 수상·1:1 어필(턱관절이 강점) · 모션그래픽도 쫙".
-             의료진(회색) 아래 따로 짙은 남색 사진 띠 — 위 의료진 구역(글+사진 두 칸)과 짜임을 다르게. 아래 진료 원칙(흰색)과도 갈린다.
+             의료진(회색) 아래 따로 짙은 남색 사진 띠 — 위 의료진 구역(글+사진 두 칸)과 짜임을 다르게. 아래 임플란트(흰색)와도 갈린다.
              새 문구 없음: 제목·설명 = 턱관절 쪽 첫머리(원장 PPT 168쪽, SECTIONS.intro) · 1:1 = STRENGTHS(원장 피드백 09-29) ·
              경험·진단/근본 치료 = TMJ_HUB_HERO_ITEMS(PPT 167쪽·261026 17쪽) · 상장 = TMJ_AWARD(병원이 보낸 사진) · 학회·건강보험 = 의료진 약력·턱관절 장비 설명.
              ⚠️ 상장 광고는 의료법 제56조 제2항 제14호 소지 — 2026-09-29 오너에게 알렸고 병원 결정으로 싣는다(홈·턱관절 쪽과 같음).
@@ -225,39 +264,26 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* ── 진료 원칙 — 2026-11-10 병원 요청으로 옛 3D DIGITAL 장비 여섯 칸 자리를 바꿨다.
-             오너 "카드형태 말고 포인트 한 개씩 그냥 한 줄로, 모션그래픽이랑 색감 넣어서 가시성 좋게" — 턱관절 생활 관리 줄(.habit-rows)과 같은 결.
-             줄 하나하나가 따로 나타난다(.reveal 이 줄마다라 스크롤로 닿을 때마다): 왼쪽 세로 선이 주황으로 차오르고, 선 위 동그라미가 커지고,
-             큰 번호가 올라오고, 제목 끝 마디 밑줄이 왼쪽부터 찬다(globals.css .prin-*). 새 반짝이·번지는 빛·그라데이션 없음. ── */}
-        <section className="section" id="principles">
-          <div className="wrap">
-            <div className="reveal mx-auto max-w-[760px] text-center">
-              <p className="eyebrow justify-center">OUR PRINCIPLES</p>
+        {/* ── 임플란트 — 2026-11-10 병원 '치과소개 순서 진료철학 → 턱관절 → 임플란트' + 오너 안 B: 턱관절 아래 짧은 한 구역.
+             옛 장비 여섯 칸(병원이 '박스 말고'로 바꾸게 한 것)은 되살리지 않는다 — 제목·설명·단추만, 사진 한 장.
+             새 문구 없음: 제목·설명 = 임플란트 허브 첫 화면(lib/heroCollage.ts '/treatment/implant', 원장 확인 문구). 사진 = 허브 대표 사진(수술 장면, 모니터에 임플란트 엑스레이).
+             위 의료진(글 왼쪽·사진 오른쪽)과 짜임이 겹치지 않게 사진을 왼쪽에. ── */}
+        <section className="section" id="implant">
+          <div className="wrap grid items-center gap-10 lg:grid-cols-2">
+            <Figure fig={{ key: 'sun/surgery-loupe', alt: '확대경을 쓰고 임플란트 수술을 하는 양대일 대표원장, 뒤 모니터에 임플란트 엑스레이' }} ratio="aspect-[3/2]" effect="img-in" />
+            <div className="reveal">
+              <p className="eyebrow">IMPLANT</p>
               <h2 className="display-sm mt-4">
-                광화문 선치과가 <span className="accent-sun whitespace-nowrap">지키는 진료 원칙</span>
+                진단부터 보철까지
+                <br />
+                대표원장이 직접 하는 <span className="accent whitespace-nowrap">디지털 임플란트</span>
               </h2>
+              <p className="lead mt-4"><Sentences text="통합치의학과 전문의인 대표원장이 3D CT 진단부터 수술, 보철, 정기검진까지 직접 맡습니다. 식립할 자리를 컴퓨터로 먼저 정하고, {뼈이식은 꼭 필요할 때만} 계획합니다." /></p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Link href="/treatment/implant" className="btn-brand">임플란트 진료 자세히</Link>
+                <Link href="/treatment/implant/navigation" className="btn-ghost">내비게이션 임플란트</Link>
+              </div>
             </div>
-            <ol className="mx-auto mt-12 max-w-[1040px] md:mt-16">
-              {PRINCIPLES.map((p) => {
-                const cut = p.title.lastIndexOf(p.accent);
-                return (
-                  <li key={p.n} className="reveal prin-row">
-                    <span className="prin-dot" aria-hidden />
-                    <div className="prin-head">
-                      <span className="prin-num">{p.n}</span>
-                      <span className="prin-tag">{p.tag}</span>
-                    </div>
-                    <div className="min-w-0">
-                      <h3 className="text-[1.35rem] font-extrabold leading-[1.4] tracking-[-0.025em] text-ink md:text-[1.65rem]">
-                        {p.title.slice(0, cut)}
-                        <span className="prin-accent whitespace-nowrap">{p.accent}</span>
-                      </h3>
-                      <p className="mt-4 text-[17px] leading-[1.85] text-ink-soft"><Sentences text={p.desc} /></p>
-                    </div>
-                  </li>
-                );
-              })}
-            </ol>
           </div>
         </section>
 

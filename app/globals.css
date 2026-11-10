@@ -506,7 +506,7 @@ td {
   align-items: center;
   border-radius: 9999px;
   padding: 0.35rem 0.85rem;
-  background: var(--color-sun-50);
+  background: #fff; /* 구역 바탕이 옅은 주황(sun-50)이라 흰 알약 */
   color: var(--color-sun-700);
   box-shadow: inset 0 0 0 1px var(--color-sun-200);
   font-size: 14px;
