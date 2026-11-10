@@ -26,7 +26,7 @@ export function BottomGuide({
   /* 전체 메뉴 — 메뉴 맨 윗줄에서 지금 갈래만 뺀다(메뉴와 같은 순서·이름) */
   const others = NAV.filter((n) => !own.items.some((it) => it.href === n.href)).map((n) => ({ label: n.label, href: n.href }));
   return (
-    <section className={`section ${bg}`} aria-label="다른 안내로 이동">
+    <section id="guide" className={`section scroll-mt-[96px] ${bg}`} aria-label="다른 안내로 이동">
       <div className="wrap">
         <div className="reveal-stack mx-auto grid max-w-[1180px] gap-6 md:grid-cols-2 lg:grid-cols-3 lg:items-start">
           <DoctorCard />
