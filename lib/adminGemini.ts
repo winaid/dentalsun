@@ -1,4 +1,6 @@
-import { CLINIC } from '@/lib/clinic';
+import { CLINIC, HOURS } from '@/lib/clinic';
+import { DOCTORS, isCertCareer } from '@/lib/doctors';
+import { NAV } from '@/lib/nav';
 import { ALL_DOCS } from '@/lib/content';
 
 /**
@@ -49,4 +51,24 @@ export async function callGeminiJson<T>(key: string, text: string, schema: Recor
   const raw = j.candidates?.[0]?.content?.parts?.map((p) => p.text || '').join('') || '';
   if (!raw) throw new Error('Gemini 가 빈 응답을 보냈습니다.');
   return JSON.parse(raw.replace(/^```json\s*|```\s*$/g, '')) as T;
+}
+
+/**
+ * 병원 사실 — 자동 글이 병원에 관해 쓸 수 있는 것은 이 목록뿐이다 (2026-11-10 오너 "절대 문제 없도록 전부 보완해").
+ * 초안·감수·최종 심의가 모두 이 목록을 본다. 경력 목록은 넣지 않는다(상품명·학회명이 섞여 있다).
+ */
+export function clinicFacts(): string {
+  return [
+    '## 병원 사실 (병원에 관한 이야기는 이 목록에 있는 것만 씁니다)',
+    '- 이름: ' + CLINIC.name + ' / 주소: ' + CLINIC.address.full,
+    '- 진료시간: ' + HOURS.display.map((h) => `${h.label} ${h.time}${h.note ? `(${h.note})` : ''}`).join(' / ') + ' / ' + HOURS.closed,
+    '- 의료진: ' + DOCTORS.map((d) => `${d.name} ${d.role}(${d.specialty})`).join(' / '),
+    '- 진료 항목: ' + NAV.filter((n) => ['임플란트', '턱관절', '일반진료'].includes(n.label)).flatMap((n) => (n.children ?? []).map((c) => c.label)).join(', '),
+    '- 이 목록에 없는 장비 이름·의료진 경력·수상·학회·논문·환자 수·통계·병원 운영 사정(예약 마감·대기 시간·붐빔)은 쓰지 않습니다. 의료진 이름은 쓰지 말고 "대표원장" "의료진" 으로만 씁니다.',
+  ].join('\n');
+}
+
+/** 의료진 자격 문자열 — 'OO과 전문의' 대조용(adminDraft.credentialProblems). */
+export function credentialText(): string {
+  return DOCTORS.map((d) => [d.specialty, ...d.career.filter(isCertCareer)].join(' ')).join(' ');
 }

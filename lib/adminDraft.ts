@@ -1,4 +1,4 @@
-import { CATEGORIES, siteContext, allowedPaths, clinicLine, callGeminiJson } from '@/lib/adminGemini';
+import { CATEGORIES, siteContext, allowedPaths, clinicLine, callGeminiJson, clinicFacts, credentialText } from '@/lib/adminGemini';
 import { CLINIC_PROMPT_DEFAULT, writingBlock, topicBlock, reviewKeepLine, cleanImageCount, type ClinicPrompt } from '@/lib/clinicPrompt';
 
 /**
@@ -37,7 +37,29 @@ export const MEDLAW_HARD = [
   '최고', '최상', '최고급', '최첨단', '유일', '완벽', '100%', '1위', '최초', '국내 최대', '보장', '확실히 낫', '반드시 낫',
   '부작용이 없', '부작용 없', '무통', '후기', '경험담', '치료 전후', '비포', '애프터', '만족도', '할인', '이벤트', '무료 ',
 ];
-export const MEDLAW_SOFT = ['통증이 없', '평생', '영구적', '영구 ', '가장 좋은', '가장 안전', '가장 효과', '전혀 아프지', '하나도 안 아'];
+export const MEDLAW_SOFT = ['통증이 없', '평생', '영구적', '영구 ', '가장 좋은', '가장 안전', '가장 효과', '전혀 아프지', '하나도 안 아', '확실히'];
+/*
+ * 2026-11-10 보완(오너 "절대 문제 없도록 전부 보완해") — 결정론 금지 확대. 모두 HARD 와 같이 다룬다(다시 쓰게 하고, 남으면 버림).
+ *   다른 의료기관 비교(의료법 제56조 비교 광고) · 전문의약품·의료기기 상품명(약사법 제68조) · 유인·사례 문구 · 가격 · 약 복용량.
+ */
+export const MEDLAW_COMPARE = ['대학병원', '종합병원', '상급종합', '큰 병원', '타 병원', '다른 병원', '타 치과', '다른 치과', '타 의원', '다른 의원', '다른 곳보다', '어느 곳보다', '일반 치과보다', '동네 치과보다'];
+export const MEDLAW_BRANDS = ['보톡스', '디스포트', '제오민', '나보타', '보툴렉스', '리쥬란', '쥬베룩', '스컬트라', '레디어스', '레스틸렌', '쥬비덤', '울쎄라', '써마지', '슈링크', '오스템', '스트라우만', '덴티움', '메가젠', '노벨바이오케어', '디오임플란트', '네오바이오텍', '인비절라인'];
+/* 금지(BANNED) 주제 — 병원이 확인해 줄 수 없는 병원 밖 제도(세금·연말정산·실손보험 청구). 시험 초안에서 공제 요건을 틀리게 썼다(2026-11-10). */
+export const MEDLAW_TOPIC = ['연말정산', '세액공제', '소득공제', '세금', '실손', '보험금 청구', '보험 청구'];
+export const MEDLAW_INDUCE = ['특가', '선착순', '사은품', '혜택가', '체험', '치료 사례', '실제 사례', '환자 사례', '틀림없이', '만족하셨'];
+export const MEDLAW_NUM_RE = [/[0-9][0-9,.]*\s?(만|천|백)?\s?원(?![가-힣])/, /[0-9]+\s?(mg|㎎|밀리그램|정씩|알씩|캡슐)/i];
+
+/** 'OO과 전문의' 는 실제 의료진 자격에 그 과목이 있어야 한다. */
+function credentialProblems(text: string): string[] {
+  const licenses = credentialText();
+  const out: string[] = [];
+  for (const m of text.matchAll(/([가-힣]{2,10}과)\s?전문의/g)) if (!licenses.includes(m[1] + ' 전문의') && !licenses.includes(m[1] + '전문의')) out.push(m[1] + ' 전문의(의료진 자격에 없음)');
+  if (/전문의/.test(text) && !/전문의/.test(licenses)) out.push('전문의(의료진 자격에 없음)');
+  return [...new Set(out)];
+}
+
+/** 프롬프트용 금지 한 줄. */
+const BAN_EXTRA_LINE = '대학병원·큰 병원·다른 병원·다른 치과와 견주는 말(대기 시간·실력·장비·비용 비교 포함), 가격(○○원)·특가·선착순, 치료 사례·체험, 약·기기 상품명(' + MEDLAW_BRANDS.slice(0, 6).join('·') + ' 등 — 성분·방식 이름으로만), 약 복용량, 의료진 자격에 없는 전문의 표시';
 
 /* 자주 나오는 비문 — 문맥과 무관하게 안전한 것만 (CLAUDE.md 룰과 같은 목록). */
 const GRAMMAR_FIX: Array<[RegExp, string]> = [
@@ -85,13 +107,15 @@ function draftPrompt(topic: string, existingTitles: string[], avoid: string[], w
     '본문은 HTML 이고 <p> <h2> <h3> <strong> <a> 만 씁니다. <ul> <ol> <li> <table> <img> <h1> 과 마크다운(**, ##, -) 은 쓰지 않습니다. 나열은 줄을 바꾸지 말고 문장으로 잇습니다 ("또한 / 한편 / 특히 / 다만").',
     '',
     '## 사실 (병원 규칙보다 셉니다)',
-    '숫자·기간은 "대개 / 보통 / 경우가 많습니다" 로 폭을 두고 개인차가 있음을 자연스럽게 담습니다. 건강보험·법·제도처럼 확신할 수 없는 사실은 "치과에서 확인해 드립니다" 로 두고 숫자를 지어내지 않습니다.',
+    '숫자·기간은 "대개 / 보통 / 경우가 많습니다" 로 폭을 두고 개인차가 있음을 자연스럽게 담습니다. 건강보험·법·제도처럼 확신할 수 없는 사실은 "치과에서 확인해 드립니다" 로 두고 숫자를 지어내지 않습니다. 진료를 미루거나 스스로 치료하라는 조언, 약 이름·복용량 안내는 하지 않습니다.',
+    '',
+    clinicFacts(),
     '',
     '## 링크 (병원 규칙보다 셉니다)',
     "본문 안에 아래 '사이트에 있는 페이지' 목록의 주소로 가는 <a href='/...'> 링크를 하나에서 둘 넣습니다. 목록에 없는 주소는 만들지 않습니다. 외부 링크는 넣지 않습니다.",
     '',
     '## 의료법 제56조 — 절대 금지 (병원 규칙보다 셉니다. 부딪히면 이 항목을 따릅니다)',
-    '최고·최상·유일·완벽·1위·최초 같은 최상급, 효과·결과 보장, "부작용이 없다", "통증이 없다", 치료 후기·경험담·만족도, 치료 전후 비교, 다른 병원 비교·비방, 가격 할인·이벤트·무료. 위반 낱말이 하나라도 있으면 글 전체가 광고 심의에 걸립니다.',
+    '최고·최상·유일·완벽·1위·최초 같은 최상급, 효과·결과 보장, "부작용이 없다", "통증이 없다", 치료 후기·경험담·만족도, 치료 전후 비교, 다른 병원 비교·비방, 가격 할인·이벤트·무료, ' + BAN_EXTRA_LINE + '. 위반 낱말이 하나라도 있으면 글 전체가 광고 심의에 걸립니다.',
     ...(avoid.length ? ['', `## 이 낱말은 어떤 문맥에서도 쓰지 마세요 (지난 응답에서 걸렸습니다): ${avoid.map((w) => `"${w.trim()}"`).join(', ')} — 다른 표현으로 바꾸세요.`] : []),
     '',
     '## 이미 있는 블로그 글 제목 (같은 질문을 다시 쓰지 말 것. 겹치면 다른 각도로)',
@@ -146,7 +170,9 @@ function normalize(d: Draft): { draft: Draft; notes: string[]; hardFail?: string
 
 export function medlaw(d: Draft): { warnings: string[]; cautions: string[] } {
   const text = `${d.title} ${d.summary} ${d.html.replace(/<[^>]+>/g, ' ')}`;
-  return { warnings: MEDLAW_HARD.filter((w) => text.includes(w)), cautions: MEDLAW_SOFT.filter((w) => text.includes(w)) };
+  const words = [...MEDLAW_HARD, ...MEDLAW_COMPARE, ...MEDLAW_BRANDS, ...MEDLAW_INDUCE].filter((w) => text.includes(w));
+  const nums = MEDLAW_NUM_RE.map((r) => text.match(r)?.[0]).filter((x): x is string => !!x).map((x) => x.trim());
+  return { warnings: [...new Set([...words, ...nums, ...credentialProblems(text)])], cautions: MEDLAW_SOFT.filter((w) => text.includes(w)) };
 }
 
 export async function generateDraft(
@@ -181,15 +207,20 @@ export async function generateDraft(
  *   ("통증이 없는 시술" 은 고치고 "통증이 없어도 오세요" 는 둔다). 사실 관계(보험·기간·수치)가 단정적이면 폭을 두게 한다.
  * ⚠️ 고치는 범위는 문장 단위다. 글의 구조·주제·길이를 바꾸지 못하게 한다 — 감수가 다시 쓰기가 되면 형식 규칙이 새로 깨진다.
  */
-export async function reviewDraft(key: string, d: Draft, clinic: ClinicPrompt = CLINIC_PROMPT_DEFAULT): Promise<{ draft: Draft; fixes: string[] }> {
+export async function reviewDraft(key: string, d: Draft, clinic: ClinicPrompt = CLINIC_PROMPT_DEFAULT, problems: string[] = []): Promise<{ draft: Draft; fixes: string[] }> {
   const text = [
     `당신은 치과 의료광고 심의 담당자이자 치과의사입니다. 아래 블로그 글을 읽고 **문제가 있는 문장만** 고칩니다.`,
+    ...(problems.length ? ['', '## 최종 심의에서 걸린 것 — 먼저 고칠 것 (해당 문장을 고치거나 지웁니다)', ...problems.map((p) => '- ' + p)] : []),
     '',
     '## 반드시 고칠 것',
     '- 의료법 제56조: 최상급(최고·유일·완벽·1위·최초), 효과·결과 보장, "부작용/통증이 없다" 는 단정, 후기·경험담·만족도, 치료 전후 비교, 타 병원 비교·비방, 할인·이벤트·무료.',
     '- 사실이 틀렸거나 단정이 지나친 문장: 건강보험 기준·기간·수치·확률. 확신할 수 없으면 "대개 / 경우가 많습니다 / 치과에서 확인해 드립니다" 로 폭을 둡니다. 지어낸 숫자는 지웁니다.',
-    '- 시술 본질과 어긋나는 표현(예: 신경치료 뒤 "신경 관리").',
+    '- 시술 본질과 어긋나는 표현(예: 신경치료 뒤 "신경 관리"), 진료를 미루거나 스스로 치료하라는 조언.',
+    '- 2026-11-10 추가: ' + BAN_EXTRA_LINE + '. 비교는 빼고 이 병원 설명만 남깁니다.',
+    '- 아래 병원 사실 목록에 없는 병원 이야기(장비·경력·수상·통계·의료진 이름·운영 사정)는 지웁니다.',
     '- 어색한 한국어·비문(필요하는 → 필요한, 되어진다 → 된다).',
+    '',
+    clinicFacts(),
     '',
     '## 절대 하지 말 것',
     '- 글의 구조·소제목 수·주제·길이를 바꾸지 않습니다. 문제 없는 문장은 글자 하나도 바꾸지 않습니다.',
@@ -222,6 +253,40 @@ export async function reviewDraft(key: string, d: Draft, clinic: ClinicPrompt = 
   return { draft: out.draft, fixes: Array.isArray(r.fixes) ? r.fixes.slice(0, 10) : [] };
 }
 
+/**
+ * 최종 심의 — 세 번째 호출(온도 0). 고치지 않고 **판정만** 한다. 하나라도 걸리면 불통과 (2026-11-10 보완).
+ * ★ 감수(고치는 눈)와 따로 두는 이유 — 고친 사람이 자기 글을 다시 보면 놓친 것을 또 놓친다.
+ */
+export async function finalGate(key: string, d: Draft): Promise<{ pass: boolean; problems: string[] }> {
+  const text = [
+    '당신은 치과 의료광고 심의 담당자이자 치과의사이고, 지금 이 글을 게시해도 되는지 마지막으로 판정합니다. 고치지 말고 판정만 합니다.',
+    '아래 점검표 가운데 하나라도 해당하는 문장이 있으면 pass=false 이고, 그 문장과 이유를 problems 에 적습니다. 애매하면 불통과입니다.',
+    '',
+    '## 점검표',
+    '1. 의료법 제56조: 최상급·효과 보장·부작용/통증 없음 단정·후기/체험/사례·치료 전후 비교·다른 의료기관(대학병원 포함)과 비교나 비방·가격/할인/이벤트/무료·환자 유인.',
+    '2. 약사법: 전문의약품·의료기기 상품명, 약 복용량 안내.',
+    '3. 거짓 표시: 아래 병원 사실 목록에 없는 자격·전문의 과목·장비·경력·수상·통계·환자 수·운영 사정(예약 마감·대기 시간).',
+    '4. 의학 사실: 틀린 설명, 확신할 근거가 없는 수치·기간·확률을 단정한 문장, 건강보험·제도 기준을 틀리게 말한 문장.',
+    '5. 위험한 조언: 진료를 미루라거나 스스로 치료하라는 말, 응급 증상을 가볍게 넘기는 말, 검사·진단 없이 모든 사람에게 시술·발치·치료를 권하는 말("검사 뒤 필요하면" 같은 단서가 없는 일괄 권유).',
+    '5-1. 병원 밖 제도: 세금·연말정산·실손보험·법 제도의 요건·금액을 단정한 문장(병원이 확인해 줄 수 없음). 건강보험 기준도 확실하지 않으면 불통과.',
+    '6. 한국어: 비문·어색한 활용(필요하는·되어진다 등)·뜻이 잘못 전달되는 문장.',
+    '',
+    clinicFacts(),
+    '',
+    '## 글',
+    '제목: ' + d.title,
+    '요약: ' + d.summary,
+    '본문: ' + d.html,
+    '',
+    '## 출력',
+    'JSON: { pass: true/false, problems: ["문제 문장 — 이유" 를 한 줄씩] }. 문제가 없으면 pass=true, problems=[].',
+  ].join('\n');
+  const schema = { type: 'OBJECT', properties: { pass: { type: 'BOOLEAN' }, problems: { type: 'ARRAY', items: { type: 'STRING' } } }, required: ['pass', 'problems'] };
+  const r = await callGeminiJson<{ pass: boolean; problems: string[] }>(key, text, schema, 0);
+  const problems = Array.isArray(r.problems) ? r.problems.filter(Boolean).slice(0, 12) : [];
+  return { pass: r.pass === true && problems.length === 0, problems };
+}
+
 /** 주제 N개 — 기존 글·사이트 페이지와 겹치지 않게, 분류 골고루. */
 export async function pickTopics(
   key: string,
@@ -240,6 +305,8 @@ export async function pickTopics(
     `- 분류(${CATEGORIES.join(' / ')})를 골고루 섞습니다. 한 분류가 ${Math.max(2, Math.ceil(count / 4))}개를 넘지 않게. 이미 있는 글에 많은 분류는 피합니다.`,
     `- 계절·명절·연말정산·방학처럼 시기와 맞는 질문을 섞어도 좋습니다. 지금은 ${month}월입니다.`,
     '- 최상급·후기·이벤트 냄새가 나는 주제는 뺍니다(의료광고).',
+    '- 대학병원·다른 병원과 견주는 주제("대학병원 안 가도 되나요"), 약·기기 상품명·가격이 들어간 주제도 뺍니다(비교 광고·약사법).',
+    '- 세금·연말정산·실손보험 청구처럼 병원이 확인해 줄 수 없는 제도 주제도 금지입니다.',
     '',
     '## 이미 있는 글',
     existing.length ? existing.map((e) => `- ${e.title}${e.summary ? ` — ${e.summary.slice(0, 80)}` : ''}`).join('\n') : '- (없음)',
@@ -256,9 +323,12 @@ export async function pickTopics(
   const seen = new Set<string>();
   return (Array.isArray(raw) ? raw : [])
     .map((t) => ({ topic: String(t.topic || '').trim().replace(/[?？]$/, ''), category: CATEGORIES.includes(t.category) ? t.category : '' }))
-    .filter((t) => t.topic.length >= 6 && !seen.has(t.topic) && seen.add(t.topic) && !existing.some((e) => tooSimilar(t.topic, e.title)))
+    .filter((t) => t.topic.length >= 6 && !riskyTopic(t.topic) && !seen.has(t.topic) && seen.add(t.topic) && !existing.some((e) => tooSimilar(t.topic, e.title)))
     .slice(0, count);
 }
+
+/** 비교·상품명·가격 주제는 고르기 단계에서 버린다(결정론). */
+const riskyTopic = (t: string) => [...MEDLAW_HARD, ...MEDLAW_COMPARE, ...MEDLAW_BRANDS, ...MEDLAW_INDUCE, ...MEDLAW_TOPIC].some((w) => t.includes(w.trim())) || MEDLAW_NUM_RE.some((r) => r.test(t));
 
 /** 제목 겹침 — 글자 2-gram 자카드. 0.55 이상이면 같은 글로 본다 (결정론, 모델과 무관한 마지막 방어선). */
 export function tooSimilar(a: string, b: string): boolean {
@@ -286,7 +356,9 @@ export async function autoDraft(
   topic?: { topic: string; category: string },
   clinic: ClinicPrompt = CLINIC_PROMPT_DEFAULT,
 ): Promise<{ ok: true; draft: Draft; cautions: string[]; fixes: string[]; topic: string } | { ok: false; reason: string; topic?: string }> {
-  const t = topic || (await pickTopics(key, 3, existing, clinic))[0];
+  /* 크론 한도 300초 — 고쳐 쓰기(약 50초) 전에 150초가 지났으면 그날은 건너뛴다 (2026-11-10 보완) */
+  const started = Date.now();
+  const t = topic || (await pickTopics(key, 4, existing, clinic))[0];
   if (!t) return { ok: false, reason: '주제를 못 골랐습니다' };
   const titles = existing.map((e) => e.title);
   let r = await generateDraft(key, t.topic, titles, [], clinic);
@@ -294,9 +366,23 @@ export async function autoDraft(
   if (r.warnings.length) r = await generateDraft(key, t.topic, titles, [...r.warnings, ...r.cautions], clinic);
   if (r.warnings.length) return { ok: false, reason: `두 번 모두 의료법 낱말: ${r.warnings.join(', ')}`, topic: t.topic };
   if (existing.some((e) => tooSimilar(r.draft.title, e.title))) return { ok: false, reason: '기존 글과 제목이 너무 비슷합니다', topic: t.topic };
-  const reviewed = await reviewDraft(key, r.draft, clinic);
-  const m = medlaw(reviewed.draft);
-  if (m.warnings.length) return { ok: false, reason: `감수 뒤에도 의료법 낱말: ${m.warnings.join(', ')}`, topic: t.topic };
+  let reviewed = await reviewDraft(key, r.draft, clinic);
+  let m = medlaw(reviewed.draft);
+  if (m.warnings.length) return { ok: false, reason: '감수 뒤에도 의료법 낱말: ' + m.warnings.join(', '), topic: t.topic };
+  const fixes = [...reviewed.fixes];
+  /* 최종 심의 — 불통과면 걸린 문장을 감수에 주고 한 번 고쳐 쓴 뒤 다시 판정. 그래도 남으면 그날은 올리지 않는다. */
+  let gate = await finalGate(key, reviewed.draft);
+  if (!gate.pass) {
+    if (Date.now() - started > 150_000) return { ok: false, reason: '최종 심의 불통과(시간이 모자라 고쳐 쓰기 생략): ' + gate.problems.slice(0, 2).join(' / '), topic: t.topic };
+    const keep = reviewed.draft;
+    reviewed = await reviewDraft(key, reviewed.draft, clinic, gate.problems);
+    reviewed = { ...reviewed, draft: { ...keep, ...reviewed.draft } };
+    fixes.push(...reviewed.fixes);
+    m = medlaw(reviewed.draft);
+    if (m.warnings.length) return { ok: false, reason: '심의 뒤 고쳐 쓴 글에 의료법 낱말: ' + m.warnings.join(', '), topic: t.topic };
+    gate = await finalGate(key, reviewed.draft);
+    if (!gate.pass) return { ok: false, reason: '최종 심의 불통과: ' + gate.problems.slice(0, 3).join(' / '), topic: t.topic };
+  }
   const draft = { ...reviewed.draft, category: reviewed.draft.category || t.category };
-  return { ok: true, draft, cautions: m.cautions, fixes: reviewed.fixes, topic: t.topic };
+  return { ok: true, draft, cautions: m.cautions, fixes, topic: t.topic };
 }
