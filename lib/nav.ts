@@ -74,7 +74,7 @@ export const NAV: NavItem[] = [
     label: '인사이트 · 후기',
     href: '/insight',
     children: [
-      { label: '블로그', href: '/insight/blog', desc: '진료실에서 자주 받는 질문을 글로 — 새 글 예약 발행' },
+      { label: '블로그', href: '/insight/blog', desc: '진료실에서 자주 받는 질문에 답한 글' },
       { label: '임상 사례', href: '/insight/clinical', desc: '실제 치료 과정을 사진과 함께 — 상악동거상술 · 풀아치 · 치근단절제술 …' },
       { label: '증상별 안내', href: '/insight#symptoms', desc: '턱 소리 · 시린 이 · 잇몸 출혈 · 사랑니 통증 …' },
       { label: '치료 가이드', href: '/insight#guides', desc: '임플란트 과정 · 비용 요인 · 건강보험 · 턱관절 순서' },
