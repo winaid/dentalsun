@@ -15,12 +15,21 @@ export type AutoConfig = {
   everyDays: number;
   /** 발행 시각 HH:mm (한국 시간). 기본 09:00. */
   time: string;
+  /**
+   * 자동 글 제목 앞에 붙이는 검색어 (2026-11-10 오너: "광화문선치과도 광화문치과로 블로그 매일 1개" — 동그라미 co.kr 과 같은 꼴).
+   * 비우면 붙이지 않는다. 겹침 검사는 이 앞머리를 떼고 본다 — 안 그러면 모든 제목이 서로 비슷하다고 걸린다.
+   */
+  titlePrefix?: string;
+  /** 자동 글에 사진(OpenAI)을 만들지. false 면 만들지 않고 lib/blogCovers.ts 의 기존 사진을 쓴다. 없으면 만든다(예전 동작). */
+  image?: boolean;
   /** 마지막으로 크론이 무엇을 했는지 — 관리자 화면에 보여 준다. */
   last?: { at: string; result: string };
 };
 
 export const AUTO_DEFAULT: AutoConfig = { enabled: false, everyDays: 3, time: '09:00' };
 
+/* ⚠️ 칸을 늘리면 여기서도 읽어야 한다 — 관리자 토글과 크론 기록이 이 결과를 펼쳐 다시 저장하므로,
+   여기서 빠진 칸은 토글 한 번에 파일에서 지워진다. */
 export async function readAutoConfig(token: string): Promise<AutoConfig> {
   try {
     const { text } = await readFile(token, AUTO_PATH);
@@ -29,6 +38,8 @@ export async function readAutoConfig(token: string): Promise<AutoConfig> {
       enabled: !!j.enabled,
       everyDays: Math.min(14, Math.max(1, Math.round(Number(j.everyDays) || 3))),
       time: /^\d{2}:\d{2}$/.test(j.time || '') ? (j.time as string) : '09:00',
+      ...(typeof j.titlePrefix === 'string' && j.titlePrefix.trim() ? { titlePrefix: j.titlePrefix.trim() } : {}),
+      ...(typeof j.image === 'boolean' ? { image: j.image } : {}),
       last: j.last,
     };
   } catch {
@@ -41,16 +52,28 @@ export async function writeAutoConfig(token: string, cfg: AutoConfig, message: s
   return commitFiles(token, [{ path: AUTO_PATH, content: JSON.stringify(cfg, null, 2) + '\n' }, ...extraFiles], message);
 }
 
-/** 저장소에 있는 글의 (date, title, summary, slug) — 크론이 다음 날짜와 겹침 검사에 쓴다. */
-export async function listPostsMeta(token: string): Promise<Array<{ date: string; time?: string; title: string; summary?: string; slug: string }>> {
+/** 제목 앞머리 떼기 — 겹침 검사용. */
+export function stripTitlePrefix(title: string, prefix?: string): string {
+  return prefix && title.startsWith(prefix) ? title.slice(prefix.length).trim() : title;
+}
+
+/** 제목 앞머리 붙이기 — 이미 그 말로 시작하면 그대로. */
+export function withTitlePrefix(title: string, prefix?: string): string {
+  if (!prefix) return title;
+  const t = stripTitlePrefix(title.trim(), prefix);
+  return `${prefix} ${t}`;
+}
+
+/** 저장소에 있는 글의 (date, title, summary, slug, image) — 크론이 다음 날짜·겹침 검사·대표 사진 고르기에 쓴다. */
+export async function listPostsMeta(token: string): Promise<Array<{ date: string; time?: string; title: string; summary?: string; slug: string; image?: string }>> {
   const files = (await listDir(token, 'content/blog')).filter((f) => f.name.endsWith('.json'));
-  const out: Array<{ date: string; time?: string; title: string; summary?: string; slug: string }> = [];
+  const out: Array<{ date: string; time?: string; title: string; summary?: string; slug: string; image?: string }> = [];
   for (const f of files) {
     try {
       const { text } = await readFile(token, f.path);
-      const j = JSON.parse(text) as { date?: string; time?: string; title?: string; summary?: string; slug?: string };
+      const j = JSON.parse(text) as { date?: string; time?: string; title?: string; summary?: string; slug?: string; image?: string };
       if (!j.title) continue;
-      out.push({ date: j.date || f.name.slice(0, 10), time: j.time, title: j.title, summary: j.summary, slug: j.slug || f.name.replace(/\.json$/, '').replace(/^\d{4}-\d{2}-\d{2}-/, '') });
+      out.push({ date: j.date || f.name.slice(0, 10), time: j.time, title: j.title, summary: j.summary, slug: j.slug || f.name.replace(/\.json$/, '').replace(/^\d{4}-\d{2}-\d{2}-/, ''), image: j.image });
     } catch { /* 깨진 파일은 건너뛴다 */ }
   }
   return out.sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));

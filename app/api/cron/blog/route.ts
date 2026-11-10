@@ -3,7 +3,8 @@ import { isAuthed } from '@/lib/adminAuth';
 import { autoDraft } from '@/lib/adminDraft';
 import { generateImage, composeImagePrompt } from '@/lib/adminImage';
 import { readClinicPrompt } from '@/lib/clinicPrompt';
-import { readAutoConfig, writeAutoConfig, listPostsMeta, nextAutoDate, todayKST } from '@/lib/autoBlog';
+import { pickCover } from '@/lib/blogCovers';
+import { readAutoConfig, writeAutoConfig, listPostsMeta, nextAutoDate, todayKST, stripTitlePrefix, withTitlePrefix } from '@/lib/autoBlog';
 
 export const runtime = 'nodejs';
 export const maxDuration = 300;
@@ -50,12 +51,13 @@ export async function GET(req: Request) {
   try {
     /* ★ 사람이 쓰든 크론이 쓰든 같은 병원 규칙을 본다 — 담당자 프롬프트를 저장소에 둔 이유가 이것이다. */
     const clinic = await readClinicPrompt(token);
-    const r = await autoDraft(gemini, posts.map((p) => ({ title: p.title, summary: p.summary })), undefined, clinic);
+    /* 겹침 검사·주제 고르기는 앞머리(광화문치과)를 뗀 제목으로 — 모든 제목이 같은 말로 시작하면 서로 비슷하다고 걸린다. */
+    const r = await autoDraft(gemini, posts.map((p) => ({ title: stripTitlePrefix(p.title, cfg.titlePrefix), summary: p.summary })), undefined, clinic);
     if (!r.ok) {
       await record(`건너뜀 — ${r.reason}${r.topic ? ` (${r.topic})` : ''}`);
       return NextResponse.json({ ok: true, skipped: r.reason, topic: r.topic });
     }
-    const d = r.draft;
+    const d = { ...r.draft, title: withTitlePrefix(r.draft.title, cfg.titlePrefix) };
     let slug = d.slug || `post-${todayKST()}`;
     const used = new Set(posts.map((p) => p.slug));
     while (used.has(slug)) slug = `${slug}-2`;
@@ -63,7 +65,7 @@ export async function GET(req: Request) {
     let image: string | undefined;
     const images: Array<{ src: string; alt: string; w: number; h: number }> = [];
     const files: Array<{ path: string; content: Buffer | string }> = [];
-    if (openai) {
+    if (openai && cfg.image !== false) {
       /* 대표 사진 + 본문 사진(담당자 프롬프트의 사진 장수 - 1)을 **한꺼번에** 만든다 — 차례로 만들면 크론 300초를 넘는다(글까지 실측 211초). */
       const one = async (scene: string) => {
         const composed = await composeImagePrompt(gemini, scene, clinic.image);
@@ -88,13 +90,25 @@ export async function GET(req: Request) {
         }
       });
     }
+    /*
+     * ★ 사진 없는 글을 두지 않는다 (2026-11-10, co.kr 11-09 오너 "애만 없으니깐 이상하다. 사진 한장씩은 나오게"와 같은 처리).
+     *   사진 만들기가 꺼져 있거나(image:false) 실패하면 lib/blogCovers.ts 의 기존 사물 사진에서
+     *   분류에 맞고 최근 여덟 편이 안 쓴 것을 고른다. 새 파일을 만들지 않으므로 커밋에 그림이 늘지 않는다.
+     */
+    let imageAlt = d.imageAlt || '';
+    if (!image) {
+      const c = pickCover(d.category, posts.slice(0, 8).map((p) => p.image), slug);
+      image = c.src;
+      imageAlt = c.alt;
+    }
     const json = {
       title: d.title,
       date,
       ...(cfg.time && cfg.time !== '00:00' ? { time: cfg.time } : {}),
       summary: d.summary,
       ...(d.category ? { category: d.category } : {}),
-      ...(image ? { image, imageAlt: d.imageAlt || '' } : {}),
+      image,
+      imageAlt,
       ...(images.length ? { images } : {}),
       slug,
       html: d.html,
