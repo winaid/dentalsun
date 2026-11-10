@@ -7,7 +7,11 @@ import { pickCover } from '@/lib/blogCovers';
 import { readAutoConfig, writeAutoConfig, listPostsMeta, nextAutoDate, todayKST, stripTitlePrefix, withTitlePrefix } from '@/lib/autoBlog';
 
 export const runtime = 'nodejs';
-export const maxDuration = 300;
+/* ★ 2026-11-11 300 → 800(Vercel Pro 최대, GA). 11-10 '절대 문제 없도록' 보완(심의·고쳐 쓰기)으로 Gemini 호출이 최대 7번이 돼
+   00시 크론이 300초에 504 로 죽었다(co.kr·라이프·바온·룩엣미 — 죽으면 '건너뜀' 기록도 못 남김). 아래 AUTO_DEADLINE_MS 로 그 전에 스스로 멈춘다. */
+export const maxDuration = 800;
+/** 글 만들기 시계 — 이 안에 못 끝내면 '시간 초과'로 건너뛰고 기록한다(maxDuration 보다 넉넉히 짧게, 기록·커밋할 시간 남김) */
+const AUTO_DEADLINE_MS = 700_000;
 export const dynamic = 'force-dynamic';
 
 /**
@@ -52,7 +56,11 @@ export async function GET(req: Request) {
     /* ★ 사람이 쓰든 크론이 쓰든 같은 병원 규칙을 본다 — 담당자 프롬프트를 저장소에 둔 이유가 이것이다. */
     const clinic = await readClinicPrompt(token);
     /* 겹침 검사·주제 고르기는 앞머리(광화문치과)를 뗀 제목으로 — 모든 제목이 같은 말로 시작하면 서로 비슷하다고 걸린다. */
-    const r = await autoDraft(gemini, posts.map((p) => ({ title: stripTitlePrefix(p.title, cfg.titlePrefix), summary: p.summary })), undefined, clinic);
+    let deadline: ReturnType<typeof setTimeout> | undefined;
+    const r = await Promise.race([
+      autoDraft(gemini, posts.map((p) => ({ title: stripTitlePrefix(p.title, cfg.titlePrefix), summary: p.summary })), undefined, clinic),
+      new Promise<{ ok: false; reason: string; topic?: string }>((res) => { deadline = setTimeout(() => res({ ok: false, reason: `시간 초과(${AUTO_DEADLINE_MS / 1000}초) — 오늘은 건너뜀` }), AUTO_DEADLINE_MS); }),
+    ]).finally(() => clearTimeout(deadline));
     if (!r.ok) {
       await record(`건너뜀 — ${r.reason}${r.topic ? ` (${r.topic})` : ''}`);
       return NextResponse.json({ ok: true, skipped: r.reason, topic: r.topic });

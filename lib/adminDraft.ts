@@ -373,7 +373,8 @@ export async function autoDraft(
   /* 최종 심의 — 불통과면 걸린 문장을 감수에 주고 한 번 고쳐 쓴 뒤 다시 판정. 그래도 남으면 그날은 올리지 않는다. */
   let gate = await finalGate(key, reviewed.draft);
   if (!gate.pass) {
-    if (Date.now() - started > 150_000) return { ok: false, reason: '최종 심의 불통과(시간이 모자라 고쳐 쓰기 생략): ' + gate.problems.slice(0, 2).join(' / '), topic: t.topic };
+    /* 고쳐 쓰기 한 번은 450초 전까지만(2026-11-11: 크론 800초·시계 700초에 맞춤, 옛 150초) */
+    if (Date.now() - started > 450_000) return { ok: false, reason: '최종 심의 불통과(시간이 모자라 고쳐 쓰기 생략): ' + gate.problems.slice(0, 2).join(' / '), topic: t.topic };
     const keep = reviewed.draft;
     reviewed = await reviewDraft(key, reviewed.draft, clinic, gate.problems);
     reviewed = { ...reviewed, draft: { ...keep, ...reviewed.draft } };
