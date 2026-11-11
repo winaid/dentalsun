@@ -66,8 +66,11 @@ export const CASE_NOTE =
 export const CASES: CaseItem[] = [
   /* 2026-10-21 원장 PPT 244쪽 '곽아람 전체 파노라마로 교체 · 도형 표시' — 치근단 사진 → 전체 파노라마(원본 zip 근관치료/곽아람, 2021-08-27 → 2025-04-16) + 치료한 치아에 빨간 원. 슬라이드 제목이 '재신경치료' → 재근관치료 사례로(오너 10-21, 자리는 그대로라 홈 CASE 번호 안 바뀜) */
   { id: 'endo-01-xray', category: 'reendo', type: 'xray', xrayKind: 'panorama', caption: '하악 우측 대구치 재근관치료 — 근관 충전 후 보철', before: { key: 'cases2/endo-01-xray-pano-before-c', w: 1600, h: 673 }, after: { key: 'cases2/endo-01-xray-pano-after-c', w: 1600, h: 673 } },
-  { id: 'endo-02-xray', category: 'endo', type: 'xray', xrayKind: 'periapical', caption: '하악 대구치 근관치료 — 기존 보철 치아의 근관 충전', before: { key: 'cases2/endo-02-xray-before', w: 1100, h: 803 }, after: { key: 'cases2/endo-02-xray-after', w: 1100, h: 803 } },
-  { id: 'endo-03-xray', category: 'endo', type: 'xray', xrayKind: 'periapical', caption: '상악 구치부 근관치료 — 우식 치아의 근관 충전', before: { key: 'cases2/endo-03-xray-before', w: 1100, h: 803 }, after: { key: 'cases2/endo-03-xray-after', w: 1100, h: 803 } },
+  /* 2026-11-11 본부장 전달 '자연치아 살리기 케이스 2·3 사진이 작아서 잘 안 보인다' — 치료한 치아는 그대로 두고 둘레만 잘라 1.1:1 로(-z, 원본 파일은 그대로).
+     02 전: 왼쪽 볼 그림자(흰 띠) 217px 덜어 냄 · 02 후·03 전후: 오른쪽 치료와 무관한 뼈 217px. 무대도 1.1:1 까지 높아져(CaseGallery stageRatio) 폰에서 약 1.3배 크게.
+     ★ 출처 확인(11-11): 병원이 09-29 보낸 홈페이지.zip '근관치료' 폴더 원본과 대조 — 01·02 는 거의 같은 사진(차이 0.003), 03·04 는 같은 사진을 기울기 바로잡고 검은 모서리 잘라 낸 판 */
+  { id: 'endo-02-xray', category: 'endo', type: 'xray', xrayKind: 'periapical', caption: '하악 대구치 근관치료 — 기존 보철 치아의 근관 충전', before: { key: 'cases2/endo-02-xray-before-z', w: 883, h: 803 }, after: { key: 'cases2/endo-02-xray-after-z', w: 883, h: 803 } },
+  { id: 'endo-03-xray', category: 'endo', type: 'xray', xrayKind: 'periapical', caption: '상악 구치부 근관치료 — 우식 치아의 근관 충전', before: { key: 'cases2/endo-03-xray-before-z', w: 883, h: 803 }, after: { key: 'cases2/endo-03-xray-after-z', w: 883, h: 803 } },
   { id: 'endo-04-xray', category: 'endo', type: 'xray', xrayKind: 'periapical', caption: '상악 구치부 근관치료 — 근관 충전 후 보철 수복', before: { key: 'cases2/endo-04-xray-before', w: 1100, h: 803 }, after: { key: 'cases2/endo-04-xray-after', w: 1100, h: 803 } },
   /* 2026-10-21 원장 PPT 244쪽 '재신경치료 — 도형 표시' — 치료한 치아에 빨간 타원(C:/tmp/sun-ppt-1019/tools/reendo-circles.mjs, 원본은 -c 없는 파일) */
   { id: 'reendo-01-xray', category: 'reendo', type: 'xray', xrayKind: 'periapical', caption: '하악 대구치 재근관치료 — 기존 근관 충전 재처치', before: { key: 'cases2/reendo-01-xray-before-c', w: 1100, h: 803 }, after: { key: 'cases2/reendo-01-xray-after-c', w: 1100, h: 803 } },

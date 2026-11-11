@@ -75,9 +75,11 @@ function Area({ title, sub, items, kind, paired = false }: { title: string; sub:
   const xr = kind === 'xray';
   /*
    * 무대 비율 — 구내는 16:10 고정(사진 대부분 1.5~2:1). 방사선은 사진마다 다르다(파노라마 2.4:1 · 치근단 1.37:1 · 세로 치근단 0.73:1) —
-   * 파노라마 틀에 세로 치근단을 넣으면 가는 띠가 됐다(09-29 캡처). 사진 비율을 따르되 1.45~2.4 사이로 묶는다. 사진은 통째로 놓는다.
+   * 파노라마 틀에 세로 치근단을 넣으면 가는 띠가 됐다(09-29 캡처). 사진 비율을 따르되 1.1~2.4 사이로 묶는다(11-11 1.45→1.1). 사진은 통째로 놓는다.
    */
-  const stageRatio = (c: CaseItem) => (xr ? Math.min(2.4, Math.max(1.45, c.before.w / c.before.h)) : 1.6);
+  /* 2026-11-11 아래 한계 1.45 → 1.1 — 본부장 '자연치아 살리기 케이스 2·3 작아서 잘 안 보임'. 치근단 사진은 치아가 위아래로 길어
+     1.45 틀이면 폰에서 높이 240px 남짓이었다. 1.1 까지 높여 치아가 크게 보이게(넓은 화면 나란히 놓일 때는 그대로 16:10). */
+  const stageRatio = (c: CaseItem) => (xr ? Math.min(2.4, Math.max(1.1, c.before.w / c.before.h)) : 1.6);
   const thumbRatio = xr ? 'aspect-[11/5]' : 'aspect-[16/10]';
   return (
     <section className="mt-12" aria-label={title}>

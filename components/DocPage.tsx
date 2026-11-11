@@ -70,6 +70,9 @@ const DOC_AI: Record<string, string> = {
  *  골이식재 담은 접시를 든 손 + 뒤 모니터에 어금니 위 상악동이 보이는 CT. 만든 도구 C:/tmp/sun-1028/gen.mjs */
 const CARD_FIG: Record<string, string> = {
   '/treatment/implant/bone-graft': 'ai/implant-bonegraft-card',
+  /* 2026-11-11 본부장 전달 "자연치아살리기 세부안내 01 MTA 근관치료 사진 — 원장 사진 말고 MTA 관련 사진" —
+     원장 사진(orig/mta-hero) → MTA 가루를 유리판에 갠 정물·투명 치아 모형(ai/natural-mta, 이미 있던 그림). MTA 쪽 자체 대표 사진은 그대로 */
+  '/treatment/natural-tooth/mta': 'ai/natural-mta',
 };
 
 /** 관련 카드 칸 수 — 셋이면 한 줄 셋, 넷이면 2×2 → 한 줄 넷 */
