@@ -21,7 +21,10 @@ const SUBLINK_KEEP = new Set([
   '/treatment/implant', // 임플란트
   '/treatment/natural-tooth', // 자연치아 살리기 (심미치료 자리)
   '/treatment/implant/full-arch', // 풀아치 임플란트 (보험 틀니 자리)
-  '/treatment/wisdom-tooth', // 매복사랑니
+  /* 2026-11-12 본부장 "광화문치과 검색 시 나오는 카테고리명 매복사랑니 → 심미보철". 네이버 글자 링크 이름은 쪽 제목이 아니라
+     홈 링크 글자를 따른다('광화문 선치과 디지털 임플란트' 쪽이 '임플란트'로 떴다) — 홈 일반진료 카드도 '심미보철'로 이 쪽을 가리킨다(app/page.tsx).
+     매복사랑니(/treatment/wisdom-tooth)는 다시 nosublink. */
+  '/treatment/aesthetic/prosthetics', // 심미보철 (매복사랑니 자리)
 ]);
 
 /** '#'·'?' 붙은 주소는 별개 쪽이 아니므로 그대로 막는다(FAQ: fragment URL 쓰지 말 것) */

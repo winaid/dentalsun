@@ -465,7 +465,9 @@ export default function HomePage() {
                 { href: '/treatment/re-root-canal', label: '재근관치료', desc: '신경치료 후 다시 생긴 뿌리 끝 염증을 치료합니다.', fig: 'ai/natural-mta' },
                 { href: '/treatment/periodontal', label: '치주치료', desc: '치석을 없애고, 잇몸 속 뿌리 표면까지 깨끗하게 치료합니다.', fig: 'ai/insight-gum' },
                 { href: '/treatment/wisdom-tooth', label: '매복사랑니', desc: '3D CT로 신경과의 거리를 확인한 뒤 안전하게 발치합니다.', fig: 'ai/insight-wisdom' },
-                { href: '/treatment/aesthetic', label: '심미치료', desc: '라미네이트 · 올세라믹 · 지르코니아 · 치아미백.', fig: 'ai/aesthetic-prosthetics' },
+                /* 2026-11-12 본부장 "검색 시 카테고리명 매복사랑니 → 심미보철" — 네이버 글자 링크가 '심미보철'로 뜨려면 홈에 그 이름·그 쪽 링크가 있어야 한다(components/SiteLink).
+                   치아미백은 진료과목 칸 '심미치료'에 그대로 있다. */
+                { href: '/treatment/aesthetic/prosthetics', label: '심미보철', desc: '라미네이트 · 올세라믹 · 지르코니아.', fig: 'ai/aesthetic-prosthetics' },
                 { href: '/treatment/painless', label: '무통 & 저자극 치료', desc: '바르는 마취제, 가글 마취제, 무통마취기를 사용해 통증을 최소화합니다.', fig: 'ai/painless-anesthesia' },
               ].map((c) => (
                 <li key={c.href}>

@@ -15,6 +15,11 @@ import { articleSchema, breadcrumbSchema, faqSchema, imageObjectSchema, itemList
 import { CLINIC } from '@/lib/clinic';
 import { WarrantyBand } from '@/components/WarrantyBand';
 import { BottomGuide } from '@/components/BottomGuide';
+import { NAV } from '@/lib/nav';
+
+/* 일반진료 바로가기 목록 — 메뉴 '일반진료'와 같은 이름·순서(허브 + 여섯 갈래). 하위 쪽(심미보철·MTA 등)은 자기 갈래가 진하게 표시된다. */
+const GENERAL_NAV = NAV.find((n) => n.href === '/treatment/general');
+const GENERAL_ITEMS = GENERAL_NAV ? [{ label: '일반진료 안내', href: GENERAL_NAV.href }, ...(GENERAL_NAV.children ?? []).map((c) => ({ label: c.label, href: c.href }))] : [];
 
 /**
  * 진료·인사이트 문서 렌더러 — Doc 하나를 쪽 하나로.
@@ -242,6 +247,14 @@ export function DocPage({ doc }: { doc: Doc }) {
             current={doc.path}
             bg="bg-white"
             own={{ title: '임플란트', accent: '안내', items: [{ label: '임플란트 안내', href: doc.path }, ...docsOfHub(doc.path).map((d) => ({ label: d.title, href: d.path }))] }}
+          />
+        )}
+        {/* 일반진료 열세 쪽 전부(허브·여섯 갈래·하위) — 2026-11-12 병원(본부장 전달) "일반진료 부분도 모두 임플란트 하단처럼 대표원장 및 다른 카테고리로 옮겨지는 것" */}
+        {GENERAL_ITEMS.some((it) => it.href === doc.path || it.href === doc.hub) && (
+          <BottomGuide
+            current={GENERAL_ITEMS.some((it) => it.href === doc.path) ? doc.path : doc.hub}
+            bg="bg-white"
+            own={{ title: '일반진료', accent: '안내', items: GENERAL_ITEMS }}
           />
         )}
 
