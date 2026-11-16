@@ -2,7 +2,7 @@ import NextLink from 'next/link';
 import type { ComponentProps } from 'react';
 
 /**
- * 사이트 안 링크 — next/link 에 rel="nosublink" 을 덧붙인다. 단 아래 SUBLINK_KEEP 여섯 쪽은 빼고.
+ * 사이트 안 링크 — next/link 에 rel="nosublink" 을 덧붙인다. 단 아래 SUBLINK_KEEP 다섯 쪽은 빼고(11-16 기준).
  *
  * ★ 2026-11-09 오너 "광화문치과에 캐러셀 카드 안 생기니 다시 밑에 버튼(글자 링크)이라도. 업체 원하는 대로"
  *   업체(본부장 전달) 요청 = 검색 결과 글자 링크 중 '보험 틀니 → 풀아치 임플란트', '심미치료 → 자연치아 살리기'.
@@ -20,11 +20,13 @@ const SUBLINK_KEEP = new Set([
   '/treatment/tmj', // 턱관절
   '/treatment/implant', // 임플란트
   '/treatment/natural-tooth', // 자연치아 살리기 (심미치료 자리)
-  '/treatment/implant/full-arch', // 풀아치 임플란트 (보험 틀니 자리)
-  /* 2026-11-12 본부장 "광화문치과 검색 시 나오는 카테고리명 매복사랑니 → 심미보철". 네이버 글자 링크 이름은 쪽 제목이 아니라
-     홈 링크 글자를 따른다('광화문 선치과 디지털 임플란트' 쪽이 '임플란트'로 떴다) — 홈 일반진료 카드도 '심미보철'로 이 쪽을 가리킨다(app/page.tsx).
-     매복사랑니(/treatment/wisdom-tooth)는 다시 nosublink. */
-  '/treatment/aesthetic/prosthetics', // 심미보철 (매복사랑니 자리)
+  /* 2026-11-12 본부장 "매복사랑니 → 심미보철" → 11-16 본부장 "심미보철 → 심미치료(상위 개념) + 맨 앞에 치과소개, 총 5개".
+     네이버 글자 링크 이름은 쪽 제목이 아니라 홈 링크 글자를 따른다('광화문 선치과 디지털 임플란트' 쪽이 '임플란트'로 떴다) —
+     홈 진료과목·일반진료 카드 모두 '심미치료'로 이 쪽을 가리킨다(app/page.tsx). 11-04 전에도 이 쪽이 '심미치료'로 떴다.
+     심미보철(/treatment/aesthetic/prosthetics)은 다시 nosublink.
+     풀아치 임플란트(/treatment/implant/full-arch, 11-09 보험 틀니 자리)는 열어 둔 동안 한 번도 안 떴고 이번 '총 5개'에 없어 뺐다 —
+     치과소개는 11-09 부터 열려 있었는데 네이버가 여섯 후보 중 넷만 골랐다. 후보를 원하는 다섯으로 줄인다(고르는 건 여전히 네이버). */
+  '/treatment/aesthetic', // 심미치료
 ]);
 
 /** '#'·'?' 붙은 주소는 별개 쪽이 아니므로 그대로 막는다(FAQ: fragment URL 쓰지 말 것) */
