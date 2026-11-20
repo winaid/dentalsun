@@ -374,8 +374,13 @@ const PAGES = [
   { label: '턱관절 장애의 치료법', href: '/treatment/tmj/treatment' },
 ];
 
+/** 하위 쪽 '더 자세히 알아보기' 설명 — 허브 설명은 하위 세 쪽 소개라, 하위 쪽에선 네 쪽 전체를 말한다(메뉴 이름 그대로) */
+const TMJ_MORE_LEAD = '턱관절 장애의 구조와 원인, 증상과 자가진단, 이갈이·이악물기, 치료법을 페이지별로 나눠 정리했습니다.';
+
 /** 허브 '더 알아보기' 카드 사진 — 쪽마다 다른 사진(같은 사진 반복 금지), 설명도 그 사진의 것 */
 const CHILD_FIG: Record<string, Fig> = {
+  /* 2026-11-20 하위 쪽 맨 아래에도 같은 카드(혜영 님) — 첫 쪽 카드는 '원인' 구역의 밝은 사진(하위 세 쪽엔 안 나오는 사진) */
+  '/treatment/tmj': { key: 'ai/tmj-cause-habit', alt: '책상에 턱을 괴고 있는 모습' },
   /* 2026-10-20 원장 PPT 179쪽 '이미지 변경' — 구내 사진·도해·어두운 제품 사진이 섞여 있던 것을 밝은 사진 셋으로 */
   '/treatment/tmj/symptoms': { key: 'ai/tmj-hub', alt: '턱 옆을 손으로 감싸 쥔 모습' },
   '/treatment/tmj/bruxism': { key: 'ai/tmj-bruxism-guard', alt: '침대 옆 탁자 위 케이스에 담긴 투명 교합안정장치' },
@@ -406,6 +411,8 @@ export function TmjPage({ doc }: { doc: Doc }) {
   const heroSize = figSize(hero.key);
   const first = (s: string) => s.split(/(?<=다\.)\s/)[0];
   const children = isHub ? docsOfHub(doc.hub) : [];
+  /* 하위 쪽 맨 아래 '더 자세히 알아보기' = 지금 쪽을 뺀 나머지 턱관절 쪽(첫 쪽 포함, 메뉴 순서) */
+  const more = isHub ? [] : ([docByPath(doc.hub), ...docsOfHub(doc.hub)].filter((d) => d && d.path !== doc.path) as Doc[]);
   /* 첫 화면 — 하위 쪽은 lib/heroCollage 표(제목 두 줄), 허브는 TMJ_HERO */
   const collage = isHub ? null : HERO_COLLAGE[doc.path];
   const heroLines: [ReactNode, ReactNode?] = collage
@@ -1263,12 +1270,15 @@ export function TmjPage({ doc }: { doc: Doc }) {
             {/* ── 맺음 편지 — 어두운 사진 판 위 대표원장의 글(원장 요청 2026-09-29). 모든 턱관절 쪽의 본문 끝 ── */}
             <TmjLetter />
 
-            {/* ── 허브: 하위 쪽 카드 — 본문 맨 끝(FAQ 뒤). 다른 쪽으로 보내는 카드는 다 읽은 뒤에 (오너 2026-09-21) ── */}
-            {show('children') && children.length > 0 && (
-              <section className="pt-20 md:pt-28" aria-labelledby="tmj-children">
-                <Head id="tmj-children" s={SECTIONS.children} />
+            {/* ── '더 자세히 알아보기' 카드 — 본문 맨 끝(FAQ·맺음 편지 뒤). 다른 쪽으로 보내는 카드는 다 읽은 뒤에 (오너 2026-09-21)
+                 허브 = 하위 세 쪽. 하위 쪽 = 지금 쪽을 뺀 나머지 셋, 넓은 화면(사이드바가 옆에 있는 xl~)에서만 —
+                 2026-11-20 혜영 님 "PC 에서 다 읽고 나면 다른 쪽으로 갈 길이 맨 위 사이드바뿐, 허브와 같은 자리에 넣어 달라".
+                 폰·좁은 화면은 사이드바(턱관절 안내)가 이미 본문 아래에 와서 그대로 둔다. ── */}
+            {((show('children') && children.length > 0) || more.length > 0) && (
+              <section className={`pt-20 md:pt-28 ${isHub ? '' : 'hidden xl:block'}`} aria-labelledby="tmj-children">
+                <Head id="tmj-children" s={SECTIONS.children} lead={isHub ? undefined : TMJ_MORE_LEAD} />
                 <ul className="reveal-stack mt-12 grid gap-5 md:grid-cols-3">
-                  {children.map((c) => {
+                  {(isHub ? children : more).map((c) => {
                     const f = CHILD_FIG[c.path] ?? c.hero ?? { key: 'ai/tmj-hub', alt: c.title };
                     return (
                       <li key={c.path}>
@@ -1277,7 +1287,7 @@ export function TmjPage({ doc }: { doc: Doc }) {
                             <Image src={figSrc(f.key)} alt={f.alt} fill sizes="(max-width: 768px) 100vw, 33vw" className={f.key.startsWith('illust/') ? 'object-contain' : 'object-cover'} />
                           </span>
                           <span className="flex flex-1 flex-col p-6">
-                            <span className="text-[1.15rem] font-extrabold text-ink">{c.title}</span>
+                            <span className="text-[1.15rem] font-extrabold text-ink">{c.path === doc.hub ? PAGES[0].label : c.title}</span>
                             <span className="mt-2 text-[16px] leading-[1.7] text-ink-soft">{first(c.summary)}</span>
                             <span className="mt-auto pt-4 text-[13.5px] font-bold text-brand-700">자세히 보기 ›</span>
                           </span>
