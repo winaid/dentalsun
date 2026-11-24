@@ -7,6 +7,8 @@ import { JsonLd } from '@/components/JsonLd';
 import { ContactBand, FaqList, MedicalNotice, Sentences, rich } from '@/components/ui';
 import { ContactCard, DoctorCard } from '@/components/SideRail';
 import { CaseGallery } from '@/components/CaseGallery';
+import { MoreCards, moreFor } from '@/components/MoreCards';
+import { cardPhoto } from '@/components/DocPage';
 import { docCharCount, figSize, figSrc, fitsBox, type Doc, type Fig } from '@/lib/docs';
 import { docByPath, docsOfHub } from '@/lib/content';
 import { HERO_COLLAGE, splitAccent } from '@/lib/heroCollage';
@@ -55,18 +57,6 @@ import { CLINIC } from '@/lib/clinic';
  */
 /** 첫 화면 배경 — 쪽마다 다른 사진(같은 사진 반복 금지) */
 const HERO_BG_OF = { navigation: 'place2/doctor-scan', custom: 'illust/custom-abutment-seal' } as const;
-
-/** 관련 쪽 카드 사진 — 쪽마다 다른 사진 */
-const REL_FIG: Record<string, string> = {
-  '/treatment/implant': 'orig/implant-hero',
-  '/treatment/implant/navigation': 'orig/misc-nav-implant-set',
-  '/treatment/implant/custom': 'ai/implant-custom',
-  /* 2026-10-26 원장 PPT(261026) 13쪽 '풀아치 임플란트 사진 교체' — 드릴 꽂힌 계획 화면 → 임플란트 네 개 위 풀아치 모형 */
-  '/treatment/implant/full-arch': 'ai/implant-fullarch',
-  '/treatment/implant/uv': 'ai/implant-uv',
-  '/treatment/implant/prf': 'ai/implant-prf',
-  '/treatment/implant/warranty': 'ai/implant-warranty',
-};
 
 /** 구역 머리 위 짧은 한글 라벨 — 옛 영문·숫자 장식 글자 자리(원장: 의미 있는 한글 소제목) */
 function Label({ children }: { children: ReactNode }) {
@@ -242,7 +232,7 @@ export function CustomImplantPage({ doc, part }: { doc: Doc; part: 'navigation' 
     ...(hubDoc ? [{ label: '임플란트 안내', href: hubDoc.path }] : []),
     ...docsOfHub(doc.hub).map((d) => ({ label: d.title, href: d.path })),
   ];
-  const related = (doc.related ?? []).map((p) => docByPath(p)).filter((d): d is Doc => Boolean(d));
+  const more = moreFor(doc, cardPhoto);
   /* 사이드바 순서 카드 — 쪽에 맞는 과정 */
   const sideSteps = part === 'custom' ? { title: '맞춤 지대주 제작 순서', steps: CI_PROCESS.steps } : { title: '가이드 식립 순서', steps: NAVI_PROCESS.steps };
   const band =
@@ -698,29 +688,10 @@ export function CustomImplantPage({ doc, part }: { doc: Doc; part: 'navigation' 
               </section>
             )}
 
-            {/* ── 관련 임플란트 쪽 카드 — 본문 맨 끝(FAQ 뒤) ── */}
-            {related.length > 0 && (
-              <section className="pt-20 md:pt-28" aria-labelledby="ci-related">
-                <Head id="ci-related" label="다른 임플란트 진료" title={<>함께 보면 좋은 <span className="accent-sun">임플란트 안내</span></>} />
-                <ul className="reveal-stack mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-2 2xl:grid-cols-4">
-                  {related.map((c) => (
-                    <li key={c.path}>
-                      <Link href={c.path} className="card card-hover flex h-full flex-col overflow-hidden">
-                        <span className="relative block aspect-[4/3] overflow-hidden bg-canvas-2">
-                          <Image src={figSrc(REL_FIG[c.path] ?? c.hero?.key ?? 'orig/implant-hero')} alt={c.hero?.alt ?? c.title} fill sizes="(max-width: 640px) 100vw, 25vw" className="object-cover" />
-                        </span>
-                        <span className="flex flex-1 flex-col p-5">
-                          <span className="text-[12px] font-bold tracking-[0.08em] text-sun-600">{c.eyebrow}</span>
-                          <span className="mt-2 text-[1.05rem] font-extrabold text-ink">{c.title}</span>
-                          <span className="mt-2 text-[16.5px] leading-[1.65] text-ink-soft">{first(c.summary)}</span>
-                          <span className="mt-auto pt-4 text-[13px] font-bold text-brand-700">자세히 보기 ›</span>
-                        </span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            )}
+            {/* ── '임플란트, 더 자세히 알아보기' 사진 카드 — 본문 맨 끝(FAQ 뒤). 턱관절 하위 쪽과 같은 모양·같은 조건:
+                 사이드바가 옆에 있는 넓은 화면(xl~)에서만, 폰·좁은 화면은 사이드바(임플란트 안내)가 본문 아래로 온다.
+                 2026-11-24 오너 "사진 카드 다 통일" — 옛 '함께 보면 좋은 임플란트 안내'(쪽마다 고른 4장)를 바꿈 (components/MoreCards) ── */}
+            {more && <MoreCards id="ci-more" name={more.name} lead={more.lead} items={more.items} perRow={3} className="hidden pt-20 md:pt-28 xl:block" />}
           </div>
 
           {/* ───────── 사이드바 ───────── */}

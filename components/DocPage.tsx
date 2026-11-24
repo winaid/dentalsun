@@ -15,6 +15,7 @@ import { articleSchema, breadcrumbSchema, faqSchema, imageObjectSchema, itemList
 import { CLINIC } from '@/lib/clinic';
 import { WarrantyBand } from '@/components/WarrantyBand';
 import { BottomGuide } from '@/components/BottomGuide';
+import { MoreCards, moreFor, morePerRow } from '@/components/MoreCards';
 import { NAV } from '@/lib/nav';
 
 /* 일반진료 바로가기 목록 — 메뉴 '일반진료'와 같은 이름·순서(허브 + 여섯 갈래). 하위 쪽(심미보철·MTA 등)은 자기 갈래가 진하게 표시된다. */
@@ -80,6 +81,21 @@ const CARD_FIG: Record<string, string> = {
   '/treatment/natural-tooth/mta': 'ai/natural-mta',
 };
 
+/** 맨 아래 '더 자세히 알아보기'(MoreCards) 카드에만 쓰는 사진 — 일반진료 일곱 장 중 넷이 대표원장 사진(둘은 같은 사진)이라
+ *  갈래마다 내용이 보이는 이미 있던 AI 사진으로(2026-11-24). 쪽 자체의 대표 사진·허브 위 카드는 그대로 */
+const MORE_FIG: Record<string, string> = {
+  '/treatment/general': 'ai/hero-clinic',
+  '/treatment/wisdom-tooth': 'ai/wide-wisdom',
+  '/treatment/natural-tooth': 'ai/wide-natural',
+  '/treatment/re-root-canal': 'ai/endosonic-blue2',
+  '/treatment/periodontal': 'ai/insight-gum',
+};
+
+/** '더 자세히 알아보기' 카드 사진 — 카드 전용 → 허브 '세부 안내' 카드와 같은 순서(카드 전용 → 문서 AI 사진 → 문서 대표 사진 → 갈래 배경). 같은 쪽은 어느 쪽 아래서나 같은 사진 */
+export function cardPhoto(href: string): string {
+  return MORE_FIG[href] ?? CARD_FIG[href] ?? DOC_AI[href] ?? docByPath(href)?.hero?.key ?? HUB_BG[href] ?? 'ai/faq';
+}
+
 /** 관련 카드 칸 수 — 셋이면 한 줄 셋, 넷이면 2×2 → 한 줄 넷 */
 function relCols(n: number) {
   if (n === 3) return 'md:grid-cols-3';
@@ -94,6 +110,7 @@ export function DocPage({ doc }: { doc: Doc }) {
   /* 허브에 links 블록이 있으면(인사이트처럼 묶음별로 직접 나열) 자동 카드는 붙이지 않는다 — 같은 카드가 두 번 나온다. */
   const children = doc.isHub && !doc.blocks.some((b) => b.type === 'links') ? docsOfHub(doc.path) : [];
   const related = (doc.related ?? []).map(docByPath).filter(Boolean) as Doc[];
+  const more = isInsight ? null : moreFor(doc, cardPhoto);
   /* 대표 사진 — 쪽마다 다른 AI 정물을 우선 쓴다(원본 사진 24장이 서른 쪽에 반복되지 않게). 인사이트처럼 매핑이 없으면 문서가 지정한 사진. */
   const heroKey = DOC_AI[doc.path] ?? doc.hero?.key;
   const hero: Fig | undefined = heroKey ? { key: heroKey, alt: doc.hero?.alt ?? doc.title } : undefined;
@@ -239,6 +256,9 @@ export function DocPage({ doc }: { doc: Doc }) {
             </div>
           </section>
         )}
+
+        {/* '○○, 더 자세히 알아보기' 사진 카드 — 턱관절 하위 쪽과 같은 모양·같은 조건(넓은 화면 xl~에서만). 2026-11-24 오너 "사진 카드 다 통일" (components/MoreCards) */}
+        {more && <MoreCards id="more-cards" name={more.name} lead={more.lead} items={more.items} perRow={morePerRow(more.items.length)} className="section hidden bg-white xl:block" inner="wrap max-w-[1320px]" />}
 
         {/* 임플란트 전체보기(허브)만 맨 아래 바로가기 — 2026-11-10 병원 요청(components/BottomGuide). 목록은 내비게이션 임플란트 사이드바와 같은 여덟(허브 + 하위).
             위 FAQ 가 회색 바탕이라 흰 바탕 */}
