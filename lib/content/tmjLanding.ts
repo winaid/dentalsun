@@ -248,7 +248,8 @@ export const TMJ_CONTACT: Record<string, { title: string; text: string }> = {
 /** 허브 첫 화면(하위 쪽은 lib/heroCollage 표). 2026-10-07 쉬운 말로 — heroCollage '/treatment/tmj' 와 같은 글 */
 export const TMJ_HERO = {
   line1: '턱에서 소리가 나고 아프다면,',
-  line2: '원인부터 찾는 턱관절 진료',
+  /* 2026-11-26 '광화문' 넣음 — 큰 제목(h1)에 검색어 '광화문 턱관절'이 붙어 있게 */
+  line2: '원인부터 찾는 광화문 턱관절 진료',
   /* 2026-10-20 원장 PPT 167쪽 */
   desc: '턱에서 딸깍 소리가 나거나 입이 잘 벌어지지 않고, 아침마다 턱이 뻐근하다면 턱관절 장애일 수 있습니다. 대표원장이 직접 원인을 진단하고, 치료부터 장기적인 관리까지 이어갑니다.',
   cardsLead: '광화문 선치과 턱관절 진료는 이렇게 합니다.',

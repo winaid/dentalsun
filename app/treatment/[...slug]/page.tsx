@@ -24,12 +24,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const description = metaDesc(path, doc.description);
   const hero = doc.hero ? figSize(doc.hero.key) : null;
   return {
-    title: doc.title,
+    title: doc.metaTitle ? { absolute: doc.metaTitle } : doc.title,
     description,
     keywords: doc.keywords,
     alternates: alt(path),
     openGraph: og({
-      title: doc.title,
+      title: doc.metaTitle ?? doc.title,
       description,
       path,
       images: doc.hero && hero ? [{ url: figSrc(doc.hero.key), width: hero.w, height: hero.h, alt: doc.hero.alt }] : undefined,

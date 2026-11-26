@@ -73,6 +73,8 @@ export interface Doc {
   hubLabel: string;
   /** H1 */
   title: string;
+  /** 검색 결과 제목(<title>·og:title) 통째로 — 없으면 '{title} | 광화문 선치과'. 화면·메뉴·빵부스러기는 title 그대로 (2026-11-26 턱관절 '광화문 턱관절치과') */
+  metaTitle?: string;
   /** 작은 윗줄 라벨. 예: 'IMPLANT · UV' */
   eyebrow: string;
   /** 한 줄 답 — H1 바로 아래 첫 단락. 이 문서가 답하는 질문에 대한 요약(2~3문장). speakable 대상. */
